@@ -1,11 +1,6 @@
 import React from "react";
-
 export function NftMilestoneSection() {
-  return (
-    <section
-      id="nft-milestone"
-      className="py-16 border-b border-white/5 bg-[radial-gradient(circle_at_top,_#111827,_#020617)]"
-    >
+  return <section id="nft-milestone" className="py-16 border-b border-white/5 bg-[radial-gradient(circle_at_top,_#111827,_#020617)]">
       <div className="max-w-6xl mx-auto px-4">
         {/* Heading Row */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
@@ -13,7 +8,7 @@ export function NftMilestoneSection() {
             <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 mb-2">
               Blockchain Milestone
             </p>
-            <h2 className="text-2xl md:text-3xl font-bold text-white">
+            <h2 className="text-2xl font-bold text-white md:text-4xl">
               First Houston Rap Artist to Sell a Hip Hop NFT
             </h2>
             <p className="mt-2 text-xs text-gray-400">
@@ -29,7 +24,7 @@ export function NftMilestoneSection() {
         {/* Content Grid */}
         <div className="grid md:grid-cols-[1.2fr_minmax(0,_1fr)] gap-8 items-start">
           {/* Left: Story */}
-          <div className="space-y-4 text-sm text-gray-200">
+          <div className="space-y-4 text-sm text-gray-200 py-[11px]">
             <p>
               On <span className="font-semibold">February 25, 2021</span>, Houston-based
               rapper <span className="font-semibold">Mr. CAP</span> made history by
@@ -94,14 +89,7 @@ export function NftMilestoneSection() {
 
               {/* NFT Video */}
               <div className="aspect-video rounded-2xl border border-white/10 overflow-hidden mb-3">
-                <video
-                  src="/video/limitless-nft.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
+                <video src="/video/limitless-nft.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover" />
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-[11px] text-gray-300">
@@ -132,18 +120,10 @@ export function NftMilestoneSection() {
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2 text-[11px]">
-                <a
-                  href="https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold transition"
-                >
+                <a href="https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353" target="_blank" rel="noreferrer" className="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold transition">
                   View on OpenSea
                 </a>
-                <a
-                  href="#contact"
-                  className="px-3 py-1.5 rounded-full border border-emerald-500/60 text-emerald-200 hover:border-emerald-300 hover:text-emerald-100 transition"
-                >
+                <a href="#contact" className="px-3 py-1.5 rounded-full border border-emerald-500/60 text-emerald-200 hover:border-emerald-300 hover:text-emerald-100 transition">
                   Inquire About Web3 & NFT Projects
                 </a>
               </div>
@@ -157,8 +137,6 @@ export function NftMilestoneSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
-
 export default NftMilestoneSection;
