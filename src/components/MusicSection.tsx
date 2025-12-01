@@ -19,7 +19,7 @@ const albums = [{
   title: "Tha Cold Ass Pimp",
   artist: "Tha Cold Ass Pimp",
   year: "2006",
-  role: "Mr. CAP-associated",
+  role: "Mixtape",
   label: "O.N.E. 4 Da Money Entertainment",
   format: "CDr, Album",
   image: albumColdAssPimp
