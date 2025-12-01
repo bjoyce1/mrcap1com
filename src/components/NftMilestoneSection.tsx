@@ -92,18 +92,16 @@ export function NftMilestoneSection() {
                 </div>
               </div>
 
-              {/* Placeholder image block */}
-              <div className="aspect-video rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-500/20 via-black to-emerald-900/40 flex items-center justify-center mb-3">
-                <div className="text-center text-[11px] text-gray-200 px-4">
-                  Artwork / Cover for
-                  <br />
-                  <span className="font-semibold text-white">
-                    "Limitless" (NFT Edition)
-                  </span>
-                  <p className="mt-1 text-[10px] text-gray-400">
-                    Replace this block with the actual NFT cover image.
-                  </p>
-                </div>
+              {/* NFT Video */}
+              <div className="aspect-video rounded-2xl border border-white/10 overflow-hidden mb-3">
+                <video
+                  src="/video/limitless-nft.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-[11px] text-gray-300">
@@ -135,12 +133,12 @@ export function NftMilestoneSection() {
 
               <div className="mt-4 flex flex-wrap gap-2 text-[11px]">
                 <a
-                  href="https://opensea.io"
+                  href="https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353"
                   target="_blank"
                   rel="noreferrer"
                   className="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-semibold transition"
                 >
-                  View on OpenSea (Listing / Archive)
+                  View on OpenSea
                 </a>
                 <a
                   href="#contact"
