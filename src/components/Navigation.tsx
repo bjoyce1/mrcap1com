@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +19,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +47,8 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isHomePage = location.pathname === "/";
+
   return (
     <header
       className={cn(
@@ -55,27 +59,46 @@ const Navigation = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 py-4">
-        <a href="#hero" className="font-display text-2xl tracking-wider">
+        <Link to="/" className="font-display text-2xl tracking-wider">
           <span className="text-primary">MR.</span>{" "}
           <span className="text-foreground">CAP</span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-1">
-          {sections.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
-              className={cn(
-                "px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors rounded-full",
-                activeSection === s.id
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-              )}
+          {isHomePage ? (
+            <>
+              {sections.map((s) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  className={cn(
+                    "px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors rounded-full",
+                    activeSection === s.id
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                  )}
+                >
+                  {s.label}
+                </a>
+              ))}
+              <Link
+                to="/nft"
+                className="px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors rounded-full
+                           text-accent hover:text-accent hover:bg-accent/10 border border-accent/30"
+              >
+                NFT Gallery
+              </Link>
+            </>
+          ) : (
+            <Link
+              to="/"
+              className="px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors rounded-full
+                         text-muted-foreground hover:text-foreground hover:bg-secondary"
             >
-              {s.label}
-            </a>
-          ))}
+              Back to Home
+            </Link>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -91,21 +114,42 @@ const Navigation = () => {
       {isMenuOpen && (
         <nav className="lg:hidden bg-background/95 backdrop-blur-lg border-t border-border animate-fade-in">
           <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
+            {isHomePage ? (
+              <>
+                {sections.map((s) => (
+                  <a
+                    key={s.id}
+                    href={`#${s.id}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={cn(
+                      "px-4 py-3 text-sm uppercase tracking-widest font-medium transition-colors rounded-lg",
+                      activeSection === s.id
+                        ? "text-primary bg-primary/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    )}
+                  >
+                    {s.label}
+                  </a>
+                ))}
+                <Link
+                  to="/nft"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="px-4 py-3 text-sm uppercase tracking-widest font-medium transition-colors rounded-lg
+                             text-accent bg-accent/10 border border-accent/30 mt-2"
+                >
+                  NFT Gallery
+                </Link>
+              </>
+            ) : (
+              <Link
+                to="/"
                 onClick={() => setIsMenuOpen(false)}
-                className={cn(
-                  "px-4 py-3 text-sm uppercase tracking-widest font-medium transition-colors rounded-lg",
-                  activeSection === s.id
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                )}
+                className="px-4 py-3 text-sm uppercase tracking-widest font-medium transition-colors rounded-lg
+                           text-muted-foreground hover:text-foreground hover:bg-secondary"
               >
-                {s.label}
-              </a>
-            ))}
+                Back to Home
+              </Link>
+            )}
           </div>
         </nav>
       )}
