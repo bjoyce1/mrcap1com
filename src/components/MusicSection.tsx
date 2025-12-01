@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
+import albumArtOfIsm from "@/assets/album-art-of-ism.png";
 const albums = [{
   title: "O.N.E. on O.N.E.",
   artist: "O.N.E. & Mr. CAP",
@@ -38,7 +39,7 @@ const albums = [{
   label: "Power Camp",
   format: "MP3, Album, Stereo",
   catalog: "USCAP4573",
-  image: null
+  image: albumArtOfIsm
 }];
 const singles = [{
   year: "2012",
