@@ -2,28 +2,8 @@ import { Music2, ExternalLink, Play, Shuffle, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const SpotifySection = () => {
-  // Replace with actual Spotify artist ID
-  const spotifyArtistId = "YOUR_SPOTIFY_ARTIST_ID";
+  const spotifyArtistId = "69pjfQNXA1xjusnI2wfgug";
   const spotifyArtistUrl = `https://open.spotify.com/artist/${spotifyArtistId}`;
-  
-  // Featured albums/playlists to embed
-  const spotifyEmbeds = [
-    {
-      type: "album",
-      title: "The Ties That Bind Us",
-      embedId: "album/YOUR_ALBUM_ID_1",
-    },
-    {
-      type: "album", 
-      title: "2 Tha Grave",
-      embedId: "album/YOUR_ALBUM_ID_2",
-    },
-    {
-      type: "album",
-      title: "The Art Of ISM",
-      embedId: "album/YOUR_ALBUM_ID_3",
-    },
-  ];
 
   return (
     <section id="spotify" className="py-24 md:py-32 bg-hero-gradient relative overflow-hidden">
@@ -100,36 +80,29 @@ const SpotifySection = () => {
           </div>
         </div>
 
-        {/* Album Embeds Grid */}
+        {/* Full Discography Embed */}
         <div className="mb-12">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h3 className="font-display text-3xl">Featured Albums</h3>
-              <p className="text-muted-foreground text-sm mt-1">Stream full projects directly</p>
-            </div>
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-display text-3xl">Full Catalog</h3>
             <Button 
               variant="ghost" 
               className="text-[#1DB954] hover:bg-[#1DB954]/10"
               onClick={() => window.open(spotifyArtistUrl, '_blank')}
             >
-              View All
+              Open in Spotify
               <ExternalLink className="w-4 h-4 ml-2" />
             </Button>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {spotifyEmbeds.map((embed, index) => (
-              <div key={index} className="rounded-xl overflow-hidden shadow-card">
-                <iframe
-                  src={`https://open.spotify.com/embed/${embed.embedId}?utm_source=generator&theme=0`}
-                  width="100%"
-                  height="352"
-                  frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                  className="rounded-xl"
-                />
-              </div>
-            ))}
+          <div className="rounded-xl overflow-hidden shadow-card">
+            <iframe
+              src={`https://open.spotify.com/embed/artist/${spotifyArtistId}?utm_source=generator&theme=0`}
+              width="100%"
+              height="500"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="rounded-xl"
+            />
           </div>
         </div>
 
