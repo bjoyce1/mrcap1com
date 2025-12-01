@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import logoImage from "@/assets/mr-cap-logo.png";
 
 const sections = [
   { id: "hero", label: "Home" },
@@ -61,9 +62,11 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center">
-            <span className="font-display font-bold text-primary text-sm">MC</span>
-          </div>
+          <img 
+            src={logoImage} 
+            alt="Mr. CAP Logo" 
+            className="w-10 h-10 rounded-full object-cover"
+          />
           <span className="hidden md:flex items-center gap-8 text-xs font-medium tracking-widest uppercase text-muted-foreground">
             <span className="flex items-center gap-2 text-foreground border-b border-primary/50 pb-0.5">
               <span className="w-2 h-2 rounded-full bg-primary" />
