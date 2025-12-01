@@ -19,11 +19,15 @@ const buttonVariants = cva(
         heroOutline: "border border-muted-foreground/40 bg-transparent text-foreground hover:border-foreground hover:bg-foreground/5",
         gold: "bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg shadow-accent/30 hover:shadow-accent/50",
         glowRed: "bg-primary/20 text-primary border border-primary/50 hover:bg-primary/30 hover:border-primary",
+        // FLUX Design System Variants
+        flux: "bg-primary text-primary-foreground hover:bg-primary/90 font-medium tracking-wide",
+        fluxOutline: "border border-white/20 bg-white/[0.02] text-foreground hover:bg-white/[0.05] hover:border-white/30 font-medium",
+        fluxGhost: "text-muted-foreground hover:text-foreground hover:bg-white/[0.02] font-medium",
       },
       size: {
         default: "h-10 px-5 py-2",
         sm: "h-9 px-4",
-        lg: "h-12 px-8 text-base",
+        lg: "h-12 px-6 text-base",
         xl: "h-14 px-10 text-lg",
         icon: "h-10 w-10",
       },
