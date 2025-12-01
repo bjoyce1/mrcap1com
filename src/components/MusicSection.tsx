@@ -36,11 +36,12 @@ const albums = [{
   title: "The Art Of ISM",
   artist: "Mr. CAP",
   year: "2019",
-  role: "Lead artist",
-  label: "Power Camp",
-  format: "MP3, Album, Stereo",
-  catalog: "USCAP4573",
-  image: albumArtOfIsm
+  role: "Lead artist (3rd studio album)",
+  label: "Sony Music / The Orchard",
+  format: "Digital, Album, 11 tracks",
+  catalog: "Deluxe Edition",
+  image: albumArtOfIsm,
+  description: "Features production by Zaytoven, Metro Boomin & Mike Will Made-It. Lead single: Words Of Ism (2018)"
 }];
 const singles = [{
   year: "2012",
