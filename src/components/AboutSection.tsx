@@ -32,7 +32,7 @@ const AboutSection = () => {
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Main Bio */}
           <div className="lg:col-span-2 space-y-6">
-            <p className="text-lg text-foreground leading-relaxed">Cornelius A. Pratt, professionally known as Mr. CAP, is a Houston-born rapper, writer, and creative technologist with deep roots in the South Park Coalition. Raised in a musical family and performing since age eight, CAP's voice carries the weight of lived experience — from street lessons and spiritual reflections to entrepreneurship and innovation.<span className="text-primary font-medium">Mr. CAP</span>, 
+            <p className="text-lg text-foreground leading-relaxed">Cornelius A. Pratt, professionally known as Mr. CAP, is a Houston-born rapper, writer, and creative technologist with deep roots in the South Park Coalition. Raised in a musical family and performing since age eight, CAP's voice carries the weight of lived experience — from street lessons and spiritual reflections to entrepreneurship and innovation. Mr. CAP, is a Houston-born rapper, writer, and creative technologist with deep roots in the South Park Coalition. Raised in a musical family and performing since age eight, CAP's voice carries the weight of lived experience — from street lessons and spiritual reflections to entrepreneurship and innovation.<span className="text-primary font-medium">Mr. CAP</span>, 
               is a Houston-born rapper, writer, and creative technologist with deep roots in the 
               South Park Coalition. Raised in a musical family and performing since age eight, 
               CAP's voice carries the weight of lived experience — from street lessons and 
