@@ -10,6 +10,7 @@ import VideoSection from "@/components/VideoSection";
 import VenturesSection from "@/components/VenturesSection";
 import NftMilestoneSection from "@/components/NftMilestoneSection";
 import NftCollectionSection from "@/components/NftCollectionSection";
+import NftWalletGalleryLive from "@/components/NftWalletGalleryLive";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -29,6 +30,7 @@ const Index = () => {
         <VenturesSection />
         <NftMilestoneSection />
         <NftCollectionSection />
+        <NftWalletGalleryLive />
         <ContactSection />
       </main>
       <Footer />
