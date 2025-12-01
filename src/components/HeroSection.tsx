@@ -34,7 +34,7 @@ const HeroSection = () => {
           {/* Main Heading */}
           <h1 className="font-display text-6xl md:text-8xl lg:text-[8rem] font-medium tracking-tighter leading-[0.9] text-foreground mb-8 text-glow animate-slide-up">Mr.
 CAP<br />
-            <span className="text-gradient-orange">CAP</span>
+            
           </h1>
 
           {/* Subtitle */}
