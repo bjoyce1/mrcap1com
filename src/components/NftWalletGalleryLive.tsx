@@ -16,29 +16,12 @@ type RawNft = {
   token_standard?: string;
 };
 
-// Album collection track names from "The Art of ISM"
-const ALBUM_COLLECTION_NAMES = [
-  "Capism",
-  "Nothing Without It",
-  "For Money",
-  "The Realest",
-  "Space Age Ism",
-  "Let Me Touch It",
-  "Words Of ISM",
-  "Words of ISM",
-  "How You Feel",
-  "International Club Hopper",
-  "Focus",
-  "Evolution of the 16th Letter",
-  "Evolution Of The 16th Letter",
-];
+// The Art of ISM collection slug on OpenSea
+const ART_OF_ISM_COLLECTION = "artofism";
 
-// Helper to check if NFT is part of album collection
+// Helper to check if NFT is part of The Art of ISM album collection
 const isAlbumNft = (nft: RawNft): boolean => {
-  const name = nft.name?.toLowerCase() || "";
-  return ALBUM_COLLECTION_NAMES.some(track => 
-    name.includes(track.toLowerCase())
-  );
+  return nft.collection === ART_OF_ISM_COLLECTION;
 };
 
 export function NftWalletGalleryLive() {
