@@ -1,15 +1,23 @@
 import { MapPin, Music, Code, Award } from "lucide-react";
-
 const AboutSection = () => {
-  const highlights = [
-    { icon: MapPin, label: "Houston, TX", desc: "Third Ward Born" },
-    { icon: Music, label: "SPC Member", desc: "South Park Coalition" },
-    { icon: Code, label: "Tech Innovator", desc: "Web & Blockchain" },
-    { icon: Award, label: "Jack Yates", desc: "Class of '93" },
-  ];
-
-  return (
-    <section id="about" className="py-24 md:py-32 border-b border-border">
+  const highlights = [{
+    icon: MapPin,
+    label: "Houston, TX",
+    desc: "Third Ward Born"
+  }, {
+    icon: Music,
+    label: "SPC Member",
+    desc: "South Park Coalition"
+  }, {
+    icon: Code,
+    label: "Tech Innovator",
+    desc: "Web & Blockchain"
+  }, {
+    icon: Award,
+    label: "Jack Yates",
+    desc: "Class of '93"
+  }];
+  return <section id="about" className="py-24 md:py-32 border-b border-border">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section Header */}
         <div className="mb-12">
@@ -24,8 +32,7 @@ const AboutSection = () => {
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Main Bio */}
           <div className="lg:col-span-2 space-y-6">
-            <p className="text-lg text-foreground leading-relaxed">
-              Cornelius A. Pratt, better known as <span className="text-primary font-medium">Mr. CAP</span>, 
+            <p className="text-lg text-foreground leading-relaxed">Cornelius A. Pratt, professionally known as Mr. CAP, is a Houston-born rapper, writer, and creative technologist with deep roots in the South Park Coalition. Raised in a musical family and performing since age eight, CAP's voice carries the weight of lived experience — from street lessons and spiritual reflections to entrepreneurship and innovation.<span className="text-primary font-medium">Mr. CAP</span>, 
               is a Houston-born rapper, writer, and creative technologist with deep roots in the 
               South Park Coalition. Raised in a musical family and performing since age eight, 
               CAP's voice carries the weight of lived experience — from street lessons and 
@@ -59,11 +66,7 @@ const AboutSection = () => {
 
           {/* Highlights Sidebar */}
           <div className="space-y-4">
-            {highlights.map((item, index) => (
-              <div
-                key={index}
-                className="bg-card-gradient rounded-xl border border-border p-5 hover:border-primary/30 transition-colors group"
-              >
+            {highlights.map((item, index) => <div key={index} className="bg-card-gradient rounded-xl border border-border p-5 hover:border-primary/30 transition-colors group">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <item.icon className="w-6 h-6 text-primary" />
@@ -73,13 +76,10 @@ const AboutSection = () => {
                     <p className="text-sm text-muted-foreground">{item.desc}</p>
                   </div>
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default AboutSection;
