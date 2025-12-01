@@ -1,5 +1,6 @@
-import { Film, Quote, Download, Award } from "lucide-react";
+import { Film, Quote, Download, Award, Music2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import dearFrankSoundtrack from "@/assets/dear-frank-soundtrack.png";
 
 const PressSection = () => {
   return (
@@ -19,7 +20,8 @@ const PressSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        {/* Featured Media Grid */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-8">
           {/* Documentary Feature */}
           <div className="bg-card-gradient rounded-2xl border border-border p-8 relative overflow-hidden">
             {/* Award Badge */}
@@ -56,55 +58,90 @@ const PressSection = () => {
             </p>
           </div>
 
-          {/* Quotes & Downloads */}
-          <div className="space-y-6">
-            {/* Pull Quotes */}
-            <div className="bg-card-gradient rounded-2xl border border-border p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Quote className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-display text-xl">Press Quotes</h3>
+          {/* Movie Soundtrack Feature */}
+          <div className="bg-card-gradient rounded-2xl border border-border p-8 relative overflow-hidden">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                <Music2 className="w-6 h-6 text-primary" />
               </div>
-
-              <div className="space-y-4">
-                <blockquote className="border-l-2 border-cap-gold pl-4 py-2">
-                  <p className="text-foreground italic">
-                    "A true architect of South Park storytelling — bridging old school 
-                    reality rap with forward-thinking ideas."
-                  </p>
-                </blockquote>
-
-                <blockquote className="border-l-2 border-primary pl-4 py-2">
-                  <p className="text-foreground italic">
-                    "Mr. CAP brings the perspective of someone who's lived it, 
-                    learned from it, and decided to build something greater."
-                  </p>
-                </blockquote>
+              <div>
+                <h3 className="font-display text-xl">Movie Soundtrack</h3>
+                <p className="text-xs text-muted-foreground">Feature Film Placement</p>
               </div>
             </div>
 
-            {/* Media Downloads */}
-            <div className="bg-card-gradient rounded-2xl border border-border p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-cap-gold/20 flex items-center justify-center">
-                  <Download className="w-5 h-5 text-cap-gold" />
-                </div>
-                <h3 className="font-display text-xl">Media Downloads</h3>
-              </div>
-
-              <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
-                <li>• High-resolution press photos</li>
-                <li>• Official logo and wordmark</li>
-                <li>• Album covers and single artwork</li>
-                <li>• Artist biography (short & long form)</li>
-              </ul>
-
-              <Button variant="gold" className="w-full">
-                <Download className="w-4 h-4" />
-                Download Full Press Kit (ZIP)
-              </Button>
+            <div className="mb-6">
+              <img 
+                src={dearFrankSoundtrack} 
+                alt="Dear Frank Movie Soundtrack" 
+                className="w-full rounded-lg border border-border/50"
+              />
             </div>
+
+            <h4 className="font-display text-2xl mb-2 text-foreground">
+              Dear Frank
+            </h4>
+
+            <p className="text-primary mb-4">
+              Song: "Get Me Right"
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed">
+              Mr. CAP's track "Get Me Right" is featured on the official soundtrack for the 
+              feature film "Dear Frank," starring Brian White, Claudia Jordan, Columbus Short, 
+              and Kearia Schroeder.
+            </p>
+          </div>
+        </div>
+
+        {/* Quotes & Downloads */}
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Pull Quotes */}
+          <div className="bg-card-gradient rounded-2xl border border-border p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                <Quote className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="font-display text-xl">Press Quotes</h3>
+            </div>
+
+            <div className="space-y-4">
+              <blockquote className="border-l-2 border-cap-gold pl-4 py-2">
+                <p className="text-foreground italic">
+                  "A true architect of South Park storytelling — bridging old school 
+                  reality rap with forward-thinking ideas."
+                </p>
+              </blockquote>
+
+              <blockquote className="border-l-2 border-primary pl-4 py-2">
+                <p className="text-foreground italic">
+                  "Mr. CAP brings the perspective of someone who's lived it, 
+                  learned from it, and decided to build something greater."
+                </p>
+              </blockquote>
+            </div>
+          </div>
+
+          {/* Media Downloads */}
+          <div className="bg-card-gradient rounded-2xl border border-border p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-cap-gold/20 flex items-center justify-center">
+                <Download className="w-5 h-5 text-cap-gold" />
+              </div>
+              <h3 className="font-display text-xl">Media Downloads</h3>
+            </div>
+
+            <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
+              <li>• High-resolution press photos</li>
+              <li>• Official logo and wordmark</li>
+              <li>• Album covers and single artwork</li>
+              <li>• Artist biography (short & long form)</li>
+            </ul>
+
+            <Button variant="gold" className="w-full">
+              <Download className="w-4 h-4" />
+              Download Full Press Kit (ZIP)
+            </Button>
           </div>
         </div>
       </div>
