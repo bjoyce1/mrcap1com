@@ -3,103 +3,119 @@ import { Button } from "@/components/ui/button";
 import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
-
-const albums = [
-  {
-    title: "O.N.E. on O.N.E.",
-    artist: "O.N.E. & Mr. CAP",
-    year: "2005",
-    role: "Co-artist (collab album)",
-    label: "O.N.E. 4 Da Money Entertainment",
-    format: "CD, Album",
-    image: null,
-  },
-  {
-    title: "Tha Cold Ass Pimp",
-    artist: "Tha Cold Ass Pimp",
-    year: "2006",
-    role: "Mr. CAP-associated",
-    label: "O.N.E. 4 Da Money Entertainment",
-    format: "CDr, Album",
-    image: null,
-  },
-  {
-    title: "2 Tha Grave",
+const albums = [{
+  title: "O.N.E. on O.N.E.",
+  artist: "O.N.E. & Mr. CAP",
+  year: "2005",
+  role: "Co-artist (collab album)",
+  label: "O.N.E. 4 Da Money Entertainment",
+  format: "CD, Album",
+  image: null
+}, {
+  title: "Tha Cold Ass Pimp",
+  artist: "Tha Cold Ass Pimp",
+  year: "2006",
+  role: "Mr. CAP-associated",
+  label: "O.N.E. 4 Da Money Entertainment",
+  format: "CDr, Album",
+  image: null
+}, {
+  title: "2 Tha Grave",
+  artist: "Mr. CAP",
+  year: "2011",
+  role: "Lead artist",
+  label: "Cap Records",
+  format: "MP3, Album",
+  catalog: "CAP RECORDS",
+  image: albumGrave,
+  featured: true
+}, {
+  title: "The Art Of ISM",
+  artist: "Mr. CAP",
+  year: "2019",
+  role: "Lead artist",
+  label: "Power Camp",
+  format: "MP3, Album, Stereo",
+  catalog: "USCAP4573",
+  image: null
+}];
+const singles = [{
+  year: "2012",
+  tracks: [{
+    title: "Live My Life (We Hustle All Day, We Hustle All Night)",
     artist: "Mr. CAP",
-    year: "2011",
-    role: "Lead artist",
+    label: "CAP Distributions"
+  }, {
+    title: "Cap International",
+    artist: "Mr. Cap feat. Big Prez & Alyssa Harris",
+    label: "Fifth Amendment Entertainment"
+  }, {
+    title: "Pyrex (Egg Beater In Hand)",
+    artist: "Mr. Cap feat. Archie Lee, Rapsta Hoffa & Young Ray Ray",
+    label: "Cap Distributions"
+  }, {
+    title: "Put The Dope Down",
+    artist: "Mr. Cap feat. SAAK & Bosey-B",
+    label: "CAP Distribution"
+  }]
+}, {
+  year: "2013",
+  tracks: [{
+    title: "I'm Bout To Blow",
+    artist: "Mr. CAP",
     label: "Cap Records",
-    format: "MP3, Album",
-    catalog: "CAP RECORDS",
-    image: albumGrave,
-    featured: true,
-  },
-  {
-    title: "The Art Of ISM",
+    catalog: "CAP4573"
+  }, {
+    title: "2 Minute Flow",
     artist: "Mr. CAP",
-    year: "2019",
-    role: "Lead artist",
-    label: "Power Camp",
-    format: "MP3, Album, Stereo",
-    catalog: "USCAP4573",
-    image: null,
-  },
-];
-
-const singles = [
-  {
-    year: "2012",
-    tracks: [
-      { title: "Live My Life (We Hustle All Day, We Hustle All Night)", artist: "Mr. CAP", label: "CAP Distributions" },
-      { title: "Cap International", artist: "Mr. Cap feat. Big Prez & Alyssa Harris", label: "Fifth Amendment Entertainment" },
-      { title: "Pyrex (Egg Beater In Hand)", artist: "Mr. Cap feat. Archie Lee, Rapsta Hoffa & Young Ray Ray", label: "Cap Distributions" },
-      { title: "Put The Dope Down", artist: "Mr. Cap feat. SAAK & Bosey-B", label: "CAP Distribution" },
-    ],
-  },
-  {
-    year: "2013",
-    tracks: [
-      { title: "I'm Bout To Blow", artist: "Mr. CAP", label: "Cap Records", catalog: "CAP4573" },
-      { title: "2 Minute Flow", artist: "Mr. CAP", label: "CAP Distributions" },
-    ],
-  },
-  {
-    year: "2014",
-    tracks: [
-      { title: "I Ain't F*n With You Devils", artist: "Mr. Cap feat. Herb Of The Dynamite Squad", label: "CAP Distributions" },
-      { title: "Big Navi L.A. Remix", artist: "Mr. Cap feat. Big Prez", label: "CAP Distributions" },
-      { title: "Unsolved Mysteries – The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
-    ],
-  },
-  {
-    year: "2015",
-    tracks: [
-      { title: "Capism", artist: "Mr. CAP", label: "CAP Distributions" },
-    ],
-  },
-  {
-    year: "2016",
-    tracks: [
-      { title: "No More Bloodshed", artist: "K-Rino / Big Deuce / Cl' Che' / Mr. Cap / Tommy-G", label: "Gutterlife Records" },
-    ],
-  },
-  {
-    year: "2018",
-    tracks: [
-      { title: "Today Was A Great Day", artist: "Mr. CAP", label: "Independent" },
-    ],
-  },
-  {
-    year: "2019",
-    tracks: [
-      { title: "Limitless", artist: "Mr. CAP", label: "Independent" },
-    ],
-  },
-];
-
+    label: "CAP Distributions"
+  }]
+}, {
+  year: "2014",
+  tracks: [{
+    title: "I Ain't F*n With You Devils",
+    artist: "Mr. Cap feat. Herb Of The Dynamite Squad",
+    label: "CAP Distributions"
+  }, {
+    title: "Big Navi L.A. Remix",
+    artist: "Mr. Cap feat. Big Prez",
+    label: "CAP Distributions"
+  }, {
+    title: "Unsolved Mysteries – The Single Pt. 1",
+    artist: "Mr Cap & K-Rino",
+    label: "ISM Muzik"
+  }]
+}, {
+  year: "2015",
+  tracks: [{
+    title: "Capism",
+    artist: "Mr. CAP",
+    label: "CAP Distributions"
+  }]
+}, {
+  year: "2016",
+  tracks: [{
+    title: "No More Bloodshed",
+    artist: "K-Rino / Big Deuce / Cl' Che' / Mr. Cap / Tommy-G",
+    label: "Gutterlife Records"
+  }]
+}, {
+  year: "2018",
+  tracks: [{
+    title: "Today Was A Great Day",
+    artist: "Mr. CAP",
+    label: "Independent"
+  }]
+}, {
+  year: "2019",
+  tracks: [{
+    title: "Limitless",
+    artist: "Mr. CAP",
+    label: "Independent"
+  }]
+}];
 const MusicSection = () => {
-  return (
-    <section id="music" className="py-24 md:py-32 bg-section-gradient border-b border-border">
+  return <section id="music" className="py-24 md:py-32 bg-section-gradient border-b border-border">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section Header */}
         <div className="mb-12">
@@ -120,11 +136,7 @@ const MusicSection = () => {
           <div className="group bg-card-gradient rounded-2xl border border-primary/30 overflow-hidden hover:border-primary/50 transition-all duration-300">
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative aspect-square md:aspect-auto overflow-hidden">
-                <img
-                  src={betnOnMe}
-                  alt="Bet'n On Me Single Cover"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <img src={betnOnMe} alt="Bet'n On Me Single Cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-card md:block hidden" />
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent md:hidden" />
                 <div className="absolute top-4 left-4">
@@ -141,7 +153,7 @@ const MusicSection = () => {
               </div>
               <div className="p-8 flex flex-col justify-center">
                 <p className="text-xs text-muted-foreground mb-2">2024 · South Park Coalition LLC</p>
-                <h3 className="font-display text-4xl md:text-5xl mb-2">The Ties That Bind Us</h3>
+                <h3 className="font-display text-4xl md:text-5xl mb-2">Bet'n on me</h3>
                 <p className="text-sm text-cap-gold mb-4">
                   Lead Single: "Bet'n On Me"
                 </p>
@@ -176,23 +188,11 @@ const MusicSection = () => {
             <h3 className="font-display text-2xl">Studio & Collab Albums</h3>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {albums.map((album, index) => (
-              <div
-                key={index}
-                className="group bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-all duration-300"
-              >
+            {albums.map((album, index) => <div key={index} className="group bg-card rounded-xl border border-border overflow-hidden hover:border-primary/30 transition-all duration-300">
                 <div className="relative aspect-square overflow-hidden bg-muted">
-                  {album.image ? (
-                    <img
-                      src={album.image}
-                      alt={`${album.title} Album Cover`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-cap-gold/10">
+                  {album.image ? <img src={album.image} alt={`${album.title} Album Cover`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-cap-gold/10">
                       <Disc3 className="w-16 h-16 text-primary/40" />
-                    </div>
-                  )}
+                    </div>}
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
                   <div className="absolute bottom-3 left-3 right-3">
                     <span className="px-2 py-0.5 rounded bg-background/80 text-xs font-medium">
@@ -208,8 +208,7 @@ const MusicSection = () => {
                   </p>
                   <p className="text-xs text-primary/70 mt-1">{album.role}</p>
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
 
@@ -220,18 +219,13 @@ const MusicSection = () => {
             <h3 className="font-display text-2xl">Singles & EPs</h3>
           </div>
           <div className="space-y-6">
-            {singles.map((yearGroup, yearIndex) => (
-              <div key={yearIndex}>
+            {singles.map((yearGroup, yearIndex) => <div key={yearIndex}>
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-sm font-semibold text-cap-gold">{yearGroup.year}</span>
                   <div className="flex-1 h-px bg-border" />
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {yearGroup.tracks.map((track, trackIndex) => (
-                    <div
-                      key={trackIndex}
-                      className="group flex items-center gap-3 p-3 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors cursor-pointer"
-                    >
+                  {yearGroup.tracks.map((track, trackIndex) => <div key={trackIndex} className="group flex items-center gap-3 p-3 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors cursor-pointer">
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
                         <Play className="w-4 h-4 text-primary" />
                       </div>
@@ -241,11 +235,9 @@ const MusicSection = () => {
                           {track.artist}
                         </p>
                       </div>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
 
@@ -272,8 +264,6 @@ const MusicSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default MusicSection;
