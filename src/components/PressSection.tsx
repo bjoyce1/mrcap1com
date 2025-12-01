@@ -1,6 +1,7 @@
 import { Film, Quote, Download, Award, Music2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dearFrankSoundtrack from "@/assets/dear-frank-soundtrack.png";
+import theLifeDocumentary from "@/assets/the-life-documentary.png";
 
 const PressSection = () => {
   return (
@@ -52,7 +53,15 @@ const PressSection = () => {
               perspective to a difficult, critical conversation about human trafficking.
             </p>
 
-            <p className="text-xs text-muted-foreground">
+            <div className="mt-6">
+              <img 
+                src={theLifeDocumentary} 
+                alt="The Life Documentary Cover" 
+                className="w-full rounded-lg border border-border/50"
+              />
+            </div>
+
+            <p className="text-xs text-muted-foreground mt-6">
               For usage, screenings, or media quotes related to this project, 
               please contact the team for details and clearances.
             </p>
