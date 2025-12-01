@@ -1,14 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { NftDetailModal } from "./NftDetailModal";
 
 type RawNft = {
   identifier?: string;
   name?: string;
+  description?: string;
   display_image_url?: string;
   image_url?: string;
   image?: { url?: string };
   collection?: string;
   opensea_url?: string;
+  contract?: string;
+  token_standard?: string;
 };
 
 export function NftWalletGalleryLive() {
@@ -17,6 +21,8 @@ export function NftWalletGalleryLive() {
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [selectedNft, setSelectedNft] = useState<RawNft | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const loadNFTs = useCallback(async (cursor?: string) => {
     const isLoadingMore = !!cursor;
@@ -66,6 +72,11 @@ export function NftWalletGalleryLive() {
     if (nextCursor && !loadingMore) {
       loadNFTs(nextCursor);
     }
+  };
+
+  const handleNftClick = (nft: RawNft) => {
+    setSelectedNft(nft);
+    setModalOpen(true);
   };
 
   return (
@@ -129,17 +140,12 @@ export function NftWalletGalleryLive() {
                       nft.name ||
                       `${nft.collection ?? "NFT"} #${nft.identifier ?? idx}`;
 
-                    const link = nft.opensea_url ||
-                      "https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494";
-
                     return (
-                      <a
+                      <button
                         key={`${nft.identifier}-${idx}`}
-                        href={link}
-                        target="_blank"
-                        rel="noreferrer"
+                        onClick={() => handleNftClick(nft)}
                         className="group relative rounded-xl overflow-hidden bg-card-gradient border border-border/50 
-                                   transition-all duration-500 ease-out
+                                   transition-all duration-500 ease-out text-left
                                    hover:border-primary/60 hover:shadow-glow hover:-translate-y-2
                                    focus:outline-none focus:ring-2 focus:ring-primary/50"
                       >
@@ -173,7 +179,7 @@ export function NftWalletGalleryLive() {
                           <div className="flex items-center gap-2 text-xs text-muted-foreground 
                                           group-hover:text-primary transition-colors duration-300">
                             <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                            View on OpenSea
+                            View Details
                             <svg 
                               className="w-3 h-3 transform group-hover:translate-x-1 transition-transform duration-300" 
                               fill="none" 
@@ -188,7 +194,7 @@ export function NftWalletGalleryLive() {
                         {/* Corner accent */}
                         <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary/50 
                                         group-hover:bg-accent group-hover:shadow-gold transition-all duration-300" />
-                      </a>
+                      </button>
                     );
                   })}
                 </div>
@@ -238,6 +244,13 @@ export function NftWalletGalleryLive() {
           </>
         )}
       </div>
+
+      {/* NFT Detail Modal */}
+      <NftDetailModal 
+        nft={selectedNft} 
+        open={modalOpen} 
+        onOpenChange={setModalOpen} 
+      />
     </section>
   );
 }
