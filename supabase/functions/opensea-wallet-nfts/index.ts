@@ -25,7 +25,22 @@ serve(async (req) => {
       );
     }
 
-    const url = `https://api.opensea.io/api/v2/chain/${CHAIN}/account/${WALLET_ADDRESS}/nfts?limit=24`;
+    // Parse request body for pagination cursor
+    let nextCursor = "";
+    try {
+      const body = await req.json();
+      nextCursor = body.next || "";
+    } catch {
+      // No body or invalid JSON, use default (no cursor)
+    }
+
+    let url = `https://api.opensea.io/api/v2/chain/${CHAIN}/account/${WALLET_ADDRESS}/nfts?limit=24`;
+    
+    // Add cursor for pagination if provided
+    if (nextCursor) {
+      url += `&next=${encodeURIComponent(nextCursor)}`;
+      console.log(`Fetching next page with cursor: ${nextCursor}`);
+    }
     
     console.log(`Fetching NFTs for wallet: ${WALLET_ADDRESS}`);
 
@@ -48,7 +63,11 @@ serve(async (req) => {
     const data = await res.json();
     console.log(`Successfully fetched ${data.nfts?.length || 0} NFTs`);
     
-    return new Response(JSON.stringify(data), {
+    // Return NFTs along with the next cursor for pagination
+    return new Response(JSON.stringify({
+      nfts: data.nfts || [],
+      next: data.next || null
+    }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
