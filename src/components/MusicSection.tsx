@@ -1,5 +1,6 @@
-import { Play, Headphones, ExternalLink, Music, Disc3 } from "lucide-react";
+import { Play, Pause, Headphones, ExternalLink, Music, Disc3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRef, useState } from "react";
 import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
@@ -115,7 +116,26 @@ const singles = [{
   }]
 }];
 const MusicSection = () => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return <section id="music" className="py-24 md:py-32 bg-section-gradient border-b border-border">
+      <audio 
+        ref={audioRef} 
+        src="/audio/betn-on-me.mp3" 
+        onEnded={() => setIsPlaying(false)}
+      />
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section Header */}
         <div className="mb-12">
@@ -146,8 +166,15 @@ const MusicSection = () => {
                 </div>
                 {/* Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-glow hover:scale-110 transition-transform">
-                    <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />
+                  <button 
+                    onClick={togglePlay}
+                    className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-glow hover:scale-110 transition-transform"
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-8 h-8 text-primary-foreground" fill="currentColor" />
+                    ) : (
+                      <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -167,9 +194,9 @@ const MusicSection = () => {
                   Executive Produced by South Park Coalition LLC
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <Button variant="hero" size="sm">
-                    <Play className="w-4 h-4" />
-                    Play "Bet'n On Me"
+                  <Button variant="hero" size="sm" onClick={togglePlay}>
+                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    {isPlaying ? "Pause" : "Play \"Bet'n On Me\""}
                   </Button>
                   <Button variant="outline" size="sm">
                     <Headphones className="w-4 h-4" />
