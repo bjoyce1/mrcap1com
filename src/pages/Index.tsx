@@ -8,6 +8,7 @@ import PressSection from "@/components/PressSection";
 import BrandSection from "@/components/BrandSection";
 import VideoSection from "@/components/VideoSection";
 import VenturesSection from "@/components/VenturesSection";
+import NftMilestoneSection from "@/components/NftMilestoneSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -25,6 +26,7 @@ const Index = () => {
         <BrandSection />
         <VideoSection />
         <VenturesSection />
+        <NftMilestoneSection />
         <ContactSection />
       </main>
       <Footer />
