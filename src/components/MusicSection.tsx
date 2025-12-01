@@ -6,6 +6,7 @@ import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
 import albumOneOnOne from "@/assets/album-one-on-one.jpg";
+import albumColdAssPimp from "@/assets/album-cold-ass-pimp.jpg";
 const albums = [{
   title: "O.N.E. on O.N.E.",
   artist: "O.N.E. & Mr. CAP",
@@ -21,7 +22,7 @@ const albums = [{
   role: "Mr. CAP-associated",
   label: "O.N.E. 4 Da Money Entertainment",
   format: "CDr, Album",
-  image: null
+  image: albumColdAssPimp
 }, {
   title: "2 Tha Grave",
   artist: "Mr. CAP",
