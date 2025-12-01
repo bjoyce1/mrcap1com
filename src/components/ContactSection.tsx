@@ -3,17 +3,24 @@ import { Button } from "@/components/ui/button";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 md:py-32 bg-section-gradient">
-      <div className="max-w-4xl mx-auto px-4 md:px-6">
+    <section id="contact" className="py-24 md:py-32 bg-white/[0.01] relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="max-w-4xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">
-            Get In Touch
-          </span>
-          <h2 className="font-display text-5xl md:text-6xl mt-2">
-            Booking & <span className="text-gradient-gold">Contact</span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-8 h-[1px] bg-primary" />
+            <span className="text-xs font-medium tracking-widest uppercase text-primary">
+              Get In Touch
+            </span>
+            <span className="w-8 h-[1px] bg-primary" />
+          </div>
+          <h2 className="font-display text-5xl md:text-6xl font-medium tracking-tight">
+            Booking & <span className="text-gradient-orange">Contact</span>
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
+          <p className="text-muted-foreground mt-4 max-w-xl mx-auto font-light">
             For live performances, features, interviews, speaking engagements, 
             sync licensing, or business inquiries.
           </p>
@@ -22,13 +29,13 @@ const ContactSection = () => {
         {/* Contact Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {/* Booking & Business */}
-          <div className="bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-colors">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-8 hover:border-primary/30 transition-colors">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Briefcase className="w-6 h-6 text-primary" />
+                <Briefcase className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-display text-xl">Booking & Business</h3>
+                <h3 className="font-display text-xl font-medium tracking-tight">Booking & Business</h3>
                 <p className="text-xs text-muted-foreground">South Park Coalition LLC</p>
               </div>
             </div>
@@ -58,13 +65,13 @@ const ContactSection = () => {
           </div>
 
           {/* Artist Contact */}
-          <div className="bg-card-gradient rounded-2xl border border-border p-8 hover:border-cap-gold/30 transition-colors">
+          <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-8 hover:border-primary/30 transition-colors">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-cap-gold/20 flex items-center justify-center">
-                <User className="w-6 h-6 text-cap-gold" />
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                <User className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-display text-xl">Artist Contact</h3>
+                <h3 className="font-display text-xl font-medium tracking-tight">Artist Contact</h3>
                 <p className="text-xs text-muted-foreground">Direct Inquiries</p>
               </div>
             </div>
@@ -77,7 +84,7 @@ const ContactSection = () => {
 
               <a
                 href="mailto:mrcap@southparkcoalitionllc.com"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-cap-gold transition-colors"
+                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 mrcap@southparkcoalitionllc.com
@@ -85,7 +92,7 @@ const ContactSection = () => {
 
               <a
                 href="tel:8327744473"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-cap-gold transition-colors"
+                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 832-774-4473
@@ -95,7 +102,7 @@ const ContactSection = () => {
                 href="https://www.mrcap1.com"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-cap-gold transition-colors"
+                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
               >
                 <Globe className="w-4 h-4" />
                 www.mrcap1.com
@@ -105,7 +112,7 @@ const ContactSection = () => {
         </div>
 
         {/* Payment Info */}
-        <div className="p-6 rounded-xl bg-card border border-border text-center">
+        <div className="p-6 rounded-xl bg-white/[0.02] border border-white/5 text-center">
           <p className="text-sm text-muted-foreground mb-2">
             <span className="font-medium text-foreground">Performance Deposits & Payments:</span>
           </p>
@@ -119,7 +126,7 @@ const ContactSection = () => {
 
         {/* Send Message CTA */}
         <div className="mt-12 text-center">
-          <Button variant="hero" size="xl" asChild>
+          <Button variant="flux" size="lg" asChild>
             <a href="mailto:mrcap@southparkcoalitionllc.com">
               <Mail className="w-5 h-5" />
               Send a Message

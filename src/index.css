@@ -1,62 +1,60 @@
-@import "@fontsource/bebas-neue";
-@import "@fontsource/outfit/300.css";
-@import "@fontsource/outfit/400.css";
-@import "@fontsource/outfit/500.css";
-@import "@fontsource/outfit/600.css";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Mr. CAP Brand Colors */
-    --cap-black: 240 7% 3%;
-    --spc-red: 0 76% 51%;
-    --accent-gold: 43 91% 61%;
-    --steel-gray: 216 13% 13%;
+    /* FLUX-Inspired Color System - Deep Indigo + Orange */
+    --flux-bg: 230 25% 7%;
+    --flux-bg-light: 230 20% 12%;
+    --flux-slate-400: 215 20% 65%;
+    --flux-slate-500: 215 16% 47%;
+    --flux-slate-600: 215 19% 35%;
+    --flux-orange-400: 27 96% 61%;
+    --flux-orange-500: 25 95% 53%;
     
     /* Core System */
-    --background: 240 7% 3%;
-    --foreground: 0 0% 95%;
+    --background: 230 25% 7%;
+    --foreground: 210 40% 96%;
 
-    --card: 216 13% 8%;
-    --card-foreground: 0 0% 95%;
+    --card: 230 20% 10%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 216 13% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 230 20% 10%;
+    --popover-foreground: 210 40% 96%;
 
-    --primary: 0 76% 51%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 27 96% 61%;
+    --primary-foreground: 230 25% 7%;
 
-    --secondary: 216 13% 13%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 230 20% 14%;
+    --secondary-foreground: 210 40% 96%;
 
-    --muted: 216 13% 18%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 230 15% 18%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 43 91% 61%;
-    --accent-foreground: 240 7% 3%;
+    --accent: 27 96% 61%;
+    --accent-foreground: 230 25% 7%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 216 13% 18%;
-    --ring: 0 76% 51%;
+    --border: 0 0% 100% / 0.05;
+    --input: 230 15% 18%;
+    --ring: 27 96% 61%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Custom Gradients */
-    --gradient-hero: linear-gradient(180deg, hsl(var(--cap-black)) 0%, hsl(216 13% 6%) 100%);
-    --gradient-section: linear-gradient(180deg, hsl(var(--steel-gray)) 0%, hsl(var(--cap-black)) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(216 13% 10%) 0%, hsl(216 13% 6%) 100%);
-    --gradient-red-glow: radial-gradient(ellipse at center, hsl(0 76% 51% / 0.15) 0%, transparent 70%);
-    
-    /* Shadows */
-    --shadow-glow: 0 0 60px hsl(0 76% 51% / 0.3);
+    /* Mr. CAP Brand Colors */
+    --cap-black: 230 25% 7%;
+    --spc-red: 0 76% 51%;
+    --accent-gold: 43 91% 61%;
+    --steel-gray: 230 20% 14%;
+
+    /* Custom Shadows */
+    --shadow-glow: 0 0 60px hsl(27 96% 61% / 0.2);
     --shadow-card: 0 10px 40px hsl(0 0% 0% / 0.5);
     --shadow-gold: 0 0 30px hsl(43 91% 61% / 0.3);
+    --shadow-orange: 0 0 100px hsl(27 96% 61% / 0.1);
   }
 }
 
@@ -70,28 +68,44 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Outfit', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: hsl(var(--background));
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.05em;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Bricolage Grotesque', sans-serif;
   }
   
   .font-body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
   }
 
+  /* Text Glow Effect */
+  .text-glow {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  }
+
+  .text-glow-orange {
+    text-shadow: 0 0 40px hsl(27 96% 61% / 0.3);
+  }
+
+  /* Gradient Text */
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(43 91% 61%) 0%, hsl(43 91% 75%) 50%, hsl(43 91% 61%) 100%);
+  }
+
+  .text-gradient-orange {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(27 96% 61%) 0%, hsl(35 100% 70%) 100%);
   }
 
   .text-gradient-red {
@@ -99,22 +113,53 @@
     background-image: linear-gradient(135deg, hsl(0 76% 51%) 0%, hsl(0 76% 65%) 50%, hsl(0 76% 51%) 100%);
   }
 
-  .bg-hero-gradient {
-    background: var(--gradient-hero);
+  /* Background Grid Pattern */
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, hsl(0 0% 100% / 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(0 0% 100% / 0.03) 1px, transparent 1px);
+    background-size: 4rem 4rem;
   }
 
-  .bg-section-gradient {
-    background: var(--gradient-section);
-  }
-
-  .bg-card-gradient {
-    background: var(--gradient-card);
+  /* Background Glows */
+  .bg-orange-glow {
+    background: radial-gradient(ellipse at center, hsl(27 96% 61% / 0.1) 0%, transparent 70%);
   }
 
   .bg-red-glow {
-    background: var(--gradient-red-glow);
+    background: radial-gradient(ellipse at center, hsl(0 76% 51% / 0.15) 0%, transparent 70%);
   }
 
+  .bg-hero-gradient {
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(230 20% 10%) 100%);
+  }
+
+  .bg-section-gradient {
+    background: linear-gradient(180deg, hsl(var(--secondary)) 0%, hsl(var(--background)) 100%);
+  }
+
+  .bg-card-gradient {
+    background: linear-gradient(145deg, hsl(230 20% 12%) 0%, hsl(230 20% 8%) 100%);
+  }
+
+  /* Gradient Border */
+  .border-gradient {
+    position: relative;
+  }
+
+  .border-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    background: linear-gradient(135deg, hsl(27 96% 61% / 0.3), hsl(0 0% 100% / 0.1));
+  }
+
+  /* Shadows */
   .shadow-glow {
     box-shadow: var(--shadow-glow);
   }
@@ -123,10 +168,11 @@
     box-shadow: var(--shadow-gold);
   }
 
-  .border-glow {
-    border-color: hsl(0 76% 51% / 0.3);
+  .shadow-orange {
+    box-shadow: var(--shadow-orange);
   }
 
+  /* Animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
@@ -141,6 +187,10 @@
 
   .animate-slide-up {
     animation: slide-up 0.8s ease-out forwards;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
   }
 }
 
@@ -170,20 +220,35 @@
   }
 }
 
+@keyframes glow {
+  from { 
+    box-shadow: 0 0 20px hsl(27 96% 61% / 0.2);
+  }
+  to { 
+    box-shadow: 0 0 40px hsl(27 96% 61% / 0.4);
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--cap-black));
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--steel-gray));
+  background: hsl(var(--secondary));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--spc-red));
+  background: hsl(var(--primary));
+}
+
+/* Selection */
+::selection {
+  background: hsl(27 96% 61% / 0.3);
+  color: hsl(var(--foreground));
 }

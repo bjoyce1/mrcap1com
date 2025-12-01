@@ -1,6 +1,7 @@
 import { Play, Disc3, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
+import UnicornBackground from "@/components/UnicornBackground";
 
 const HeroSection = () => {
   return (
@@ -8,72 +9,71 @@ const HeroSection = () => {
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Background Image */}
+      {/* Unicorn Studio Animated Background */}
+      <UnicornBackground />
+
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
           src={heroBg}
           alt="Mr. CAP - Houston Hip Hop Artist"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-center opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80" />
       </div>
 
-      {/* Red Glow Effect */}
-      <div className="absolute inset-0 z-0 bg-red-glow opacity-50" />
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 z-0 bg-grid-pattern pointer-events-none" />
+
+      {/* Orange Glow Effect */}
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 py-32 md:py-40">
-        <div className="max-w-2xl">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 md:py-40">
+        <div className="max-w-3xl">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-6 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse-slow" />
-            <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">
+          <div className="flex items-center gap-3 mb-6 animate-fade-in">
+            <span className="inline-flex items-center justify-center w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-xs font-medium tracking-widest uppercase text-primary">
               Electronic Press Kit
             </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="font-display text-6xl md:text-8xl lg:text-9xl leading-none mb-4 animate-slide-up">
-            MR. <span className="text-gradient-red">CAP</span>
+          <h1 className="font-display text-6xl md:text-8xl lg:text-[8rem] font-medium tracking-tighter leading-[0.9] text-foreground mb-8 text-glow animate-slide-up">
+            MR.
+            <br />
+            <span className="text-gradient-orange">CAP</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-muted-foreground mb-4 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-            Artist • Storyteller • Technologist • <span className="text-cap-gold">South Park Coalition</span> Original Member
-          </p>
-
-          {/* Tagline */}
-          <p className="text-sm uppercase tracking-[0.2em] text-cap-gold font-medium mb-6 animate-slide-up" style={{ animationDelay: "0.2s" }}>
-            Bet'n On Me. Bet'n On Truth. Bet'n On Legacy.
-          </p>
-
-          {/* Description */}
-          <p className="text-muted-foreground text-base leading-relaxed max-w-xl mb-8 animate-slide-up" style={{ animationDelay: "0.3s" }}>
-            Mr. CAP is not just another rapper in the game — he's a Houston original, 
-            South Park Coalition veteran, and a creative architect building his own universe 
-            across music, media, tech, and blockchain.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed mb-10 animate-slide-up font-light" style={{ animationDelay: "0.1s" }}>
+            Artist • Storyteller • Technologist<br />
+            <span className="text-primary">South Park Coalition</span> Original Member
           </p>
 
           {/* Album Announcement */}
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-card/50 border border-border mb-8 animate-slide-up" style={{ animationDelay: "0.4s" }}>
-            <Disc3 className="w-5 h-5 text-primary animate-spin" style={{ animationDuration: "3s" }} />
-            <span className="text-sm">
-              New Album · <span className="text-foreground font-medium">The Ties That Bind Us</span>
-            </span>
+          <div className="flex items-center gap-4 mb-10 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+            <div className="flex items-center gap-3 px-4 py-2 bg-white/[0.02] border border-white/10 rounded-full">
+              <Disc3 className="w-4 h-4 text-primary animate-spin" style={{ animationDuration: "3s" }} />
+              <span className="text-sm text-muted-foreground">
+                New Album · <span className="text-foreground font-medium">The Ties That Bind Us</span>
+              </span>
+            </div>
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-3 animate-slide-up" style={{ animationDelay: "0.5s" }}>
-            <Button variant="hero" size="lg">
+          <div className="flex flex-wrap gap-4 animate-slide-up" style={{ animationDelay: "0.3s" }}>
+            <Button variant="flux" size="lg">
               <Play className="w-4 h-4" />
               Listen to "Bet'n On Me"
             </Button>
-            <Button variant="heroOutline" size="lg">
+            <Button variant="fluxOutline" size="lg">
               <Disc3 className="w-4 h-4" />
               Stream The Album
             </Button>
-            <Button variant="glowRed" size="lg" asChild>
+            <Button variant="fluxGhost" size="lg" asChild>
               <a href="#contact">
                 <Mail className="w-4 h-4" />
                 Book Mr. CAP
@@ -83,9 +83,9 @@ const HeroSection = () => {
         </div>
 
         {/* SPC Badge */}
-        <div className="absolute bottom-8 right-4 md:right-8 hidden md:block animate-float">
-          <div className="bg-card/80 backdrop-blur-lg border border-border rounded-2xl px-6 py-4 shadow-glow">
-            <p className="font-display text-lg text-foreground">
+        <div className="absolute bottom-8 right-6 md:right-8 hidden md:block animate-float">
+          <div className="bg-white/[0.02] backdrop-blur-lg border border-white/10 rounded-2xl px-6 py-4">
+            <p className="font-display text-lg font-medium text-foreground tracking-tight">
               South Park Coalition
             </p>
             <p className="text-sm text-muted-foreground">Houston, TX</p>

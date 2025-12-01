@@ -54,29 +54,37 @@ const Navigation = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-background/90 backdrop-blur-lg border-b border-border"
+          ? "bg-background/80 backdrop-blur-lg border-b border-white/5"
           : "bg-transparent"
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 py-4">
-        <Link to="/" className="font-display text-2xl tracking-wider">
-          <span className="text-primary">MR.</span>{" "}
-          <span className="text-foreground">CAP</span>
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center">
+            <span className="font-display font-bold text-primary text-sm">MC</span>
+          </div>
+          <span className="hidden md:flex items-center gap-8 text-xs font-medium tracking-widest uppercase text-muted-foreground">
+            <span className="flex items-center gap-2 text-foreground border-b border-primary/50 pb-0.5">
+              <span className="w-2 h-2 rounded-full bg-primary" />
+              Mr. CAP
+            </span>
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-8">
           {isHomePage ? (
             <>
-              {sections.map((s) => (
+              {sections.slice(0, 5).map((s) => (
                 <a
                   key={s.id}
                   href={`#${s.id}`}
                   className={cn(
-                    "px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors rounded-full",
+                    "text-sm font-medium tracking-wide transition-colors",
                     activeSection === s.id
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   {s.label}
@@ -84,36 +92,46 @@ const Navigation = () => {
               ))}
               <Link
                 to="/nft"
-                className="px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors rounded-full
-                           text-accent hover:text-accent hover:bg-accent/10 border border-accent/30"
+                className="flex items-center gap-2 text-primary border-b border-primary pb-0.5
+                           text-sm font-medium hover:text-primary/80 transition-colors"
               >
+                <span className="w-2 h-[1px] bg-primary" />
                 NFT Gallery
               </Link>
             </>
           ) : (
             <Link
               to="/"
-              className="px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors rounded-full
-                         text-muted-foreground hover:text-foreground hover:bg-secondary"
+              className="text-sm font-medium tracking-wide text-muted-foreground hover:text-foreground transition-colors"
             >
               Back to Home
             </Link>
           )}
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Right Side */}
+        <div className="flex items-center gap-6">
+          <a
+            href="#contact"
+            className="hidden md:block text-xs font-medium tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Contact
+          </a>
+          
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <nav className="lg:hidden bg-background/95 backdrop-blur-lg border-t border-border animate-fade-in">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+        <nav className="lg:hidden bg-background/95 backdrop-blur-lg border-t border-white/5 animate-fade-in">
+          <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-2">
             {isHomePage ? (
               <>
                 {sections.map((s) => (
@@ -122,10 +140,10 @@ const Navigation = () => {
                     href={`#${s.id}`}
                     onClick={() => setIsMenuOpen(false)}
                     className={cn(
-                      "px-4 py-3 text-sm uppercase tracking-widest font-medium transition-colors rounded-lg",
+                      "px-4 py-3 text-sm font-medium tracking-wide transition-colors rounded-lg",
                       activeSection === s.id
                         ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                     )}
                   >
                     {s.label}
@@ -134,8 +152,8 @@ const Navigation = () => {
                 <Link
                   to="/nft"
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3 text-sm uppercase tracking-widest font-medium transition-colors rounded-lg
-                             text-accent bg-accent/10 border border-accent/30 mt-2"
+                  className="px-4 py-3 text-sm font-medium tracking-wide transition-colors rounded-lg
+                             text-primary bg-primary/10 border border-primary/30 mt-2"
                 >
                   NFT Gallery
                 </Link>
@@ -144,8 +162,8 @@ const Navigation = () => {
               <Link
                 to="/"
                 onClick={() => setIsMenuOpen(false)}
-                className="px-4 py-3 text-sm uppercase tracking-widest font-medium transition-colors rounded-lg
-                           text-muted-foreground hover:text-foreground hover:bg-secondary"
+                className="px-4 py-3 text-sm font-medium tracking-wide transition-colors rounded-lg
+                           text-muted-foreground hover:text-foreground hover:bg-white/5"
               >
                 Back to Home
               </Link>
