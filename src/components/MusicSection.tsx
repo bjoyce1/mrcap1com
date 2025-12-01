@@ -5,6 +5,7 @@ import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
+import albumOneOnOne from "@/assets/album-one-on-one.jpg";
 const albums = [{
   title: "O.N.E. on O.N.E.",
   artist: "O.N.E. & Mr. CAP",
@@ -12,7 +13,7 @@ const albums = [{
   role: "Co-artist (collab album)",
   label: "O.N.E. 4 Da Money Entertainment",
   format: "CD, Album",
-  image: null
+  image: albumOneOnOne
 }, {
   title: "Tha Cold Ass Pimp",
   artist: "Tha Cold Ass Pimp",
