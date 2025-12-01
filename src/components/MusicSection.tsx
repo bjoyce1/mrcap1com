@@ -2,6 +2,7 @@ import { Play, Headphones, ExternalLink, Music, Disc3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
+import betnOnMe from "@/assets/betn-on-me.png";
 
 const albums = [
   {
@@ -120,8 +121,8 @@ const MusicSection = () => {
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative aspect-square md:aspect-auto overflow-hidden">
                 <img
-                  src={albumTies}
-                  alt="The Ties That Bind Us Album Cover"
+                  src={betnOnMe}
+                  alt="Bet'n On Me Single Cover"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-card md:block hidden" />
