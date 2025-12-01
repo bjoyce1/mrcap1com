@@ -2,23 +2,14 @@ import { Play, Disc3, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
 import UnicornBackground from "@/components/UnicornBackground";
-
 const HeroSection = () => {
-  return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden"
-    >
+  return <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Unicorn Studio Animated Background */}
       <UnicornBackground />
 
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={heroBg}
-          alt="Mr. CAP - Houston Hip Hop Artist"
-          className="w-full h-full object-cover object-center opacity-40"
-        />
+        <img src={heroBg} alt="Mr. CAP - Houston Hip Hop Artist" className="w-full h-full object-cover object-center opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80" />
       </div>
@@ -41,22 +32,27 @@ const HeroSection = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="font-display text-6xl md:text-8xl lg:text-[8rem] font-medium tracking-tighter leading-[0.9] text-foreground mb-8 text-glow animate-slide-up">
-            MR.
-            <br />
+          <h1 className="font-display text-6xl md:text-8xl lg:text-[8rem] font-medium tracking-tighter leading-[0.9] text-foreground mb-8 text-glow animate-slide-up">Mr.
+CAP<br />
             <span className="text-gradient-orange">CAP</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed mb-10 animate-slide-up font-light" style={{ animationDelay: "0.1s" }}>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed mb-10 animate-slide-up font-light" style={{
+          animationDelay: "0.1s"
+        }}>
             Artist • Storyteller • Technologist<br />
             <span className="text-primary">South Park Coalition</span> Original Member
           </p>
 
           {/* Album Announcement */}
-          <div className="flex items-center gap-4 mb-10 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-4 mb-10 animate-slide-up" style={{
+          animationDelay: "0.2s"
+        }}>
             <div className="flex items-center gap-3 px-4 py-2 bg-white/[0.02] border border-white/10 rounded-full">
-              <Disc3 className="w-4 h-4 text-primary animate-spin" style={{ animationDuration: "3s" }} />
+              <Disc3 className="w-4 h-4 text-primary animate-spin" style={{
+              animationDuration: "3s"
+            }} />
               <span className="text-sm text-muted-foreground">
                 New Album · <span className="text-foreground font-medium">The Ties That Bind Us</span>
               </span>
@@ -64,7 +60,9 @@ const HeroSection = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 animate-slide-up" style={{ animationDelay: "0.3s" }}>
+          <div className="flex flex-wrap gap-4 animate-slide-up" style={{
+          animationDelay: "0.3s"
+        }}>
             <Button variant="flux" size="lg">
               <Play className="w-4 h-4" />
               Listen to "Bet'n On Me"
@@ -98,8 +96,6 @@ const HeroSection = () => {
         <span className="text-xs uppercase tracking-widest text-muted-foreground">Scroll</span>
         <div className="w-px h-8 bg-gradient-to-b from-primary to-transparent" />
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
