@@ -1,4 +1,4 @@
-import { Mic2, MapPin, Users, CheckCircle } from "lucide-react";
+import { Mic2, MapPin, Users, CheckCircle, Calendar, Clock, Ticket, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const LiveSection = () => {
@@ -32,6 +32,63 @@ const LiveSection = () => {
             Whether it's a club, theater, or festival setting, he brings sharp delivery, 
             crowd connection, and a catalog that hits from intro to encore.
           </p>
+        </div>
+
+        {/* Featured Upcoming Show */}
+        <div className="mb-12 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary/20 via-cap-gold/10 to-transparent border border-primary/30 relative overflow-hidden">
+          <div className="absolute top-4 right-4">
+            <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider rounded-full animate-pulse">
+              Upcoming Show
+            </span>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <span className="text-xs uppercase tracking-[0.2em] text-cap-gold font-medium">
+                The Bet'n On Me Tour
+              </span>
+              <h3 className="font-display text-3xl md:text-4xl mt-2 mb-4">
+                South Park Coalition <span className="text-primary">Live in Concert</span>
+              </h3>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <Calendar className="w-5 h-5 text-cap-gold" />
+                  <span>Saturday, December 13, 2025</span>
+                </div>
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <Clock className="w-5 h-5 text-cap-gold" />
+                  <span>Doors Open at 8:00 PM</span>
+                </div>
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <MapPin className="w-5 h-5 text-cap-gold" />
+                  <div>
+                    <span className="block">Flamingo Cantina</span>
+                    <span className="text-sm text-muted-foreground/70">515 E 6th St, Austin, TX 78701</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-muted-foreground">
+                  <Ticket className="w-5 h-5 text-cap-gold" />
+                  <span>$25 Early Bird / $20 Online</span>
+                </div>
+              </div>
+
+              <Button variant="hero" size="lg" asChild>
+                <a href="https://spcatx2025.lovable.app/" target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-4 h-4" />
+                  Get Tickets & Event Details
+                </a>
+              </Button>
+            </div>
+
+            <div className="hidden md:block text-center">
+              <div className="inline-block p-6 rounded-xl bg-background/50 border border-border">
+                <p className="text-sm text-muted-foreground mb-2">Performing alongside</p>
+                <p className="font-display text-xl text-foreground">K-Rino • Point Blank • Klondike Kat</p>
+                <p className="text-xs text-muted-foreground mt-2">& More SPC Legends</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
