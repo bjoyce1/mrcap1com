@@ -117,10 +117,10 @@ const ContactSection = () => {
             <span className="font-medium text-foreground">Performance Deposits & Payments:</span>
           </p>
           <p className="text-xs text-muted-foreground">
-            CashApp: <span className="font-mono text-foreground">$ReginaldGilliand</span>
+            CashApp: <span className="font-mono text-foreground">$CorneliusAPratt</span>
             {" · "}
-            Zelle: <span className="font-mono text-foreground">832-889-8677</span>
-            {" "}(Wreckless Entertainment)
+            Zelle: <span className="font-mono text-foreground">713-423-5333</span>
+            {" "}(Cap Distributions)
           </p>
         </div>
 
