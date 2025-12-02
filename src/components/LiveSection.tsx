@@ -1,5 +1,6 @@
 import { Mic2, MapPin, Users, CheckCircle, Calendar, Clock, Ticket, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import spcPoster from "@/assets/spc-austin-2025.png";
 
 const LiveSection = () => {
   const highlights = [
@@ -81,12 +82,14 @@ const LiveSection = () => {
               </Button>
             </div>
 
-            <div className="hidden md:block text-center">
-              <div className="inline-block p-6 rounded-xl bg-background/50 border border-border">
-                <p className="text-sm text-muted-foreground mb-2">Performing alongside</p>
-                <p className="font-display text-xl text-foreground">K-Rino • Point Blank • Klondike Kat</p>
-                <p className="text-xs text-muted-foreground mt-2">& More SPC Legends</p>
-              </div>
+            <div className="hidden md:block">
+              <a href="https://spcatx2025.lovable.app/" target="_blank" rel="noopener noreferrer" className="block">
+                <img 
+                  src={spcPoster} 
+                  alt="South Park Coalition Live in Concert - December 13, 2025 at Flamingo Cantina" 
+                  className="w-full max-w-sm mx-auto rounded-xl border border-border/50 shadow-lg hover:scale-105 transition-transform duration-300"
+                />
+              </a>
             </div>
           </div>
         </div>
