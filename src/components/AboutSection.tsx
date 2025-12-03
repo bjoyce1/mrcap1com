@@ -5,7 +5,7 @@ const AboutSection = () => {
     {
       icon: MapPin,
       label: "Houston, TX",
-      desc: "South Park"
+      desc: "South Park Born"
     },
     {
       icon: Music,
