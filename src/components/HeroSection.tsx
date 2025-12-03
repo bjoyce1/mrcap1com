@@ -39,8 +39,8 @@ const HeroSection = () => {
 
           {/* Main Heading */}
           <h1 className="font-display text-5xl md:text-7xl lg:text-[6rem] font-medium tracking-tighter leading-[0.95] text-foreground mb-6 text-glow animate-slide-up">
-            Houston-Born.<br />
-            <span className="text-primary">SPC Bred.</span><br />
+            South Park Born.<br />
+            <span className="text-primary">Class of '92.</span><br />
             Future-Focused.
           </h1>
 
