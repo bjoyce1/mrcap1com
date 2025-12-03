@@ -20,7 +20,7 @@ const AboutSection = () => {
     {
       icon: Award,
       label: "Jack Yates",
-      desc: "Class of '93"
+      desc: "Class of '92"
     }
   ];
 
