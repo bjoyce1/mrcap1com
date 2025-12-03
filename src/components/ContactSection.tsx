@@ -1,5 +1,6 @@
 import { Mail, Phone, Globe, User, Briefcase } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import BookingForm from "@/components/BookingForm";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 const ContactSection = () => {
   return (
@@ -7,7 +8,7 @@ const ContactSection = () => {
       {/* Background Glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
       
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -26,112 +27,117 @@ const ContactSection = () => {
           </p>
         </div>
 
-        {/* Contact Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {/* Booking & Business */}
-          <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-8 hover:border-primary/30 transition-colors">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Briefcase className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-display text-xl font-medium tracking-tight">Booking & Business</h3>
-                <p className="text-xs text-muted-foreground">South Park Coalition LLC</p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium text-foreground">Reginald Gilliand</p>
-                <p className="text-sm text-muted-foreground">Executive Producer / Co-CEO</p>
-              </div>
-
-              <a
-                href="mailto:pointblank@southparkcoalitionllc.com"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                pointblank@southparkcoalitionllc.com
-              </a>
-
-              <a
-                href="tel:7135503001"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                713-550-3001
-              </a>
-            </div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Booking Form */}
+          <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-6 md:p-8">
+            <h3 className="font-display text-2xl font-medium tracking-tight mb-6">
+              Submit a Booking Request
+            </h3>
+            <BookingForm />
           </div>
 
-          {/* Artist Contact */}
-          <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-8 hover:border-primary/30 transition-colors">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <User className="w-5 h-5 text-primary" />
+          <div className="space-y-6">
+            {/* Contact Cards */}
+            <div className="grid gap-6">
+              {/* Booking & Business */}
+              <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-6 hover:border-primary/30 transition-colors">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Briefcase className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-lg font-medium tracking-tight">Booking & Business</h3>
+                    <p className="text-xs text-muted-foreground">South Park Coalition LLC</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium text-foreground">Reginald Gilliand</p>
+                    <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
+                  </div>
+
+                  <a
+                    href="mailto:pointblank@southparkcoalitionllc.com"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Mail className="w-4 h-4" />
+                    pointblank@southparkcoalitionllc.com
+                  </a>
+
+                  <a
+                    href="tel:7135503001"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Phone className="w-4 h-4" />
+                    713-550-3001
+                  </a>
+                </div>
               </div>
-              <div>
-                <h3 className="font-display text-xl font-medium tracking-tight">Artist Contact</h3>
-                <p className="text-xs text-muted-foreground">Direct Inquiries</p>
+
+              {/* Artist Contact */}
+              <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-6 hover:border-primary/30 transition-colors">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <User className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-lg font-medium tracking-tight">Artist Contact</h3>
+                    <p className="text-xs text-muted-foreground">Direct Inquiries</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium text-foreground">Cornelius A. Pratt (Mr. CAP)</p>
+                    <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
+                  </div>
+
+                  <a
+                    href="mailto:mrcap@southparkcoalitionllc.com"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Mail className="w-4 h-4" />
+                    mrcap@southparkcoalitionllc.com
+                  </a>
+
+                  <a
+                    href="tel:8327744473"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Phone className="w-4 h-4" />
+                    832-774-4473
+                  </a>
+
+                  <a
+                    href="https://www.mrcap1.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Globe className="w-4 h-4" />
+                    www.mrcap1.com
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium text-foreground">Cornelius A. Pratt (Mr. CAP)</p>
-                <p className="text-sm text-muted-foreground">Executive Producer / Co-CEO</p>
-              </div>
+            {/* Newsletter Signup */}
+            <NewsletterSignup source="contact-page" variant="hero" />
 
-              <a
-                href="mailto:mrcap@southparkcoalitionllc.com"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                mrcap@southparkcoalitionllc.com
-              </a>
-
-              <a
-                href="tel:8327744473"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                832-774-4473
-              </a>
-
-              <a
-                href="https://www.mrcap1.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                <Globe className="w-4 h-4" />
-                www.mrcap1.com
-              </a>
+            {/* Payment Info */}
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-center">
+              <p className="text-sm text-muted-foreground mb-1">
+                <span className="font-medium text-foreground">Performance Deposits & Payments:</span>
+              </p>
+              <p className="text-xs text-muted-foreground">
+                CashApp: <span className="font-mono text-foreground">$CorneliusAPratt</span>
+                {" · "}
+                Zelle: <span className="font-mono text-foreground">713-423-5333</span>
+                {" "}(Cap Distributions)
+              </p>
             </div>
           </div>
-        </div>
-
-        {/* Payment Info */}
-        <div className="p-6 rounded-xl bg-white/[0.02] border border-white/5 text-center">
-          <p className="text-sm text-muted-foreground mb-2">
-            <span className="font-medium text-foreground">Performance Deposits & Payments:</span>
-          </p>
-          <p className="text-xs text-muted-foreground">
-            CashApp: <span className="font-mono text-foreground">$CorneliusAPratt</span>
-            {" · "}
-            Zelle: <span className="font-mono text-foreground">713-423-5333</span>
-            {" "}(Cap Distributions)
-          </p>
-        </div>
-
-        {/* Send Message CTA */}
-        <div className="mt-12 text-center">
-          <Button variant="flux" size="lg" asChild>
-            <a href="mailto:mrcap@southparkcoalitionllc.com">
-              <Mail className="w-5 h-5" />
-              Send a Message
-            </a>
-          </Button>
         </div>
       </div>
     </section>
