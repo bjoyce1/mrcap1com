@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Calendar, MapPin, Ticket, ExternalLink, Clock } from "lucide-react";
+import { ChevronRight, Calendar, MapPin, Ticket, ExternalLink, Clock, Mic2 } from "lucide-react";
 import spcPoster from "@/assets/spc-austin-2025.png";
 
 const upcomingShows = [
@@ -32,44 +32,38 @@ const pastShows = [
 const Live = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Mr. CAP Live Shows",
-    "itemListElement": upcomingShows.map((show, index) => ({
-      "@type": "MusicEvent",
-      "position": index + 1,
-      "name": show.title,
-      "startDate": "2025-12-13T19:00:00-06:00",
-      "location": {
-        "@type": "Place",
-        "name": show.venue,
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": show.address,
-          "addressLocality": show.city,
-          "addressRegion": show.state,
-          "addressCountry": "US"
-        }
-      },
-      "performer": {
-        "@type": "Person",
-        "name": "Mr. CAP"
-      },
-      "offers": {
-        "@type": "Offer",
-        "url": show.ticketUrl
+    "@type": "MusicEvent",
+    "name": "South Park Coalition Live in Concert - The Bet'n On Me Tour",
+    "startDate": "2025-12-13T19:00:00-06:00",
+    "location": {
+      "@type": "MusicVenue",
+      "name": "Flamingo Cantina",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "515 E 6th St",
+        "addressLocality": "Austin",
+        "addressRegion": "TX",
+        "postalCode": "78701",
+        "addressCountry": "US"
       }
-    }))
+    },
+    "performer": {
+      "@type": "Person",
+      "name": "Mr. CAP"
+    },
+    "url": "https://spcatx2025.lovable.app/",
+    "eventStatus": "https://schema.org/EventScheduled"
   };
 
   return (
     <>
       <Helmet>
-        <title>Live Shows — Mr. CAP Tour Dates & Concerts | Book Hip-Hop Performance</title>
-        <meta name="description" content="See Mr. CAP live in concert. View upcoming tour dates across Texas and beyond. Book Mr. CAP for your venue, festival, or private event." />
+        <title>Live Shows & Booking | Mr. CAP</title>
+        <meta name="description" content="Book Mr. CAP for shows across Houston, Texas, and Louisiana. View upcoming tour dates, past performances, and submit booking requests for concerts, festivals, and special events." />
         <link rel="canonical" href="https://mrcapmusic.com/live" />
         
-        <meta property="og:title" content="Live Shows — Mr. CAP Tour Dates & Concerts" />
-        <meta property="og:description" content="See Mr. CAP live in concert. View upcoming tour dates and booking info." />
+        <meta property="og:title" content="Live Shows & Booking | Mr. CAP" />
+        <meta property="og:description" content="Book Mr. CAP for shows across Houston, Texas, and Louisiana. View upcoming tour dates and booking info." />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
@@ -88,13 +82,14 @@ const Live = () => {
               </nav>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-                Live{" "}
+                Live Shows &{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-flux-accent">
-                  Shows
+                  Booking
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
-                Experience authentic Houston hip-hop live. Tour dates, past performances, and booking information.
+                Whether it's a packed Houston club or a festival stage in another city, Mr. CAP brings a raw, 
+                honest performance—built on decades of experience and a lifetime of stories.
               </p>
             </div>
           </section>
@@ -184,22 +179,30 @@ const Live = () => {
           <section className="py-20 bg-card/20 border-y border-border/50">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
+                <Mic2 className="w-12 h-12 text-primary mx-auto mb-6" />
                 <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                  Book Mr. CAP
+                  Bring Mr. CAP to Your City
                 </h2>
                 <p className="text-muted-foreground mb-8">
-                  Available for club shows, festivals, corporate events, and private functions. 
-                  Bringing authentic Houston hip-hop and South Park Coalition legacy to your event.
+                  Ready to bring a South Park Coalition original to your venue? Mr. CAP offers club sets, 
+                  festival performances, and special appearances, with a professional team and a reputation 
+                  for authentic, crowd-connecting shows.
                 </p>
                 
-                <div className="bg-card/50 border border-border/50 rounded-xl p-8 mb-8">
-                  <h3 className="font-bold mb-4">Booking Inquiries</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Email: <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">wrecklessent@gmail.com</a>
-                  </p>
-                  <div className="text-sm text-muted-foreground">
-                    <p><strong>Performance Deposits:</strong></p>
-                    <p>CashApp: $CorneliusAPratt · Zelle: 713-423-5333 (Cap Distributions)</p>
+                <div className="bg-card/50 border border-border/50 rounded-xl p-8 mb-8 text-left">
+                  <h3 className="font-bold mb-4 text-center">Booking Inquiries</h3>
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Email</p>
+                      <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">
+                        wrecklessent@gmail.com
+                      </a>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Performance Deposits</p>
+                      <p className="text-sm">CashApp: <span className="font-mono text-foreground">$CorneliusAPratt</span></p>
+                      <p className="text-sm">Zelle: <span className="font-mono text-foreground">713-423-5333</span> (Cap Distributions)</p>
+                    </div>
                   </div>
                 </div>
                 

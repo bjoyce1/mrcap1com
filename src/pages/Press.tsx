@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText } from "lucide-react";
+import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image } from "lucide-react";
 
 const pressFeatures = [
   {
@@ -41,12 +41,14 @@ const quotes = [
   },
 ];
 
+const mediaBio = `Cornelius A. Pratt, professionally known as Mr. CAP, is a Houston-born rapper, writer, and creative technologist with deep roots in the South Park Coalition. With over three decades in the music industry, he has released multiple albums including his latest "The Ties That Bind Us" and the hit single "Bet'n On Me." In 2021, he became the first Houston rapper to sell a Hip Hop NFT on the blockchain.`;
+
 const Press = () => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Press & Media - Mr. CAP",
-    "description": "Press kit, media coverage, and interview requests for Mr. CAP",
+    "name": "Press & Media - Mr. CAP - EPK",
+    "description": "Access official press assets, bio, photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features.",
     "mainEntity": {
       "@type": "Person",
       "name": "Mr. CAP",
@@ -57,11 +59,11 @@ const Press = () => {
   return (
     <>
       <Helmet>
-        <title>Press & Media — Mr. CAP | Interviews, Features & Press Kit</title>
-        <meta name="description" content="Press kit, media coverage, and interview requests for Mr. CAP. Download high-res photos, bio, and press materials for Houston hip-hop coverage." />
+        <title>Press & Media | Mr. CAP – EPK</title>
+        <meta name="description" content="Access official press assets, bio, photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features." />
         <link rel="canonical" href="https://mrcapmusic.com/press" />
         
-        <meta property="og:title" content="Press & Media — Mr. CAP" />
+        <meta property="og:title" content="Press & Media | Mr. CAP – EPK" />
         <meta property="og:description" content="Press kit and media coverage for Houston hip-hop artist Mr. CAP." />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -87,13 +89,31 @@ const Press = () => {
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
-                Press materials, media coverage, and interview requests.
+                Official press assets, bio, photos, quotes, and media coverage. Download the EPK and request interviews.
               </p>
             </div>
           </section>
 
+          {/* Media Bio */}
+          <section className="py-16 bg-card/20 border-b border-border/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-2xl font-display font-bold mb-6">Media-Ready Bio</h2>
+                <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                  <p className="text-muted-foreground leading-relaxed">{mediaBio}</p>
+                  <button 
+                    onClick={() => navigator.clipboard.writeText(mediaBio)}
+                    className="mt-4 text-sm text-primary hover:underline"
+                  >
+                    Copy to clipboard
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Press Kit Download */}
-          <section className="py-16 bg-gradient-to-b from-primary/10 to-transparent">
+          <section className="py-16">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
                 <FileText className="w-16 h-16 text-primary mx-auto mb-6" />
@@ -111,7 +131,7 @@ const Press = () => {
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild>
                     <a href="/photos.zip" download>
-                      <Download className="mr-2 h-5 w-5" />
+                      <Image className="mr-2 h-5 w-5" />
                       High-Res Photos
                     </a>
                   </Button>

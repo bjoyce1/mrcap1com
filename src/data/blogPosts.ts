@@ -22,13 +22,125 @@ export const blogCategories = [
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "the-untold-story-of-mr-cap",
+    title: "The Untold Story of Mr. CAP: Houston's Hidden Architect of Underground Hip-Hop",
+    excerpt: "From Third Ward stages to South Park Coalition, prison to digital distribution, this is the untold story of Mr. CAP and how he became one of Houston's most slept-on architects of underground hip-hop.",
+    content: `
+## The Name You've Heard But Don't Know
+
+In every city, there are artists whose fingerprints are all over the culture even if their names never sit comfortably in mainstream headlines. In Houston, one of those names is Mr. CAP—rapper, writer, technologist, and original South Park Coalition member whose story tracks the evolution of Southern hip-hop itself.
+
+## From Third Ward to the Mic
+
+Mr. CAP's journey starts in Houston's Third Ward, raised in a musical family and performing from a young age. Long before streaming, before social media, he was learning how to move a crowd face to face—talent shows, local stages, and wherever a microphone would stand still long enough.
+
+## South Park Coalition & The Ethics of Independence
+
+Becoming an original member of the South Park Coalition (SPC) didn't just plug CAP into a rap crew—it plugged him into a philosophy. Independence. Lyricism. Community. SPC was a place where wordplay mattered as much as hustle, and where artists learned to move like business owners long before it was trendy to call yourself a "brand."
+
+## Life, Loss, and Lessons the Industry Doesn't Teach
+
+CAP's story includes hard chapters—time behind bars, broken deals, missed opportunities. But those same chapters sharpened his perspective. Instead of chasing a quick hit, he started thinking about ownership, rights, and how easily artists can lose everything if they don't understand the paperwork behind the music.
+
+## From 2 Tha Grave to The Ties That Bind Us
+
+His debut album, *2 Tha Grave*, captured the hunger and raw reality of that era. Fast forward, *The Ties That Bind Us* picks up the story from a different angle—more seasoned, more reflective, but just as honest. Together, the catalog maps out a life lived in real time, not a label-manufactured storyline.
+
+## Rapper, Yes—But Also Technologist
+
+What separates Mr. CAP from a lot of his peers is what he did when he wasn't on stage. He studied Computer Network Engineering and Computer Science, worked in corporate environments, and later stepped into digital distribution, web design, blockchain, and AI.
+
+That means when he talks about "owning your masters" or "controlling your data," it's not just rap rhetoric—he actually understands the systems behind the music.
+
+## The Hidden Architect
+
+You won't always see Mr. CAP centered in the spotlight. Sometimes he's behind the scenes—helping other artists navigate distribution, tech, or strategy. Other times he's building platforms and infrastructure independent artists can use long after the show ends.
+
+That's why "hidden architect" fits. Not everybody knows the name. But if you trace enough stories, records, and ideas around Houston, his influence keeps showing up.
+
+## Why This Story Matters Now
+
+In a world where going viral can seem more important than building something that lasts, Mr. CAP's story is a reminder: legacy > trend. The artists who understand business, tech, and their own value are the ones who can keep creating on their own terms.
+
+And if you're just now finding out who he is, you're not late. You're right on time.
+    `,
+    category: "Houston Hip-Hop History",
+    date: "2024-12-03",
+    author: "Mr. CAP",
+    readTime: "10 min",
+    tags: ["Biography", "Houston", "South Park Coalition", "Underground Hip-Hop", "Third Ward"],
+  },
+  {
+    slug: "blockchain-nfts-and-hip-hop-mr-cap",
+    title: "How Blockchain, NFTs, and Hip-Hop Collide: Inside Mr. CAP's Tech Experiments",
+    excerpt: "A look at how Mr. CAP blends Houston hip-hop, NFTs, and blockchain to experiment with new forms of ownership, payments, and legacy in the music game.",
+    content: `
+## Beyond the Buzzwords
+
+For a lot of artists, blockchain and NFTs were just buzzwords in 2021. For Mr. CAP, they were another tool in a lifelong mission: making sure artists aren't last in line to get paid or recognized.
+
+## Houston Hustle Meets Web3
+
+Coming out of Houston's independent grind, the idea of direct-to-fan, traceable ownership felt natural. Mr. CAP didn't approach Web3 as a hype train—he approached it like a new distribution channel.
+
+## The First Hip-Hop NFT from Houston
+
+In February 2021, Mr. CAP minted "Limitless" on OpenSea, becoming the first Houston rapper to sell a Hip Hop NFT on the blockchain. The sale was for a four-figure sum, but the significance went far beyond money.
+
+It was proof of concept: artists could tokenize their work, create scarcity, and build direct relationships with collectors—without a label or distributor in between.
+
+## What NFTs Should Have Been About
+
+Not "get rich quick," but:
+
+- **Proven ownership** — Blockchain records who created what and when
+- **Limited digital editions** — Scarcity that fans can actually own
+- **Unlocking experiences** — Shows, calls, exclusives tied to tokens
+- **Building a direct supporter base** — No algorithms deciding who sees your work
+
+## Smart Contracts, Real Talk
+
+Imagine every time a record gets resold or streamed in a new format, a smart contract sends your cut automatically. No chasing statements. No hoping someone accounted correctly. That's the future Mr. CAP experiments toward.
+
+## Lessons for Independent Artists
+
+1. **Don't jump into tech you don't understand.** Study first, experiment second.
+2. **Use Web3 where it adds real value**, not just marketing hype.
+3. **Focus on ownership**, not trends.
+4. **Build community** before you drop anything.
+5. **Think long-term** — tokens should represent lasting value, not quick flips.
+
+## What's Next for Mr. CAP in Tech
+
+From crypto concepts to AI-powered tools for artists, the experiments continue. Same mission: more control, more independence, more ways to build something that outlives the trend.
+
+The technology will keep evolving. What matters is the principle behind it: artists should own their work, know their numbers, and have direct paths to their audience.
+
+That's what Mr. CAP has been building toward for 30+ years. Blockchain is just the latest chapter.
+    `,
+    category: "Blockchain & AI",
+    date: "2024-11-20",
+    author: "Mr. CAP",
+    readTime: "8 min",
+    tags: ["NFT", "Blockchain", "Web3", "Music Industry", "Innovation", "Ownership"],
+  },
+  {
     slug: "south-park-coalition-history-houston-hip-hop",
-    title: "The History of South Park Coalition: Houston's Most Influential Hip-Hop Collective",
-    excerpt: "From the streets of South Park to worldwide recognition, the story of how SPC changed Houston hip-hop forever.",
+    title: "South Park Coalition: How a Houston Movement Rewrote the Rules for Independent Rap",
+    excerpt: "The untold story of how SPC became one of the most influential underground hip-hop collectives in history.",
     content: `
 ## The Birth of a Movement
 
 The South Park Coalition emerged from Houston's South Park neighborhood in the late 1980s, founded by K-Rino. What started as a group of friends passionate about hip-hop would grow into one of the most influential underground collectives in rap history.
+
+## The Philosophy
+
+SPC was never just about music. It was about:
+
+- **Lyrical excellence** over commercial trends
+- **Independence** before "independent" was cool
+- **Community** over competition
+- **Ownership** of your own work
 
 ## The Original Members
 
@@ -36,91 +148,99 @@ The original lineup included some of the most talented lyricists Houston has eve
 
 ## Impact on Houston Hip-Hop
 
-SPC's influence on Houston's rap scene cannot be overstated. While Rap-A-Lot Records was putting Houston on the mainstream map, SPC was building an underground empire that prioritized lyrical excellence over commercial appeal.
+While Rap-A-Lot Records was putting Houston on the mainstream map, SPC was building an underground empire. The collective proved you could:
 
-## Legacy
+- Release records without major label backing
+- Build a loyal fanbase through quality and consistency
+- Maintain artistic integrity while still making money
+- Create infrastructure that other artists could use
 
-Today, South Park Coalition stands as a testament to what independent hip-hop can achieve. With over 1,000 albums released collectively, the group has built a legacy that continues to inspire new generations of artists.
+## The Numbers
 
-## The Future
+Over 1,000 albums released collectively. Countless shows performed. Generations of artists influenced. And still going strong decades later.
 
-As members like Mr. CAP continue to release new music and embrace new technologies like NFTs and blockchain, SPC proves that authentic hip-hop never dies—it evolves.
+## Lessons for Today's Artists
+
+1. **Quality over quantity** — SPC releases always had substance
+2. **Community over competition** — They elevated each other
+3. **Long-term thinking** — Building catalogs, not just singles
+4. **Business acumen** — Understanding the industry, not just the art
+
+## The Legacy Continues
+
+Today, South Park Coalition stands as a testament to what independent hip-hop can achieve. As members like Mr. CAP continue to release new music and embrace new technologies, SPC proves that authentic hip-hop never dies—it evolves.
     `,
     category: "South Park Coalition",
     date: "2024-11-15",
     author: "Mr. CAP",
     readTime: "8 min",
-    tags: ["South Park Coalition", "Houston", "History", "Underground Hip-Hop"],
-  },
-  {
-    slug: "first-houston-rapper-nft-blockchain",
-    title: "How I Became the First Houston Rapper to Sell an NFT",
-    excerpt: "On February 25, 2021, I made history by minting 'Limitless' on OpenSea. Here's the full story.",
-    content: `
-## The Beginning
-
-When I first heard about NFTs in late 2020, I immediately saw the potential for independent artists. Blockchain technology offered something we'd been fighting for decades: true ownership and direct connection to fans.
-
-## Why 'Limitless'?
-
-I chose to mint "Limitless" because the song embodies everything I believe about an artist's potential. There are no limits to what we can achieve when we embrace new technology and stay true to our art.
-
-## The Day Everything Changed
-
-February 25, 2021. I minted "Limitless" on OpenSea and became the first Houston rap artist to sell a Hip Hop NFT on the blockchain. The sale was for a four-figure sum, but the significance went far beyond money.
-
-## What It Means for Artists
-
-This wasn't just about me. It was about showing every independent artist that there are new paths to ownership and success. You don't need a major label to build value in your art.
-
-## Looking Forward
-
-Since that day, I've continued to explore how blockchain and AI can empower artists. The future is being built right now, and I'm proud to be part of it.
-    `,
-    category: "Blockchain & AI",
-    date: "2024-10-20",
-    author: "Mr. CAP",
-    readTime: "6 min",
-    tags: ["NFT", "Blockchain", "Web3", "Music Industry", "Innovation"],
+    tags: ["South Park Coalition", "Houston", "History", "Underground Hip-Hop", "K-Rino"],
   },
   {
     slug: "independent-artist-success-music-industry-2024",
-    title: "The Independent Artist Playbook: Building a Career in 2024",
-    excerpt: "After 30+ years in the game, here's what I've learned about building a sustainable music career.",
+    title: "The Independent Artist Playbook: Building a Career Without a Major Label in 2024",
+    excerpt: "After 30+ years in the game, here's what I've learned about building a sustainable music career on your own terms.",
     content: `
 ## The Game Has Changed
 
-When I started in the late '80s, the music industry looked completely different. Today, independent artists have more opportunities than ever—but also more competition.
+When I started in the late '80s, the music industry looked completely different. Today, independent artists have more opportunities than ever—but also more competition and more noise to cut through.
 
-## Own Your Masters
+Here's what actually works.
 
-This is rule number one. Never sign away ownership of your music unless you absolutely have to. Your catalog is your retirement plan.
+## Rule #1: Own Your Masters
 
-## Build Direct Relationships
+This is non-negotiable. Never sign away ownership of your music unless you absolutely have to—and understand exactly what you're giving up.
 
-Social media, email lists, and NFTs allow you to connect directly with fans. Use these tools. Don't rely solely on algorithms.
+Your catalog is your retirement plan. Every stream, every sync, every sample clearance for the rest of your life.
 
-## Diversify Your Income
+## Rule #2: Build Direct Relationships
 
-Music streaming pays pennies. Think about merchandise, live shows, sync licensing, NFTs, and other revenue streams.
+Social media, email lists, NFTs, and community platforms allow you to connect directly with fans. Use these tools. Don't rely solely on algorithms or playlists to build your audience.
 
-## Stay Consistent
+The artists who survive industry changes are the ones who can reach their fans without permission from platforms.
 
-I've been releasing music for over 30 years. Consistency builds legacy. Show up every day, even when it's hard.
+## Rule #3: Diversify Your Income
 
-## Embrace Technology
+Music streaming pays pennies per stream. Smart artists think about:
 
-From blockchain to AI, new technology offers new opportunities. Don't be afraid to experiment.
+- **Live shows** — Still the best money in music
+- **Merchandise** — Especially limited editions
+- **Sync licensing** — TV, film, commercials, games
+- **NFTs and collectibles** — Direct-to-fan ownership
+- **Teaching and consulting** — Share what you know
 
-## The Long Game
+## Rule #4: Stay Consistent
 
-Success in music isn't a sprint—it's a marathon. Focus on building something that lasts.
+I've been releasing music for over 30 years. Consistency builds legacy. Show up every day, even when it's hard, even when the numbers are low.
+
+The artists who disappear for years at a time lose momentum. The ones who keep creating keep their name in the conversation.
+
+## Rule #5: Embrace Technology
+
+From blockchain to AI, new technology offers new opportunities. Don't be afraid to experiment. The artists who adapt survive. The ones who don't get left behind.
+
+## Rule #6: Think Long-Term
+
+Success in music isn't a sprint—it's a marathon. Focus on building something that lasts, not chasing the next viral moment.
+
+The goal isn't one hit. The goal is a career.
+
+## Final Thoughts
+
+The industry will keep changing. New platforms will rise and fall. But the fundamentals stay the same:
+
+- Make great music
+- Own your work
+- Build real relationships
+- Stay in the game
+
+That's the playbook. Now execute.
     `,
     category: "Music Industry Playbook",
     date: "2024-09-10",
     author: "Mr. CAP",
     readTime: "7 min",
-    tags: ["Music Business", "Independent Artist", "Career Advice", "Success"],
+    tags: ["Music Business", "Independent Artist", "Career Advice", "Success", "Strategy"],
   },
   {
     slug: "art-of-ism-album-making-story",
