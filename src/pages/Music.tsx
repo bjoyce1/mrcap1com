@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Play, ExternalLink, Music as MusicIcon } from "lucide-react";
+import { ChevronRight, Play, ExternalLink, Music as MusicIcon, Disc3 } from "lucide-react";
 
 import albumBetn from "@/assets/betn-on-me.png";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
@@ -21,6 +21,8 @@ const albums = [
     apple: "https://music.apple.com/...",
     type: "Album",
     tracks: 12,
+    description: "More than an album—it's a life story scored in 808s. From Third Ward lessons to blockchain boardrooms.",
+    featured: true,
   },
   {
     title: "Bet'n On Me",
@@ -29,7 +31,7 @@ const albums = [
     spotify: "https://open.spotify.com/track/...",
     apple: "https://music.apple.com/...",
     type: "Single",
-    featured: true,
+    description: "An anthem for entrepreneurs, hustlers, and late bloomers betting on themselves.",
   },
   {
     title: "The Art of ISM",
@@ -40,6 +42,7 @@ const albums = [
     type: "Album",
     tracks: 11,
     label: "Sony Music / The Orchard",
+    description: "Features production from Zaytoven and Metro Boomin.",
   },
   {
     title: "2 Tha Grave",
@@ -47,18 +50,21 @@ const albums = [
     image: albumGrave,
     spotify: "https://open.spotify.com/album/...",
     type: "Album",
+    description: "Debut album introducing the signature blend of raw lyricism and Southern grit.",
   },
   {
     title: "Tha Cold Ass Pimp",
     year: "2006",
     image: albumColdAss,
     type: "Mixtape",
+    description: "Critically acclaimed mixtape showcasing versatility and street credibility.",
   },
   {
     title: "O.N.E. on O.N.E.",
     year: "2005",
     image: albumOneOnOne,
     type: "Album",
+    description: "Debut solo album establishing Houston's underground meets conscious lyricism.",
   },
 ];
 
@@ -73,27 +79,33 @@ const streamingPlatforms = [
 const Music = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "MusicGroup",
-    "name": "Mr. CAP",
+    "@type": "MusicAlbum",
+    "name": "The Ties That Bind Us",
+    "byArtist": {
+      "@type": "Person",
+      "name": "Mr. CAP"
+    },
+    "genre": "Hip-Hop",
+    "image": "https://mrcapmusic.com/images/albums/the-ties-that-bind-us.jpg",
     "url": "https://mrcapmusic.com/music",
-    "genre": ["Hip-Hop", "Rap", "Underground Hip-Hop"],
-    "album": albums.filter(a => a.type === "Album").map(album => ({
-      "@type": "MusicAlbum",
-      "name": album.title,
-      "datePublished": album.year,
-      "numTracks": album.tracks,
-      "image": album.image
-    }))
+    "datePublished": "2024",
+    "track": [
+      {
+        "@type": "MusicRecording",
+        "name": "Bet'n On Me",
+        "url": "https://mrcapmusic.com/music#betn-on-me"
+      }
+    ]
   };
 
   return (
     <>
       <Helmet>
-        <title>Music — Mr. CAP Discography | Houston Hip-Hop Albums & Singles</title>
-        <meta name="description" content="Stream Mr. CAP's complete discography including The Ties That Bind Us, The Art of ISM, and classic albums. Authentic Houston underground hip-hop on all platforms." />
+        <title>Music by Mr. CAP | Albums, Singles, Videos & Lyrics</title>
+        <meta name="description" content="Stream albums, singles and videos from Mr. CAP, Houston hip-hop artist and South Park Coalition original member. Explore The Ties That Bind Us, 2 Tha Grave, and more." />
         <link rel="canonical" href="https://mrcapmusic.com/music" />
         
-        <meta property="og:title" content="Music — Mr. CAP Discography" />
+        <meta property="og:title" content="Music by Mr. CAP | Albums, Singles, Videos & Lyrics" />
         <meta property="og:description" content="Stream the complete discography of Houston hip-hop pioneer Mr. CAP." />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -113,18 +125,80 @@ const Music = () => {
               </nav>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+                Music &{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-flux-accent">
                   Discography
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
-                Three decades of authentic Houston hip-hop. Stream albums, singles, and collaborations.
+                Dive into the catalog—from 2 Tha Grave to The Ties That Bind Us. Watch official videos, 
+                live performances, and rare footage that tells the story behind the records.
               </p>
             </div>
           </section>
 
+          {/* Featured Release */}
+          <section className="py-16 bg-gradient-to-b from-primary/10 to-transparent">
+            <div className="container mx-auto px-4">
+              <div className="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+                <div className="relative">
+                  <img
+                    src={albumTies}
+                    alt="The Ties That Bind Us album cover"
+                    className="w-full max-w-md mx-auto rounded-xl shadow-2xl shadow-primary/20"
+                  />
+                  <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground text-xs font-bold px-4 py-2 rounded-full">
+                    NEW ALBUM
+                  </div>
+                </div>
+                <div>
+                  <span className="inline-flex items-center gap-2 text-primary text-sm font-medium mb-4">
+                    <Disc3 className="w-4 h-4 animate-spin" style={{ animationDuration: "3s" }} />
+                    FEATURED RELEASE
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+                    The Ties That Bind Us
+                  </h2>
+                  <p className="text-muted-foreground mb-6">
+                    <em>The Ties That Bind Us</em> is more than an album—it's a life story scored in 808s. 
+                    From Third Ward lessons to blockchain boardrooms, Mr. CAP turns years of struggle, hustle, 
+                    and growth into a soundtrack for people betting on themselves.
+                  </p>
+                  <ul className="space-y-2 text-sm text-muted-foreground mb-6">
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      Gritty Houston storytelling
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      South Park Coalition features
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      Real-life experiences from streets to tech
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      Available on all major streaming platforms
+                    </li>
+                  </ul>
+                  <div className="flex flex-wrap gap-3">
+                    <Button variant="flux" size="lg">
+                      <Play className="mr-2 h-4 w-4" />
+                      Stream Now
+                    </Button>
+                    <Button variant="fluxOutline" size="lg">
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      Listen to "Bet'n On Me"
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Streaming Platforms */}
-          <section className="py-12 bg-card/20 border-b border-border/50">
+          <section className="py-12 bg-card/20 border-y border-border/50">
             <div className="container mx-auto px-4">
               <p className="text-center text-muted-foreground mb-6">Stream on your favorite platform</p>
               <div className="flex flex-wrap justify-center gap-4">
@@ -189,16 +263,9 @@ const Music = () => {
                       {album.label && (
                         <p className="text-sm text-muted-foreground mt-1">{album.label}</p>
                       )}
-                      {album.tracks && (
-                        <p className="text-sm text-muted-foreground mt-1">{album.tracks} tracks</p>
+                      {album.description && (
+                        <p className="text-sm text-muted-foreground mt-2">{album.description}</p>
                       )}
-                      <div className="flex gap-2 mt-4">
-                        {album.spotify && (
-                          <a href={album.spotify} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
                     </div>
                   </div>
                 ))}
@@ -232,7 +299,8 @@ const Music = () => {
                 Experience Live
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-                Nothing beats experiencing Mr. CAP's music live. Check out upcoming shows and booking info.
+                Whether it's a packed Houston club or a festival stage in another city, Mr. CAP brings a raw, 
+                honest performance—built on decades of experience and a lifetime of stories.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button variant="flux" asChild>

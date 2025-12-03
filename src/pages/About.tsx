@@ -3,17 +3,25 @@ import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Download, Music, Mic2, Trophy, Users, Calendar, Sparkles } from "lucide-react";
+import { ChevronRight, Download, Music, Mic2, Trophy, Users, Calendar, Sparkles, GraduationCap, MapPin } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const timeline = [
   { year: "1990s", title: "South Park Coalition Origins", desc: "Joined the legendary South Park Coalition as an original member alongside K-Rino, Dope-E, and Klondike Kat" },
+  { year: "Early Career", title: "Jack Yates High School", desc: "Graduated from Jack Yates Senior High School, later studying Computer Network Engineering and Computer Science" },
   { year: "2005", title: "O.N.E. on O.N.E.", desc: "Released debut solo album, establishing a unique sound blending Houston's underground with conscious lyricism" },
   { year: "2006", title: "Tha Cold Ass Pimp", desc: "Dropped the critically acclaimed mixtape showcasing versatility and street credibility" },
-  { year: "2011", title: "2 Tha Grave", desc: "Released sophomore album with deeper introspection and refined production" },
+  { year: "2011", title: "2 Tha Grave", desc: "Debut album introduced his signature blend of raw lyricism, storytelling, and Southern grit" },
   { year: "2019", title: "The Art of ISM", desc: "Third studio album via Sony Music/The Orchard featuring Zaytoven, Metro Boomin production" },
   { year: "2021", title: "NFT Pioneer", desc: "Became first Houston rapper to sell a Hip Hop NFT, minting 'Limitless' on OpenSea" },
-  { year: "2024", title: "The Ties That Bind Us", desc: "Latest album release with lead single 'Bet'n On Me' showcasing evolution of sound" },
+  { year: "2024", title: "The Ties That Bind Us", desc: "Latest album with lead single 'Bet'n On Me' — a soundtrack for people betting on themselves" },
+];
+
+const highlights = [
+  { icon: Users, label: "South Park Coalition", desc: "Original Member" },
+  { icon: MapPin, label: "Houston, Texas", desc: "Third Ward Raised" },
+  { icon: GraduationCap, label: "Jack Yates High School", desc: "Graduate" },
+  { icon: Trophy, label: "First Houston NFT", desc: "Hip-Hop Pioneer" },
 ];
 
 const About = () => {
@@ -22,31 +30,39 @@ const About = () => {
     "@type": "Person",
     "name": "Mr. CAP",
     "alternateName": "Cornelius A. Pratt",
-    "description": "Houston hip-hop artist, South Park Coalition original member, entrepreneur, and blockchain pioneer. Over three decades in the music industry.",
+    "description": "Houston-born rapper, South Park Coalition original member, and creative technologist connecting hip-hop, business, and blockchain.",
     "image": "https://mrcapmusic.com/og-image.jpg",
     "url": "https://mrcapmusic.com/about",
     "sameAs": [
       "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
       "https://www.youtube.com/@mrcap1",
+      "https://twitter.com/mrcap1",
+      "https://instagram.com/mrcap.eth",
       "https://opensea.io/mrcap"
     ],
-    "jobTitle": "Hip-Hop Artist",
+    "jobTitle": "Rapper, Writer, Technologist",
     "memberOf": {
       "@type": "MusicGroup",
       "name": "South Park Coalition"
     },
-    "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "Music Production", "Entrepreneurship"]
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Houston",
+      "addressRegion": "TX",
+      "addressCountry": "US"
+    },
+    "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "Music Production", "Entrepreneurship", "Digital Distribution"]
   };
 
   return (
     <>
       <Helmet>
-        <title>About Mr. CAP — Houston Hip-Hop Pioneer | South Park Coalition Original Member</title>
-        <meta name="description" content="Learn about Mr. CAP (Cornelius A. Pratt), an original member of Houston's legendary South Park Coalition. Three decades of authentic hip-hop, from underground classics to blockchain innovation." />
+        <title>About Mr. CAP | Houston Rapper, South Park Coalition Original Member & Technologist</title>
+        <meta name="description" content="Learn the story of Mr. CAP – Cornelius A. Pratt – Houston-born rapper, South Park Coalition original member, and creative technologist connecting hip-hop, business, and blockchain." />
         <link rel="canonical" href="https://mrcapmusic.com/about" />
         
-        <meta property="og:title" content="About Mr. CAP — Houston Hip-Hop Pioneer" />
-        <meta property="og:description" content="Original member of South Park Coalition. Three decades of authentic Houston hip-hop." />
+        <meta property="og:title" content="About Mr. CAP | Houston Rapper, South Park Coalition Original Member" />
+        <meta property="og:description" content="Learn the story of Mr. CAP – Cornelius A. Pratt – Houston-born rapper, South Park Coalition original member, and creative technologist." />
         <meta property="og:type" content="profile" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
@@ -75,7 +91,7 @@ const About = () => {
                 </span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
-                Three decades of authentic Houston hip-hop. From South Park Coalition to blockchain pioneer.
+                Houston-born rapper, writer, and creative technologist with deep roots in the South Park Coalition.
               </p>
             </div>
           </section>
@@ -88,30 +104,33 @@ const About = () => {
                   <h2 className="text-3xl font-display font-bold">Biography</h2>
                   <div className="prose prose-lg prose-invert max-w-none space-y-4">
                     <p className="text-muted-foreground leading-relaxed">
-                      Mr. CAP (Cornelius A. Pratt) is a Houston hip-hop artist and original member of the legendary 
-                      South Park Coalition. With over three decades in the music industry, he has been instrumental 
-                      in shaping the sound of Houston's underground rap scene while continuously evolving his artistry.
+                      Cornelius A. Pratt, professionally known as Mr. CAP, is a Houston-born rapper, writer, and 
+                      creative technologist with deep roots in the South Park Coalition. Raised in a musical family 
+                      and performing since childhood, CAP's voice carries the weight of lived experience—from street 
+                      lessons and spiritual reflections to entrepreneurship and innovation.
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
-                      Born and raised in Houston's South Park neighborhood, Mr. CAP emerged from the same streets 
-                      that produced some of hip-hop's most influential underground artists. As a founding member 
-                      of the South Park Coalition, he helped establish a movement that prioritized lyrical excellence 
-                      and authentic storytelling over commercial trends.
+                      After graduating from Jack Yates Senior High School and studying Computer Network Engineering 
+                      and Computer Science, he took his talent beyond the mic into digital distribution, web and 
+                      graphic design, and blockchain-based ventures. His debut album, <em>2 Tha Grave</em>, introduced 
+                      his signature blend of raw lyricism, storytelling, and Southern grit.
                     </p>
-                    <blockquote className="border-l-4 border-primary pl-6 italic text-foreground">
+                    <blockquote className="border-l-4 border-primary pl-6 italic text-foreground bg-card/30 py-4 pr-6 rounded-r-lg">
                       "Real hip-hop never dies. It evolves, adapts, and finds new ways to connect with people. 
                       That's what I've been doing for 30+ years."
                     </blockquote>
                     <p className="text-muted-foreground leading-relaxed">
-                      Beyond music, Mr. CAP has positioned himself at the forefront of music technology innovation. 
-                      In 2021, he became the first Houston rap artist to sell a Hip Hop NFT on the blockchain, 
-                      minting his song "Limitless" on OpenSea. This pioneering move demonstrated his understanding 
-                      of how technology can empower independent artists.
+                      Today, with his latest project <em>The Ties That Bind Us</em> and the lead single "Bet'n On Me", 
+                      Mr. CAP stands at the intersection of music, media, and technology—bridging old school integrity 
+                      with new school innovation while representing Houston, South Park Coalition, and independent 
+                      creators worldwide.
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
-                      Today, Mr. CAP continues to release new music, perform across Texas and beyond, and mentor 
-                      the next generation of artists. His latest album "The Ties That Bind Us" represents the 
-                      culmination of his artistic journey while pointing toward the future of independent hip-hop.
+                      What separates Mr. CAP from a lot of his peers is what he did when he wasn't on stage. He 
+                      studied Computer Network Engineering and Computer Science, worked in corporate environments, 
+                      and later stepped into digital distribution, web design, blockchain, and AI. That means when 
+                      he talks about "owning your masters" or "controlling your data," it's not just rap rhetoric—he 
+                      actually understands the systems behind the music.
                     </p>
                   </div>
                 </div>
@@ -120,34 +139,15 @@ const About = () => {
                   <div className="bg-card/50 border border-border/50 rounded-xl p-6">
                     <h3 className="text-xl font-bold mb-4">Quick Facts</h3>
                     <ul className="space-y-4">
-                      <li className="flex items-start gap-3">
-                        <Users className="w-5 h-5 text-primary mt-1" />
-                        <div>
-                          <p className="font-medium">South Park Coalition</p>
-                          <p className="text-sm text-muted-foreground">Original Member</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Music className="w-5 h-5 text-primary mt-1" />
-                        <div>
-                          <p className="font-medium">4 Studio Albums</p>
-                          <p className="text-sm text-muted-foreground">+ Numerous Singles</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Trophy className="w-5 h-5 text-primary mt-1" />
-                        <div>
-                          <p className="font-medium">First Houston NFT</p>
-                          <p className="text-sm text-muted-foreground">Hip Hop NFT Pioneer</p>
-                        </div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <Calendar className="w-5 h-5 text-primary mt-1" />
-                        <div>
-                          <p className="font-medium">30+ Years</p>
-                          <p className="text-sm text-muted-foreground">In the Industry</p>
-                        </div>
-                      </li>
+                      {highlights.map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <item.icon className="w-5 h-5 text-primary mt-1" />
+                          <div>
+                            <p className="font-medium">{item.label}</p>
+                            <p className="text-sm text-muted-foreground">{item.desc}</p>
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                   
@@ -189,20 +189,22 @@ const About = () => {
 
           {/* SPC Section */}
           <section className="py-20">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl font-display font-bold mb-6">South Park Coalition</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                The South Park Coalition is one of Houston's most influential hip-hop collectives, 
-                founded in the late 1980s. Mr. CAP has been an integral part of this movement, 
-                helping to establish Houston's unique underground sound that influenced countless artists.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button variant="fluxOutline" asChild>
-                  <Link to="/music">Explore Music</Link>
-                </Button>
-                <Button variant="fluxGhost" asChild>
-                  <Link to="/live">Live Shows</Link>
-                </Button>
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-3xl font-display font-bold mb-6">South Park Coalition Legacy</h2>
+                <p className="text-muted-foreground mb-8">
+                  As an original member of the legendary South Park Coalition, Mr. CAP carries forward one of the 
+                  most respected underground hip-hop movements in Texas. The sound, the message, and the independence 
+                  that shaped a generation still live here—just with new tools and new technology.
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <Button variant="fluxOutline" asChild>
+                    <Link to="/music">Explore Music</Link>
+                  </Button>
+                  <Button variant="fluxGhost" asChild>
+                    <Link to="/blog/south-park-coalition-history-houston-hip-hop">Learn the SPC Story</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </section>
