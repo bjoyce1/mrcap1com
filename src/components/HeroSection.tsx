@@ -9,7 +9,7 @@ const HeroSection = () => {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-70"
         >
           <source src="/video/hero-bg.webm" type="video/webm" />
         </video>
