@@ -92,6 +92,15 @@ const Blog = () => {
                     to={`/blog/${post.slug}`}
                     className="group bg-card/30 border border-border/50 rounded-xl overflow-hidden hover:border-primary/50 transition-all"
                   >
+                    {post.image && (
+                      <div className="aspect-video overflow-hidden">
+                        <img 
+                          src={post.image} 
+                          alt={post.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
                     <div className="p-8">
                       <div className="flex items-center gap-3 mb-4">
                         <span className="text-xs bg-primary/20 text-primary px-3 py-1 rounded-full">
