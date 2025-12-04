@@ -24,7 +24,7 @@ const HeroSection = () => {
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 md:py-40">
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-16 py-32 md:py-40">
         <div className="max-w-3xl">
           {/* Badge */}
           <div className="flex items-center gap-3 mb-6 animate-fade-in">
