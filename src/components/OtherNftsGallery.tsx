@@ -48,7 +48,10 @@ export function OtherNftsGallery() {
       }
 
       const list = (data?.nfts || data?.assets || []).filter(
-        (nft: RawNft) => nft.collection !== ART_OF_ISM_COLLECTION
+        (nft: RawNft) => 
+          nft.collection !== ART_OF_ISM_COLLECTION &&
+          !nft.name?.toLowerCase().includes('ugly kid') &&
+          !nft.collection?.toLowerCase().includes('ugly kid')
       );
       
       if (isLoadingMore) {
