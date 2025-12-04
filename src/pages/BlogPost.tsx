@@ -106,6 +106,21 @@ const BlogPost = () => {
             </div>
           </section>
 
+          {/* Featured Image */}
+          {post.image && (
+            <section className="py-8">
+              <div className="container mx-auto px-4">
+                <div className="max-w-3xl mx-auto">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full rounded-xl border border-border/50 shadow-lg"
+                  />
+                </div>
+              </div>
+            </section>
+          )}
+
           {/* Content */}
           <section className="py-16">
             <div className="container mx-auto px-4">
