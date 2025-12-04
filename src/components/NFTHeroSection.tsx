@@ -141,14 +141,14 @@ export const NFTHeroSection = ({
 
         {/* Right: Card Images */}
         <motion.div
-          className="relative lg:w-1/2 h-[300px] md:h-[400px] w-full flex items-center justify-center"
+          className="relative lg:w-1/2 h-[350px] md:h-[450px] w-full flex items-center justify-center"
           variants={cardsVariants}
         >
           {/* Back Card */}
           <motion.div
             variants={cardItemVariants}
             whileHover={{ y: -10, rotate: -5, transition: { duration: 0.3 } }}
-            className="absolute h-48 md:h-72 w-36 md:w-56 rounded-2xl shadow-2xl shadow-primary/20 overflow-hidden transform rotate-[-6deg] translate-x-16 md:translate-x-24 border border-white/10 bg-white/[0.02]"
+            className="absolute h-64 md:h-96 w-48 md:w-72 rounded-2xl shadow-2xl shadow-primary/20 overflow-hidden transform rotate-[-6deg] translate-x-20 md:translate-x-28 border border-white/10 bg-white/[0.02]"
           >
             <img
               src={imageUrl2}
@@ -162,7 +162,7 @@ export const NFTHeroSection = ({
           <motion.div
             variants={cardItemVariants}
             whileHover={{ y: -10, rotate: 5, transition: { duration: 0.3 } }}
-            className="absolute h-48 md:h-72 w-36 md:w-56 rounded-2xl shadow-2xl shadow-primary/30 overflow-hidden transform rotate-[6deg] -translate-x-12 md:-translate-x-16 border border-white/10 bg-white/[0.02]"
+            className="absolute h-64 md:h-96 w-48 md:w-72 rounded-2xl shadow-2xl shadow-primary/30 overflow-hidden transform rotate-[6deg] -translate-x-16 md:-translate-x-20 border border-white/10 bg-white/[0.02]"
           >
             <img
               src={imageUrl1}
