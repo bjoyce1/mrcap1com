@@ -13,8 +13,8 @@ const HeroSection = () => {
         >
           <source src="/video/hero-bg.webm" type="video/webm" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-background/35 to-background/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-background/30" />
       </div>
 
       {/* Grid Pattern Overlay */}
