@@ -6,6 +6,7 @@ import { OtherNftsGallery } from "@/components/OtherNftsGallery";
 import NFTHeroSection from "@/components/NFTHeroSection";
 import nftLimitless from "@/assets/nft-limitless.png";
 import nftArtOfIsm from "@/assets/nft-art-of-ism.png";
+import mrCapCoin from "@/assets/mr-cap-coin.png";
 
 const NFTGallery = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -39,9 +40,7 @@ const NFTGallery = () => {
           </Link>
           
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center">
-              <span className="font-display font-bold text-primary text-sm">MC</span>
-            </div>
+            <img src={mrCapCoin} alt="MR. CAP" className="w-10 h-10 rounded-full object-cover" />
             <span className="font-display text-xl font-medium tracking-tight">
               MR. CAP
             </span>
@@ -141,9 +140,7 @@ const NFTGallery = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="font-display font-bold text-primary text-xs">MC</span>
-              </div>
+              <img src={mrCapCoin} alt="MR. CAP" className="w-9 h-9 rounded-full object-cover" />
               <span className="font-display text-lg font-medium tracking-tight">
                 MR. CAP
               </span>
