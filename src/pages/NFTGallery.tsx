@@ -4,6 +4,8 @@ import { ArrowLeft, ExternalLink, Wallet } from "lucide-react";
 import { ArtOfIsmCollection } from "@/components/ArtOfIsmCollection";
 import { OtherNftsGallery } from "@/components/OtherNftsGallery";
 import NFTHeroSection from "@/components/NFTHeroSection";
+import nftLimitless from "@/assets/nft-limitless.png";
+import nftArtOfIsm from "@/assets/nft-art-of-ism.png";
 
 const NFTGallery = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -60,7 +62,7 @@ const NFTGallery = () => {
       </header>
 
       {/* Hero Section */}
-      <NFTHeroSection />
+      <NFTHeroSection imageUrl1={nftLimitless} imageUrl2={nftArtOfIsm} />
 
       {/* Milestone Banner */}
       <section className="relative py-12 bg-white/[0.02] border-y border-white/5">
