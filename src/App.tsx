@@ -15,6 +15,7 @@ import BlogPost from "./pages/BlogPost";
 import Cities from "./pages/Cities";
 import CityLanding from "./pages/CityLanding";
 import NFTGallery from "./pages/NFTGallery";
+import ArtGallery from "./pages/ArtGallery";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -42,6 +43,7 @@ const App = () => (
               <Route path="/cities" element={<Cities />} />
               <Route path="/city/:citySlug" element={<CityLanding />} />
               <Route path="/nft" element={<NFTGallery />} />
+              <Route path="/art" element={<ArtGallery />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
