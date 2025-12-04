@@ -18,9 +18,45 @@ export const blogCategories = [
   "Artist Success",
   "Blockchain & AI",
   "Behind the Music",
+  "NFT Art & Music",
+  "Crypto",
 ];
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "breaking-boundaries-mr-cap-pioneers-hip-hop-nfts-in-houston",
+    title: "Breaking Boundaries: Mr. CAP Pioneers Hip Hop NFTs in Houston",
+    excerpt: "Houston, Texas - The world of music and art took a major leap forward with the February 25, 2021 sale of the first-ever Hip Hop NFT by a Houston artist.",
+    content: `
+## The Historic Sale
+
+Houston, Texas - The world of music and art took a major leap forward with the February 25, 2021 sale of the first-ever Hip Hop NFT by a Houston artist.
+
+*Content coming soon - check back for the full story of how Mr. CAP made history in the NFT space.*
+    `,
+    category: "NFT Art & Music",
+    date: "2024-01-30",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["NFT", "Hip Hop", "Houston", "Blockchain", "History"],
+  },
+  {
+    slug: "mr-cap-is-shaking-up-the-nft-world-with-im-bout-to-blow",
+    title: "Mr. CAP is Shaking Up the NFT World with \"I'm Bout To Blow\"",
+    excerpt: "Hey hip-hop heads and NFT enthusiasts! Big news hitting the streets – Houston's very own rap legend, Mr. CAP, is taking the NFT world by storm.",
+    content: `
+## Introduction
+
+Hey hip-hop heads and NFT enthusiasts! Big news hitting the streets – Houston's very own rap legend, Mr. CAP, is taking the NFT world by storm with his latest release "I'm Bout To Blow".
+
+*Content coming soon - check back for the full story of this exciting NFT release.*
+    `,
+    category: "NFT Art & Music",
+    date: "2023-12-20",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["NFT", "Hip Hop", "New Release", "Music NFT"],
+  },
   {
     slug: "the-untold-story-of-mr-cap",
     title: "The Untold Story of Mr. CAP: Houston's Hidden Architect of Underground Hip-Hop",
