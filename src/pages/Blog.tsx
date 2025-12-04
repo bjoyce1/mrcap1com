@@ -92,13 +92,24 @@ const Blog = () => {
                     to={`/blog/${post.slug}`}
                     className="group bg-card/30 border border-border/50 rounded-xl overflow-hidden hover:border-primary/50 transition-all"
                   >
-                    {post.image && (
+                    {post.image ? (
                       <div className="aspect-video overflow-hidden">
                         <img 
                           src={post.image} 
                           alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
+                      </div>
+                    ) : (
+                      <div className="aspect-video overflow-hidden bg-gradient-to-br from-primary/20 via-card to-flux-accent/20 flex items-center justify-center relative">
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-4 left-4 w-24 h-24 border border-primary/30 rounded-full" />
+                          <div className="absolute bottom-4 right-4 w-16 h-16 border border-flux-accent/30 rounded-full" />
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-border/30 rotate-45" />
+                        </div>
+                        <span className="text-2xl font-display font-bold text-primary/40 group-hover:text-primary/60 transition-colors">
+                          MR. CAP
+                        </span>
                       </div>
                     )}
                     <div className="p-8">
