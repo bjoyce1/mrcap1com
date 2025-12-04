@@ -25,11 +25,11 @@ const NFTGallery = () => {
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrollY > 50 
-            ? "bg-background/80 backdrop-blur-lg border-b border-white/5" 
+            ? "bg-background/80 backdrop-blur-xl border-b border-white/5" 
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 h-20">
           <Link 
             to="/" 
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
@@ -51,8 +51,8 @@ const NFTGallery = () => {
             href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full
-                       text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-white/5 ring-1 ring-white/10 rounded-lg
+                       text-foreground text-sm font-medium hover:bg-white/10 transition-colors"
           >
             <Wallet className="w-4 h-4" />
             <span className="hidden sm:inline">View on OpenSea</span>
@@ -65,11 +65,11 @@ const NFTGallery = () => {
       <NFTHeroSection imageUrl1={nftLimitless} imageUrl2={nftArtOfIsm} />
 
       {/* Milestone Banner */}
-      <section className="relative py-12 bg-white/[0.02] border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="relative py-12 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-y border-white/5">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-2xl bg-white/5 ring-1 ring-white/10 flex items-center justify-center">
                 <span className="text-2xl">🏆</span>
               </div>
               <div>
@@ -90,7 +90,7 @@ const NFTGallery = () => {
 
       {/* Main Content */}
       <main className="py-16 md:py-24 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           
           {/* Art of ISM Collection */}
           <ArtOfIsmCollection />
@@ -98,7 +98,7 @@ const NFTGallery = () => {
           {/* Divider */}
           <div className="flex items-center gap-4 my-16">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <div className="flex items-center gap-3 px-6 py-3 bg-white/[0.02] border border-white/10 rounded-full">
+            <div className="flex items-center gap-3 px-6 py-3 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl ring-1 ring-white/10 rounded-full">
               <Wallet className="w-4 h-4 text-primary" />
               <span className="text-sm text-muted-foreground uppercase tracking-widest font-medium">
                 Wallet Collection
@@ -114,7 +114,7 @@ const NFTGallery = () => {
       </main>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-white/[0.02] border-t border-white/5">
+      <section className="py-16 md:py-24 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-t border-white/5">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-display font-medium text-foreground mb-4 tracking-tight">
             Collect <span className="text-gradient-orange">Digital History</span>
@@ -138,7 +138,7 @@ const NFTGallery = () => {
 
       {/* Footer */}
       <footer className="py-8 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <Link to="/" className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">

@@ -103,7 +103,7 @@ export function OtherNftsGallery() {
   if (error) {
     return (
       <div className="text-center py-12">
-        <p className="text-destructive text-sm bg-destructive/10 inline-block px-6 py-3 rounded-lg border border-destructive/20">
+        <p className="text-destructive text-sm supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl inline-block px-6 py-3 rounded-lg ring-1 ring-destructive/20">
           {error}
         </p>
       </div>
@@ -139,9 +139,9 @@ export function OtherNftsGallery() {
             <button
               key={`other-${nft.identifier}-${idx}`}
               onClick={() => handleNftClick(nft)}
-              className="group relative rounded-2xl overflow-hidden bg-card border border-border/50 
+              className="group relative rounded-2xl overflow-hidden supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl ring-1 ring-white/5 
                          transition-all duration-500 ease-out text-left
-                         hover:border-primary/60 hover:shadow-glow hover:-translate-y-2
+                         hover:ring-white/20 hover:bg-white/5 hover:-translate-y-2
                          focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               {/* Hover overlay */}
@@ -171,7 +171,7 @@ export function OtherNftsGallery() {
               )}
               
               {/* Image */}
-              <div className="aspect-square overflow-hidden bg-secondary">
+              <div className="aspect-square overflow-hidden bg-white/5">
                 {image ? (
                   <img
                     src={image}
@@ -181,7 +181,7 @@ export function OtherNftsGallery() {
                                group-hover:scale-110"
                   />
                 ) : (
-                  <div className="flex items-center justify-center w-full h-full bg-muted">
+                  <div className="flex items-center justify-center w-full h-full bg-white/5">
                     <span className="text-xs text-muted-foreground">No Image</span>
                   </div>
                 )}
@@ -190,7 +190,7 @@ export function OtherNftsGallery() {
               {/* Content */}
               <div className="p-5 relative z-20">
                 <p className="font-medium text-foreground truncate text-base mb-2 
-                              group-hover:text-accent transition-colors duration-300">
+                              group-hover:text-primary transition-colors duration-300">
                   {name}
                 </p>
                 <div className="flex items-center justify-between">
@@ -221,10 +221,10 @@ export function OtherNftsGallery() {
             onClick={handleLoadMore}
             disabled={loadingMore}
             className="group relative inline-flex items-center gap-3 px-8 py-4 
-                       bg-card border border-border/50 rounded-xl
+                       supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl ring-1 ring-white/10 rounded-xl
                        text-foreground font-medium text-sm
                        transition-all duration-300
-                       hover:border-primary/60 hover:shadow-glow hover:-translate-y-1
+                       hover:ring-white/20 hover:bg-white/5 hover:-translate-y-1
                        disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           >
             {loadingMore ? (
@@ -234,9 +234,9 @@ export function OtherNftsGallery() {
               </>
             ) : (
               <>
-                <span className="text-gradient-gold">Load More NFTs</span>
+                <span className="text-primary">Load More NFTs</span>
                 <svg 
-                  className="w-4 h-4 text-accent transform group-hover:translate-y-1 transition-transform duration-300" 
+                  className="w-4 h-4 text-primary transform group-hover:translate-y-1 transition-transform duration-300" 
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor"
