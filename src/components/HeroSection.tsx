@@ -1,15 +1,18 @@
 import { Play, Disc3, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.jpg";
-import UnicornBackground from "@/components/UnicornBackground";
 const HeroSection = () => {
   return <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Unicorn Studio Animated Background */}
-      <UnicornBackground />
-
-      {/* Background Image with Overlay */}
+      {/* Video Background */}
       <div className="absolute inset-0 z-0">
-        <img src={heroBg} alt="Mr. CAP - Houston Hip Hop Artist" className="w-full h-full object-cover object-center opacity-40" />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-50"
+        >
+          <source src="/video/hero-bg.webm" type="video/webm" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/80" />
       </div>
