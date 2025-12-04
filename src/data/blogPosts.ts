@@ -26,6 +26,177 @@ export const blogCategories = [
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "mr-cap-stands-tall-with-new-single-soarn",
+    title: "Mr. CAP Stands Tall with New Single 'SOAR'N'",
+    excerpt: "A hard-hitting single addressing social issues faced by young Black men, balancing pain with pride and reminding listeners that maintaining one's standards is an act of resistance.",
+    content: `
+## Standards Of A Real One
+
+This post announces **"SOAR'N"** (short for *Standards Of A Real One*), a hard-hitting single produced by **Ciddy Boi Music** with co-production by **Dope-E**.
+
+## Confronting Social Issues
+
+The song confronts social issues faced by young Black men, addressing police brutality, systemic racism and everyday survival. Mr. CAP's lyrics balance pain with pride, reminding listeners that maintaining one's standards is an act of resistance.
+
+## Release and Distribution
+
+The release date was set for **1 August 2023** and the track is available on major platforms alongside an NFT edition. Each digital token includes:
+
+- The song
+- A lyric sheet
+- A digital badge symbolising resilience
+
+In the post Mr. CAP emphasises that the goal is not only to tell his story but also to empower others to stand tall in the face of adversity.
+
+## Continuing the Tradition
+
+"SOAR'N" continues Mr. CAP's tradition of socially conscious music and his experimentation with Web3 distribution. Stream the single, engage with the message and support independent artists pushing boundaries.
+    `,
+    category: "NFT Art & Music",
+    date: "2023-07-26",
+    author: "ISM",
+    readTime: "3 min",
+    tags: ["SOAR'N", "Social Justice", "Ciddy Boi Music", "NFT", "Conscious Hip Hop"],
+  },
+  {
+    slug: "southern-sounds-mrcap-release",
+    title: "Southern Sounds – Mr. CAP Release",
+    excerpt: "A soulful collaboration with singer Venita Vyne that takes listeners on a sonic road trip through the American South.",
+    content: `
+## A Sonic Road Trip
+
+In late 2023 Mr. CAP unveiled **"Southern Sounds,"** a soulful collaboration with singer **Venita Vyne** produced by **Ciddy Boi Music**.
+
+The track is described as a sonic road trip through the American South. Over bluesy guitars and rolling drums Mr. CAP paints scenes of backroads, barbecue stands and block parties, while Venita Vyne's vocals add a melodic counterpoint.
+
+## NFT Drop Announcement
+
+The article also announces a special NFT drop: on **14 November 2023** a limited number of digital collectibles tied to the single were released. Each NFT includes:
+
+- The song
+- Exclusive artwork
+- Access to a behind-the-scenes video
+
+By tokenising the single, Mr. CAP connects traditional southern storytelling with cutting-edge distribution.
+
+## Preserving Regional Culture
+
+Fans are encouraged to listen to "Southern Sounds," share their favourite moments, and explore the accompanying NFT collection. The release reinforces the artist's commitment to preserving regional culture while experimenting with new technology.
+    `,
+    category: "Collaborations",
+    date: "2023-10-26",
+    author: "ISM",
+    readTime: "3 min",
+    tags: ["Southern Sounds", "Venita Vyne", "Ciddy Boi Music", "NFT", "R&B"],
+  },
+  {
+    slug: "one-hunid-single-featuring-big-mike-geto-boys",
+    title: "One Hunid (Single Featuring Big Mike, Geto Boys)",
+    excerpt: "Mr. CAP links up with Big Mike of the legendary Geto Boys for this powerful collaboration.",
+    content: `
+## A Legendary Collaboration
+
+In June 2019 Mr. CAP released **"One Hunid,"** a single featuring **Big Mike** of the legendary **Geto Boys**.
+
+## Houston Hip-Hop Legacy
+
+This collaboration brings together two generations of Houston hip-hop. Big Mike's contributions to the Geto Boys helped define the sound of Southern rap, and linking up with Mr. CAP creates a bridge between the classic era and independent innovation.
+
+## More Details Coming
+
+*Additional production credits, streaming links, and behind-the-scenes details coming soon.*
+    `,
+    category: "Collaborations",
+    date: "2019-06-25",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["Big Mike", "Geto Boys", "Houston", "Collaboration", "Hip Hop"],
+  },
+  {
+    slug: "whats-up-world",
+    title: "What's Up World",
+    excerpt: "A greeting and update from Mr. CAP to fans around the world.",
+    content: `
+## Checking In
+
+This post from May 2022 served as a greeting and update from Mr. CAP to his fans worldwide.
+
+## Staying Connected
+
+Mr. CAP has always prioritised direct connection with his audience. From early blog posts to NFT drops, the mission remains the same: keep fans in the loop and build community.
+
+*Additional updates and content coming soon.*
+    `,
+    category: "Behind the Music",
+    date: "2022-05-16",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["Update", "Community", "Fans"],
+  },
+  {
+    slug: "today-was-a-great-day",
+    title: "Today Was A Great Day (Single)",
+    excerpt: "Celebrating the release of the uplifting single 'Today Was A Great Day.'",
+    content: `
+## Good Vibes
+
+In February 2018 Mr. CAP released **"Today Was A Great Day,"** an uplifting single celebrating life's positive moments.
+
+## A Different Energy
+
+While Mr. CAP is known for conscious content and street narratives, this track showcases his range – proving he can deliver feel-good energy when the moment calls for it.
+
+*Additional details about production and collaborators coming soon.*
+    `,
+    category: "Behind the Music",
+    date: "2018-02-11",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["Single", "Positive", "Feel Good"],
+  },
+  {
+    slug: "patiently-waiting-artist-mr-cap",
+    title: "Patiently Waiting Artist Mr. CAP",
+    excerpt: "An exclusive interview with Memphis 10 on 93.7 The Beat radio.",
+    content: `
+## Radio Interview
+
+This 2015 entry teased an exclusive interview with **Memphis 10** on **93.7 The Beat** radio.
+
+## Building Buzz
+
+Radio appearances have always been a crucial part of hip-hop promotion. This interview gave Mr. CAP a platform to share his story, discuss upcoming projects, and connect with Houston's hip-hop community.
+
+*Full transcript and audio clips coming soon if available.*
+    `,
+    category: "Media & Press",
+    date: "2015-07-18",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["Radio", "Interview", "93.7 The Beat", "Memphis 10"],
+  },
+  {
+    slug: "somebody-tell-wiz-khalifa-theres-only-one-mr-cap",
+    title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
+    excerpt: "A playful statement on identity and originality in hip-hop.",
+    content: `
+## One of a Kind
+
+This 2015 headline makes a playful statement about Mr. CAP's unique identity in the hip-hop world.
+
+## Originality Matters
+
+In an industry full of similar names and borrowed styles, standing out requires authenticity. Mr. CAP has built his career on being unmistakably himself – from his South Park Coalition roots to his tech-forward approach.
+
+*Full story and context coming soon.*
+    `,
+    category: "Behind the Music",
+    date: "2015-04-20",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["Identity", "Originality", "Hip Hop"],
+  },
+  {
     slug: "breaking-boundaries-mr-cap-pioneers-hip-hop-nfts-in-houston",
     title: "Breaking Boundaries: Mr. CAP Pioneers Hip Hop NFTs in Houston",
     excerpt: "On 25 February 2021 Mr. CAP minted and sold a one-of-a-kind NFT of his song 'Limitless' through OpenSea, becoming the first Houston rap artist to leverage non-fungible tokens.",
