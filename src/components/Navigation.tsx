@@ -12,6 +12,7 @@ const navLinks = [
   { to: "/blog", label: "Blog" },
   { to: "/cities", label: "Cities" },
   { to: "/nft", label: "NFT", highlight: true },
+  { to: "/art", label: "Art", highlight: true },
 ];
 
 const homeSections = [
