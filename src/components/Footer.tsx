@@ -1,4 +1,5 @@
 import { Instagram, Twitter, Facebook, Youtube } from "lucide-react";
+import mrCapCoin from "@/assets/mr-cap-coin.png";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -35,9 +36,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-1">
             <a href="#hero" className="inline-flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="font-display font-bold text-primary text-xs">MC</span>
-              </div>
+              <img src={mrCapCoin} alt="MR. CAP" className="w-10 h-10 rounded-full object-cover" />
               <span className="font-display text-xl font-medium tracking-tight text-foreground">
                 MR. CAP
               </span>
