@@ -262,6 +262,7 @@ For listeners who knew the original version, the NFT drop represents both nostal
     slug: "dippin-thru-the-metaverse-pt-1",
     title: "Dippin Thru the Metaverse pt.1",
     excerpt: "Mr. CAP teams up with producer Ciddy Boi P to explore the fusion of hip-hop and emerging technology in this single that blends classic southern rap with futuristic sound design.",
+    image: "/images/dippin-metaverse.png",
     content: `
 ## Hip-Hop Meets the Future
 
