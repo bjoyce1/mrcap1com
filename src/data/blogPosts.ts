@@ -200,6 +200,7 @@ In an industry full of similar names and borrowed styles, standing out requires 
     slug: "breaking-boundaries-mr-cap-pioneers-hip-hop-nfts-in-houston",
     title: "Breaking Boundaries: Mr. CAP Pioneers Hip Hop NFTs in Houston",
     excerpt: "On 25 February 2021 Mr. CAP minted and sold a one-of-a-kind NFT of his song 'Limitless' through OpenSea, becoming the first Houston rap artist to leverage non-fungible tokens.",
+    image: "/images/limitless-blog.webp",
     content: `
 ## A Milestone for Houston Hip-Hop
 
