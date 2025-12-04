@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ExternalLink, Wallet } from "lucide-react";
 import { ArtOfIsmCollection } from "@/components/ArtOfIsmCollection";
 import { OtherNftsGallery } from "@/components/OtherNftsGallery";
-import UnicornBackground from "@/components/UnicornBackground";
+import NFTHeroSection from "@/components/NFTHeroSection";
 
 const NFTGallery = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -60,59 +60,7 @@ const NFTGallery = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-        {/* Unicorn Studio Background */}
-        <UnicornBackground />
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background pointer-events-none z-[1]" />
-        
-        {/* Orange Glow */}
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Badge */}
-          <div className="flex justify-center mb-6">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center justify-center w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-medium tracking-widest uppercase text-primary">
-                Web3 · Live On-Chain
-              </span>
-            </div>
-          </div>
-          
-          {/* Title */}
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-display font-medium text-center mb-6 tracking-tighter text-glow">
-            NFT
-            <br />
-            <span className="text-gradient-orange">Portfolio</span>
-          </h1>
-          
-          {/* Description */}
-          <p className="text-lg text-muted-foreground text-center max-w-2xl mx-auto mb-12 leading-relaxed font-light">
-            Pioneering Houston hip-hop in Web3. Explore MR. CAP's digital art collection, 
-            featuring tokenized music, exclusive collaborations, and blockchain collectibles.
-          </p>
-          
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-            <div className="text-center">
-              <p className="text-4xl md:text-5xl font-display font-medium text-gradient-orange">2021</p>
-              <p className="text-xs uppercase tracking-wider text-muted-foreground mt-2">First Houston Hip-Hop NFT</p>
-            </div>
-            <div className="w-px h-16 bg-white/10 hidden md:block" />
-            <div className="text-center">
-              <p className="text-4xl md:text-5xl font-display font-medium text-primary">11</p>
-              <p className="text-xs uppercase tracking-wider text-muted-foreground mt-2">Album Tracks Tokenized</p>
-            </div>
-            <div className="w-px h-16 bg-white/10 hidden md:block" />
-            <div className="text-center">
-              <p className="text-4xl md:text-5xl font-display font-medium text-foreground">ETH</p>
-              <p className="text-xs uppercase tracking-wider text-muted-foreground mt-2">Ethereum Blockchain</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <NFTHeroSection />
 
       {/* Milestone Banner */}
       <section className="relative py-12 bg-white/[0.02] border-y border-white/5">
