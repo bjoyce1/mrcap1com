@@ -20,42 +20,259 @@ export const blogCategories = [
   "Behind the Music",
   "NFT Art & Music",
   "Crypto",
+  "Media & Press",
+  "Collaborations",
 ];
 
 export const blogPosts: BlogPost[] = [
   {
     slug: "breaking-boundaries-mr-cap-pioneers-hip-hop-nfts-in-houston",
     title: "Breaking Boundaries: Mr. CAP Pioneers Hip Hop NFTs in Houston",
-    excerpt: "Houston, Texas - The world of music and art took a major leap forward with the February 25, 2021 sale of the first-ever Hip Hop NFT by a Houston artist.",
+    excerpt: "On 25 February 2021 Mr. CAP minted and sold a one-of-a-kind NFT of his song 'Limitless' through OpenSea, becoming the first Houston rap artist to leverage non-fungible tokens.",
     content: `
-## The Historic Sale
+## A Milestone for Houston Hip-Hop
 
-Houston, Texas - The world of music and art took a major leap forward with the February 25, 2021 sale of the first-ever Hip Hop NFT by a Houston artist.
+In early 2024 Mr. CAP announced a milestone that places Houston at the forefront of blockchain culture. On **25 February 2021** he minted and sold a one-of-a-kind NFT of his song **"Limitless"** through OpenSea, becoming the first Houston rap artist to leverage non-fungible tokens.
 
-*Content coming soon - check back for the full story of how Mr. CAP made history in the NFT space.*
+## What is an NFT?
+
+An NFT (non-fungible token) is a unique digital asset recorded on a blockchain and cannot be replicated; it gives its owner provable authenticity and the ability to transfer ownership.
+
+## New Revenue Streams and Creative Possibilities
+
+In this blog post Mr. CAP recounts how minting "Limitless" as an NFT opened new revenue streams and creative possibilities. He explains that NFTs are not just collectibles but a way for artists to retain control of their work in the digital age.
+
+> "I am extremely proud to be the first Houston rap artist to sell a Hip Hop NFT on the blockchain."
+
+He notes that the success of the sale could inspire other independent musicians to embrace Web3 technology.
+
+## Houston's Hip-Hop Innovation
+
+The article also places the accomplishment in the broader context of Houston's hip-hop scene. By pioneering Hip Hop NFTs Mr. CAP shows how artists from the South Park Coalition can innovate beyond music, blending technology with culture.
+
+The piece concludes by encouraging readers to learn more about NFTs and to watch for future blockchain releases from the artist.
     `,
     category: "NFT Art & Music",
     date: "2024-01-30",
     author: "ISM",
-    readTime: "2 min",
-    tags: ["NFT", "Hip Hop", "Houston", "Blockchain", "History"],
+    readTime: "4 min",
+    tags: ["NFT", "Hip Hop", "Houston", "Blockchain", "History", "Limitless", "OpenSea"],
   },
   {
     slug: "mr-cap-is-shaking-up-the-nft-world-with-im-bout-to-blow",
     title: "Mr. CAP is Shaking Up the NFT World with \"I'm Bout To Blow\"",
-    excerpt: "Hey hip-hop heads and NFT enthusiasts! Big news hitting the streets – Houston's very own rap legend, Mr. CAP, is taking the NFT world by storm.",
+    excerpt: "In 2023 Mr. CAP revisited his 2019 single 'I'm Bout To Blow' and reimagined it as a digital collectible, offering fans a way to invest in his music and own a piece of hip-hop history.",
     content: `
-## Introduction
+## A Classic Reimagined
 
-Hey hip-hop heads and NFT enthusiasts! Big news hitting the streets – Houston's very own rap legend, Mr. CAP, is taking the NFT world by storm with his latest release "I'm Bout To Blow".
+In 2023 Mr. CAP revisited his 2019 single **"I'm Bout To Blow"** and reimagined it as a digital collectible. The track is a gritty anthem about perseverance and self-belief – and now he's decided to mint it as an NFT.
 
-*Content coming soon - check back for the full story of this exciting NFT release.*
+By turning the song into a limited-edition digital asset he offers fans a way to invest in his music and own a piece of hip-hop history.
+
+## Benefits of the NFT Release
+
+The article details the benefits of the NFT release: each token unlocks exclusive artwork, behind-the-scenes access and the chance to participate in future drops.
+
+Produced by longtime collaborator **Ciddy Boi Music**, the song's pounding drums and cinematic soundscapes are preserved in a format that can't be pirated or copied. Mr. CAP emphasises that blockchain technology gives artists direct control over their catalogue and rewards loyal supporters.
+
+## Nostalgia Meets Innovation
+
+For listeners who knew the original version, the NFT drop represents both nostalgia and innovation. The post encourages fans to explore the NFT marketplace and highlights that a portion of proceeds will fund upcoming projects.
+
+**"I'm Bout To Blow"** is no longer just a song – it's a tokenised statement about independence and ownership in the digital era.
     `,
     category: "NFT Art & Music",
     date: "2023-12-20",
     author: "ISM",
+    readTime: "4 min",
+    tags: ["NFT", "Hip Hop", "New Release", "Music NFT", "Ciddy Boi Music"],
+  },
+  {
+    slug: "dippin-thru-the-metaverse-pt-1",
+    title: "Dippin Thru the Metaverse pt.1",
+    excerpt: "Mr. CAP teams up with producer Ciddy Boi P to explore the fusion of hip-hop and emerging technology in this single that blends classic southern rap with futuristic sound design.",
+    content: `
+## Hip-Hop Meets the Future
+
+On this track Mr. CAP teams up with producer **Ciddy Boi P** to explore the fusion of hip-hop and emerging technology. **"Dippin Thru the Metaverse pt.1"** is a single that blends classic southern rap with futuristic sound design.
+
+## Navigating the Blockchain Era
+
+Lyrically the song paints a picture of navigating the blockchain era, mixing street lessons with references to cryptocurrencies and digital worlds.
+
+## More Than a Gimmick
+
+The project is more than a gimmick; it's a commentary on how technology is reshaping culture. Mr. CAP explains that the "metaverse" in the song represents both a virtual space and a state of mind where artists take control of their destiny.
+
+By incorporating blockchain terminology and cyber-punk production, he aims to show that hip-hop can evolve without losing its soul.
+
+## The Journey Continues
+
+Readers are invited to listen to the track and reflect on the intersection of music and Web3. The post hints at future instalments that will further explore the metaverse concept, encouraging fans to follow the journey as the artist dips through new digital dimensions.
+    `,
+    category: "NFT Art & Music",
+    date: "2023-12-20",
+    author: "ISM",
+    readTime: "3 min",
+    tags: ["Metaverse", "Web3", "Ciddy Boi P", "Technology", "Hip Hop"],
+  },
+  {
+    slug: "honoring-the-legacy-of-o-n-e-with-the-release-of-to-tha-grave",
+    title: "Honoring the Legacy of O.N.E. with the Release of 'To Tha Grave'",
+    excerpt: "This heartfelt post commemorates the remastered release of 'To Tha Grave,' originally recorded with Mr. CAP's cousin O.N.E. (Originality Never Ends).",
+    content: `
+## A Tribute to Family
+
+This heartfelt post commemorates the remastered release of **"To Tha Grave,"** originally recorded with Mr. CAP's cousin **O.N.E. (Originality Never Ends)**. O.N.E. passed away in 2021, and the updated version is both a tribute and a celebration of his contributions to Houston rap.
+
+Mr. CAP recalls their creative partnership and the late artist's influence on the South Park Coalition's sound.
+
+## Preserving Legacy on the Blockchain
+
+The post describes how the single has been minted as an NFT to preserve O.N.E.'s legacy on the blockchain. Fans can stream the track for free or purchase the tokenised edition, which includes:
+
+- The remastered audio
+- Unseen photos
+- A short documentary clip
+
+Proceeds from the NFT will support O.N.E.'s family and a scholarship fund for aspiring musicians.
+
+## Keeping Art Alive
+
+In closing Mr. CAP encourages listeners to share the song, reflect on O.N.E.'s impact and honour those we've lost by keeping their art alive.
+    `,
+    category: "Behind the Music",
+    date: "2022-12-22",
+    author: "ISM",
+    readTime: "4 min",
+    tags: ["O.N.E.", "Tribute", "Family", "NFT", "South Park Coalition", "Legacy"],
+  },
+  {
+    slug: "discover-pwa-power-weed-alcohol-the-hottest-collaboration-from-mr-cap-and-devyn-kelly",
+    title: "Discover 'PWA (Power Weed & Alcohol)' – The Hottest Collaboration from Mr. CAP and Devyn Kelly",
+    excerpt: "Mr. CAP teams up with singer Devyn Kelly and producer Ciddy Boi Music for a steamy blend of hip-hop and R&B.",
+    content: `
+## A Steamy Collaboration
+
+On **8 April 2023** Mr. CAP teamed up with singer **Devyn Kelly** and producer **Ciddy Boi Music** to release **"PWA (Power Weed & Alcohol)."**
+
+The track is a steamy blend of hip-hop and R&B, with Mr. CAP's verses delivered over sultry chords and Devyn Kelly's smooth hook. Lyrically it celebrates intoxicating nights and the chemistry between collaborators.
+
+## Limited NFT Offering
+
+The article highlights a special NFT offering: only **500** digital tokens were minted, each including:
+
+- The single
+- High-resolution artwork
+- Access to a private listening session
+
+Collectors who purchase the NFT would also receive a discount code for upcoming merchandise. Mr. CAP notes that the drop is designed to reward fans who believe in the duo's creative chemistry.
+
+## Available Everywhere
+
+For listeners who prefer traditional platforms, "PWA" was simultaneously released on major streaming services. The post invites audiences to experience the song, share it with friends and consider investing in the limited-edition NFT before it sells out.
+    `,
+    category: "Collaborations",
+    date: "2023-04-08",
+    author: "ISM",
+    readTime: "3 min",
+    tags: ["Devyn Kelly", "Ciddy Boi Music", "R&B", "NFT", "Collaboration"],
+  },
+  {
+    slug: "h-town-represent",
+    title: "H-Town Represent",
+    excerpt: "Mr. CAP pays homage to Houston with the exclusive NFT anthem 'H-Town Represent' – a rallying cry for anyone proud to call Houston home.",
+    content: `
+## A Houston Anthem
+
+Houston's hip-hop scene is known for its loyalty and swagger, and in this post Mr. CAP pays homage with the exclusive NFT anthem **"H-Town Represent."**
+
+Produced by **Ciddy Boi P**, the song features heavy bass, chopped-and-screwed influences and lyrics that name-check neighbourhoods and legends. The track is more than music – it's a rallying cry for anyone proud to call Houston home.
+
+## Limited NFT Release
+
+The release includes a limited run of **100** NFTs. Each token bundles:
+
+- The song
+- A piece of cover art hand-drawn by Mr. CAP
+- Access to an online meet-and-greet
+
+The post notes that buyers will own a piece of Houston music history and help fund future creative projects.
+
+## Reflecting on the Journey
+
+Mr. CAP uses the article to reflect on his journey through the South Park Coalition and the city's influence on his craft. He encourages fans to secure their NFT early and to blast the anthem in celebration of H-Town's enduring legacy.
+    `,
+    category: "Houston Hip-Hop History",
+    date: "2023-04-07",
+    author: "ISM",
+    readTime: "3 min",
+    tags: ["Houston", "H-Town", "NFT", "Ciddy Boi P", "South Park Coalition"],
+  },
+  {
+    slug: "dear-frank",
+    title: "Dear Frank (Motion Picture Soundtrack)",
+    excerpt: "Mr. CAP contributes to the motion picture 'Dear Frank' soundtrack, teaming up with Da Homie and E-Dogg on the song 'Get Me Right.'",
+    content: `
+## Contributing to Cinema
+
+This post announces Mr. CAP's contribution to the motion picture **"Dear Frank,"** a dramatic film featuring Brian J. White, Claudia Jordan, Columbus Short and Kearia Schroeder.
+
+## The Track
+
+For the soundtrack Mr. CAP teams up with **Da Homie** and **E-Dogg** on the song **"Get Me Right,"** produced by **TrackHouse Productions**.
+
+## Versatility in Action
+
+The article serves as a credit roll, listing the artists involved and encouraging fans to watch the film and listen to the soundtrack. This post underscores Mr. CAP's versatility as both a performer and a contributor to multimedia projects.
+    `,
+    category: "Behind the Music",
+    date: "2021-01-27",
+    author: "ISM",
     readTime: "2 min",
-    tags: ["NFT", "Hip Hop", "New Release", "Music NFT"],
+    tags: ["Soundtrack", "Film", "Dear Frank", "Da Homie", "E-Dogg", "TrackHouse Productions"],
+  },
+  {
+    slug: "hangin-with-mr-cap-of-the-spc",
+    title: "Hangin' With Mr. CAP of the SPC",
+    excerpt: "A look back at hanging out with Mr. CAP, a founding member of the South Park Coalition (SPC).",
+    content: `
+## A Founding Member
+
+This post from March 2015 documents time spent with Mr. CAP, a founding member of the **South Park Coalition (SPC)**.
+
+## The SPC Legacy
+
+The South Park Coalition has been a cornerstone of Houston's underground hip-hop scene since the late 1980s. Mr. CAP's contributions to the collective helped shape the sound and philosophy that would influence generations of artists.
+
+## More to Come
+
+*Additional content, photos and reflections from this era coming soon.*
+    `,
+    category: "South Park Coalition",
+    date: "2015-03-13",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["South Park Coalition", "SPC", "Houston", "History"],
+  },
+  {
+    slug: "mr-cap-interview-and-performance-on-fame-train",
+    title: "Mr. CAP Interview & Performance on Fame Train",
+    excerpt: "Mr. CAP appears on the television show Fame Train for an exclusive interview and live performance.",
+    content: `
+## Television Appearance
+
+In 2016 Mr. CAP made an appearance on the television show **Fame Train** for an exclusive interview and live performance.
+
+## More to Come
+
+*Additional context about the interview, performance details and memorable quotes coming soon. Video links will be added when available.*
+    `,
+    category: "Media & Press",
+    date: "2016-06-13",
+    author: "ISM",
+    readTime: "2 min",
+    tags: ["Interview", "Television", "Fame Train", "Performance"],
   },
   {
     slug: "the-untold-story-of-mr-cap",
