@@ -32,38 +32,57 @@ const pastShows = [
 const Live = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "MusicEvent",
-    "name": "South Park Coalition Live in Concert - The Bet'n On Me Tour",
-    "startDate": "2025-12-13T19:00:00-06:00",
-    "location": {
-      "@type": "MusicVenue",
-      "name": "Flamingo Cantina",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "515 E 6th St",
-        "addressLocality": "Austin",
-        "addressRegion": "TX",
-        "postalCode": "78701",
-        "addressCountry": "US"
+    "@graph": [
+      {
+        "@type": "MusicEvent",
+        "name": "South Park Coalition Live in Concert - The Bet'n On Me Tour",
+        "startDate": "2025-12-13T19:00:00-06:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "MusicVenue",
+          "name": "Flamingo Cantina",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "515 E 6th St",
+            "addressLocality": "Austin",
+            "addressRegion": "TX",
+            "postalCode": "78701",
+            "addressCountry": "US"
+          }
+        },
+        "performer": [
+          { "@type": "Person", "name": "Mr. CAP" },
+          { "@type": "MusicGroup", "name": "South Park Coalition" }
+        ],
+        "offers": {
+          "@type": "Offer",
+          "url": "https://spcatx2025.lovable.app/",
+          "availability": "https://schema.org/InStock"
+        },
+        "image": "https://mrcap1.com/images/spc-austin-2025.png"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+          { "@type": "ListItem", "position": 2, "name": "Live", "item": "https://mrcap1.com/live" }
+        ]
       }
-    },
-    "performer": {
-      "@type": "Person",
-      "name": "Mr. CAP"
-    },
-    "url": "https://spcatx2025.lovable.app/",
-    "eventStatus": "https://schema.org/EventScheduled"
+    ]
   };
 
   return (
     <>
       <Helmet>
-        <title>Live Shows & Booking | Mr. CAP</title>
-        <meta name="description" content="Book Mr. CAP for shows across Houston, Texas, and Louisiana. View upcoming tour dates, past performances, and submit booking requests for concerts, festivals, and special events." />
-        <link rel="canonical" href="https://mrcapmusic.com/live" />
+        <title>Live Shows & Booking | Mr. CAP – Houston Hip-Hop Concerts & Events</title>
+        <meta name="description" content="Book Mr. CAP for live shows across Houston, Texas, and Louisiana. View upcoming tour dates, past performances, and submit booking requests for concerts, festivals, and special events." />
+        <link rel="canonical" href="https://mrcap1.com/live" />
         
         <meta property="og:title" content="Live Shows & Booking | Mr. CAP" />
         <meta property="og:description" content="Book Mr. CAP for shows across Houston, Texas, and Louisiana. View upcoming tour dates and booking info." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mrcap1.com/live" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

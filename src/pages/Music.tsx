@@ -125,21 +125,35 @@ const streamingPlatforms = [
 const Music = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "MusicAlbum",
-    "name": "The Ties That Bind Us",
-    "byArtist": {
-      "@type": "Person",
-      "name": "Mr. CAP"
-    },
-    "genre": "Hip-Hop",
-    "image": "https://mrcapmusic.com/images/albums/the-ties-that-bind-us.jpg",
-    "url": "https://mrcapmusic.com/music",
-    "datePublished": "2024",
-    "track": [
+    "@graph": [
       {
-        "@type": "MusicRecording",
-        "name": "Bet'n On Me",
-        "url": "https://mrcapmusic.com/music#betn-on-me"
+        "@type": "MusicPlaylist",
+        "name": "Mr. CAP Discography",
+        "description": "Complete discography of Houston hip-hop artist Mr. CAP including albums, singles, and collaborations.",
+        "url": "https://mrcap1.com/music",
+        "numTracks": 50,
+        "track": albums.filter(a => a.type === "Album" || a.type === "SPC Album").map(album => ({
+          "@type": "MusicRecording",
+          "name": album.title,
+          "datePublished": album.year,
+          "byArtist": { "@type": "Person", "name": "Mr. CAP" }
+        }))
+      },
+      {
+        "@type": "MusicAlbum",
+        "name": "The Ties That Bind Us",
+        "byArtist": { "@type": "MusicGroup", "name": "South Park Coalition" },
+        "genre": ["Hip-Hop", "Southern Rap"],
+        "datePublished": "2024-10-18",
+        "numTracks": 19,
+        "track": [{ "@type": "MusicRecording", "name": "Bet'n On Me" }]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+          { "@type": "ListItem", "position": 2, "name": "Music", "item": "https://mrcap1.com/music" }
+        ]
       }
     ]
   };
@@ -147,12 +161,14 @@ const Music = () => {
   return (
     <>
       <Helmet>
-        <title>Music by Mr. CAP | Albums, Singles, Videos & Lyrics</title>
-        <meta name="description" content="Stream albums, singles and videos from Mr. CAP, Houston hip-hop artist and South Park Coalition original member. Explore The Ties That Bind Us, 2 Tha Grave, and more." />
-        <link rel="canonical" href="https://mrcapmusic.com/music" />
+        <title>Music by Mr. CAP | Albums, Singles & Discography | Houston Hip-Hop</title>
+        <meta name="description" content="Stream albums, singles and music from Mr. CAP – Houston hip-hop artist and South Park Coalition original member. Explore The Ties That Bind Us, The Art of ISM, 2 Tha Grave, and more." />
+        <link rel="canonical" href="https://mrcap1.com/music" />
         
-        <meta property="og:title" content="Music by Mr. CAP | Albums, Singles, Videos & Lyrics" />
+        <meta property="og:title" content="Music by Mr. CAP | Albums, Singles & Discography" />
         <meta property="og:description" content="Stream the complete discography of Houston hip-hop pioneer Mr. CAP." />
+        <meta property="og:type" content="music.album" />
+        <meta property="og:url" content="https://mrcap1.com/music" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

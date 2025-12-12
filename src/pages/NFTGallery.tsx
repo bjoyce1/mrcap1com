@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ExternalLink, Wallet } from "lucide-react";
 import { ArtOfIsmCollection } from "@/components/ArtOfIsmCollection";
 import { OtherNftsGallery } from "@/components/OtherNftsGallery";
@@ -17,7 +18,39 @@ const NFTGallery = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Mr. CAP NFT Collection",
+    "description": "Explore Mr. CAP's NFT collection featuring The Art of ISM album tracks and exclusive digital collectibles. First Houston rapper to sell a Hip Hop NFT on the blockchain.",
+    "url": "https://mrcap1.com/nft",
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "The Art of ISM NFT Album Collection",
+      "description": "11 tracks from The Art of ISM album available as individual NFT collectibles",
+      "numberOfItems": 11
+    },
+    "about": {
+      "@type": "Person",
+      "name": "Mr. CAP",
+      "description": "First Houston rapper to sell a Hip Hop NFT on the blockchain (February 25, 2021)"
+    }
+  };
+
   return (
+    <>
+      <Helmet>
+        <title>NFT Gallery | Mr. CAP – Digital Art & Music Collectibles</title>
+        <meta name="description" content="Explore Mr. CAP's NFT collection featuring The Art of ISM album, exclusive digital art, and music collectibles. First Houston rapper to sell a Hip Hop NFT on the blockchain." />
+        <link rel="canonical" href="https://mrcap1.com/nft" />
+        
+        <meta property="og:title" content="NFT Gallery | Mr. CAP" />
+        <meta property="og:description" content="Digital art and music collectibles from Houston hip-hop pioneer Mr. CAP." />
+        <meta property="og:type" content="website" />
+        
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
+
     <div className="min-h-screen bg-background text-foreground">
       {/* Grid Pattern Background */}
       <div className="fixed inset-0 z-0 bg-grid-pattern pointer-events-none" />
@@ -152,6 +185,7 @@ const NFTGallery = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

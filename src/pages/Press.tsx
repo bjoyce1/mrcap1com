@@ -56,25 +56,60 @@ const mediaBio = `Cornelius A. Pratt, professionally known as Mr. CAP, is a Hous
 const Press = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Press & Media - Mr. CAP - EPK",
-    "description": "Access official press assets, bio, photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features.",
-    "mainEntity": {
-      "@type": "Person",
-      "name": "Mr. CAP",
-      "description": "Houston hip-hop artist and South Park Coalition member"
-    }
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Press & Media - Mr. CAP - Electronic Press Kit",
+        "description": "Access official press assets, bio, photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features.",
+        "url": "https://mrcap1.com/press",
+        "mainEntity": {
+          "@type": "Person",
+          "name": "Mr. CAP",
+          "description": "Houston hip-hop artist and South Park Coalition member"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How can I request an interview with Mr. CAP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For interview requests, contact wrecklessent@gmail.com. Please include details about your publication, audience, and preferred format. Allow 48-72 hours for response."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where can I download press photos of Mr. CAP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "High-resolution press photos and the official press kit are available for download on the Press page at mrcap1.com/press."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+          { "@type": "ListItem", "position": 2, "name": "Press", "item": "https://mrcap1.com/press" }
+        ]
+      }
+    ]
   };
 
   return (
     <>
       <Helmet>
-        <title>Press & Media | Mr. CAP – EPK</title>
-        <meta name="description" content="Access official press assets, bio, photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features." />
-        <link rel="canonical" href="https://mrcapmusic.com/press" />
+        <title>Press & Media | Mr. CAP – Electronic Press Kit (EPK)</title>
+        <meta name="description" content="Access official press assets, bio, high-res photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features for Houston hip-hop coverage." />
+        <link rel="canonical" href="https://mrcap1.com/press" />
         
         <meta property="og:title" content="Press & Media | Mr. CAP – EPK" />
         <meta property="og:description" content="Press kit and media coverage for Houston hip-hop artist Mr. CAP." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mrcap1.com/press" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

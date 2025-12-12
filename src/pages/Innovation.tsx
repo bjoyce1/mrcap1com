@@ -22,26 +22,55 @@ import dippinMetaverse from "@/assets/dippin-metaverse.png";
 const Innovation = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Innovation & Tech - Mr. CAP",
-    "description": "Explore Mr. CAP's tech ventures including CAP Distributions, blockchain projects, NFTs, and the groundbreaking 'Dippin Thru the Metaverse' single.",
-    "mainEntity": {
-      "@type": "Person",
-      "name": "Mr. CAP",
-      "description": "Houston hip-hop artist, technologist, and entrepreneur",
-      "knowsAbout": ["Digital Distribution", "Blockchain", "NFTs", "Web3", "Music Technology"]
-    }
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Innovation & Tech - Mr. CAP",
+        "description": "Explore Mr. CAP's tech ventures including CAP Distributions digital distribution platform, blockchain projects, NFTs, and the groundbreaking 'Dippin Thru the Metaverse' single.",
+        "url": "https://mrcap1.com/innovation",
+        "mainEntity": {
+          "@type": "Person",
+          "name": "Mr. CAP",
+          "description": "Houston hip-hop artist, technologist, and entrepreneur",
+          "knowsAbout": ["Digital Distribution", "Blockchain", "NFTs", "Web3", "Music Technology", "Computer Network Engineering"]
+        }
+      },
+      {
+        "@type": "Organization",
+        "name": "CAP Distributions",
+        "description": "Digital distribution company helping independent artists make their music available worldwide.",
+        "founder": { "@type": "Person", "name": "Mr. CAP" },
+        "serviceType": ["Music Distribution", "Graphic Design", "Web Development", "Media Production"]
+      },
+      {
+        "@type": "MusicRecording",
+        "name": "Dippin Thru the Metaverse",
+        "byArtist": { "@type": "Person", "name": "Mr. CAP" },
+        "producer": { "@type": "Person", "name": "Ciddy Boi P" },
+        "datePublished": "2023-12",
+        "description": "A groundbreaking blend of Houston street narratives with futuristic production, exploring blockchain and digital innovation."
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+          { "@type": "ListItem", "position": 2, "name": "Innovation", "item": "https://mrcap1.com/innovation" }
+        ]
+      }
+    ]
   };
 
   return (
     <>
       <Helmet>
         <title>Innovation & Tech | Mr. CAP – Digital Distribution, Blockchain & Web3</title>
-        <meta name="description" content="Explore Mr. CAP's tech ventures: CAP Distributions digital music platform, blockchain/NFT projects, and the groundbreaking 'Dippin Thru the Metaverse' single." />
-        <link rel="canonical" href="https://mrcapmusic.com/innovation" />
+        <meta name="description" content="Explore Mr. CAP's tech ventures: CAP Distributions digital music platform, blockchain/NFT projects, and the groundbreaking 'Dippin Thru the Metaverse' single. Where Houston hip-hop meets technology." />
+        <link rel="canonical" href="https://mrcap1.com/innovation" />
         
         <meta property="og:title" content="Innovation & Tech | Mr. CAP" />
         <meta property="og:description" content="Where Houston hip-hop meets blockchain technology and digital innovation." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mrcap1.com/innovation" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
