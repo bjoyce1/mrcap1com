@@ -63,6 +63,30 @@ const Index = () => {
         }
       },
       {
+        "@type": "Organization",
+        "@id": "https://mrcap1.com/#organization",
+        "name": "CAP Distributions",
+        "alternateName": "Wreckless Entertainment",
+        "description": "Independent music label and distribution company founded by Mr. CAP, focusing on digital distribution, blockchain music, and artist development.",
+        "url": "https://mrcap1.com",
+        "logo": "https://mrcap1.com/favicon.ico",
+        "founder": { "@id": "https://mrcap1.com/#person" },
+        "foundingLocation": {
+          "@type": "Place",
+          "name": "Houston, Texas"
+        },
+        "areaServed": "US",
+        "sameAs": [
+          "https://instagram.com/mrcapism",
+          "https://twitter.com/mrcap1"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "wrecklessent@gmail.com",
+          "contactType": "booking"
+        }
+      },
+      {
         "@type": "MusicGroup",
         "@id": "https://mrcap1.com/#artist",
         "name": "Mr. CAP",
