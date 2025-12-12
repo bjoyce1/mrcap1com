@@ -1,15 +1,29 @@
 import { Play, Disc3, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+
 const HeroSection = () => {
-  return <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Video Background */}
-      <div className="absolute inset-0 z-0">
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Video Background with Parallax */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{ transform: `translateY(${scrollY * 0.5}px)` }}
+      >
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-95"
+          className="w-full h-full object-cover opacity-95 scale-110"
         >
           <source src="/video/hero-bg.webm" type="video/webm" />
         </video>
@@ -18,13 +32,22 @@ const HeroSection = () => {
       </div>
 
       {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 z-0 bg-grid-pattern pointer-events-none" />
+      <div 
+        className="absolute inset-0 z-0 bg-grid-pattern pointer-events-none"
+        style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+      />
 
-      {/* Orange Glow Effect */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+      {/* Orange Glow Effect with Parallax */}
+      <div 
+        className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary/10 blur-[100px] rounded-full pointer-events-none"
+        style={{ transform: `translate(50%, calc(-50% + ${scrollY * 0.2}px))` }}
+      />
 
-      {/* Content */}
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-16 py-32 md:py-40">
+      {/* Content with Reverse Parallax */}
+      <div 
+        className="relative z-10 w-full px-6 md:px-12 lg:px-16 py-32 md:py-40"
+        style={{ transform: `translateY(${scrollY * -0.1}px)` }}
+      >
         <div className="max-w-3xl">
           {/* Badge */}
           <div className="flex items-center gap-3 mb-6 animate-fade-in">
@@ -43,19 +66,19 @@ const HeroSection = () => {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed mb-8 animate-slide-up font-light" style={{
-          animationDelay: "0.1s"
-        }}>
+            animationDelay: "0.1s"
+          }}>
             Mr. CAP is an original South Park Coalition member, rapper, writer, and technologist bridging Houston's underground roots with tomorrow's tech.
           </p>
 
           {/* Album & Single Announcements */}
           <div className="flex flex-wrap items-center gap-3 mb-10 animate-slide-up" style={{
-          animationDelay: "0.2s"
-        }}>
+            animationDelay: "0.2s"
+          }}>
             <div className="flex items-center gap-3 px-4 py-2 bg-white/[0.02] border border-white/10 rounded-full">
               <Disc3 className="w-4 h-4 text-primary animate-spin" style={{
-              animationDuration: "3s"
-            }} />
+                animationDuration: "3s"
+              }} />
               <span className="text-sm text-muted-foreground">
                 SPC Album · <span className="text-foreground font-medium">The Ties That Bind Us</span>
               </span>
@@ -69,8 +92,8 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 animate-slide-up" style={{
-          animationDelay: "0.3s"
-        }}>
+            animationDelay: "0.3s"
+          }}>
             <Button variant="flux" size="lg">
               <Play className="w-4 h-4" />
               Stream "Bet'n On Me"
@@ -89,7 +112,10 @@ const HeroSection = () => {
         </div>
 
         {/* SPC Badge */}
-        <div className="absolute bottom-8 right-6 md:right-8 hidden md:block animate-float">
+        <div 
+          className="absolute bottom-8 right-6 md:right-8 hidden md:block animate-float"
+          style={{ transform: `translateY(${scrollY * -0.15}px)` }}
+        >
           <div className="bg-white/[0.02] backdrop-blur-lg border border-white/10 rounded-2xl px-6 py-4">
             <p className="font-display text-lg font-medium text-foreground tracking-tight">
               South Park Coalition
@@ -104,6 +130,8 @@ const HeroSection = () => {
         <span className="text-xs uppercase tracking-widest text-muted-foreground">Scroll</span>
         <div className="w-px h-8 bg-gradient-to-b from-primary to-transparent" />
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
