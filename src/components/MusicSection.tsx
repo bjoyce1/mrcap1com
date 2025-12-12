@@ -18,21 +18,15 @@ const albums = [{
   featured: true,
   description: "SPC group album featuring K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped version released Jan 2025."
 }, {
-  title: "O.N.E. on O.N.E.",
-  artist: "O.N.E. & Mr. CAP",
-  year: "2005",
-  role: "Co-artist (collab album)",
-  label: "O.N.E. 4 Da Money Entertainment",
-  format: "CD, Album",
-  image: albumOneOnOne
-}, {
-  title: "Tha Cold Ass Pimp",
-  artist: "Tha Cold Ass Pimp",
-  year: "2006",
-  role: "Mixtape",
-  label: "O.N.E. 4 Da Money Entertainment",
-  format: "CDr, Album",
-  image: albumColdAssPimp
+  title: "The Art Of ISM",
+  artist: "Mr. CAP",
+  year: "2019",
+  role: "Lead artist (3rd studio album)",
+  label: "Sony Music / The Orchard",
+  format: "Digital, Album, 11 tracks",
+  catalog: "Deluxe Edition",
+  image: albumArtOfIsm,
+  description: "Features production by Zaytoven, Metro Boomin & Mike Will Made-It. Lead single: Words Of Ism (2018)"
 }, {
   title: "2 Tha Grave",
   artist: "Mr. CAP",
@@ -43,15 +37,21 @@ const albums = [{
   catalog: "CAP RECORDS",
   image: albumGrave
 }, {
-  title: "The Art Of ISM",
-  artist: "Mr. CAP",
-  year: "2019",
-  role: "Lead artist (3rd studio album)",
-  label: "Sony Music / The Orchard",
-  format: "Digital, Album, 11 tracks",
-  catalog: "Deluxe Edition",
-  image: albumArtOfIsm,
-  description: "Features production by Zaytoven, Metro Boomin & Mike Will Made-It. Lead single: Words Of Ism (2018)"
+  title: "Tha Cold Ass Pimp",
+  artist: "Tha Cold Ass Pimp",
+  year: "2006",
+  role: "Mixtape",
+  label: "O.N.E. 4 Da Money Entertainment",
+  format: "CDr, Album",
+  image: albumColdAssPimp
+}, {
+  title: "O.N.E. on O.N.E.",
+  artist: "O.N.E. & Mr. CAP",
+  year: "2005",
+  role: "Co-artist (collab album)",
+  label: "O.N.E. 4 Da Money Entertainment",
+  format: "CD, Album",
+  image: albumOneOnOne
 }];
 const singles = [{
   year: "2024",
