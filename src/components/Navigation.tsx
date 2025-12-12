@@ -13,6 +13,7 @@ const navLinks = [
   { to: "/cities", label: "Cities" },
   { to: "/nft", label: "NFT", highlight: true },
   { to: "/art", label: "Art", highlight: true },
+  { to: "/innovation", label: "Tech", highlight: true },
 ];
 
 const homeSections = [
