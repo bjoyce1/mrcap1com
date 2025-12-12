@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/hooks/useAuth";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Music from "./pages/Music";
@@ -17,10 +18,16 @@ import CityLanding from "./pages/CityLanding";
 import NFTGallery from "./pages/NFTGallery";
 import ArtGallery from "./pages/ArtGallery";
 import Innovation from "./pages/Innovation";
+import HoustonRapper from "./pages/HoustonRapper";
+import SouthParkCoalition from "./pages/SouthParkCoalition";
+import TexasUndergroundHipHop from "./pages/TexasUndergroundHipHop";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+
+// Google Analytics Measurement ID - Replace with actual ID when available
+const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +39,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
@@ -46,6 +54,9 @@ const App = () => (
               <Route path="/nft" element={<NFTGallery />} />
               <Route path="/art" element={<ArtGallery />} />
               <Route path="/innovation" element={<Innovation />} />
+              <Route path="/houston-rapper-mr-cap" element={<HoustonRapper />} />
+              <Route path="/south-park-coalition-houston" element={<SouthParkCoalition />} />
+              <Route path="/texas-underground-hip-hop" element={<TexasUndergroundHipHop />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
