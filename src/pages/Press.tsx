@@ -7,6 +7,12 @@ import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image } fr
 
 const pressFeatures = [
   {
+    outlet: "Sound.xyz",
+    title: "Dippin Thru the Metaverse – A Groundbreaking Blend of Hip-Hop and Technology",
+    date: "2023",
+    url: "https://www.sound.xyz/mrcap/dippin-thru-the-metaverse",
+  },
+  {
     outlet: "Houston Chronicle",
     title: "South Park Coalition: 30 Years of Houston Underground",
     date: "2024",
@@ -27,6 +33,10 @@ const pressFeatures = [
 ];
 
 const quotes = [
+  {
+    text: "Shout-out to Mr. Cap… he a hardworking man. I sit and watch him all the time. I learn a lot from watching things.",
+    source: "Sosamann, HotNewHipHop Interview (2022)",
+  },
   {
     text: "Mr. CAP represents the true essence of Houston hip-hop. His longevity and authenticity are unmatched.",
     source: "K-Rino, South Park Coalition Founder",

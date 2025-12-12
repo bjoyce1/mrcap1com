@@ -48,8 +48,8 @@ const HeroSection = () => {
             Mr. CAP is an original South Park Coalition member, rapper, writer, and technologist bridging Houston's underground roots with tomorrow's tech.
           </p>
 
-          {/* Album Announcement */}
-          <div className="flex items-center gap-4 mb-10 animate-slide-up" style={{
+          {/* Album & Single Announcements */}
+          <div className="flex flex-wrap items-center gap-3 mb-10 animate-slide-up" style={{
           animationDelay: "0.2s"
         }}>
             <div className="flex items-center gap-3 px-4 py-2 bg-white/[0.02] border border-white/10 rounded-full">
@@ -57,7 +57,12 @@ const HeroSection = () => {
               animationDuration: "3s"
             }} />
               <span className="text-sm text-muted-foreground">
-                New Album · <span className="text-foreground font-medium">The Ties That Bind Us</span>
+                SPC Album · <span className="text-foreground font-medium">The Ties That Bind Us</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-3 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full">
+              <span className="text-sm text-primary font-medium">
+                🔥 New Single: Dippin Thru the Metaverse
               </span>
             </div>
           </div>

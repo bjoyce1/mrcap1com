@@ -11,16 +11,16 @@ const VenturesSection = () => {
     },
     {
       icon: Disc,
-      name: "Cap Distributions",
+      name: "CAP Distributions",
       description:
-        "A digital distribution and creative services company connecting independent artists and brands with professional-level graphic design, web design, music production, and media solutions.",
+        "With his background in computer network engineering, Mr. CAP founded CAP Distributions — a digital distribution company helping independent artists make their music available worldwide. Beyond distribution, it offers professional graphic design, web design, and media solutions.",
       color: "gold",
     },
     {
       icon: Coins,
-      name: "Blockchain & Capicoin",
+      name: "Metaverse & Blockchain",
       description:
-        "Emerging fintech and blockchain concepts focused on ownership, transparency, and financial empowerment — reflecting Mr. CAP's belief that artists and communities should have access to modern tools and new economic rails.",
+        "Mr. CAP's 'Dippin Thru the Metaverse' single reflects his interest in blockchain and NFT culture — portraying the coexistence of street life and digital innovation. His work explores ownership, transparency, and financial empowerment for artists.",
       color: "primary",
     },
   ];
