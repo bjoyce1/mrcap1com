@@ -12,6 +12,8 @@ import albumColdAss from "@/assets/album-cold-ass-pimp.jpg";
 import albumOneOnOne from "@/assets/album-one-on-one.jpg";
 import albumTies from "@/assets/album-ties.jpg";
 import dippinMetaverse from "@/assets/dippin-metaverse.png";
+import southernSounds from "@/assets/southern-sounds.jpg";
+import boutToBlow from "@/assets/bout-to-blow.png";
 
 const albums = [
   {
@@ -55,11 +57,20 @@ const albums = [
   {
     title: "Southern Sounds (Ultra ISM)",
     year: "2023",
-    image: albumBetn,
+    image: southernSounds,
     spotify: "https://open.spotify.com/...",
     apple: "https://music.apple.com/us/album/southern-sounds-ultra-ism-feat-venita-vyne-single/1715088888",
     type: "Single",
     description: "Featuring Venita Vyne. Released on Power Camp.",
+  },
+  {
+    title: "I'm Bout To Blow",
+    year: "2013",
+    image: boutToBlow,
+    spotify: "https://open.spotify.com/...",
+    apple: "https://music.apple.com/...",
+    type: "Single",
+    description: "Classic street anthem from 2013.",
   },
   {
     title: "H-Town Represent",

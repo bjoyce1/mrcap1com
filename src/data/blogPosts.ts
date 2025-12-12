@@ -113,27 +113,6 @@ This collaboration brings together two generations of Houston hip-hop. Big Mike'
     tags: ["Big Mike", "Geto Boys", "Houston", "Collaboration", "Hip Hop"],
   },
   {
-    slug: "whats-up-world",
-    title: "What's Up World",
-    excerpt: "A greeting and update from Mr. CAP to fans around the world.",
-    content: `
-## Checking In
-
-This post from May 2022 served as a greeting and update from Mr. CAP to his fans worldwide.
-
-## Staying Connected
-
-Mr. CAP has always prioritised direct connection with his audience. From early blog posts to NFT drops, the mission remains the same: keep fans in the loop and build community.
-
-*Additional updates and content coming soon.*
-    `,
-    category: "Behind the Music",
-    date: "2022-05-16",
-    author: "ISM",
-    readTime: "2 min",
-    tags: ["Update", "Community", "Fans"],
-  },
-  {
     slug: "today-was-a-great-day",
     title: "Today Was A Great Day (Single)",
     excerpt: "Celebrating the release of the uplifting single 'Today Was A Great Day.'",
