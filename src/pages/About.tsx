@@ -27,43 +27,90 @@ const highlights = [
 const About = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Mr. CAP",
-    "alternateName": "Cornelius A. Pratt",
-    "description": "Houston-born rapper, South Park Coalition original member, and creative technologist connecting hip-hop, business, and blockchain.",
-    "image": "https://mrcapmusic.com/og-image.jpg",
-    "url": "https://mrcapmusic.com/about",
-    "sameAs": [
-      "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-      "https://www.youtube.com/@mrcap1",
-      "https://twitter.com/mrcap1",
-      "https://instagram.com/mrcap.eth",
-      "https://opensea.io/mrcap"
-    ],
-    "jobTitle": "Rapper, Writer, Technologist",
-    "memberOf": {
-      "@type": "MusicGroup",
-      "name": "South Park Coalition"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Houston",
-      "addressRegion": "TX",
-      "addressCountry": "US"
-    },
-    "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "Music Production", "Entrepreneurship", "Digital Distribution"]
+    "@graph": [
+      {
+        "@type": "Person",
+        "name": "Mr. CAP",
+        "alternateName": "Cornelius A. Pratt",
+        "description": "Houston-born rapper, South Park Coalition original member, and creative technologist connecting hip-hop, business, and blockchain.",
+        "image": "https://mrcap1.com/og-image.jpg",
+        "url": "https://mrcap1.com/about",
+        "sameAs": [
+          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
+          "https://www.youtube.com/@mrcap1",
+          "https://twitter.com/mrcap1",
+          "https://instagram.com/mrcapism",
+          "https://www.tiktok.com/@mrcapism",
+          "https://opensea.io/mrcap"
+        ],
+        "jobTitle": "Rapper, Writer, Technologist",
+        "memberOf": {
+          "@type": "MusicGroup",
+          "name": "South Park Coalition"
+        },
+        "alumniOf": {
+          "@type": "HighSchool",
+          "name": "Jack Yates Senior High School",
+          "address": { "@type": "PostalAddress", "addressLocality": "Houston", "addressRegion": "TX" }
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Houston",
+          "addressRegion": "TX",
+          "addressCountry": "US"
+        },
+        "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "Music Production", "Entrepreneurship", "Digital Distribution", "Computer Network Engineering"]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Where is Mr. CAP from?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mr. CAP is from Houston, Texas, specifically the Third Ward/South Park area. He graduated from Jack Yates Senior High School."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Mr. CAP's real name?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mr. CAP's real name is Cornelius A. Pratt."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does CAP stand for?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CAP stands for Cornelius A. Pratt, his initials."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+          { "@type": "ListItem", "position": 2, "name": "About", "item": "https://mrcap1.com/about" }
+        ]
+      }
+    ]
   };
 
   return (
     <>
       <Helmet>
         <title>About Mr. CAP | Houston Rapper, South Park Coalition Original Member & Technologist</title>
-        <meta name="description" content="Learn the story of Mr. CAP – Cornelius A. Pratt – Houston-born rapper, South Park Coalition original member, and creative technologist connecting hip-hop, business, and blockchain." />
-        <link rel="canonical" href="https://mrcapmusic.com/about" />
+        <meta name="description" content="Learn the story of Mr. CAP (Cornelius A. Pratt) – Houston-born rapper, South Park Coalition original member, Jack Yates graduate, and creative technologist connecting hip-hop, business, and blockchain." />
+        <link rel="canonical" href="https://mrcap1.com/about" />
         
         <meta property="og:title" content="About Mr. CAP | Houston Rapper, South Park Coalition Original Member" />
         <meta property="og:description" content="Learn the story of Mr. CAP – Cornelius A. Pratt – Houston-born rapper, South Park Coalition original member, and creative technologist." />
         <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://mrcap1.com/about" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

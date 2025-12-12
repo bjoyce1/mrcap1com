@@ -8,35 +8,46 @@ import { ChevronRight, Clock, Tag } from "lucide-react";
 const Blog = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Mr. CAP Blog",
-    "description": "Insights on Houston hip-hop, music industry, blockchain innovation, and artist success",
-    "url": "https://mrcapmusic.com/blog",
-    "author": {
-      "@type": "Person",
-      "name": "Mr. CAP"
-    },
-    "blogPost": blogPosts.map(post => ({
-      "@type": "BlogPosting",
-      "headline": post.title,
-      "datePublished": post.date,
-      "author": {
-        "@type": "Person",
-        "name": post.author
+    "@graph": [
+      {
+        "@type": "Blog",
+        "name": "Mr. CAP Blog",
+        "description": "Insights on Houston hip-hop history, South Park Coalition, music industry success, blockchain innovation, and independent artist strategies.",
+        "url": "https://mrcap1.com/blog",
+        "author": {
+          "@type": "Person",
+          "name": "Mr. CAP"
+        },
+        "blogPost": blogPosts.map(post => ({
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "datePublished": post.date,
+          "author": { "@type": "Person", "name": post.author },
+          "url": `https://mrcap1.com/blog/${post.slug}`,
+          "description": post.excerpt
+        }))
       },
-      "url": `https://mrcapmusic.com/blog/${post.slug}`
-    }))
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mrcap1.com/blog" }
+        ]
+      }
+    ]
   };
 
   return (
     <>
       <Helmet>
-        <title>Blog — Mr. CAP | Houston Hip-Hop, Music Industry & Blockchain Insights</title>
-        <meta name="description" content="Insights from Mr. CAP on Houston hip-hop history, South Park Coalition, music industry success, and blockchain innovation for artists." />
-        <link rel="canonical" href="https://mrcapmusic.com/blog" />
+        <title>Blog | Mr. CAP – Houston Hip-Hop, Music Industry & Blockchain Insights</title>
+        <meta name="description" content="Insights from Mr. CAP on Houston hip-hop history, South Park Coalition legacy, music industry success strategies, and blockchain innovation for independent artists." />
+        <link rel="canonical" href="https://mrcap1.com/blog" />
         
-        <meta property="og:title" content="Blog — Mr. CAP" />
-        <meta property="og:description" content="Insights on Houston hip-hop, music industry, and blockchain innovation." />
+        <meta property="og:title" content="Blog | Mr. CAP" />
+        <meta property="og:description" content="Insights on Houston hip-hop, music industry, and blockchain innovation from Mr. CAP." />
+        <meta property="og:type" content="blog" />
+        <meta property="og:url" content="https://mrcap1.com/blog" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

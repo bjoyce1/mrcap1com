@@ -2,132 +2,144 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Main Pages -->
   <url>
-    <loc>https://mrcapmusic.com/</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/about</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/about</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/music</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/music</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/live</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/live</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/press</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/press</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/blog</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/blog</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/cities</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/innovation</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/nft</loc>
-    <lastmod>2024-12-03</lastmod>
+    <loc>https://mrcap1.com/nft</loc>
+    <lastmod>2025-12-12</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrcap1.com/art</loc>
+    <lastmod>2025-12-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mrcap1.com/cities</loc>
+    <lastmod>2025-12-12</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <!-- Blog Posts -->
   <url>
-    <loc>https://mrcapmusic.com/blog/south-park-coalition-history-houston-hip-hop</loc>
+    <loc>https://mrcap1.com/blog/south-park-coalition-history-houston-hip-hop</loc>
     <lastmod>2024-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/blog/first-houston-rapper-nft-blockchain</loc>
+    <loc>https://mrcap1.com/blog/first-houston-rapper-nft-blockchain</loc>
     <lastmod>2024-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/blog/independent-artist-success-music-industry-2024</loc>
+    <loc>https://mrcap1.com/blog/independent-artist-success-music-industry-2024</loc>
     <lastmod>2024-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mrcapmusic.com/blog/art-of-ism-album-making-story</loc>
+    <loc>https://mrcap1.com/blog/art-of-ism-album-making-story</loc>
     <lastmod>2024-08-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <!-- Texas Cities -->
-  <url><loc>https://mrcapmusic.com/city/houston</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mrcapmusic.com/city/dallas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mrcapmusic.com/city/fort-worth</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mrcapmusic.com/city/san-antonio</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mrcapmusic.com/city/austin</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mrcapmusic.com/city/el-paso</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mrcapmusic.com/city/arlington</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mrcapmusic.com/city/corpus-christi</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mrcapmusic.com/city/plano</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/lubbock</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/garland</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/frisco</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/mckinney</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/pasadena</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/killeen</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/brownsville</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/mesquite</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/mcallen</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/waco</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/carrollton</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/denton</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/midland</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/abilene</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/beaumont</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/round-rock</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/the-woodlands</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/sugar-land</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/college-station</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/tyler</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/wichita-falls</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/san-marcos</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/galveston</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/laredo</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/amarillo</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/grand-prairie</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/odessa</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/lewisville</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/edinburg</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/pearland</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/allen</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/houston</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/city/dallas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/city/fort-worth</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/city/san-antonio</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/city/austin</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/city/el-paso</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/city/arlington</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/city/corpus-christi</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/city/plano</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/lubbock</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/garland</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/frisco</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/mckinney</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/pasadena</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/killeen</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/brownsville</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/mesquite</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/mcallen</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/waco</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/carrollton</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/denton</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/midland</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/abilene</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/beaumont</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/round-rock</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/the-woodlands</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/sugar-land</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/college-station</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/tyler</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/wichita-falls</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/san-marcos</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/galveston</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/laredo</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/amarillo</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/grand-prairie</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/odessa</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/lewisville</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/edinburg</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/pearland</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/allen</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   
   <!-- Louisiana Cities -->
-  <url><loc>https://mrcapmusic.com/city/new-orleans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mrcapmusic.com/city/baton-rouge</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mrcapmusic.com/city/shreveport</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mrcapmusic.com/city/lafayette</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mrcapmusic.com/city/lake-charles</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/kenner</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/monroe</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/alexandria</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/houma</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/slidell</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://mrcapmusic.com/city/bossier-city</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/new-orleans</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/city/baton-rouge</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/city/shreveport</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/city/lafayette</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/city/lake-charles</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/kenner</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/monroe</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/alexandria</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/houma</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/slidell</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mrcap1.com/city/bossier-city</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
