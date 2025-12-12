@@ -26,8 +26,8 @@ const CityLanding = () => {
       {
         "@type": "LocalBusiness",
         "name": `Mr. CAP – Live Shows in ${city.name}, ${city.stateAbbr}`,
-        "url": `https://mrcapmusic.com/city/${city.slug}`,
-        "image": "https://mrcapmusic.com/images/mrcap-live.jpg",
+        "url": `https://mrcap1.com/city/${city.slug}`,
+        "image": "https://mrcap1.com/images/mrcap-live.jpg",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": city.name,
@@ -35,11 +35,11 @@ const CityLanding = () => {
           "addressCountry": "US"
         },
         "areaServed": city.name,
-        "sameAs": ["https://mrcapmusic.com"]
+        "sameAs": ["https://mrcap1.com"]
       },
       {
         "@type": "Person",
-        "@id": "https://mrcapmusic.com/#person",
+        "@id": "https://mrcap1.com/#person",
         "name": "Mr. CAP",
         "alternateName": "Cornelius A. Pratt",
         "description": "Houston hip-hop artist, South Park Coalition original member",
@@ -48,9 +48,9 @@ const CityLanding = () => {
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcapmusic.com" },
-          { "@type": "ListItem", "position": 2, "name": "Cities", "item": "https://mrcapmusic.com/cities" },
-          { "@type": "ListItem", "position": 3, "name": city.name, "item": `https://mrcapmusic.com/city/${city.slug}` }
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+          { "@type": "ListItem", "position": 2, "name": "Cities", "item": "https://mrcap1.com/cities" },
+          { "@type": "ListItem", "position": 3, "name": city.name, "item": `https://mrcap1.com/city/${city.slug}` }
         ]
       }
     ]
@@ -62,12 +62,12 @@ const CityLanding = () => {
         <title>{pageTitle}</title>
         <meta name="description" content={metaDescription} />
         <meta name="keywords" content={`${city.name} hip hop, ${city.name} rap concerts, Mr. CAP ${city.name}, South Park Coalition ${city.stateAbbr}, Houston rapper ${city.name}, book rapper ${city.name}`} />
-        <link rel="canonical" href={`https://mrcapmusic.com/city/${city.slug}`} />
+        <link rel="canonical" href={`https://mrcap1.com/city/${city.slug}`} />
         
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://mrcapmusic.com/city/${city.slug}`} />
+        <meta property="og:url" content={`https://mrcap1.com/city/${city.slug}`} />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
