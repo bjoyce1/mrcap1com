@@ -11,6 +11,7 @@ import albumGrave from "@/assets/album-grave.jpg";
 import albumColdAss from "@/assets/album-cold-ass-pimp.jpg";
 import albumOneOnOne from "@/assets/album-one-on-one.jpg";
 import albumTies from "@/assets/album-ties.jpg";
+import dippinMetaverse from "@/assets/dippin-metaverse.png";
 
 const albums = [
   {
@@ -18,10 +19,10 @@ const albums = [
     year: "2024",
     image: albumTies,
     spotify: "https://open.spotify.com/album/...",
-    apple: "https://music.apple.com/...",
-    type: "Album",
-    tracks: 12,
-    description: "More than an album—it's a life story scored in 808s. From Third Ward lessons to blockchain boardrooms.",
+    apple: "https://music.apple.com/us/album/the-ties-that-bind-us/1770685229",
+    type: "SPC Album",
+    tracks: 19,
+    description: "South Park Coalition group album featuring K-Rino, Point Blank, Klondike Kat, and more. Over an hour of Houston underground.",
     featured: true,
   },
   {
@@ -31,7 +32,52 @@ const albums = [
     spotify: "https://open.spotify.com/track/...",
     apple: "https://music.apple.com/...",
     type: "Single",
-    description: "An anthem for entrepreneurs, hustlers, and late bloomers betting on themselves.",
+    description: "Lead single from The Ties That Bind Us. An anthem for hustlers betting on themselves.",
+  },
+  {
+    title: "Social Media is a Ho Stroll",
+    year: "2024",
+    image: albumBetn,
+    spotify: "https://open.spotify.com/...",
+    apple: "https://music.apple.com/...",
+    type: "Single",
+    description: "Featuring Ai'Eshsa. A reflection on the pitfalls of social media culture.",
+  },
+  {
+    title: "Dippin Thru the Metaverse",
+    year: "2023",
+    image: dippinMetaverse,
+    spotify: "https://open.spotify.com/...",
+    apple: "https://music.apple.com/...",
+    type: "Single",
+    description: "Produced by Ciddy Boi P. Fuses Houston street narratives with futuristic production and blockchain culture.",
+  },
+  {
+    title: "Southern Sounds (Ultra ISM)",
+    year: "2023",
+    image: albumBetn,
+    spotify: "https://open.spotify.com/...",
+    apple: "https://music.apple.com/us/album/southern-sounds-ultra-ism-feat-venita-vyne-single/1715088888",
+    type: "Single",
+    description: "Featuring Venita Vyne. Released on Power Camp.",
+  },
+  {
+    title: "H-Town Represent",
+    year: "2023",
+    image: albumBetn,
+    spotify: "https://open.spotify.com/...",
+    apple: "https://music.apple.com/us/album/h-town-represent-feat-ciddy-boi-p-single/1681810016",
+    type: "Single",
+    description: "Featuring Ciddy Boi P. A high-energy homage to Houston.",
+  },
+  {
+    title: "Where the Bag At (Extended)",
+    year: "2023",
+    image: albumBetn,
+    spotify: "https://open.spotify.com/...",
+    apple: "https://music.apple.com/us/album/where-the-bag-at-extended-feat-devyn-kelly-single/1683108665",
+    type: "Single",
+    description: "Featuring Devyn Kelly.",
   },
   {
     title: "The Art of ISM",
@@ -225,7 +271,7 @@ const Music = () => {
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">Discography</h2>
-                <span className="text-sm text-neutral-400">6 releases</span>
+                <span className="text-sm text-neutral-400">{albums.length} releases</span>
               </div>
               <div className="grid grid-flow-col auto-cols-[minmax(180px,1fr)] gap-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-thin">
                 {albums.map((album) => (
@@ -272,10 +318,11 @@ const Music = () => {
                 </div>
                 <ul className="divide-y divide-white/5">
                   {[
+                    { name: "Dippin Thru the Metaverse", album: "Single (2023)", duration: "3:45", image: dippinMetaverse },
                     { name: "Bet'n On Me", album: "The Ties That Bind Us", duration: "3:45", image: albumBetn },
+                    { name: "Social Media is a Ho Stroll", album: "Single (2024)", duration: "3:32", image: albumBetn },
                     { name: "Words of ISM", album: "The Art of ISM", duration: "4:12", image: albumArtOfIsm },
                     { name: "Limitless", album: "Single", duration: "3:58", image: albumArtOfIsm },
-                    { name: "Evolution of the 16th Letter", album: "The Art of ISM", duration: "4:05", image: albumArtOfIsm },
                   ].map((track, i) => (
                     <li key={i} className="flex items-center gap-3 py-3 group cursor-pointer hover:bg-white/[0.02] -mx-2 px-2 rounded-lg transition-colors">
                       <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
