@@ -16,6 +16,7 @@ import southernSounds from "@/assets/southern-sounds.jpg";
 import boutToBlow from "@/assets/bout-to-blow.png";
 import hTownRepresent from "@/assets/h-town-represent.png";
 import limitless from "@/assets/limitless.webp";
+import socialMediaHoStroll from "@/assets/social-media-ho-stroll.jpg";
 
 const albums = [
   {
@@ -349,7 +350,7 @@ const Music = () => {
                   {[
                     { name: "Dippin Thru the Metaverse", album: "Single (2023)", duration: "3:45", image: dippinMetaverse },
                     { name: "Bet'n On Me", album: "The Ties That Bind Us", duration: "3:45", image: albumBetn },
-                    { name: "Social Media is a Ho Stroll", album: "Single (2024)", duration: "3:32", image: albumBetn },
+                    { name: "Social Media is a Ho Stroll", album: "Single (2024)", duration: "3:32", image: socialMediaHoStroll },
                     { name: "Words of ISM", album: "The Art of ISM", duration: "4:12", image: albumArtOfIsm },
                     { name: "Limitless", album: "Single", duration: "3:58", image: limitless },
                   ].map((track, i) => (
