@@ -277,6 +277,7 @@ Readers are invited to listen to the track and reflect on the intersection of mu
     slug: "honoring-the-legacy-of-o-n-e-with-the-release-of-to-tha-grave",
     title: "Honoring the Legacy of O.N.E. with the Release of 'To Tha Grave'",
     excerpt: "This heartfelt post commemorates the remastered release of 'To Tha Grave,' originally recorded with Mr. CAP's cousin O.N.E. (Originality Never Ends).",
+    image: "/images/to-tha-grave-blog.png",
     content: `
 ## A Tribute to Family
 
