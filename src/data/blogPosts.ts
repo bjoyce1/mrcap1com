@@ -62,6 +62,7 @@ In the post Mr. CAP emphasises that the goal is not only to tell his story but a
     slug: "southern-sounds-mrcap-release",
     title: "Southern Sounds – Mr. CAP Release",
     excerpt: "A soulful collaboration with singer Venita Vyne that takes listeners on a sonic road trip through the American South.",
+    image: "/assets/southern-sounds-blog.jpg",
     content: `
 ## A Sonic Road Trip
 
