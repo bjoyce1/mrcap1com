@@ -308,6 +308,7 @@ In closing Mr. CAP encourages listeners to share the song, reflect on O.N.E.'s i
     slug: "discover-pwa-power-weed-alcohol-the-hottest-collaboration-from-mr-cap-and-devyn-kelly",
     title: "Discover 'PWA (Power Weed & Alcohol)' – The Hottest Collaboration from Mr. CAP and Devyn Kelly",
     excerpt: "Mr. CAP teams up with singer Devyn Kelly and producer Ciddy Boi Music for a steamy blend of hip-hop and R&B.",
+    image: "/images/pwa-blog.webp",
     content: `
 ## A Steamy Collaboration
 
