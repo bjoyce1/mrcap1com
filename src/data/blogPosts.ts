@@ -215,6 +215,7 @@ In conclusion, the sale of Mr. CAP's Hip Hop NFT has set a new standard for arti
   {
     slug: "mr-cap-is-shaking-up-the-nft-world-with-im-bout-to-blow",
     title: "Mr. CAP is Shaking Up the NFT World with \"I'm Bout To Blow\"",
+    image: "/images/bout-to-blow-blog.png",
     excerpt: "In 2023 Mr. CAP revisited his 2019 single 'I'm Bout To Blow' and reimagined it as a digital collectible, offering fans a way to invest in his music and own a piece of hip-hop history.",
     content: `
 ## A Classic Reimagined
