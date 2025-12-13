@@ -198,6 +198,7 @@ Radio appearances have always been a crucial part of hip-hop promotion. This int
     slug: "somebody-tell-wiz-khalifa-theres-only-one-mr-cap",
     title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
     excerpt: "A playful statement on identity and originality in hip-hop.",
+    image: "/images/wiz-khalifa-blog.jpg",
     content: `
 ## One of a Kind
 
