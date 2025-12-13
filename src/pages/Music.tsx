@@ -14,6 +14,8 @@ import albumTies from "@/assets/album-ties.jpg";
 import dippinMetaverse from "@/assets/dippin-metaverse.png";
 import southernSounds from "@/assets/southern-sounds.jpg";
 import boutToBlow from "@/assets/bout-to-blow.png";
+import hTownRepresent from "@/assets/h-town-represent.png";
+import limitless from "@/assets/limitless.webp";
 
 const albums = [
   {
@@ -75,7 +77,7 @@ const albums = [
   {
     title: "H-Town Represent",
     year: "2023",
-    image: albumBetn,
+    image: hTownRepresent,
     spotify: "https://open.spotify.com/...",
     apple: "https://music.apple.com/us/album/h-town-represent-feat-ciddy-boi-p-single/1681810016",
     type: "Single",
@@ -349,7 +351,7 @@ const Music = () => {
                     { name: "Bet'n On Me", album: "The Ties That Bind Us", duration: "3:45", image: albumBetn },
                     { name: "Social Media is a Ho Stroll", album: "Single (2024)", duration: "3:32", image: albumBetn },
                     { name: "Words of ISM", album: "The Art of ISM", duration: "4:12", image: albumArtOfIsm },
-                    { name: "Limitless", album: "Single", duration: "3:58", image: albumArtOfIsm },
+                    { name: "Limitless", album: "Single", duration: "3:58", image: limitless },
                   ].map((track, i) => (
                     <li key={i} className="flex items-center gap-3 py-3 group cursor-pointer hover:bg-white/[0.02] -mx-2 px-2 rounded-lg transition-colors">
                       <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
