@@ -42,7 +42,7 @@ const albums = [
   {
     title: "Social Media is a Ho Stroll",
     year: "2024",
-    image: albumBetn,
+    image: socialMediaHoStroll,
     spotify: "https://open.spotify.com/...",
     apple: "https://music.apple.com/...",
     type: "Single",
