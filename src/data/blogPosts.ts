@@ -26,6 +26,44 @@ export const blogCategories = [
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "houston-rapper-lands-major-art-music-collaboration-with-artist-ali-sabet",
+    title: "Houston Rapper Lands Major Art-Music Collaboration With Artist Ali Sabet",
+    excerpt: "Mr. CAP teams up with internationally renowned visual artist Ali Sabet for 'Sunshade + Bet on Her,' a groundbreaking fusion of fine art and hip-hop featuring Billy Cook.",
+    image: "/images/sunshade-sabet-blog.png",
+    content: `
+## A Groundbreaking Fusion
+
+In 2020, Mr. CAP embarked on a unique creative journey with internationally acclaimed visual artist **Ali Sabet**. The result was **"Sunshade + Bet on Her"** – a groundbreaking project that merges fine art with hip-hop music.
+
+## About Ali Sabet
+
+Ali Sabet is a renowned Iranian-American artist known for his vibrant, expressive portraits and bold use of color. His work has been exhibited in galleries worldwide and collected by celebrities and art enthusiasts alike. This collaboration marks a significant crossover between the visual arts and music worlds.
+
+## The Collaboration
+
+The project pairs Sabet's iconic "Sunshade" artwork with Mr. CAP's track "Bet on Her" featuring Houston R&B legend **Billy Cook**. The combination creates a multi-sensory experience that bridges two creative disciplines.
+
+## Art Meets Music NFT
+
+This collaboration was later minted as an NFT, combining:
+
+- Sabet's original digital artwork
+- Mr. CAP's exclusive audio track
+- Behind-the-scenes content from both artists
+
+## Breaking Boundaries
+
+The partnership demonstrates Mr. CAP's commitment to pushing boundaries beyond traditional hip-hop. By collaborating with established figures in the art world, he continues to expand the definition of what a hip-hop artist can achieve.
+
+This project stands as a testament to the power of cross-disciplinary collaboration and the endless possibilities when art forms intersect.
+    `,
+    category: "Collaborations",
+    date: "2020-06-15",
+    author: "ISM",
+    readTime: "3 min",
+    tags: ["Ali Sabet", "Art", "Collaboration", "Billy Cook", "NFT", "Sunshade"],
+  },
+  {
     slug: "mr-cap-stands-tall-with-new-single-soarn",
     title: "Mr. CAP Stands Tall with New Single 'SOAR'N'",
     excerpt: "A hard-hitting single addressing social issues faced by young Black men, balancing pain with pride and reminding listeners that maintaining one's standards is an act of resistance.",
