@@ -26,6 +26,36 @@ export const blogCategories = [
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "mr-cap-returns-to-his-musical-roots",
+    title: "Mr. CAP Returns to His Musical Roots",
+    excerpt: "After years of tech ventures and blockchain innovation, Mr. CAP reconnects with his South Park Coalition origins and the raw Houston sound that launched his career.",
+    image: "/images/musical-roots-blog.jpg",
+    content: `
+## Back to the Beginning
+
+After years of pioneering blockchain technology, NFT releases, and digital innovation, Mr. CAP is returning to what started it all – the raw, unfiltered sound of Houston hip-hop.
+
+## South Park Coalition Legacy
+
+As a founding member of the South Park Coalition, Mr. CAP has always carried the weight of Houston's underground legacy. This return to his musical roots represents a full-circle moment, reconnecting with the streets and sounds that shaped his artistry.
+
+## The Balance of Innovation and Tradition
+
+While Mr. CAP continues to push boundaries in the digital space, he understands the importance of staying connected to his foundation. The South Park Coalition's influence on Houston hip-hop cannot be overstated, and Mr. CAP remains committed to honoring that legacy.
+
+## What's Next
+
+Fans can expect new music that blends the classic Houston sound with modern production techniques. Mr. CAP proves that you can embrace the future while respecting the past.
+
+Stay tuned for upcoming releases that showcase the best of both worlds – innovation rooted in tradition.
+    `,
+    category: "Behind the Music",
+    date: "2024-03-15",
+    author: "ISM",
+    readTime: "3 min",
+    tags: ["South Park Coalition", "Houston", "Hip Hop", "Legacy", "Music"],
+  },
+  {
     slug: "houston-rapper-lands-major-art-music-collaboration-with-artist-ali-sabet",
     title: "Houston Rapper Lands Major Art-Music Collaboration With Artist Ali Sabet",
     excerpt: "Mr. CAP teams up with internationally renowned visual artist Ali Sabet for 'Sunshade + Bet on Her,' a groundbreaking fusion of fine art and hip-hop featuring Billy Cook.",
