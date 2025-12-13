@@ -340,6 +340,7 @@ For listeners who prefer traditional platforms, "PWA" was simultaneously release
     slug: "h-town-represent",
     title: "H-Town Represent",
     excerpt: "Mr. CAP pays homage to Houston with the exclusive NFT anthem 'H-Town Represent' – a rallying cry for anyone proud to call Houston home.",
+    image: "/images/h-town-represent-blog.png",
     content: `
 ## A Houston Anthem
 
