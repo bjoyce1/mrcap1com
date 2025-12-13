@@ -29,6 +29,7 @@ export const blogPosts: BlogPost[] = [
     slug: "mr-cap-stands-tall-with-new-single-soarn",
     title: "Mr. CAP Stands Tall with New Single 'SOAR'N'",
     excerpt: "A hard-hitting single addressing social issues faced by young Black men, balancing pain with pride and reminding listeners that maintaining one's standards is an act of resistance.",
+    image: "/images/soarn-blog.webp",
     content: `
 ## Standards Of A Real One
 
