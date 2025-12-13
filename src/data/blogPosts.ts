@@ -186,6 +186,7 @@ This collaboration brings together two generations of Houston hip-hop. Big Mike'
     slug: "today-was-a-great-day",
     title: "Today Was A Great Day (Single)",
     excerpt: "Celebrating the release of the uplifting single 'Today Was A Great Day.'",
+    image: "/images/today-great-day-blog.jpg",
     content: `
 ## Good Vibes
 
