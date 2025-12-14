@@ -68,8 +68,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Bricolage Grotesque", "sans-serif"],
-        sans: ["Space Grotesk", "sans-serif"],
+        display: ["Montserrat", "sans-serif"],
+        sans: ["Merriweather", "serif"],
+        ui: ["Poppins", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
