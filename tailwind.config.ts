@@ -69,8 +69,8 @@ export default {
       },
       fontFamily: {
         display: ["Montserrat", "sans-serif"],
-        sans: ["Merriweather", "serif"],
-        ui: ["Poppins", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
+        ui: ["Inter", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
