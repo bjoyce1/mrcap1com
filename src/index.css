@@ -69,23 +69,33 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Merriweather', serif;
     background-color: hsl(var(--background));
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
     letter-spacing: -0.02em;
+  }
+
+  nav, button, .btn, .cta, .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   
   .font-body {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Merriweather', serif;
+  }
+
+  .font-ui {
+    font-family: 'Poppins', sans-serif;
   }
 
   /* Text Glow Effect */
