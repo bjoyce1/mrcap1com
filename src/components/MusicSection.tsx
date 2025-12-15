@@ -1,6 +1,7 @@
 import { Play, Pause, Headphones, ExternalLink, Music, Disc3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
@@ -155,8 +156,14 @@ const singles = [{
   }]
 }];
 const MusicSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const featuredRef = useRef<HTMLDivElement>(null);
+  const albumsRef = useRef<HTMLDivElement>(null);
+  const singlesRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -167,7 +174,93 @@ const MusicSection = () => {
       setIsPlaying(!isPlaying);
     }
   };
-  return <section id="music" className="py-24 md:py-32 bg-white/[0.01] border-b border-white/5 relative overflow-hidden">
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Header reveal
+      gsap.fromTo(
+        headerRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Featured album scale-in reveal
+      gsap.fromTo(
+        featuredRef.current,
+        { scale: 0.9, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: featuredRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Album cards staggered reveal
+      const albumCards = albumsRef.current?.querySelectorAll(".album-card");
+      if (albumCards) {
+        gsap.fromTo(
+          albumCards,
+          { y: 60, opacity: 0, scale: 0.95 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: albumsRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // Singles sections staggered reveal
+      const singleYears = singlesRef.current?.querySelectorAll(".singles-year");
+      if (singleYears) {
+        gsap.fromTo(
+          singleYears,
+          { x: -40, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: singlesRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return <section ref={sectionRef} id="music" className="py-24 md:py-32 bg-white/[0.01] border-b border-white/5 relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
       
@@ -175,7 +268,7 @@ const MusicSection = () => {
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="mb-12">
+        <div ref={headerRef} className="mb-12 will-change-transform">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-[1px] bg-primary" />
             <span className="text-xs font-medium tracking-widest uppercase text-primary">
@@ -192,7 +285,7 @@ const MusicSection = () => {
         </div>
 
         {/* Latest Release Feature */}
-        <div className="mb-16">
+        <div ref={featuredRef} className="mb-16 will-change-transform">
           <div className="group bg-white/[0.02] rounded-2xl border border-primary/20 overflow-hidden hover:border-primary/40 transition-all duration-300">
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative aspect-square md:aspect-auto overflow-hidden">
@@ -242,13 +335,13 @@ const MusicSection = () => {
         </div>
 
         {/* Studio Albums */}
-        <div className="mb-16">
+        <div ref={albumsRef} className="mb-16">
           <div className="flex items-center gap-3 mb-6">
             <Disc3 className="w-5 h-5 text-primary" />
             <h3 className="font-display text-2xl font-medium tracking-tight">Studio & Collab Albums</h3>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {albums.map((album, index) => <div key={index} className="group bg-white/[0.02] rounded-xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300">
+            {albums.map((album, index) => <div key={index} className="album-card group bg-white/[0.02] rounded-xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 will-change-transform">
                 <div className="relative aspect-square overflow-hidden bg-muted">
                   {album.image ? <img src={album.image} alt={`${album.title} Album Cover`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                       <Disc3 className="w-16 h-16 text-primary/40" />
@@ -273,13 +366,13 @@ const MusicSection = () => {
         </div>
 
         {/* Singles & EPs */}
-        <div>
+        <div ref={singlesRef}>
           <div className="flex items-center gap-3 mb-6">
             <Music className="w-5 h-5 text-primary" />
             <h3 className="font-display text-2xl font-medium tracking-tight">Singles & EPs</h3>
           </div>
           <div className="space-y-6">
-            {singles.map((yearGroup, yearIndex) => <div key={yearIndex}>
+            {singles.map((yearGroup, yearIndex) => <div key={yearIndex} className="singles-year will-change-transform">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-sm font-semibold text-primary">{yearGroup.year}</span>
                   <div className="flex-1 h-px bg-white/10" />
