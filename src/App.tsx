@@ -26,6 +26,13 @@ import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
+// EPK Pages
+import EPKHub from "./pages/epk/EPKHub";
+import EPKMusic from "./pages/epk/EPKMusic";
+import EPKPress from "./pages/epk/EPKPress";
+import EPKBrands from "./pages/epk/EPKBrands";
+import EPKMedia from "./pages/epk/EPKMedia";
+
 // Google Analytics Measurement ID - Replace with actual ID when available
 const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
 
@@ -59,6 +66,12 @@ const App = () => (
               <Route path="/texas-underground-hip-hop" element={<TexasUndergroundHipHop />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
+              {/* EPK Routes */}
+              <Route path="/epk" element={<EPKHub />} />
+              <Route path="/epk/music" element={<EPKMusic />} />
+              <Route path="/epk/press" element={<EPKPress />} />
+              <Route path="/epk/brands" element={<EPKBrands />} />
+              <Route path="/epk/media" element={<EPKMedia />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
