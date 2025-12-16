@@ -5,75 +5,86 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Calendar, MapPin, Ticket, ExternalLink, Clock, Mic2 } from "lucide-react";
 import spcPoster from "@/assets/spc-austin-2025.png";
-
-const upcomingShows = [
-  {
-    title: "South Park Coalition Live in Concert",
-    subtitle: "The Bet'n On Me Tour",
-    date: "December 13, 2025",
-    time: "Doors 7:00 PM",
-    venue: "Flamingo Cantina",
-    city: "Austin",
-    state: "TX",
-    address: "515 E 6th St, Austin, TX 78701",
-    ticketUrl: "https://spcatx2025.lovable.app/",
-    poster: spcPoster,
-    featured: true,
-  },
-];
-
-const pastShows = [
-  { date: "Oct 2024", venue: "House of Blues", city: "Houston, TX" },
-  { date: "Aug 2024", venue: "Warehouse Live", city: "Houston, TX" },
-  { date: "Jun 2024", venue: "Trees", city: "Dallas, TX" },
-  { date: "Mar 2024", venue: "Paper Tiger", city: "San Antonio, TX" },
-];
-
+const upcomingShows = [{
+  title: "South Park Coalition Live in Concert",
+  subtitle: "The Bet'n On Me Tour",
+  date: "December 13, 2025",
+  time: "Doors 7:00 PM",
+  venue: "Flamingo Cantina",
+  city: "Austin",
+  state: "TX",
+  address: "515 E 6th St, Austin, TX 78701",
+  ticketUrl: "https://spcatx2025.lovable.app/",
+  poster: spcPoster,
+  featured: true
+}];
+const pastShows = [{
+  date: "Oct 2024",
+  venue: "House of Blues",
+  city: "Houston, TX"
+}, {
+  date: "Aug 2024",
+  venue: "Warehouse Live",
+  city: "Houston, TX"
+}, {
+  date: "Jun 2024",
+  venue: "Trees",
+  city: "Dallas, TX"
+}, {
+  date: "Mar 2024",
+  venue: "Paper Tiger",
+  city: "San Antonio, TX"
+}];
 const Live = () => {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "MusicEvent",
-        "name": "South Park Coalition Live in Concert - The Bet'n On Me Tour",
-        "startDate": "2025-12-13T19:00:00-06:00",
-        "eventStatus": "https://schema.org/EventScheduled",
-        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-        "location": {
-          "@type": "MusicVenue",
-          "name": "Flamingo Cantina",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "515 E 6th St",
-            "addressLocality": "Austin",
-            "addressRegion": "TX",
-            "postalCode": "78701",
-            "addressCountry": "US"
-          }
-        },
-        "performer": [
-          { "@type": "Person", "name": "Mr. CAP" },
-          { "@type": "MusicGroup", "name": "South Park Coalition" }
-        ],
-        "offers": {
-          "@type": "Offer",
-          "url": "https://spcatx2025.lovable.app/",
-          "availability": "https://schema.org/InStock"
-        },
-        "image": "https://mrcap1.com/images/spc-austin-2025.png"
+    "@graph": [{
+      "@type": "MusicEvent",
+      "name": "South Park Coalition Live in Concert - The Bet'n On Me Tour",
+      "startDate": "2025-12-13T19:00:00-06:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "MusicVenue",
+        "name": "Flamingo Cantina",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "515 E 6th St",
+          "addressLocality": "Austin",
+          "addressRegion": "TX",
+          "postalCode": "78701",
+          "addressCountry": "US"
+        }
       },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Live", "item": "https://mrcap1.com/live" }
-        ]
-      }
-    ]
+      "performer": [{
+        "@type": "Person",
+        "name": "Mr. CAP"
+      }, {
+        "@type": "MusicGroup",
+        "name": "South Park Coalition"
+      }],
+      "offers": {
+        "@type": "Offer",
+        "url": "https://spcatx2025.lovable.app/",
+        "availability": "https://schema.org/InStock"
+      },
+      "image": "https://mrcap1.com/images/spc-austin-2025.png"
+    }, {
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://mrcap1.com"
+      }, {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Live",
+        "item": "https://mrcap1.com/live"
+      }]
+    }]
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Live Shows & Booking | Mr. CAP – Houston Hip-Hop Concerts & Events</title>
         <meta name="description" content="Book Mr. CAP for live shows across Houston, Texas, and Louisiana. View upcoming tour dates, past performances, and submit booking requests for concerts, festivals, and special events." />
@@ -114,8 +125,7 @@ const Live = () => {
           </section>
 
           {/* Featured Show */}
-          {upcomingShows.filter(s => s.featured).map((show) => (
-            <section key={show.title} className="py-16 bg-gradient-to-b from-primary/10 to-transparent">
+          {upcomingShows.filter(s => s.featured).map(show => <section key={show.title} className="py-16 bg-gradient-to-b from-primary/10 to-transparent">
               <div className="container mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                   <div>
@@ -163,16 +173,11 @@ const Live = () => {
                   </div>
                   
                   <div className="relative">
-                    <img
-                      src={show.poster}
-                      alt={`${show.title} poster`}
-                      className="w-full max-w-md mx-auto rounded-xl shadow-2xl shadow-primary/20"
-                    />
+                    <img src={show.poster} alt={`${show.title} poster`} className="w-full max-w-md mx-auto rounded-xl shadow-2xl shadow-primary/20" />
                   </div>
                 </div>
               </div>
-            </section>
-          ))}
+            </section>)}
 
           {/* Past Shows */}
           <section className="py-20 border-t border-border/50">
@@ -180,16 +185,11 @@ const Live = () => {
               <h2 className="text-2xl font-display font-bold mb-8">Recent Performances</h2>
               
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {pastShows.map((show, index) => (
-                  <div
-                    key={index}
-                    className="bg-card/30 border border-border/50 rounded-xl p-6 hover:border-border transition-colors"
-                  >
+                {pastShows.map((show, index) => <div key={index} className="bg-card/30 border border-border/50 rounded-xl p-6 hover:border-border transition-colors">
                     <span className="text-xs text-muted-foreground">{show.date}</span>
                     <h3 className="font-bold mt-1">{show.venue}</h3>
                     <p className="text-sm text-muted-foreground">{show.city}</p>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </div>
           </section>
@@ -213,9 +213,7 @@ const Live = () => {
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <p className="text-sm text-muted-foreground mb-2">Email</p>
-                      <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">
-                        wrecklessent@gmail.com
-                      </a>
+                      <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">southparkcoalitionllc@gmail.com</a>
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground mb-2">Performance Deposits</p>
@@ -238,8 +236,6 @@ const Live = () => {
 
         <Footer />
       </div>
-    </>
-  );
+    </>;
 };
-
 export default Live;
