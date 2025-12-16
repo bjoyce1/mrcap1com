@@ -11,6 +11,7 @@ const navLinks = [
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },
   { to: "/cities", label: "Cities" },
+  { to: "/epk", label: "EPK", highlight: true },
   { to: "/nft", label: "NFT", highlight: true },
   { to: "/art", label: "Art", highlight: true },
   { to: "/innovation", label: "Tech", highlight: true },

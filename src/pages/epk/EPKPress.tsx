@@ -32,11 +32,11 @@ const EPKPress = () => {
         breadcrumb="Press"
       >
         {/* Press Bio */}
-        <section className="py-16">
+        <section className="gsap-section py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-6 text-center">Press Bio</h2>
-              <div className="bg-card/50 border border-border/50 rounded-xl p-8">
+              <h2 className="gsap-item text-2xl font-display font-bold mb-6 text-center">Press Bio</h2>
+              <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-8">
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                   Mr. CAP is a Houston-based hip-hop artist whose career reflects the evolution of Southern rap culture. As a member of the iconic South Park Coalition, he emerged from the same creative ecosystem that helped define Houston's influence on hip-hop worldwide. While trends shifted and industry gates closed, Mr. CAP remained independent—continuing to release music and perform without compromising authenticity.
                 </p>
@@ -52,13 +52,13 @@ const EPKPress = () => {
         </section>
 
         {/* Press Highlights */}
-        <section className="py-16 bg-card/20 border-y border-border/50">
+        <section className="gsap-section py-16 bg-card/20 border-y border-border/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-8 text-center">Press Highlights</h2>
+              <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Press Highlights</h2>
               <ul className="space-y-4">
                 {pressHighlights.map((highlight, index) => (
-                  <li key={index} className="flex items-start gap-3">
+                  <li key={index} className="gsap-item flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-muted-foreground text-lg">{highlight}</span>
                   </li>
@@ -69,22 +69,22 @@ const EPKPress = () => {
         </section>
 
         {/* Media Assets */}
-        <section className="py-16">
+        <section className="gsap-section py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-8 text-center">Media Assets</h2>
+              <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Media Assets</h2>
               <div className="grid md:grid-cols-3 gap-4">
-                <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center">
+                <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-6 text-center">
                   <Image className="w-10 h-10 text-primary mx-auto mb-4" />
                   <h3 className="font-bold mb-2">Press Photos</h3>
                   <p className="text-sm text-muted-foreground">High-resolution press photos</p>
                 </div>
-                <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center">
+                <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-6 text-center">
                   <FileText className="w-10 h-10 text-primary mx-auto mb-4" />
                   <h3 className="font-bold mb-2">Logos</h3>
                   <p className="text-sm text-muted-foreground">Official logos and branding</p>
                 </div>
-                <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center">
+                <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-6 text-center">
                   <Download className="w-10 h-10 text-primary mx-auto mb-4" />
                   <h3 className="font-bold mb-2">Press Kit</h3>
                   <p className="text-sm text-muted-foreground">Downloadable Press Kit (ZIP)</p>
@@ -95,10 +95,10 @@ const EPKPress = () => {
         </section>
 
         {/* Download Section */}
-        <section className="py-16 bg-card/20 border-y border-border/50">
+        <section className="gsap-section py-16 bg-card/20 border-y border-border/50">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl font-display font-bold mb-6">Download Press Materials</h2>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <h2 className="gsap-item text-2xl font-display font-bold mb-6">Download Press Materials</h2>
+            <div className="gsap-item flex flex-wrap gap-4 justify-center">
               <Button variant="flux" size="lg" asChild>
                 <a href="/press-kit.pdf" download>
                   <FileText className="mr-2 h-5 w-5" />
