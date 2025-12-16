@@ -41,11 +41,11 @@ const EPKBrands = () => {
         breadcrumb="Brands"
       >
         {/* Brand Positioning */}
-        <section className="py-16">
+        <section className="gsap-section py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-6 text-center">Brand Positioning</h2>
-              <div className="bg-card/50 border border-border/50 rounded-xl p-8">
+              <h2 className="gsap-item text-2xl font-display font-bold mb-6 text-center">Brand Positioning</h2>
+              <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-8">
                 <p className="text-lg text-muted-foreground leading-relaxed text-center">
                   Mr. CAP represents authenticity, independence, and longevity. His career bridges legacy hip-hop culture with modern digital entrepreneurship—making him a strong fit for brands seeking real cultural alignment, not manufactured influence.
                 </p>
@@ -55,13 +55,13 @@ const EPKBrands = () => {
         </section>
 
         {/* Why It Works */}
-        <section className="py-16 bg-card/20 border-y border-border/50">
+        <section className="gsap-section py-16 bg-card/20 border-y border-border/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-8 text-center">Why It Works</h2>
+              <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Why It Works</h2>
               <ul className="space-y-4">
                 {whyItWorks.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
+                  <li key={index} className="gsap-item flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-muted-foreground text-lg">{item}</span>
                   </li>
@@ -72,15 +72,15 @@ const EPKBrands = () => {
         </section>
 
         {/* Partnership Opportunities */}
-        <section className="py-16">
+        <section className="gsap-section py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-8 text-center">Partnership Opportunities</h2>
+              <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Partnership Opportunities</h2>
               <div className="grid md:grid-cols-3 gap-4">
                 {partnershipOpportunities.map((item, index) => (
                   <div
                     key={index}
-                    className="bg-card/50 border border-border/50 rounded-xl p-6 text-center"
+                    className="gsap-item bg-card/50 border border-border/50 rounded-xl p-6 text-center"
                   >
                     <item.icon className="w-8 h-8 text-primary mx-auto mb-3" />
                     <h3 className="font-bold">{item.title}</h3>

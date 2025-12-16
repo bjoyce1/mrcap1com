@@ -39,11 +39,11 @@ const EPKMusic = () => {
         breadcrumb="Music & Booking"
       >
         {/* Artist Snapshot */}
-        <section className="py-16">
+        <section className="gsap-section py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-8 text-center">Artist Snapshot</h2>
-              <div className="bg-card/50 border border-border/50 rounded-xl p-8">
+              <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Artist Snapshot</h2>
+              <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-8">
                 <div className="grid md:grid-cols-2 gap-6">
                   {artistSnapshot.map((item) => (
                     <div key={item.label}>
@@ -58,11 +58,11 @@ const EPKMusic = () => {
         </section>
 
         {/* Booking Bio */}
-        <section className="py-16 bg-card/20 border-y border-border/50">
+        <section className="gsap-section py-16 bg-card/20 border-y border-border/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-6 text-center">Booking Bio</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed text-center">
+              <h2 className="gsap-item text-2xl font-display font-bold mb-6 text-center">Booking Bio</h2>
+              <p className="gsap-item text-lg text-muted-foreground leading-relaxed text-center">
                 Mr. CAP is a Houston hip-hop artist and proud member of the legendary South Park Coalition. With deep roots in the Screwed Up Click era, his career represents longevity, independence, and authenticity. Known for commanding stage presence and polished delivery, Mr. CAP brings Southern grit with modern energy—making him a strong fit for clubs, showcases, and festivals nationwide.
               </p>
             </div>
@@ -70,13 +70,13 @@ const EPKMusic = () => {
         </section>
 
         {/* Music Highlights */}
-        <section className="py-16">
+        <section className="gsap-section py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-8 text-center">Music Highlights</h2>
+              <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Music Highlights</h2>
               <ul className="space-y-4 mb-8">
                 {musicHighlights.map((highlight, index) => (
-                  <li key={index} className="flex items-start gap-3">
+                  <li key={index} className="gsap-item flex items-start gap-3">
                     <Music className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-muted-foreground">{highlight}</span>
                   </li>
@@ -84,7 +84,7 @@ const EPKMusic = () => {
               </ul>
               
               {/* Spotify Embed */}
-              <div className="mt-8">
+              <div className="gsap-item mt-8">
                 <iframe 
                   src="https://open.spotify.com/embed/artist/69pjfQNXA1xjusnI2wfgug?utm_source=generator&theme=0" 
                   width="100%" 
@@ -100,20 +100,20 @@ const EPKMusic = () => {
         </section>
 
         {/* Live Performance */}
-        <section className="py-16 bg-card/20 border-y border-border/50">
+        <section className="gsap-section py-16 bg-card/20 border-y border-border/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display font-bold mb-8 text-center">Live Performance</h2>
+              <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Live Performance</h2>
               <ul className="space-y-4">
-                <li className="flex items-start gap-3">
+                <li className="gsap-item flex items-start gap-3">
                   <Mic className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">High-energy, professional stage execution</span>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="gsap-item flex items-start gap-3">
                   <Calendar className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">Ideal for clubs, festivals, curated hip-hop events</span>
                 </li>
-                <li className="flex items-start gap-3">
+                <li className="gsap-item flex items-start gap-3">
                   <Download className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">Technical rider available upon request</span>
                 </li>
@@ -123,10 +123,10 @@ const EPKMusic = () => {
         </section>
 
         {/* Download Section */}
-        <section className="py-16">
+        <section className="gsap-section py-16">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl font-display font-bold mb-6">Download Materials</h2>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <h2 className="gsap-item text-2xl font-display font-bold mb-6">Download Materials</h2>
+            <div className="gsap-item flex flex-wrap gap-4 justify-center">
               <Button variant="flux" size="lg" asChild>
                 <a href="/booking-epk.pdf" download>
                   <Download className="mr-2 h-5 w-5" />

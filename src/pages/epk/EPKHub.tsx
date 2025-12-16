@@ -57,10 +57,10 @@ const EPKHub = () => {
         breadcrumb="EPK"
       >
         {/* Intro */}
-        <section className="py-12">
+        <section className="gsap-section py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="gsap-item text-lg text-muted-foreground leading-relaxed">
                 Welcome to the official Electronic Press Kit for Mr. CAP, Houston hip-hop artist and proud member of the legendary South Park Coalition.
                 <br /><br />
                 Select the EPK that fits your purpose below.
@@ -70,14 +70,14 @@ const EPKHub = () => {
         </section>
 
         {/* EPK Navigation Grid */}
-        <section className="py-12">
+        <section className="gsap-section py-12">
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {epkPages.map((page) => (
                 <Link
                   key={page.href}
                   to={page.href}
-                  className="group bg-card/50 border border-border/50 rounded-2xl p-8 hover:border-primary/50 hover:bg-card/80 transition-all duration-300"
+                  className="gsap-item group bg-card/50 border border-border/50 rounded-2xl p-8 hover:border-primary/50 hover:bg-card/80 transition-all duration-300"
                 >
                   <page.icon className="w-10 h-10 text-primary mb-4" />
                   <h2 className="text-2xl font-display font-bold mb-2 group-hover:text-primary transition-colors">
