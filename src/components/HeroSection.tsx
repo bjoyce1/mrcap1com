@@ -2,6 +2,7 @@ import { Play, Disc3, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
+import { MagneticWrapper } from "@/hooks/useMagneticHover";
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -202,20 +203,26 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div ref={ctaRef} className="flex flex-wrap gap-4 will-change-transform">
-            <Button variant="flux" size="lg">
-              <Play className="w-4 h-4" />
-              Stream "Bet'n On Me"
-            </Button>
-            <Button variant="fluxOutline" size="lg">
-              <Disc3 className="w-4 h-4" />
-              Explore The Ties That Bind Us
-            </Button>
-            <Button variant="fluxGhost" size="lg" asChild>
-              <a href="#contact">
-                <Mail className="w-4 h-4" />
-                Book Mr. CAP
-              </a>
-            </Button>
+            <MagneticWrapper strength={0.2}>
+              <Button variant="flux" size="lg">
+                <Play className="w-4 h-4" />
+                Stream "Bet'n On Me"
+              </Button>
+            </MagneticWrapper>
+            <MagneticWrapper strength={0.2}>
+              <Button variant="fluxOutline" size="lg">
+                <Disc3 className="w-4 h-4" />
+                Explore The Ties That Bind Us
+              </Button>
+            </MagneticWrapper>
+            <MagneticWrapper strength={0.2}>
+              <Button variant="fluxGhost" size="lg" asChild>
+                <a href="#contact">
+                  <Mail className="w-4 h-4" />
+                  Book Mr. CAP
+                </a>
+              </Button>
+            </MagneticWrapper>
           </div>
         </div>
 

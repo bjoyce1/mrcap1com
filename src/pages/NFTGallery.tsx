@@ -1,21 +1,132 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ExternalLink, Wallet } from "lucide-react";
 import { ArtOfIsmCollection } from "@/components/ArtOfIsmCollection";
 import { OtherNftsGallery } from "@/components/OtherNftsGallery";
 import NFTHeroSection from "@/components/NFTHeroSection";
+import { MagneticWrapper } from "@/hooks/useMagneticHover";
+import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import nftLimitless from "@/assets/nft-limitless.png";
 import nftArtOfIsm from "@/assets/nft-art-of-ism.png";
 import mrCapCoin from "@/assets/mr-cap-coin.png";
 
 const NFTGallery = () => {
   const [scrollY, setScrollY] = useState(0);
+  const milestoneRef = useRef<HTMLElement>(null);
+  const collectionRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const otherNftsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // GSAP Scroll Animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Milestone Banner Animation
+      if (milestoneRef.current) {
+        gsap.fromTo(
+          milestoneRef.current,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: milestoneRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // Art of ISM Collection Animation
+      if (collectionRef.current) {
+        gsap.fromTo(
+          collectionRef.current,
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: collectionRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // Divider Animation
+      if (dividerRef.current) {
+        gsap.fromTo(
+          dividerRef.current,
+          { opacity: 0, scaleX: 0 },
+          {
+            opacity: 1,
+            scaleX: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: dividerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // Other NFTs Gallery Animation
+      if (otherNftsRef.current) {
+        gsap.fromTo(
+          otherNftsRef.current,
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: otherNftsRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // CTA Section Animation
+      if (ctaRef.current) {
+        const ctaElements = ctaRef.current.querySelectorAll("h2, p, a");
+        gsap.fromTo(
+          ctaElements,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ctaRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   const jsonLd = {
@@ -97,7 +208,7 @@ const NFTGallery = () => {
       <NFTHeroSection imageUrl1={nftLimitless} imageUrl2={nftArtOfIsm} />
 
       {/* Milestone Banner */}
-      <section className="relative py-12 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-y border-white/5">
+      <section ref={milestoneRef} className="relative py-12 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-y border-white/5">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
@@ -125,10 +236,12 @@ const NFTGallery = () => {
         <div className="max-w-6xl mx-auto px-6">
           
           {/* Art of ISM Collection */}
-          <ArtOfIsmCollection />
+          <div ref={collectionRef}>
+            <ArtOfIsmCollection />
+          </div>
           
           {/* Divider */}
-          <div className="flex items-center gap-4 my-16">
+          <div ref={dividerRef} className="flex items-center gap-4 my-16">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             <div className="flex items-center gap-3 px-6 py-3 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl ring-1 ring-white/10 rounded-full">
               <Wallet className="w-4 h-4 text-primary" />
@@ -140,13 +253,15 @@ const NFTGallery = () => {
           </div>
           
           {/* Other NFTs */}
-          <OtherNftsGallery />
+          <div ref={otherNftsRef}>
+            <OtherNftsGallery />
+          </div>
           
         </div>
       </main>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-t border-white/5">
+      <section ref={ctaRef} className="py-16 md:py-24 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-t border-white/5">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-display font-medium text-foreground mb-4 tracking-tight">
             Collect <span className="text-gradient-orange">Digital History</span>
@@ -155,16 +270,18 @@ const NFTGallery = () => {
             Own a piece of Houston hip-hop history. Each NFT represents a unique moment 
             in MR. CAP's pioneering journey in Web3.
           </p>
-          <a 
-            href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground 
-                       rounded-full font-medium text-lg hover:bg-primary/90 transition-colors"
-          >
-            <span>Explore on OpenSea</span>
-            <ExternalLink className="w-5 h-5" />
-          </a>
+          <MagneticWrapper strength={0.25}>
+            <a 
+              href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground 
+                         rounded-full font-medium text-lg hover:bg-primary/90 transition-colors"
+            >
+              <span>Explore on OpenSea</span>
+              <ExternalLink className="w-5 h-5" />
+            </a>
+          </MagneticWrapper>
         </div>
       </section>
 

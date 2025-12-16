@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { MagneticWrapper } from '@/hooks/useMagneticHover';
 
 interface NFTHeroSectionProps {
   imageUrl1?: string;
@@ -107,16 +108,18 @@ export const NFTHeroSection = ({
           </motion.p>
           
           <motion.div variants={itemVariants} className="mt-8">
-            <a 
-              href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              <Button variant="flux" size="lg" className="h-12 px-8 text-base">
-                Explore Collection
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </a>
+            <MagneticWrapper strength={0.25}>
+              <a 
+                href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Button variant="flux" size="lg" className="h-12 px-8 text-base">
+                  Explore Collection
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </a>
+            </MagneticWrapper>
           </motion.div>
 
           {/* Stats */}
