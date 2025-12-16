@@ -1,14 +1,91 @@
+import { useRef, useEffect } from "react";
 import { Film, Quote, Download, Award, Music2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import dearFrankSoundtrack from "@/assets/dear-frank-soundtrack.png";
 import theLifeDocumentary from "@/assets/the-life-documentary.png";
 
 const PressSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const featuredCardsRef = useRef<HTMLDivElement>(null);
+  const bottomCardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current.children,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // Featured cards animation
+      if (featuredCardsRef.current) {
+        gsap.fromTo(
+          featuredCardsRef.current.children,
+          { opacity: 0, y: 60, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.9,
+            stagger: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: featuredCardsRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      // Bottom cards animation
+      if (bottomCardsRef.current) {
+        gsap.fromTo(
+          bottomCardsRef.current.children,
+          { opacity: 0, y: 50, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: bottomCardsRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="press" className="py-24 md:py-32 bg-section-gradient border-b border-border">
+    <section ref={sectionRef} id="press" className="py-24 md:py-32 bg-section-gradient border-b border-border">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section Header */}
-        <div className="mb-12">
+        <div ref={headerRef} className="mb-12">
           <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">
             Media
           </span>
@@ -22,7 +99,7 @@ const PressSection = () => {
         </div>
 
         {/* Featured Media Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
+        <div ref={featuredCardsRef} className="grid lg:grid-cols-2 gap-8 mb-8">
           {/* Documentary Feature */}
           <div className="bg-card-gradient rounded-2xl border border-border p-8 relative overflow-hidden">
             {/* Award Badge */}
@@ -127,7 +204,7 @@ const PressSection = () => {
         </div>
 
         {/* Quotes & Downloads */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div ref={bottomCardsRef} className="grid lg:grid-cols-2 gap-8">
           {/* Pull Quotes */}
           <div className="bg-card-gradient rounded-2xl border border-border p-6">
             <div className="flex items-center gap-3 mb-6">
