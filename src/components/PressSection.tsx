@@ -99,11 +99,30 @@ const PressSection = () => {
               Song: "Get Me Right"
             </p>
 
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               Mr. CAP's track "Get Me Right" is featured on the official soundtrack for the 
               feature film "Dear Frank," starring Brian White, Claudia Jordan, Columbus Short, 
               and Kearia Schroeder.
             </p>
+
+            <div className="flex flex-wrap gap-4">
+              <a 
+                href="https://www.amazon.com/gp/video/detail/amzn1.dv.gti.6559a27a-3134-4308-91de-a95896312683?autoplay=0&ref_=atv_cf_strg_wb" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              >
+                Watch on Prime Video →
+              </a>
+              <a 
+                href="https://www.imdb.com/title/tt34445946/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-cap-gold hover:text-cap-gold/80 transition-colors text-sm font-medium"
+              >
+                View on IMDb →
+              </a>
+            </div>
           </div>
         </div>
 
