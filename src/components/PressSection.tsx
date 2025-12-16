@@ -61,10 +61,14 @@ const PressSection = () => {
               />
             </div>
 
-            <p className="text-xs text-muted-foreground mt-6">
-              For usage, screenings, or media quotes related to this project, 
-              please contact the team for details and clearances.
-            </p>
+            <a 
+              href="https://www.pbs.org/show/the-life/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-6 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+            >
+              Watch on PBS →
+            </a>
           </div>
 
           {/* Movie Soundtrack Feature */}
