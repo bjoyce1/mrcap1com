@@ -5,32 +5,32 @@ import EPKLayout from "@/components/EPKLayout";
 
 const epkPages = [
   {
-    title: "Music & Booking",
+    title: "Music & Booking EPK",
     description: "Full set, feature appearances, festivals. Book Mr. CAP for your next event.",
     icon: Music,
     href: "/epk/music",
-    cta: "View Booking EPK",
+    cta: "View Music & Booking EPK",
   },
   {
-    title: "Press & Interviews",
+    title: "Press & Media EPK",
     description: "Media coverage, interview requests, publication features.",
     icon: Newspaper,
     href: "/epk/press",
-    cta: "View Press EPK",
+    cta: "View Press & Media EPK",
   },
   {
-    title: "Brand Partnerships",
+    title: "Brand & Partnership EPK",
     description: "Endorsements, campaigns, product collaborations, and licensing.",
     icon: Briefcase,
     href: "/epk/brands",
-    cta: "View Brand EPK",
+    cta: "View Brand & Partnership EPK",
   },
   {
-    title: "Film & Speaking",
+    title: "Film & Speaking EPK",
     description: "Documentary features, music supervision, speaking engagements.",
     icon: Film,
     href: "/epk/media",
-    cta: "View Media EPK",
+    cta: "View Film & Speaking EPK",
   },
 ];
 
@@ -38,26 +38,39 @@ const EPKHub = () => {
   return (
     <>
       <Helmet>
-        <title>Mr. CAP | Electronic Press Kit (EPK) – Houston Hip-Hop Artist</title>
+        <title>Mr. CAP | Official Electronic Press Kit (EPK) – Houston Hip-Hop Artist</title>
         <meta 
           name="description" 
           content="Official Electronic Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member. Access booking, press, brand, and media resources." 
         />
         <link rel="canonical" href="https://mrcap1.com/epk" />
-        <meta property="og:title" content="Mr. CAP | Electronic Press Kit (EPK)" />
+        <meta property="og:title" content="Mr. CAP | Official EPK" />
         <meta property="og:description" content="Official EPK for Houston hip-hop artist Mr. CAP. Booking, press, brands, and media resources." />
         <meta property="og:url" content="https://mrcap1.com/epk" />
       </Helmet>
 
       <EPKLayout
-        title="Electronic Press Kit"
-        subtitle="South Park Born. Class of '92. Future-Focused. Access everything you need to book, feature, or partner with Mr. CAP."
-        tagline="Official EPK"
+        title="MR. CAP — OFFICIAL EPK"
+        subtitle="South Park Born. SPC Raised. Independent & Future-Focused."
+        tagline="Electronic Press Kit"
         ctaLabel="General Inquiries"
         breadcrumb="EPK"
       >
+        {/* Intro */}
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Welcome to the official Electronic Press Kit for Mr. CAP, Houston hip-hop artist and proud member of the legendary South Park Coalition.
+                <br /><br />
+                Select the EPK that fits your purpose below.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* EPK Navigation Grid */}
-        <section className="py-20">
+        <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {epkPages.map((page) => (
@@ -77,30 +90,6 @@ const EPKHub = () => {
                   </span>
                 </Link>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Quick Stats */}
-        <section className="py-16 bg-card/20 border-y border-border/50">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
-              <div>
-                <div className="text-4xl font-display font-bold text-primary">30+</div>
-                <div className="text-sm text-muted-foreground mt-1">Years in Music</div>
-              </div>
-              <div>
-                <div className="text-4xl font-display font-bold text-primary">4</div>
-                <div className="text-sm text-muted-foreground mt-1">Studio Albums</div>
-              </div>
-              <div>
-                <div className="text-4xl font-display font-bold text-primary">1st</div>
-                <div className="text-sm text-muted-foreground mt-1">Houston Rap NFT</div>
-              </div>
-              <div>
-                <div className="text-4xl font-display font-bold text-primary">SPC</div>
-                <div className="text-sm text-muted-foreground mt-1">Original Member</div>
-              </div>
             </div>
           </div>
         </section>
