@@ -18,6 +18,12 @@ import minnieImg from "@/assets/self-love/minnie.png";
 import nonahImg from "@/assets/self-love/nonah.png";
 import pradaImg from "@/assets/self-love/prada.png";
 import sakitaImg from "@/assets/self-love/sakita.png";
+import skylaImg from "@/assets/self-love/skyla.png";
+import trytidaImg from "@/assets/self-love/trytida.png";
+import tyaImg from "@/assets/self-love/tya.png";
+import velataImg from "@/assets/self-love/velata.png";
+import wydayaImg from "@/assets/self-love/wydaya.png";
+import yannaImg from "@/assets/self-love/yanna.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,6 +71,12 @@ const artwork2026 = [
   { id: "nonah", title: "Nonah", image: nonahImg, meaning: "Guardian of the door" },
   { id: "prada", title: "Prada", image: pradaImg, meaning: "Gold on grit" },
   { id: "sakita", title: "Sakita", image: sakitaImg, meaning: "Self, proclaimed" },
+  { id: "skyla", title: "Skyla", image: skylaImg, meaning: "Bold affirmation in chaos" },
+  { id: "trytida", title: "Trytida", image: trytidaImg, meaning: "Loved and unashamed" },
+  { id: "tya", title: "Tya", image: tyaImg, meaning: "The look of knowing" },
+  { id: "velata", title: "Velata", image: velataImg, meaning: "Weathered but present" },
+  { id: "wydaya", title: "Wydaya", image: wydayaImg, meaning: "Fire behind the gaze" },
+  { id: "yanna", title: "Yanna", image: yannaImg, meaning: "Love as legacy" },
 ];
 
 const ArtGallery = () => {
