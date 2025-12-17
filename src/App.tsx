@@ -33,6 +33,11 @@ import EPKPress from "./pages/epk/EPKPress";
 import EPKBrands from "./pages/epk/EPKBrands";
 import EPKMedia from "./pages/epk/EPKMedia";
 
+// Self Love Installation Pages
+import SelfLoveInstallation from "./pages/SelfLoveInstallation";
+import SelfLoveRoom2024 from "./pages/SelfLoveRoom2024";
+import SelfLoveStory from "./pages/SelfLoveStory";
+
 // Google Analytics Measurement ID - Replace with actual ID when available
 const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
 
@@ -72,6 +77,12 @@ const App = () => (
               <Route path="/epk/press" element={<EPKPress />} />
               <Route path="/epk/brands" element={<EPKBrands />} />
               <Route path="/epk/media" element={<EPKMedia />} />
+              {/* Self Love Installation Routes */}
+              <Route path="/self-love" element={<SelfLoveInstallation />} />
+              <Route path="/self-love/2024" element={<SelfLoveRoom2024 />} />
+              <Route path="/self-love/2024/:slug" element={<SelfLoveStory />} />
+              <Route path="/self-love/2025" element={<div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2025 — Coming Soon</p></div>} />
+              <Route path="/self-love/2026" element={<div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2026 — Coming Soon</p></div>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
