@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { selfLove2024 } from "@/data/selfLove2024";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -7,6 +7,7 @@ import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import { ArrowLeft } from "lucide-react";
 
 export default function SelfLoveRoom2024() {
+  const location = useLocation();
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -83,6 +84,7 @@ export default function SelfLoveRoom2024() {
             <Link
               key={s.slug}
               to={`/self-love/2024/${s.slug}`}
+              state={{ backgroundLocation: location }}
               className="group rounded-2xl border border-border/20 bg-card/50 overflow-hidden hover:bg-card/70 transition-all duration-300"
             >
               <div className="aspect-[9/16] max-h-[320px] bg-muted/20 overflow-hidden">
