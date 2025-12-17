@@ -29,6 +29,51 @@ const EPKMusic = () => {
         <meta property="og:title" content="Mr. CAP | Booking EPK – Live Hip Hop Performer" />
         <meta property="og:description" content="Book Mr. CAP for live performances. Full sets, features, festivals." />
         <meta property="og:url" content="https://mrcap1.com/epk/music" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Mr. CAP Booking EPK",
+            "description": "Book Mr. CAP for live performances, full sets, and feature appearances.",
+            "url": "https://mrcap1.com/epk/music",
+            "mainEntity": {
+              "@type": "MusicGroup",
+              "@id": "https://mrcap1.com/#musicgroup",
+              "name": "Mr. CAP",
+              "genre": ["Hip-Hop", "Southern Hip-Hop", "Houston Rap"],
+              "foundingLocation": {
+                "@type": "Place",
+                "name": "Houston, Texas"
+              },
+              "member": {
+                "@type": "Person",
+                "@id": "https://mrcap1.com/#person",
+                "name": "Mr. CAP"
+              },
+              "event": {
+                "@type": "Event",
+                "name": "Book Mr. CAP Live Performance",
+                "performer": {
+                  "@type": "Person",
+                  "name": "Mr. CAP"
+                },
+                "organizer": {
+                  "@type": "Organization",
+                  "name": "South Park Coalition LLC",
+                  "email": "southparkcoalitionllc@gmail.com"
+                }
+              }
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
+                { "@type": "ListItem", "position": 3, "name": "Music & Booking", "item": "https://mrcap1.com/epk/music" }
+              ]
+            }
+          })}
+        </script>
       </Helmet>
 
       <EPKLayout

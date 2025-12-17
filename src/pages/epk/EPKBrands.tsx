@@ -31,6 +31,39 @@ const EPKBrands = () => {
         <meta property="og:title" content="Mr. CAP | Brand Partnership EPK" />
         <meta property="og:description" content="Brand partnerships, endorsements, and collaborations with Houston hip-hop artist Mr. CAP." />
         <meta property="og:url" content="https://mrcap1.com/epk/brands" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Mr. CAP Brand Partnership EPK",
+            "description": "Partner with Mr. CAP for brand endorsements, campaigns, and collaborations.",
+            "url": "https://mrcap1.com/epk/brands",
+            "mainEntity": {
+              "@type": "Person",
+              "@id": "https://mrcap1.com/#person",
+              "name": "Mr. CAP",
+              "description": "Houston hip-hop artist representing authenticity, independence, and longevity in music and digital entrepreneurship.",
+              "knowsAbout": ["Hip-Hop Culture", "Brand Partnerships", "Digital Marketing", "NFT", "Blockchain"],
+              "memberOf": {
+                "@type": "MusicGroup",
+                "name": "South Park Coalition"
+              }
+            },
+            "potentialAction": {
+              "@type": "ContactAction",
+              "target": "mailto:southparkcoalitionllc@gmail.com",
+              "name": "Partner With Mr. CAP"
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
+                { "@type": "ListItem", "position": 3, "name": "Brands", "item": "https://mrcap1.com/epk/brands" }
+              ]
+            }
+          })}
+        </script>
       </Helmet>
 
       <EPKLayout

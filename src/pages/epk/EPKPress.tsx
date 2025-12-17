@@ -22,6 +22,35 @@ const EPKPress = () => {
         <meta property="og:title" content="Mr. CAP | Press Kit – Media & Interview Requests" />
         <meta property="og:description" content="Download press materials and request interviews with Mr. CAP." />
         <meta property="og:url" content="https://mrcap1.com/epk/press" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Mr. CAP Press Kit",
+            "description": "Official press kit for Mr. CAP with bio, photos, and media assets.",
+            "url": "https://mrcap1.com/epk/press",
+            "mainEntity": {
+              "@type": "Person",
+              "@id": "https://mrcap1.com/#person",
+              "name": "Mr. CAP",
+              "description": "Houston-based hip-hop artist and member of the South Park Coalition. First Houston rapper to sell a hip-hop NFT (February 25, 2021). Documentary contributor to The Life: Sex Trafficking and Modern-Day Slavery.",
+              "knowsAbout": ["Hip-Hop Music", "Blockchain", "NFT", "Independent Music"],
+              "award": "First Houston rapper to sell a hip-hop NFT",
+              "memberOf": {
+                "@type": "MusicGroup",
+                "name": "South Park Coalition"
+              }
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
+                { "@type": "ListItem", "position": 3, "name": "Press", "item": "https://mrcap1.com/epk/press" }
+              ]
+            }
+          })}
+        </script>
       </Helmet>
 
       <EPKLayout

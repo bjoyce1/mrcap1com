@@ -22,6 +22,39 @@ const EPKMedia = () => {
         <meta property="og:title" content="Mr. CAP | Film & Speaking EPK" />
         <meta property="og:description" content="Film credits, soundtracks, and speaking engagements with Mr. CAP." />
         <meta property="og:url" content="https://mrcap1.com/epk/media" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Mr. CAP Film & Speaking EPK",
+            "description": "Book Mr. CAP for film projects, documentaries, and speaking engagements.",
+            "url": "https://mrcap1.com/epk/media",
+            "mainEntity": {
+              "@type": "Person",
+              "@id": "https://mrcap1.com/#person",
+              "name": "Mr. CAP",
+              "description": "Houston hip-hop artist with experience in film, media, and cultural commentary. Documentary contributor to The Life: Sex Trafficking and Modern-Day Slavery.",
+              "knowsAbout": ["Independent Artistry", "Hip-Hop Culture", "Music and Blockchain", "Creative Industries"],
+              "hasCredential": {
+                "@type": "EducationalOccupationalCredential",
+                "name": "Documentary Contributor"
+              }
+            },
+            "potentialAction": {
+              "@type": "ContactAction",
+              "target": "mailto:southparkcoalitionllc@gmail.com",
+              "name": "Media & Speaking Inquiries"
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
+                { "@type": "ListItem", "position": 3, "name": "Media", "item": "https://mrcap1.com/epk/media" }
+              ]
+            }
+          })}
+        </script>
       </Helmet>
 
       <EPKLayout
