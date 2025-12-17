@@ -10,6 +10,9 @@ export type SelfLoveStory = {
   body: string;
 };
 
+// Optional ambient audio for Room I (leave empty until you upload audio)
+export const room2024AmbientAudio = "";
+
 export const selfLove2024: SelfLoveStory[] = [
   {
     year: 2024,
