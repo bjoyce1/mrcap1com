@@ -47,6 +47,44 @@ const EPKHub = () => {
         <meta property="og:title" content="Mr. CAP | Official EPK" />
         <meta property="og:description" content="Official EPK for Houston hip-hop artist Mr. CAP. Booking, press, brands, and media resources." />
         <meta property="og:url" content="https://mrcap1.com/epk" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Mr. CAP Official Electronic Press Kit",
+            "description": "Official Electronic Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member.",
+            "url": "https://mrcap1.com/epk",
+            "mainEntity": {
+              "@type": "Person",
+              "@id": "https://mrcap1.com/#person",
+              "name": "Mr. CAP",
+              "alternateName": "MrCap",
+              "description": "Houston hip-hop artist and member of the South Park Coalition",
+              "genre": ["Hip-Hop", "Southern Hip-Hop", "Houston Rap"],
+              "homeLocation": {
+                "@type": "Place",
+                "name": "Houston, Texas"
+              },
+              "memberOf": {
+                "@type": "MusicGroup",
+                "name": "South Park Coalition"
+              },
+              "sameAs": [
+                "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
+                "https://www.instagram.com/mrcapism",
+                "https://www.youtube.com/@mrcap1",
+                "https://twitter.com/mrcap1"
+              ]
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
+                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" }
+              ]
+            }
+          })}
+        </script>
       </Helmet>
 
       <EPKLayout
