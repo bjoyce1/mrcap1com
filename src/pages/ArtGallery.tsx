@@ -1,11 +1,23 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, Palette, ExternalLink, Heart, Sparkles, Crown, Calendar } from "lucide-react";
+import { ArrowLeft, Palette, ExternalLink, Heart, Sparkles, Crown, Calendar, X } from "lucide-react";
 import { gsap } from "@/hooks/useGSAP";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import mrCapCoin from "@/assets/mr-cap-coin.png";
 import { Button } from "@/components/ui/button";
+
+// 2026 Collection Artwork Imports
+import deshiImg from "@/assets/self-love/deshi.png";
+import fintiImg from "@/assets/self-love/finti.png";
+import jaspinImg from "@/assets/self-love/jaspin.png";
+import keliaImg from "@/assets/self-love/kelia.png";
+import koliaImg from "@/assets/self-love/kolia.png";
+import lolaImg from "@/assets/self-love/lola.png";
+import minnieImg from "@/assets/self-love/minnie.png";
+import nonahImg from "@/assets/self-love/nonah.png";
+import pradaImg from "@/assets/self-love/prada.png";
+import sakitaImg from "@/assets/self-love/sakita.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,17 +48,32 @@ const installationRooms = [
     theme: "Mastery • Permanence • Legacy",
     description: "This final room represents arrival. Not perfection — ownership. The work here seals the story into permanence: self-love as a power source, a standard, and a legacy.",
     link: null,
-    linkLabel: "Coming 2026",
+    linkLabel: "View Collection Below",
     icon: Crown,
     status: "coming",
   },
+];
+
+const artwork2026 = [
+  { id: "deshi", title: "Deshi", image: deshiImg, meaning: "The keeper of thresholds" },
+  { id: "finti", title: "Finti", image: fintiImg, meaning: "Strength worn openly" },
+  { id: "jaspin", title: "Jaspin", image: jaspinImg, meaning: "Quiet power in stillness" },
+  { id: "kelia", title: "Kelia", image: keliaImg, meaning: "One love, one heart" },
+  { id: "kolia", title: "Kolia", image: koliaImg, meaning: "Profile of self-recognition" },
+  { id: "lola", title: "Lola", image: lolaImg, meaning: "Eyes closed, spirit awake" },
+  { id: "minnie", title: "Minnie", image: minnieImg, meaning: "Color amidst decay" },
+  { id: "nonah", title: "Nonah", image: nonahImg, meaning: "Guardian of the door" },
+  { id: "prada", title: "Prada", image: pradaImg, meaning: "Gold on grit" },
+  { id: "sakita", title: "Sakita", image: sakitaImg, meaning: "Self, proclaimed" },
 ];
 
 const ArtGallery = () => {
   const heroRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const roomsRef = useRef<HTMLElement>(null);
+  const galleryRef = useRef<HTMLElement>(null);
   const curatorRef = useRef<HTMLElement>(null);
+  const [selectedArtwork, setSelectedArtwork] = useState<typeof artwork2026[0] | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -111,6 +138,24 @@ const ArtGallery = () => {
           ease: "power3.out",
           scrollTrigger: {
             trigger: curatorRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Gallery animation
+      gsap.fromTo(
+        ".gsap-artwork-card",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: galleryRef.current,
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
@@ -366,6 +411,77 @@ const ArtGallery = () => {
             ))}
           </div>
         </section>
+
+        {/* 2026 Featured Works Gallery */}
+        <section ref={galleryRef} id="featured-works-2026" className="py-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-primary/10 ring-1 ring-primary/20 rounded-full">
+                <Crown className="w-4 h-4 text-primary" />
+                <span className="text-sm uppercase tracking-widest font-medium">Room III • 2026</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-wide mb-4">
+                Featured Works
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                The Ownership Collection — Mastery, Permanence, and Legacy sealed into visual permanence.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+              {artwork2026.map((artwork) => (
+                <button
+                  key={artwork.id}
+                  onClick={() => setSelectedArtwork(artwork)}
+                  className="gsap-artwork-card group relative aspect-[3/2] rounded-xl overflow-hidden ring-1 ring-border hover:ring-primary/50 transition-all duration-300"
+                >
+                  <img
+                    src={artwork.image}
+                    alt={artwork.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="font-display font-bold text-sm uppercase tracking-wide">{artwork.title}</h3>
+                    <p className="text-xs text-muted-foreground mt-0.5">{artwork.meaning}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Artwork Modal */}
+        {selectedArtwork && (
+          <div 
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/95 backdrop-blur-xl"
+            onClick={() => setSelectedArtwork(null)}
+          >
+            <button
+              onClick={() => setSelectedArtwork(null)}
+              className="absolute top-6 right-6 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div 
+              className="max-w-4xl w-full animate-scale-in"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedArtwork.image}
+                alt={selectedArtwork.title}
+                className="w-full h-auto rounded-2xl ring-1 ring-border"
+              />
+              <div className="mt-6 text-center">
+                <h3 className="font-display text-2xl md:text-3xl font-extrabold uppercase tracking-wide">
+                  {selectedArtwork.title}
+                </h3>
+                <p className="text-muted-foreground mt-2 text-lg">{selectedArtwork.meaning}</p>
+                <p className="text-sm text-muted-foreground/60 mt-4">Self Love • Room III • 2026</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Curator's Note */}
         <section ref={curatorRef} className="py-16 px-6 bg-muted/30">
