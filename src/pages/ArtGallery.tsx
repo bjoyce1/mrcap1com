@@ -211,12 +211,26 @@ const ArtGallery = () => {
         </header>
 
         {/* Hero Section */}
-        <section ref={heroRef} className="relative pt-32 pb-16 md:pt-40 md:pb-24 px-6">
+        <section ref={heroRef} className="relative pt-32 pb-16 md:pt-40 md:pb-24 px-6 overflow-hidden min-h-[80vh] flex items-center">
+          {/* Video Background */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+          >
+            <source src="/video/art-hero-bg.mp4" type="video/mp4" />
+          </video>
+          
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-background/60" />
+          
           {/* Gradient Atmosphere */}
           <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-30 pointer-events-none"
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-40 pointer-events-none"
             style={{
-              background: "radial-gradient(50% 50% at 50% 30%, hsl(var(--primary) / 0.4) 0%, transparent 70%)",
+              background: "radial-gradient(50% 50% at 50% 30%, hsl(var(--primary) / 0.5) 0%, transparent 70%)",
             }}
           />
 
