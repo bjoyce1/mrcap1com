@@ -7,6 +7,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import mrCapCoin from "@/assets/mr-cap-coin.png";
 import { Button } from "@/components/ui/button";
 
+// 2025 Collection Artwork Imports
+import selfAi1Img from "@/assets/self-love/self-ai-1.png";
+import selfAi2Img from "@/assets/self-love/self-ai-2.png";
+import selfAi3Img from "@/assets/self-love/self-ai-3.png";
+import selfAi4Img from "@/assets/self-love/self-ai-4.png";
+
 // 2026 Collection Artwork Imports
 import deshiImg from "@/assets/self-love/deshi.png";
 import fintiImg from "@/assets/self-love/finti.png";
@@ -60,23 +66,30 @@ const installationRooms = [
   },
 ];
 
+const artwork2025 = [
+  { id: "self-ai-1", title: "Self 爱 I", image: selfAi1Img, meaning: "The first gesture inward", year: "2025" },
+  { id: "self-ai-2", title: "Self 爱 II", image: selfAi2Img, meaning: "Hearts worn on skin", year: "2025" },
+  { id: "self-ai-3", title: "Self 爱 III", image: selfAi3Img, meaning: "The declaration worn", year: "2025" },
+  { id: "self-ai-4", title: "Self 爱 IV", image: selfAi4Img, meaning: "Eyes that see worth", year: "2025" },
+];
+
 const artwork2026 = [
-  { id: "deshi", title: "Deshi", image: deshiImg, meaning: "The keeper of thresholds" },
-  { id: "finti", title: "Finti", image: fintiImg, meaning: "Strength worn openly" },
-  { id: "jaspin", title: "Jaspin", image: jaspinImg, meaning: "Quiet power in stillness" },
-  { id: "kelia", title: "Kelia", image: keliaImg, meaning: "One love, one heart" },
-  { id: "kolia", title: "Kolia", image: koliaImg, meaning: "Profile of self-recognition" },
-  { id: "lola", title: "Lola", image: lolaImg, meaning: "Eyes closed, spirit awake" },
-  { id: "minnie", title: "Minnie", image: minnieImg, meaning: "Color amidst decay" },
-  { id: "nonah", title: "Nonah", image: nonahImg, meaning: "Guardian of the door" },
-  { id: "prada", title: "Prada", image: pradaImg, meaning: "Gold on grit" },
-  { id: "sakita", title: "Sakita", image: sakitaImg, meaning: "Self, proclaimed" },
-  { id: "skyla", title: "Skyla", image: skylaImg, meaning: "Bold affirmation in chaos" },
-  { id: "trytida", title: "Trytida", image: trytidaImg, meaning: "Loved and unashamed" },
-  { id: "tya", title: "Tya", image: tyaImg, meaning: "The look of knowing" },
-  { id: "velata", title: "Velata", image: velataImg, meaning: "Weathered but present" },
-  { id: "wydaya", title: "Wydaya", image: wydayaImg, meaning: "Fire behind the gaze" },
-  { id: "yanna", title: "Yanna", image: yannaImg, meaning: "Love as legacy" },
+  { id: "deshi", title: "Deshi", image: deshiImg, meaning: "The keeper of thresholds", year: "2026" },
+  { id: "finti", title: "Finti", image: fintiImg, meaning: "Strength worn openly", year: "2026" },
+  { id: "jaspin", title: "Jaspin", image: jaspinImg, meaning: "Quiet power in stillness", year: "2026" },
+  { id: "kelia", title: "Kelia", image: keliaImg, meaning: "One love, one heart", year: "2026" },
+  { id: "kolia", title: "Kolia", image: koliaImg, meaning: "Profile of self-recognition", year: "2026" },
+  { id: "lola", title: "Lola", image: lolaImg, meaning: "Eyes closed, spirit awake", year: "2026" },
+  { id: "minnie", title: "Minnie", image: minnieImg, meaning: "Color amidst decay", year: "2026" },
+  { id: "nonah", title: "Nonah", image: nonahImg, meaning: "Guardian of the door", year: "2026" },
+  { id: "prada", title: "Prada", image: pradaImg, meaning: "Gold on grit", year: "2026" },
+  { id: "sakita", title: "Sakita", image: sakitaImg, meaning: "Self, proclaimed", year: "2026" },
+  { id: "skyla", title: "Skyla", image: skylaImg, meaning: "Bold affirmation in chaos", year: "2026" },
+  { id: "trytida", title: "Trytida", image: trytidaImg, meaning: "Loved and unashamed", year: "2026" },
+  { id: "tya", title: "Tya", image: tyaImg, meaning: "The look of knowing", year: "2026" },
+  { id: "velata", title: "Velata", image: velataImg, meaning: "Weathered but present", year: "2026" },
+  { id: "wydaya", title: "Wydaya", image: wydayaImg, meaning: "Fire behind the gaze", year: "2026" },
+  { id: "yanna", title: "Yanna", image: yannaImg, meaning: "Love as legacy", year: "2026" },
 ];
 
 const ArtGallery = () => {
@@ -424,8 +437,47 @@ const ArtGallery = () => {
           </div>
         </section>
 
+        {/* 2025 Featured Works Gallery */}
+        <section id="featured-works-2025" className="py-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-primary/10 ring-1 ring-primary/20 rounded-full">
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span className="text-sm uppercase tracking-widest font-medium">Room II • 2025</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-wide mb-4">
+                The Becoming
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Growth, Boundaries, and Voice — Self Love as active decision.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+              {artwork2025.map((artwork) => (
+                <button
+                  key={artwork.id}
+                  onClick={() => setSelectedArtwork(artwork)}
+                  className="gsap-artwork-card group relative aspect-[2/3] rounded-xl overflow-hidden ring-1 ring-border hover:ring-primary/50 transition-all duration-300"
+                >
+                  <img
+                    src={artwork.image}
+                    alt={artwork.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="font-display font-bold text-sm uppercase tracking-wide">{artwork.title}</h3>
+                    <p className="text-xs text-muted-foreground mt-0.5">{artwork.meaning}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* 2026 Featured Works Gallery */}
-        <section ref={galleryRef} id="featured-works-2026" className="py-20 px-6">
+        <section ref={galleryRef} id="featured-works-2026" className="py-20 px-6 bg-muted/20">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-primary/10 ring-1 ring-primary/20 rounded-full">
@@ -433,10 +485,10 @@ const ArtGallery = () => {
                 <span className="text-sm uppercase tracking-widest font-medium">Room III • 2026</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-wide mb-4">
-                Featured Works
+                The Ownership
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                The Ownership Collection — Mastery, Permanence, and Legacy sealed into visual permanence.
+                Mastery, Permanence, and Legacy sealed into visual permanence.
               </p>
             </div>
 
@@ -489,7 +541,9 @@ const ArtGallery = () => {
                   {selectedArtwork.title}
                 </h3>
                 <p className="text-muted-foreground mt-2 text-lg">{selectedArtwork.meaning}</p>
-                <p className="text-sm text-muted-foreground/60 mt-4">Self Love • Room III • 2026</p>
+                <p className="text-sm text-muted-foreground/60 mt-4">
+                  Self Love • {selectedArtwork.year === "2025" ? "Room II" : "Room III"} • {selectedArtwork.year}
+                </p>
               </div>
             </div>
           </div>
