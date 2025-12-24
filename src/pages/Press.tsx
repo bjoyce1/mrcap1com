@@ -5,7 +5,26 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image, Mic, Award, Music, Users, Calendar, MapPin, Globe } from "lucide-react";
 
+// Featured press article (Houston Press)
+const featuredArticle = {
+  outlet: "Houston Press",
+  title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
+  author: "Nathan Smith",
+  date: "April 20, 2015",
+  dateISO: "2015-04-20",
+  url: "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/",
+  image: "/images/wiz-khalifa-blog.jpg",
+  quote: "I have nothing to do with Wiz Khalifa…I've seen his Instagram followers…even though I'm not a mainstream artist with mainstream exposure, people know who Mr. CAP is. And that's me.",
+  summary: "This feature from Houston Press profiles Mr. CAP's career and clarifies a notable identity mix-up with Wiz Khalifa. It highlights his deep roots in Houston's hip-hop scene and long-standing commitment to his craft and community.",
+};
+
 const pressFeatures = [
+  {
+    outlet: "Houston Press",
+    title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
+    date: "2015",
+    url: "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/",
+  },
   {
     outlet: "Sound.xyz",
     title: "Dippin Thru the Metaverse – A Groundbreaking Blend of Hip-Hop and Technology",
@@ -39,6 +58,10 @@ const pressFeatures = [
 ];
 
 const quotes = [
+  {
+    text: "I have nothing to do with Wiz Khalifa…I've seen his Instagram followers…even though I'm not a mainstream artist with mainstream exposure, people know who Mr. CAP is. And that's me.",
+    source: "Houston Press (2015)",
+  },
   {
     text: "Shout-out to Mr. Cap… he a hardworking man. I sit and watch him all the time. I learn a lot from watching things.",
     source: "Sosamann, HotNewHipHop Interview (2022)",
@@ -243,6 +266,26 @@ const Press = () => {
         "url": "https://mrcap1.com/press",
         "contactType": "Press/Media Inquiries",
         "email": "wrecklessent@gmail.com"
+      },
+      {
+        "@type": "NewsArticle",
+        "headline": "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
+        "datePublished": "2015-04-20",
+        "author": {
+          "@type": "Person",
+          "name": "Nathan Smith"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Houston Press",
+          "url": "https://www.houstonpress.com"
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/"
+        },
+        "url": "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/",
+        "about": { "@id": "https://mrcap1.com/#person" }
       }
     ]
   };
@@ -293,6 +336,70 @@ const Press = () => {
                 Official electronic press kit for journalists, bloggers, podcasters, and media professionals. 
                 Download assets, copy-ready bios, and request interviews.
               </p>
+            </div>
+          </section>
+
+          {/* Featured Article - Houston Press */}
+          <section className="py-16 bg-gradient-to-b from-primary/5 to-transparent border-b border-border/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-5xl mx-auto">
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Featured Article
+                  </span>
+                </div>
+                
+                <div className="bg-card/50 border border-border/50 rounded-2xl overflow-hidden">
+                  <div className="grid lg:grid-cols-2 gap-0">
+                    {/* Image */}
+                    <div className="relative aspect-[4/3] lg:aspect-auto">
+                      <img 
+                        src={featuredArticle.image}
+                        alt="Mr. CAP vs Wiz Khalifa - Mainstream vs Indie Underground"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-background/80" />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="p-8 lg:p-10 flex flex-col justify-center">
+                      <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-2">
+                        {featuredArticle.outlet}
+                      </span>
+                      <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 leading-tight">
+                        "{featuredArticle.title}"
+                      </h2>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Published: {featuredArticle.date} | Author: {featuredArticle.author}
+                      </p>
+                      
+                      <blockquote className="border-l-4 border-primary pl-4 my-6">
+                        <p className="text-foreground/90 italic leading-relaxed">
+                          "{featuredArticle.quote}"
+                        </p>
+                        <cite className="text-sm text-muted-foreground mt-2 block not-italic">
+                          — {featuredArticle.outlet}
+                        </cite>
+                      </blockquote>
+                      
+                      <p className="text-muted-foreground mb-6">
+                        {featuredArticle.summary}
+                      </p>
+                      
+                      <Button variant="flux" asChild className="w-fit">
+                        <a 
+                          href={featuredArticle.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Read Original Article
+                          <ExternalLink className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
