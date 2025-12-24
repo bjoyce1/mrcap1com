@@ -21,6 +21,8 @@ import Innovation from "./pages/Innovation";
 import HoustonRapper from "./pages/HoustonRapper";
 import SouthParkCoalition from "./pages/SouthParkCoalition";
 import TexasUndergroundHipHop from "./pages/TexasUndergroundHipHop";
+import WhoIsMrCap from "./pages/WhoIsMrCap";
+import Discography from "./pages/Discography";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -70,6 +72,8 @@ function AppRoutes() {
         <Route path="/houston-rapper-mr-cap" element={<HoustonRapper />} />
         <Route path="/south-park-coalition-houston" element={<SouthParkCoalition />} />
         <Route path="/texas-underground-hip-hop" element={<TexasUndergroundHipHop />} />
+        <Route path="/who-is-mr-cap" element={<WhoIsMrCap />} />
+        <Route path="/mr-cap-discography" element={<Discography />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
         {/* EPK Routes */}
