@@ -760,6 +760,78 @@ Releasing through Sony Music / The Orchard gave the album the distribution it de
     readTime: "9 min",
     tags: ["The Art of ISM", "Zaytoven", "Metro Boomin", "Album", "Production"],
   },
+  {
+    slug: "why-betn-on-me-is-more-than-a-song",
+    title: "Why 'Bet'n On Me' Is More Than a Song",
+    excerpt: "The lead single from 'The Ties That Bind Us' isn't just a record — it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.",
+    image: "/images/betn-on-me-story.jpg",
+    content: `
+## A Philosophy Shaped by Decades
+
+"Bet'n On Me" isn't just a record — it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.
+
+When Mr. CAP stepped into the booth to record this track for the South Park Coalition's *The Ties That Bind Us* album, he wasn't just making another song. He was distilling 30+ years of lessons into three minutes and forty-five seconds.
+
+## The SPC Mentality
+
+The South Park Coalition taught its members something that most artists never learn: **you don't need permission to build something great**.
+
+While the music industry was busy signing artists to exploitative contracts, SPC was:
+
+- Pressing their own CDs
+- Selling out of car trunks
+- Building direct relationships with fans
+- Keeping 100% of their masters
+
+This wasn't just a business model — it was a survival strategy. And "Bet'n On Me" is the anthem for everyone who's ever had to bet on themselves when no one else would.
+
+## The Independent Grind
+
+Major labels offered deals. Industry gatekeepers made promises. But Mr. CAP understood something fundamental: **the only sure bet is the one you place on yourself**.
+
+The track speaks to every entrepreneur, every artist, every hustler who's been told "no" more times than they can count. It's for the ones who kept going anyway.
+
+## Industry Gatekeeping vs. Self-Ownership
+
+The music industry has always been designed to extract value from artists. Record deals that look good on paper but leave artists broke. Publishing agreements that sign away lifetime rights. Distribution contracts that take 80% of revenue.
+
+Mr. CAP saw through all of it.
+
+Through CAP Distributions, he built an alternative — a way for independent artists to reach global platforms without surrendering their ownership. "Bet'n On Me" is the soundtrack to that mission.
+
+## The Long-Term Vision
+
+This isn't about betting on trends. It's not about chasing viral moments or algorithm hacks.
+
+It's about:
+
+- Building something that lasts
+- Owning what you create
+- Staying true to your roots while evolving with the times
+- Proving that longevity beats hype every single time
+
+## The Message
+
+From South Park streets to blockchain technology, from cassette tapes to streaming platforms — the constant has always been the same: **bet on yourself**.
+
+Because when you bet on yourself, you can never lose. Even when you fail, you learn. Even when you fall, you get back up. And eventually, the bets start paying off.
+
+---
+
+**This isn't about betting on trends.**  
+**It's about betting on yourself.**
+
+---
+
+👉 [Listen to "Bet'n On Me"](/music)  
+👉 [Explore the full legacy at mrcap1.com](/)
+    `,
+    category: "Behind the Music",
+    date: "2024-12-20",
+    author: "ISM",
+    readTime: "5 min",
+    tags: ["Bet'n On Me", "The Ties That Bind Us", "SPC", "Independence", "Philosophy", "South Park Coalition"],
+  },
 ];
 
 export const getBlogPostBySlug = (slug: string): BlogPost | undefined => {
