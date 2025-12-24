@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image } from "lucide-react";
+import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image, Mic, Award, Music, Users, Calendar, MapPin, Globe } from "lucide-react";
 
 const pressFeatures = [
   {
@@ -30,6 +30,12 @@ const pressFeatures = [
     date: "2021",
     url: "#",
   },
+  {
+    outlet: "HipHopDX",
+    title: "South Park Coalition's Legacy in Southern Hip-Hop",
+    date: "2024",
+    url: "#",
+  },
 ];
 
 const quotes = [
@@ -51,7 +57,63 @@ const quotes = [
   },
 ];
 
-const mediaBio = `Cornelius A. Pratt, professionally known as Mr. CAP, is a Houston-born rapper, writer, and creative technologist with deep roots in the South Park Coalition. With over three decades in the music industry, he has released multiple albums including his latest "The Ties That Bind Us" and the hit single "Bet'n On Me." In 2021, he became the first Houston rapper to sell a Hip Hop NFT on the blockchain.`;
+// Short bio for quick copy
+const shortBio = `Mr. CAP is a Houston-born rapper and founding member of the South Park Coalition, with 30+ years in underground hip-hop. First Houston rapper to sell a Hip Hop NFT (2021).`;
+
+// Full media bio
+const mediaBio = `Cornelius A. Pratt, professionally known as Mr. CAP (Creative Artist Promoter), is a Houston-born rapper, writer, and creative technologist. As a founding member of the legendary South Park Coalition (SPC), he has been a pivotal force in Houston's underground hip-hop scene since the late 1980s.
+
+With over three decades in the music industry, Mr. CAP has released multiple critically acclaimed albums including "Art of Ism," "Cold Ass Pimp," "To Tha Grave," and his latest "The Ties That Bind Us." His 2024 single "Bet'n On Me" continues to showcase his lyrical prowess and cultural relevance.
+
+In 2021, Mr. CAP made history as the first Houston rapper to sell a Hip Hop NFT on the blockchain, pioneering the intersection of Southern hip-hop and Web3 technology. His NFT collection "Limitless" on Sound.xyz represents a new frontier for independent artists seeking ownership and direct fan engagement.
+
+Beyond music, Mr. CAP is a cultural historian, documenting Houston's rich hip-hop heritage and mentoring the next generation of artists. His work has been featured in Houston Chronicle, Complex, AllHipHop, HipHopDX, and Sound.xyz.`;
+
+// Key facts for journalists
+const keyFacts = [
+  { label: "Real Name", value: "Cornelius A. Pratt" },
+  { label: "Stage Name", value: "Mr. CAP (Creative Artist Promoter)" },
+  { label: "Origin", value: "Houston, Texas (South Park)" },
+  { label: "Active Since", value: "1988" },
+  { label: "Affiliation", value: "South Park Coalition (SPC)" },
+  { label: "Notable First", value: "First Houston Rapper to Sell a Hip Hop NFT (2021)" },
+  { label: "Latest Release", value: "Bet'n On Me (2024)" },
+  { label: "Albums", value: "Art of Ism, Cold Ass Pimp, To Tha Grave, The Ties That Bind Us" },
+];
+
+// Story angles for journalists
+const storyAngles = [
+  {
+    title: "Houston Hip-Hop Pioneer",
+    description: "30+ years documenting and shaping the South Park Coalition legacy alongside K-Rino",
+    icon: Music,
+  },
+  {
+    title: "Web3 & NFT Innovation",
+    description: "First Houston rapper to sell a Hip Hop NFT, bridging underground hip-hop with blockchain technology",
+    icon: Globe,
+  },
+  {
+    title: "Cultural Preservation",
+    description: "Actively documenting Houston's hip-hop history and mentoring emerging artists",
+    icon: Award,
+  },
+  {
+    title: "Independent Artist Blueprint",
+    description: "Three decades of sustainable independence in the music industry",
+    icon: Users,
+  },
+];
+
+// Interview topics
+const interviewTopics = [
+  "The history and legacy of Houston's South Park Coalition",
+  "Web3, NFTs, and the future of music ownership for independent artists",
+  "30+ years of navigating the music industry as an independent artist",
+  "Houston's influence on Southern hip-hop and national trends",
+  "The evolution of underground hip-hop from 1988 to present",
+  "Preserving hip-hop culture and mentoring the next generation",
+];
 
 const Press = () => {
   const jsonLd = {
@@ -59,24 +121,102 @@ const Press = () => {
     "@graph": [
       {
         "@type": "WebPage",
-        "name": "Press & Media - Mr. CAP - Electronic Press Kit",
-        "description": "Access official press assets, bio, photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features.",
+        "@id": "https://mrcap1.com/press#webpage",
+        "name": "Press & Media Kit - Mr. CAP | Houston Hip-Hop Artist EPK",
+        "description": "Official electronic press kit for Mr. CAP, Houston rapper and South Park Coalition member. Download press assets, bio, high-res photos, and request interviews.",
         "url": "https://mrcap1.com/press",
-        "mainEntity": {
-          "@type": "Person",
-          "name": "Mr. CAP",
-          "description": "Houston hip-hop artist and South Park Coalition member"
+        "isPartOf": { "@id": "https://mrcap1.com/#website" },
+        "about": { "@id": "https://mrcap1.com/#person" },
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-12-01"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://mrcap1.com/#person",
+        "name": "Mr. CAP",
+        "alternateName": ["Cornelius A. Pratt", "Creative Artist Promoter", "Mr CAP"],
+        "description": "Houston-born rapper, South Park Coalition founding member, and first Houston rapper to sell a Hip Hop NFT. Over 30 years in underground hip-hop.",
+        "url": "https://mrcap1.com",
+        "image": "https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg",
+        "sameAs": [
+          "https://twitter.com/mrcap1",
+          "https://instagram.com/mrcap1",
+          "https://www.youtube.com/@mrcap1",
+          "https://open.spotify.com/artist/6v2pXkNCnGBxTkJB8GhHo8",
+          "https://www.sound.xyz/mrcap"
+        ],
+        "birthPlace": {
+          "@type": "Place",
+          "name": "Houston, Texas",
+          "address": { "@type": "PostalAddress", "addressLocality": "Houston", "addressRegion": "TX", "addressCountry": "US" }
+        },
+        "nationality": { "@type": "Country", "name": "United States" },
+        "jobTitle": ["Rapper", "Recording Artist", "Creative Technologist", "Cultural Historian"],
+        "affiliation": {
+          "@type": "MusicGroup",
+          "name": "South Park Coalition",
+          "foundingDate": "1987",
+          "foundingLocation": { "@type": "Place", "name": "Houston, Texas" }
+        },
+        "award": ["First Houston Rapper to Sell a Hip Hop NFT (2021)"],
+        "knowsAbout": ["Hip-Hop Music", "Houston Hip-Hop", "South Park Coalition", "NFT Music", "Web3", "Underground Hip-Hop", "Southern Rap"],
+        "genre": ["Hip-Hop", "Southern Rap", "Underground Hip-Hop", "Houston Rap"],
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "Recording Artist",
+          "occupationalCategory": "27-2042.00"
         }
       },
       {
+        "@type": "MusicGroup",
+        "@id": "https://mrcap1.com/#spc",
+        "name": "South Park Coalition",
+        "alternateName": "SPC",
+        "description": "Legendary Houston hip-hop collective founded in 1987, one of the most influential underground rap groups in Southern hip-hop history.",
+        "foundingDate": "1987",
+        "foundingLocation": { "@type": "Place", "name": "South Park, Houston, Texas" },
+        "genre": ["Hip-Hop", "Southern Rap", "Underground Hip-Hop"],
+        "member": [
+          { "@type": "Person", "name": "Mr. CAP", "@id": "https://mrcap1.com/#person" },
+          { "@type": "Person", "name": "K-Rino" },
+          { "@type": "Person", "name": "Klondike Kat" },
+          { "@type": "Person", "name": "Dope-E" }
+        ]
+      },
+      {
         "@type": "FAQPage",
+        "@id": "https://mrcap1.com/press#faq",
         "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Who is Mr. CAP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper and founding member of the South Park Coalition, with over 30 years in underground hip-hop. In 2021, he became the first Houston rapper to sell a Hip Hop NFT on the blockchain."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the South Park Coalition?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The South Park Coalition (SPC) is a legendary Houston hip-hop collective founded in 1987 in the South Park neighborhood. It includes artists like K-Rino, Mr. CAP, Klondike Kat, and Dope-E, and is considered one of the most influential underground rap groups in Southern hip-hop history."
+            }
+          },
           {
             "@type": "Question",
             "name": "How can I request an interview with Mr. CAP?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For interview requests, contact wrecklessent@gmail.com. Please include details about your publication, audience, and preferred format. Allow 48-72 hours for response."
+              "text": "For interview requests, contact wrecklessent@gmail.com. Please include your publication name, audience size, topic focus, and preferred format (video, audio, or written). Allow 48-72 hours for response."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What makes Mr. CAP a pioneer in NFT music?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In 2021, Mr. CAP became the first Houston rapper to sell a Hip Hop NFT on the blockchain, pioneering the intersection of Southern hip-hop and Web3 technology. His NFT collection 'Limitless' on Sound.xyz demonstrates new pathways for independent artist ownership."
             }
           },
           {
@@ -93,8 +233,16 @@ const Press = () => {
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Press", "item": "https://mrcap1.com/press" }
+          { "@type": "ListItem", "position": 2, "name": "Press & Media Kit", "item": "https://mrcap1.com/press" }
         ]
+      },
+      {
+        "@type": "ContactPage",
+        "name": "Media Contact - Mr. CAP",
+        "description": "Contact information for press inquiries, interview requests, and media partnerships with Mr. CAP.",
+        "url": "https://mrcap1.com/press",
+        "contactType": "Press/Media Inquiries",
+        "email": "wrecklessent@gmail.com"
       }
     ]
   };
@@ -102,14 +250,22 @@ const Press = () => {
   return (
     <>
       <Helmet>
-        <title>Press & Media | Mr. CAP – Electronic Press Kit (EPK)</title>
-        <meta name="description" content="Access official press assets, bio, high-res photos, quotes, and media coverage for Mr. CAP. Download the EPK and request interviews or features for Houston hip-hop coverage." />
+        <title>Press & Media Kit | Mr. CAP – Houston Hip-Hop Artist EPK</title>
+        <meta name="description" content="Official electronic press kit for Mr. CAP, Houston rapper and South Park Coalition founding member. Download press assets, bio, high-res photos, and request interviews." />
         <link rel="canonical" href="https://mrcap1.com/press" />
         
-        <meta property="og:title" content="Press & Media | Mr. CAP – EPK" />
-        <meta property="og:description" content="Press kit and media coverage for Houston hip-hop artist Mr. CAP." />
+        <meta property="og:title" content="Press & Media Kit | Mr. CAP – Houston Hip-Hop Artist" />
+        <meta property="og:description" content="Official EPK for Mr. CAP. 30+ years in Houston hip-hop, South Park Coalition member, first Houston rapper to sell an NFT." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcap1.com/press" />
+        <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg" />
+        
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@mrcap1" />
+        <meta name="twitter:title" content="Press & Media Kit | Mr. CAP" />
+        <meta name="twitter:description" content="Official EPK for Houston hip-hop artist Mr. CAP. 30+ years in the game." />
+        
+        <meta name="keywords" content="Mr. CAP press kit, Houston rapper EPK, South Park Coalition press, Houston hip-hop media, underground hip-hop press, Texas rapper interview, NFT rapper press kit" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
@@ -124,60 +280,146 @@ const Press = () => {
               <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
                 <Link to="/" className="hover:text-primary transition-colors">Home</Link>
                 <ChevronRight className="w-4 h-4" />
-                <span className="text-foreground">Press</span>
+                <span className="text-foreground">Press & Media Kit</span>
               </nav>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
                 Press &{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-flux-accent">
-                  Media
+                  Media Kit
                 </span>
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl">
-                Official press assets, bio, photos, quotes, and media coverage. Download the EPK and request interviews.
+              <p className="text-xl text-muted-foreground max-w-3xl">
+                Official electronic press kit for journalists, bloggers, podcasters, and media professionals. 
+                Download assets, copy-ready bios, and request interviews.
               </p>
             </div>
           </section>
 
-          {/* Media Bio */}
+          {/* Quick Facts for Journalists */}
           <section className="py-16 bg-card/20 border-b border-border/50">
             <div className="container mx-auto px-4">
-              <div className="max-w-3xl mx-auto">
-                <h2 className="text-2xl font-display font-bold mb-6">Media-Ready Bio</h2>
-                <div className="bg-card/50 border border-border/50 rounded-xl p-6">
-                  <p className="text-muted-foreground leading-relaxed">{mediaBio}</p>
-                  <button 
-                    onClick={() => navigator.clipboard.writeText(mediaBio)}
-                    className="mt-4 text-sm text-primary hover:underline"
-                  >
-                    Copy to clipboard
-                  </button>
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
+                  <FileText className="w-6 h-6 text-primary" />
+                  Quick Facts
+                </h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {keyFacts.map((fact, index) => (
+                    <div key={index} className="bg-card/50 border border-border/50 rounded-lg p-4 flex justify-between items-start">
+                      <span className="text-muted-foreground font-medium">{fact.label}</span>
+                      <span className="text-foreground text-right max-w-[60%]">{fact.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Story Angles */}
+          <section className="py-16 border-b border-border/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
+                  <Mic className="w-6 h-6 text-primary" />
+                  Story Angles
+                </h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {storyAngles.map((angle, index) => (
+                    <div key={index} className="bg-card/30 border border-border/50 rounded-xl p-6 hover:border-primary/50 transition-colors">
+                      <angle.icon className="w-8 h-8 text-primary mb-4" />
+                      <h3 className="font-bold text-lg mb-2">{angle.title}</h3>
+                      <p className="text-muted-foreground">{angle.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Media Bios */}
+          <section className="py-16 bg-card/20 border-b border-border/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-2xl font-display font-bold mb-8">Media-Ready Bios</h2>
+                
+                {/* Short Bio */}
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold mb-4 text-primary">Short Bio (1 sentence)</h3>
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                    <p className="text-muted-foreground leading-relaxed">{shortBio}</p>
+                    <button 
+                      onClick={() => navigator.clipboard.writeText(shortBio)}
+                      className="mt-4 text-sm text-primary hover:underline flex items-center gap-2"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Copy to clipboard
+                    </button>
+                  </div>
+                </div>
+
+                {/* Full Bio */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-primary">Full Bio (Feature-length)</h3>
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                    <div className="text-muted-foreground leading-relaxed whitespace-pre-line">{mediaBio}</div>
+                    <button 
+                      onClick={() => navigator.clipboard.writeText(mediaBio)}
+                      className="mt-4 text-sm text-primary hover:underline flex items-center gap-2"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Copy to clipboard
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Interview Topics */}
+          <section className="py-16 border-b border-border/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
+                  <Mic className="w-6 h-6 text-primary" />
+                  Interview Topics
+                </h2>
+                <div className="bg-card/30 border border-border/50 rounded-xl p-6">
+                  <p className="text-muted-foreground mb-6">Mr. CAP is available to discuss the following topics for podcasts, articles, and video features:</p>
+                  <ul className="space-y-3">
+                    {interviewTopics.map((topic, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <ChevronRight className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-foreground">{topic}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
           </section>
 
           {/* Press Kit Download */}
-          <section className="py-16">
+          <section className="py-16 bg-card/20 border-b border-border/50">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
-                <FileText className="w-16 h-16 text-primary mx-auto mb-6" />
-                <h2 className="text-3xl font-display font-bold mb-4">Press Kit</h2>
+                <Download className="w-16 h-16 text-primary mx-auto mb-6" />
+                <h2 className="text-3xl font-display font-bold mb-4">Download Press Assets</h2>
                 <p className="text-muted-foreground mb-8">
                   Download the official press kit including high-resolution photos, biography, 
-                  discography, and approved media assets.
+                  discography, logos, and approved media assets.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
                   <Button variant="flux" size="lg" asChild>
                     <a href="/press-kit.pdf" download>
                       <Download className="mr-2 h-5 w-5" />
-                      Download Press Kit (PDF)
+                      Press Kit (PDF)
                     </a>
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild>
                     <a href="/photos.zip" download>
                       <Image className="mr-2 h-5 w-5" />
-                      High-Res Photos
+                      High-Res Photos (ZIP)
                     </a>
                   </Button>
                 </div>
@@ -186,37 +428,39 @@ const Press = () => {
           </section>
 
           {/* Press Features */}
-          <section className="py-20 border-t border-border/50">
+          <section className="py-20 border-b border-border/50">
             <div className="container mx-auto px-4">
               <h2 className="text-2xl font-display font-bold mb-8">Featured Coverage</h2>
               
-              <div className="space-y-4 max-w-3xl">
+              <div className="space-y-4 max-w-4xl">
                 {pressFeatures.map((feature, index) => (
                   <a
                     key={index}
                     href={feature.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-between bg-card/30 border border-border/50 rounded-xl p-6 hover:border-primary/50 transition-colors group"
                   >
                     <div>
-                      <span className="text-xs text-primary font-medium">{feature.outlet}</span>
+                      <span className="text-xs text-primary font-medium uppercase tracking-wider">{feature.outlet}</span>
                       <h3 className="font-bold mt-1 group-hover:text-primary transition-colors">
                         {feature.title}
                       </h3>
                       <span className="text-sm text-muted-foreground">{feature.date}</span>
                     </div>
-                    <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 ml-4" />
                   </a>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* Quotes */}
-          <section className="py-20 bg-card/20 border-y border-border/50">
+          {/* Quotes / Testimonials */}
+          <section className="py-20 bg-card/20 border-b border-border/50">
             <div className="container mx-auto px-4">
               <h2 className="text-2xl font-display font-bold mb-8 text-center">What They're Saying</h2>
               
-              <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 {quotes.map((quote, index) => (
                   <div
                     key={index}
@@ -238,19 +482,43 @@ const Press = () => {
                 <Mail className="w-12 h-12 text-primary mx-auto mb-6" />
                 <h2 className="text-3xl font-display font-bold mb-4">Media Inquiries</h2>
                 <p className="text-muted-foreground mb-8">
-                  For interview requests, press inquiries, and media partnerships, please contact:
+                  For interview requests, press inquiries, podcast appearances, and media partnerships:
                 </p>
                 <div className="bg-card/50 border border-border/50 rounded-xl p-8">
                   <p className="text-lg font-medium mb-2">Press Contact</p>
                   <a 
                     href="mailto:wrecklessent@gmail.com?subject=Press Inquiry - Mr. CAP"
-                    className="text-primary hover:underline text-lg"
+                    className="text-primary hover:underline text-xl font-semibold"
                   >
                     wrecklessent@gmail.com
                   </a>
                   <p className="text-sm text-muted-foreground mt-4">
-                    Please allow 48-72 hours for response
+                    Please include: Publication name, audience size, topic focus, preferred format
                   </p>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Response time: 48-72 hours
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Suggested Citation */}
+          <section className="py-16 bg-card/20 border-t border-border/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-xl font-display font-bold mb-4">Suggested Citation</h2>
+                <p className="text-muted-foreground mb-4">When referencing Mr. CAP in articles or academic work:</p>
+                <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                  <code className="text-sm text-foreground">
+                    Mr. CAP (Cornelius A. Pratt). South Park Coalition. Houston, Texas. https://mrcap1.com
+                  </code>
+                  <button 
+                    onClick={() => navigator.clipboard.writeText("Mr. CAP (Cornelius A. Pratt). South Park Coalition. Houston, Texas. https://mrcap1.com")}
+                    className="mt-4 text-sm text-primary hover:underline block mx-auto"
+                  >
+                    Copy citation
+                  </button>
                 </div>
               </div>
             </div>
