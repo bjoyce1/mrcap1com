@@ -3,135 +3,148 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Play, ExternalLink, ChevronRight, Disc3, Calendar, Music } from "lucide-react";
+import { Play, ExternalLink, ChevronRight, Disc3, Music } from "lucide-react";
 
 import albumTies from "@/assets/album-ties.jpg";
-import albumBetn from "@/assets/betn-on-me.png";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
 import albumGrave from "@/assets/album-grave.jpg";
 import albumColdAss from "@/assets/album-cold-ass-pimp.jpg";
 import albumOneOnOne from "@/assets/album-one-on-one.jpg";
-import dippinMetaverse from "@/assets/dippin-metaverse.png";
-import southernSounds from "@/assets/southern-sounds.jpg";
-import boutToBlow from "@/assets/bout-to-blow.png";
-import hTownRepresent from "@/assets/h-town-represent.png";
-import limitless from "@/assets/limitless.webp";
-import socialMediaHoStroll from "@/assets/social-media-ho-stroll.jpg";
 
-const discography = {
-  albums: [
-    {
-      title: "The Ties That Bind Us",
-      year: "2024",
-      image: albumTies,
-      type: "SPC Group Album",
-      tracks: 19,
-      label: "Independent / CAP Distributions",
-      spotify: "https://open.spotify.com/album/...",
-      apple: "https://music.apple.com/us/album/the-ties-that-bind-us/1770685229",
-      description: "South Park Coalition group album featuring K-Rino, Point Blank, Klondike Kat, and more. Over an hour of Houston underground hip-hop with the lead single 'Bet'n On Me'.",
-      featured: true,
-    },
-    {
-      title: "The Art of ISM",
-      year: "2019",
-      image: albumArtOfIsm,
-      type: "Studio Album",
-      tracks: 11,
-      label: "Sony Music / The Orchard",
-      spotify: "https://open.spotify.com/album/...",
-      apple: "https://music.apple.com/...",
-      description: "Major label distribution with production from Zaytoven, Metro Boomin, and Mike Will Made-It. Features the track 'Words of ISM' and collaborations with Houston legends.",
-    },
-    {
-      title: "2 Tha Grave",
-      year: "2011",
-      image: albumGrave,
-      type: "Studio Album",
-      tracks: 14,
-      label: "Wreckless Entertainment",
-      spotify: "https://open.spotify.com/album/...",
-      description: "Follow-up album introducing the signature blend of raw lyricism, Southern grit, and street wisdom. A tribute to perseverance and legacy.",
-    },
-    {
-      title: "O.N.E. on O.N.E.",
-      year: "2005",
-      image: albumOneOnOne,
-      type: "Debut Album",
-      tracks: 16,
-      label: "Wreckless Entertainment",
-      description: "Debut solo album establishing Houston's underground meets conscious lyricism. Features collaborations with South Park Coalition members.",
-    },
-  ],
-  mixtapes: [
-    {
-      title: "Tha Cold Ass Pimp",
-      year: "2006",
-      image: albumColdAss,
-      type: "Mixtape",
-      description: "Critically acclaimed mixtape showcasing versatility and street credibility. A fan favorite from the early catalog.",
-    },
-  ],
-  singles: [
-    {
-      title: "Bet'n On Me",
-      year: "2024",
-      image: albumBetn,
-      spotify: "https://open.spotify.com/track/...",
-      apple: "https://music.apple.com/...",
-      description: "Lead single from 'The Ties That Bind Us'. An anthem for hustlers betting on themselves.",
-    },
-    {
-      title: "Social Media is a Ho Stroll",
-      year: "2024",
-      image: socialMediaHoStroll,
-      featuring: "Ai'Eshsa",
-      description: "A sharp reflection on the pitfalls of social media culture.",
-    },
-    {
-      title: "Dippin Thru the Metaverse",
-      year: "2023",
-      image: dippinMetaverse,
-      producer: "Ciddy Boi P",
-      description: "Fuses Houston street narratives with futuristic production and blockchain culture.",
-    },
-    {
-      title: "Southern Sounds (Ultra ISM)",
-      year: "2023",
-      image: southernSounds,
-      featuring: "Venita Vyne",
-      apple: "https://music.apple.com/us/album/southern-sounds-ultra-ism-feat-venita-vyne-single/1715088888",
-      description: "Soulful collaboration released on Power Camp.",
-    },
-    {
-      title: "H-Town Represent",
-      year: "2023",
-      image: hTownRepresent,
-      featuring: "Ciddy Boi P",
-      apple: "https://music.apple.com/us/album/h-town-represent-feat-ciddy-boi-p-single/1681810016",
-      description: "A high-energy homage to Houston.",
-    },
-    {
-      title: "Limitless",
-      year: "2021",
-      image: limitless,
-      featuring: "K-Rino",
-      description: "Historic track—first Houston Hip-Hop NFT ever sold on the blockchain.",
-      nft: true,
-    },
-    {
-      title: "I'm Bout To Blow",
-      year: "2013",
-      image: boutToBlow,
-      description: "Classic street anthem that defined an era.",
-    },
-  ],
-};
+const studioAlbums = [
+  {
+    title: "The Ties That Bind Us",
+    artist: "South Park Coalition",
+    year: "2024",
+    role: "SPC Group Album",
+    label: "South Park Coalition LLC",
+    format: "Digital, Album, 19 tracks",
+    image: albumTies,
+    featured: true,
+    description: "SPC group album featuring K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped version released Jan 2025.",
+    spotify: "https://open.spotify.com/album/...",
+    apple: "https://music.apple.com/us/album/the-ties-that-bind-us/1770685229",
+  },
+  {
+    title: "The Art Of ISM",
+    artist: "Mr. CAP",
+    year: "2019",
+    role: "Lead artist (3rd studio album)",
+    label: "Sony Music / The Orchard",
+    format: "Digital, Album, 11 tracks",
+    image: albumArtOfIsm,
+    description: "Features production by Zaytoven, Metro Boomin & Mike Will Made-It. Lead single: Words Of Ism (2018)",
+    spotify: "https://open.spotify.com/album/...",
+  },
+  {
+    title: "2 Tha Grave",
+    artist: "Mr. CAP",
+    year: "2011",
+    role: "Lead artist",
+    label: "Cap Records",
+    format: "MP3, Album",
+    image: albumGrave,
+    spotify: "https://open.spotify.com/album/...",
+  },
+  {
+    title: "Tha Cold Ass Pimp",
+    artist: "Tha Cold Ass Pimp",
+    year: "2006",
+    role: "Mixtape",
+    label: "O.N.E. 4 Da Money Entertainment",
+    format: "CDr, Album",
+    image: albumColdAss,
+  },
+  {
+    title: "O.N.E. on O.N.E.",
+    artist: "O.N.E. & Mr. CAP",
+    year: "2005",
+    role: "Co-artist (collab album)",
+    label: "O.N.E. 4 Da Money Entertainment",
+    format: "CD, Album",
+    image: albumOneOnOne,
+  },
+];
+
+const singlesData = [
+  {
+    year: "2024",
+    tracks: [
+      { title: "Social Media is a Ho Stroll", artist: "Mr. CAP feat. Ai'Eshsa", label: "CAP Distributions" },
+      { title: "Bet'n On Me", artist: "South Park Coalition", label: "South Park Coalition LLC" },
+    ],
+  },
+  {
+    year: "2023",
+    tracks: [
+      { title: "Dippin Thru the Metaverse", artist: "Mr. CAP (prod. Ciddy Boi P)", label: "CAP Distributions" },
+      { title: "Southern Sounds (Ultra ISM)", artist: "Mr. CAP feat. Venita Vyne", label: "Power Camp" },
+      { title: "H-Town Represent", artist: "Mr. CAP feat. Ciddy Boi P", label: "CAP Distributions" },
+      { title: "Where the Bag At (Extended)", artist: "Mr. CAP feat. Devyn Kelly", label: "CAP Distributions" },
+    ],
+  },
+  {
+    year: "2021",
+    tracks: [
+      { title: "Limitless", artist: "Mr. CAP feat. K-Rino", label: "Independent", nft: true },
+    ],
+  },
+  {
+    year: "2019",
+    tracks: [
+      { title: "Limitless", artist: "Mr. CAP", label: "Independent" },
+    ],
+  },
+  {
+    year: "2018",
+    tracks: [
+      { title: "Today Was A Great Day", artist: "Mr. CAP", label: "Independent" },
+    ],
+  },
+  {
+    year: "2016",
+    tracks: [
+      { title: "No More Bloodshed", artist: "K-Rino / Big Deuce / Cl' Che' / Mr. Cap / Tommy-G", label: "Gutterlife Records" },
+    ],
+  },
+  {
+    year: "2015",
+    tracks: [
+      { title: "Capism", artist: "Mr. CAP", label: "CAP Distributions" },
+    ],
+  },
+  {
+    year: "2014",
+    tracks: [
+      { title: "I Ain't F*n With You Devils", artist: "Mr. Cap feat. Herb Of The Dynamite Squad", label: "CAP Distributions" },
+      { title: "Big Navi L.A. Remix", artist: "Mr. Cap feat. Big Prez", label: "CAP Distributions" },
+      { title: "Unsolved Mysteries – The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
+    ],
+  },
+  {
+    year: "2013",
+    tracks: [
+      { title: "I'm Bout To Blow", artist: "Mr. CAP", label: "Cap Records" },
+      { title: "2 Minute Flow", artist: "Mr. CAP", label: "CAP Distributions" },
+    ],
+  },
+  {
+    year: "2012",
+    tracks: [
+      { title: "Live My Life (We Hustle All Day, We Hustle All Night)", artist: "Mr. CAP", label: "CAP Distributions" },
+      { title: "Cap International", artist: "Mr. Cap feat. Big Prez & Alyssa Harris", label: "Fifth Amendment Entertainment" },
+      { title: "Pyrex (Egg Beater In Hand)", artist: "Mr. Cap feat. Archie Lee, Rapsta Hoffa & Young Ray Ray", label: "Cap Distributions" },
+      { title: "Put The Dope Down", artist: "Mr. Cap feat. SAAK & Bosey-B", label: "CAP Distribution" },
+    ],
+  },
+];
 
 const Discography = () => {
   const pageTitle = "Mr. CAP Discography | Complete Album & Singles List | Houston Hip-Hop";
   const metaDescription = "Explore the complete discography of Houston rapper Mr. CAP. Albums include The Ties That Bind Us (2024), The Art of ISM (2019), 2 Tha Grave (2011), O.N.E. on O.N.E. (2005), plus singles, mixtapes, and NFT releases.";
 
+  const allSingles = singlesData.flatMap(group => group.tracks);
+  
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -140,19 +153,17 @@ const Discography = () => {
         "name": "Mr. CAP Complete Discography",
         "description": metaDescription,
         "url": "https://mrcap1.com/mr-cap-discography",
-        "numTracks": discography.albums.reduce((acc, a) => acc + (a.tracks || 0), 0) + discography.singles.length,
+        "numTracks": studioAlbums.length + allSingles.length,
         "track": [
-          ...discography.albums.map(album => ({
+          ...studioAlbums.map(album => ({
             "@type": "MusicAlbum",
             "name": album.title,
             "datePublished": album.year,
-            "numTracks": album.tracks,
             "byArtist": { "@type": "Person", "name": "Mr. CAP" }
           })),
-          ...discography.singles.map(single => ({
+          ...allSingles.map(single => ({
             "@type": "MusicRecording",
             "name": single.title,
-            "datePublished": single.year,
             "byArtist": { "@type": "Person", "name": "Mr. CAP" }
           }))
         ]
@@ -214,147 +225,102 @@ const Discography = () => {
               </p>
             </div>
 
-            {/* Albums Section */}
+            {/* Studio & Collab Albums */}
             <section className="mb-16">
               <div className="flex items-center gap-3 mb-8">
                 <Disc3 className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl md:text-3xl font-display font-bold">Studio Albums</h2>
+                <h2 className="text-2xl md:text-3xl font-display font-bold">Studio & Collab Albums</h2>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-6">
-                {discography.albums.map((album) => (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {studioAlbums.map((album, index) => (
                   <div 
-                    key={album.title}
-                    className={`bg-card/50 border rounded-2xl overflow-hidden ${album.featured ? 'border-primary/50' : 'border-border/50'}`}
+                    key={index}
+                    className={`group bg-card/50 border rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300 ${album.featured ? 'border-primary/50' : 'border-border/50'}`}
                   >
-                    <div className="flex flex-col sm:flex-row">
-                      <div className="relative sm:w-48 flex-shrink-0">
-                        <img 
-                          src={album.image} 
-                          alt={`${album.title} album cover`}
-                          className="w-full aspect-square object-cover"
-                        />
-                        {album.featured && (
-                          <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
-                            LATEST
-                          </div>
-                        )}
-                      </div>
-                      <div className="p-5 flex flex-col justify-between flex-1">
-                        <div>
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-xs text-primary font-medium uppercase tracking-wider">{album.type}</span>
-                            <span className="text-xs text-muted-foreground">• {album.year}</span>
-                          </div>
-                          <h3 className="text-xl font-bold mb-2">{album.title}</h3>
-                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{album.description}</p>
-                          <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                            {album.tracks && <span>{album.tracks} tracks</span>}
-                            {album.label && <span>• {album.label}</span>}
-                          </div>
+                    <div className="relative aspect-square overflow-hidden bg-muted">
+                      <img 
+                        src={album.image} 
+                        alt={`${album.title} album cover`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+                      {album.featured && (
+                        <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
+                          LATEST
                         </div>
-                        <div className="flex gap-2 mt-4">
+                      )}
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <span className="px-2 py-0.5 rounded bg-background/80 text-xs font-medium">
+                          {album.year}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-medium text-foreground mb-1 line-clamp-1">{album.title}</h3>
+                      <p className="text-xs text-muted-foreground mb-2">{album.artist}</p>
+                      <p className="text-xs text-muted-foreground/70">{album.label}</p>
+                      <p className="text-xs text-primary/70 mt-1">{album.role}</p>
+                      {(album.spotify || album.apple) && (
+                        <div className="flex gap-2 mt-3">
                           {album.spotify && (
-                            <Button variant="flux" size="sm" asChild>
+                            <Button variant="flux" size="sm" className="flex-1" asChild>
                               <a href={album.spotify} target="_blank" rel="noopener noreferrer">
-                                <Play className="w-3 h-3 mr-1" />
-                                Spotify
+                                <Play className="w-3 h-3" />
                               </a>
                             </Button>
                           )}
                           {album.apple && (
-                            <Button variant="fluxOutline" size="sm" asChild>
+                            <Button variant="fluxOutline" size="sm" className="flex-1" asChild>
                               <a href={album.apple} target="_blank" rel="noopener noreferrer">
-                                Apple Music
+                                <ExternalLink className="w-3 h-3" />
                               </a>
                             </Button>
                           )}
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Mixtapes */}
+            {/* Singles & EPs */}
             <section className="mb-16">
               <div className="flex items-center gap-3 mb-8">
                 <Music className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl md:text-3xl font-display font-bold">Mixtapes</h2>
+                <h2 className="text-2xl md:text-3xl font-display font-bold">Singles & EPs</h2>
               </div>
               
-              <div className="grid md:grid-cols-3 gap-6">
-                {discography.mixtapes.map((mixtape) => (
-                  <div 
-                    key={mixtape.title}
-                    className="bg-card/50 border border-border/50 rounded-xl overflow-hidden"
-                  >
-                    <img 
-                      src={mixtape.image} 
-                      alt={`${mixtape.title} cover`}
-                      className="w-full aspect-square object-cover"
-                    />
-                    <div className="p-4">
-                      <span className="text-xs text-primary font-medium uppercase tracking-wider">{mixtape.type} • {mixtape.year}</span>
-                      <h3 className="font-bold mt-1 mb-2">{mixtape.title}</h3>
-                      <p className="text-sm text-muted-foreground">{mixtape.description}</p>
+              <div className="space-y-6">
+                {singlesData.map((yearGroup, yearIndex) => (
+                  <div key={yearIndex}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-sm font-semibold text-primary">{yearGroup.year}</span>
+                      <div className="flex-1 h-px bg-border/50" />
                     </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Singles */}
-            <section className="mb-16">
-              <div className="flex items-center gap-3 mb-8">
-                <Calendar className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl md:text-3xl font-display font-bold">Singles & Features</h2>
-              </div>
-              
-              <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {discography.singles.map((single) => (
-                  <div 
-                    key={single.title}
-                    className={`bg-card/50 border rounded-xl overflow-hidden ${single.nft ? 'border-amber-500/50' : 'border-border/50'}`}
-                  >
-                    <div className="relative">
-                      <img 
-                        src={single.image} 
-                        alt={`${single.title} artwork`}
-                        className="w-full aspect-square object-cover"
-                      />
-                      {single.nft && (
-                        <div className="absolute top-2 right-2 bg-amber-500 text-black text-[10px] font-bold px-2 py-1 rounded-full">
-                          NFT
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {yearGroup.tracks.map((track, trackIndex) => (
+                        <div 
+                          key={trackIndex}
+                          className={`group flex items-center gap-3 p-3 rounded-lg bg-card/50 border hover:border-primary/30 transition-colors cursor-pointer ${track.nft ? 'border-amber-500/50' : 'border-border/50'}`}
+                        >
+                          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
+                            <Play className="w-4 h-4 text-primary" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium text-foreground text-sm line-clamp-1">{track.title}</p>
+                              {track.nft && (
+                                <span className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                                  NFT
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground line-clamp-1">{track.artist}</p>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <span className="text-xs text-muted-foreground">{single.year}</span>
-                      <h3 className="font-bold mt-1">{single.title}</h3>
-                      {single.featuring && (
-                        <p className="text-xs text-primary">feat. {single.featuring}</p>
-                      )}
-                      {single.producer && (
-                        <p className="text-xs text-muted-foreground">Prod. {single.producer}</p>
-                      )}
-                      <div className="flex gap-2 mt-3">
-                        {single.spotify && (
-                          <Button variant="flux" size="sm" className="flex-1" asChild>
-                            <a href={single.spotify} target="_blank" rel="noopener noreferrer">
-                              <Play className="w-3 h-3" />
-                            </a>
-                          </Button>
-                        )}
-                        {single.apple && (
-                          <Button variant="fluxOutline" size="sm" className="flex-1" asChild>
-                            <a href={single.apple} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          </Button>
-                        )}
-                      </div>
+                      ))}
                     </div>
                   </div>
                 ))}
