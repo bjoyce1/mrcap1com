@@ -42,8 +42,8 @@ import SelfLoveRoom2024 from "./pages/SelfLoveRoom2024";
 import SelfLoveStory from "./pages/SelfLoveStory";
 import SelfLoveStoryModal from "./components/SelfLoveStoryModal";
 
-// Google Analytics Measurement ID - Replace with actual ID when available
-const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
+// Google Analytics Measurement ID
+const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
 
 const queryClient = new QueryClient();
 
