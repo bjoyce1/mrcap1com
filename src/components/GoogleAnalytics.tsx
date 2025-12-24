@@ -63,21 +63,55 @@ export const trackEvent = (
   }
 };
 
-// Pre-defined event trackers for common actions
-export const trackBookingFormSubmit = () => {
-  trackEvent("generate_lead", {
-    event_category: "booking",
+// ================================
+// CONVERSION TRACKING EVENTS
+// These are the key events to track in GA4
+// ================================
+
+// Booking form submission - tracks when someone submits a booking request
+export const trackBookingSubmit = () => {
+  trackEvent("booking_submit", {
+    event_category: "conversion",
     event_label: "booking_form_submit",
   });
 };
 
-export const trackNewsletterSignup = () => {
-  trackEvent("sign_up", {
-    event_category: "newsletter",
-    event_label: "newsletter_signup",
+// Legacy alias for backward compatibility
+export const trackBookingFormSubmit = trackBookingSubmit;
+
+// EPK download - tracks when someone downloads the press kit
+export const trackEPKDownload = () => {
+  trackEvent("epk_download", {
+    event_category: "conversion",
+    event_label: "epk_download",
   });
 };
 
+// Music click - tracks when someone clicks to stream music
+export const trackMusicClick = (platform: string, trackName?: string) => {
+  trackEvent("music_click", {
+    event_category: "conversion",
+    event_label: platform,
+    track_name: trackName || "unknown",
+  });
+};
+
+// Email signup - tracks newsletter signups
+export const trackEmailSignup = (source?: string) => {
+  trackEvent("email_signup", {
+    event_category: "conversion",
+    event_label: source || "website",
+  });
+};
+
+// Legacy alias for backward compatibility
+export const trackNewsletterSignup = () => trackEmailSignup("newsletter");
+
+// ================================
+// ENGAGEMENT TRACKING EVENTS
+// ================================
+
+// Track music play in on-site player
 export const trackMusicPlay = (trackName: string) => {
   trackEvent("select_content", {
     event_category: "music",
@@ -86,13 +120,7 @@ export const trackMusicPlay = (trackName: string) => {
   });
 };
 
-export const trackEPKDownload = () => {
-  trackEvent("file_download", {
-    event_category: "epk",
-    event_label: "epk_download",
-  });
-};
-
+// Track external link clicks
 export const trackExternalLink = (url: string, linkType: string) => {
   trackEvent("click", {
     event_category: "external_link",
@@ -101,11 +129,38 @@ export const trackExternalLink = (url: string, linkType: string) => {
   });
 };
 
+// Track NFT views
 export const trackNFTView = (nftName: string) => {
   trackEvent("view_item", {
     event_category: "nft",
     event_label: nftName,
     content_type: "nft",
+  });
+};
+
+// Track blog post reads
+export const trackBlogRead = (postSlug: string, postTitle: string) => {
+  trackEvent("view_item", {
+    event_category: "blog",
+    event_label: postSlug,
+    post_title: postTitle,
+  });
+};
+
+// Track video plays
+export const trackVideoPlay = (videoName: string) => {
+  trackEvent("video_start", {
+    event_category: "video",
+    event_label: videoName,
+  });
+};
+
+// Track social share clicks
+export const trackSocialShare = (platform: string, contentType: string) => {
+  trackEvent("share", {
+    event_category: "social",
+    event_label: platform,
+    content_type: contentType,
   });
 };
 
