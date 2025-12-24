@@ -271,12 +271,20 @@ const Live = () => {
                   </div>
                 </div>
                 
-                <Button variant="flux" size="lg" asChild>
-                  <Link to="/cities">
-                    <MapPin className="mr-2 h-5 w-5" />
-                    View All Tour Cities
-                  </Link>
-                </Button>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Button variant="flux" size="lg" asChild>
+                    <Link to="/booking">
+                      <Calendar className="mr-2 h-5 w-5" />
+                      Submit Booking Request
+                    </Link>
+                  </Button>
+                  <Button variant="fluxOutline" size="lg" asChild>
+                    <Link to="/cities">
+                      <MapPin className="mr-2 h-5 w-5" />
+                      View All Tour Cities
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </section>
