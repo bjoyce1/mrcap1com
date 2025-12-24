@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Loader2, Send, Check } from 'lucide-react';
+import { trackBookingSubmit } from '@/components/GoogleAnalytics';
 
 const bookingSchema = z.object({
   name: z.string().trim().min(2, 'Name is required').max(100),
@@ -82,6 +83,7 @@ const BookingForm = () => {
     } else {
       setIsSubmitted(true);
       toast.success('Booking request submitted!');
+      trackBookingSubmit();
     }
 
     setIsSubmitting(false);

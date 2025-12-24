@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Loader2, Mail, Check, Sparkles } from 'lucide-react';
+import { trackEmailSignup } from '@/components/GoogleAnalytics';
 
 const emailSchema = z.object({
   email: z.string().trim().email('Please enter a valid email').max(255),
@@ -52,6 +53,7 @@ const NewsletterSignup = ({ source = 'website', variant = 'default' }: Newslette
     } else {
       setIsSubscribed(true);
       toast.success('Welcome to the Inner Circle!');
+      trackEmailSignup(source);
     }
 
     setIsSubmitting(false);

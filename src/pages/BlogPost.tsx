@@ -1,14 +1,23 @@
 import { useParams, Link, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getBlogPostBySlug, blogPosts } from "@/data/blogPosts";
 import { ChevronRight, Clock, Calendar, Tag, Share2, Twitter, Facebook, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackBlogRead } from "@/components/GoogleAnalytics";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getBlogPostBySlug(slug) : undefined;
+
+  // Track blog read on mount
+  useEffect(() => {
+    if (post) {
+      trackBlogRead(post.slug, post.title);
+    }
+  }, [post]);
 
   if (!post) {
     return <Navigate to="/blog" replace />;

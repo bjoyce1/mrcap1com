@@ -2,6 +2,7 @@ import { Play, Pause, Headphones, ExternalLink, Music, Disc3 } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { useRef, useState, useEffect } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
+import { trackMusicPlay } from "@/components/GoogleAnalytics";
 import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
@@ -170,6 +171,7 @@ const MusicSection = () => {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
+        trackMusicPlay("Bet'n On Me");
       }
       setIsPlaying(!isPlaying);
     }
@@ -398,21 +400,29 @@ const MusicSection = () => {
         <div className="mt-12 pt-8 border-t border-white/5">
           <p className="text-sm text-muted-foreground mb-4">Stream Mr. CAP's music on all major platforms:</p>
           <div className="flex flex-wrap gap-3">
-            <Button variant="fluxOutline" size="sm">
-              <ExternalLink className="w-4 h-4" />
-              Spotify
+            <Button variant="fluxOutline" size="sm" asChild>
+              <a href="https://open.spotify.com/artist/1pSXGKxJIw95dV3xQX4TjS" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4" />
+                Spotify
+              </a>
             </Button>
-            <Button variant="fluxOutline" size="sm">
-              <ExternalLink className="w-4 h-4" />
-              Apple Music
+            <Button variant="fluxOutline" size="sm" asChild>
+              <a href="https://music.apple.com/us/artist/mr-cap/276295771" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4" />
+                Apple Music
+              </a>
             </Button>
-            <Button variant="fluxOutline" size="sm">
-              <ExternalLink className="w-4 h-4" />
-              YouTube Music
+            <Button variant="fluxOutline" size="sm" asChild>
+              <a href="https://music.youtube.com/channel/UCTBPJTJdwbE2G-mANsRzwqg" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4" />
+                YouTube Music
+              </a>
             </Button>
-            <Button variant="fluxOutline" size="sm">
-              <ExternalLink className="w-4 h-4" />
-              Amazon Music
+            <Button variant="fluxOutline" size="sm" asChild>
+              <a href="https://music.amazon.com/artists/B001G5R6E6/mr-cap" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4" />
+                Amazon Music
+              </a>
             </Button>
           </div>
         </div>

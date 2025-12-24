@@ -25,6 +25,7 @@ import WhoIsMrCap from "./pages/WhoIsMrCap";
 import Discography from "./pages/Discography";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import Booking from "./pages/Booking";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -74,6 +75,7 @@ function AppRoutes() {
         <Route path="/texas-underground-hip-hop" element={<TexasUndergroundHipHop />} />
         <Route path="/who-is-mr-cap" element={<WhoIsMrCap />} />
         <Route path="/mr-cap-discography" element={<Discography />} />
+        <Route path="/booking" element={<Booking />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
         {/* EPK Routes */}
