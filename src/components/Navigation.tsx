@@ -5,15 +5,14 @@ import { cn } from "@/lib/utils";
 import logoImage from "@/assets/mr-cap-logo.png";
 
 const navLinks = [
-  { to: "/about", label: "About" },
+  { to: "/who-is-mr-cap", label: "Who Is Mr. CAP?" },
   { to: "/music", label: "Music" },
+  { to: "/mr-cap-discography", label: "Discography" },
   { to: "/live", label: "Live" },
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },
-  { to: "/cities", label: "Cities" },
   { to: "/epk", label: "EPK", highlight: true },
   { to: "/nft", label: "NFT", highlight: true },
-  { to: "/art", label: "Art", highlight: true },
   { to: "/innovation", label: "Tech", highlight: true },
 ];
 

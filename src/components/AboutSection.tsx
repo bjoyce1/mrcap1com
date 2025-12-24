@@ -1,5 +1,6 @@
 import { MapPin, Music, Code, Award } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 const AboutSection = () => {
@@ -160,6 +161,22 @@ const AboutSection = () => {
                 entrepreneur turning real-life experience into music, media, and modern legacy."
               </p>
             </blockquote>
+
+            {/* Internal Links */}
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link 
+                to="/who-is-mr-cap" 
+                className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+              >
+                Read Full Biography →
+              </Link>
+              <Link 
+                to="/mr-cap-discography" 
+                className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+              >
+                View Full Discography →
+              </Link>
+            </div>
           </div>
 
           {/* Highlights Sidebar */}
