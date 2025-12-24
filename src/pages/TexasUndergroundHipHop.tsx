@@ -14,25 +14,18 @@ const TexasUndergroundHipHop = () => {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebPage",
-        "@id": "https://mrcap1.com/texas-underground-hip-hop",
-        "name": "Texas Underground Hip-Hop | Mr. CAP",
-        "description": metaDescription,
-        "isPartOf": { "@id": "https://mrcap1.com/#website" },
-        "about": {
-          "@type": "Thing",
-          "name": "Texas Underground Hip-Hop",
-          "description": "Independent hip-hop music scene in Texas, particularly Houston, featuring artists who release music independently without major label support"
-        }
-      },
-      {
-        "@type": "Person",
-        "@id": "https://mrcap1.com/#person",
-        "name": "Mr. CAP",
-        "alternateName": ["Cornelius A. Pratt", "CAP"],
-        "description": "Texas underground hip-hop pioneer and South Park Coalition original member",
-        "genre": ["Underground Hip-Hop", "Houston Rap", "Southern Rap", "Texas Rap"],
-        "url": "https://mrcap1.com"
+        "@type": "Article",
+        "headline": "Texas Underground Hip-Hop and the Legacy of Mr. CAP",
+        "author": {
+          "@type": "Person",
+          "name": "Mr. CAP"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "CAP Distributions"
+        },
+        "mainEntityOfPage": "https://mrcap1.com/texas-underground-hip-hop",
+        "description": "An inside look at Texas underground hip-hop culture and the role Mr. CAP plays in its legacy."
       },
       {
         "@type": "FAQPage",

@@ -22,46 +22,33 @@ const WhoIsMrCap = () => {
         "@type": "Person",
         "@id": "https://mrcap1.com/#person",
         "name": "Mr. CAP",
-        "alternateName": ["Cornelius A. Pratt", "CAP", "Mr CAP", "MrCAP"],
-        "description": "Houston-born rapper, entrepreneur, and cultural architect best known as a long-time member of the legendary South Park Coalition (SPC).",
+        "alternateName": "Cornelius A. Pratt",
+        "url": "https://mrcap1.com/who-is-mr-cap",
         "birthPlace": {
           "@type": "Place",
-          "name": "Houston, Texas",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Houston",
-            "addressRegion": "TX",
-            "addressCountry": "US"
+          "name": "Houston, Texas, USA"
+        },
+        "jobTitle": ["Rapper", "Entrepreneur"],
+        "description": "Mr. CAP is a Houston-based rapper and entrepreneur, and a long-time member of the South Park Coalition, known for independent hip-hop, cultural impact, and digital music innovation.",
+        "affiliation": [
+          {
+            "@type": "MusicGroup",
+            "name": "South Park Coalition"
           }
-        },
-        "jobTitle": ["Hip-Hop Artist", "Entrepreneur", "Cultural Architect"],
-        "genre": ["Hip-Hop", "Southern Rap", "Underground Hip-Hop", "Houston Rap"],
-        "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "South Park Coalition", "Music Production", "Digital Distribution"],
-        "memberOf": {
-          "@type": "MusicGroup",
-          "name": "South Park Coalition",
-          "foundingLocation": "Houston, Texas",
-          "foundingDate": "1987"
-        },
-        "affiliation": {
-          "@type": "Organization",
-          "name": "CAP Distributions",
-          "description": "Digital distribution company helping independent artists release music globally"
-        },
-        "award": [
-          "First Houston Rapper to Sell a Hip-Hop NFT (2021)",
-          "South Park Coalition Member",
-          "Featured in Emmy-Recognized Documentary 'The Life'"
         ],
+        "owns": {
+          "@type": "Organization",
+          "name": "CAP Distributions"
+        },
         "sameAs": [
+          "https://www.mrcap1.com",
           "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
           "https://www.instagram.com/mrcapism/",
           "https://twitter.com/mrcap1",
           "https://www.youtube.com/@mrcap1",
           "https://music.apple.com/us/artist/mr-cap/1506719540",
           "https://opensea.io/mrcap"
-        ],
-        "url": "https://mrcap1.com"
+        ]
       },
       {
         "@type": "FAQPage",

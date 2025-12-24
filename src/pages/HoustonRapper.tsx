@@ -15,52 +15,18 @@ const HoustonRapper = () => {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Person",
-        "@id": "https://mrcap1.com/#person",
+        "@type": "MusicArtist",
         "name": "Mr. CAP",
-        "alternateName": ["Cornelius A. Pratt", "CAP", "Mr CAP"],
-        "description": "Houston rapper and original member of South Park Coalition, pioneering independent hip-hop since 1992",
-        "birthPlace": {
-          "@type": "Place",
-          "name": "Houston, Texas",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Houston",
-            "addressRegion": "TX",
-            "addressCountry": "US"
-          }
-        },
-        "jobTitle": "Hip-Hop Artist",
-        "genre": ["Hip-Hop", "Southern Rap", "Underground Hip-Hop", "Houston Rap"],
-        "memberOf": {
-          "@type": "MusicGroup",
-          "name": "South Park Coalition",
-          "foundingLocation": "Houston, Texas",
-          "foundingDate": "1987"
-        },
-        "sameAs": [
-          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-          "https://www.instagram.com/mrcapism/",
-          "https://twitter.com/mrcap1",
-          "https://www.youtube.com/@mrcap1"
-        ],
-        "url": "https://mrcap1.com"
-      },
-      {
-        "@type": "MusicGroup",
-        "@id": "https://mrcap1.com/#spc",
-        "name": "South Park Coalition",
-        "alternateName": "SPC",
-        "description": "Legendary Houston hip-hop collective founded in South Park neighborhood, featuring artists like Mr. CAP, K-Rino, and others",
+        "genre": ["Hip-Hop", "Southern Hip-Hop", "Underground Hip-Hop"],
         "foundingLocation": {
           "@type": "Place",
-          "name": "South Park, Houston, Texas"
+          "name": "Houston, Texas"
         },
-        "foundingDate": "1987",
-        "genre": ["Houston Hip-Hop", "Southern Rap", "Underground Hip-Hop"],
-        "member": {
-          "@type": "Person",
-          "@id": "https://mrcap1.com/#person"
+        "url": "https://mrcap1.com/houston-rapper-mr-cap",
+        "description": "Mr. CAP is a Houston rapper rooted in the city's South Park neighborhood, known for independent hip-hop and long-standing cultural influence.",
+        "memberOf": {
+          "@type": "MusicGroup",
+          "name": "South Park Coalition"
         }
       },
       {
