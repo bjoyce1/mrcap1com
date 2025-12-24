@@ -26,6 +26,12 @@ const pressFeatures = [
     url: "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/",
   },
   {
+    outlet: "Houston Press",
+    title: "K-Rino, Point Blank and the SPC Might Still Be Rapping at Warehouse Live Right Now",
+    date: "2016",
+    url: "https://www.houstonpress.com/music/k-rino-point-blank-and-the-spc-might-still-be-rapping-at-warehouse-live-right-now-7756589/",
+  },
+  {
     outlet: "Sound.xyz",
     title: "Dippin Thru the Metaverse – A Groundbreaking Blend of Hip-Hop and Technology",
     date: "2023",
@@ -286,6 +292,40 @@ const Press = () => {
         },
         "url": "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/",
         "about": { "@id": "https://mrcap1.com/#person" }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Press Mentions of Mr. CAP",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "NewsArticle",
+              "headline": "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
+              "datePublished": "2015-04-20",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Houston Press"
+              },
+              "url": "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "NewsArticle",
+              "headline": "K-Rino, Point Blank and the SPC Might Still Be Rapping at Warehouse Live Right Now",
+              "datePublished": "2016-10-17",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Houston Press"
+              },
+              "url": "https://www.houstonpress.com/music/k-rino-point-blank-and-the-spc-might-still-be-rapping-at-warehouse-live-right-now-7756589/"
+            }
+          }
+        ]
       }
     ]
   };
