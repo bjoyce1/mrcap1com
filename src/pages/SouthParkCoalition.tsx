@@ -15,42 +15,18 @@ const SouthParkCoalition = () => {
     "@graph": [
       {
         "@type": "MusicGroup",
-        "@id": "https://mrcap1.com/#spc",
         "name": "South Park Coalition",
-        "alternateName": "SPC",
-        "description": "The South Park Coalition (SPC) is a legendary Houston hip-hop collective founded in 1987 in the South Park neighborhood. One of the longest-running rap collectives in history.",
         "foundingLocation": {
           "@type": "Place",
-          "name": "South Park, Houston, Texas",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Houston",
-            "addressRegion": "TX",
-            "addressCountry": "US"
-          }
+          "name": "Houston, Texas"
         },
-        "foundingDate": "1987",
-        "genre": ["Houston Hip-Hop", "Southern Rap", "Underground Hip-Hop", "Texas Rap"],
-        "member": [
-          {
-            "@type": "Person",
-            "@id": "https://mrcap1.com/#person",
-            "name": "Mr. CAP",
-            "alternateName": "Cornelius A. Pratt"
-          }
-        ]
-      },
-      {
-        "@type": "Person",
-        "@id": "https://mrcap1.com/#person",
-        "name": "Mr. CAP",
-        "alternateName": ["Cornelius A. Pratt", "CAP"],
-        "description": "Original member of the South Park Coalition, Houston rapper active since 1992",
-        "memberOf": {
-          "@type": "MusicGroup",
-          "@id": "https://mrcap1.com/#spc"
+        "genre": ["Hip-Hop", "Southern Hip-Hop"],
+        "member": {
+          "@type": "Person",
+          "name": "Mr. CAP"
         },
-        "url": "https://mrcap1.com"
+        "url": "https://mrcap1.com/south-park-coalition-houston",
+        "description": "South Park Coalition is a legendary Houston hip-hop collective known for independent music, longevity, and cultural impact."
       },
       {
         "@type": "FAQPage",
