@@ -32,6 +32,12 @@ const pressFeatures = [
     url: "https://www.houstonpress.com/music/k-rino-point-blank-and-the-spc-might-still-be-rapping-at-warehouse-live-right-now-7756589/",
   },
   {
+    outlet: "Houston Press",
+    title: "Point Blank at Numbers, 11/22/2014",
+    date: "2014",
+    url: "https://www.houstonpress.com/music/point-blank-at-numbers-11-22-2014-6760363/",
+  },
+  {
     outlet: "Sound.xyz",
     title: "Dippin Thru the Metaverse – A Groundbreaking Blend of Hip-Hop and Technology",
     date: "2023",
@@ -323,6 +329,20 @@ const Press = () => {
                 "name": "Houston Press"
               },
               "url": "https://www.houstonpress.com/music/k-rino-point-blank-and-the-spc-might-still-be-rapping-at-warehouse-live-right-now-7756589/"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "NewsArticle",
+              "headline": "Point Blank at Numbers, 11/22/2014",
+              "datePublished": "2014-11-22",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Houston Press"
+              },
+              "url": "https://www.houstonpress.com/music/point-blank-at-numbers-11-22-2014-6760363/"
             }
           }
         ]
