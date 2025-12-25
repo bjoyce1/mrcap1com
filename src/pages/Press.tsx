@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import PressTimeline from "@/components/PressTimeline";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image, Mic, Award, Music, Users, Calendar, MapPin, Globe } from "lucide-react";
 
@@ -18,56 +19,7 @@ const featuredArticle = {
   summary: "This feature from Houston Press profiles Mr. CAP's career and clarifies a notable identity mix-up with Wiz Khalifa. It highlights his deep roots in Houston's hip-hop scene and long-standing commitment to his craft and community.",
 };
 
-const pressFeatures = [
-  {
-    outlet: "Houston Chronicle",
-    title: "Mr. CAP Returns to His Musical Roots",
-    date: "2014",
-    author: "Andrew Dansby",
-  },
-  {
-    outlet: "Houston Press",
-    title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
-    date: "2015",
-    url: "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/",
-  },
-  {
-    outlet: "Houston Press",
-    title: "K-Rino, Point Blank and the SPC Might Still Be Rapping at Warehouse Live Right Now",
-    date: "2016",
-    url: "https://www.houstonpress.com/music/k-rino-point-blank-and-the-spc-might-still-be-rapping-at-warehouse-live-right-now-7756589/",
-  },
-  {
-    outlet: "Houston Press",
-    title: "Point Blank at Numbers, 11/22/2014",
-    date: "2014",
-    url: "https://www.houstonpress.com/music/point-blank-at-numbers-11-22-2014-6760363/",
-  },
-  {
-    outlet: "Sound.xyz",
-    title: "Dippin Thru the Metaverse – A Groundbreaking Blend of Hip-Hop and Technology",
-    date: "2023",
-    url: "https://www.sound.xyz/mrcap/dippin-thru-the-metaverse",
-  },
-  {
-    outlet: "Complex",
-    title: "The Untold Story of Houston's Most Influential Rap Collective",
-    date: "2023",
-    url: "#",
-  },
-  {
-    outlet: "AllHipHop",
-    title: "Mr. CAP Becomes First Houston Rapper to Sell NFT",
-    date: "2021",
-    url: "#",
-  },
-  {
-    outlet: "HipHopDX",
-    title: "South Park Coalition's Legacy in Southern Hip-Hop",
-    date: "2024",
-    url: "#",
-  },
-];
+// Press features moved to PressTimeline component
 
 const quotes = [
   {
@@ -310,14 +262,8 @@ const Press = () => {
               "@type": "NewsArticle",
               "headline": "Mr. CAP Returns to His Musical Roots",
               "datePublished": "2014-04-08",
-              "author": {
-                "@type": "Person",
-                "name": "Andrew Dansby"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "Houston Chronicle"
-              }
+              "author": { "@type": "Person", "name": "Andrew Dansby" },
+              "publisher": { "@type": "Organization", "name": "Houston Chronicle" }
             }
           },
           {
@@ -325,13 +271,11 @@ const Press = () => {
             "position": 2,
             "item": {
               "@type": "NewsArticle",
-              "headline": "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
-              "datePublished": "2015-04-20",
-              "publisher": {
-                "@type": "Organization",
-                "name": "Houston Press"
-              },
-              "url": "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/"
+              "headline": "Point Blank at Numbers, 11/22/2014",
+              "datePublished": "2014-11-22",
+              "author": { "@type": "Person", "name": "Nathan Smith" },
+              "publisher": { "@type": "Organization", "name": "Houston Press" },
+              "url": "https://www.houstonpress.com/music/point-blank-at-numbers-11-22-2014-6760363/"
             }
           },
           {
@@ -339,13 +283,11 @@ const Press = () => {
             "position": 3,
             "item": {
               "@type": "NewsArticle",
-              "headline": "K-Rino, Point Blank and the SPC Might Still Be Rapping at Warehouse Live Right Now",
-              "datePublished": "2016-10-17",
-              "publisher": {
-                "@type": "Organization",
-                "name": "Houston Press"
-              },
-              "url": "https://www.houstonpress.com/music/k-rino-point-blank-and-the-spc-might-still-be-rapping-at-warehouse-live-right-now-7756589/"
+              "headline": "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
+              "datePublished": "2015-04-20",
+              "author": { "@type": "Person", "name": "Nathan Smith" },
+              "publisher": { "@type": "Organization", "name": "Houston Press" },
+              "url": "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/"
             }
           },
           {
@@ -353,13 +295,11 @@ const Press = () => {
             "position": 4,
             "item": {
               "@type": "NewsArticle",
-              "headline": "Point Blank at Numbers, 11/22/2014",
-              "datePublished": "2014-11-22",
-              "publisher": {
-                "@type": "Organization",
-                "name": "Houston Press"
-              },
-              "url": "https://www.houstonpress.com/music/point-blank-at-numbers-11-22-2014-6760363/"
+              "headline": "K-Rino, Point Blank & the SPC Might Still Be Rapping at Warehouse Live Right Now",
+              "datePublished": "2016-10-17",
+              "author": { "@type": "Person", "name": "Nathan Smith" },
+              "publisher": { "@type": "Organization", "name": "Houston Press" },
+              "url": "https://www.houstonpress.com/music/k-rino-point-blank-and-the-spc-might-still-be-rapping-at-warehouse-live-right-now-7756589/"
             }
           }
         ]
@@ -611,33 +551,8 @@ const Press = () => {
             </div>
           </section>
 
-          {/* Press Features */}
-          <section className="py-20 border-b border-border/50">
-            <div className="container mx-auto px-4">
-              <h2 className="text-2xl font-display font-bold mb-8">Featured Coverage</h2>
-              
-              <div className="space-y-4 max-w-4xl">
-                {pressFeatures.map((feature, index) => (
-                  <a
-                    key={index}
-                    href={feature.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between bg-card/30 border border-border/50 rounded-xl p-6 hover:border-primary/50 transition-colors group"
-                  >
-                    <div>
-                      <span className="text-xs text-primary font-medium uppercase tracking-wider">{feature.outlet}</span>
-                      <h3 className="font-bold mt-1 group-hover:text-primary transition-colors">
-                        {feature.title}
-                      </h3>
-                      <span className="text-sm text-muted-foreground">{feature.date}</span>
-                    </div>
-                    <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 ml-4" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
+          {/* Press Timeline */}
+          <PressTimeline />
 
           {/* Quotes / Testimonials */}
           <section className="py-20 bg-card/20 border-b border-border/50">
