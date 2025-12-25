@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PressTimeline from "@/components/PressTimeline";
@@ -14,7 +15,7 @@ const featuredArticle = {
   date: "April 20, 2015",
   dateISO: "2015-04-20",
   url: "https://www.houstonpress.com/music/somebody-tell-wiz-khalifa-theres-only-one-mr-cap-7373143/",
-  image: "/images/wiz-khalifa-blog.jpg",
+  images: ["/images/wiz-khalifa-blog.jpg", "/images/cap-wiz-2.jpg"],
   quote: "I have nothing to do with Wiz Khalifa…I've seen his Instagram followers…even though I'm not a mainstream artist with mainstream exposure, people know who Mr. CAP is. And that's me.",
   summary: "This feature from Houston Press profiles Mr. CAP's career and clarifies a notable identity mix-up with Wiz Khalifa. It highlights his deep roots in Houston's hip-hop scene and long-standing commitment to his craft and community."
 };
@@ -98,6 +99,88 @@ const storyAngles = [{
 
 // Interview topics
 const interviewTopics = ["The history and legacy of Houston's South Park Coalition", "Web3, NFTs, and the future of music ownership for independent artists", "30+ years of navigating the music industry as an independent artist", "Houston's influence on Southern hip-hop and national trends", "The evolution of underground hip-hop from 1988 to present", "Preserving hip-hop culture and mentoring the next generation"];
+// Featured Article Slideshow Component
+const FeaturedArticleSlideshow = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % featuredArticle.images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="bg-card/50 border border-border/50 rounded-2xl overflow-hidden">
+      <div className="grid lg:grid-cols-2 gap-0">
+        {/* Image Slideshow */}
+        <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
+          {featuredArticle.images.map((image, index) => (
+            <img
+              key={image}
+              src={image}
+              alt={`Mr. CAP vs Wiz Khalifa - Mainstream vs Indie Underground ${index + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+                index === currentImageIndex ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-background/80" />
+          
+          {/* Slideshow Indicators */}
+          <div className="absolute bottom-4 left-4 flex gap-2">
+            {featuredArticle.images.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentImageIndex 
+                    ? "bg-primary w-6" 
+                    : "bg-white/50 hover:bg-white/80"
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+        
+        {/* Content */}
+        <div className="p-8 lg:p-10 flex flex-col justify-center">
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-2">
+            {featuredArticle.outlet}
+          </span>
+          <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 leading-tight">
+            "{featuredArticle.title}"
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Published: {featuredArticle.date} | Author: {featuredArticle.author}
+          </p>
+          
+          <blockquote className="border-l-4 border-primary pl-4 my-6">
+            <p className="text-foreground/90 italic leading-relaxed">
+              "{featuredArticle.quote}"
+            </p>
+            <cite className="text-sm text-muted-foreground mt-2 block not-italic">
+              — {featuredArticle.outlet}
+            </cite>
+          </blockquote>
+          
+          <p className="text-muted-foreground mb-6">
+            {featuredArticle.summary}
+          </p>
+          
+          <Button variant="flux" asChild className="w-fit">
+            <a href={featuredArticle.url} target="_blank" rel="noopener noreferrer">
+              Read Original Article
+              <ExternalLink className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Press = () => {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -393,48 +476,7 @@ const Press = () => {
                   </span>
                 </div>
                 
-                <div className="bg-card/50 border border-border/50 rounded-2xl overflow-hidden">
-                  <div className="grid lg:grid-cols-2 gap-0">
-                    {/* Image */}
-                    <div className="relative aspect-[4/3] lg:aspect-auto">
-                      <img src={featuredArticle.image} alt="Mr. CAP vs Wiz Khalifa - Mainstream vs Indie Underground" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-background/80" />
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="p-8 lg:p-10 flex flex-col justify-center">
-                      <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-2">
-                        {featuredArticle.outlet}
-                      </span>
-                      <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 leading-tight">
-                        "{featuredArticle.title}"
-                      </h2>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        Published: {featuredArticle.date} | Author: {featuredArticle.author}
-                      </p>
-                      
-                      <blockquote className="border-l-4 border-primary pl-4 my-6">
-                        <p className="text-foreground/90 italic leading-relaxed">
-                          "{featuredArticle.quote}"
-                        </p>
-                        <cite className="text-sm text-muted-foreground mt-2 block not-italic">
-                          — {featuredArticle.outlet}
-                        </cite>
-                      </blockquote>
-                      
-                      <p className="text-muted-foreground mb-6">
-                        {featuredArticle.summary}
-                      </p>
-                      
-                      <Button variant="flux" asChild className="w-fit">
-                        <a href={featuredArticle.url} target="_blank" rel="noopener noreferrer">
-                          Read Original Article
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <FeaturedArticleSlideshow />
               </div>
             </div>
           </section>
