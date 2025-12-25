@@ -20,6 +20,12 @@ const featuredArticle = {
 
 const pressFeatures = [
   {
+    outlet: "Houston Chronicle",
+    title: "Mr. CAP Returns to His Musical Roots",
+    date: "2014",
+    author: "Andrew Dansby",
+  },
+  {
     outlet: "Houston Press",
     title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
     date: "2015",
@@ -42,12 +48,6 @@ const pressFeatures = [
     title: "Dippin Thru the Metaverse – A Groundbreaking Blend of Hip-Hop and Technology",
     date: "2023",
     url: "https://www.sound.xyz/mrcap/dippin-thru-the-metaverse",
-  },
-  {
-    outlet: "Houston Chronicle",
-    title: "South Park Coalition: 30 Years of Houston Underground",
-    date: "2024",
-    url: "#",
   },
   {
     outlet: "Complex",
@@ -308,6 +308,23 @@ const Press = () => {
             "position": 1,
             "item": {
               "@type": "NewsArticle",
+              "headline": "Mr. CAP Returns to His Musical Roots",
+              "datePublished": "2014-04-08",
+              "author": {
+                "@type": "Person",
+                "name": "Andrew Dansby"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Houston Chronicle"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "NewsArticle",
               "headline": "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
               "datePublished": "2015-04-20",
               "publisher": {
@@ -319,7 +336,7 @@ const Press = () => {
           },
           {
             "@type": "ListItem",
-            "position": 2,
+            "position": 3,
             "item": {
               "@type": "NewsArticle",
               "headline": "K-Rino, Point Blank and the SPC Might Still Be Rapping at Warehouse Live Right Now",
@@ -333,7 +350,7 @@ const Press = () => {
           },
           {
             "@type": "ListItem",
-            "position": 3,
+            "position": 4,
             "item": {
               "@type": "NewsArticle",
               "headline": "Point Blank at Numbers, 11/22/2014",
