@@ -206,7 +206,14 @@ const Press = () => {
       "description": "Houston-born rapper, South Park Coalition founding member, and first Houston rapper to sell a Hip Hop NFT. Over 30 years in underground hip-hop.",
       "url": "https://mrcap1.com",
       "image": "https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg",
-      "sameAs": ["https://twitter.com/mrcap1", "https://instagram.com/mrcap1", "https://www.youtube.com/@mrcap1", "https://open.spotify.com/artist/6v2pXkNCnGBxTkJB8GhHo8", "https://www.sound.xyz/mrcap"],
+      "sameAs": [
+        "https://www.instagram.com/mrcapism/",
+        "https://x.com/mrcap1",
+        "https://www.facebook.com/mrcap11",
+        "https://www.youtube.com/@mrcap1",
+        "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
+        "https://www.tiktok.com/@mrcapism"
+      ],
       "birthPlace": {
         "@type": "Place",
         "name": "Houston, Texas",
@@ -614,6 +621,47 @@ const Press = () => {
                     <p className="text-foreground italic mb-4">"{quote.text}"</p>
                     <p className="text-sm text-muted-foreground">— {quote.source}</p>
                   </div>)}
+              </div>
+            </div>
+          </section>
+
+          {/* Official Links */}
+          <section className="py-20 border-b border-border/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-2xl mx-auto">
+                <h2 className="text-2xl font-display font-bold mb-6 text-center">Official Links</h2>
+                <div className="bg-card/50 border border-border/50 rounded-xl p-8">
+                  <div className="grid gap-3 text-center md:text-left">
+                    <p className="text-foreground">
+                      <span className="text-muted-foreground">Website:</span>{" "}
+                      <a href="https://mrcap1.com" className="text-primary hover:underline font-medium">mrcap1.com</a>
+                    </p>
+                    <p className="text-foreground">
+                      <span className="text-muted-foreground">Instagram:</span>{" "}
+                      <a href="https://www.instagram.com/mrcapism/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">@mrcapism</a>
+                    </p>
+                    <p className="text-foreground">
+                      <span className="text-muted-foreground">X:</span>{" "}
+                      <a href="https://x.com/mrcap1" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">@mrcap1</a>
+                    </p>
+                    <p className="text-foreground">
+                      <span className="text-muted-foreground">Facebook:</span>{" "}
+                      <a href="https://www.facebook.com/mrcap11" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">facebook.com/mrcap11</a>
+                    </p>
+                    <p className="text-foreground">
+                      <span className="text-muted-foreground">YouTube:</span>{" "}
+                      <a href="https://www.youtube.com/@mrcap1" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">@mrcap1</a>
+                    </p>
+                    <p className="text-foreground">
+                      <span className="text-muted-foreground">Spotify:</span>{" "}
+                      <a href="https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Artist Profile</a>
+                    </p>
+                    <p className="text-foreground">
+                      <span className="text-muted-foreground">TikTok:</span>{" "}
+                      <a href="https://www.tiktok.com/@mrcapism" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">@mrcapism</a>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
