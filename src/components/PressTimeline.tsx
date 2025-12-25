@@ -14,6 +14,7 @@ const pressItems: PressItem[] = [
   {
     outlet: "Houston Chronicle",
     title: "Mr. CAP Returns to His Musical Roots",
+    url: "https://www.houstonchronicle.com/entertainment/music/article/mr-cap-returns-to-his-musical-roots-5383713.php",
     dateISO: "2014-04-08",
     author: "Andrew Dansby",
     summary:
