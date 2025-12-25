@@ -100,9 +100,9 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Social Links */}
+          {/* Official Accounts */}
           <div>
-            <h4 className="text-sm font-medium text-foreground mb-4">Connect</h4>
+            <h4 className="text-sm font-medium text-foreground mb-4">Official Accounts</h4>
             <div className="flex items-center gap-3">
               {socialLinks.map((social, index) => (
                 <a

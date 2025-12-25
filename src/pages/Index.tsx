@@ -41,14 +41,12 @@ const Index = () => {
         "url": "https://mrcap1.com",
         "image": "https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg",
         "sameAs": [
-          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-          "https://www.youtube.com/@mrcap1",
-          "https://twitter.com/mrcap1",
-          "https://instagram.com/mrcapism",
-          "https://www.tiktok.com/@mrcapism",
+          "https://www.instagram.com/mrcapism/",
+          "https://x.com/mrcap1",
           "https://www.facebook.com/mrcap11",
-          "https://opensea.io/mrcap",
-          "https://music.apple.com/us/artist/mr-cap/1506719540"
+          "https://www.youtube.com/@mrcap1",
+          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
+          "https://www.tiktok.com/@mrcapism"
         ],
         "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "South Park Coalition", "Music Production", "Digital Distribution"],
         "memberOf": {
@@ -78,8 +76,12 @@ const Index = () => {
         },
         "areaServed": "US",
         "sameAs": [
-          "https://instagram.com/mrcapism",
-          "https://twitter.com/mrcap1"
+          "https://www.instagram.com/mrcapism/",
+          "https://x.com/mrcap1",
+          "https://www.facebook.com/mrcap11",
+          "https://www.youtube.com/@mrcap1",
+          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
+          "https://www.tiktok.com/@mrcapism"
         ],
         "contactPoint": {
           "@type": "ContactPoint",
