@@ -194,11 +194,16 @@ const HeroSection = () => {
                 SPC Album · <span className="text-foreground font-medium">The Ties That Bind Us</span>
               </span>
             </div>
-            <div className="flex items-center gap-3 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full">
+            <a 
+              href="https://www.sound.xyz/mrcap/releases" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full hover:bg-primary/20 transition-colors"
+            >
               <span className="text-sm text-primary font-medium">
                 🔥 New Single: Dippin Thru the Metaverse
               </span>
-            </div>
+            </a>
           </div>
 
           {/* CTA Buttons */}
