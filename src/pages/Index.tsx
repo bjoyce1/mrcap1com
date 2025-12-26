@@ -12,6 +12,7 @@ import VenturesSection from "@/components/VenturesSection";
 import NftMilestoneSection from "@/components/NftMilestoneSection";
 import NftPreviewSection from "@/components/NftPreviewSection";
 import ContactSection from "@/components/ContactSection";
+import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -201,15 +202,7 @@ const Index = () => {
           <ContactSection />
         </main>
         
-        {/* Citation Block for AI extraction */}
-        <section className="py-8 border-t border-border/30 bg-muted/30">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-              Mr. CAP is a Houston-based rapper and long-time member of the South Park Coalition. Official site:{" "}
-              <a href="https://mrcap1.com" className="text-primary hover:underline">mrcap1.com</a>
-            </p>
-          </div>
-        </section>
+        <CitationBlock />
         
         <Footer />
       </div>
