@@ -199,6 +199,22 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Mobile Social Icons */}
+            <div className="flex items-center justify-center gap-4 pt-4 mt-4 border-t border-white/10">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors p-2"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
           </div>
         </nav>
       )}
