@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CitationBlock from "@/components/CitationBlock";
 import PressTimeline from "@/components/PressTimeline";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image, Mic, Award, Music, Users, Calendar, MapPin, Globe } from "lucide-react";
@@ -710,6 +711,7 @@ const Press = () => {
           </section>
         </main>
 
+        <CitationBlock />
         <Footer />
       </div>
     </>;

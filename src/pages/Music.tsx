@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CitationBlock from "@/components/CitationBlock";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Play, ExternalLink, Music as MusicIcon, Disc3, ArrowRight } from "lucide-react";
 
@@ -446,6 +447,7 @@ const Music = () => {
           </section>
         </main>
 
+        <CitationBlock />
         <Footer />
       </div>
     </>

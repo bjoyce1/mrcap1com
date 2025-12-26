@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CitationBlock from "@/components/CitationBlock";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, Music, Mic2, Trophy, Users, Calendar, Sparkles, GraduationCap, MapPin } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -257,6 +258,7 @@ const About = () => {
           </section>
         </main>
 
+        <CitationBlock />
         <Footer />
       </div>
     </>
