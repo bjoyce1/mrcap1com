@@ -121,7 +121,7 @@ const Innovation = () => {
 
                 <div className="flex flex-wrap gap-4">
                   <Button variant="flux" size="lg" asChild>
-                    <a href="https://www.sound.xyz/mrcap/dippin-thru-the-metaverse" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.sound.xyz/mrcap/releases" target="_blank" rel="noopener noreferrer">
                       <Play className="w-4 h-4" />
                       Stream "Dippin Thru the Metaverse"
                     </a>
@@ -192,7 +192,7 @@ const Innovation = () => {
 
                   <div className="flex flex-wrap gap-3">
                     <Button variant="flux" asChild>
-                      <a href="https://www.sound.xyz/mrcap/dippin-thru-the-metaverse" target="_blank" rel="noopener noreferrer">
+                      <a href="https://www.sound.xyz/mrcap/releases" target="_blank" rel="noopener noreferrer">
                         <Play className="w-4 h-4" />
                         Listen on Sound.xyz
                       </a>

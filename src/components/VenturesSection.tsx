@@ -22,6 +22,7 @@ const VenturesSection = () => {
       description:
         "Mr. CAP's 'Dippin Thru the Metaverse' single reflects his interest in blockchain and NFT culture — portraying the coexistence of street life and digital innovation. His work explores ownership, transparency, and financial empowerment for artists.",
       color: "primary",
+      link: "https://www.sound.xyz/mrcap/releases",
     },
   ];
 
@@ -44,34 +45,40 @@ const VenturesSection = () => {
 
         {/* Ventures Grid */}
         <div className="grid md:grid-cols-3 gap-6">
-          {ventures.map((venture, index) => (
-            <div
-              key={index}
-              className="group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300"
-            >
-              <div
-                className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
-                  venture.color === "gold" ? "bg-cap-gold/20" : "bg-primary/10"
-                }`}
+          {ventures.map((venture, index) => {
+            const CardWrapper = venture.link ? 'a' : 'div';
+            const cardProps = venture.link ? { href: venture.link, target: "_blank", rel: "noopener noreferrer" } : {};
+            
+            return (
+              <CardWrapper
+                key={index}
+                {...cardProps}
+                className="group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300 block"
               >
-                <venture.icon
-                  className={`w-7 h-7 ${
-                    venture.color === "gold" ? "text-cap-gold" : "text-primary"
+                <div
+                  className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
+                    venture.color === "gold" ? "bg-cap-gold/20" : "bg-primary/10"
                   }`}
-                />
-              </div>
+                >
+                  <venture.icon
+                    className={`w-7 h-7 ${
+                      venture.color === "gold" ? "text-cap-gold" : "text-primary"
+                    }`}
+                  />
+                </div>
 
-              <h3 className="font-display text-2xl mb-4">{venture.name}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                {venture.description}
-              </p>
+                <h3 className="font-display text-2xl mb-4">{venture.name}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                  {venture.description}
+                </p>
 
-              <div className="flex items-center gap-2 text-sm text-primary group-hover:text-cap-gold transition-colors cursor-pointer">
-                <span>Learn More</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          ))}
+                <div className="flex items-center gap-2 text-sm text-primary group-hover:text-cap-gold transition-colors cursor-pointer">
+                  <span>Learn More</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </CardWrapper>
+            );
+          })}
         </div>
 
         {/* CTA */}
