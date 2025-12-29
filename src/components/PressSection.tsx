@@ -106,7 +106,7 @@ const PressSection = () => {
             <div className="absolute top-4 right-4">
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-cap-gold/20 border border-cap-gold/30">
                 <Award className="w-4 h-4 text-cap-gold" />
-                <span className="text-xs text-cap-gold font-medium">Emmy Nominated</span>
+                <span className="text-xs text-cap-gold font-medium">Emmy Winner</span>
               </div>
             </div>
 
@@ -115,8 +115,8 @@ const PressSection = () => {
                 <Film className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-display text-xl">Emmy Winner</h3>
-                <p className="text-xs text-muted-foreground">2024 Lone Star Emmy Award</p>
+                <h3 className="font-display text-xl">Documentary Feature</h3>
+                <p className="text-xs text-muted-foreground">2024 Lone Star Emmy Winner</p>
               </div>
             </div>
 
