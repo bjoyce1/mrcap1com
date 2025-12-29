@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import BookingForm from "@/components/BookingForm";
 import { ChevronRight, Mail, Phone, MapPin, Calendar } from "lucide-react";
+import CitationBlock from "@/components/CitationBlock";
 
 const Booking = () => {
   const jsonLd = {
@@ -194,6 +195,7 @@ const Booking = () => {
           </section>
         </main>
 
+        <CitationBlock />
         <Footer />
       </div>
     </>

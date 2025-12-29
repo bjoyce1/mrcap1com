@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { getCityBySlug, getCitiesByState, allCities, type CityData } from "@/data/cities";
 import { MapPin, Calendar, Music, Mic2, ChevronRight, Play, ExternalLink } from "lucide-react";
+import CitationBlock from "@/components/CitationBlock";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const CityLanding = () => {
@@ -285,6 +286,7 @@ const CityLanding = () => {
           )}
         </main>
 
+        <CitationBlock />
         <Footer />
       </div>
     </>
