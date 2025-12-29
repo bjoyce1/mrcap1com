@@ -203,11 +203,12 @@ const TrafficMagnetSection = () => {
 
           {/* Bet'n On Me Story */}
           <div className="bg-card/50 border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all">
-            <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 flex items-center justify-center mb-4">
-              <div className="text-center px-4">
-                <BookOpen className="w-16 h-16 text-amber-400 mx-auto mb-3" />
-                <span className="text-sm font-medium text-muted-foreground">Behind the Music</span>
-              </div>
+            <div className="w-full aspect-square rounded-xl overflow-hidden mb-4">
+              <img
+                src="/images/musical-roots-blog.jpg"
+                alt="Mr. CAP Returns to His Musical Roots - Houston Chronicle"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
             
             <span className="inline-block text-xs text-amber-400 font-medium uppercase tracking-wider mb-2">
