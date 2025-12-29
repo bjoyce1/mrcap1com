@@ -414,7 +414,7 @@ const WhoIsMrCap = () => {
                       className="w-full aspect-video object-cover"
                     />
                     <div className="p-4">
-                      <span className="text-xs text-primary font-medium uppercase tracking-wider">Documentary Feature</span>
+                      <span className="text-xs text-primary font-medium uppercase tracking-wider">Emmy Winner</span>
                       <h3 className="font-bold mt-1">The Life: Sex Trafficking & Modern-Day Slavery</h3>
                     </div>
                   </div>

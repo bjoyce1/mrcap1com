@@ -115,8 +115,8 @@ const PressSection = () => {
                 <Film className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-display text-xl">Documentary Feature</h3>
-                <p className="text-xs text-muted-foreground">2024 Lone Star Emmy Nominee</p>
+                <h3 className="font-display text-xl">Emmy Winner</h3>
+                <p className="text-xs text-muted-foreground">2024 Lone Star Emmy Award</p>
               </div>
             </div>
 
