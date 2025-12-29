@@ -9,6 +9,7 @@ const AboutSection = () => {
   const bioRef = useRef<HTMLDivElement>(null);
   const highlightsRef = useRef<HTMLDivElement>(null);
   const quoteRef = useRef<HTMLQuoteElement>(null);
+  const bgImageRef = useRef<HTMLImageElement>(null);
 
   const highlights = [
     { icon: MapPin, label: "Houston, TX", desc: "South Park Born" },
@@ -96,6 +97,24 @@ const AboutSection = () => {
           }
         );
       }
+
+      // Parallax effect on background image
+      if (bgImageRef.current) {
+        gsap.fromTo(
+          bgImageRef.current,
+          { y: -50 },
+          {
+            y: 50,
+            ease: "none",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -108,11 +127,12 @@ const AboutSection = () => {
       className="py-24 md:py-32 border-b border-white/5 relative overflow-hidden"
     >
       {/* Background Image with Fade */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img 
+          ref={bgImageRef}
           src="/images/about-bg.png" 
           alt="" 
-          className="absolute right-0 top-0 h-full w-auto object-cover object-left opacity-20"
+          className="absolute right-0 top-0 h-[120%] w-auto object-cover object-left opacity-50 will-change-transform"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
