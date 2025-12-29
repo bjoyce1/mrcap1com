@@ -132,7 +132,7 @@ const AboutSection = () => {
           ref={bgImageRef}
           src="/images/about-bg.png" 
           alt="" 
-          className="absolute right-0 top-0 h-[120%] w-auto object-cover object-left opacity-20 will-change-transform"
+          className="absolute right-0 top-0 h-[120%] w-auto object-cover object-left opacity-80 will-change-transform"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/60" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
