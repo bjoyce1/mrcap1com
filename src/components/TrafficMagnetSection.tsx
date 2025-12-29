@@ -214,9 +214,9 @@ const TrafficMagnetSection = () => {
               ✍️ Liner Notes
             </span>
             
-            <h3 className="font-display font-bold text-lg mb-1">The Story of "Bet'n On Me"</h3>
+            <h3 className="font-display font-bold text-lg mb-1">Mr. CAP Returns to His Musical Roots</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              The making of an anthem for hustlers
+              Houston Chronicle on Mr. CAP's legacy
             </p>
             
             <Button variant="fluxOutline" size="sm" className="w-full" asChild>
