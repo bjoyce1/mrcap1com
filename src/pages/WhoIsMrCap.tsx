@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, Play, ExternalLink, ChevronRight, Calendar, Disc3, Building2, Zap, Globe, Film, Users, Award } from "lucide-react";
+import CitationBlock from "@/components/CitationBlock";
 import heroBg from "@/assets/hero-bg.jpg";
 import albumTies from "@/assets/album-ties.jpg";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
@@ -464,6 +465,7 @@ const WhoIsMrCap = () => {
           </section>
         </main>
         
+        <CitationBlock />
         <Footer />
       </div>
     </>

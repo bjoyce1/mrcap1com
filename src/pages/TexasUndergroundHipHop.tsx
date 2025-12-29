@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, MapPin, ChevronRight, Calendar, Mic2, Play } from "lucide-react";
+import CitationBlock from "@/components/CitationBlock";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const TexasUndergroundHipHop = () => {
@@ -320,6 +321,7 @@ const TexasUndergroundHipHop = () => {
           </section>
         </main>
 
+        <CitationBlock />
         <Footer />
       </div>
     </>

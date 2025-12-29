@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, Mic2, Play, ExternalLink, ChevronRight, Award, Users, Calendar } from "lucide-react";
+import CitationBlock from "@/components/CitationBlock";
 import heroBg from "@/assets/hero-bg.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
 
@@ -374,6 +375,7 @@ const HoustonRapper = () => {
           </section>
         </main>
 
+        <CitationBlock />
         <Footer />
       </div>
     </>
