@@ -107,6 +107,17 @@ const AboutSection = () => {
       id="about"
       className="py-24 md:py-32 border-b border-white/5 relative overflow-hidden"
     >
+      {/* Background Image with Fade */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img 
+          src="/images/about-bg.png" 
+          alt="" 
+          className="absolute right-0 top-0 h-full w-auto object-cover object-left opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+      </div>
+      
       {/* Background Glow */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
 
