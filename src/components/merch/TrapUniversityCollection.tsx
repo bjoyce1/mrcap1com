@@ -1,23 +1,31 @@
 import { motion } from "framer-motion";
 import { ImagePlus } from "lucide-react";
 
+// Import product images
+import whiteHoodie from "@/assets/trap-university/white-hoodie.jpg";
+import leatherJacket from "@/assets/trap-university/leather-jacket.jpg";
+import slides from "@/assets/trap-university/slides.jpg";
+import croppedHoodie from "@/assets/trap-university/cropped-hoodie.jpg";
+import backpack from "@/assets/trap-university/backpack.jpg";
+
 interface PlaceholderItem {
   id: number;
   title: string;
   price: string;
+  image?: string;
 }
 
 const placeholderItems: PlaceholderItem[] = [
-  { id: 1, title: "Trap University Tee #1", price: "TBD" },
-  { id: 2, title: "Trap University Tee #2", price: "TBD" },
-  { id: 3, title: "Trap University Hoodie #1", price: "TBD" },
-  { id: 4, title: "Trap University Hoodie #2", price: "TBD" },
-  { id: 5, title: "Trap University Cap", price: "TBD" },
-  { id: 6, title: "Trap University Jacket", price: "TBD" },
-  { id: 7, title: "Trap University Shorts", price: "TBD" },
-  { id: 8, title: "Trap University Sweatpants", price: "TBD" },
-  { id: 9, title: "Trap University Tank Top", price: "TBD" },
-  { id: 10, title: "Trap University Beanie", price: "TBD" },
+  { id: 1, title: "White Hoodie", price: "TBD", image: whiteHoodie },
+  { id: 2, title: "Leather Bomber Jacket", price: "TBD", image: leatherJacket },
+  { id: 3, title: "Slides", price: "TBD", image: slides },
+  { id: 4, title: "Women's Cropped Hoodie", price: "TBD", image: croppedHoodie },
+  { id: 5, title: "All-Over Print Backpack", price: "TBD", image: backpack },
+  { id: 6, title: "Trap University Shorts", price: "TBD" },
+  { id: 7, title: "Trap University Sweatpants", price: "TBD" },
+  { id: 8, title: "Trap University Tank Top", price: "TBD" },
+  { id: 9, title: "Trap University Beanie", price: "TBD" },
+  { id: 10, title: "Trap University Cap", price: "TBD" },
 ];
 
 export const TrapUniversityCollection = () => {
@@ -64,16 +72,26 @@ export const TrapUniversityCollection = () => {
               className="group"
             >
               <div className="bg-secondary/30 border border-border/50 rounded-xl overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-lg">
-                {/* Image Placeholder */}
-                <div className="aspect-square relative bg-muted/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <ImagePlus className="w-10 h-10 text-muted-foreground/40 mx-auto mb-2" />
-                    <span className="text-xs text-muted-foreground/50 font-mono">#{item.id}</span>
-                  </div>
+                {/* Image or Placeholder */}
+                <div className="aspect-square relative bg-muted/50 flex items-center justify-center overflow-hidden">
+                  {item.image ? (
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="text-center">
+                      <ImagePlus className="w-10 h-10 text-muted-foreground/40 mx-auto mb-2" />
+                      <span className="text-xs text-muted-foreground/50 font-mono">#{item.id}</span>
+                    </div>
+                  )}
                   
                   {/* Overlay hint */}
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
-                    <span className="text-xs text-muted-foreground font-mono">Image pending</span>
+                    <span className="text-xs text-muted-foreground font-mono">
+                      {item.image ? "Coming Soon" : "Image pending"}
+                    </span>
                   </div>
                 </div>
                 
