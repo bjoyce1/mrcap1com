@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { MerchHero } from "@/components/merch/MerchHero";
 import { ProductGrid } from "@/components/merch/ProductGrid";
 import { CartDrawer } from "@/components/merch/CartDrawer";
+import { TrapUniversityCollection } from "@/components/merch/TrapUniversityCollection";
 
 const Merch = () => {
   return (
@@ -31,6 +32,7 @@ const Merch = () => {
         <main className="pt-20">
           <MerchHero />
           <ProductGrid />
+          <TrapUniversityCollection />
         </main>
 
         <Footer />
