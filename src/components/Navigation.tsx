@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Instagram, Facebook, Youtube } from "lucide-react";
+import { Menu, X, Instagram, Facebook, Youtube, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImage from "@/assets/mr-cap-logo.png";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const socialLinks = [
   { href: "https://www.instagram.com/mrcapism/", label: "Instagram", icon: Instagram },
@@ -27,14 +33,17 @@ const socialLinks = [
 
 const navLinks = [
   { to: "/who-is-mr-cap", label: "Who Is Mr. CAP?" },
-  { to: "/music", label: "Music" },
-  { to: "/mr-cap-discography", label: "Discography" },
   { to: "/live", label: "Live" },
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },
   { to: "/epk", label: "EPK", highlight: true },
   { to: "/nft", label: "NFT", highlight: true },
   { to: "/innovation", label: "Tech", highlight: true },
+];
+
+const musicDropdownLinks = [
+  { to: "/music", label: "Music" },
+  { to: "/mr-cap-discography", label: "Discography" },
 ];
 
 const homeSections = [
@@ -55,6 +64,7 @@ const Navigation = () => {
   const location = useLocation();
 
   const isHomePage = location.pathname === "/";
+  const isMusicActive = musicDropdownLinks.some(link => location.pathname === link.to);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,7 +120,47 @@ const Navigation = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-6">
-          {navLinks.map((link) => (
+          <Link
+            to="/who-is-mr-cap"
+            className={cn(
+              "text-sm font-medium tracking-wide transition-colors",
+              location.pathname === "/who-is-mr-cap"
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Who Is Mr. CAP?
+          </Link>
+          
+          {/* Music Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className={cn(
+              "flex items-center gap-1 text-sm font-medium tracking-wide transition-colors outline-none",
+              isMusicActive
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            )}>
+              Music
+              <ChevronDown className="w-3 h-3" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-background border border-border/50 z-50">
+              {musicDropdownLinks.map((link) => (
+                <DropdownMenuItem key={link.to} asChild>
+                  <Link
+                    to={link.to}
+                    className={cn(
+                      "w-full cursor-pointer",
+                      location.pathname === link.to && "text-primary"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {navLinks.slice(1).map((link) => (
             <Link
               key={link.to}
               to={link.to}
@@ -182,7 +232,27 @@ const Navigation = () => {
             >
               Home
             </Link>
-            {navLinks.map((link) => (
+            {/* Music Section with sub-links */}
+            <div className="px-4 py-2 text-xs font-medium tracking-widest uppercase text-muted-foreground/70">
+              Music
+            </div>
+            {musicDropdownLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setIsMenuOpen(false)}
+                className={cn(
+                  "px-6 py-3 text-sm font-medium tracking-wide transition-colors rounded-lg",
+                  location.pathname === link.to
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+            
+            {navLinks.slice(1).map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
