@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/hooks/useAuth";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Music from "./pages/Music";
@@ -26,6 +27,7 @@ import Discography from "./pages/Discography";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import Booking from "./pages/Booking";
+import Links from "./pages/Links";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -58,6 +60,7 @@ function AppRoutes() {
   return (
     <>
       <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
+      <ExitIntentPopup />
       <ScrollToTop />
       
       {/* Main routes - render background location if modal is open */}
@@ -80,6 +83,7 @@ function AppRoutes() {
         <Route path="/who-is-mr-cap" element={<WhoIsMrCap />} />
         <Route path="/mr-cap-discography" element={<Discography />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/links" element={<Links />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
         {/* EPK Routes */}

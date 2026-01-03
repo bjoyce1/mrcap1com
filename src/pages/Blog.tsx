@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { blogPosts, blogCategories } from "@/data/blogPosts";
 import { ChevronRight, Clock, Tag } from "lucide-react";
 
@@ -163,26 +164,18 @@ const Blog = () => {
 
           {/* Newsletter CTA */}
           <section className="py-20 bg-gradient-to-b from-primary/10 to-background border-t border-border/50">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-                Stay Updated
-              </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-                Get the latest posts, music releases, and tour announcements delivered to your inbox.
-              </p>
-              <form className="max-w-md mx-auto flex gap-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 bg-card/50 border border-border/50 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
-                >
-                  Subscribe
-                </button>
-              </form>
+            <div className="container mx-auto px-4">
+              <div className="max-w-md mx-auto">
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+                    Stay Updated
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Get the latest posts, music releases, and tour announcements delivered to your inbox.
+                  </p>
+                </div>
+                <NewsletterSignup source="blog" variant="default" />
+              </div>
             </div>
           </section>
         </main>
