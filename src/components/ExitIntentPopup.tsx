@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { X, Gift, Mail, Loader2, Check } from 'lucide-react';
+import { X, Mail, Loader2, Check } from 'lucide-react';
 import { z } from 'zod';
+import mrCapCoin from '@/assets/mr-cap-coin.png';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -138,8 +139,8 @@ const ExitIntentPopup = () => {
                 ) : (
                   <>
                     {/* Icon */}
-                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                      <Gift className="w-8 h-8 text-primary" />
+                    <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-6">
+                      <img src={mrCapCoin} alt="Mr CAP Coin" className="w-full h-full object-cover" />
                     </div>
 
                     {/* Content */}
