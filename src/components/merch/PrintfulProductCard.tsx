@@ -1,28 +1,22 @@
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
 import { PrintfulProduct, getProductImage, getLowestPrice } from "@/lib/printful";
-import { Button } from "@/components/ui/button";
 
 interface PrintfulProductCardProps {
   product: PrintfulProduct;
+  onSelect: (product: PrintfulProduct) => void;
 }
 
-export const PrintfulProductCard = ({ product }: PrintfulProductCardProps) => {
+export const PrintfulProductCard = ({ product, onSelect }: PrintfulProductCardProps) => {
   const imageUrl = getProductImage(product);
   const price = getLowestPrice(product);
   const variantCount = product.sync_variants?.length || 0;
-
-  // For Printful, we'll link to their checkout or a product detail page
-  const handleViewProduct = () => {
-    // You could implement a product detail modal or page here
-    console.log('View product:', product.sync_product.id);
-  };
 
   return (
     <motion.div
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
-      className="group bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-300"
+      onClick={() => onSelect(product)}
+      className="group bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer"
     >
       {/* Product Image */}
       <div className="aspect-square overflow-hidden bg-muted/20 relative">
@@ -39,6 +33,13 @@ export const PrintfulProductCard = ({ product }: PrintfulProductCardProps) => {
             {variantCount} options
           </div>
         )}
+
+        {/* Quick view overlay */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <span className="bg-white text-black px-4 py-2 rounded-full text-sm font-medium">
+            Quick View
+          </span>
+        </div>
       </div>
 
       {/* Product Info */}
@@ -47,22 +48,10 @@ export const PrintfulProductCard = ({ product }: PrintfulProductCardProps) => {
           {product.sync_product.name}
         </h3>
         
-        <div className="flex items-center justify-between">
-          <p className="text-xl font-bold text-primary">
-            {price.currency === 'USD' ? '$' : price.currency} {price.amount}
-            {variantCount > 1 && <span className="text-sm font-normal text-muted-foreground ml-1">+</span>}
-          </p>
-          
-          <Button 
-            size="sm" 
-            variant="outline"
-            onClick={handleViewProduct}
-            className="opacity-0 group-hover:opacity-100 transition-opacity"
-          >
-            <ExternalLink className="w-4 h-4 mr-1" />
-            View
-          </Button>
-        </div>
+        <p className="text-xl font-bold text-primary">
+          {price.currency === 'USD' ? '$' : price.currency} {price.amount}
+          {variantCount > 1 && <span className="text-sm font-normal text-muted-foreground ml-1">+</span>}
+        </p>
       </div>
     </motion.div>
   );
