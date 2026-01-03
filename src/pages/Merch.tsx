@@ -6,16 +6,11 @@ import { ProductGrid } from "@/components/merch/ProductGrid";
 import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
 import { CartDrawer } from "@/components/merch/CartDrawer";
 import { TrapUniversityCollection } from "@/components/merch/TrapUniversityCollection";
-
 const Merch = () => {
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Official Merch | Mr. CAP - Houston Hip-Hop Artist</title>
-        <meta 
-          name="description" 
-          content="Shop exclusive Mr. CAP merchandise. Limited edition apparel, accessories, and collectibles from Houston's innovative hip-hop artist." 
-        />
+        <meta name="description" content="Shop exclusive Mr. CAP merchandise. Limited edition apparel, accessories, and collectibles from Houston's innovative hip-hop artist." />
         <meta property="og:title" content="Official Merch | Mr. CAP" />
         <meta property="og:description" content="Shop exclusive Mr. CAP merchandise. Limited edition apparel, accessories, and collectibles." />
         <meta property="og:type" content="website" />
@@ -32,15 +27,13 @@ const Merch = () => {
 
         <main className="pt-20">
           <MerchHero />
-          <ProductGrid />
+          
           <PrintfulProductGrid />
-          <TrapUniversityCollection />
+          
         </main>
 
         <Footer />
       </div>
-    </>
-  );
+    </>;
 };
-
 export default Merch;

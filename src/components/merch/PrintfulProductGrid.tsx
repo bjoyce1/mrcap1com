@@ -4,23 +4,19 @@ import { Loader2, AlertCircle, ShoppingBag } from "lucide-react";
 import { fetchPrintfulProducts, PrintfulProduct } from "@/lib/printful";
 import { PrintfulProductCard } from "./PrintfulProductCard";
 import { PrintfulProductModal } from "./PrintfulProductModal";
-
 export const PrintfulProductGrid = () => {
   const [products, setProducts] = useState<PrintfulProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<PrintfulProduct | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
       setError(null);
-      
       try {
         const fetchedProducts = await fetchPrintfulProducts();
         setProducts(fetchedProducts);
-        
         if (fetchedProducts.length === 0) {
           setError('No products found in your Printful store.');
         }
@@ -31,36 +27,28 @@ export const PrintfulProductGrid = () => {
         setIsLoading(false);
       }
     };
-
     loadProducts();
   }, []);
-
   const handleProductSelect = (product: PrintfulProduct) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
   };
-
   if (isLoading) {
-    return (
-      <section className="py-16 px-6">
+    return <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center justify-center py-20">
             <Loader2 className="w-10 h-10 animate-spin text-primary mb-4" />
             <p className="text-muted-foreground">Loading Printful products...</p>
           </div>
         </div>
-      </section>
-    );
+      </section>;
   }
-
   if (error) {
-    return (
-      <section className="py-16 px-6">
+    return <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <AlertCircle className="w-12 h-12 text-muted-foreground mb-4" />
@@ -70,67 +58,58 @@ export const PrintfulProductGrid = () => {
             </p>
           </div>
         </div>
-      </section>
-    );
+      </section>;
   }
-
-  return (
-    <>
+  return <>
       <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} whileInView={{
+          opacity: 1,
+          y: 0
+        }} viewport={{
+          once: true
+        }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-4">
               <ShoppingBag className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">Printful Collection</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Print-on-Demand Merch
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">TRAP UNIVERSITY</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               High-quality custom merchandise printed and shipped on demand.
             </p>
           </motion.div>
 
           {/* Products Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              visible: { transition: { staggerChildren: 0.1 } }
-            }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          >
-            {products.map((product) => (
-              <motion.div
-                key={product.sync_product.id}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-              >
-                <PrintfulProductCard 
-                  product={product} 
-                  onSelect={handleProductSelect}
-                />
-              </motion.div>
-            ))}
+          <motion.div initial="hidden" whileInView="visible" viewport={{
+          once: true
+        }} variants={{
+          visible: {
+            transition: {
+              staggerChildren: 0.1
+            }
+          }
+        }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {products.map(product => <motion.div key={product.sync_product.id} variants={{
+            hidden: {
+              opacity: 0,
+              y: 20
+            },
+            visible: {
+              opacity: 1,
+              y: 0
+            }
+          }}>
+                <PrintfulProductCard product={product} onSelect={handleProductSelect} />
+              </motion.div>)}
           </motion.div>
         </div>
       </section>
 
       {/* Product Modal */}
-      <PrintfulProductModal
-        product={selectedProduct}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
-    </>
-  );
+      <PrintfulProductModal product={selectedProduct} isOpen={isModalOpen} onClose={handleCloseModal} />
+    </>;
 };
