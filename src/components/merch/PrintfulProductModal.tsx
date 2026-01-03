@@ -160,7 +160,7 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 sm:inset-6 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[calc(100%-3rem)] md:max-w-4xl md:max-h-[85vh] bg-background rounded-2xl overflow-hidden z-50 flex flex-col shadow-2xl"
+            className="fixed inset-4 sm:inset-6 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[calc(100%-3rem)] md:max-w-4xl max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-3rem)] md:max-h-[85dvh] bg-background rounded-2xl overflow-hidden z-50 flex flex-col shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">
@@ -175,7 +175,9 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6">
+            <div
+              className={`flex-1 min-h-0 p-4 md:p-6 ${step === 'shipping' ? 'overflow-hidden' : 'overflow-y-auto'}`}
+            >
               {step === 'select' && (
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Images */}
@@ -272,7 +274,7 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
               )}
 
               {step === 'shipping' && (
-                <div className="max-w-md mx-auto flex flex-col h-full">
+                <div className="max-w-md mx-auto flex flex-col h-full min-h-0">
                   <div className="bg-muted/20 rounded-lg p-4 mb-4 flex-shrink-0">
                     <div className="flex gap-4">
                       <img
@@ -290,7 +292,7 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 flex-1 overflow-y-auto pb-4">
+                  <div className="grid grid-cols-2 gap-4 flex-1 min-h-0 overflow-y-auto overscroll-contain pb-4">
                     <div className="col-span-2">
                       <Label htmlFor="name">Full Name *</Label>
                       <Input
@@ -385,7 +387,7 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-4 border-t border-border flex-shrink-0">
+                  <div className="flex gap-3 pt-4 border-t border-border flex-shrink-0 bg-background pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
                     <Button variant="outline" onClick={() => setStep('select')} className="flex-1">
                       Back
                     </Button>
