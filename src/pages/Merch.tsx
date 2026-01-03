@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { MerchHero } from "@/components/merch/MerchHero";
 import { ProductGrid } from "@/components/merch/ProductGrid";
+import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
 import { CartDrawer } from "@/components/merch/CartDrawer";
 import { TrapUniversityCollection } from "@/components/merch/TrapUniversityCollection";
 
@@ -32,6 +33,7 @@ const Merch = () => {
         <main className="pt-20">
           <MerchHero />
           <ProductGrid />
+          <PrintfulProductGrid />
           <TrapUniversityCollection />
         </main>
 

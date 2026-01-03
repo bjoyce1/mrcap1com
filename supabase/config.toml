@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.opensea-wallet-nfts]
 verify_jwt = false
+
+[functions.printful-products]
+verify_jwt = false
