@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Minus, Plus, ShoppingBag, Truck, Loader2 } from "lucide-react";
+import { X, Minus, Plus, ShoppingBag, Truck, Loader2, ChevronLeft } from "lucide-react";
 import { z } from "zod";
 import { PrintfulProduct, getProductImage, getLowestPrice } from "@/lib/printful";
 import { Button } from "@/components/ui/button";
@@ -63,7 +63,6 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
       toast.error("Please select a variant");
       return;
     }
-    // Auto-select first variant if only one exists or none selected
     if (!selectedVariantId && variants.length >= 1) {
       setSelectedVariantId(variants[0].id);
     }
@@ -75,7 +74,6 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
   };
 
   const handlePlaceOrder = async () => {
-    // Validate shipping info
     const result = shippingSchema.safeParse(shippingInfo);
     if (!result.success) {
       const firstError = result.error.errors[0];
@@ -155,31 +153,37 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
           />
 
-          {/* Modal */}
+          {/* Right-side panel */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 sm:inset-6 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[calc(100%-3rem)] md:max-w-4xl max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-3rem)] md:max-h-[85dvh] bg-background rounded-2xl overflow-hidden z-50 flex flex-col shadow-2xl"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed inset-y-0 right-0 w-full sm:w-[480px] md:w-[520px] lg:w-[600px] bg-background z-50 flex flex-col shadow-2xl border-l border-border/50"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border">
-              <h2 className="text-lg font-semibold">
-                {step === 'select' && 'Select Options'}
-                {step === 'shipping' && 'Shipping Information'}
-                {step === 'confirm' && 'Order Confirmed'}
-              </h2>
-              <Button variant="ghost" size="icon" onClick={handleClose}>
+            {/* Header - Fixed */}
+            <div className="flex-shrink-0 flex items-center justify-between p-4 sm:p-6 border-b border-border/50">
+              <div className="flex items-center gap-3">
+                {step !== 'select' && step !== 'confirm' && (
+                  <Button variant="ghost" size="icon" onClick={() => setStep('select')} className="h-8 w-8">
+                    <ChevronLeft className="w-5 h-5" />
+                  </Button>
+                )}
+                <h2 className="text-lg font-mono uppercase tracking-wider">
+                  {step === 'select' && 'Select Options'}
+                  {step === 'shipping' && 'Shipping'}
+                  {step === 'confirm' && 'Confirmed'}
+                </h2>
+              </div>
+              <Button variant="ghost" size="icon" onClick={handleClose} className="h-8 w-8">
                 <X className="w-5 h-5" />
               </Button>
             </div>
 
-            {/* Content */}
-            <div
-              className={`flex-1 min-h-0 p-4 md:p-6 ${step === 'shipping' ? 'overflow-hidden' : 'overflow-y-auto'}`}
-            >
+            {/* Content - Scrollable */}
+            <div className="flex-1 overflow-y-auto min-h-0">
               {step === 'select' && (
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="p-4 sm:p-6 space-y-6">
                   {/* Images */}
                   <div className="space-y-4">
                     <div className="aspect-square rounded-xl overflow-hidden bg-muted/20">
@@ -260,22 +264,14 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                         </Button>
                       </div>
                     </div>
-
-                    <Button 
-                      size="lg" 
-                      className="w-full"
-                      onClick={handleContinueToShipping}
-                    >
-                      <ShoppingBag className="w-5 h-5 mr-2" />
-                      Continue to Checkout
-                    </Button>
                   </div>
                 </div>
               )}
 
               {step === 'shipping' && (
-                <div className="max-w-md mx-auto flex flex-col h-full min-h-0">
-                  <div className="bg-muted/20 rounded-lg p-4 mb-4 flex-shrink-0">
+                <div className="p-4 sm:p-6 space-y-4">
+                  {/* Order Summary */}
+                  <div className="bg-muted/20 rounded-lg p-4">
                     <div className="flex gap-4">
                       <img
                         src={getProductImage(product)}
@@ -292,7 +288,8 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 flex-1 min-h-0 overflow-y-auto overscroll-contain pb-4">
+                  {/* Shipping Form */}
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="col-span-2">
                       <Label htmlFor="name">Full Name *</Label>
                       <Input
@@ -386,43 +383,62 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                       />
                     </div>
                   </div>
-
-                  <div className="flex gap-3 pt-4 border-t border-border flex-shrink-0 bg-background pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
-                    <Button variant="outline" onClick={() => setStep('select')} className="flex-1">
-                      Back
-                    </Button>
-                    <Button onClick={handlePlaceOrder} disabled={isLoading} className="flex-1">
-                      {isLoading ? (
-                        <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Processing...
-                        </>
-                      ) : (
-                        <>
-                          <Truck className="w-4 h-4 mr-2" />
-                          Place Order
-                        </>
-                      )}
-                    </Button>
-                  </div>
                 </div>
               )}
 
               {step === 'confirm' && (
-                <div className="text-center py-12">
-                  <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <ShoppingBag className="w-10 h-10 text-green-500" />
+                <div className="flex-1 flex items-center justify-center p-6">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <ShoppingBag className="w-10 h-10 text-green-500" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Order Placed!</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Your order has been submitted successfully. You'll receive a confirmation email shortly.
+                    </p>
+                    <Button onClick={handleClose}>
+                      Continue Shopping
+                    </Button>
                   </div>
-                  <h3 className="text-2xl font-bold mb-2">Order Placed!</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Your order has been submitted successfully. You'll receive a confirmation email shortly.
-                  </p>
-                  <Button onClick={handleClose}>
-                    Continue Shopping
-                  </Button>
                 </div>
               )}
             </div>
+
+            {/* Footer - Fixed */}
+            {step !== 'confirm' && (
+              <div className="flex-shrink-0 p-4 sm:p-6 border-t border-border/50 bg-background">
+                {step === 'select' && (
+                  <Button 
+                    size="lg" 
+                    className="w-full font-mono uppercase tracking-wider"
+                    onClick={handleContinueToShipping}
+                  >
+                    <ShoppingBag className="w-5 h-5 mr-2" />
+                    Continue to Checkout
+                  </Button>
+                )}
+                {step === 'shipping' && (
+                  <Button 
+                    size="lg"
+                    className="w-full font-mono uppercase tracking-wider"
+                    onClick={handlePlaceOrder} 
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <Truck className="w-4 h-4 mr-2" />
+                        Place Order - ${totalPrice}
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            )}
           </motion.div>
         </>
       )}
