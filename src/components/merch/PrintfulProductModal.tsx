@@ -268,8 +268,8 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
               )}
 
               {step === 'shipping' && (
-                <div className="max-w-md mx-auto space-y-4">
-                  <div className="bg-muted/20 rounded-lg p-4 mb-6">
+                <div className="max-w-md mx-auto flex flex-col h-full">
+                  <div className="bg-muted/20 rounded-lg p-4 mb-4 flex-shrink-0">
                     <div className="flex gap-4">
                       <img
                         src={getProductImage(product)}
@@ -286,7 +286,7 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4 flex-1 overflow-y-auto pb-4">
                     <div className="col-span-2">
                       <Label htmlFor="name">Full Name *</Label>
                       <Input
@@ -381,7 +381,7 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-4">
+                  <div className="flex gap-3 pt-4 border-t border-border flex-shrink-0">
                     <Button variant="outline" onClick={() => setStep('select')} className="flex-1">
                       Back
                     </Button>
