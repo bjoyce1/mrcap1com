@@ -59,9 +59,13 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
   };
 
   const handleContinueToShipping = () => {
-    if (!selectedVariantId && variants.length > 0) {
+    if (!selectedVariantId && variants.length > 1) {
       toast.error("Please select a variant");
       return;
+    }
+    // Auto-select first variant if only one exists or none selected
+    if (!selectedVariantId && variants.length >= 1) {
+      setSelectedVariantId(variants[0].id);
     }
     setStep('shipping');
   };
