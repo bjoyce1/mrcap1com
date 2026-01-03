@@ -1,13 +1,11 @@
 import { Helmet } from "react-helmet-async";
-import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { MerchHero } from "@/components/merch/MerchHero";
-import { ProductGrid } from "@/components/merch/ProductGrid";
 import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
-import { CartDrawer } from "@/components/merch/CartDrawer";
-import { TrapUniversityCollection } from "@/components/merch/TrapUniversityCollection";
+
 const Merch = () => {
-  return <>
+  return (
+    <>
       <Helmet>
         <title>Official Merch | Mr. CAP - Houston Hip-Hop Artist</title>
         <meta name="description" content="Shop exclusive Mr. CAP merchandise. Limited edition apparel, accessories, and collectibles from Houston's innovative hip-hop artist." />
@@ -18,22 +16,16 @@ const Merch = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
-        <Navigation />
+        <MerchHero />
         
-        {/* Fixed cart button */}
-        <div className="fixed top-24 right-6 z-50">
-          <CartDrawer />
-        </div>
-
-        <main className="pt-20">
-          <MerchHero />
-          
+        <main id="products">
           <PrintfulProductGrid />
-          
         </main>
 
         <Footer />
       </div>
-    </>;
+    </>
+  );
 };
+
 export default Merch;
