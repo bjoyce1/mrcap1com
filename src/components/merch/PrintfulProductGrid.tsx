@@ -75,7 +75,7 @@ export const PrintfulProductGrid = () => {
         }} className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-4">
               <ShoppingBag className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Printful Collection</span>
+              <span className="text-sm font-medium text-primary">The Trap University Collection</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">TRAP UNIVERSITY</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
