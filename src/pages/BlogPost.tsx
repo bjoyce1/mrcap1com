@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { getBlogPostBySlug, blogPosts } from "@/data/blogPosts";
 import { ChevronRight, Clock, Calendar, Tag, Share2, Twitter, Facebook, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -192,6 +193,15 @@ const BlogPost = () => {
                       <Linkedin className="w-4 h-4" />
                     </a>
                   </div>
+                </div>
+
+                {/* Newsletter CTA */}
+                <div className="mt-12 pt-8 border-t border-border/50">
+                  <div className="text-center mb-4">
+                    <h3 className="text-lg font-display font-bold mb-2">Enjoyed this post?</h3>
+                    <p className="text-sm text-muted-foreground">Get more content like this delivered to your inbox.</p>
+                  </div>
+                  <NewsletterSignup source="blog_post" variant="default" />
                 </div>
               </div>
             </div>
