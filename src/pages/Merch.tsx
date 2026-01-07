@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet-async";
-import Footer from "@/components/Footer";
-import { MerchHero } from "@/components/merch/MerchHero";
-import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
 import { ParticleHero } from "@/components/merch/ParticleHero";
+import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
+import { MerchQualitySection } from "@/components/merch/MerchQualitySection";
+import { MerchNewsletterSection } from "@/components/merch/MerchNewsletterSection";
+import { MerchFooter } from "@/components/merch/MerchFooter";
 import trapUniversityLogo from "@/assets/trap-university-logo.png";
 
 const Merch = () => {
@@ -21,7 +22,7 @@ const Merch = () => {
         <link rel="canonical" href="https://mrcap.com/merch" />
       </Helmet>
 
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-[#020202] text-foreground">
         <ParticleHero
           subtitle="Official Collection"
           description="Exclusive streetwear designed for the culture. Limited drops, unlimited drip."
@@ -78,9 +79,11 @@ const Merch = () => {
         
         <main id="products">
           <PrintfulProductGrid />
+          <MerchQualitySection />
+          <MerchNewsletterSection />
         </main>
 
-        <Footer />
+        <MerchFooter />
       </div>
     </>
   );
