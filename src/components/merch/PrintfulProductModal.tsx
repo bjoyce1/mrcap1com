@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useCartStore } from "@/stores/cartStore";
 
 interface PrintfulProductModalProps {
   product: PrintfulProduct | null;
@@ -35,6 +36,7 @@ declare global {
 }
 
 export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProductModalProps) => {
+  const { addItem } = useCartStore();
   const [selectedVariantId, setSelectedVariantId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [step, setStep] = useState<'select' | 'shipping' | 'payment' | 'confirm'>('select');
@@ -193,6 +195,29 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
 
   const handleQuantityChange = (delta: number) => {
     setQuantity(prev => Math.max(1, Math.min(10, prev + delta)));
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedVariantId && variants.length > 1) {
+      toast.error("Please select a variant");
+      return;
+    }
+    const variantToAdd = selectedVariant || variants[0];
+    if (variantToAdd && product) {
+      addItem({
+        productId: product.sync_product.id,
+        variantId: variantToAdd.id,
+        name: product.sync_product.name,
+        variantName: variantToAdd.name,
+        price: parseFloat(variantToAdd.retail_price),
+        currency: variantToAdd.currency || 'USD',
+        image: getProductImage(product),
+      }, quantity);
+      toast.success("Added to cart", {
+        description: `${product.sync_product.name} x${quantity}`,
+      });
+      handleClose();
+    }
   };
 
   const handleContinueToShipping = () => {
@@ -569,16 +594,26 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
 
             {/* Footer - Fixed */}
             {step !== 'confirm' && step !== 'payment' && (
-              <div className="flex-shrink-0 p-4 sm:p-6 border-t border-border/50 bg-background">
+              <div className="flex-shrink-0 p-4 sm:p-6 border-t border-border/50 bg-background space-y-3">
                 {step === 'select' && (
-                  <Button 
-                    size="lg" 
-                    className="w-full font-mono uppercase tracking-wider"
-                    onClick={handleContinueToShipping}
-                  >
-                    <ShoppingBag className="w-5 h-5 mr-2" />
-                    Continue to Checkout
-                  </Button>
+                  <>
+                    <Button 
+                      size="lg" 
+                      className="w-full font-mono uppercase tracking-wider"
+                      onClick={handleAddToCart}
+                    >
+                      <ShoppingBag className="w-5 h-5 mr-2" />
+                      Add to Cart - ${totalPrice}
+                    </Button>
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      className="w-full font-mono uppercase tracking-wider"
+                      onClick={handleContinueToShipping}
+                    >
+                      Buy Now
+                    </Button>
+                  </>
                 )}
                 {step === 'shipping' && (
                   <Button 

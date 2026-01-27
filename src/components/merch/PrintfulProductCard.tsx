@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
+import { ShoppingBag } from "lucide-react";
 import { PrintfulProduct, getProductImage, getLowestPrice } from "@/lib/printful";
+import { useCartStore } from "@/stores/cartStore";
+import { toast } from "sonner";
 
 interface PrintfulProductCardProps {
   product: PrintfulProduct;
@@ -7,9 +10,36 @@ interface PrintfulProductCardProps {
 }
 
 export const PrintfulProductCard = ({ product, onSelect }: PrintfulProductCardProps) => {
+  const { addItem } = useCartStore();
   const imageUrl = getProductImage(product);
   const price = getLowestPrice(product);
   const variantCount = product.sync_variants?.length || 0;
+  const firstVariant = product.sync_variants?.[0];
+
+  const handleQuickAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    if (variantCount > 1) {
+      // Open modal for variant selection
+      onSelect(product);
+      return;
+    }
+
+    if (firstVariant) {
+      addItem({
+        productId: product.sync_product.id,
+        variantId: firstVariant.id,
+        name: product.sync_product.name,
+        variantName: firstVariant.name,
+        price: parseFloat(firstVariant.retail_price),
+        currency: firstVariant.currency || 'USD',
+        image: imageUrl,
+      });
+      toast.success("Added to cart", {
+        description: product.sync_product.name,
+      });
+    }
+  };
 
   return (
     <motion.div
@@ -34,11 +64,15 @@ export const PrintfulProductCard = ({ product, onSelect }: PrintfulProductCardPr
           </div>
         )}
 
-        {/* Quick view overlay */}
+        {/* Quick add overlay */}
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <span className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-            Add to Cart
-          </span>
+          <button
+            onClick={handleQuickAdd}
+            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          >
+            <ShoppingBag className="w-4 h-4" />
+            {variantCount > 1 ? 'Select Options' : 'Add to Cart'}
+          </button>
         </div>
       </div>
 

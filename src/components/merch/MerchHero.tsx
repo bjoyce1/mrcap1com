@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { CartDrawer } from "./CartDrawer";
 
 const categories = [
   {
@@ -69,10 +70,12 @@ export const MerchHero = () => {
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Search className="h-4 w-4" />
               </Button>
+              <CartDrawer />
             </nav>
 
             {/* Mobile Menu */}
             <div className="flex items-center gap-2 md:hidden">
+              <CartDrawer />
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" className="rounded-full">
