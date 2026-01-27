@@ -6,9 +6,6 @@ verify_jwt = false
 [functions.opensea-wallet-nfts]
 verify_jwt = false
 
-[functions.opensea-collection-nfts]
-verify_jwt = false
-
 [functions.printful-products]
 verify_jwt = false
 
@@ -16,7 +13,4 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.paypal-checkout]
-verify_jwt = false
-
-[functions.nft-holder]
 verify_jwt = false
