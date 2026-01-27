@@ -47,6 +47,12 @@ const OPKHub = () => {
         <meta property="og:title" content="Mr. CAP | Official OPK" />
         <meta property="og:description" content="Official OPK for Houston hip-hop artist Mr. CAP. Booking, press, brands, and media resources." />
         <meta property="og:url" content="https://mrcap1.com/opk" />
+        <meta property="og:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="640" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
