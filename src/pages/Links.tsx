@@ -35,9 +35,9 @@ const links = [
     icon: Sparkles,
   },
   {
-    title: "📰 Press Kit (EPK)",
+    title: "📰 Press Kit (OPK)",
     description: "Media & brand partnerships",
-    url: "/epk",
+    url: "/opk",
     internal: true,
     icon: Users,
   },

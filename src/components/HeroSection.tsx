@@ -161,7 +161,7 @@ const HeroSection = () => {
           <div className="flex items-center gap-3 mb-6">
             <span className="inline-flex items-center justify-center w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-xs font-medium tracking-widest uppercase text-primary">
-              Electronic Press Kit
+              Online Press Kit
             </span>
           </div>
 

@@ -188,8 +188,8 @@ const Press = () => {
     "@graph": [{
       "@type": "WebPage",
       "@id": "https://mrcap1.com/press#webpage",
-      "name": "Press & Media Kit - Mr. CAP | Houston Hip-Hop Artist EPK",
-      "description": "Official electronic press kit for Mr. CAP, Houston rapper and South Park Coalition member. Download press assets, bio, high-res photos, and request interviews.",
+      "name": "Press & Media Kit - Mr. CAP | Houston Hip-Hop Artist OPK",
+      "description": "Official online press kit for Mr. CAP, Houston rapper and South Park Coalition member. Download press assets, bio, high-res photos, and request interviews.",
       "url": "https://mrcap1.com/press",
       "isPartOf": {
         "@id": "https://mrcap1.com/#website"
@@ -428,12 +428,12 @@ const Press = () => {
   };
   return <>
       <Helmet>
-        <title>Press & Media Kit | Mr. CAP – Houston Hip-Hop Artist EPK</title>
-        <meta name="description" content="Official electronic press kit for Mr. CAP, Houston rapper and South Park Coalition founding member. Download press assets, bio, high-res photos, and request interviews." />
+        <title>Press & Media Kit | Mr. CAP – Houston Hip-Hop Artist OPK</title>
+        <meta name="description" content="Official online press kit for Mr. CAP, Houston rapper and South Park Coalition founding member. Download press assets, bio, high-res photos, and request interviews." />
         <link rel="canonical" href="https://mrcap1.com/press" />
         
         <meta property="og:title" content="Press & Media Kit | Mr. CAP – Houston Hip-Hop Artist" />
-        <meta property="og:description" content="Official EPK for Mr. CAP. 30+ years in Houston hip-hop, South Park Coalition member, first Houston rapper to sell an NFT." />
+        <meta property="og:description" content="Official OPK for Mr. CAP. 30+ years in Houston hip-hop, South Park Coalition member, first Houston rapper to sell an NFT." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcap1.com/press" />
         <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg" />
@@ -441,9 +441,9 @@ const Press = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@mrcap1" />
         <meta name="twitter:title" content="Press & Media Kit | Mr. CAP" />
-        <meta name="twitter:description" content="Official EPK for Houston hip-hop artist Mr. CAP. 30+ years in the game." />
+        <meta name="twitter:description" content="Official OPK for Houston hip-hop artist Mr. CAP. 30+ years in the game." />
         
-        <meta name="keywords" content="Mr. CAP press kit, Houston rapper EPK, South Park Coalition press, Houston hip-hop media, underground hip-hop press, Texas rapper interview, NFT rapper press kit" />
+        <meta name="keywords" content="Mr. CAP press kit, Houston rapper OPK, South Park Coalition press, Houston hip-hop media, underground hip-hop press, Texas rapper interview, NFT rapper press kit" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

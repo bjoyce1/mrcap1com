@@ -6,7 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
-interface EPKLayoutProps {
+interface OPKLayoutProps {
   children: React.ReactNode;
   title: string;
   subtitle: string;
@@ -16,7 +16,7 @@ interface EPKLayoutProps {
   breadcrumb: string;
 }
 
-const EPKLayout = ({
+const OPKLayout = ({
   children,
   title,
   subtitle,
@@ -24,7 +24,7 @@ const EPKLayout = ({
   ctaLabel = "Get in Touch",
   ctaEmail = "southparkcoalitionllc@gmail.com",
   breadcrumb,
-}: EPKLayoutProps) => {
+}: OPKLayoutProps) => {
   const heroRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const footerCtaRef = useRef<HTMLElement>(null);
@@ -116,8 +116,8 @@ const EPKLayout = ({
             <nav className="gsap-hero-item flex items-center gap-2 text-sm text-muted-foreground mb-8">
               <Link to="/" className="hover:text-primary transition-colors">Home</Link>
               <ChevronRight className="w-4 h-4" />
-              <Link to="/epk" className="hover:text-primary transition-colors">EPK</Link>
-              {breadcrumb !== "EPK" && (
+              <Link to="/opk" className="hover:text-primary transition-colors">OPK</Link>
+              {breadcrumb !== "OPK" && (
                 <>
                   <ChevronRight className="w-4 h-4" />
                   <span className="text-foreground">{breadcrumb}</span>
@@ -185,4 +185,4 @@ const EPKLayout = ({
   );
 };
 
-export default EPKLayout;
+export default OPKLayout;

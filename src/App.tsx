@@ -31,12 +31,12 @@ import Links from "./pages/Links";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
-// EPK Pages
-import EPKHub from "./pages/epk/EPKHub";
-import EPKMusic from "./pages/epk/EPKMusic";
-import EPKPress from "./pages/epk/EPKPress";
-import EPKBrands from "./pages/epk/EPKBrands";
-import EPKMedia from "./pages/epk/EPKMedia";
+// OPK Pages
+import OPKHub from "./pages/opk/OPKHub";
+import OPKMusic from "./pages/opk/OPKMusic";
+import OPKPress from "./pages/opk/OPKPress";
+import OPKBrands from "./pages/opk/OPKBrands";
+import OPKMedia from "./pages/opk/OPKMedia";
 
 // Self Love Installation Pages
 import SelfLoveInstallation from "./pages/SelfLoveInstallation";
@@ -86,12 +86,12 @@ function AppRoutes() {
         <Route path="/links" element={<Links />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
-        {/* EPK Routes */}
-        <Route path="/epk" element={<EPKHub />} />
-        <Route path="/epk/music" element={<EPKMusic />} />
-        <Route path="/epk/press" element={<EPKPress />} />
-        <Route path="/epk/brands" element={<EPKBrands />} />
-        <Route path="/epk/media" element={<EPKMedia />} />
+        {/* OPK Routes */}
+        <Route path="/opk" element={<OPKHub />} />
+        <Route path="/opk/music" element={<OPKMusic />} />
+        <Route path="/opk/press" element={<OPKPress />} />
+        <Route path="/opk/brands" element={<OPKBrands />} />
+        <Route path="/opk/media" element={<OPKMedia />} />
         {/* Self Love Installation Routes */}
         <Route path="/self-love" element={<SelfLoveInstallation />} />
         <Route path="/self-love/2024" element={<SelfLoveRoom2024 />} />

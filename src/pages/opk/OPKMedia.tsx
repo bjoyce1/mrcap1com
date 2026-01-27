@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Mic } from "lucide-react";
-import EPKLayout from "@/components/EPKLayout";
+import OPKLayout from "@/components/OPKLayout";
 
 const speakingTopics = [
   "Independent artistry & ownership",
@@ -9,26 +9,26 @@ const speakingTopics = [
   "Life beyond the mainstream industry",
 ];
 
-const EPKMedia = () => {
+const OPKMedia = () => {
   return (
     <>
       <Helmet>
-        <title>Mr. CAP | Film & Speaking EPK – Documentary, Soundtracks, Keynotes</title>
+        <title>Mr. CAP | Film & Speaking OPK – Documentary, Soundtracks, Keynotes</title>
         <meta 
           name="description" 
           content="Book Mr. CAP for film projects, music supervision, documentaries, and speaking engagements. PBS documentary featured. Amazon Prime soundtrack." 
         />
-        <link rel="canonical" href="https://mrcap1.com/epk/media" />
-        <meta property="og:title" content="Mr. CAP | Film & Speaking EPK" />
+        <link rel="canonical" href="https://mrcap1.com/opk/media" />
+        <meta property="og:title" content="Mr. CAP | Film & Speaking OPK" />
         <meta property="og:description" content="Film credits, soundtracks, and speaking engagements with Mr. CAP." />
-        <meta property="og:url" content="https://mrcap1.com/epk/media" />
+        <meta property="og:url" content="https://mrcap1.com/opk/media" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Mr. CAP Film & Speaking EPK",
+            "name": "Mr. CAP Film & Speaking OPK",
             "description": "Book Mr. CAP for film projects, documentaries, and speaking engagements.",
-            "url": "https://mrcap1.com/epk/media",
+            "url": "https://mrcap1.com/opk/media",
             "mainEntity": {
               "@type": "Person",
               "@id": "https://mrcap1.com/#person",
@@ -49,18 +49,18 @@ const EPKMedia = () => {
               "@type": "BreadcrumbList",
               "itemListElement": [
                 { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
-                { "@type": "ListItem", "position": 3, "name": "Media", "item": "https://mrcap1.com/epk/media" }
+                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" },
+                { "@type": "ListItem", "position": 3, "name": "Media", "item": "https://mrcap1.com/opk/media" }
               ]
             }
           })}
         </script>
       </Helmet>
 
-      <EPKLayout
+      <OPKLayout
         title="Independent Voice in Music, Media & Culture"
         subtitle=""
-        tagline="Film & Speaking EPK"
+        tagline="Film & Speaking OPK"
         ctaLabel="Media & Speaking Inquiries"
         breadcrumb="Media"
       >
@@ -100,9 +100,9 @@ const EPKMedia = () => {
             </div>
           </div>
         </section>
-      </EPKLayout>
+      </OPKLayout>
     </>
   );
 };
 
-export default EPKMedia;
+export default OPKMedia;

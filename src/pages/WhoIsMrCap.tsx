@@ -170,7 +170,7 @@ const WhoIsMrCap = () => {
                 <Button variant="fluxOutline" size="lg" asChild>
                   <Link to="/press">
                     <ExternalLink className="mr-2 h-5 w-5" />
-                    View Press & EPK
+                    View Press & OPK
                   </Link>
                 </Button>
                 <Button variant="fluxOutline" size="lg" asChild>
@@ -450,7 +450,7 @@ const WhoIsMrCap = () => {
                   <Button variant="fluxOutline" size="lg" asChild>
                     <Link to="/press">
                       <ExternalLink className="mr-2 h-5 w-5" />
-                      View Press & EPK
+                      View Press & OPK
                     </Link>
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild>
