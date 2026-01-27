@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/hooks/useAuth";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -92,6 +92,12 @@ function AppRoutes() {
         <Route path="/opk/press" element={<OPKPress />} />
         <Route path="/opk/brands" element={<OPKBrands />} />
         <Route path="/opk/media" element={<OPKMedia />} />
+        {/* Legacy EPK Redirects */}
+        <Route path="/epk" element={<Navigate to="/opk" replace />} />
+        <Route path="/epk/music" element={<Navigate to="/opk/music" replace />} />
+        <Route path="/epk/press" element={<Navigate to="/opk/press" replace />} />
+        <Route path="/epk/brands" element={<Navigate to="/opk/brands" replace />} />
+        <Route path="/epk/media" element={<Navigate to="/opk/media" replace />} />
         {/* Self Love Installation Routes */}
         <Route path="/self-love" element={<SelfLoveInstallation />} />
         <Route path="/self-love/2024" element={<SelfLoveRoom2024 />} />
