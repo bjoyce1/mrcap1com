@@ -142,12 +142,12 @@ const TrafficMagnetSection = () => {
             <audio ref={audioRef} src="/audio/betn-on-me.mp3" preload="metadata" />
           </div>
 
-          {/* EPK Download */}
+          {/* OPK Download */}
           <div className="bg-card/50 border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all">
             <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mb-4">
               <div className="text-center">
                 <FileText className="w-16 h-16 text-primary mx-auto mb-3" />
-                <span className="text-sm font-medium text-muted-foreground">Electronic Press Kit</span>
+                <span className="text-sm font-medium text-muted-foreground">Online Press Kit</span>
               </div>
             </div>
             
@@ -155,7 +155,7 @@ const TrafficMagnetSection = () => {
               📄 For Media & Promoters
             </span>
             
-            <h3 className="font-display font-bold text-lg mb-1">Download EPK</h3>
+            <h3 className="font-display font-bold text-lg mb-1">Download OPK</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Bio, photos, tech rider & booking info
             </p>

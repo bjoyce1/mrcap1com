@@ -37,7 +37,7 @@ const navLinks = [
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },
   { to: "/merch", label: "Merch", highlight: true },
-  { to: "/epk", label: "EPK", highlight: true },
+  { to: "/opk", label: "OPK", highlight: true },
   { to: "/nft", label: "NFT", highlight: true },
   { to: "/innovation", label: "Tech", highlight: true },
 ];

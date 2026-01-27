@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Download, Music, Mic, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import EPKLayout from "@/components/EPKLayout";
+import OPKLayout from "@/components/OPKLayout";
 
 const artistSnapshot = [
   { label: "Genre", value: "Hip-Hop (Southern / Houston)" },
@@ -16,26 +16,26 @@ const musicHighlights = [
   "Available on Spotify, Apple Music, and YouTube",
 ];
 
-const EPKMusic = () => {
+const OPKMusic = () => {
   return (
     <>
       <Helmet>
-        <title>Mr. CAP | Booking EPK – Live Hip Hop Performer</title>
+        <title>Mr. CAP | Booking OPK – Live Hip Hop Performer</title>
         <meta 
           name="description" 
-          content="Book Mr. CAP, Houston hip-hop artist and South Park Coalition member, for full set or feature appearances. Download the booking EPK." 
+          content="Book Mr. CAP, Houston hip-hop artist and South Park Coalition member, for full set or feature appearances. Download the booking OPK." 
         />
-        <link rel="canonical" href="https://mrcap1.com/epk/music" />
-        <meta property="og:title" content="Mr. CAP | Booking EPK – Live Hip Hop Performer" />
+        <link rel="canonical" href="https://mrcap1.com/opk/music" />
+        <meta property="og:title" content="Mr. CAP | Booking OPK – Live Hip Hop Performer" />
         <meta property="og:description" content="Book Mr. CAP for live performances. Full sets, features, festivals." />
-        <meta property="og:url" content="https://mrcap1.com/epk/music" />
+        <meta property="og:url" content="https://mrcap1.com/opk/music" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Mr. CAP Booking EPK",
+            "name": "Mr. CAP Booking OPK",
             "description": "Book Mr. CAP for live performances, full sets, and feature appearances.",
-            "url": "https://mrcap1.com/epk/music",
+            "url": "https://mrcap1.com/opk/music",
             "mainEntity": {
               "@type": "MusicGroup",
               "@id": "https://mrcap1.com/#musicgroup",
@@ -68,18 +68,18 @@ const EPKMusic = () => {
               "@type": "BreadcrumbList",
               "itemListElement": [
                 { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
-                { "@type": "ListItem", "position": 3, "name": "Music & Booking", "item": "https://mrcap1.com/epk/music" }
+                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" },
+                { "@type": "ListItem", "position": 3, "name": "Music & Booking", "item": "https://mrcap1.com/opk/music" }
               ]
             }
           })}
         </script>
       </Helmet>
 
-      <EPKLayout
+      <OPKLayout
         title="MR. CAP"
         subtitle="South Park Born. SPC Raised. Independent & Future-Focused."
-        tagline="Music & Booking EPK"
+        tagline="Music & Booking OPK"
         ctaLabel="Book Mr. CAP"
         breadcrumb="Music & Booking"
       >
@@ -173,17 +173,17 @@ const EPKMusic = () => {
             <h2 className="gsap-item text-2xl font-display font-bold mb-6">Download Materials</h2>
             <div className="gsap-item flex flex-wrap gap-4 justify-center">
               <Button variant="flux" size="lg" asChild>
-                <a href="/booking-epk.pdf" download>
+                <a href="/booking-opk.pdf" download>
                   <Download className="mr-2 h-5 w-5" />
-                  Download Booking EPK (PDF)
+                  Download Booking OPK (PDF)
                 </a>
               </Button>
             </div>
           </div>
         </section>
-      </EPKLayout>
+      </OPKLayout>
     </>
   );
 };
 
-export default EPKMusic;
+export default OPKMusic;

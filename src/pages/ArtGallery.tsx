@@ -603,8 +603,8 @@ const ArtGallery = () => {
               <Link to="/nft" className="text-sm text-muted-foreground hover:text-foreground transition">
                 NFT Gallery
               </Link>
-              <Link to="/epk" className="text-sm text-muted-foreground hover:text-foreground transition">
-                EPK
+              <Link to="/opk" className="text-sm text-muted-foreground hover:text-foreground transition">
+                OPK
               </Link>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Download, FileText, Image, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import EPKLayout from "@/components/EPKLayout";
+import OPKLayout from "@/components/OPKLayout";
 
 const pressHighlights = [
   "Member of the South Park Coalition",
@@ -9,7 +9,7 @@ const pressHighlights = [
   "First Houston rapper to sell a hip-hop NFT (Feb 25, 2021)",
 ];
 
-const EPKPress = () => {
+const OPKPress = () => {
   return (
     <>
       <Helmet>
@@ -18,17 +18,17 @@ const EPKPress = () => {
           name="description" 
           content="Official press kit for Mr. CAP. Download bio, photos, and media assets. Request interviews and features with Houston hip-hop veteran." 
         />
-        <link rel="canonical" href="https://mrcap1.com/epk/press" />
+        <link rel="canonical" href="https://mrcap1.com/opk/press" />
         <meta property="og:title" content="Mr. CAP | Press Kit – Media & Interview Requests" />
         <meta property="og:description" content="Download press materials and request interviews with Mr. CAP." />
-        <meta property="og:url" content="https://mrcap1.com/epk/press" />
+        <meta property="og:url" content="https://mrcap1.com/opk/press" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
             "name": "Mr. CAP Press Kit",
             "description": "Official press kit for Mr. CAP with bio, photos, and media assets.",
-            "url": "https://mrcap1.com/epk/press",
+            "url": "https://mrcap1.com/opk/press",
             "mainEntity": {
               "@type": "Person",
               "@id": "https://mrcap1.com/#person",
@@ -45,18 +45,18 @@ const EPKPress = () => {
               "@type": "BreadcrumbList",
               "itemListElement": [
                 { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
-                { "@type": "ListItem", "position": 3, "name": "Press", "item": "https://mrcap1.com/epk/press" }
+                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" },
+                { "@type": "ListItem", "position": 3, "name": "Press", "item": "https://mrcap1.com/opk/press" }
               ]
             }
           })}
         </script>
       </Helmet>
 
-      <EPKLayout
+      <OPKLayout
         title="Houston Hip-Hop Legacy, Built to Last"
         subtitle=""
-        tagline="Press & Media EPK"
+        tagline="Press & Media OPK"
         ctaLabel="Request an Interview"
         breadcrumb="Press"
       >
@@ -143,9 +143,9 @@ const EPKPress = () => {
             </div>
           </div>
         </section>
-      </EPKLayout>
+      </OPKLayout>
     </>
   );
 };
 
-export default EPKPress;
+export default OPKPress;

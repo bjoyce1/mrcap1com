@@ -1,59 +1,59 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Music, Newspaper, Briefcase, Film, ArrowRight } from "lucide-react";
-import EPKLayout from "@/components/EPKLayout";
+import OPKLayout from "@/components/OPKLayout";
 
-const epkPages = [
+const opkPages = [
   {
-    title: "Music & Booking EPK",
+    title: "Music & Booking OPK",
     description: "Full set, feature appearances, festivals. Book Mr. CAP for your next event.",
     icon: Music,
-    href: "/epk/music",
-    cta: "View Music & Booking EPK",
+    href: "/opk/music",
+    cta: "View Music & Booking OPK",
   },
   {
-    title: "Press & Media EPK",
+    title: "Press & Media OPK",
     description: "Media coverage, interview requests, publication features.",
     icon: Newspaper,
-    href: "/epk/press",
-    cta: "View Press & Media EPK",
+    href: "/opk/press",
+    cta: "View Press & Media OPK",
   },
   {
-    title: "Brand & Partnership EPK",
+    title: "Brand & Partnership OPK",
     description: "Endorsements, campaigns, product collaborations, and licensing.",
     icon: Briefcase,
-    href: "/epk/brands",
-    cta: "View Brand & Partnership EPK",
+    href: "/opk/brands",
+    cta: "View Brand & Partnership OPK",
   },
   {
-    title: "Film & Speaking EPK",
+    title: "Film & Speaking OPK",
     description: "Documentary features, music supervision, speaking engagements.",
     icon: Film,
-    href: "/epk/media",
-    cta: "View Film & Speaking EPK",
+    href: "/opk/media",
+    cta: "View Film & Speaking OPK",
   },
 ];
 
-const EPKHub = () => {
+const OPKHub = () => {
   return (
     <>
       <Helmet>
-        <title>Mr. CAP | Official Electronic Press Kit (EPK) – Houston Hip-Hop Artist</title>
+        <title>Mr. CAP | Official Online Press Kit (OPK) – Houston Hip-Hop Artist</title>
         <meta 
           name="description" 
-          content="Official Electronic Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member. Access booking, press, brand, and media resources." 
+          content="Official Online Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member. Access booking, press, brand, and media resources." 
         />
-        <link rel="canonical" href="https://mrcap1.com/epk" />
-        <meta property="og:title" content="Mr. CAP | Official EPK" />
-        <meta property="og:description" content="Official EPK for Houston hip-hop artist Mr. CAP. Booking, press, brands, and media resources." />
-        <meta property="og:url" content="https://mrcap1.com/epk" />
+        <link rel="canonical" href="https://mrcap1.com/opk" />
+        <meta property="og:title" content="Mr. CAP | Official OPK" />
+        <meta property="og:description" content="Official OPK for Houston hip-hop artist Mr. CAP. Booking, press, brands, and media resources." />
+        <meta property="og:url" content="https://mrcap1.com/opk" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Mr. CAP Official Electronic Press Kit",
-            "description": "Official Electronic Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member.",
-            "url": "https://mrcap1.com/epk",
+            "name": "Mr. CAP Official Online Press Kit",
+            "description": "Official Online Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member.",
+            "url": "https://mrcap1.com/opk",
             "mainEntity": {
               "@type": "Person",
               "@id": "https://mrcap1.com/#person",
@@ -80,38 +80,38 @@ const EPKHub = () => {
               "@type": "BreadcrumbList",
               "itemListElement": [
                 { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" }
+                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" }
               ]
             }
           })}
         </script>
       </Helmet>
 
-      <EPKLayout
-        title="MR. CAP — OFFICIAL EPK"
+      <OPKLayout
+        title="MR. CAP — OFFICIAL OPK"
         subtitle="South Park Born. SPC Raised. Independent & Future-Focused."
-        tagline="Electronic Press Kit"
+        tagline="Online Press Kit"
         ctaLabel="General Inquiries"
-        breadcrumb="EPK"
+        breadcrumb="OPK"
       >
         {/* Intro */}
         <section className="gsap-section py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <p className="gsap-item text-lg text-muted-foreground leading-relaxed">
-                Welcome to the official Electronic Press Kit for Mr. CAP, Houston hip-hop artist and proud member of the legendary South Park Coalition.
+                Welcome to the official Online Press Kit for Mr. CAP, Houston hip-hop artist and proud member of the legendary South Park Coalition.
                 <br /><br />
-                Select the EPK that fits your purpose below.
+                Select the OPK that fits your purpose below.
               </p>
             </div>
           </div>
         </section>
 
-        {/* EPK Navigation Grid */}
+        {/* OPK Navigation Grid */}
         <section className="gsap-section py-12">
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {epkPages.map((page) => (
+              {opkPages.map((page) => (
                 <Link
                   key={page.href}
                   to={page.href}
@@ -131,9 +131,9 @@ const EPKHub = () => {
             </div>
           </div>
         </section>
-      </EPKLayout>
+      </OPKLayout>
     </>
   );
 };
 
-export default EPKHub;
+export default OPKHub;

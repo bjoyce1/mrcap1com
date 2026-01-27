@@ -79,13 +79,16 @@ export const trackBookingSubmit = () => {
 // Legacy alias for backward compatibility
 export const trackBookingFormSubmit = trackBookingSubmit;
 
-// EPK download - tracks when someone downloads the press kit
-export const trackEPKDownload = () => {
-  trackEvent("epk_download", {
+// OPK download - tracks when someone downloads the press kit
+export const trackOPKDownload = () => {
+  trackEvent("opk_download", {
     event_category: "conversion",
-    event_label: "epk_download",
+    event_label: "opk_download",
   });
 };
+
+// Legacy alias for backward compatibility
+export const trackEPKDownload = trackOPKDownload;
 
 // Music click - tracks when someone clicks to stream music
 export const trackMusicClick = (platform: string, trackName?: string) => {

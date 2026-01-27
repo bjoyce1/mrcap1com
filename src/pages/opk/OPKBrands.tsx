@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { CheckCircle, Sparkles, Megaphone, Calendar, Music, Blocks } from "lucide-react";
-import EPKLayout from "@/components/EPKLayout";
+import OPKLayout from "@/components/OPKLayout";
 
 const whyItWorks = [
   "Established South Park Coalition credibility",
@@ -18,26 +18,26 @@ const partnershipOpportunities = [
   { icon: Blocks, title: "Digital & NFT-based Collaborations" },
 ];
 
-const EPKBrands = () => {
+const OPKBrands = () => {
   return (
     <>
       <Helmet>
-        <title>Mr. CAP | Brand Partnership EPK – Sponsorships & Collaborations</title>
+        <title>Mr. CAP | Brand Partnership OPK – Sponsorships & Collaborations</title>
         <meta 
           name="description" 
           content="Partner with Mr. CAP for brand endorsements, campaigns, and product collaborations. Authentic voice. 30+ year legacy. Houston and beyond." 
         />
-        <link rel="canonical" href="https://mrcap1.com/epk/brands" />
-        <meta property="og:title" content="Mr. CAP | Brand Partnership EPK" />
+        <link rel="canonical" href="https://mrcap1.com/opk/brands" />
+        <meta property="og:title" content="Mr. CAP | Brand Partnership OPK" />
         <meta property="og:description" content="Brand partnerships, endorsements, and collaborations with Houston hip-hop artist Mr. CAP." />
-        <meta property="og:url" content="https://mrcap1.com/epk/brands" />
+        <meta property="og:url" content="https://mrcap1.com/opk/brands" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Mr. CAP Brand Partnership EPK",
+            "name": "Mr. CAP Brand Partnership OPK",
             "description": "Partner with Mr. CAP for brand endorsements, campaigns, and collaborations.",
-            "url": "https://mrcap1.com/epk/brands",
+            "url": "https://mrcap1.com/opk/brands",
             "mainEntity": {
               "@type": "Person",
               "@id": "https://mrcap1.com/#person",
@@ -58,18 +58,18 @@ const EPKBrands = () => {
               "@type": "BreadcrumbList",
               "itemListElement": [
                 { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "EPK", "item": "https://mrcap1.com/epk" },
-                { "@type": "ListItem", "position": 3, "name": "Brands", "item": "https://mrcap1.com/epk/brands" }
+                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" },
+                { "@type": "ListItem", "position": 3, "name": "Brands", "item": "https://mrcap1.com/opk/brands" }
               ]
             }
           })}
         </script>
       </Helmet>
 
-      <EPKLayout
+      <OPKLayout
         title="Culture. Credibility. Forward Motion."
         subtitle=""
-        tagline="Brand & Partnership EPK"
+        tagline="Brand & Partnership OPK"
         ctaLabel="Partner With Mr. CAP"
         breadcrumb="Brands"
       >
@@ -123,9 +123,9 @@ const EPKBrands = () => {
             </div>
           </div>
         </section>
-      </EPKLayout>
+      </OPKLayout>
     </>
   );
 };
 
-export default EPKBrands;
+export default OPKBrands;

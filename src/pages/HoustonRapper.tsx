@@ -365,7 +365,7 @@ const HoustonRapper = () => {
                   <Link to="/live">Book a Show</Link>
                 </Button>
                 <Button variant="fluxOutline" size="lg" asChild>
-                  <Link to="/press">Press & EPK</Link>
+                  <Link to="/press">Press & OPK</Link>
                 </Button>
                 <Button variant="fluxGhost" size="lg" asChild>
                   <Link to="/blog">Read Articles</Link>
