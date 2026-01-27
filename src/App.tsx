@@ -46,7 +46,6 @@ import SelfLoveStoryModal from "./components/SelfLoveStoryModal";
 
 // Merch Pages
 import Merch from "./pages/Merch";
-import MerchProduct from "./pages/MerchProduct";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -107,7 +106,6 @@ function AppRoutes() {
         <Route path="/self-love/2026" element={<div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2026 — Coming Soon</p></div>} />
         {/* Merch Routes */}
         <Route path="/merch" element={<Merch />} />
-        <Route path="/merch/:handle" element={<MerchProduct />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>

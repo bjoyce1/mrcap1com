@@ -1,4 +1,4 @@
-import { ArrowUpRight, Search, ShoppingBasket, Menu } from "lucide-react";
+import { ArrowUpRight, Search, Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -11,8 +11,6 @@ import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { useCartStore } from "@/stores/cartStore";
-import { CartDrawer } from "./CartDrawer";
 
 const categories = [
   {
@@ -45,9 +43,6 @@ const navigation = [
 ];
 
 export const MerchHero = () => {
-  const { items } = useCartStore();
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Top Section */}
@@ -74,12 +69,10 @@ export const MerchHero = () => {
               <Button variant="ghost" size="icon" className="rounded-full">
                 <Search className="h-4 w-4" />
               </Button>
-              <CartDrawer />
             </nav>
 
             {/* Mobile Menu */}
             <div className="flex items-center gap-2 md:hidden">
-              <CartDrawer />
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" className="rounded-full">
