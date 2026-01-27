@@ -5,6 +5,8 @@ import { ArrowLeft, ExternalLink, Wallet } from "lucide-react";
 import { ArtOfIsmCollection } from "@/components/ArtOfIsmCollection";
 import { OtherNftsGallery } from "@/components/OtherNftsGallery";
 import NFTHeroSection from "@/components/NFTHeroSection";
+import { NFTGate } from "@/components/NFTGate";
+import { VerifiedContractBlock } from "@/components/VerifiedContractBlock";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import nftLimitless from "@/assets/nft-limitless.png";
@@ -149,7 +151,7 @@ const NFTGallery = () => {
   };
 
   return (
-    <>
+    <NFTGate>
       <Helmet>
         <title>NFT Gallery | Mr. CAP – Digital Art & Music Collectibles</title>
         <meta name="description" content="Explore Mr. CAP's NFT collection featuring The Art of ISM album, exclusive digital art, and music collectibles. First Houston rapper to sell a Hip Hop NFT on the blockchain." />
@@ -260,6 +262,9 @@ const NFTGallery = () => {
         </div>
       </main>
 
+      {/* Verified Contract Block */}
+      <VerifiedContractBlock />
+
       {/* CTA Section */}
       <section ref={ctaRef} className="py-16 md:py-24 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-t border-white/5">
         <div className="max-w-4xl mx-auto px-6 text-center">
@@ -302,7 +307,7 @@ const NFTGallery = () => {
         </div>
       </footer>
     </div>
-    </>
+    </NFTGate>
   );
 };
 
