@@ -131,8 +131,8 @@ const Navigation = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
           <img src={logoImage} alt="Mr. CAP Logo" className="w-10 h-10 rounded-full object-cover" />
-          <span className="hidden md:flex items-center gap-8 text-xs font-medium tracking-widest uppercase text-muted-foreground">
-            <span className="flex items-center gap-2 text-foreground border-b border-primary/50 pb-0.5">
+          <span className="hidden md:flex items-center gap-8 text-xs font-medium tracking-widest uppercase text-white/70">
+            <span className="flex items-center gap-2 text-white border-b border-primary/50 pb-0.5">
               <span className="w-2 h-2 rounded-full bg-primary" />
               Mr. CAP
             </span>
@@ -140,27 +140,27 @@ const Navigation = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6 text-secondary-foreground">
-          <Link to="/who-is-mr-cap" className={cn("text-sm font-medium tracking-wide transition-colors", location.pathname === "/who-is-mr-cap" ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>
+        <nav className="hidden lg:flex items-center gap-6">
+          <Link to="/who-is-mr-cap" className={cn("text-sm font-medium tracking-wide transition-colors", location.pathname === "/who-is-mr-cap" ? "text-white" : "text-white/80 hover:text-white")}>
             Who Is Mr. CAP?
           </Link>
           
           {/* Music Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className={cn("flex items-center gap-1 text-sm font-medium tracking-wide transition-colors outline-none", isMusicActive ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>
+            <DropdownMenuTrigger className={cn("flex items-center gap-1 text-sm font-medium tracking-wide transition-colors outline-none", isMusicActive ? "text-white" : "text-white/80 hover:text-white")}>
               Music
               <ChevronDown className="w-3 h-3" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-background border border-border/50 z-50">
+            <DropdownMenuContent className="bg-background/95 backdrop-blur-md border border-white/10 z-50">
               {musicDropdownLinks.map(link => <DropdownMenuItem key={link.to} asChild>
-                  <Link to={link.to} className={cn("w-full cursor-pointer", location.pathname === link.to && "text-primary")}>
+                  <Link to={link.to} className={cn("w-full cursor-pointer text-foreground", location.pathname === link.to && "text-primary")}>
                     {link.label}
                   </Link>
                 </DropdownMenuItem>)}
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {navLinks.slice(1).map(link => <Link key={link.to} to={link.to} className={cn("text-sm font-medium tracking-wide transition-colors", link.highlight ? "text-primary border-b border-primary pb-0.5 hover:text-primary/80" : location.pathname === link.to ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>
+          {navLinks.slice(1).map(link => <Link key={link.to} to={link.to} className={cn("text-sm font-medium tracking-wide transition-colors", link.highlight ? "text-primary border-b border-primary pb-0.5 hover:text-primary/80" : location.pathname === link.to ? "text-white" : "text-white/80 hover:text-white")}>
               {link.label}
             </Link>)}
         </nav>
@@ -169,14 +169,14 @@ const Navigation = () => {
         <div className="flex items-center gap-4">
           {/* Social Icons - Desktop */}
           <div className="hidden md:flex items-center gap-3">
-            {socialLinks.map(social => <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" aria-label={social.label}>
+            {socialLinks.map(social => <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-primary transition-colors" aria-label={social.label}>
                 <social.icon className="w-4 h-4" />
               </a>)}
           </div>
 
           <div className="hidden md:block w-px h-5 bg-border/50" />
 
-          <Link to="/#contact" className="hidden md:block text-xs font-medium tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/#contact" className="hidden md:block text-xs font-medium tracking-widest uppercase text-white/70 hover:text-white transition-colors">
             Contact
           </Link>
           
