@@ -12,10 +12,10 @@ const AboutSection = () => {
   const bgImageRef = useRef<HTMLImageElement>(null);
 
   const highlights = [
-    { icon: MapPin, label: "Houston, TX", desc: "South Park Born" },
-    { icon: Music, label: "SPC Member", desc: "South Park Coalition" },
+    { icon: MapPin, label: "Third Ward, Houston", desc: "Houston, Texas" },
+    { icon: Music, label: "SPC Original", desc: "South Park Coalition" },
+    { icon: Award, label: "Lone Star Emmy", desc: "Award-Winning Contributor" },
     { icon: Code, label: "Tech Innovator", desc: "Web & Blockchain" },
-    { icon: Award, label: "Jack Yates", desc: "Class of '92" },
   ];
 
   useEffect(() => {
@@ -159,38 +159,35 @@ const AboutSection = () => {
           {/* Main Bio */}
           <div ref={bioRef} className="lg:col-span-2 space-y-6">
             <p className="text-lg text-foreground leading-relaxed font-light will-change-transform">
-              Cornelius A. Pratt, professionally known as{" "}
-              <span className="text-primary font-medium">Mr. CAP</span>, is a Houston-born
-              rapper, writer, and creative technologist with deep roots in the South Park
-              Coalition. Raised in a musical family and performing since age eight, CAP's voice
-              carries the weight of lived experience — from street lessons and spiritual
-              reflections to entrepreneurship and innovation.
+              <span className="text-primary font-medium">Mr. CAP</span> (born Cornelius A. Pratt, April 5, 1973) is a Houston-based
+              rapper, entrepreneur, and media producer whose career spans decades within the Southern hip hop underground. 
+              Raised in Houston's Third Ward, he began performing at a young age and later became an original member of the 
+              South Park Coalition, one of Texas' most enduring independent hip hop collectives.
             </p>
 
             <p className="text-muted-foreground leading-relaxed font-light will-change-transform">
-              After graduating from Jack Yates Senior High School and studying Computer Network
-              Engineering and Computer Science, he took his talent beyond the mic into digital
-              distribution, web and graphic design, and blockchain-based ventures. His debut
-              album,
-              <span className="italic text-foreground"> "2 Tha Grave" (2011)</span>, introduced
-              his signature blend of raw lyricism, storytelling, and Southern grit.
+              Known for narrative-driven lyricism and Houston-rooted authenticity, Mr. CAP has released solo and 
+              collaborative projects while maintaining a strong presence in the city's cultural ecosystem. His work 
+              has been covered by major outlets including{" "}
+              <span className="text-foreground">Houston Press</span> and{" "}
+              <span className="text-foreground">Houston Chronicle</span>, documenting both his musical output and 
+              long-standing role in Houston hip hop.
             </p>
 
             <p className="text-muted-foreground leading-relaxed font-light will-change-transform">
-              Today, with The SPC's latest project{" "}
-              <span className="italic text-foreground">"The Ties That Bind Us"</span> and the
-              lead single <span className="italic text-foreground">"Bet'n On Me"</span>, Mr.
-              CAP stands at the intersection of music, media, and technology — bridging old
-              school integrity with new school innovation while representing Houston, South Park
-              Coalition, and independent creators worldwide.
+              Beyond music, Mr. CAP contributed to the documentary{" "}
+              <span className="italic text-foreground">"The Life: Sex Trafficking and Modern-Day Slavery"</span>, 
+              which won a <span className="text-primary font-medium">Lone Star Emmy Award</span>. He was also honored during the 
+              50th Anniversary of Hip Hop by Broadcast Houston and received a{" "}
+              <span className="text-foreground">Certificate of Congressional Recognition</span> from Congresswoman Sheila Jackson Lee.
             </p>
 
             {/* Pull Quote */}
             <blockquote ref={quoteRef} className="border-l-2 border-primary pl-6 py-4 my-8 will-change-transform">
               <p className="text-xl text-foreground italic font-light leading-relaxed">
-                "Houston's Mr. CAP is an original SPC member, rapper, and tech-minded
-                entrepreneur turning real-life experience into music, media, and modern legacy."
+                "These recognitions reflect not just music, but years of cultural contribution and storytelling."
               </p>
+              <cite className="text-sm text-muted-foreground not-italic mt-2 block">— Mr. CAP</cite>
             </blockquote>
 
             {/* Internal Links */}
