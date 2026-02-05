@@ -20,7 +20,8 @@ import {
   MessageSquare,
   ChevronDown,
   Trash2,
-  Download
+  Download,
+  Music
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
@@ -275,6 +276,17 @@ const Admin = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="mb-6">
+            <Link
+              to="/admin/library"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors"
+            >
+              <Music className="w-4 h-4" />
+              Music Library Manager
+            </Link>
           </div>
 
           {/* Tabs */}

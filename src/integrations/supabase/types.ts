@@ -179,6 +179,7 @@ export type Database = {
           is_public: boolean
           play_count: number
           release_year: number | null
+          requires_nft: boolean
           slug: string
           title: string
           track_number: number | null
@@ -198,6 +199,7 @@ export type Database = {
           is_public?: boolean
           play_count?: number
           release_year?: number | null
+          requires_nft?: boolean
           slug: string
           title: string
           track_number?: number | null
@@ -217,6 +219,7 @@ export type Database = {
           is_public?: boolean
           play_count?: number
           release_year?: number | null
+          requires_nft?: boolean
           slug?: string
           title?: string
           track_number?: number | null

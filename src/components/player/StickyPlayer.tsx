@@ -1,10 +1,11 @@
 import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/stores/playerStore";
 import { Slider } from "@/components/ui/slider";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import QueueDrawer from "./QueueDrawer";
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -32,6 +33,8 @@ const StickyPlayer = () => {
     setVolume,
     setIsMinimized,
     closePlayer,
+    isQueueOpen,
+    toggleQueue,
   } = usePlayerStore();
 
   // Sync audio element with store
@@ -203,8 +206,15 @@ const StickyPlayer = () => {
                 </div>
               </div>
 
-              {/* Volume + Actions */}
-              <div className="hidden md:flex items-center gap-2 w-40 justify-end">
+              {/* Volume + Queue + Actions */}
+              <div className="hidden md:flex items-center gap-2 w-48 justify-end">
+                <button
+                  onClick={toggleQueue}
+                  className={cn("p-1.5 transition-colors", isQueueOpen ? "text-primary" : "text-muted-foreground hover:text-foreground")}
+                  title="Queue"
+                >
+                  <ListMusic className="w-4 h-4" />
+                </button>
                 <button
                   onClick={() => setVolume(volume === 0 ? 0.8 : 0)}
                   className="p-1 text-muted-foreground hover:text-foreground"
@@ -255,6 +265,7 @@ const StickyPlayer = () => {
           </div>
         )}
       </div>
+      <QueueDrawer />
     </>
   );
 };

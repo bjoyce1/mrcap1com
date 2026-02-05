@@ -52,6 +52,7 @@ import Listen from "./pages/Listen";
 import AlbumPage from "./pages/AlbumPage";
 import TrackPage from "./pages/TrackPage";
 import StickyPlayer from "./components/player/StickyPlayer";
+import AdminLibrary from "./pages/AdminLibrary";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -91,6 +92,7 @@ function AppRoutes() {
         <Route path="/links" element={<Links />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/library" element={<AdminLibrary />} />
         {/* OPK Routes */}
         <Route path="/opk" element={<OPKHub />} />
         <Route path="/opk/music" element={<OPKMusic />} />
