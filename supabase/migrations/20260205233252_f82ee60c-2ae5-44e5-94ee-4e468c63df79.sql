@@ -1,0 +1,1 @@
+ALTER TABLE public.tracks ADD COLUMN spotify_url text;

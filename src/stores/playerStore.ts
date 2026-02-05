@@ -17,6 +17,7 @@ export interface Track {
   is_public: boolean;
   play_count: number;
   requires_nft: boolean;
+  spotify_url: string | null;
 }
 
 export interface Album {
