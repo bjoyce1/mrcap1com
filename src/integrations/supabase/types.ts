@@ -219,6 +219,7 @@ export type Database = {
           release_year: number | null
           requires_nft: boolean
           slug: string
+          spotify_url: string | null
           title: string
           track_number: number | null
           updated_at: string
@@ -239,6 +240,7 @@ export type Database = {
           release_year?: number | null
           requires_nft?: boolean
           slug: string
+          spotify_url?: string | null
           title: string
           track_number?: number | null
           updated_at?: string
@@ -259,6 +261,7 @@ export type Database = {
           release_year?: number | null
           requires_nft?: boolean
           slug?: string
+          spotify_url?: string | null
           title?: string
           track_number?: number | null
           updated_at?: string
