@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      albums: {
+        Row: {
+          artist: string
+          cover_art_url: string | null
+          created_at: string
+          credits: string | null
+          description: string | null
+          id: string
+          is_public: boolean
+          release_year: number
+          slug: string
+          title: string
+          track_count: number
+          updated_at: string
+        }
+        Insert: {
+          artist?: string
+          cover_art_url?: string | null
+          created_at?: string
+          credits?: string | null
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          release_year: number
+          slug: string
+          title: string
+          track_count?: number
+          updated_at?: string
+        }
+        Update: {
+          artist?: string
+          cover_art_url?: string | null
+          created_at?: string
+          credits?: string | null
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          release_year?: number
+          slug?: string
+          title?: string
+          track_count?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       booking_requests: {
         Row: {
           admin_notes: string | null
@@ -118,6 +163,74 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      tracks: {
+        Row: {
+          album_id: string | null
+          artist: string
+          audio_url: string | null
+          cover_art_url: string | null
+          created_at: string
+          credits: string | null
+          duration: number
+          explicit: boolean
+          featured_artists: string | null
+          id: string
+          is_public: boolean
+          play_count: number
+          release_year: number | null
+          slug: string
+          title: string
+          track_number: number | null
+          updated_at: string
+        }
+        Insert: {
+          album_id?: string | null
+          artist?: string
+          audio_url?: string | null
+          cover_art_url?: string | null
+          created_at?: string
+          credits?: string | null
+          duration?: number
+          explicit?: boolean
+          featured_artists?: string | null
+          id?: string
+          is_public?: boolean
+          play_count?: number
+          release_year?: number | null
+          slug: string
+          title: string
+          track_number?: number | null
+          updated_at?: string
+        }
+        Update: {
+          album_id?: string | null
+          artist?: string
+          audio_url?: string | null
+          cover_art_url?: string | null
+          created_at?: string
+          credits?: string | null
+          duration?: number
+          explicit?: boolean
+          featured_artists?: string | null
+          id?: string
+          is_public?: boolean
+          play_count?: number
+          release_year?: number | null
+          slug?: string
+          title?: string
+          track_number?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tracks_album_id_fkey"
+            columns: ["album_id"]
+            isOneToOne: false
+            referencedRelation: "albums"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
