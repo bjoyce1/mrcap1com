@@ -43,6 +43,7 @@ const navLinks = [
 ];
 
 const musicDropdownLinks = [
+  { to: "/listen", label: "Stream" },
   { to: "/music", label: "Music" },
   { to: "/mr-cap-discography", label: "Discography" },
 ];

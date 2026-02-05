@@ -47,6 +47,12 @@ import SelfLoveStoryModal from "./components/SelfLoveStoryModal";
 // Merch Pages
 import Merch from "./pages/Merch";
 
+// Streaming Pages
+import Listen from "./pages/Listen";
+import AlbumPage from "./pages/AlbumPage";
+import TrackPage from "./pages/TrackPage";
+import StickyPlayer from "./components/player/StickyPlayer";
+
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
 
@@ -106,6 +112,10 @@ function AppRoutes() {
         <Route path="/self-love/2026" element={<div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2026 — Coming Soon</p></div>} />
         {/* Merch Routes */}
         <Route path="/merch" element={<Merch />} />
+        {/* Streaming Routes */}
+        <Route path="/listen" element={<Listen />} />
+        <Route path="/album/:albumSlug" element={<AlbumPage />} />
+        <Route path="/track/:trackSlug" element={<TrackPage />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -116,6 +126,9 @@ function AppRoutes() {
           <Route path="/self-love/2024/:slug" element={<SelfLoveStoryModal />} />
         </Routes>
       )}
+
+      {/* Global Sticky Player */}
+      <StickyPlayer />
     </>
   );
 }
