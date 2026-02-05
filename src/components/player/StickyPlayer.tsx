@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic } from "lucide-react";
+import { reportQualifiedStream } from "@/lib/streamTracking";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/stores/playerStore";
 import { Slider } from "@/components/ui/slider";
@@ -15,6 +16,7 @@ function formatTime(seconds: number): string {
 
 const StickyPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const qualifiedRef = useRef<Record<string, boolean>>({});
   const {
     currentTrack,
     queue,
@@ -76,6 +78,20 @@ const StickyPlayer = () => {
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume;
   }, [volume]);
+
+  // Qualified stream: fire once per track when 30s reached
+  useEffect(() => {
+    if (!currentTrack) return;
+    const key = currentTrack.id;
+    if (!qualifiedRef.current[key] && currentTime >= 30) {
+      qualifiedRef.current[key] = true;
+      reportQualifiedStream({
+        trackId: currentTrack.id,
+        secondsListened: Math.floor(currentTime),
+        pagePath: window.location.pathname,
+      }).catch(() => {});
+    }
+  }, [currentTrack?.id, currentTime]);
 
   const handleTimeUpdate = useCallback(() => {
     if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
