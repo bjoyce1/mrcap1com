@@ -164,6 +164,44 @@ export type Database = {
         }
         Relationships: []
       }
+      stream_logs: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string | null
+          seconds_listened: number
+          session_id: string
+          streamed_date: string
+          track_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path?: string | null
+          seconds_listened: number
+          session_id: string
+          streamed_date?: string
+          track_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string | null
+          seconds_listened?: number
+          session_id?: string
+          streamed_date?: string
+          track_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stream_logs_track_id_fkey"
+            columns: ["track_id"]
+            isOneToOne: false
+            referencedRelation: "tracks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tracks: {
         Row: {
           album_id: string | null
