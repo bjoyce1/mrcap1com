@@ -101,7 +101,7 @@ const AlbumPage = () => {
             src={artOfIsmBg}
             alt=""
             aria-hidden="true"
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover opacity-[0.35]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
         </div>
