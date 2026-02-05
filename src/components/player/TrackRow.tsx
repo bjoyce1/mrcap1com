@@ -1,7 +1,7 @@
-import { Play, Pause } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Play, Pause, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePlayerStore, Track } from "@/stores/playerStore";
+import NFTGate from "./NFTGate";
 
 interface TrackRowProps {
   track: Track;
@@ -17,7 +17,7 @@ function formatDuration(seconds: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-const TrackRow = ({ track, index, queue, showAlbumArt = true, showDuration = true }: TrackRowProps) => {
+const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration = true }: TrackRowProps) => {
   const { currentTrack, isPlaying, playTrack, togglePlay } = usePlayerStore();
   const isActive = currentTrack?.id === track.id;
   const trackQueue = queue || [track];
@@ -87,6 +87,17 @@ const TrackRow = ({ track, index, queue, showAlbumArt = true, showDuration = tru
       )}
     </div>
   );
+};
+
+const TrackRow = (props: TrackRowProps) => {
+  if (props.track.requires_nft) {
+    return (
+      <NFTGate>
+        <TrackRowInner {...props} />
+      </NFTGate>
+    );
+  }
+  return <TrackRowInner {...props} />;
 };
 
 export default TrackRow;

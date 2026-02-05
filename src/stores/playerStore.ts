@@ -16,6 +16,7 @@ export interface Track {
   featured_artists: string | null;
   is_public: boolean;
   play_count: number;
+  requires_nft: boolean;
 }
 
 export interface Album {
@@ -55,6 +56,8 @@ interface PlayerStore {
   setVolume: (volume: number) => void;
   setIsMinimized: (minimized: boolean) => void;
   closePlayer: () => void;
+  isQueueOpen: boolean;
+  toggleQueue: () => void;
 }
 
 export const usePlayerStore = create<PlayerStore>()((set, get) => ({
@@ -67,6 +70,7 @@ export const usePlayerStore = create<PlayerStore>()((set, get) => ({
   volume: 0.8,
   isPlayerVisible: false,
   isMinimized: false,
+  isQueueOpen: false,
 
   playTrack: (track, queue, queueIndex) => {
     const newQueue = queue || [track];
@@ -124,5 +128,6 @@ export const usePlayerStore = create<PlayerStore>()((set, get) => ({
   setDuration: (duration) => set({ duration }),
   setVolume: (volume) => set({ volume }),
   setIsMinimized: (minimized) => set({ isMinimized: minimized }),
-  closePlayer: () => set({ isPlayerVisible: false, isPlaying: false, currentTrack: null }),
+  closePlayer: () => set({ isPlayerVisible: false, isPlaying: false, currentTrack: null, isQueueOpen: false }),
+  toggleQueue: () => set((state) => ({ isQueueOpen: !state.isQueueOpen })),
 }));
