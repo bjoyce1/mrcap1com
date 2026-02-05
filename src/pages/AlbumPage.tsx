@@ -7,6 +7,7 @@ import TrackRow from "@/components/player/TrackRow";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import artOfIsmBg from "@/assets/art-of-ism-bg.jpg";
 
 function formatTotalDuration(tracks: { duration: number }[]): string {
   const total = tracks.reduce((s, t) => s + t.duration, 0);
@@ -84,7 +85,7 @@ const AlbumPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground relative">
       <SEO
         title={`${album.title} — ${album.artist} | Stream on mrcap1.com`}
         description={album.description || `Listen to ${album.title} by ${album.artist}. ${album.track_count} tracks, released ${album.release_year}.`}
@@ -92,9 +93,23 @@ const AlbumPage = () => {
         ogImage={album.cover_art_url || undefined}
         jsonLd={jsonLd}
       />
+
+      {/* Faded background image — only for Art of ISM */}
+      {album.slug === "the-art-of-ism" && (
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <img
+            src={artOfIsmBg}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover opacity-[0.07]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
+        </div>
+      )}
+
       <Navigation />
 
-      <section className="relative pt-28 pb-16 px-6">
+      <section className="relative z-10 pt-28 pb-16 px-6">
         <div className="max-w-5xl mx-auto">
           <Link to="/listen" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="w-4 h-4" /> Back to Listen
