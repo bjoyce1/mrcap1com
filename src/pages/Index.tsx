@@ -14,6 +14,7 @@ import NftPreviewSection from "@/components/NftPreviewSection";
 import ContactSection from "@/components/ContactSection";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
+import BookingCard from "@/components/BookingCard";
 
 const Index = () => {
   const jsonLd = {
@@ -199,6 +200,11 @@ const Index = () => {
           <VenturesSection />
           <NftMilestoneSection />
           <NftPreviewSection />
+          <section className="py-16 px-4">
+            <div className="max-w-5xl mx-auto">
+              <BookingCard />
+            </div>
+          </section>
           <ContactSection />
         </main>
         
