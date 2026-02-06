@@ -53,6 +53,8 @@ import AlbumPage from "./pages/AlbumPage";
 import TrackPage from "./pages/TrackPage";
 import StickyPlayer from "./components/player/StickyPlayer";
 import AdminLibrary from "./pages/AdminLibrary";
+import AdminRoadmap from "./pages/AdminRoadmap";
+import Legacy from "./pages/Legacy";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -93,6 +95,8 @@ function AppRoutes() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/library" element={<AdminLibrary />} />
+        <Route path="/admin/roadmap" element={<AdminRoadmap />} />
+        <Route path="/legacy" element={<Legacy />} />
         {/* OPK Routes */}
         <Route path="/opk" element={<OPKHub />} />
         <Route path="/opk/music" element={<OPKMusic />} />

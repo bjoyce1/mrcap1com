@@ -117,6 +117,23 @@ const Listen = () => {
       </section>
 
       <div className="max-w-6xl mx-auto px-6 pb-32 space-y-14">
+        {/* Start Here - Curated Picks */}
+        <div>
+          <h2 className="text-xl font-display text-foreground mb-2 flex items-center gap-2">
+            <Play className="w-5 h-5 text-primary" /> Start Here
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">New to CAP? These 5 tracks tell the story.</p>
+          <div className="bg-card/50 rounded-xl border border-primary/20 overflow-hidden divide-y divide-border/10">
+            {tracksLoading ? (
+              <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
+            ) : (
+              latestTracks?.slice(0, 5).map((track, i) => (
+                <TrackRow key={track.id} track={track} index={i} queue={latestTracks?.slice(0, 5) || []} />
+              ))
+            )}
+          </div>
+        </div>
+
         {/* Latest Releases */}
         <div ref={latestRef}>
           <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">

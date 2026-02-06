@@ -7,6 +7,7 @@ import CitationBlock from "@/components/CitationBlock";
 import PressTimeline from "@/components/PressTimeline";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image, Mic, Award, Music, Users, Calendar, MapPin, Globe } from "lucide-react";
+import BookingCard from "@/components/BookingCard";
 
 // Featured press article (Houston Press)
 const featuredArticle = {
@@ -707,6 +708,13 @@ const Press = () => {
                   </button>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Booking Card */}
+          <section className="py-16">
+            <div className="container mx-auto px-4">
+              <BookingCard variant="compact" />
             </div>
           </section>
         </main>
