@@ -9,6 +9,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import StoryBlock from "@/components/player/StoryBlock";
 import type { Album } from "@/stores/playerStore";
 
 function formatDuration(seconds: number): string {
@@ -212,6 +213,12 @@ const TrackPage = () => {
               </div>
             </div>
           )}
+
+          <StoryBlock
+            description={album?.description}
+            releaseYear={track.release_year}
+            className="mt-8"
+          />
 
           {track.credits && (
             <div className="mt-8 text-sm text-muted-foreground border-t border-border/20 pt-6">
