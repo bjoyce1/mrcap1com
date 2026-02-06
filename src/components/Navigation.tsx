@@ -33,6 +33,7 @@ const socialLinks = [
 
 const navLinks = [
   { to: "/who-is-mr-cap", label: "Who Is Mr. CAP?" },
+  { to: "/legacy", label: "Legacy" },
   { to: "/live", label: "Live" },
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },

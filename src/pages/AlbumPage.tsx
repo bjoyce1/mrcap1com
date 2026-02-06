@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import TrackRow from "@/components/player/TrackRow";
+import StoryBlock from "@/components/player/StoryBlock";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
@@ -165,6 +166,12 @@ const AlbumPage = () => {
               ))
             )}
           </div>
+
+          <StoryBlock
+            description={album.description}
+            releaseYear={album.release_year}
+            className="mt-8"
+          />
 
           {album.credits && (
             <div className="mt-8 text-sm text-muted-foreground">
