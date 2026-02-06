@@ -9,7 +9,6 @@ const WALLET_ADDRESS = "0xf69120023756f1d1f539c23ade135efb66e3f494";
 const CHAIN = "ethereum";
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -18,28 +17,27 @@ serve(async (req) => {
     const OPENSEA_API_KEY = Deno.env.get('OPENSEA_API_KEY');
     
     if (!OPENSEA_API_KEY) {
-      console.error("Missing OPENSEA_API_KEY in environment variables");
+      console.error("Missing OPENSEA_API_KEY");
       return new Response(
-        JSON.stringify({ error: "Missing OPENSEA_API_KEY in environment variables" }),
+        JSON.stringify({ error: "Service not configured" }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Parse request body for pagination cursor
     let nextCursor = "";
     try {
       const body = await req.json();
-      nextCursor = body.next || "";
+      if (typeof body.next === 'string' && body.next.length <= 500) {
+        nextCursor = body.next;
+      }
     } catch {
-      // No body or invalid JSON, use default (no cursor)
+      // No body, use defaults
     }
 
     let url = `https://api.opensea.io/api/v2/chain/${CHAIN}/account/${WALLET_ADDRESS}/nfts?limit=24`;
     
-    // Add cursor for pagination if provided
     if (nextCursor) {
       url += `&next=${encodeURIComponent(nextCursor)}`;
-      console.log(`Fetching next page with cursor: ${nextCursor}`);
     }
     
     console.log(`Fetching NFTs for wallet: ${WALLET_ADDRESS}`);
@@ -52,18 +50,16 @@ serve(async (req) => {
     });
 
     if (!res.ok) {
-      const errText = await res.text();
-      console.error("OpenSea Error:", errText);
+      console.error("OpenSea Error:", res.status);
       return new Response(
-        JSON.stringify({ error: "Failed to fetch NFTs from OpenSea", details: errText }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: "Failed to fetch NFTs" }),
+        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     const data = await res.json();
     console.log(`Successfully fetched ${data.nfts?.length || 0} NFTs`);
     
-    // Return NFTs along with the next cursor for pagination
     return new Response(JSON.stringify({
       nfts: data.nfts || [],
       next: data.next || null
@@ -73,9 +69,8 @@ serve(async (req) => {
 
   } catch (error: unknown) {
     console.error("API Route Error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return new Response(
-      JSON.stringify({ error: "Server error contacting OpenSea", details: errorMessage }),
+      JSON.stringify({ error: "Failed to load NFTs" }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

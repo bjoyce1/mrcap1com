@@ -9,17 +9,11 @@ const PAYPAL_API_URL = Deno.env.get('PAYPAL_MODE') === 'live'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
 
-interface CreateOrderRequest {
-  amount: string;
-  currency: string;
-  description: string;
-}
+const ALLOWED_CURRENCIES = ['USD', 'EUR', 'GBP', 'CAD', 'AUD'];
+const AMOUNT_RE = /^\d+(\.\d{1,2})?$/;
+const MAX_DESCRIPTION_LENGTH = 200;
+const PAYPAL_ORDER_ID_RE = /^[A-Z0-9]{10,20}$/;
 
-interface CaptureOrderRequest {
-  orderId: string;
-}
-
-// Get PayPal access token
 async function getPayPalAccessToken(): Promise<string> {
   const clientId = Deno.env.get('PAYPAL_CLIENT_ID');
   const clientSecret = Deno.env.get('PAYPAL_CLIENT_SECRET');
@@ -42,14 +36,13 @@ async function getPayPalAccessToken(): Promise<string> {
   if (!response.ok) {
     const errorText = await response.text();
     console.error('PayPal auth error:', errorText);
-    throw new Error('Failed to authenticate with PayPal');
+    throw new Error('Payment service unavailable');
   }
 
   const data = await response.json();
   return data.access_token;
 }
 
-// Create PayPal order
 async function createPayPalOrder(amount: string, currency: string, description: string) {
   const accessToken = await getPayPalAccessToken();
 
@@ -74,17 +67,16 @@ async function createPayPalOrder(amount: string, currency: string, description: 
   if (!response.ok) {
     const errorText = await response.text();
     console.error('PayPal create order error:', errorText);
-    throw new Error('Failed to create PayPal order');
+    throw new Error('Failed to create payment order');
   }
 
   return await response.json();
 }
 
-// Capture PayPal order
 async function capturePayPalOrder(orderId: string) {
   const accessToken = await getPayPalAccessToken();
 
-  const response = await fetch(`${PAYPAL_API_URL}/v2/checkout/orders/${orderId}/capture`, {
+  const response = await fetch(`${PAYPAL_API_URL}/v2/checkout/orders/${encodeURIComponent(orderId)}/capture`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${accessToken}`,
@@ -95,14 +87,13 @@ async function capturePayPalOrder(orderId: string) {
   if (!response.ok) {
     const errorText = await response.text();
     console.error('PayPal capture error:', errorText);
-    throw new Error('Failed to capture PayPal payment');
+    throw new Error('Failed to capture payment');
   }
 
   return await response.json();
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -112,17 +103,42 @@ serve(async (req) => {
     const action = url.searchParams.get('action');
 
     if (action === 'create') {
-      const { amount, currency, description }: CreateOrderRequest = await req.json();
-      
-      if (!amount || !currency) {
+      let body: unknown;
+      try {
+        body = await req.json();
+      } catch {
         return new Response(
-          JSON.stringify({ error: 'Amount and currency are required' }),
+          JSON.stringify({ error: 'Invalid request body' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
-      console.log('Creating PayPal order:', { amount, currency, description });
-      const order = await createPayPalOrder(amount, currency, description);
+      const { amount, currency, description } = body as Record<string, unknown>;
+
+      // Validate amount format
+      if (typeof amount !== 'string' || !AMOUNT_RE.test(amount) || parseFloat(amount) <= 0 || parseFloat(amount) > 99999) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid amount' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Validate currency
+      const curr = typeof currency === 'string' ? currency.toUpperCase() : '';
+      if (!ALLOWED_CURRENCIES.includes(curr)) {
+        return new Response(
+          JSON.stringify({ error: 'Unsupported currency' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Sanitize description
+      const desc = typeof description === 'string'
+        ? description.slice(0, MAX_DESCRIPTION_LENGTH)
+        : 'Merchandise order';
+
+      console.log('Creating PayPal order:', { amount, currency: curr });
+      const order = await createPayPalOrder(amount, curr, desc);
       console.log('PayPal order created:', order.id);
 
       return new Response(
@@ -136,11 +152,22 @@ serve(async (req) => {
     }
 
     if (action === 'capture') {
-      const { orderId }: CaptureOrderRequest = await req.json();
-      
-      if (!orderId) {
+      let body: unknown;
+      try {
+        body = await req.json();
+      } catch {
         return new Response(
-          JSON.stringify({ error: 'Order ID is required' }),
+          JSON.stringify({ error: 'Invalid request body' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      const { orderId } = body as Record<string, unknown>;
+
+      // Validate orderId format
+      if (typeof orderId !== 'string' || !PAYPAL_ORDER_ID_RE.test(orderId)) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid order ID' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -160,12 +187,11 @@ serve(async (req) => {
       );
     }
 
-    // Return client ID for frontend SDK initialization
     if (action === 'client-id') {
       const clientId = Deno.env.get('PAYPAL_CLIENT_ID');
       if (!clientId) {
         return new Response(
-          JSON.stringify({ error: 'PayPal not configured' }),
+          JSON.stringify({ error: 'Payment service not configured' }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -177,15 +203,14 @@ serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ error: 'Invalid action. Use ?action=create, ?action=capture, or ?action=client-id' }),
+      JSON.stringify({ error: 'Invalid action' }),
       { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error('Error in paypal-checkout function:', errorMessage);
+    console.error('Error in paypal-checkout function:', error);
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'Payment processing failed. Please try again.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
