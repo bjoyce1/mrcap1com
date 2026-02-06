@@ -8,7 +8,6 @@ const corsHeaders = {
 const PRINTFUL_API_URL = 'https://api.printful.com';
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -19,14 +18,13 @@ serve(async (req) => {
     if (!apiKey) {
       console.error('PRINTFUL_API_KEY not configured');
       return new Response(
-        JSON.stringify({ error: 'Printful API key not configured' }),
+        JSON.stringify({ error: 'Service not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     console.log('Fetching products from Printful...');
 
-    // Fetch sync products from Printful
     const response = await fetch(`${PRINTFUL_API_URL}/store/products`, {
       method: 'GET',
       headers: {
@@ -36,18 +34,16 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Printful API error:', response.status, errorText);
+      console.error('Printful API error:', response.status);
       return new Response(
-        JSON.stringify({ error: `Printful API error: ${response.status}` }),
-        { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'Failed to fetch products' }),
+        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     const data = await response.json();
     console.log(`Fetched ${data.result?.length || 0} products from Printful`);
 
-    // Fetch detailed info for each product
     const detailedProducts = await Promise.all(
       (data.result || []).map(async (product: any) => {
         try {
@@ -73,16 +69,12 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({ products: detailedProducts }),
-      { 
-        status: 200, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
     console.error('Error in printful-products function:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'Failed to load products' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
