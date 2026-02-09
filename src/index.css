@@ -268,3 +268,25 @@
   background: hsl(27 96% 61% / 0.3);
   color: hsl(var(--foreground));
 }
+
+/* Mobile App-Like Feel */
+@media (max-width: 1023px) {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

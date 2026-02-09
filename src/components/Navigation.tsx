@@ -103,7 +103,7 @@ const Navigation = () => {
         "bg-black/20 backdrop-blur-lg"
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-14 lg:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
           <img 
@@ -206,10 +206,10 @@ const Navigation = () => {
             Contact
           </Link>
           
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - hidden when bottom nav is active */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-white hover:text-primary transition-colors"
+            className="hidden p-2 text-white hover:text-primary transition-colors"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
