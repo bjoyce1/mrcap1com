@@ -133,7 +133,8 @@ const StickyPlayer = () => {
       />
       <div
         className={cn(
-          "fixed bottom-0 left-0 right-0 z-[60] bg-card/95 backdrop-blur-xl border-t border-border/50 transition-all duration-300",
+          "fixed left-0 right-0 z-[60] bg-card/95 backdrop-blur-xl border-t border-border/50 transition-all duration-300",
+          "bottom-[calc(4rem+env(safe-area-inset-bottom))] lg:bottom-0",
           isMinimized ? "h-16" : "h-auto"
         )}
       >
