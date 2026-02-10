@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       manifest: false, // we use our own public/manifest.json
       workbox: {
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         globPatterns: ["**/*.{js,css,html,ico,png,jpg,jpeg,svg,webp,woff2}"],
         runtimeCaching: [
           {
