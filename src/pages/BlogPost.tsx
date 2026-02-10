@@ -143,8 +143,15 @@ const BlogPost = () => {
                     prose-blockquote:border-l-primary prose-blockquote:bg-card/30 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:rounded-r-lg
                     prose-strong:text-foreground
                     prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
-                  dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>').replace(/## /g, '<h2>').replace(/<br\/><h2>/g, '</p><h2>').replace(/<h2>([^<]+)/g, '<h2>$1</h2><p>') }}
-                />
+                >
+                  {post.content.split(/\n/).map((block, i) => {
+                    if (block.startsWith('## ')) {
+                      return <h2 key={i}>{block.slice(3)}</h2>;
+                    }
+                    if (block.trim() === '') return null;
+                    return <p key={i}>{block}</p>;
+                  })}
+                </div>
                 
                 {/* Tags */}
                 <div className="mt-12 pt-8 border-t border-border/50">
