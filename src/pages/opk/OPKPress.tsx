@@ -22,12 +22,12 @@ const OPKPress = () => {
         <meta property="og:title" content="Mr. CAP | Press Kit – Media & Interview Requests" />
         <meta property="og:description" content="Download press materials and request interviews with Mr. CAP." />
         <meta property="og:url" content="https://mrcap1.com/opk/press" />
-        <meta property="og:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
+        <meta property="og:image" content="https://mrcap1.com/images/opk-download.png" />
         <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="640" />
+        <meta property="og:image:height" content="1200" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
+        <meta name="twitter:image" content="https://mrcap1.com/images/opk-download.png" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
