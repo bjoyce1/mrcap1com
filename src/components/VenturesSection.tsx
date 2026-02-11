@@ -1,6 +1,12 @@
 import { Building2, Disc, Coins, ArrowRight } from "lucide-react";
+import { useRef, useEffect } from "react";
+import { gsap } from "@/hooks/useGSAP";
 
 const VenturesSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
   const ventures = [
     {
       icon: Building2,
@@ -26,11 +32,57 @@ const VenturesSection = () => {
     },
   ];
 
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Header reveal
+      gsap.fromTo(
+        headerRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Venture cards staggered reveal
+      const cards = gridRef.current?.querySelectorAll(".venture-card");
+      if (cards) {
+        gsap.fromTo(
+          cards,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="ventures" className="py-24 md:py-32 border-b border-border">
+    <section ref={sectionRef} id="ventures" className="py-24 md:py-32 border-b border-border">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section Header */}
-        <div className="mb-12">
+        <div ref={headerRef} className="mb-12 will-change-transform">
           <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">
             Entrepreneurship
           </span>
@@ -44,7 +96,7 @@ const VenturesSection = () => {
         </div>
 
         {/* Ventures Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div ref={gridRef} className="grid md:grid-cols-3 gap-6">
           {ventures.map((venture, index) => {
             const CardWrapper = venture.link ? 'a' : 'div';
             const cardProps = venture.link ? { href: venture.link, target: "_blank", rel: "noopener noreferrer" } : {};
@@ -53,7 +105,7 @@ const VenturesSection = () => {
               <CardWrapper
                  key={index}
                  {...cardProps}
-                 className="group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300 block card-lift glass-hover"
+                 className="venture-card group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300 block card-lift glass-hover will-change-transform"
                >
                 <div
                   className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
