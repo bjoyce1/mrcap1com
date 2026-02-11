@@ -3,6 +3,8 @@ import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { MagneticWrapper } from '@/hooks/useMagneticHover';
+import { useEffect, useRef } from 'react';
+import { gsap } from '@/hooks/useGSAP';
 
 interface NFTHeroSectionProps {
   imageUrl1?: string;
@@ -54,6 +56,41 @@ export const NFTHeroSection = ({
   imageUrl2 = '/placeholder.svg',
   className,
 }: NFTHeroSectionProps) => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const textContentRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Parallax for text content (moves slower)
+      gsap.to(textContentRef.current, {
+        y: 60,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
+
+      // Parallax for card images (moves faster)
+      gsap.to(cardsRef.current, {
+        y: -30,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
   const gridBackgroundStyle = {
     backgroundImage:
       'linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px)',
@@ -74,14 +111,14 @@ export const NFTHeroSection = ({
       {/* Orange Glow */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary/15 blur-[120px] rounded-full pointer-events-none" />
 
-      <motion.div
+       <motion.div
         className="relative max-w-7xl mx-auto flex min-h-[60vh] items-center justify-between px-6 lg:flex-row flex-col gap-12"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
         {/* Left: Text Content */}
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left lg:w-1/2">
+        <div ref={textContentRef} className="flex flex-col items-center text-center lg:items-start lg:text-left lg:w-1/2 will-change-transform">
           {/* Badge */}
           <motion.div className="flex items-center gap-3 mb-6" variants={itemVariants}>
             <span className="inline-flex items-center justify-center w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -144,7 +181,8 @@ export const NFTHeroSection = ({
 
         {/* Right: Card Images */}
         <motion.div
-          className="relative lg:w-1/2 h-[400px] md:h-[520px] w-full flex items-center justify-center"
+          ref={cardsRef}
+          className="relative lg:w-1/2 h-[400px] md:h-[520px] w-full flex items-center justify-center will-change-transform"
           variants={cardsVariants}
         >
           {/* Back Card */}
