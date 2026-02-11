@@ -5,8 +5,41 @@ import Footer from "@/components/Footer";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { blogPosts, blogCategories } from "@/data/blogPosts";
 import { ChevronRight, Clock, Tag } from "lucide-react";
+import { useRef, useEffect } from "react";
+import { gsap } from "@/hooks/useGSAP";
 
 const Blog = () => {
+  const postsGridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!postsGridRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Blog cards staggered reveal
+      const cards = postsGridRef.current?.querySelectorAll(".blog-card");
+      if (cards) {
+        gsap.fromTo(
+          cards,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: postsGridRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, postsGridRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -97,12 +130,12 @@ const Blog = () => {
           {/* Posts Grid */}
           <section className="py-20">
             <div className="container mx-auto px-4">
-              <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              <div ref={postsGridRef} className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 {blogPosts.map((post) => (
                   <Link
                     key={post.slug}
                     to={`/blog/${post.slug}`}
-                    className="group bg-card/30 border border-border/50 rounded-xl overflow-hidden hover:border-primary/50 transition-all"
+                    className="blog-card group bg-card/30 border border-border/50 rounded-xl overflow-hidden hover:border-primary/50 transition-all will-change-transform"
                   >
                     {post.image ? (
                       <div className="aspect-video overflow-hidden">
