@@ -161,22 +161,22 @@ const Navigation = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {navLinks.slice(1).map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={cn(
-                "text-sm font-medium tracking-wide transition-colors",
-                link.highlight
-                  ? "text-primary border-b border-primary pb-0.5 hover:text-primary/80"
-                  : location.pathname === link.to
-                  ? "text-white"
-                  : "text-white/80 hover:text-white"
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+           {navLinks.slice(1).map((link) => (
+             <Link
+               key={link.to}
+               to={link.to}
+               className={cn(
+                 "text-sm font-medium tracking-wide transition-colors",
+                 link.highlight
+                   ? "text-white border-b border-primary pb-0.5 hover:text-white"
+                   : location.pathname === link.to
+                   ? "text-white"
+                   : "text-white/80 hover:text-white"
+               )}
+             >
+               {link.label}
+             </Link>
+           ))}
         </nav>
 
         {/* Right Side */}
