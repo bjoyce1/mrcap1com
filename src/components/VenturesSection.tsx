@@ -51,10 +51,10 @@ const VenturesSection = () => {
             
             return (
               <CardWrapper
-                key={index}
-                {...cardProps}
-                className="group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300 block"
-              >
+                 key={index}
+                 {...cardProps}
+                 className="group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300 block card-lift glass-hover"
+               >
                 <div
                   className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
                     venture.color === "gold" ? "bg-cap-gold/20" : "bg-primary/10"

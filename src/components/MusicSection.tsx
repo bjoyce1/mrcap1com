@@ -287,8 +287,8 @@ const MusicSection = () => {
         </div>
 
         {/* Latest Release Feature */}
-        <div ref={featuredRef} className="mb-16 will-change-transform">
-          <div className="group bg-white/[0.02] rounded-2xl border border-primary/20 overflow-hidden hover:border-primary/40 transition-all duration-300">
+         <div ref={featuredRef} className="mb-16 will-change-transform">
+           <div className="group bg-white/[0.02] rounded-2xl border border-primary/20 overflow-hidden hover:border-primary/40 transition-all duration-300 card-lift glass-hover">
             <div className="grid md:grid-cols-2 gap-0">
               <div className="relative aspect-square md:aspect-auto overflow-hidden">
                 <img src={betnOnMe} alt="Bet'n On Me Single Cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -342,8 +342,8 @@ const MusicSection = () => {
             <Disc3 className="w-5 h-5 text-primary" />
             <h3 className="font-display text-2xl font-medium tracking-tight">Studio & Collab Albums</h3>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {albums.map((album, index) => <div key={index} className="album-card group bg-white/[0.02] rounded-xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 will-change-transform">
+           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+             {albums.map((album, index) => <div key={index} className="album-card group bg-white/[0.02] rounded-xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 will-change-transform card-lift glass-hover">
                 <div className="relative aspect-square overflow-hidden bg-muted">
                   {album.image ? <img src={album.image} alt={`${album.title} Album Cover`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                       <Disc3 className="w-16 h-16 text-primary/40" />
