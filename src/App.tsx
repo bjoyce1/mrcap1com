@@ -7,7 +7,6 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import Index from "./pages/Index";
@@ -74,7 +73,6 @@ function AppRoutes() {
       <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
       <ExitIntentPopup />
       <ScrollToTop />
-      <CustomCursor />
       
       {/* Main routes - render background location if modal is open */}
       <AnimatePresence mode="wait">
