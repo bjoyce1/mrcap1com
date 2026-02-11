@@ -11,6 +11,7 @@ const HeroSection = () => {
   const nameRef = useRef<HTMLHeadingElement>(null);
   const releaseRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const gradientRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -85,6 +86,25 @@ const HeroSection = () => {
           scrub: 0.5,
         },
       });
+
+      // Animated gradient overlay based on scroll
+      gsap.to(gradientRef.current, {
+        "--gradient-position": "100%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+        onUpdate: function() {
+          const progress = this.progress();
+          const opacity = 0.3 + progress * 0.35; // opacity shifts from 30% to 65%
+          if (gradientRef.current) {
+            gradientRef.current.style.opacity = opacity.toString();
+          }
+        },
+      } as any);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -108,6 +128,11 @@ const HeroSection = () => {
         />
         {/* Subtle bottom gradient for text legibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        {/* Animated gradient overlay */}
+        <div
+          ref={gradientRef}
+          className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary/5 to-transparent opacity-30 will-change-opacity"
+        />
       </div>
 
       {/* Centered Bottom Content */}

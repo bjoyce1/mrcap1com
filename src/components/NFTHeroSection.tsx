@@ -59,6 +59,7 @@ export const NFTHeroSection = ({
   const sectionRef = useRef<HTMLDivElement>(null);
   const textContentRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const gradientRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -87,6 +88,24 @@ export const NFTHeroSection = ({
           scrub: 0.5,
         },
       });
+
+      // Animated gradient overlay based on scroll
+      gsap.to(gradientRef.current, {
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+        onUpdate: function() {
+          const progress = this.progress();
+          const opacity = 0.15 + progress * 0.25; // opacity shifts from 15% to 40%
+          if (gradientRef.current) {
+            gradientRef.current.style.opacity = opacity.toString();
+          }
+        },
+      } as any);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -107,6 +126,12 @@ export const NFTHeroSection = ({
       {/* Grid Background */}
       <div className="absolute inset-0" style={gridBackgroundStyle} />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+      
+      {/* Animated gradient overlay */}
+      <div
+        ref={gradientRef}
+        className="absolute inset-0 bg-gradient-to-b from-primary/15 via-accent/5 to-transparent opacity-15 pointer-events-none will-change-opacity"
+      />
       
       {/* Orange Glow */}
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary/15 blur-[120px] rounded-full pointer-events-none" />
