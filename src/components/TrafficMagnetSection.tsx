@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Download, FileText, Video, BookOpen, Volume2, VolumeX } from "lucide-react";
 import betnOnMe from "@/assets/betn-on-me.png";
+import opkCover from "@/assets/opk-cover.png";
 
 const TrafficMagnetSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -144,11 +145,8 @@ const TrafficMagnetSection = () => {
 
           {/* OPK Download */}
           <div className="bg-card/50 border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all">
-            <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mb-4">
-              <div className="text-center">
-                <FileText className="w-16 h-16 text-primary mx-auto mb-3" />
-                <span className="text-sm font-medium text-muted-foreground">Online Press Kit</span>
-              </div>
+            <div className="w-full aspect-square rounded-xl overflow-hidden mb-4">
+              <img src={opkCover} alt="Mr. CAP Online Press Kit" className="w-full h-full object-cover" />
             </div>
             
             <span className="inline-block text-xs text-primary font-medium uppercase tracking-wider mb-2">
