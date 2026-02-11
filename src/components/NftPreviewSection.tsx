@@ -46,13 +46,13 @@ const NftPreviewSection = () => {
             </div>
           </div>
           
-          {/* CTA Button */}
-          <Link
-            to="/nft"
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground 
-                       rounded-xl font-medium text-lg transition-all duration-300
-                       hover:bg-primary/90 hover:shadow-glow hover:-translate-y-1"
-          >
+           {/* CTA Button */}
+           <Link
+             to="/nft"
+             className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground 
+                        rounded-xl font-medium text-lg transition-all duration-300
+                        hover:bg-primary/90 hover:shadow-glow hover:-translate-y-1 card-lift"
+           >
             <span>View Full NFT Portfolio</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
