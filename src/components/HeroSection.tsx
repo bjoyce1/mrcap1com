@@ -64,13 +64,25 @@ const HeroSection = () => {
 
       // Subtle parallax on scroll
       gsap.to(imageRef.current, {
-        yPercent: 15,
+        yPercent: 20,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1,
+          scrub: 0.5,
+        },
+      });
+
+      // Name text parallax (slower)
+      gsap.to(nameRef.current, {
+        y: 50,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
         },
       });
     }, sectionRef);
