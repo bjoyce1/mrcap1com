@@ -24,6 +24,7 @@ import {
   Music
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Navigation from '@/components/Navigation';
 import {
   Select,
   SelectContent,
@@ -201,6 +202,7 @@ const Admin = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
+        <Navigation />
         {/* Header */}
         <header className="border-b border-white/5 bg-card/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
