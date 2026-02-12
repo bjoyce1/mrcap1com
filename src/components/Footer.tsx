@@ -1,6 +1,7 @@
 import { Instagram, Twitter, Facebook, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
 import mrCapCoin from "@/assets/mr-cap-coin.png";
+import { MagneticWrapper } from "@/hooks/useMagneticHover";
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
@@ -41,7 +42,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-1">
             <a href="#hero" className="group inline-flex items-center gap-3 mb-4">
-              <img src={mrCapCoin} alt="MR. CAP" className="w-10 h-10 rounded-full object-cover transition-transform duration-500 group-hover:rotate-[360deg]" />
+              <img src={mrCapCoin} alt="MR. CAP" className="w-10 h-10 rounded-full object-cover transition-transform duration-500 group-hover:rotate-[360deg] metallic-glow" />
               <span className="font-display text-xl font-medium tracking-tight text-foreground">
                 MR. CAP
               </span>
@@ -108,17 +109,18 @@ const Footer = () => {
             <h4 className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-5">Official Accounts</h4>
             <div className="flex items-center gap-3">
               {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground 
-                           hover:text-primary hover:bg-primary/10 hover:scale-110 transition-all duration-300"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4" />
-                </a>
+                <MagneticWrapper key={index} strength={0.2}>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground 
+                             hover:text-primary hover:bg-primary/10 hover:scale-110 transition-all duration-300"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-4 h-4" />
+                  </a>
+                </MagneticWrapper>
               ))}
             </div>
           </div>

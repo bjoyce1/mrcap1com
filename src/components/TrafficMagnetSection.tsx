@@ -146,7 +146,7 @@ const TrafficMagnetSection = () => {
           {/* OPK Download */}
           <div className="bg-card/50 border border-border/50 rounded-2xl p-6 hover:border-primary/30 transition-all">
             <div className="w-full aspect-square rounded-xl overflow-hidden mb-4">
-              <img src={opkCover} alt="Mr. CAP Online Press Kit" className="w-full h-full object-cover" />
+              <img src={opkCover} alt="Mr. CAP Online Press Kit" className="w-full h-full object-cover metallic-glow" />
             </div>
             
             <span className="inline-block text-xs text-primary font-medium uppercase tracking-wider mb-2">

@@ -13,11 +13,11 @@
     --flux-orange-400: 27 96% 61%;
     --flux-orange-500: 25 95% 53%;
     
-    /* Core System */
-    --background: 230 25% 7%;
-    --foreground: 210 40% 96%;
+    /* Core System — Luxury Dark */
+    --background: 0 0% 10%;
+    --foreground: 0 0% 100%;
 
-    --card: 230 20% 10%;
+    --card: 0 0% 13%;
     --card-foreground: 210 40% 96%;
 
     --popover: 230 20% 10%;
@@ -76,8 +76,8 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
@@ -90,9 +90,24 @@
 
 @layer utilities {
   .font-display {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
     text-transform: uppercase;
+  }
+
+  .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Metallic Glow */
+  .metallic-glow {
+    filter: drop-shadow(0 0 12px hsl(43 91% 61% / 0.4)) drop-shadow(0 0 30px hsl(43 91% 61% / 0.2));
+    animation: shimmer-glow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes shimmer-glow {
+    0% { filter: drop-shadow(0 0 12px hsl(43 91% 61% / 0.3)) drop-shadow(0 0 30px hsl(43 91% 61% / 0.15)); }
+    100% { filter: drop-shadow(0 0 18px hsl(43 91% 61% / 0.5)) drop-shadow(0 0 40px hsl(43 91% 61% / 0.25)); }
   }
   
   .font-body {

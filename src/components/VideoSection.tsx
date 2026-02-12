@@ -73,11 +73,12 @@ const VideoSection = () => {
         {/* Video Player Modal */}
         {selectedVideo && (
           <div 
-            className="fixed inset-0 z-50 bg-background/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 glass flex items-center justify-center p-4"
+            style={{ background: 'hsl(0 0% 0% / 0.85)', backdropFilter: 'blur(24px)' }}
             onClick={() => setSelectedVideo(null)}
           >
             <div 
-              className="relative w-full max-w-4xl aspect-video"
+              className="relative w-full max-w-4xl aspect-video glass rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_hsl(43,91%,61%,0.15)]"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -91,7 +92,7 @@ const VideoSection = () => {
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                className="w-full h-full rounded-xl"
+                className="w-full h-full rounded-2xl"
               />
             </div>
           </div>
@@ -121,7 +122,7 @@ const VideoSection = () => {
             {videos.slice(0, 6).map((video) => (
               <div
                 key={video.id}
-                className="group relative rounded-2xl border border-border overflow-hidden bg-card cursor-pointer hover:border-primary/50 transition-all"
+                className="group relative rounded-2xl overflow-hidden bg-card cursor-pointer glass border border-white/5 hover:border-primary/30 hover:shadow-[0_0_40px_hsl(43,91%,61%,0.1)] transition-all duration-300"
                 onClick={() => setSelectedVideo(video.id)}
               >
                 {/* Thumbnail */}
