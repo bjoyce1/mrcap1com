@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Palette, ExternalLink, Heart, Sparkles, Crown, Calendar, X } from "lucide-react";
+import Navigation from "@/components/Navigation";
 import { gsap } from "@/hooks/useGSAP";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import mrCapCoin from "@/assets/mr-cap-coin.png";
@@ -257,28 +258,7 @@ const ArtGallery = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
-        {/* Fixed Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-          <div className="max-w-6xl mx-auto flex items-center justify-between px-6 h-20">
-            <Link
-              to="/"
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              <span className="text-sm font-medium">Back to Home</span>
-            </Link>
-
-            <Link to="/" className="flex items-center gap-3">
-              <img src={mrCapCoin} alt="MR. CAP" className="w-10 h-10 rounded-full object-cover" />
-              <span className="font-display text-xl font-bold tracking-tight uppercase">MR. CAP</span>
-            </Link>
-
-            <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 ring-1 ring-primary/20 rounded-lg">
-              <Palette className="w-4 h-4 text-primary" />
-              <span className="hidden sm:inline text-sm font-medium">Art</span>
-            </div>
-          </div>
-        </header>
+        <Navigation />
 
         {/* Hero Section */}
         <section ref={heroRef} className="relative pt-32 pb-16 md:pt-40 md:pb-24 px-6 overflow-hidden min-h-[80vh] flex items-center">

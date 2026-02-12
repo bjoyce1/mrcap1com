@@ -3,6 +3,7 @@ import { ExternalLink, Music, Calendar, ShoppingBag, Mail, Disc3, Users, Sparkle
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import Navigation from "@/components/Navigation";
 import mrCapLogo from "@/assets/mr-cap-logo.png";
 
 const links = [
@@ -81,6 +82,7 @@ const Links = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
+        <Navigation />
         {/* Decorative background */}
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-flux-accent/5" />

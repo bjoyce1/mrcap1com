@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import Navigation from "@/components/Navigation";
 import type { Album, Track } from "@/stores/playerStore";
 
 const AdminLibrary = () => {
@@ -163,6 +164,7 @@ const AdminLibrary = () => {
     <>
       <Helmet><title>Music Library Admin | Mr. CAP</title><meta name="robots" content="noindex, nofollow" /></Helmet>
       <div className="min-h-screen bg-background">
+        <Navigation />
         <header className="border-b border-border/30 bg-card/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">

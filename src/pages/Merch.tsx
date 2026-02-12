@@ -4,6 +4,7 @@ import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
 import { MerchQualitySection } from "@/components/merch/MerchQualitySection";
 import { MerchNewsletterSection } from "@/components/merch/MerchNewsletterSection";
 import { MerchFooter } from "@/components/merch/MerchFooter";
+import Navigation from "@/components/Navigation";
 import trapUniversityLogo from "@/assets/trap-university-logo.png";
 
 const Merch = () => {
@@ -23,6 +24,7 @@ const Merch = () => {
       </Helmet>
 
       <div className="min-h-screen bg-[#020202] text-foreground">
+        <Navigation />
         <ParticleHero
           subtitle="Official Collection"
           description="Exclusive streetwear designed for the culture. Limited drops, unlimited drip."
