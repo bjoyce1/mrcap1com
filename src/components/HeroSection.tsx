@@ -1,17 +1,23 @@
 import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/hooks/useGSAP";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
 import heroImage from "@/assets/mrcap-hero-bg.jpg";
 
 const HeroSection = () => {
+  const [glitching, setGlitching] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const releaseRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const gradientRef = useRef<HTMLDivElement>(null);
+
+  const handleTitleHover = () => {
+    setGlitching(true);
+    setTimeout(() => setGlitching(false), 1200);
+  };
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -130,7 +136,10 @@ const HeroSection = () => {
         {/* Artist Name - Bold, Centered */}
         <h1
           ref={nameRef}
-          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase tracking-wider will-change-transform animate-glitch"
+          onMouseEnter={handleTitleHover}
+          className={`font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase tracking-wider will-change-transform cursor-pointer transition-none ${
+            glitching ? "animate-glitch" : ""
+          }`}
           style={{ color: "hsl(43, 91%, 61%)" }}
         >
           Mr. CAP
