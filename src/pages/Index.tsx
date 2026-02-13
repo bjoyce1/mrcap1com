@@ -15,9 +15,6 @@ import ContactSection from "@/components/ContactSection";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
 import BookingCard from "@/components/BookingCard";
-import ScrollReveal from "@/components/ScrollReveal";
-import ListenFAB from "@/components/ListenFAB";
-import NewsletterBanner from "@/components/NewsletterBanner";
 
 const Index = () => {
   const jsonLd = {
@@ -191,47 +188,23 @@ const Index = () => {
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
-        <ListenFAB />
         <main>
           <HeroSection />
-          <ScrollReveal>
-            <TrafficMagnetSection />
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
-            <AboutSection />
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
-            <MusicSection />
-          </ScrollReveal>
-          <ScrollReveal>
-            <SpotifySection />
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
-            <LiveSection />
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
-            <PressSection />
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
-            <VideoSection />
-          </ScrollReveal>
-          <ScrollReveal>
-            <VenturesSection />
-          </ScrollReveal>
-          <ScrollReveal>
-            <NftMilestoneSection />
-          </ScrollReveal>
-          <ScrollReveal>
-            <NftPreviewSection />
-          </ScrollReveal>
+          <TrafficMagnetSection />
+          <AboutSection />
+          <MusicSection />
+          <SpotifySection />
+          <LiveSection />
+          <PressSection />
+          <VideoSection />
+          <VenturesSection />
+          <NftMilestoneSection />
+          <NftPreviewSection />
           <section className="py-16 px-4">
             <div className="max-w-5xl mx-auto">
               <BookingCard />
             </div>
           </section>
-          <ScrollReveal>
-            <NewsletterBanner />
-          </ScrollReveal>
           <ContactSection />
         </main>
         

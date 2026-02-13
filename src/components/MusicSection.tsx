@@ -343,7 +343,7 @@ const MusicSection = () => {
             <h3 className="font-display text-2xl font-medium tracking-tight">Studio & Collab Albums</h3>
           </div>
            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-             {albums.map((album, index) => <div key={index} className="album-card group bg-white/[0.02] rounded-xl border border-white/5 overflow-hidden hover:border-primary/30 hover:scale-105 hover:shadow-[0_20px_60px_hsl(43,91%,61%,0.3)] transition-all duration-300 will-change-transform glass-hover">
+             {albums.map((album, index) => <div key={index} className="album-card group bg-white/[0.02] rounded-xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 will-change-transform card-lift glass-hover">
                 <div className="relative aspect-square overflow-hidden bg-muted">
                   {album.image ? <img src={album.image} alt={`${album.title} Album Cover`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /> : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                       <Disc3 className="w-16 h-16 text-primary/40" />

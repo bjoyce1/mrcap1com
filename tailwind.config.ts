@@ -68,8 +68,7 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Oswald", "sans-serif"],
-        serif: ["Playfair Display", "serif"],
+        display: ["Montserrat", "sans-serif"],
         sans: ["Inter", "sans-serif"],
         ui: ["Inter", "sans-serif"],
       },
