@@ -130,7 +130,7 @@ const HeroSection = () => {
         {/* Artist Name - Bold, Centered */}
         <h1
           ref={nameRef}
-          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase tracking-wider text-cap-gold will-change-transform"
+          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-extrabold uppercase tracking-wider will-change-transform animate-glitch"
           style={{ color: "hsl(43, 91%, 61%)" }}
         >
           Mr. CAP
