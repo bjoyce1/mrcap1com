@@ -75,17 +75,7 @@ const HeroSection = () => {
         },
       });
 
-      // Name text parallax (slower)
-      gsap.to(nameRef.current, {
-        y: 50,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.5,
-        },
-      });
+      // No separate name parallax — let it stay anchored with release info to avoid overlap
 
       // Animated gradient overlay based on scroll
       gsap.to(gradientRef.current, {
