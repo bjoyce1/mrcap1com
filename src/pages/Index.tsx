@@ -16,6 +16,10 @@ import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
 import BookingCard from "@/components/BookingCard";
 
+const SectionDivider = () => (
+  <div className="section-divider max-w-4xl mx-auto" />
+);
+
 const Index = () => {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -72,10 +76,7 @@ const Index = () => {
         "url": "https://mrcap1.com",
         "logo": "https://mrcap1.com/favicon.ico",
         "founder": { "@id": "https://mrcap1.com/#person" },
-        "foundingLocation": {
-          "@type": "Place",
-          "name": "Houston, Texas"
-        },
+        "foundingLocation": { "@type": "Place", "name": "Houston, Texas" },
         "areaServed": "US",
         "sameAs": [
           "https://www.instagram.com/mrcapism/",
@@ -190,17 +191,27 @@ const Index = () => {
         <Navigation />
         <main>
           <HeroSection />
+          <SectionDivider />
           <TrafficMagnetSection />
+          <SectionDivider />
           <AboutSection />
+          <SectionDivider />
           <MusicSection />
+          <SectionDivider />
           <SpotifySection />
+          <SectionDivider />
           <LiveSection />
+          <SectionDivider />
           <PressSection />
+          <SectionDivider />
           <VideoSection />
+          <SectionDivider />
           <VenturesSection />
+          <SectionDivider />
           <NftMilestoneSection />
           <NftPreviewSection />
-          <section className="py-16 px-4">
+          <SectionDivider />
+          <section className="section-spacing px-4">
             <div className="max-w-5xl mx-auto">
               <BookingCard />
             </div>

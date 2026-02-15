@@ -4,24 +4,27 @@ import NewsletterSignup from "@/components/NewsletterSignup";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 md:py-32 bg-white/[0.01] relative overflow-hidden">
+    <section id="contact" className="section-spacing relative overflow-hidden">
+      {/* Top gradient divider */}
+      <div className="absolute top-0 inset-x-0 section-divider" />
+      
       {/* Background Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] h-[400px] bg-primary/4 blur-[140px] rounded-full pointer-events-none" />
       
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="w-8 h-[1px] bg-primary" />
-            <span className="text-xs font-medium tracking-widest uppercase text-primary">
+            <span className="w-12 h-[1px] bg-primary" />
+            <span className="text-xs font-medium tracking-[0.25em] uppercase text-primary">
               Get In Touch
             </span>
-            <span className="w-8 h-[1px] bg-primary" />
+            <span className="w-12 h-[1px] bg-primary" />
           </div>
-          <h2 className="font-display text-5xl md:text-6xl font-medium tracking-tight">
+          <h2 className="font-editorial text-5xl md:text-6xl lg:text-7xl tracking-tight">
             Booking & <span className="text-gradient-orange">Contact</span>
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-xl mx-auto font-light">
+          <p className="text-muted-foreground mt-5 max-w-xl mx-auto font-light text-balance">
             For live performances, features, interviews, speaking engagements, 
             sync licensing, or business inquiries.
           </p>
@@ -29,8 +32,8 @@ const ContactSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Booking Form */}
-          <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-6 md:p-8">
-            <h3 className="font-display text-2xl font-medium tracking-tight mb-6">
+          <div className="glass rounded-2xl p-6 md:p-8">
+            <h3 className="font-editorial text-2xl tracking-tight mb-6">
               Submit a Booking Request
             </h3>
             <BookingForm />
@@ -40,13 +43,13 @@ const ContactSection = () => {
             {/* Contact Cards */}
             <div className="grid gap-6">
               {/* Booking & Business */}
-              <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-6 hover:border-primary/30 transition-colors">
+              <div className="glass rounded-2xl p-6 hover:border-primary/20 transition-colors">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Briefcase className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-medium tracking-tight">Booking & Business</h3>
+                    <h3 className="font-editorial text-lg">Booking & Business</h3>
                     <p className="text-xs text-muted-foreground">South Park Coalition LLC</p>
                   </div>
                 </div>
@@ -56,33 +59,23 @@ const ContactSection = () => {
                     <p className="font-medium text-foreground">Reginald Gilliand</p>
                     <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
                   </div>
-
-                  <a
-                    href="mailto:pointblank@southparkcoalitionllc.com"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Mail className="w-4 h-4" />
-                    pointblank@southparkcoalitionllc.com
+                  <a href="mailto:pointblank@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <Mail className="w-4 h-4" /> pointblank@southparkcoalitionllc.com
                   </a>
-
-                  <a
-                    href="tel:7135503001"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Phone className="w-4 h-4" />
-                    713-550-3001
+                  <a href="tel:7135503001" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <Phone className="w-4 h-4" /> 713-550-3001
                   </a>
                 </div>
               </div>
 
               {/* Artist Contact */}
-              <div className="bg-white/[0.02] rounded-2xl border border-white/5 p-6 hover:border-primary/30 transition-colors">
+              <div className="glass rounded-2xl p-6 hover:border-primary/20 transition-colors">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                     <User className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-medium tracking-tight">Artist Contact</h3>
+                    <h3 className="font-editorial text-lg">Artist Contact</h3>
                     <p className="text-xs text-muted-foreground">Direct Inquiries</p>
                   </div>
                 </div>
@@ -92,31 +85,14 @@ const ContactSection = () => {
                     <p className="font-medium text-foreground">Cornelius A. Pratt (Mr. CAP)</p>
                     <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
                   </div>
-
-                  <a
-                    href="mailto:mrcap@southparkcoalitionllc.com"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Mail className="w-4 h-4" />
-                    mrcap@southparkcoalitionllc.com
+                  <a href="mailto:mrcap@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <Mail className="w-4 h-4" /> mrcap@southparkcoalitionllc.com
                   </a>
-
-                  <a
-                    href="tel:8327744473"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Phone className="w-4 h-4" />
-                    832-774-4473
+                  <a href="tel:8327744473" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <Phone className="w-4 h-4" /> 832-774-4473
                   </a>
-
-                  <a
-                    href="https://www.mrcap1.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Globe className="w-4 h-4" />
-                    www.mrcap1.com
+                  <a href="https://www.mrcap1.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <Globe className="w-4 h-4" /> www.mrcap1.com
                   </a>
                 </div>
               </div>
@@ -126,7 +102,7 @@ const ContactSection = () => {
             <NewsletterSignup source="contact-page" variant="hero" />
 
             {/* Payment Info */}
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-center">
+            <div className="glass rounded-xl p-4 text-center">
               <p className="text-sm text-muted-foreground mb-1">
                 <span className="font-medium text-foreground">Performance Deposits & Payments:</span>
               </p>

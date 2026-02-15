@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Play, Youtube, Film, Loader2, ExternalLink } from "lucide-react";
+import { Play, Youtube, Film, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -27,12 +27,8 @@ const VideoSection = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase.functions.invoke('youtube-videos');
-      
       if (error) throw error;
-      
-      if (data?.videos) {
-        setVideos(data.videos);
-      }
+      if (data?.videos) setVideos(data.videos);
     } catch (err: any) {
       console.error('Error fetching videos:', err);
       setError(err.message || 'Failed to load videos');
@@ -54,17 +50,20 @@ const VideoSection = () => {
   };
 
   return (
-    <section id="video" className="py-24 md:py-32 bg-section-gradient border-b border-border">
+    <section id="video" className="section-spacing relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section Header */}
-        <div className="mb-12">
-          <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">
-            Visual Content
-          </span>
-          <h2 className="font-display text-5xl md:text-6xl mt-2">
+        <div className="mb-16">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-12 h-[1px] bg-primary" />
+            <span className="text-xs font-medium tracking-[0.25em] uppercase text-primary">
+              Visual Content
+            </span>
+          </div>
+          <h2 className="font-editorial text-5xl md:text-6xl lg:text-7xl tracking-tight">
             Video <span className="text-gradient-gold">Gallery</span>
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-2xl">
+          <p className="text-muted-foreground mt-5 max-w-2xl text-balance">
             See Mr. CAP in motion — from official music videos to live performance clips 
             and documentary appearances.
           </p>
@@ -73,16 +72,16 @@ const VideoSection = () => {
         {/* Video Player Modal */}
         {selectedVideo && (
           <div 
-            className="fixed inset-0 z-50 bg-background/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={() => setSelectedVideo(null)}
           >
             <div 
-              className="relative w-full max-w-4xl aspect-video"
+              className="relative w-full max-w-5xl aspect-video"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedVideo(null)}
-                className="absolute -top-12 right-0 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute -top-12 right-0 text-muted-foreground hover:text-foreground transition-colors text-sm"
               >
                 Close ✕
               </button>
@@ -99,7 +98,7 @@ const VideoSection = () => {
 
         {/* Loading State */}
         {loading && (
-          <div className="flex items-center justify-center py-16">
+          <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
             <span className="ml-3 text-muted-foreground">Loading videos...</span>
           </div>
@@ -107,79 +106,109 @@ const VideoSection = () => {
 
         {/* Error State */}
         {error && !loading && (
-          <div className="text-center py-16">
+          <div className="text-center py-20">
             <p className="text-muted-foreground mb-4">{error}</p>
-            <Button variant="outline" onClick={fetchVideos}>
+            <Button variant="outline" onClick={fetchVideos} className="rounded-full">
               Try Again
             </Button>
           </div>
         )}
 
-        {/* Video Grid */}
+        {/* Cinema-style Video Grid — Featured + smaller grid */}
         {!loading && !error && videos.length > 0 && (
-          <div className="grid md:grid-cols-3 gap-6">
-            {videos.slice(0, 6).map((video) => (
-              <div
-                key={video.id}
-                className="group relative rounded-2xl border border-border overflow-hidden bg-card cursor-pointer hover:border-primary/50 transition-all"
-                onClick={() => setSelectedVideo(video.id)}
-              >
-                {/* Thumbnail */}
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-background/20 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-glow">
-                      <Play className="w-6 h-6 text-primary-foreground ml-1" fill="currentColor" />
-                    </div>
-                  </div>
-
-                  {/* Duration Badge */}
-                  <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-background/90 text-xs font-medium">
-                    {video.duration}
+          <div className="space-y-6">
+            {/* Featured video — large */}
+            <div
+              className="group relative rounded-2xl overflow-hidden cursor-pointer glass-hover"
+              onClick={() => setSelectedVideo(videos[0].id)}
+            >
+              <div className="relative aspect-video overflow-hidden">
+                <img
+                  src={videos[0].thumbnail}
+                  alt={videos[0].title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="glass w-20 h-20 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+                    <Play className="w-8 h-8 text-foreground ml-1" fill="currentColor" />
                   </div>
                 </div>
-
-                {/* Video Info */}
-                <div className="p-4">
-                  <h3 className="font-semibold text-foreground line-clamp-2 mb-2 group-hover:text-primary transition-colors">
-                    {video.title}
+                <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-background/90 via-background/40 to-transparent">
+                  <h3 className="font-editorial text-2xl md:text-3xl text-foreground mb-1 line-clamp-1">
+                    {videos[0].title}
                   </h3>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span>{formatViewCount(video.viewCount)}</span>
-                    <span>•</span>
-                    <span>{formatDate(video.publishedAt)}</span>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span>{formatViewCount(videos[0].viewCount)}</span>
+                    <span>·</span>
+                    <span>{formatDate(videos[0].publishedAt)}</span>
                   </div>
+                </div>
+                <div className="absolute top-4 right-4 px-2 py-1 rounded glass text-xs font-medium">
+                  {videos[0].duration}
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Smaller grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {videos.slice(1, 7).map((video) => (
+                <div
+                  key={video.id}
+                  className="group relative rounded-xl overflow-hidden cursor-pointer glass-hover"
+                  onClick={() => setSelectedVideo(video.id)}
+                >
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="glass w-14 h-14 rounded-full flex items-center justify-center">
+                        <Play className="w-5 h-5 text-foreground ml-0.5" fill="currentColor" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded glass text-xs font-medium">
+                      {video.duration}
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-medium text-foreground line-clamp-2 mb-2 group-hover:text-primary transition-colors text-sm">
+                      {video.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <span>{formatViewCount(video.viewCount)}</span>
+                      <span>·</span>
+                      <span>{formatDate(video.publishedAt)}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
         {/* Empty State */}
         {!loading && !error && videos.length === 0 && (
-          <div className="text-center py-16">
-            <Film className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
+          <div className="text-center py-20">
+            <Film className="w-12 h-12 mx-auto text-muted-foreground/30 mb-4" />
             <p className="text-muted-foreground">No videos found</p>
           </div>
         )}
 
         {/* YouTube CTA */}
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button 
             variant="hero" 
             size="lg"
+            className="rounded-full px-8"
             onClick={() => window.open('https://www.youtube.com/@mrcap1', '_blank')}
           >
             <Youtube className="w-5 h-5" />
             Subscribe on YouTube
           </Button>
-          <Button variant="outline" size="lg">
+          <Button variant="outline" size="lg" className="rounded-full border-white/10">
             <Film className="w-5 h-5" />
             Request B-Roll / Clean Footage
           </Button>

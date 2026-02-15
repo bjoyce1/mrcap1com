@@ -69,6 +69,7 @@ export default {
       },
       fontFamily: {
         display: ["Montserrat", "sans-serif"],
+        editorial: ["Montserrat", "sans-serif"],
         sans: ["Inter", "sans-serif"],
         ui: ["Inter", "sans-serif"],
       },
