@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { motion, AnimatePresence, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import mascotImage from "@/assets/mr-cap-mascot.png";
 
 const TIPS = [
@@ -13,24 +13,34 @@ const TIPS = [
 const FloatingMascot = () => {
   const [showBubble, setShowBubble] = useState(false);
   const [tipIndex, setTipIndex] = useState(0);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [idlePhase, setIdlePhase] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgControls = useAnimation();
+
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const rotateY = useTransform(tiltX, [-1, 1], [-18, 18]);
+  const rotateX = useTransform(tiltY, [-1, 1], [12, -12]);
+
+  // Idle "breathing" cycle — subtle weight-shifting every few seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIdlePhase((p) => (p + 1) % 4);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const maxDistance = 400;
-    const dx = (e.clientX - centerX) / maxDistance;
-    const dy = (e.clientY - centerY) / maxDistance;
-    setTilt({
-      x: Math.max(-1, Math.min(1, dx)) * 15,
-      y: Math.max(-1, Math.min(1, -dy)) * 10,
-    });
-  }, []);
+    const maxDist = 500;
+    tiltX.set(Math.max(-1, Math.min(1, (e.clientX - centerX) / maxDist)));
+    tiltY.set(Math.max(-1, Math.min(1, (e.clientY - centerY) / maxDist)));
+  }, [tiltX, tiltY]);
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
@@ -38,21 +48,35 @@ const FloatingMascot = () => {
   }, [handleMouseMove]);
 
   const handleClick = async () => {
+    if (isDragging) return;
     setShowBubble((prev) => !prev);
     setTipIndex((prev) => (prev + 1) % TIPS.length);
-    // Squish & bounce on click
     await imgControls.start({
-      scaleX: [1, 1.15, 0.9, 1.05, 1],
-      scaleY: [1, 0.85, 1.12, 0.97, 1],
-      rotate: [0, -5, 5, -2, 0],
-      transition: { duration: 0.5, ease: "easeOut" },
+      scaleX: [1, 1.2, 0.85, 1.08, 1],
+      scaleY: [1, 0.8, 1.18, 0.95, 1],
+      rotate: [0, -8, 8, -3, 0],
+      transition: { duration: 0.55, ease: "easeOut" },
     });
   };
 
+  // Idle body language variants
+  const idleVariants: Record<number, object> = {
+    0: { rotate: 0, x: 0 },
+    1: { rotate: -1.5, x: -2 },
+    2: { rotate: 0.8, x: 1 },
+    3: { rotate: -0.5, x: -1 },
+  };
+
   return (
-    <div
+    <motion.div
       ref={containerRef}
-      className="fixed bottom-20 right-4 z-50 md:bottom-8 md:right-8 flex flex-col items-end gap-2"
+      drag
+      dragMomentum={false}
+      dragElastic={0.15}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={() => setTimeout(() => setIsDragging(false), 100)}
+      className="fixed bottom-20 right-4 z-50 md:bottom-8 md:right-8 flex flex-col items-end gap-3 select-none"
+      style={{ touchAction: "none" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -60,95 +84,119 @@ const FloatingMascot = () => {
       <AnimatePresence>
         {showBubble && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="max-w-[200px] rounded-xl bg-card/90 backdrop-blur-xl border border-border/40 px-4 py-3 text-sm text-foreground shadow-xl"
+            initial={{ opacity: 0, y: 14, scale: 0.85, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 14, scale: 0.85, filter: "blur(4px)" }}
+            transition={{ type: "spring", stiffness: 500, damping: 28 }}
+            className="relative max-w-[200px] rounded-2xl bg-card/95 backdrop-blur-2xl border border-primary/20 px-4 py-3 text-sm text-foreground shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
-            <p>{TIPS[tipIndex]}</p>
-            <div className="absolute -bottom-2 right-6 w-4 h-4 bg-card/90 border-b border-r border-border/40 rotate-45" />
+            <p className="leading-snug">{TIPS[tipIndex]}</p>
+            {/* Bubble tail */}
+            <div className="absolute -bottom-[6px] right-7 w-3 h-3 bg-card/95 border-b border-r border-primary/20 rotate-45" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Mascot */}
+      {/* Character container — no box, free-standing */}
       <motion.button
         onClick={handleClick}
-        animate={{ y: [0, -6, 0] }}
-        transition={{ y: { duration: 3, repeat: Infinity, ease: "easeInOut" } }}
-        className="relative cursor-pointer outline-none group"
-        aria-label="Mr. CAP mascot guide"
+        className="relative cursor-grab active:cursor-grabbing outline-none"
+        aria-label="Mr. CAP mascot guide — click for tips, drag to move"
+        style={{ perspective: 800 }}
       >
-        {/* Glow on hover */}
+        {/* Ambient glow — organic, large */}
         <motion.div
-          className="absolute -inset-3 rounded-full bg-primary/15 blur-2xl"
-          animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1.2 : 0.8 }}
-          transition={{ duration: 0.4 }}
+          className="absolute -inset-6 rounded-full blur-3xl pointer-events-none"
+          style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.2) 0%, transparent 70%)" }}
+          animate={{
+            opacity: isHovered ? 0.9 : 0.3,
+            scale: isHovered ? 1.4 : 1,
+          }}
+          transition={{ duration: 0.5 }}
         />
 
-        {/* Chain sparkle effect */}
+        {/* Sparkle particles — more organic spread */}
         <AnimatePresence>
           {isHovered && (
             <>
-              {[0, 1, 2].map((i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 rounded-full bg-primary"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{
-                    opacity: [0, 1, 0],
-                    scale: [0, 1.5, 0],
-                    x: [0, (i - 1) * 12],
-                    y: [0, -8 - i * 6],
-                  }}
-                  exit={{ opacity: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    delay: i * 0.15,
-                    repeat: Infinity,
-                    repeatDelay: 0.6,
-                  }}
-                  style={{ left: "45%", top: "35%" }}
-                />
-              ))}
+              {[...Array(5)].map((_, i) => {
+                const angle = (i / 5) * Math.PI * 2 - Math.PI / 2;
+                const radius = 30 + Math.random() * 20;
+                return (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1.5 h-1.5 rounded-full bg-primary pointer-events-none"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{
+                      opacity: [0, 1, 0],
+                      scale: [0, 1, 0],
+                      x: [0, Math.cos(angle) * radius],
+                      y: [0, Math.sin(angle) * radius],
+                    }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      duration: 1,
+                      delay: i * 0.12,
+                      repeat: Infinity,
+                      repeatDelay: 0.8,
+                    }}
+                    style={{ left: "50%", top: "40%" }}
+                  />
+                );
+              })}
             </>
           )}
         </AnimatePresence>
 
-        {/* Ground shadow — squishes on hover */}
+        {/* Idle body-language wrapper */}
         <motion.div
-          className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-black/40 blur-md"
           animate={{
-            width: isHovered ? 72 : 64,
-            height: isHovered ? 10 : 12,
-            opacity: isHovered ? 0.5 : 0.35,
+            y: [0, -8, 0],
+            ...idleVariants[idlePhase],
           }}
-          transition={{ duration: 0.3 }}
-        />
+          transition={{
+            y: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 1.2, ease: "easeInOut" },
+            x: { duration: 1.2, ease: "easeInOut" },
+          }}
+        >
+          {/* 3D tilt wrapper — driven by cursor */}
+          <motion.div
+            style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
+          >
+            {/* Ground shadow — reacts to hover + tilt */}
+            <motion.div
+              className="absolute -bottom-2 left-1/2 rounded-[50%] bg-black/50 blur-lg pointer-events-none"
+              animate={{
+                width: isHovered ? 80 : 68,
+                height: isHovered ? 8 : 14,
+                x: "-50%",
+                opacity: isHovered ? 0.6 : 0.3,
+                scaleX: isHovered ? 1.1 : 1,
+              }}
+              transition={{ duration: 0.35 }}
+            />
 
-        {/* Character image */}
-        <motion.img
-          src={mascotImage}
-          alt="Mr. CAP mascot"
-          className="w-20 h-auto md:w-24 drop-shadow-[0_8px_24px_rgba(0,0,0,0.6)]"
-          animate={imgControls}
-          whileHover={{
-            scale: 1.08,
-            rotate: [0, -2, 2, -1, 0],
-            transition: {
-              scale: { duration: 0.25 },
-              rotate: { duration: 0.6, repeat: Infinity, repeatDelay: 0.8 },
-            },
-          }}
-          style={{
-            transform: `perspective(600px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
-            transition: "transform 0.15s ease-out",
-          }}
-          draggable={false}
-        />
+            {/* The character — clean, no container */}
+            <motion.img
+              src={mascotImage}
+              alt="Mr. CAP"
+              className="w-24 h-auto md:w-28 pointer-events-none"
+              animate={imgControls}
+              whileHover={{
+                scale: 1.12,
+                transition: { duration: 0.3, ease: "easeOut" },
+              }}
+              style={{
+                filter: `drop-shadow(0 12px 28px rgba(0,0,0,0.7)) drop-shadow(0 2px 6px rgba(0,0,0,0.5))`,
+                transformStyle: "preserve-3d",
+              }}
+              draggable={false}
+            />
+          </motion.div>
+        </motion.div>
       </motion.button>
-    </div>
+    </motion.div>
   );
 };
 
