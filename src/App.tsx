@@ -55,6 +55,7 @@ import AlbumPage from "./pages/AlbumPage";
 import TrackPage from "./pages/TrackPage";
 import StickyPlayer from "./components/player/StickyPlayer";
 import MobileBottomNav from "./components/MobileBottomNav";
+import FloatingMascot from "./components/FloatingMascot";
 import AdminLibrary from "./pages/AdminLibrary";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import Legacy from "./pages/Legacy";
@@ -141,6 +142,7 @@ function AppRoutes() {
       {/* Global Sticky Player */}
       <StickyPlayer />
       <MobileBottomNav />
+      <FloatingMascot />
     </>
   );
 }
