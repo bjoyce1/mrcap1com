@@ -28,10 +28,10 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
         <img
           src={limitlessBg}
           alt=""
-          className="w-full h-full object-cover opacity-20"
+          className="w-full h-full object-cover opacity-40"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/70 to-background" />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
