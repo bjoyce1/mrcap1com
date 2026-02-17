@@ -191,28 +191,41 @@ const Music = () => {
       <div className="min-h-screen bg-[#000000] text-zinc-100">
         <Navigation />
         
-        <main className="pt-24">
-          {/* Hero Section */}
-          <section className="relative z-10">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 lg:pt-32">
+        <main>
+          {/* Video Hero Section */}
+          <section className="relative w-full h-[70vh] sm:h-[80vh] overflow-hidden">
+            {/* YouTube Video Embed */}
+            <div className="absolute inset-0">
+              <iframe
+                src="https://www.youtube.com/embed/3G3_rIwKRTE?autoplay=1&mute=1&loop=1&playlist=3G3_rIwKRTE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+                title="Mr. CAP – Music Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] sm:w-[200%] sm:h-[200%] pointer-events-none"
+                style={{ border: 'none' }}
+              />
+            </div>
+            {/* Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/60 to-transparent" />
+
+            {/* Content */}
+            <div className="relative z-10 h-full flex flex-col justify-end max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
               {/* Breadcrumb */}
-              <nav className="flex items-center gap-2 text-sm text-neutral-400 mb-8 animate-fade-in">
+              <nav className="absolute top-28 left-4 sm:left-6 lg:left-8 flex items-center gap-2 text-sm text-neutral-400 animate-fade-in">
                 <Link to="/" className="hover:text-white transition-colors">Home</Link>
                 <ChevronRight className="w-4 h-4" />
                 <span className="text-white">Music</span>
               </nav>
 
-              <div className="flex flex-col sm:flex-row gap-8 items-center justify-between pb-12">
-                {/* Left: Heading */}
-                <div className="text-left flex-1">
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight text-white leading-tight">
+              <div className="flex flex-col sm:flex-row gap-8 items-end justify-between">
+                <div className="flex-1">
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight text-white leading-tight drop-shadow-2xl">
                     20+ Years. 6 Albums. Countless Stories.
                   </h1>
                 </div>
-
-                {/* Right: Subheading + Button */}
                 <div className="flex flex-col flex-1 text-left sm:text-right max-w-md space-y-6 items-start sm:items-end">
-                  <p className="text-base sm:text-lg text-white/70 max-w-sm">
+                  <p className="text-base sm:text-lg text-white/80 max-w-sm drop-shadow-lg">
                     From South Park streets to streaming platforms worldwide—Mr. CAP's discography spans two decades of Houston hip-hop.
                   </p>
                   <Button variant="flux" size="lg" className="group">
@@ -221,6 +234,13 @@ const Music = () => {
                   </Button>
                 </div>
               </div>
+            </div>
+          </section>
+
+          <div className="pt-16">
+          {/* Featured Album Section */}
+          <section className="relative z-10">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
               {/* Featured Album Preview with Glow */}
               <div className="relative mt-8 sm:mt-16">
@@ -273,6 +293,7 @@ const Music = () => {
               </div>
             </div>
           </section>
+          </div>
 
           {/* Streaming Platforms */}
           <section className="py-12 mt-16 border-y border-white/5 bg-white/[0.02]" style={{ backdropFilter: 'blur(20px)' }}>
