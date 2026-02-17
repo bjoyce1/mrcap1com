@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, Play, Crown, Star, ExternalLink, Hexagon, Triangle, Command, Ghost, Gem, Cpu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -28,6 +29,35 @@ const StatItem = ({ value, label }: { value: string; label: string }) => (
     <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
   </div>
 );
+
+const TiltCard = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 20 });
+
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  }, [x, y]);
+
+  const onLeave = useCallback(() => { x.set(0); y.set(0); }, [x, y]);
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{ rotateX, rotateY, transformPerspective: 800 }}
+      className={cn('will-change-transform', className)}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 export const NFTHeroSection = ({
   imageUrl1 = '/placeholder.svg',
@@ -176,7 +206,7 @@ export const NFTHeroSection = ({
             </div>
 
             {/* NFT Preview Cards */}
-            <div className="hero-animate relative h-[260px] md:h-[320px]">
+            <TiltCard className="hero-animate relative h-[260px] md:h-[320px]">
               {/* Back card */}
               <div className="absolute right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
                 <img src={imageUrl2} alt="NFT Preview 2" className="w-full h-full object-cover" />
@@ -187,7 +217,7 @@ export const NFTHeroSection = ({
                 <img src={imageUrl1} alt="NFT Preview 1" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
               </div>
-            </div>
+            </TiltCard>
 
             {/* Marquee Card */}
             <div className="hero-animate rounded-2xl ring-1 ring-border bg-card/60 backdrop-blur-xl p-4 overflow-hidden">
