@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import { ArtOfIsmCollection } from "@/components/ArtOfIsmCollection";
 import { OtherNftsGallery } from "@/components/OtherNftsGallery";
 import NFTHeroSection from "@/components/NFTHeroSection";
+import LimitlessSpotlight from "@/components/LimitlessSpotlight";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import nftLimitless from "@/assets/nft-limitless.png";
@@ -15,6 +16,7 @@ import mrCapCoin from "@/assets/mr-cap-coin.png";
 const NFTGallery = () => {
   const [scrollY, setScrollY] = useState(0);
   const milestoneRef = useRef<HTMLElement>(null);
+  const limitlessRef = useRef<HTMLElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
   const otherNftsRef = useRef<HTMLDivElement>(null);
@@ -41,6 +43,25 @@ const NFTGallery = () => {
             ease: "power3.out",
             scrollTrigger: {
               trigger: milestoneRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // Limitless Spotlight Animation
+      if (limitlessRef.current) {
+        gsap.fromTo(
+          limitlessRef.current,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: limitlessRef.current,
               start: "top 85%",
               toggleActions: "play none none reverse",
             },
@@ -195,6 +216,9 @@ const NFTGallery = () => {
           </div>
         </div>
       </section>
+
+      {/* Limitless Spotlight */}
+      <LimitlessSpotlight ref={limitlessRef} />
 
       {/* Main Content */}
       <main className="py-16 md:py-24 relative z-10">
