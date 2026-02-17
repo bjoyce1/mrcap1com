@@ -1,10 +1,35 @@
-import { useRef, useState } from "react";
-import { Play, Pause, Sparkles, Gamepad2 } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { Play, Pause, Sparkles, Gamepad2, Clock, Swords, Zap, Shield, Wind, Flame } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+
+const MINT_DATE = new Date("2025-09-15T18:00:00Z");
+
+const CHARACTER_STATS = [
+  { label: "Power", value: 88, icon: Flame, color: "bg-destructive" },
+  { label: "Speed", value: 75, icon: Wind, color: "bg-accent" },
+  { label: "Defense", value: 70, icon: Shield, color: "bg-primary" },
+  { label: "Combo", value: 92, icon: Zap, color: "bg-yellow-500" },
+  { label: "Finisher", value: 95, icon: Swords, color: "bg-destructive" },
+];
+
+function useCountdown(target: Date) {
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const diff = Math.max(0, target.getTime() - now);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
+  return { days, hours, minutes, seconds, expired: diff === 0 };
+}
 
 const UnreleasedNFTShowcase = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const countdown = useCountdown(MINT_DATE);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -45,7 +70,43 @@ const UnreleasedNFTShowcase = () => {
           </p>
         </div>
 
-        {/* Character Lore */}
+        {/* Countdown Timer */}
+        <div className="max-w-md mx-auto mb-10">
+          <div className="rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm p-5 text-center">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Clock className="w-4 h-4 text-primary" />
+              <span className="text-xs uppercase tracking-widest text-primary font-semibold">
+                {countdown.expired ? "Mint Window Open" : "Estimated Mint Date"}
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground mb-4">
+              September 15, 2025 · 6:00 PM UTC
+            </p>
+            {!countdown.expired ? (
+              <div className="grid grid-cols-4 gap-3">
+                {[
+                  { val: countdown.days, label: "Days" },
+                  { val: countdown.hours, label: "Hrs" },
+                  { val: countdown.minutes, label: "Min" },
+                  { val: countdown.seconds, label: "Sec" },
+                ].map((unit) => (
+                  <div key={unit.label} className="flex flex-col items-center">
+                    <span className="text-2xl md:text-3xl font-display font-bold text-foreground tabular-nums">
+                      {String(unit.val).padStart(2, "0")}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
+                      {unit.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-lg font-semibold text-accent">Minting Now 🔥</p>
+            )}
+          </div>
+        </div>
+
+        {/* Character Lore + Stats */}
         <div className="max-w-2xl mx-auto mb-10 space-y-4 text-center">
           <div className="rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm p-6 md:p-8">
             <h3 className="text-sm uppercase tracking-widest text-primary font-semibold mb-3">Character Lore</h3>
@@ -55,10 +116,32 @@ const UnreleasedNFTShowcase = () => {
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4">
               In <span className="text-primary font-medium">H-Town Fight Minnies</span>, Mr. CAP fights with the spirit of Houston — screwed-up combos, chopped-up counters, and a flow that keeps opponents guessing. His signature move, <span className="text-accent font-medium italic">"The Cap Check"</span>, is a devastating finisher that leaves no room for pretenders.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 mb-6">
               <span className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full ring-1 ring-primary/20 bg-primary/5 text-primary">Southside Houston</span>
               <span className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full ring-1 ring-accent/20 bg-accent/5 text-accent">Street Fighter</span>
               <span className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full ring-1 ring-destructive/20 bg-destructive/5 text-destructive">No Cap Zone</span>
+            </div>
+
+            {/* Character Stats */}
+            <div className="border-t border-white/10 pt-6">
+              <h4 className="text-xs uppercase tracking-widest text-muted-foreground font-semibold mb-5">Fighter Stats</h4>
+              <div className="space-y-3">
+                {CHARACTER_STATS.map((stat) => (
+                  <div key={stat.label} className="flex items-center gap-3">
+                    <div className="w-8 flex items-center justify-center">
+                      <stat.icon className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                    <span className="text-xs text-muted-foreground w-16 text-left font-medium">{stat.label}</span>
+                    <div className="flex-1 h-2 rounded-full bg-white/5 overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${stat.color} transition-all duration-1000`}
+                        style={{ width: `${stat.value}%` }}
+                      />
+                    </div>
+                    <span className="text-xs tabular-nums text-foreground font-semibold w-8 text-right">{stat.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -104,7 +187,7 @@ const UnreleasedNFTShowcase = () => {
             </div>
 
             {/* Info bar */}
-            <div className="p-4 md:p-5 bg-[hsl(220_14%_8%)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="p-4 md:p-5 bg-[hsl(220,14%,8%)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 ring-1 ring-primary/20 flex items-center justify-center shrink-0">
                   <Gamepad2 className="w-5 h-5 text-primary" />
