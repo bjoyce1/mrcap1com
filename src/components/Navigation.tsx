@@ -13,13 +13,13 @@ import {
 const primaryLinks = [
   { to: "/listen", label: "Music" },
   { to: "/live", label: "Live" },
+  { to: "/nft", label: "NFT" },
   { to: "/who-is-mr-cap", label: "About" },
   { to: "/press", label: "Press" },
 ];
 
 const moreLinks = [
   { to: "/opk", label: "OPK" },
-  { to: "/nft", label: "NFT" },
   { to: "/merch", label: "Merch" },
   { to: "/innovation", label: "Tech" },
   { to: "/blog", label: "Blog" },
