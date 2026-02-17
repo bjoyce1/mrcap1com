@@ -1,6 +1,7 @@
 import { forwardRef, useState, useRef } from "react";
 import { ExternalLink, Play, Pause, Film, Music, ShoppingBag } from "lucide-react";
 import limitlessCover from "@/assets/limitless-cover.png";
+import limitlessBg from "@/assets/limitless-bg.jpg";
 
 const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
   const [showVideo, setShowVideo] = useState(false);
@@ -20,10 +21,18 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
   return (
     <section
       ref={ref}
-      className="py-16 md:py-24 relative border-b border-white/5"
+      className="py-16 md:py-24 relative border-b border-white/5 overflow-hidden"
     >
-      {/* Subtle glow bg */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary)/0.06),_transparent_70%)] pointer-events-none" />
+      {/* Background image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src={limitlessBg}
+          alt=""
+          className="w-full h-full object-cover opacity-20"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+      </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
