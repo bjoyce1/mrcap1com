@@ -7,6 +7,7 @@ import { ArtOfIsmCollection } from "@/components/ArtOfIsmCollection";
 import { OtherNftsGallery } from "@/components/OtherNftsGallery";
 import NFTHeroSection from "@/components/NFTHeroSection";
 import LimitlessSpotlight from "@/components/LimitlessSpotlight";
+import UnreleasedNFTShowcase from "@/components/nft/UnreleasedNFTShowcase";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import nftLimitless from "@/assets/nft-limitless.png";
@@ -229,6 +230,9 @@ const NFTGallery = () => {
             <ArtOfIsmCollection />
           </div>
           
+          {/* Unreleased NFT Showcase */}
+          <UnreleasedNFTShowcase />
+
           {/* Divider */}
           <div ref={dividerRef} className="flex items-center gap-4 my-16">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
