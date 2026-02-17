@@ -77,25 +77,44 @@ const Listen = () => {
       />
       <Navigation />
 
-      {/* Hero */}
-      <section className="relative pt-32 pb-16 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-orange-glow opacity-20 pointer-events-none" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
-        <div className="max-w-6xl mx-auto relative" ref={heroRef}>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Headphones className="w-5 h-5 text-primary" />
-                <span className="text-xs uppercase tracking-widest text-primary font-medium">CAP STREAM</span>
-              </div>
-              <h1 className="text-5xl md:text-7xl font-display text-foreground mb-3 leading-tight">
-                <span className="text-gradient-orange">Listen</span>
+      {/* Video Hero */}
+      <section className="relative w-full h-[70vh] sm:h-[80vh] overflow-hidden">
+        {/* YouTube Background */}
+        <div className="absolute inset-0">
+          <iframe
+            src="https://www.youtube.com/embed/3G3_rIwKRTE?autoplay=1&mute=1&loop=1&playlist=3G3_rIwKRTE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+            title="Mr. CAP – Music Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] sm:w-[200%] sm:h-[200%] pointer-events-none"
+            style={{ border: 'none' }}
+          />
+        </div>
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
+
+        {/* Content */}
+        <div className="relative z-10 h-full flex flex-col justify-end max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24" ref={heroRef}>
+          <div className="flex items-center gap-2 mb-4">
+            <Headphones className="w-5 h-5 text-primary" />
+            <span className="text-xs uppercase tracking-widest text-primary font-medium">CAP STREAM</span>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-8 items-end justify-between">
+            <div className="flex-1">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight text-foreground leading-tight drop-shadow-2xl">
+                Stream Direct. No Middleman.
               </h1>
-              <p className="text-muted-foreground text-lg max-w-xl">
-                Stream Mr. CAP's full catalog — Houston hip hop straight from the source. No middleman.
-              </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col flex-1 text-left sm:text-right max-w-md space-y-4 items-start sm:items-end">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-sm drop-shadow-lg">
+                Mr. CAP's full catalog — Houston hip hop straight from the source.
+              </p>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <span>{allTracks?.length || 0} tracks</span>
+                <span className="w-1 h-1 rounded-full bg-muted-foreground" />
+                <span>{albums?.length || 0} albums</span>
+              </div>
               <button
                 onClick={handlePlayAll}
                 className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105"
@@ -103,15 +122,6 @@ const Listen = () => {
                 <Play className="w-5 h-5" /> Play All
               </button>
             </div>
-          </div>
-
-          {/* Quick stats */}
-          <div className="flex items-center gap-6 text-sm text-muted-foreground mb-2">
-            <span>{allTracks?.length || 0} tracks</span>
-            <span className="w-1 h-1 rounded-full bg-muted-foreground" />
-            <span>{albums?.length || 0} albums</span>
-            <span className="w-1 h-1 rounded-full bg-muted-foreground" />
-            <span>{singles.length} singles</span>
           </div>
         </div>
       </section>
