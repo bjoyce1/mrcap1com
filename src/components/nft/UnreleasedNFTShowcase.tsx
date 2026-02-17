@@ -42,7 +42,7 @@ const UnreleasedNFTShowcase = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden border-b border-white/5">
+    <section className="py-16 md:py-24 relative overflow-hidden border-b border-white/5 w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
       {/* Background promo video */}
       <div className="absolute inset-0 pointer-events-none">
         <video
