@@ -205,19 +205,19 @@ export const NFTHeroSection = ({
               </div>
             </div>
 
-            {/* NFT Preview Cards */}
-            <TiltCard className="hero-animate relative h-[260px] md:h-[320px]">
+            {/* NFT Preview Cards — independent tilt */}
+            <div className="hero-animate relative h-[260px] md:h-[320px]">
               {/* Back card */}
-              <div className="absolute right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
+              <TiltCard className="absolute right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
                 <img src={imageUrl2} alt="NFT Preview 2" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
-              </div>
+              </TiltCard>
               {/* Front card */}
-              <div className="absolute left-4 top-0 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-primary/20 -rotate-3 shadow-2xl shadow-primary/20">
+              <TiltCard className="absolute left-4 top-0 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-primary/20 -rotate-3 shadow-2xl shadow-primary/20">
                 <img src={imageUrl1} alt="NFT Preview 1" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
-              </div>
-            </TiltCard>
+              </TiltCard>
+            </div>
 
             {/* Marquee Card */}
             <div className="hero-animate rounded-2xl ring-1 ring-border bg-card/60 backdrop-blur-xl p-4 overflow-hidden">
