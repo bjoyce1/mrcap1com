@@ -45,6 +45,24 @@ const UnreleasedNFTShowcase = () => {
           </p>
         </div>
 
+        {/* Character Lore */}
+        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-center">
+          <div className="rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm p-6 md:p-8">
+            <h3 className="text-sm uppercase tracking-widest text-primary font-semibold mb-3">Character Lore</h3>
+            <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4">
+              Born in the trenches of Houston's Southside, <span className="text-foreground font-medium">Mr. CAP</span> rose from the underground rap scene to become an unstoppable force. Known for his razor-sharp wit and cold-blooded bars, he channels that same energy into the ring.
+            </p>
+            <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4">
+              In <span className="text-primary font-medium">H-Town Fight Minnies</span>, Mr. CAP fights with the spirit of Houston — screwed-up combos, chopped-up counters, and a flow that keeps opponents guessing. His signature move, <span className="text-accent font-medium italic">"The Cap Check"</span>, is a devastating finisher that leaves no room for pretenders.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+              <span className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full ring-1 ring-primary/20 bg-primary/5 text-primary">Southside Houston</span>
+              <span className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full ring-1 ring-accent/20 bg-accent/5 text-accent">Street Fighter</span>
+              <span className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full ring-1 ring-destructive/20 bg-destructive/5 text-destructive">No Cap Zone</span>
+            </div>
+          </div>
+        </div>
+
         {/* Video card */}
         <div className="max-w-3xl mx-auto">
           <div
