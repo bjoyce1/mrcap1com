@@ -43,9 +43,17 @@ const UnreleasedNFTShowcase = () => {
 
   return (
     <section className="py-16 md:py-24 relative overflow-hidden border-b border-white/5">
-      {/* Ambient glow */}
+      {/* Background promo video */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
+        <video
+          src="/video/fight-minnies-promo.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-15"
+        />
+        <div className="absolute inset-0 bg-background/70" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
