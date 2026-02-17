@@ -178,6 +178,40 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
               </a>
             </div>
 
+            {/* Streaming platforms */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-[11px] uppercase tracking-wider text-muted-foreground mr-1">
+                Stream
+              </span>
+              <a
+                href="https://open.spotify.com/track/3MViYAlAMJOxnFEGYXXYJR"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(141,73%,42%)]/10 ring-1 ring-[hsl(141,73%,42%)]/30 text-sm text-[hsl(141,73%,42%)] hover:bg-[hsl(141,73%,42%)]/20 transition-colors"
+              >
+                <Music className="w-3.5 h-3.5" />
+                Spotify
+              </a>
+              <a
+                href="https://music.apple.com/us/album/limitless-feat-k-rino/1553349553?i=1553349554"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(357,97%,63%)]/10 ring-1 ring-[hsl(357,97%,63%)]/30 text-sm text-[hsl(357,97%,63%)] hover:bg-[hsl(357,97%,63%)]/20 transition-colors"
+              >
+                <Music className="w-3.5 h-3.5" />
+                Apple Music
+              </a>
+              <a
+                href="https://music.youtube.com/watch?v=nojd0u9jBr0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(0,100%,50%)]/10 ring-1 ring-[hsl(0,100%,50%)]/30 text-sm text-[hsl(0,100%,50%)] hover:bg-[hsl(0,100%,50%)]/20 transition-colors"
+              >
+                <Music className="w-3.5 h-3.5" />
+                YouTube Music
+              </a>
+            </div>
+
             {/* Quote */}
             <blockquote className="border-l-2 border-primary/60 pl-4 text-sm italic text-muted-foreground">
               "I'm extremely proud to be the first Houston rap artist to sell a
