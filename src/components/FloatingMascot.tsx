@@ -1,13 +1,14 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useAnimation, useMotionValue, useTransform } from "framer-motion";
+import { Link } from "react-router-dom";
 import mascotImage from "@/assets/mr-cap-mascot.png";
 
 const TIPS = [
-  "Check out the latest drops 🎵",
-  "Scroll down to explore more!",
-  "Hit up the merch store 🔥",
-  "Book a show — let's connect!",
-  "Stream the new album now 🎧",
+  { text: "Check out the latest drops 🎵", href: "/music" },
+  { text: "Scroll down to explore more!", href: null },
+  { text: "Hit up the merch store 🔥", href: "/merch" },
+  { text: "Book a show — let's connect!", href: "/booking" },
+  { text: "Stream the new album now 🎧", href: "/listen" },
 ];
 
 const FloatingMascot = () => {
@@ -16,6 +17,8 @@ const FloatingMascot = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [idlePhase, setIdlePhase] = useState(0);
+  const [clickCount, setClickCount] = useState(0);
+  const [isSupersized, setIsSupersized] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgControls = useAnimation();
 
@@ -49,8 +52,17 @@ const FloatingMascot = () => {
 
   const handleClick = async () => {
     if (isDragging) return;
-    setShowBubble((prev) => !prev);
-    setTipIndex((prev) => (prev + 1) % TIPS.length);
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+
+    if (newCount >= 9 && !isSupersized) {
+      setIsSupersized(true);
+      setShowBubble(true);
+    } else {
+      setShowBubble((prev) => !prev);
+      setTipIndex((prev) => (prev + 1) % TIPS.length);
+    }
+
     await imgControls.start({
       scaleX: [1, 1.2, 0.85, 1.08, 1],
       scaleY: [1, 0.8, 1.18, 0.95, 1],
@@ -90,7 +102,15 @@ const FloatingMascot = () => {
             transition={{ type: "spring", stiffness: 500, damping: 28 }}
             className="relative max-w-[200px] rounded-2xl bg-card/95 backdrop-blur-2xl border border-primary/20 px-4 py-3 text-sm text-foreground shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
-            <p className="leading-snug">{TIPS[tipIndex]}</p>
+            {isSupersized ? (
+              <p className="leading-snug font-bold">Damn! clicky 😤</p>
+            ) : TIPS[tipIndex].href ? (
+              <Link to={TIPS[tipIndex].href!} className="leading-snug block hover:text-primary transition-colors">
+                {TIPS[tipIndex].text}
+              </Link>
+            ) : (
+              <p className="leading-snug">{TIPS[tipIndex].text}</p>
+            )}
             {/* Bubble tail */}
             <div className="absolute -bottom-[6px] right-7 w-3 h-3 bg-card/95 border-b border-r border-primary/20 rotate-45" />
           </motion.div>
@@ -181,7 +201,7 @@ const FloatingMascot = () => {
             <motion.img
               src={mascotImage}
               alt="Mr. CAP"
-              className="w-24 h-auto md:w-28 pointer-events-none"
+              className={`pointer-events-none transition-all duration-500 ${isSupersized ? "w-48 md:w-56" : "w-24 md:w-28"} h-auto`}
               animate={imgControls}
               whileHover={{
                 scale: 1.12,
