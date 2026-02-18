@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CitationBlock from "@/components/CitationBlock";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Play, ExternalLink, Music as MusicIcon, Disc3, ArrowRight, Headphones } from "lucide-react";
+import { ChevronRight, Play, ExternalLink, Music as MusicIcon, Disc3, ArrowRight, Headphones, Heart, Clock } from "lucide-react";
 import TrackRow from "@/components/player/TrackRow";
 import { useAlbums, useLatestTracks, useAllTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
@@ -171,43 +171,39 @@ const Music = () => {
           <section className="relative z-10 pt-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative mt-8 sm:mt-16">
-                <div className="absolute -top-8 inset-0 bg-gradient-to-r from-violet-500/30 via-fuchsia-500/20 to-indigo-500/30 h-56 max-w-5xl rounded-[28px] mx-auto blur-2xl" />
-                <div className="relative backdrop-blur-2xl bg-card/30 ring-1 ring-border/20 rounded-2xl overflow-hidden max-w-5xl mx-auto" style={{ maskImage: 'linear-gradient(black 0%, black 70%, transparent 100%)' }}>
-                  <div className="p-6 sm:p-8">
-                    <div className="flex flex-col md:flex-row gap-8 items-center">
-                      <div className="relative group">
-                        <img
-                          src={albumTies}
-                          alt="The Ties That Bind Us album cover"
-                          className="w-48 h-48 sm:w-64 sm:h-64 rounded-xl object-cover shadow-2xl group-hover:scale-[1.02] transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                            <Play className="w-8 h-8 text-white ml-1" fill="white" />
-                          </div>
-                        </div>
-                        <div className="absolute -top-3 -right-3 bg-gradient-to-r from-violet-500 to-indigo-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                          NEW ALBUM
+                <div className="relative rounded-2xl bg-card/50 border border-border/20 overflow-hidden max-w-5xl mx-auto p-6 sm:p-10">
+                  <div className="flex flex-col md:flex-row gap-8 items-center">
+                    <div className="relative group shrink-0">
+                      <img
+                        src={albumTies}
+                        alt="The Ties That Bind Us album cover"
+                        className="w-40 h-40 sm:w-44 sm:h-44 rounded-xl object-cover shadow-2xl group-hover:scale-[1.02] transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                        <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                          <Play className="w-7 h-7 text-white ml-0.5" fill="white" />
                         </div>
                       </div>
-                      <div className="flex-1 text-center md:text-left">
-                        <span className="inline-flex items-center gap-2 text-violet-400 text-sm font-medium mb-3">
-                          <Disc3 className="w-4 h-4 animate-spin" style={{ animationDuration: "3s" }} />
-                          FEATURED RELEASE
-                        </span>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground mb-3 tracking-tight">
-                          The Ties That Bind Us
-                        </h2>
-                        <p className="text-muted-foreground mb-6 max-w-lg">
-                          More than an album—it's a life story scored in 808s. From Third Ward lessons to blockchain boardrooms, Mr. CAP turns years of struggle, hustle, and growth into a soundtrack for people betting on themselves.
-                        </p>
-                        <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                          <Button variant="flux" asChild>
-                            <Link to="/album/the-ties-that-bind-us">
-                              <Play className="mr-2 h-4 w-4" /> Play Album
-                            </Link>
-                          </Button>
-                        </div>
+                    </div>
+                    <div className="flex-1 text-center md:text-left">
+                      <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
+                        Featured Album
+                      </span>
+                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-foreground mb-3 tracking-tight leading-tight">
+                        The Ties That<br className="hidden sm:block" /> Bind Us
+                      </h2>
+                      <p className="text-sm text-muted-foreground mb-6 max-w-md">
+                        More than an album—it's a life story scored in 808s. From Third Ward lessons to blockchain boardrooms, Mr. CAP turns years of struggle into a soundtrack for people betting on themselves.
+                      </p>
+                      <div className="flex items-center gap-3 justify-center md:justify-start">
+                        <Button variant="outline" className="rounded-full gap-2 px-6 border-border/40 hover:bg-secondary/50" asChild>
+                          <Link to="/album/the-ties-that-bind-us">
+                            <Play className="w-4 h-4" /> Play Now
+                          </Link>
+                        </Button>
+                        <button className="w-10 h-10 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-colors">
+                          <Heart className="w-4 h-4" />
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -256,10 +252,10 @@ const Music = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-1 px-1">
+              <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide -mx-1 px-1">
                 {tracksLoading
                   ? Array.from({ length: 5 }).map((_, i) => (
-                      <div key={i} className="min-w-[180px] aspect-square rounded-2xl bg-secondary/50 animate-pulse shrink-0" />
+                      <div key={i} className="min-w-[220px] aspect-[4/5] rounded-xl bg-secondary/50 animate-pulse shrink-0" />
                     ))
                   : latestTracks?.map((track) => {
                       const queue = latestTracks || [];
@@ -268,9 +264,9 @@ const Music = () => {
                         <button
                           key={track.id}
                           onClick={() => track.audio_url && playTrack(track, queue, idx)}
-                          className="group min-w-[180px] shrink-0 text-left"
+                          className="group min-w-[220px] shrink-0 text-left"
                         >
-                          <div className="relative aspect-square rounded-2xl overflow-hidden mb-3">
+                          <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-3">
                             <img
                               src={track.cover_art_url || "/placeholder.svg"}
                               alt={track.title}
@@ -296,13 +292,13 @@ const Music = () => {
               <h2 className="text-lg font-semibold text-foreground tracking-tight mb-6">Your Mix</h2>
               <div className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl overflow-hidden">
                 {/* Table header */}
-                <div className="hidden sm:grid grid-cols-[40px_1fr_1fr_100px_60px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/10">
+                <div className="hidden sm:grid grid-cols-[40px_1fr_1fr_120px_60px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/10">
                   <span>#</span>
                   <span>Title</span>
                   <span>Album</span>
-                  <span>Year</span>
+                  <span>Added</span>
                   <span className="text-right">
-                    <MusicIcon className="w-3.5 h-3.5 inline" />
+                    <Clock className="w-3.5 h-3.5 inline" />
                   </span>
                 </div>
 
@@ -316,7 +312,7 @@ const Music = () => {
                       <button
                         key={track.id}
                         onClick={() => track.audio_url && playTrack(track, queue, i)}
-                        className="group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_1fr_100px_60px] gap-3 px-5 py-3 text-left hover:bg-secondary/40 transition-colors border-b border-border/5 last:border-b-0"
+                      className="group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_1fr_120px_60px] gap-3 px-5 py-3 text-left hover:bg-secondary/40 transition-colors border-b border-border/5 last:border-b-0"
                       >
                         {/* Number / Play icon */}
                         <span className="flex items-center text-sm text-muted-foreground tabular-nums">
@@ -342,7 +338,7 @@ const Music = () => {
                           {albums?.find(a => a.id === track.album_id)?.title || '—'}
                         </span>
 
-                        {/* Year (hidden on mobile) */}
+                        {/* Added (hidden on mobile) */}
                         <span className="hidden sm:flex items-center text-xs text-muted-foreground">
                           {track.release_year || '—'}
                         </span>
