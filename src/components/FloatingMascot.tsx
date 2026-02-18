@@ -9,6 +9,11 @@ const TIPS = [
   { text: "Hit up the merch store 🔥", href: "/merch" },
   { text: "Book a show — let's connect!", href: "/booking" },
   { text: "Stream the new album now 🎧", href: "/listen" },
+  { text: "Peep the NFT collection 🖼️", href: "/nft-gallery" },
+  { text: "Read what the press says 📰", href: "/press" },
+  { text: "Get to know the real CAP 💯", href: "/about" },
+  { text: "Watch the latest visuals 🎬", href: "/music" },
+  { text: "See where CAP's performing 🎤", href: "/live" },
 ];
 
 const FloatingMascot = () => {
