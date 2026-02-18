@@ -252,10 +252,10 @@ const Music = () => {
                 </div>
               </div>
 
-              <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide -mx-1 px-1">
+              <div className="flex gap-7 overflow-x-auto pb-4 scrollbar-hide -mx-1 px-1">
                 {tracksLoading
                   ? Array.from({ length: 5 }).map((_, i) => (
-                      <div key={i} className="min-w-[220px] aspect-[4/5] rounded-xl bg-secondary/50 animate-pulse shrink-0" />
+                      <div key={i} className="min-w-[220px] aspect-square rounded-xl bg-secondary/50 animate-pulse shrink-0" />
                     ))
                   : latestTracks?.map((track) => {
                       const queue = latestTracks || [];
@@ -266,7 +266,7 @@ const Music = () => {
                           onClick={() => track.audio_url && playTrack(track, queue, idx)}
                           className="group min-w-[220px] shrink-0 text-left"
                         >
-                          <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-3">
+                          <div className="relative aspect-square rounded-xl overflow-hidden mb-3">
                             <img
                               src={track.cover_art_url || "/placeholder.svg"}
                               alt={track.title}
