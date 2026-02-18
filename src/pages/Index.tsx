@@ -6,7 +6,7 @@ import AboutSection from "@/components/AboutSection";
 import MusicSection from "@/components/MusicSection";
 import SpotifySection from "@/components/SpotifySection";
 import LiveSection from "@/components/LiveSection";
-import PressSection from "@/components/PressSection";
+
 import VideoSection from "@/components/VideoSection";
 import VenturesSection from "@/components/VenturesSection";
 import NftMilestoneSection from "@/components/NftMilestoneSection";
@@ -201,8 +201,6 @@ const Index = () => {
           <SpotifySection />
           <SectionDivider />
           <LiveSection />
-          <SectionDivider />
-          <PressSection />
           <SectionDivider />
           <VideoSection />
           <SectionDivider />

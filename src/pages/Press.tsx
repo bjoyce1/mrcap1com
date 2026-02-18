@@ -8,6 +8,7 @@ import PressTimeline from "@/components/PressTimeline";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image, Mic, Award, Music, Users, Calendar, MapPin, Globe } from "lucide-react";
 import BookingCard from "@/components/BookingCard";
+import PressSection from "@/components/PressSection";
 
 // Featured press article (Houston Press)
 const featuredArticle = {
@@ -489,6 +490,9 @@ const Press = () => {
               </div>
             </div>
           </section>
+
+          {/* Media Press & Notable Appearances */}
+          <PressSection />
 
           {/* Quick Facts for Journalists */}
           <section className="py-16 bg-card/20 border-b border-border/50">
