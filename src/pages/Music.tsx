@@ -239,72 +239,156 @@ const Music = () => {
             </div>
           </section>
 
-          {/* CAP STREAM — Live Track Lists */}
-          <div className="max-w-6xl mx-auto px-6 pb-32 space-y-14 pt-16">
-            {/* Start Here */}
+          {/* ── Muse-style content below ── */}
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-32 pt-16 space-y-16">
+
+            {/* Recently Played — Horizontal Scroll Cards */}
             <div ref={startHereRef}>
-              <h2 className="text-xl font-display text-foreground mb-2 flex items-center gap-2">
-                <Play className="w-5 h-5 text-primary" /> Start Here
-              </h2>
-              <p className="text-sm text-muted-foreground mb-4">New to CAP? These 5 tracks tell the story.</p>
-              <div className="bg-card/50 rounded-xl border border-primary/20 overflow-hidden divide-y divide-border/10">
-                {tracksLoading ? (
-                  <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
-                ) : (
-                  latestTracks?.slice(0, 5).map((track, i) => (
-                    <TrackRow key={track.id} track={track} index={i} queue={latestTracks?.slice(0, 5) || []} />
-                  ))
-                )}
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-foreground tracking-tight">Recently Played</h2>
+                <div className="flex items-center gap-2">
+                  <button className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-colors">
+                    <ChevronRight className="w-4 h-4 rotate-180" />
+                  </button>
+                  <button className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-colors">
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-1 px-1">
+                {tracksLoading
+                  ? Array.from({ length: 5 }).map((_, i) => (
+                      <div key={i} className="min-w-[180px] aspect-square rounded-2xl bg-secondary/50 animate-pulse shrink-0" />
+                    ))
+                  : latestTracks?.map((track) => {
+                      const queue = latestTracks || [];
+                      const idx = queue.findIndex(t => t.id === track.id);
+                      return (
+                        <button
+                          key={track.id}
+                          onClick={() => track.audio_url && playTrack(track, queue, idx)}
+                          className="group min-w-[180px] shrink-0 text-left"
+                        >
+                          <div className="relative aspect-square rounded-2xl overflow-hidden mb-3">
+                            <img
+                              src={track.cover_art_url || "/placeholder.svg"}
+                              alt={track.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
+                              <div className="w-12 h-12 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-lg shadow-primary/30">
+                                <Play className="w-5 h-5 text-primary-foreground ml-0.5" fill="currentColor" />
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm font-medium text-foreground truncate">{track.title}</p>
+                          <p className="text-xs text-muted-foreground truncate">{track.artist}{track.featured_artists ? ` ft. ${track.featured_artists}` : ''}</p>
+                        </button>
+                      );
+                    })}
               </div>
             </div>
 
-            {/* Latest Releases */}
+            {/* Your Mix — Table-style Track List */}
             <div ref={latestRef}>
-              <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
-                <MusicIcon className="w-5 h-5 text-primary" /> Latest Releases
-              </h2>
-              <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
+              <h2 className="text-lg font-semibold text-foreground tracking-tight mb-6">Your Mix</h2>
+              <div className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl overflow-hidden">
+                {/* Table header */}
+                <div className="hidden sm:grid grid-cols-[40px_1fr_1fr_100px_60px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/10">
+                  <span>#</span>
+                  <span>Title</span>
+                  <span>Album</span>
+                  <span>Year</span>
+                  <span className="text-right">
+                    <MusicIcon className="w-3.5 h-3.5 inline" />
+                  </span>
+                </div>
+
+                {/* Table rows */}
                 {tracksLoading ? (
-                  <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
+                  <div className="p-10 text-center text-muted-foreground">Loading tracks...</div>
                 ) : (
-                  latestTracks?.map((track, i) => (
-                    <TrackRow key={track.id} track={track} index={i} queue={latestTracks} />
-                  ))
+                  allTracks?.map((track, i) => {
+                    const queue = allTracks || [];
+                    return (
+                      <button
+                        key={track.id}
+                        onClick={() => track.audio_url && playTrack(track, queue, i)}
+                        className="group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_1fr_100px_60px] gap-3 px-5 py-3 text-left hover:bg-secondary/40 transition-colors border-b border-border/5 last:border-b-0"
+                      >
+                        {/* Number / Play icon */}
+                        <span className="flex items-center text-sm text-muted-foreground tabular-nums">
+                          <span className="group-hover:hidden">{i + 1}</span>
+                          <Play className="hidden group-hover:block w-4 h-4 text-primary" />
+                        </span>
+
+                        {/* Title + Artist + cover */}
+                        <span className="flex items-center gap-3 min-w-0">
+                          <img
+                            src={track.cover_art_url || "/placeholder.svg"}
+                            alt={track.title}
+                            className="w-10 h-10 rounded-lg object-cover shrink-0"
+                          />
+                          <span className="min-w-0">
+                            <p className="text-sm font-medium text-foreground truncate">{track.title}</p>
+                            <p className="text-xs text-muted-foreground truncate">{track.artist}{track.featured_artists ? ` ft. ${track.featured_artists}` : ''}</p>
+                          </span>
+                        </span>
+
+                        {/* Album (hidden on mobile) */}
+                        <span className="hidden sm:flex items-center text-sm text-muted-foreground truncate">
+                          {albums?.find(a => a.id === track.album_id)?.title || '—'}
+                        </span>
+
+                        {/* Year (hidden on mobile) */}
+                        <span className="hidden sm:flex items-center text-xs text-muted-foreground">
+                          {track.release_year || '—'}
+                        </span>
+
+                        {/* Duration */}
+                        <span className="flex items-center justify-end text-xs text-muted-foreground tabular-nums">
+                          {track.duration > 0 ? `${Math.floor(track.duration / 60)}:${(track.duration % 60).toString().padStart(2, '0')}` : '—'}
+                        </span>
+                      </button>
+                    );
+                  })
                 )}
               </div>
             </div>
 
-            {/* Albums Grid */}
+            {/* Albums Grid — Card style */}
             <div ref={albumsRef}>
-              <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
+              <h2 className="text-lg font-semibold text-foreground tracking-tight mb-6 flex items-center gap-2">
                 <Disc3 className="w-5 h-5 text-primary" /> Albums
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
                 {albumsLoading
                   ? Array.from({ length: 5 }).map((_, i) => (
-                      <div key={i} className="aspect-square bg-secondary rounded-xl animate-pulse" />
+                      <div key={i} className="aspect-square rounded-2xl bg-secondary/50 animate-pulse" />
                     ))
                   : albums?.map((album) => (
                       <Link
                         key={album.id}
                         to={`/album/${album.slug}`}
-                        className="group relative aspect-square rounded-xl overflow-hidden bg-secondary border border-border/30 hover:border-primary/40 transition-all hover:shadow-glow"
+                        className="group text-left"
                       >
-                        <img
-                          src={album.cover_art_url || "/placeholder.svg"}
-                          alt={album.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-3">
-                          <p className="text-sm font-medium text-white truncate">{album.title}</p>
-                          <p className="text-xs text-white/60">{album.release_year} · {album.artist}</p>
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-lg shadow-primary/40">
-                            <Play className="w-6 h-6" />
+                        <div className="relative aspect-square rounded-2xl overflow-hidden mb-3 ring-1 ring-border/10 hover:ring-primary/30 transition-all">
+                          <img
+                            src={album.cover_art_url || "/placeholder.svg"}
+                            alt={album.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
+                            <div className="w-12 h-12 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-lg shadow-primary/30">
+                              <Play className="w-5 h-5 text-primary-foreground ml-0.5" fill="currentColor" />
+                            </div>
                           </div>
                         </div>
+                        <p className="text-sm font-medium text-foreground truncate">{album.title}</p>
+                        <p className="text-xs text-muted-foreground">{album.release_year} · {album.artist}</p>
                       </Link>
                     ))}
               </div>
@@ -313,24 +397,52 @@ const Music = () => {
             {/* Singles & Features */}
             {singles.length > 0 && (
               <div ref={singlesRef}>
-                <h2 className="text-xl font-display text-foreground mb-4">Singles & Features</h2>
-                <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
+                <h2 className="text-lg font-semibold text-foreground tracking-tight mb-6">Singles & Features</h2>
+                <div className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl overflow-hidden">
+                  <div className="hidden sm:grid grid-cols-[40px_1fr_1fr_100px_60px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/10">
+                    <span>#</span>
+                    <span>Title</span>
+                    <span>Label</span>
+                    <span>Year</span>
+                    <span className="text-right"><MusicIcon className="w-3.5 h-3.5 inline" /></span>
+                  </div>
                   {singles.map((track, i) => (
-                    <TrackRow key={track.id} track={track} index={i} queue={singles} />
+                    <button
+                      key={track.id}
+                      onClick={() => track.audio_url && playTrack(track, singles, i)}
+                      className="group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_1fr_100px_60px] gap-3 px-5 py-3 text-left hover:bg-secondary/40 transition-colors border-b border-border/5 last:border-b-0"
+                    >
+                      <span className="flex items-center text-sm text-muted-foreground tabular-nums">
+                        <span className="group-hover:hidden">{i + 1}</span>
+                        <Play className="hidden group-hover:block w-4 h-4 text-primary" />
+                      </span>
+                      <span className="flex items-center gap-3 min-w-0">
+                        <img src={track.cover_art_url || "/placeholder.svg"} alt={track.title} className="w-10 h-10 rounded-lg object-cover shrink-0" />
+                        <span className="min-w-0">
+                          <p className="text-sm font-medium text-foreground truncate">{track.title}</p>
+                          <p className="text-xs text-muted-foreground truncate">{track.artist}{track.featured_artists ? ` ft. ${track.featured_artists}` : ''}</p>
+                        </span>
+                      </span>
+                      <span className="hidden sm:flex items-center text-sm text-muted-foreground truncate">—</span>
+                      <span className="hidden sm:flex items-center text-xs text-muted-foreground">{track.release_year || '—'}</span>
+                      <span className="flex items-center justify-end text-xs text-muted-foreground tabular-nums">
+                        {track.duration > 0 ? `${Math.floor(track.duration / 60)}:${(track.duration % 60).toString().padStart(2, '0')}` : '—'}
+                      </span>
+                    </button>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Spotify Artist Embed */}
+            {/* Spotify Embed */}
             <div>
-              <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
-                <svg className="w-5 h-5 text-[#1DB954]" viewBox="0 0 24 24" fill="currentColor">
+              <h2 className="text-lg font-semibold text-foreground tracking-tight mb-6 flex items-center gap-2">
+                <svg className="w-5 h-5 text-[hsl(141,73%,42%)]" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
                 </svg>
                 Full Catalog on Spotify
               </h2>
-              <div className="bg-card/50 rounded-xl border border-border/30 p-4">
+              <div className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl p-4">
                 <iframe
                   style={{ borderRadius: 12 }}
                   src="https://open.spotify.com/embed/artist/69pjfQNXA1xjusnI2wfgug?utm_source=generator&theme=0"
