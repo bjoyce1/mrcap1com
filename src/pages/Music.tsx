@@ -1,133 +1,23 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useRef, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CitationBlock from "@/components/CitationBlock";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Play, ExternalLink, Music as MusicIcon, Disc3, ArrowRight } from "lucide-react";
+import { ChevronRight, Play, ExternalLink, Music as MusicIcon, Disc3, ArrowRight, Headphones } from "lucide-react";
+import TrackRow from "@/components/player/TrackRow";
+import { useAlbums, useLatestTracks, useAllTracks } from "@/hooks/useStreamingData";
+import { usePlayerStore } from "@/stores/playerStore";
+import { trackEvent } from "@/components/GoogleAnalytics";
+import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 import albumBetn from "@/assets/betn-on-me.png";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
-import albumGrave from "@/assets/album-grave.jpg";
-import albumColdAss from "@/assets/album-cold-ass-pimp.jpg";
-import albumOneOnOne from "@/assets/album-one-on-one.jpg";
 import albumTies from "@/assets/album-ties.jpg";
 import dippinMetaverse from "@/assets/dippin-metaverse.png";
-import southernSounds from "@/assets/southern-sounds.jpg";
-import boutToBlow from "@/assets/bout-to-blow.png";
-import hTownRepresent from "@/assets/h-town-represent.png";
 import limitless from "@/assets/limitless.webp";
 import socialMediaHoStroll from "@/assets/social-media-ho-stroll.jpg";
-
-const albums = [
-  {
-    title: "The Ties That Bind Us",
-    year: "2024",
-    image: albumTies,
-    spotify: "https://open.spotify.com/album/...",
-    apple: "https://music.apple.com/us/album/the-ties-that-bind-us/1770685229",
-    type: "SPC Album",
-    tracks: 19,
-    description: "South Park Coalition group album featuring K-Rino, Point Blank, Klondike Kat, and more. Over an hour of Houston underground.",
-    featured: true,
-  },
-  {
-    title: "Bet'n On Me",
-    year: "2024",
-    image: albumBetn,
-    spotify: "https://open.spotify.com/track/...",
-    apple: "https://music.apple.com/...",
-    type: "Single",
-    description: "Lead single from The Ties That Bind Us. An anthem for hustlers betting on themselves.",
-  },
-  {
-    title: "Social Media is a Ho Stroll",
-    year: "2024",
-    image: socialMediaHoStroll,
-    spotify: "https://open.spotify.com/...",
-    apple: "https://music.apple.com/...",
-    type: "Single",
-    description: "Featuring Ai'Eshsa. A reflection on the pitfalls of social media culture.",
-  },
-  {
-    title: "Dippin Thru the Metaverse",
-    year: "2023",
-    image: dippinMetaverse,
-    spotify: "https://www.sound.xyz/mrcap/releases",
-    apple: "https://www.sound.xyz/mrcap/releases",
-    type: "Single",
-    description: "Produced by Ciddy Boi P. Fuses Houston street narratives with futuristic production and blockchain culture.",
-  },
-  {
-    title: "Southern Sounds (Ultra ISM)",
-    year: "2023",
-    image: southernSounds,
-    spotify: "https://open.spotify.com/...",
-    apple: "https://music.apple.com/us/album/southern-sounds-ultra-ism-feat-venita-vyne-single/1715088888",
-    type: "Single",
-    description: "Featuring Venita Vyne. Released on Power Camp.",
-  },
-  {
-    title: "I'm Bout To Blow",
-    year: "2013",
-    image: boutToBlow,
-    spotify: "https://open.spotify.com/...",
-    apple: "https://music.apple.com/...",
-    type: "Single",
-    description: "Classic street anthem from 2013.",
-  },
-  {
-    title: "H-Town Represent",
-    year: "2023",
-    image: hTownRepresent,
-    spotify: "https://open.spotify.com/...",
-    apple: "https://music.apple.com/us/album/h-town-represent-feat-ciddy-boi-p-single/1681810016",
-    type: "Single",
-    description: "Featuring Ciddy Boi P. A high-energy homage to Houston.",
-  },
-  {
-    title: "Where the Bag At (Extended)",
-    year: "2023",
-    image: albumBetn,
-    spotify: "https://open.spotify.com/...",
-    apple: "https://music.apple.com/us/album/where-the-bag-at-extended-feat-devyn-kelly-single/1683108665",
-    type: "Single",
-    description: "Featuring Devyn Kelly.",
-  },
-  {
-    title: "The Art of ISM",
-    year: "2019",
-    image: albumArtOfIsm,
-    spotify: "https://open.spotify.com/album/...",
-    apple: "https://music.apple.com/...",
-    type: "Album",
-    tracks: 11,
-    label: "Sony Music / The Orchard",
-    description: "Features production from Zaytoven and Metro Boomin.",
-  },
-  {
-    title: "2 Tha Grave",
-    year: "2011",
-    image: albumGrave,
-    spotify: "https://open.spotify.com/album/...",
-    type: "Album",
-    description: "Debut album introducing the signature blend of raw lyricism and Southern grit.",
-  },
-  {
-    title: "Tha Cold Ass Pimp",
-    year: "2006",
-    image: albumColdAss,
-    type: "Mixtape",
-    description: "Critically acclaimed mixtape showcasing versatility and street credibility.",
-  },
-  {
-    title: "O.N.E. on O.N.E.",
-    year: "2005",
-    image: albumOneOnOne,
-    type: "Album",
-    description: "Debut solo album establishing Houston's underground meets conscious lyricism.",
-  },
-];
 
 const streamingPlatforms = [
   { name: "Spotify", url: "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug", color: "bg-[#1DB954]" },
@@ -138,6 +28,47 @@ const streamingPlatforms = [
 ];
 
 const Music = () => {
+  const { data: albums, isLoading: albumsLoading } = useAlbums();
+  const { data: latestTracks, isLoading: tracksLoading } = useLatestTracks(8);
+  const { data: allTracks } = useAllTracks();
+  const { playTrack } = usePlayerStore();
+
+  const startHereRef = useRef<HTMLDivElement>(null);
+  const latestRef = useRef<HTMLDivElement>(null);
+  const albumsRef = useRef<HTMLDivElement>(null);
+  const singlesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    trackEvent("player_loaded", { page_path: "/music", source: "music" });
+  }, []);
+
+  // GSAP scroll animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      [startHereRef, latestRef, albumsRef, singlesRef].forEach((ref) => {
+        if (ref.current) {
+          gsap.from(ref.current, {
+            y: 40, opacity: 0, duration: 0.7, ease: "power2.out",
+            scrollTrigger: { trigger: ref.current, start: "top 85%", toggleActions: "play none none none" },
+          });
+        }
+      });
+    });
+    return () => ctx.revert();
+  }, [latestTracks, albums, allTracks]);
+
+  const singles = allTracks?.filter(t => !t.album_id) || [];
+
+  const handlePlayAll = () => {
+    if (allTracks && allTracks.length > 0) {
+      const playable = allTracks.filter(t => t.audio_url);
+      if (playable.length > 0) {
+        playTrack(playable[0], playable, 0);
+        trackEvent("album_play", { page_path: "/music", source: "music" });
+      }
+    }
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -146,13 +77,7 @@ const Music = () => {
         "name": "Mr. CAP Discography",
         "description": "Complete discography of Houston hip-hop artist Mr. CAP including albums, singles, and collaborations.",
         "url": "https://mrcap1.com/music",
-        "numTracks": 50,
-        "track": albums.filter(a => a.type === "Album" || a.type === "SPC Album").map(album => ({
-          "@type": "MusicRecording",
-          "name": album.title,
-          "datePublished": album.year,
-          "byArtist": { "@type": "Person", "name": "Mr. CAP" }
-        }))
+        "numTracks": allTracks?.length || 0,
       },
       {
         "@type": "MusicAlbum",
@@ -161,7 +86,6 @@ const Music = () => {
         "genre": ["Hip-Hop", "Southern Rap"],
         "datePublished": "2024-10-18",
         "numTracks": 19,
-        "track": [{ "@type": "MusicRecording", "name": "Bet'n On Me" }]
       },
       {
         "@type": "BreadcrumbList",
@@ -176,25 +100,22 @@ const Music = () => {
   return (
     <>
       <Helmet>
-        <title>Music by Mr. CAP | Albums, Singles & Discography | Houston Hip-Hop</title>
-        <meta name="description" content="Stream albums, singles and music from Mr. CAP – Houston hip-hop artist and South Park Coalition original member. Explore The Ties That Bind Us, The Art of ISM, 2 Tha Grave, and more." />
+        <title>Music by Mr. CAP | Stream, Albums & Discography | Houston Hip-Hop</title>
+        <meta name="description" content="Stream Mr. CAP's full catalog — albums, singles and music from Houston's underground hip-hop pioneer. South Park Coalition original member." />
         <link rel="canonical" href="https://mrcap1.com/music" />
-        
-        <meta property="og:title" content="Music by Mr. CAP | Albums, Singles & Discography" />
+        <meta property="og:title" content="Music by Mr. CAP | Stream & Discography" />
         <meta property="og:description" content="Stream the complete discography of Houston hip-hop pioneer Mr. CAP." />
         <meta property="og:type" content="music.album" />
         <meta property="og:url" content="https://mrcap1.com/music" />
-        
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
-      <div className="min-h-screen bg-[#000000] text-zinc-100">
+      <div className="min-h-screen bg-background text-foreground">
         <Navigation />
-        
+
         <main>
           {/* Video Hero Section */}
           <section className="relative w-full h-[70vh] sm:h-[80vh] overflow-hidden">
-            {/* YouTube Video Embed */}
             <div className="absolute inset-0">
               <iframe
                 src="https://www.youtube.com/embed/3G3_rIwKRTE?autoplay=1&mute=1&loop=1&playlist=3G3_rIwKRTE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
@@ -205,49 +126,53 @@ const Music = () => {
                 style={{ border: 'none' }}
               />
             </div>
-            {/* Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/40 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
 
-            {/* Content */}
             <div className="relative z-10 h-full flex flex-col justify-end max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
-              {/* Breadcrumb */}
-              <nav className="absolute top-28 left-4 sm:left-6 lg:left-8 flex items-center gap-2 text-sm text-neutral-400 animate-fade-in">
-                <Link to="/" className="hover:text-white transition-colors">Home</Link>
+              <nav className="absolute top-28 left-4 sm:left-6 lg:left-8 flex items-center gap-2 text-sm text-muted-foreground animate-fade-in">
+                <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
                 <ChevronRight className="w-4 h-4" />
-                <span className="text-white">Music</span>
+                <span className="text-foreground">Music</span>
               </nav>
+
+              <div className="flex items-center gap-2 mb-4">
+                <Headphones className="w-5 h-5 text-primary" />
+                <span className="text-xs uppercase tracking-widest text-primary font-medium">CAP STREAM</span>
+              </div>
 
               <div className="flex flex-col sm:flex-row gap-8 items-end justify-between">
                 <div className="flex-1">
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight text-white leading-tight drop-shadow-2xl">
-                    20+ Years. 6 Albums. Countless Stories.
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight text-foreground leading-tight drop-shadow-2xl">
+                    20+ Years. 6 Albums. Stream Direct.
                   </h1>
                 </div>
-                <div className="flex flex-col flex-1 text-left sm:text-right max-w-md space-y-6 items-start sm:items-end">
-                  <p className="text-base sm:text-lg text-white/80 max-w-sm drop-shadow-lg">
-                    From South Park streets to streaming platforms worldwide—Mr. CAP's discography spans two decades of Houston hip-hop.
+                <div className="flex flex-col flex-1 text-left sm:text-right max-w-md space-y-4 items-start sm:items-end">
+                  <p className="text-base sm:text-lg text-muted-foreground max-w-sm drop-shadow-lg">
+                    Mr. CAP's full catalog — Houston hip hop straight from the source. No middleman.
                   </p>
-                  <Button variant="flux" size="lg" className="group">
-                    Stream Now
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>{allTracks?.length || 0} tracks</span>
+                    <span className="w-1 h-1 rounded-full bg-muted-foreground" />
+                    <span>{albums?.length || 0} albums</span>
+                  </div>
+                  <button
+                    onClick={handlePlayAll}
+                    className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105"
+                  >
+                    <Play className="w-5 h-5" /> Play All
+                  </button>
                 </div>
               </div>
             </div>
           </section>
 
-          <div className="pt-16">
-          {/* Featured Album Section */}
-          <section className="relative z-10">
+          {/* Featured Album */}
+          <section className="relative z-10 pt-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-              {/* Featured Album Preview with Glow */}
               <div className="relative mt-8 sm:mt-16">
-                {/* Glow */}
                 <div className="absolute -top-8 inset-0 bg-gradient-to-r from-violet-500/30 via-fuchsia-500/20 to-indigo-500/30 h-56 max-w-5xl rounded-[28px] mx-auto blur-2xl" />
-
-                <div className="relative backdrop-blur-2xl bg-white/[0.03] ring-1 ring-white/5 rounded-2xl overflow-hidden max-w-5xl mx-auto" style={{ maskImage: 'linear-gradient(black 0%, black 70%, transparent 100%)' }}>
+                <div className="relative backdrop-blur-2xl bg-card/30 ring-1 ring-border/20 rounded-2xl overflow-hidden max-w-5xl mx-auto" style={{ maskImage: 'linear-gradient(black 0%, black 70%, transparent 100%)' }}>
                   <div className="p-6 sm:p-8">
                     <div className="flex flex-col md:flex-row gap-8 items-center">
                       <div className="relative group">
@@ -270,20 +195,17 @@ const Music = () => {
                           <Disc3 className="w-4 h-4 animate-spin" style={{ animationDuration: "3s" }} />
                           FEATURED RELEASE
                         </span>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white mb-3 tracking-tight">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground mb-3 tracking-tight">
                           The Ties That Bind Us
                         </h2>
-                        <p className="text-neutral-400 mb-6 max-w-lg">
+                        <p className="text-muted-foreground mb-6 max-w-lg">
                           More than an album—it's a life story scored in 808s. From Third Ward lessons to blockchain boardrooms, Mr. CAP turns years of struggle, hustle, and growth into a soundtrack for people betting on themselves.
                         </p>
                         <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                          <Button variant="flux">
-                            <Play className="mr-2 h-4 w-4" />
-                            Play Album
-                          </Button>
-                          <Button variant="outline" className="bg-white/5 border-white/10 hover:bg-white/10 text-white">
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            Listen to "Bet'n On Me"
+                          <Button variant="flux" asChild>
+                            <Link to="/album/the-ties-that-bind-us">
+                              <Play className="mr-2 h-4 w-4" /> Play Album
+                            </Link>
                           </Button>
                         </div>
                       </div>
@@ -293,12 +215,11 @@ const Music = () => {
               </div>
             </div>
           </section>
-          </div>
 
           {/* Streaming Platforms */}
-          <section className="py-12 mt-16 border-y border-white/5 bg-white/[0.02]" style={{ backdropFilter: 'blur(20px)' }}>
+          <section className="py-12 mt-16 border-y border-border/20 bg-card/30" style={{ backdropFilter: 'blur(20px)' }}>
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
-              <p className="text-center text-neutral-400 mb-6">Stream on your favorite platform</p>
+              <p className="text-center text-muted-foreground mb-6">Stream on your favorite platform</p>
               <div className="flex flex-wrap justify-center gap-3">
                 {streamingPlatforms.map((platform) => (
                   <a
@@ -306,153 +227,133 @@ const Music = () => {
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-2 bg-card/50 border border-border/30 rounded-full px-5 py-2.5 hover:bg-card/80 transition-colors"
                     style={{ backdropFilter: 'blur(12px)' }}
                   >
                     <div className={`w-2 h-2 rounded-full ${platform.color}`} />
-                    <span className="text-sm font-medium text-white">{platform.name}</span>
-                    <ExternalLink className="w-3 h-3 text-neutral-400" />
+                    <span className="text-sm font-medium text-foreground">{platform.name}</span>
+                    <ExternalLink className="w-3 h-3 text-muted-foreground" />
                   </a>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* Albums Horizontal Scroll */}
-          <section className="py-16 px-4 sm:px-6">
-            <div className="max-w-6xl mx-auto">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">Discography</h2>
-                <span className="text-sm text-neutral-400">{albums.length} releases</span>
-              </div>
-              <div className="grid grid-flow-col auto-cols-[minmax(180px,1fr)] gap-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-thin">
-                {albums.map((album) => (
-                  <a
-                    key={album.title}
-                    href={album.spotify || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group border rounded-xl p-3 min-w-[180px] transition-all bg-white/[0.03] border-white/5 hover:bg-white/[0.06] hover:border-white/10"
-                    style={{ backdropFilter: 'blur(18px)' }}
-                  >
-                    <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
-                      <img
-                        src={album.image}
-                        alt={`${album.title} album cover`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      {album.featured && (
-                        <div className="absolute top-2 left-2 bg-gradient-to-r from-violet-500 to-indigo-500 text-white text-[10px] font-bold px-2 py-1 rounded-full">
-                          NEW
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                          <Play className="w-5 h-5 text-white ml-0.5" fill="white" />
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-sm font-medium text-white truncate">{album.title}</p>
-                    <p className="text-xs text-neutral-400">{album.type} • {album.year}</p>
-                  </a>
-                ))}
+          {/* CAP STREAM — Live Track Lists */}
+          <div className="max-w-6xl mx-auto px-6 pb-32 space-y-14 pt-16">
+            {/* Start Here */}
+            <div ref={startHereRef}>
+              <h2 className="text-xl font-display text-foreground mb-2 flex items-center gap-2">
+                <Play className="w-5 h-5 text-primary" /> Start Here
+              </h2>
+              <p className="text-sm text-muted-foreground mb-4">New to CAP? These 5 tracks tell the story.</p>
+              <div className="bg-card/50 rounded-xl border border-primary/20 overflow-hidden divide-y divide-border/10">
+                {tracksLoading ? (
+                  <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
+                ) : (
+                  latestTracks?.slice(0, 5).map((track, i) => (
+                    <TrackRow key={track.id} track={track} index={i} queue={latestTracks?.slice(0, 5) || []} />
+                  ))
+                )}
               </div>
             </div>
-          </section>
 
-          {/* Two Column Layout */}
-          <section className="py-8 px-4 sm:px-6">
-            <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6">
-              {/* Featured Tracks */}
-              <div className="border rounded-xl p-5 backdrop-blur-xl bg-white/[0.03] border-white/5" style={{ backdropFilter: 'blur(24px)' }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold tracking-tight text-white">Featured Tracks</h3>
-                </div>
-                <ul className="divide-y divide-white/5">
-                  {[
-                    { name: "Dippin Thru the Metaverse", album: "Single (2023)", duration: "3:45", image: dippinMetaverse },
-                    { name: "Bet'n On Me", album: "The Ties That Bind Us", duration: "3:45", image: albumBetn },
-                    { name: "Social Media is a Ho Stroll", album: "Single (2024)", duration: "3:32", image: socialMediaHoStroll },
-                    { name: "Words of ISM", album: "The Art of ISM", duration: "4:12", image: albumArtOfIsm },
-                    { name: "Limitless", album: "Single", duration: "3:58", image: limitless },
-                  ].map((track, i) => (
-                    <li key={i} className="flex items-center gap-3 py-3 group cursor-pointer hover:bg-white/[0.02] -mx-2 px-2 rounded-lg transition-colors">
-                      <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
-                        <img src={track.image} className="w-full h-full object-cover" alt={track.name} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white truncate">{track.name}</p>
-                        <p className="text-xs text-neutral-400 truncate">{track.album}</p>
-                      </div>
-                      <span className="text-xs text-neutral-400">{track.duration}</span>
-                      <button className="ml-2 p-1.5 rounded text-neutral-400 hover:text-white hover:bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Play className="w-4 h-4" />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+            {/* Latest Releases */}
+            <div ref={latestRef}>
+              <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
+                <MusicIcon className="w-5 h-5 text-primary" /> Latest Releases
+              </h2>
+              <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
+                {tracksLoading ? (
+                  <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
+                ) : (
+                  latestTracks?.map((track, i) => (
+                    <TrackRow key={track.id} track={track} index={i} queue={latestTracks} />
+                  ))
+                )}
               </div>
+            </div>
 
-              {/* Album Highlights */}
-              <div className="border rounded-xl p-5 backdrop-blur-xl bg-white/[0.03] border-white/5" style={{ backdropFilter: 'blur(24px)' }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold tracking-tight text-white">Album Highlights</h3>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  {albums.slice(0, 4).map((album) => (
-                    <a
-                      key={album.title}
-                      href={album.spotify || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group rounded-xl overflow-hidden border transition-colors border-white/5 bg-white/5 hover:bg-white/10"
-                    >
-                      <div className="aspect-[4/3] overflow-hidden">
+            {/* Albums Grid */}
+            <div ref={albumsRef}>
+              <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
+                <Disc3 className="w-5 h-5 text-primary" /> Albums
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {albumsLoading
+                  ? Array.from({ length: 5 }).map((_, i) => (
+                      <div key={i} className="aspect-square bg-secondary rounded-xl animate-pulse" />
+                    ))
+                  : albums?.map((album) => (
+                      <Link
+                        key={album.id}
+                        to={`/album/${album.slug}`}
+                        className="group relative aspect-square rounded-xl overflow-hidden bg-secondary border border-border/30 hover:border-primary/40 transition-all hover:shadow-glow"
+                      >
                         <img
-                          src={album.image}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          src={album.cover_art_url || "/placeholder.svg"}
                           alt={album.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                      </div>
-                      <div className="p-3">
-                        <p className="text-sm font-medium text-white truncate">{album.title}</p>
-                        <p className="text-xs text-neutral-400">{album.tracks ? `${album.tracks} tracks` : album.type} • {album.year}</p>
-                      </div>
-                    </a>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-3">
+                          <p className="text-sm font-medium text-white truncate">{album.title}</p>
+                          <p className="text-xs text-white/60">{album.release_year} · {album.artist}</p>
+                        </div>
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-lg shadow-primary/40">
+                            <Play className="w-6 h-6" />
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+              </div>
+            </div>
+
+            {/* Singles & Features */}
+            {singles.length > 0 && (
+              <div ref={singlesRef}>
+                <h2 className="text-xl font-display text-foreground mb-4">Singles & Features</h2>
+                <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
+                  {singles.map((track, i) => (
+                    <TrackRow key={track.id} track={track} index={i} queue={singles} />
                   ))}
                 </div>
               </div>
-            </div>
-          </section>
+            )}
 
-          {/* Spotify Embed */}
-          <section className="py-16 px-4 sm:px-6 border-t border-white/5 bg-white/[0.02]">
-            <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl font-semibold tracking-tight text-white text-center mb-8">Full Catalog on Spotify</h2>
-              <div className="max-w-3xl mx-auto rounded-xl overflow-hidden ring-1 ring-white/10">
+            {/* Spotify Artist Embed */}
+            <div>
+              <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5 text-[#1DB954]" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                </svg>
+                Full Catalog on Spotify
+              </h2>
+              <div className="bg-card/50 rounded-xl border border-border/30 p-4">
                 <iframe
+                  style={{ borderRadius: 12 }}
                   src="https://open.spotify.com/embed/artist/69pjfQNXA1xjusnI2wfgug?utm_source=generator&theme=0"
                   width="100%"
                   height="352"
                   frameBorder="0"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
-                  className="rounded-xl"
                 />
               </div>
             </div>
-          </section>
+          </div>
 
           {/* CTA */}
-          <section className="py-20 px-4 sm:px-6">
+          <section className="py-20 px-4 sm:px-6 border-t border-border/20">
             <div className="max-w-6xl mx-auto text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-violet-500/20 to-indigo-500/20 border border-white/10 mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-violet-500/20 to-indigo-500/20 border border-border/30 mb-6">
                 <MusicIcon className="w-8 h-8 text-violet-400" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4 tracking-tight">
                 Experience Live
               </h2>
-              <p className="text-neutral-400 max-w-xl mx-auto mb-8">
+              <p className="text-muted-foreground max-w-xl mx-auto mb-8">
                 Whether it's a packed Houston club or a festival stage in another city, Mr. CAP brings a raw, 
                 honest performance—built on decades of experience and a lifetime of stories.
               </p>
@@ -460,7 +361,7 @@ const Music = () => {
                 <Button variant="flux" asChild>
                   <Link to="/live">View Live Shows</Link>
                 </Button>
-                <Button variant="outline" className="bg-white/5 border-white/10 hover:bg-white/10 text-white" asChild>
+                <Button variant="fluxOutline" asChild>
                   <Link to="/nft">NFT Collection</Link>
                 </Button>
               </div>

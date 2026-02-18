@@ -88,7 +88,7 @@ const TrackPage = () => {
         <Navigation />
         <div className="pt-32 text-center">
           <p className="text-muted-foreground text-lg">Track not found</p>
-          <Link to="/listen" className="text-primary hover:underline mt-2 inline-block">← Back to Listen</Link>
+          <Link to="/music" className="text-primary hover:underline mt-2 inline-block">← Back to Music</Link>
         </div>
       </div>
     );
@@ -125,8 +125,8 @@ const TrackPage = () => {
       <section className="relative pt-28 pb-16 px-6">
         <div className="absolute inset-0 bg-orange-glow opacity-20 pointer-events-none" />
         <div className="max-w-4xl mx-auto relative">
-          <Link to="/listen" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6">
-            <ArrowLeft className="w-4 h-4" /> Back to Listen
+          <Link to="/music" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6">
+            <ArrowLeft className="w-4 h-4" /> Back to Music
           </Link>
 
           <div className="flex flex-col md:flex-row items-center gap-8 mb-10">

@@ -8,7 +8,7 @@ const TIPS = [
   { text: "Scroll down to explore more!", href: null },
   { text: "Hit up the merch store 🔥", href: "/merch" },
   { text: "Book a show — let's connect!", href: "/booking" },
-  { text: "Stream the new album now 🎧", href: "/listen" },
+  { text: "Stream the new album now 🎧", href: "/music" },
   { text: "Peep the NFT collection 🖼️", href: "/nft-gallery" },
   { text: "Read what the press says 📰", href: "/press" },
   { text: "Get to know the real CAP 💯", href: "/about" },
