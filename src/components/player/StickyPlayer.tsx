@@ -42,7 +42,15 @@ const StickyPlayer = () => {
   // Sync audio element with store
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !currentTrack?.audio_url) return;
+    if (!audio || !currentTrack) return;
+
+    // Clear previous audio when track has no audio_url
+    if (!currentTrack.audio_url) {
+      audio.pause();
+      audio.removeAttribute("src");
+      audio.load();
+      return;
+    }
     
     audio.src = currentTrack.audio_url;
     audio.volume = volume;
