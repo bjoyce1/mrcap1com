@@ -41,8 +41,11 @@ import {
   Disc3,
   Music,
 } from "lucide-react";
-import { useAlbums, useAllTracks } from "@/hooks/useStreamingData";
+import { useAlbums, useAllTracks, useAlbumTracks } from "@/hooks/useStreamingData";
+import albumArtOfIsm from "@/assets/album-art-of-ism.png";
 import { usePlayerStore, type Track } from "@/stores/playerStore";
+
+const ART_OF_ISM_ALBUM_ID = "b90a99fe-a3ea-4ed6-b6d7-a6fa236b4965";
 
 type ViewMode = "grid" | "list";
 type SortMode = "new" | "popular" | "title";
@@ -56,6 +59,7 @@ const formatTime = (s: number) => {
 export default function PremiumMusicSection() {
   const { data: albums } = useAlbums();
   const { data: allTracks } = useAllTracks();
+  const { data: artOfIsmTracks } = useAlbumTracks(ART_OF_ISM_ALBUM_ID);
   const { playTrack, currentTrack, isPlaying, togglePlay } = usePlayerStore();
 
   const [query, setQuery] = React.useState("");
@@ -281,6 +285,108 @@ export default function PremiumMusicSection() {
             </div>
           </div>
         </div>
+
+        {/* ═══════ ART OF ISM ALBUM PLAYER ═══════ */}
+        {artOfIsmTracks && artOfIsmTracks.length > 0 && (
+          <div className="mb-12 rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl overflow-hidden">
+            <div className="flex flex-col sm:flex-row gap-6 p-6 sm:p-8 border-b border-border/10">
+              <div className="relative group shrink-0 self-center sm:self-start">
+                <img
+                  src={albumArtOfIsm}
+                  alt="The Art of ISM album cover"
+                  className="w-32 h-32 sm:w-40 sm:h-40 rounded-xl object-cover shadow-2xl group-hover:scale-[1.02] transition-transform duration-500"
+                />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                  <button
+                    onClick={() => {
+                      const playable = artOfIsmTracks.filter(t => t.audio_url);
+                      if (playable.length > 0) handlePlay(playable[0], playable, 0);
+                    }}
+                    className="w-12 h-12 rounded-full bg-primary/90 backdrop-blur-md flex items-center justify-center shadow-lg shadow-primary/30"
+                  >
+                    <Play className="w-5 h-5 text-primary-foreground ml-0.5" fill="currentColor" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 text-center sm:text-left flex flex-col justify-center">
+                <Badge variant="secondary" className="text-[10px] w-fit mx-auto sm:mx-0 mb-2 bg-primary/10 text-primary border-primary/20">
+                  <Disc3 className="w-3 h-3 mr-1" /> Album · 11 Tracks
+                </Badge>
+                <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight mb-1">
+                  The Art of ISM
+                </h3>
+                <p className="text-sm text-muted-foreground mb-1">Mr. CAP · 2019 · Sony Music / The Orchard</p>
+                <p className="text-xs text-muted-foreground/70 mb-4 max-w-md">
+                  Features production by Zaytoven, Metro Boomin &amp; Mike Will Made-It. Deluxe Edition.
+                </p>
+                <div className="flex items-center gap-3 justify-center sm:justify-start">
+                  <Button
+                    variant="flux"
+                    size="sm"
+                    className="rounded-full gap-2"
+                    onClick={() => {
+                      const playable = artOfIsmTracks.filter(t => t.audio_url);
+                      if (playable.length > 0) handlePlay(playable[0], playable, 0);
+                    }}
+                  >
+                    <Play className="w-4 h-4" /> Play Album
+                  </Button>
+                  <Button variant="fluxOutline" size="sm" className="rounded-full gap-2" asChild>
+                    <Link to="/album/the-art-of-ism">
+                      View Album
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Track listing */}
+            <div className="hidden sm:grid grid-cols-[40px_1fr_60px] gap-3 px-6 py-2.5 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/5">
+              <span>#</span>
+              <span>Title</span>
+              <span className="text-right"><Clock className="w-3.5 h-3.5 inline" /></span>
+            </div>
+            {artOfIsmTracks.map((track, i) => {
+              const isCurrent = currentTrack?.id === track.id;
+              const isTrackPlaying = isCurrent && isPlaying;
+              return (
+                <button
+                  key={track.id}
+                  onClick={() => handlePlay(track, artOfIsmTracks, i)}
+                  className={`group w-full grid grid-cols-[40px_1fr_60px] gap-3 px-6 py-3 text-left transition-colors border-b border-border/5 last:border-b-0 ${
+                    isCurrent ? "bg-primary/5" : "hover:bg-secondary/40"
+                  }`}
+                >
+                  <span className="flex items-center text-sm tabular-nums">
+                    {isCurrent ? (
+                      isTrackPlaying ? (
+                        <Pause className="w-4 h-4 text-primary" />
+                      ) : (
+                        <Play className="w-4 h-4 text-primary" />
+                      )
+                    ) : (
+                      <>
+                        <span className="group-hover:hidden text-muted-foreground">{track.track_number ?? i + 1}</span>
+                        <Play className="hidden group-hover:block w-4 h-4 text-primary" />
+                      </>
+                    )}
+                  </span>
+                  <span className="flex items-center gap-3 min-w-0">
+                    <span className="min-w-0">
+                      <p className={`text-sm font-medium truncate ${isCurrent ? "text-primary" : "text-foreground"}`}>
+                        {track.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">{track.artist}</p>
+                    </span>
+                  </span>
+                  <span className="flex items-center justify-end text-xs text-muted-foreground tabular-nums">
+                    {track.duration > 0 ? formatTime(track.duration) : "—"}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* ═══════ CONTROLS ROW ═══════ */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
