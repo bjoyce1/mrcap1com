@@ -1,10 +1,9 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, Play, Crown, Star, ExternalLink, Hexagon, Triangle, Command, Ghost, Gem, Cpu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { MagneticWrapper } from '@/hooks/useMagneticHover';
-import { gsap } from '@/hooks/useGSAP';
 import { Progress } from '@/components/ui/progress';
 
 // --- Marquee platforms ---
@@ -66,23 +65,13 @@ export const NFTHeroSection = ({
 }: NFTHeroSectionProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        sectionRef.current!.querySelectorAll('.hero-animate'),
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.15 }
-      );
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  // GSAP entrance animation removed in favor of CSS keyframes for reliability on mobile
 
   return (
     <section
       ref={sectionRef}
       className={cn(
-        'relative w-full overflow-hidden bg-background text-foreground pt-32 pb-20 md:pt-40 md:pb-28',
+        'relative w-full overflow-hidden bg-background text-foreground pt-24 pb-12 md:pt-40 md:pb-28',
         className
       )}
     >
@@ -95,13 +84,13 @@ export const NFTHeroSection = ({
         .animate-nft-marquee { animation: nft-marquee 35s linear infinite; }
       `}</style>
 
-      {/* Background gradient mask */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/5" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,hsl(var(--primary)/0.15),transparent)]" />
+      {/* Background gradient mask - using pointer-events-none to ensure content is accessible */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background/80 to-accent/5 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,hsl(var(--primary)/0.15),transparent)] pointer-events-none" aria-hidden="true" />
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[60vh]">
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-0 lg:min-h-[60vh]">
 
           {/* --- LEFT COLUMN --- */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -115,7 +104,7 @@ export const NFTHeroSection = ({
             </div>
 
             {/* Heading */}
-            <h1 className="hero-animate text-5xl md:text-6xl lg:text-7xl font-display font-medium tracking-tighter leading-[0.95]">
+            <h1 className="hero-animate text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-medium tracking-tighter leading-[0.95]">
               Pioneering
               <br />
               <span className="text-gradient-orange">Digital Art</span>
@@ -124,13 +113,13 @@ export const NFTHeroSection = ({
             </h1>
 
             {/* Description */}
-            <p className="hero-animate mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed font-light">
+            <p className="hero-animate mt-4 md:mt-6 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed font-light">
               Houston hip-hop meets Web3. Explore MR. CAP's tokenized music,
               exclusive collaborations, and blockchain collectibles — crafted for collectors.
             </p>
 
             {/* CTA Buttons */}
-            <div className="hero-animate flex flex-wrap items-center gap-4 mt-8">
+            <div className="hero-animate flex flex-wrap items-center gap-4 mt-6 md:mt-8">
               <MagneticWrapper strength={0.25}>
                 <a
                   href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494"
@@ -206,14 +195,14 @@ export const NFTHeroSection = ({
             </div>
 
             {/* NFT Preview Cards — independent tilt */}
-            <div className="hero-animate relative h-[260px] md:h-[320px]">
+            <div className="hero-animate relative h-[200px] sm:h-[260px] md:h-[320px]">
               {/* Back card */}
-              <TiltCard className="absolute right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
+              <TiltCard className="absolute right-2 sm:right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
                 <img src={imageUrl2} alt="NFT Preview 2" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
               </TiltCard>
               {/* Front card */}
-              <TiltCard className="absolute left-4 top-0 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-primary/20 -rotate-3 shadow-2xl shadow-primary/20">
+              <TiltCard className="absolute left-2 sm:left-4 top-0 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-primary/20 -rotate-3 shadow-2xl shadow-primary/20">
                 <img src={imageUrl1} alt="NFT Preview 1" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
               </TiltCard>
