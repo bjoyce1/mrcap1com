@@ -204,7 +204,7 @@ const Legacy = () => {
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button variant="flux" asChild>
-                  <Link to="/listen">Stream the Music</Link>
+                  <Link to="/music">Stream the Music</Link>
                 </Button>
                 <Button variant="fluxOutline" asChild>
                   <Link to="/booking">Book Mr. CAP</Link>

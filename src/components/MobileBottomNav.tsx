@@ -6,7 +6,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 
 const primaryTabs = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/listen", label: "Music", icon: Music },
+  { to: "/music", label: "Music", icon: Music },
   { to: "/live", label: "Live", icon: Radio },
   { to: "/merch", label: "Merch", icon: ShoppingBag },
 ];

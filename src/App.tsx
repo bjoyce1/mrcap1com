@@ -50,7 +50,6 @@ import SelfLoveStoryModal from "./components/SelfLoveStoryModal";
 import Merch from "./pages/Merch";
 
 // Streaming Pages
-import Listen from "./pages/Listen";
 import AlbumPage from "./pages/AlbumPage";
 import TrackPage from "./pages/TrackPage";
 import StickyPlayer from "./components/player/StickyPlayer";
@@ -124,7 +123,7 @@ function AppRoutes() {
           {/* Merch Routes */}
           <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
           {/* Streaming Routes */}
-          <Route path="/listen" element={<PageTransition><Listen /></PageTransition>} />
+          <Route path="/listen" element={<Navigate to="/music" replace />} />
           <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
           <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
