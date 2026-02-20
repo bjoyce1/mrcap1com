@@ -1,5 +1,6 @@
 import { Heart, ExternalLink, Play } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 type RawNft = {
   identifier?: string;
@@ -29,6 +30,8 @@ function mockPrice(nft: RawNft, idx: number): number {
 
 export function NFTCard({ nft, index, onClick }: NFTCardProps) {
   const [liked, setLiked] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-40px" });
 
   const image = nft.display_image_url || nft.image_url || nft.image?.url;
   const name = nft.name || `${nft.collection ?? "NFT"} #${nft.identifier ?? index}`;
@@ -42,7 +45,11 @@ export function NFTCard({ nft, index, onClick }: NFTCardProps) {
     "https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494";
 
   return (
-    <div
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 32 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+      transition={{ duration: 0.45, delay: (index % 6) * 0.07, ease: "easeOut" }}
       className="group relative rounded-2xl overflow-hidden bg-[hsl(220_14%_10%)] ring-1 ring-white/5
                  transition-all duration-300 hover:ring-primary/30 hover:-translate-y-1 hover:shadow-[0_8px_32px_hsl(200_80%_50%/0.12)]
                  cursor-pointer flex flex-col"
@@ -157,6 +164,6 @@ export function NFTCard({ nft, index, onClick }: NFTCardProps) {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
