@@ -89,11 +89,11 @@ export const NFTHeroSection = ({
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,hsl(var(--primary)/0.15),transparent)] pointer-events-none" aria-hidden="true" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 overflow-hidden">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-0 lg:min-h-[60vh]">
 
           {/* --- LEFT COLUMN --- */}
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left overflow-hidden">
 
             {/* Badge */}
             <div className="hero-animate inline-flex items-center gap-2 px-4 py-1.5 rounded-full ring-1 ring-primary/20 bg-primary/5 mb-6">
@@ -104,7 +104,7 @@ export const NFTHeroSection = ({
             </div>
 
             {/* Heading */}
-            <h1 className="hero-animate text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-medium tracking-tighter leading-[0.95]">
+            <h1 className="hero-animate text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-medium tracking-tighter leading-[0.95]">
               Pioneering
               <br />
               <span className="text-gradient-orange">Digital Art</span>
@@ -113,13 +113,13 @@ export const NFTHeroSection = ({
             </h1>
 
             {/* Description */}
-            <p className="hero-animate mt-4 md:mt-6 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed font-light">
+            <p className="hero-animate mt-4 md:mt-6 text-sm md:text-lg text-muted-foreground leading-relaxed font-light">
               Houston hip-hop meets Web3. Explore MR. CAP's tokenized music,
               exclusive collaborations, and blockchain collectibles — crafted for collectors.
             </p>
 
             {/* CTA Buttons */}
-            <div className="hero-animate flex flex-wrap items-center gap-4 mt-6 md:mt-8">
+            <div className="hero-animate flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-4 mt-6 md:mt-8 w-full">
               <MagneticWrapper strength={0.25}>
                 <a
                   href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494"
@@ -143,10 +143,10 @@ export const NFTHeroSection = ({
           </div>
 
           {/* --- RIGHT COLUMN --- */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5 overflow-hidden">
 
             {/* Stats Card (glassmorphism) */}
-            <div className="hero-animate relative rounded-2xl ring-1 ring-border bg-card/60 backdrop-blur-xl p-6 overflow-hidden">
+            <div className="hero-animate relative rounded-2xl ring-1 ring-border bg-card/60 backdrop-blur-xl p-4 sm:p-6 overflow-hidden">
               {/* Glow */}
               <div className="absolute -top-20 -right-20 w-48 h-48 bg-primary/15 blur-[80px] rounded-full pointer-events-none" />
 
@@ -174,7 +174,7 @@ export const NFTHeroSection = ({
                 <div className="h-px bg-border" />
 
                 {/* Mini stats */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   <StatItem value="2021" label="First Mint" />
                   <StatItem value="ETH" label="Blockchain" />
                   <StatItem value="1st" label="Houston NFT" />
@@ -195,14 +195,14 @@ export const NFTHeroSection = ({
             </div>
 
             {/* NFT Preview Cards — independent tilt */}
-            <div className="hero-animate relative h-[200px] sm:h-[260px] md:h-[320px]">
+            <div className="hero-animate relative h-[180px] sm:h-[260px] md:h-[320px]">
               {/* Back card */}
-              <TiltCard className="absolute right-2 sm:right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
+              <TiltCard className="absolute right-0 sm:right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
                 <img src={imageUrl2} alt="NFT Preview 2" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
               </TiltCard>
               {/* Front card */}
-              <TiltCard className="absolute left-2 sm:left-4 top-0 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-primary/20 -rotate-3 shadow-2xl shadow-primary/20">
+              <TiltCard className="absolute left-0 sm:left-4 top-0 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-primary/20 -rotate-3 shadow-2xl shadow-primary/20">
                 <img src={imageUrl1} alt="NFT Preview 1" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
               </TiltCard>

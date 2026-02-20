@@ -195,9 +195,9 @@ const NFTGallery = () => {
       <NFTHeroSection imageUrl1={nftLimitless} imageUrl2={nftArtOfIsm} />
 
       {/* Milestone Banner */}
-      <section ref={milestoneRef} className="relative py-12 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-y border-white/5">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+      <section ref={milestoneRef} className="relative py-8 md:py-12 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-y border-white/5">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-white/5 ring-1 ring-white/10 flex items-center justify-center">
                 <span className="text-2xl">🏆</span>
@@ -222,8 +222,8 @@ const NFTGallery = () => {
       <LimitlessSpotlight ref={limitlessRef} />
 
       {/* Main Content */}
-      <main className="py-16 md:py-24 relative z-10">
-        <div className="max-w-7xl mx-auto px-6">
+      <main className="py-10 md:py-24 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           
           {/* Art of ISM Collection */}
           <div ref={collectionRef}>
@@ -254,9 +254,9 @@ const NFTGallery = () => {
       </main>
 
       {/* CTA Section */}
-      <section ref={ctaRef} className="py-16 md:py-24 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-display font-medium text-foreground mb-4 tracking-tight">
+      <section ref={ctaRef} className="py-12 md:py-24 supports-[backdrop-filter]:bg-white/[0.03] backdrop-blur-xl border-t border-white/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-3xl md:text-5xl font-display font-medium text-foreground mb-4 tracking-tight">
             Collect <span className="text-gradient-orange">Digital History</span>
           </h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto font-light">
@@ -279,8 +279,8 @@ const NFTGallery = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-6">
+      <footer className="py-8 border-t border-white/5 mb-16 md:mb-0">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <Link to="/" className="flex items-center gap-3">
               <img src={mrCapCoin} alt="MR. CAP" className="w-9 h-9 rounded-full object-cover" />
