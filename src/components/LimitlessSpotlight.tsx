@@ -34,7 +34,7 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/70 to-background" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="mb-10">
           <p className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-2">
@@ -51,7 +51,7 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-[340px_1fr] gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-[340px_1fr] gap-6 md:gap-8 lg:gap-12 items-start">
           {/* Left — Cover Art + Audio */}
           <div className="space-y-4">
             <div className="relative group rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">

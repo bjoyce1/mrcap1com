@@ -20,7 +20,7 @@ export function NFTFilterToolbar({
   onViewModeChange,
 }: NFTFilterToolbarProps) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+    <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center justify-between gap-3 sm:gap-4 mb-8">
       {/* Sort dropdown */}
       <div className="flex items-center gap-3">
         <span className="text-sm text-muted-foreground font-medium">Sort By</span>
@@ -35,7 +35,7 @@ export function NFTFilterToolbar({
       </div>
 
       {/* Time range chips + view toggle */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 no-scrollbar">
         {TIME_RANGES.map((range) => (
           <button
             key={range}
