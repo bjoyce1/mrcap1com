@@ -57,6 +57,20 @@ const FloatingMascot = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [handleMouseMove]);
 
+  const resetMascot = useCallback(() => {
+    setIsAlbumMode(false);
+    setIsSupersized(false);
+    setClickCount(0);
+    setShowBubble(false);
+  }, []);
+
+  // Auto-reset 10 seconds after album mode triggers
+  useEffect(() => {
+    if (!isAlbumMode) return;
+    const timer = setTimeout(resetMascot, 10000);
+    return () => clearTimeout(timer);
+  }, [isAlbumMode, resetMascot]);
+
   const handleClick = async () => {
     if (isDragging) return;
     const newCount = clickCount + 1;
@@ -114,9 +128,22 @@ const FloatingMascot = () => {
             className="relative max-w-[200px] rounded-2xl bg-card/95 backdrop-blur-2xl border border-primary/20 px-4 py-3 text-sm text-foreground shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
             {isAlbumMode ? (
-              <a href="/album/the-art-of-ism" className="leading-snug block font-bold hover:text-primary transition-colors">
-                Download My Album for free 🎶
-              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="/images/opk-download.png"
+                  download="The-Art-Of-ISM"
+                  className="leading-snug block font-bold hover:text-primary transition-colors"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Download My Album for free 🎶
+                </a>
+                <button
+                  onClick={(e) => { e.stopPropagation(); resetMascot(); }}
+                  className="text-[10px] text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider"
+                >
+                  ✕ Reset
+                </button>
+              </div>
             ) : isSupersized ? (
               <p className="leading-snug font-bold">Damn! clicky 😤</p>
             ) : TIPS[tipIndex].href ? (
