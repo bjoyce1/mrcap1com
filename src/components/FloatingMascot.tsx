@@ -130,8 +130,8 @@ const FloatingMascot = () => {
             {isAlbumMode ? (
               <div className="flex flex-col gap-2">
                 <a
-                  href="/images/opk-download.png"
-                  download="The-Art-Of-ISM"
+                  href="https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/Download.zip"
+                  download="The-Art-Of-ISM.zip"
                   className="leading-snug block font-bold hover:text-primary transition-colors"
                   onClick={(e) => e.stopPropagation()}
                 >
