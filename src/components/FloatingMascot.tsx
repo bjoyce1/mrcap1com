@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import mascotImage from "@/assets/mr-cap-mascot.png";
+import albumCover from "@/assets/album-art-of-ism.png";
 
 const TIPS = [
   { text: "Check out the latest drops 🎵", href: "/music" },
@@ -24,6 +25,7 @@ const FloatingMascot = () => {
   const [idlePhase, setIdlePhase] = useState(0);
   const [clickCount, setClickCount] = useState(0);
   const [isSupersized, setIsSupersized] = useState(false);
+  const [isAlbumMode, setIsAlbumMode] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgControls = useAnimation();
 
@@ -60,7 +62,11 @@ const FloatingMascot = () => {
     const newCount = clickCount + 1;
     setClickCount(newCount);
 
-    if (newCount >= 9 && !isSupersized) {
+    if (newCount >= 19 && !isAlbumMode) {
+      setIsAlbumMode(true);
+      setIsSupersized(true);
+      setShowBubble(true);
+    } else if (newCount >= 9 && !isSupersized) {
       setIsSupersized(true);
       setShowBubble(true);
     } else {
@@ -107,7 +113,11 @@ const FloatingMascot = () => {
             transition={{ type: "spring", stiffness: 500, damping: 28 }}
             className="relative max-w-[200px] rounded-2xl bg-card/95 backdrop-blur-2xl border border-primary/20 px-4 py-3 text-sm text-foreground shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
-            {isSupersized ? (
+            {isAlbumMode ? (
+              <a href="/album/the-art-of-ism" className="leading-snug block font-bold hover:text-primary transition-colors">
+                Download My Album for free 🎶
+              </a>
+            ) : isSupersized ? (
               <p className="leading-snug font-bold">Damn! clicky 😤</p>
             ) : TIPS[tipIndex].href ? (
               <Link to={TIPS[tipIndex].href!} className="leading-snug block hover:text-primary transition-colors">
@@ -204,16 +214,18 @@ const FloatingMascot = () => {
 
             {/* The character — clean, no container */}
             <motion.img
-              src={mascotImage}
-              alt="Mr. CAP"
-              className={`pointer-events-none transition-all duration-500 ${isSupersized ? "w-48 md:w-56" : "w-24 md:w-28"} h-auto`}
+              src={isAlbumMode ? albumCover : mascotImage}
+              alt={isAlbumMode ? "The Art of ISM Album" : "Mr. CAP"}
+              className={`pointer-events-none transition-all duration-500 ${isAlbumMode ? "w-48 md:w-56 rounded-xl shadow-2xl shadow-primary/30" : isSupersized ? "w-48 md:w-56" : "w-24 md:w-28"} h-auto`}
               animate={imgControls}
               whileHover={{
                 scale: 1.12,
                 transition: { duration: 0.3, ease: "easeOut" },
               }}
               style={{
-                filter: `drop-shadow(0 12px 28px rgba(0,0,0,0.7)) drop-shadow(0 2px 6px rgba(0,0,0,0.5))`,
+                filter: isAlbumMode
+                  ? `drop-shadow(0 12px 40px rgba(249,115,22,0.4)) drop-shadow(0 2px 8px rgba(0,0,0,0.5))`
+                  : `drop-shadow(0 12px 28px rgba(0,0,0,0.7)) drop-shadow(0 2px 6px rgba(0,0,0,0.5))`,
                 transformStyle: "preserve-3d",
               }}
               draggable={false}
