@@ -1,3 +1,4 @@
+import { useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Play, Clock, ArrowLeft, Share2 } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -21,6 +22,11 @@ const AlbumPage = () => {
   const { data: album, isLoading: albumLoading } = useAlbumBySlug(albumSlug || "");
   const { data: tracks, isLoading: tracksLoading } = useAlbumTracks(album?.id);
   const { playTrack } = usePlayerStore();
+  const [expandedTrackId, setExpandedTrackId] = useState<string | null>(null);
+
+  const handleToggleExpand = useCallback((trackId: string) => {
+    setExpandedTrackId(prev => prev === trackId ? null : trackId);
+  }, []);
 
   const handlePlayAll = () => {
     if (tracks && tracks.length > 0) {
@@ -162,7 +168,7 @@ const AlbumPage = () => {
               <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
             ) : (
               tracks?.map((track, i) => (
-                <TrackRow key={track.id} track={track} index={i} queue={tracks} showAlbumArt={false} />
+                <TrackRow key={track.id} track={track} index={i} queue={tracks} showAlbumArt={false} expandedTrackId={expandedTrackId} onToggleExpand={handleToggleExpand} />
               ))
             )}
           </div>
