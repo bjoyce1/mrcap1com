@@ -10,6 +10,8 @@ interface TrackRowProps {
   queue?: Track[];
   showAlbumArt?: boolean;
   showDuration?: boolean;
+  expandedTrackId?: string | null;
+  onToggleExpand?: (trackId: string) => void;
 }
 
 function formatDuration(seconds: number): string {
@@ -32,13 +34,16 @@ function useWaveformBars(trackId: string, count = 50) {
   }, [trackId, count]);
 }
 
-const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration = true }: TrackRowProps) => {
+const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration = true, expandedTrackId, onToggleExpand }: TrackRowProps) => {
   const { currentTrack, isPlaying, currentTime, duration, playTrack, togglePlay } = usePlayerStore();
-  const [expanded, setExpanded] = useState(false);
+  const [localExpanded, setLocalExpanded] = useState(false);
   const isActive = currentTrack?.id === track.id;
   const trackQueue = queue || [track];
   const queueIndex = queue ? queue.findIndex(t => t.id === track.id) : 0;
   const waveformBars = useWaveformBars(track.id);
+
+  // Use parent-controlled state if provided, otherwise local state
+  const expanded = expandedTrackId !== undefined ? expandedTrackId === track.id : localExpanded;
 
   const handlePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -50,7 +55,11 @@ const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration 
   };
 
   const toggleAccordion = () => {
-    setExpanded(prev => !prev);
+    if (onToggleExpand) {
+      onToggleExpand(track.id);
+    } else {
+      setLocalExpanded(prev => !prev);
+    }
   };
 
   const progressPercent = isActive && duration > 0 ? (currentTime / duration) * 100 : 0;
