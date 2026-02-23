@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Loader2, AlertCircle, ShoppingBag, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Loader2, AlertCircle } from "lucide-react";
 import { fetchPrintfulProducts, PrintfulProduct } from "@/lib/printful";
 import { PrintfulProductCard } from "./PrintfulProductCard";
 import { PrintfulProductModal } from "./PrintfulProductModal";
@@ -22,11 +22,11 @@ export const PrintfulProductGrid = () => {
         const fetchedProducts = await fetchPrintfulProducts();
         setProducts(fetchedProducts);
         if (fetchedProducts.length === 0) {
-          setError('No products found in your Printful store.');
+          setError("No products found in your Printful store.");
         }
       } catch (err) {
-        console.error('Error loading Printful products:', err);
-        setError('Failed to load products. Please try again.');
+        console.error("Error loading Printful products:", err);
+        setError("Failed to load products. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -49,7 +49,7 @@ export const PrintfulProductGrid = () => {
       <section className="py-16 px-6 bg-[#020202]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className="w-10 h-10 animate-spin text-blue-500 mb-4" />
+            <Loader2 className="w-10 h-10 animate-spin text-red-500 mb-4" />
             <p className="text-muted-foreground">Loading products...</p>
           </div>
         </div>
@@ -75,72 +75,57 @@ export const PrintfulProductGrid = () => {
 
   return (
     <>
-      {/* Category Tabs */}
-      <MerchCategoryTabs 
-        activeCategory={activeCategory} 
-        onCategoryChange={setActiveCategory} 
+      <MerchCategoryTabs
+        activeCategory={activeCategory}
+        onCategoryChange={setActiveCategory}
       />
 
       <section className="py-16 px-6 bg-[#020202]">
         <div className="max-w-7xl mx-auto">
-          {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col md:flex-row md:items-end md:justify-between mb-12"
+            className="mb-12"
           >
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-br from-white to-neutral-400 bg-clip-text text-transparent">
-                Featured Products
-              </h2>
-              <p className="text-muted-foreground">
-                Community favorites and new arrivals.
-              </p>
-            </div>
-
-            {/* Navigation Arrows */}
-            <div className="flex items-center gap-2 mt-4 md:mt-0">
-              <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-all">
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-all">
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-br from-white to-neutral-400 bg-clip-text text-transparent">
+              Featured Products
+            </h2>
+            <p className="text-muted-foreground">
+              Community favorites and new arrivals.
+            </p>
           </motion.div>
 
-          {/* Products Grid */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.1
-                }
-              }
-            }}
-            className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
           >
-            {products.map((product) => (
-              <motion.div
-                key={product.sync_product.id}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-              >
-                <PrintfulProductCard product={product} onSelect={handleProductSelect} />
-              </motion.div>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {products.map((product) => (
+                <motion.div
+                  key={product.sync_product.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                >
+                  <PrintfulProductCard
+                    product={product}
+                    onSelect={handleProductSelect}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </motion.div>
         </div>
       </section>
 
-      {/* Product Modal */}
-      <PrintfulProductModal product={selectedProduct} isOpen={isModalOpen} onClose={handleCloseModal} />
+      <PrintfulProductModal
+        product={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 };
