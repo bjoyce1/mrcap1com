@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useRef, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { 
   ChevronRight, 
   Play, 
+  Pause,
   ExternalLink, 
   Cpu, 
   Globe, 
@@ -15,11 +17,29 @@ import {
   Blocks,
   Zap,
   ArrowRight,
-  Network
+  Network,
+  Volume2,
+  VolumeX
 } from "lucide-react";
 import dippinMetaverse from "@/assets/dippin-metaverse.png";
 
 const Innovation = () => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) { audioRef.current.pause(); } else { audioRef.current.play(); }
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = () => {
+    if (!audioRef.current) return;
+    audioRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -120,11 +140,9 @@ const Innovation = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-4">
-                  <Button variant="flux" size="lg" asChild>
-                    <a href="https://www.sound.xyz/mrcap/releases" target="_blank" rel="noopener noreferrer">
-                      <Play className="w-4 h-4" />
-                      Stream "Dippin Thru the Metaverse"
-                    </a>
+                  <Button variant="flux" size="lg" onClick={togglePlay}>
+                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    {isPlaying ? 'Now Playing' : 'Play "Dippin Thru the Metaverse"'}
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild>
                     <Link to="/nft">
@@ -133,6 +151,17 @@ const Innovation = () => {
                     </Link>
                   </Button>
                 </div>
+                <audio
+                  ref={audioRef}
+                  src="/audio/dippin-thru-metaverse.mp3"
+                  preload="metadata"
+                  onTimeUpdate={() => {
+                    if (audioRef.current) {
+                      setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100 || 0);
+                    }
+                  }}
+                  onEnded={() => { setIsPlaying(false); setProgress(0); }}
+                />
               </div>
             </div>
           </section>
@@ -151,6 +180,21 @@ const Innovation = () => {
                       className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    {/* Play overlay */}
+                    <button
+                      onClick={togglePlay}
+                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center backdrop-blur-sm">
+                        {isPlaying ? <Pause className="w-7 h-7 text-white" /> : <Play className="w-7 h-7 text-white ml-1" />}
+                      </div>
+                    </button>
+                    {/* Progress bar */}
+                    {progress > 0 && (
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
+                        <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
+                      </div>
+                    )}
                     <div className="absolute bottom-6 left-6 right-6">
                       <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/80 text-white text-xs font-medium backdrop-blur-sm mb-3">
                         <Music className="w-3 h-3" />
@@ -184,18 +228,15 @@ const Innovation = () => {
                       adapts and innovates in a rapidly changing industry.
                     </p>
                     <p>
-                      Released on <strong className="text-white">Sound.xyz</strong>, the track showcases Mr. CAP's 
-                      commitment to Web3 platforms and artist ownership, continuing his legacy as a pioneer in 
-                      music technology.
+                      The track showcases Mr. CAP's commitment to digital innovation and artist ownership, 
+                      continuing his legacy as a pioneer in music technology.
                     </p>
                   </div>
 
                   <div className="flex flex-wrap gap-3">
-                    <Button variant="flux" asChild>
-                      <a href="https://www.sound.xyz/mrcap/releases" target="_blank" rel="noopener noreferrer">
-                        <Play className="w-4 h-4" />
-                        Listen on Sound.xyz
-                      </a>
+                    <Button variant="flux" onClick={togglePlay}>
+                      {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                      {isPlaying ? 'Playing Now' : 'Play Track'}
                     </Button>
                     <Button variant="fluxOutline" asChild>
                       <a href="https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug" target="_blank" rel="noopener noreferrer">
@@ -325,10 +366,9 @@ const Innovation = () => {
                   {
                     icon: Network,
                     title: "Web3 Platforms",
-                    description: "Music released on Sound.xyz and other Web3 platforms, embracing decentralized distribution.",
-                    link: "https://www.sound.xyz/mrcap",
-                    linkText: "Sound.xyz Profile",
-                    external: true
+                    description: "Music released on Web3 platforms, embracing decentralized distribution and artist ownership.",
+                    link: "/music",
+                    linkText: "Explore Music"
                   },
                   {
                     icon: Coins,
@@ -344,25 +384,13 @@ const Innovation = () => {
                     </div>
                     <h3 className="text-xl font-display font-bold mb-3">{item.title}</h3>
                     <p className="text-neutral-400 text-sm leading-relaxed mb-4">{item.description}</p>
-                    {item.external ? (
-                      <a 
-                        href={item.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors"
-                      >
-                        {item.linkText}
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    ) : (
-                      <Link 
-                        to={item.link}
-                        className="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors"
-                      >
-                        {item.linkText}
-                        <ArrowRight className="w-4 h-4" />
-                      </Link>
-                    )}
+                    <Link 
+                      to={item.link}
+                      className="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 transition-colors"
+                    >
+                      {item.linkText}
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 ))}
               </div>
