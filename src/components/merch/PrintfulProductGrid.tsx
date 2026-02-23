@@ -34,6 +34,23 @@ export const PrintfulProductGrid = () => {
     loadProducts();
   }, []);
 
+  // Category keyword map for filtering Printful products by name
+  const categoryKeywords: Record<string, string[]> = {
+    tshirts: ["t-shirt", "tee", "tshirt"],
+    hoodies: ["hoodie", "sweatshirt", "pullover", "crop hoodie"],
+    caps: ["cap", "hat", "beanie", "bucket hat"],
+    bags: ["bag", "tote", "backpack"],
+    drinkware: ["mug", "cup", "tumbler", "bottle", "drinkware"],
+  };
+
+  const filteredProducts = activeCategory === "all"
+    ? products
+    : products.filter((p) => {
+        const name = p.sync_product.name.toLowerCase();
+        const keywords = categoryKeywords[activeCategory] || [];
+        return keywords.some((kw) => name.includes(kw));
+      });
+
   const handleProductSelect = (product: PrintfulProduct) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
@@ -101,7 +118,7 @@ export const PrintfulProductGrid = () => {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
           >
             <AnimatePresence mode="popLayout">
-              {products.map((product) => (
+              {filteredProducts.map((product) => (
                 <motion.div
                   key={product.sync_product.id}
                   layout
