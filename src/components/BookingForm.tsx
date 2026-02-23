@@ -13,8 +13,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { Loader2, Send, Check } from 'lucide-react';
+import { Loader2, Send, Check, ArrowLeft, ArrowRight } from 'lucide-react';
 import { trackBookingSubmit } from '@/components/GoogleAnalytics';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const bookingSchema = z.object({
   name: z.string().trim().min(2, 'Name is required').max(100),
@@ -29,7 +30,14 @@ const bookingSchema = z.object({
 
 type BookingType = 'show' | 'feature' | 'interview' | 'speaking' | 'other';
 
+const steps = [
+  { label: 'Contact', fields: ['name', 'email', 'phone'] },
+  { label: 'Event', fields: ['booking_type', 'city', 'venue', 'event_date'] },
+  { label: 'Details', fields: ['message'] },
+];
+
 const BookingForm = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -49,6 +57,34 @@ const BookingForm = () => {
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: '' }));
     }
+  };
+
+  const validateStep = (step: number): boolean => {
+    const stepFields = steps[step].fields;
+    const partial: Record<string, unknown> = {};
+    for (const f of stepFields) {
+      partial[f] = (formData as Record<string, string>)[f];
+    }
+
+    // Only validate required fields per step
+    const newErrors: Record<string, string> = {};
+    if (step === 0) {
+      if (!formData.name || formData.name.trim().length < 2) newErrors.name = 'Name is required';
+      if (!formData.email || !z.string().email().safeParse(formData.email).success) newErrors.email = 'Please enter a valid email';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const goNext = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    }
+  };
+
+  const goBack = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -103,6 +139,7 @@ const BookingForm = () => {
           variant="fluxOutline"
           onClick={() => {
             setIsSubmitted(false);
+            setCurrentStep(0);
             setFormData({
               name: '',
               email: '',
@@ -122,133 +159,198 @@ const BookingForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <Label htmlFor="name" className="text-sm">
-            Name <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="name"
-            placeholder="Your name"
-            value={formData.name}
-            onChange={(e) => handleChange('name', e.target.value)}
-            className="bg-secondary/50 border-white/10"
-          />
-          {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="email" className="text-sm">
-            Email <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            value={formData.email}
-            onChange={(e) => handleChange('email', e.target.value)}
-            className="bg-secondary/50 border-white/10"
-          />
-          {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <Label htmlFor="phone" className="text-sm">Phone</Label>
-          <Input
-            id="phone"
-            type="tel"
-            placeholder="(555) 123-4567"
-            value={formData.phone}
-            onChange={(e) => handleChange('phone', e.target.value)}
-            className="bg-secondary/50 border-white/10"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="booking_type" className="text-sm">
-            Request Type <span className="text-destructive">*</span>
-          </Label>
-          <Select
-            value={formData.booking_type}
-            onValueChange={(value) => handleChange('booking_type', value)}
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Progress Dots */}
+      <div className="flex items-center justify-center gap-3 mb-2">
+        {steps.map((step, i) => (
+          <button
+            key={step.label}
+            type="button"
+            onClick={() => { if (i < currentStep) setCurrentStep(i); }}
+            className="flex items-center gap-2"
           >
-            <SelectTrigger className="bg-secondary/50 border-white/10">
-              <SelectValue placeholder="Select type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="show">Live Show / Performance</SelectItem>
-              <SelectItem value="feature">Music Feature / Collaboration</SelectItem>
-              <SelectItem value="interview">Interview / Press</SelectItem>
-              <SelectItem value="speaking">Speaking Engagement</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
+                i === currentStep
+                  ? 'bg-primary text-primary-foreground scale-110'
+                  : i < currentStep
+                  ? 'bg-primary/30 text-foreground'
+                  : 'bg-white/5 text-muted-foreground'
+              }`}
+            >
+              {i < currentStep ? <Check className="w-4 h-4" /> : i + 1}
+            </div>
+            {i < steps.length - 1 && (
+              <div className={`w-8 h-[2px] transition-colors ${i < currentStep ? 'bg-primary/50' : 'bg-white/10'}`} />
+            )}
+          </button>
+        ))}
       </div>
+      <p className="text-center text-xs text-muted-foreground">
+        Step {currentStep + 1} of {steps.length}: <span className="text-foreground font-medium">{steps[currentStep].label}</span>
+      </p>
 
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <Label htmlFor="city" className="text-sm">City / Location</Label>
-          <Input
-            id="city"
-            placeholder="Houston, TX"
-            value={formData.city}
-            onChange={(e) => handleChange('city', e.target.value)}
-            className="bg-secondary/50 border-white/10"
-          />
-        </div>
+      {/* Animated Step Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+        >
+          {currentStep === 0 && (
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-sm">
+                  Name <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="name"
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={(e) => handleChange('name', e.target.value)}
+                  className="bg-secondary/50 border-white/10"
+                />
+                {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-sm">
+                  Email <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={(e) => handleChange('email', e.target.value)}
+                  className="bg-secondary/50 border-white/10"
+                />
+                {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-sm">Phone</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="(555) 123-4567"
+                  value={formData.phone}
+                  onChange={(e) => handleChange('phone', e.target.value)}
+                  className="bg-secondary/50 border-white/10"
+                />
+              </div>
+            </div>
+          )}
 
-        <div className="space-y-2">
-          <Label htmlFor="venue" className="text-sm">Venue / Event Name</Label>
-          <Input
-            id="venue"
-            placeholder="Venue or event name"
-            value={formData.venue}
-            onChange={(e) => handleChange('venue', e.target.value)}
-            className="bg-secondary/50 border-white/10"
-          />
-        </div>
-      </div>
+          {currentStep === 1 && (
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="booking_type" className="text-sm">
+                  Request Type <span className="text-destructive">*</span>
+                </Label>
+                <Select
+                  value={formData.booking_type}
+                  onValueChange={(value) => handleChange('booking_type', value)}
+                >
+                  <SelectTrigger className="bg-secondary/50 border-white/10">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="show">Live Show / Performance</SelectItem>
+                    <SelectItem value="feature">Music Feature / Collaboration</SelectItem>
+                    <SelectItem value="interview">Interview / Press</SelectItem>
+                    <SelectItem value="speaking">Speaking Engagement</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <Label htmlFor="city" className="text-sm">City / Location</Label>
+                  <Input
+                    id="city"
+                    placeholder="Houston, TX"
+                    value={formData.city}
+                    onChange={(e) => handleChange('city', e.target.value)}
+                    className="bg-secondary/50 border-white/10"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="venue" className="text-sm">Venue / Event Name</Label>
+                  <Input
+                    id="venue"
+                    placeholder="Venue or event name"
+                    value={formData.venue}
+                    onChange={(e) => handleChange('venue', e.target.value)}
+                    className="bg-secondary/50 border-white/10"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="event_date" className="text-sm">Proposed Date</Label>
+                <Input
+                  id="event_date"
+                  type="date"
+                  value={formData.event_date}
+                  onChange={(e) => handleChange('event_date', e.target.value)}
+                  className="bg-secondary/50 border-white/10"
+                />
+              </div>
+            </div>
+          )}
 
-      <div className="space-y-2">
-        <Label htmlFor="event_date" className="text-sm">Proposed Date</Label>
-        <Input
-          id="event_date"
-          type="date"
-          value={formData.event_date}
-          onChange={(e) => handleChange('event_date', e.target.value)}
-          className="bg-secondary/50 border-white/10"
-        />
-      </div>
+          {currentStep === 2 && (
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="message" className="text-sm">Message / Details</Label>
+                <Textarea
+                  id="message"
+                  placeholder="Tell us about your event, budget, and any other details..."
+                  value={formData.message}
+                  onChange={(e) => handleChange('message', e.target.value)}
+                  rows={6}
+                  className="bg-secondary/50 border-white/10 resize-none"
+                />
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
-      <div className="space-y-2">
-        <Label htmlFor="message" className="text-sm">Message / Details</Label>
-        <Textarea
-          id="message"
-          placeholder="Tell us about your event, budget, and any other details..."
-          value={formData.message}
-          onChange={(e) => handleChange('message', e.target.value)}
-          rows={4}
-          className="bg-secondary/50 border-white/10 resize-none"
-        />
-      </div>
+      {/* Navigation Buttons */}
+      <div className="flex items-center justify-between pt-2">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={goBack}
+          disabled={currentStep === 0}
+          className="gap-2"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </Button>
 
-      <Button type="submit" variant="flux" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            Submitting...
-          </>
+        {currentStep < steps.length - 1 ? (
+          <Button type="button" variant="flux" onClick={goNext} className="gap-2">
+            Next
+            <ArrowRight className="w-4 h-4" />
+          </Button>
         ) : (
-          <>
-            <Send className="w-4 h-4" />
-            Submit Request
-          </>
+          <Button type="submit" variant="flux" disabled={isSubmitting} className="gap-2">
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                Submit Request
+              </>
+            )}
+          </Button>
         )}
-      </Button>
+      </div>
     </form>
   );
 };
