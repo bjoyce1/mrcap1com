@@ -1,12 +1,7 @@
 import { Building2, Disc, Coins, ArrowRight } from "lucide-react";
-import { useRef, useEffect } from "react";
-import { gsap } from "@/hooks/useGSAP";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const VenturesSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-
   const ventures = [
     {
       icon: Building2,
@@ -32,114 +27,73 @@ const VenturesSection = () => {
     },
   ];
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Header reveal
-      gsap.fromTo(
-        headerRef.current,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      // Venture cards staggered reveal
-      const cards = gridRef.current?.querySelectorAll(".venture-card");
-      if (cards) {
-        gsap.fromTo(
-          cards,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="ventures" className="py-24 md:py-32 border-b border-border">
+    <section id="ventures" className="py-24 md:py-32 border-b border-border">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Section Header */}
-        <div ref={headerRef} className="mb-12 will-change-transform">
-          <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">
-            Entrepreneurship
-          </span>
-          <h2 className="font-display text-5xl md:text-6xl mt-2">
-            Beyond Music: <span className="text-gradient-gold">Ventures</span>
-          </h2>
-          <p className="text-muted-foreground mt-4 max-w-2xl">
-            Mr. CAP's vision moves beyond the studio and stage. He builds tools, visuals, 
-            and experiences that extend into tech, finance, and storytelling.
-          </p>
-        </div>
+        <ScrollReveal width="100%">
+          <div className="mb-12">
+            <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">
+              Entrepreneurship
+            </span>
+            <h2 className="font-display text-5xl md:text-6xl mt-2">
+              Beyond Music: <span className="text-gradient-gold">Ventures</span>
+            </h2>
+            <p className="text-muted-foreground mt-4 max-w-2xl">
+              Mr. CAP's vision moves beyond the studio and stage. He builds tools, visuals,
+              and experiences that extend into tech, finance, and storytelling.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Ventures Grid */}
-        <div ref={gridRef} className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {ventures.map((venture, index) => {
             const CardWrapper = venture.link ? 'a' : 'div';
             const cardProps = venture.link ? { href: venture.link, target: "_blank", rel: "noopener noreferrer" } : {};
-            
+
             return (
-              <CardWrapper
-                 key={index}
-                 {...cardProps}
-                 className="venture-card group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300 block card-lift glass-hover will-change-transform"
-               >
-                <div
-                  className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
-                    venture.color === "gold" ? "bg-cap-gold/20" : "bg-primary/10"
-                  }`}
+              <ScrollReveal key={index} width="100%" delay={0.15 * index}>
+                <CardWrapper
+                  {...cardProps}
+                  className="venture-card group bg-card-gradient rounded-2xl border border-border p-8 hover:border-primary/30 transition-all duration-300 block card-lift glass-hover"
                 >
-                  <venture.icon
-                    className={`w-7 h-7 ${
-                      venture.color === "gold" ? "text-cap-gold" : "text-primary"
+                  <div
+                    className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ${
+                      venture.color === "gold" ? "bg-cap-gold/20" : "bg-primary/10"
                     }`}
-                  />
-                </div>
+                  >
+                    <venture.icon
+                      className={`w-7 h-7 ${
+                        venture.color === "gold" ? "text-cap-gold" : "text-primary"
+                      }`}
+                    />
+                  </div>
 
-                <h3 className="font-display text-2xl mb-4">{venture.name}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                  {venture.description}
-                </p>
+                  <h3 className="font-display text-2xl mb-4">{venture.name}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    {venture.description}
+                  </p>
 
-                <div className="flex items-center gap-2 text-sm text-primary group-hover:text-cap-gold transition-colors cursor-pointer">
-                  <span>Learn More</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </CardWrapper>
+                  <div className="flex items-center gap-2 text-sm text-primary group-hover:text-cap-gold transition-colors cursor-pointer">
+                    <span>Learn More</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </CardWrapper>
+              </ScrollReveal>
             );
           })}
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
-          <p className="text-muted-foreground">
-            For collaboration, tech partnerships, or white-label creative services, 
-            reach out through the contact section below.
-          </p>
-        </div>
+        <ScrollReveal width="100%" delay={0.3}>
+          <div className="mt-12 text-center">
+            <p className="text-muted-foreground">
+              For collaboration, tech partnerships, or white-label creative services,
+              reach out through the contact section below.
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
