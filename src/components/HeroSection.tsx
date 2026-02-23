@@ -13,6 +13,7 @@ const HeroSection = () => {
   const releaseRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const gradientRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleTitleHover = () => {
     setGlitching(true);
@@ -52,8 +53,21 @@ const HeroSection = () => {
           "-=0.5"
         );
 
+      // Background parallax — moves faster (deeper layer)
       gsap.to(imageRef.current, {
-        yPercent: 20,
+        yPercent: 30,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
+
+      // Content parallax — moves slower (foreground layer, creates depth)
+      gsap.to(contentRef.current, {
+        yPercent: -15,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -91,27 +105,23 @@ const HeroSection = () => {
       id="hero"
       className="relative h-screen w-full overflow-hidden grain-overlay"
     >
-      {/* Full-bleed Background Image */}
+      {/* Full-bleed Background Image — deep parallax layer */}
       <div ref={imageRef} className="absolute inset-0 will-change-transform">
         <img
           src={heroImage}
           alt="Mr. CAP"
           className="h-full w-full object-cover object-top"
         />
-        {/* Deeper bottom gradient for cinematic contrast */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-        {/* Side vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background))_100%)]" />
-        {/* Animated gradient overlay */}
         <div
           ref={gradientRef}
           className="absolute inset-0 bg-gradient-to-b from-primary/15 via-primary/5 to-transparent opacity-30 will-change-opacity"
         />
       </div>
 
-      {/* Centered Bottom Content */}
-      <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center pb-20 md:pb-28">
-        {/* Artist Name — Extra large editorial impact */}
+      {/* Centered Bottom Content — foreground parallax layer */}
+      <div ref={contentRef} className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center pb-20 md:pb-28 will-change-transform">
         <h1
           ref={nameRef}
           onMouseEnter={handleTitleHover}
@@ -126,7 +136,6 @@ const HeroSection = () => {
           Mr. CAP
         </h1>
 
-        {/* Release Info */}
         <div
           ref={releaseRef}
           className="mt-5 flex items-center gap-3 text-sm md:text-base font-medium tracking-[0.2em] uppercase will-change-transform"
@@ -136,7 +145,6 @@ const HeroSection = () => {
           <span className="text-foreground/50">Out Now</span>
         </div>
 
-        {/* CTA Button — Premium pill with glow */}
         <div ref={ctaRef} className="mt-10 will-change-transform">
           <MagneticWrapper strength={0.15}>
             <Button
