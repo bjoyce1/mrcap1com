@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, Eye } from "lucide-react";
 import { PrintfulProduct, getProductImage, getLowestPrice } from "@/lib/printful";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
@@ -18,9 +18,8 @@ export const PrintfulProductCard = ({ product, onSelect }: PrintfulProductCardPr
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (variantCount > 1) {
-      // Open modal for variant selection
       onSelect(product);
       return;
     }
@@ -32,7 +31,7 @@ export const PrintfulProductCard = ({ product, onSelect }: PrintfulProductCardPr
         name: product.sync_product.name,
         variantName: firstVariant.name,
         price: parseFloat(firstVariant.retail_price),
-        currency: firstVariant.currency || 'USD',
+        currency: firstVariant.currency || "USD",
         image: imageUrl,
       });
       toast.success("Added to cart", {
@@ -43,48 +42,54 @@ export const PrintfulProductCard = ({ product, onSelect }: PrintfulProductCardPr
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
       onClick={() => onSelect(product)}
-      className="group bg-[#0A0A0A] rounded-2xl overflow-hidden border border-white/5 hover:border-blue-500/30 transition-all duration-300 cursor-pointer"
+      className="group relative flex flex-col cursor-pointer"
     >
-      {/* Product Image */}
-      <div className="aspect-square overflow-hidden bg-[#111111] relative">
-        <img
-          src={imageUrl}
-          alt={product.sync_product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
-        
-        {/* Variant count badge */}
+      {/* Image Container */}
+      <div className="relative aspect-[4/5] bg-[#1a1a1a] rounded-2xl overflow-hidden mb-6 shadow-xl border border-white/5 group-hover:border-red-500/30 transition-colors duration-500">
+        {/* Variant badge */}
         {variantCount > 1 && (
-          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-blue-500 text-white px-2 py-1 rounded-md text-[10px] sm:text-xs font-medium">
+          <div className="absolute top-3 left-3 z-20 bg-black/80 backdrop-blur-md border border-white/10 text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-full tracking-widest">
             {variantCount} options
           </div>
         )}
 
-        {/* Quick add overlay */}
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        {/* Product Image */}
+        <img
+          src={imageUrl}
+          alt={product.sync_product.name}
+          className="w-full h-full object-cover object-center transform transition-transform duration-700 ease-out group-hover:scale-110"
+          loading="lazy"
+        />
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-[2px] transition-all duration-300 flex flex-col items-center justify-end p-6 z-10">
           <button
             onClick={handleQuickAdd}
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-xl shadow-[0_10px_20px_rgba(220,38,38,0.3)] flex justify-center items-center gap-2 transform transition-all duration-300 translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
           >
             <ShoppingBag className="w-4 h-4" />
-            {variantCount > 1 ? 'Select Options' : 'Add to Cart'}
+            {variantCount > 1 ? "Select Options" : "Quick Add"}
           </button>
+          <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-white/80 hover:text-white uppercase tracking-widest cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+            <Eye className="w-3.5 h-3.5" /> Quick View
+          </div>
         </div>
       </div>
 
       {/* Product Info */}
-      <div className="p-4">
-        <h3 className="font-medium text-sm sm:text-base text-foreground mb-2 line-clamp-1 group-hover:text-blue-400 transition-colors">
-          {product.sync_product.name}
-        </h3>
-        
-        <p className="text-base sm:text-lg font-semibold text-foreground">
-          {price.currency === 'USD' ? '$' : price.currency}{price.amount}
-        </p>
+      <div className="flex flex-col flex-1 px-1">
+        <div className="flex justify-between items-start gap-4 mb-2">
+          <h3 className="text-lg font-bold leading-tight group-hover:text-red-400 transition-colors text-foreground">
+            {product.sync_product.name}
+          </h3>
+          <span className="text-lg font-mono font-medium text-neutral-300 whitespace-nowrap">
+            {price.currency === "USD" ? "$" : price.currency}
+            {price.amount}
+          </span>
+        </div>
       </div>
     </motion.div>
   );
