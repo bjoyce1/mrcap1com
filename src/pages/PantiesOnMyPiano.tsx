@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import { usePlayerStore } from "@/stores/playerStore";
 
 import coverStandard from "@/assets/pomp-standard.png";
 import coverStudio from "@/assets/pomp-studio.png";
@@ -355,10 +356,43 @@ const BehindTheSong = () => (
 );
 
 /* ─── Main Page ─── */
+const POMP_TRACK = {
+  id: "pomp-single",
+  title: "Panties on My Piano",
+  slug: "panties-on-my-piano",
+  artist: "MR. CAP",
+  album_id: null,
+  track_number: 1,
+  duration: 210,
+  audio_url: "/audio/panties-on-my-piano.mp3",
+  cover_art_url: null as string | null,
+  explicit: true,
+  release_year: 2025,
+  credits: "Produced by MR. CAP",
+  featured_artists: "Ciddi Boy P",
+  is_public: true,
+  play_count: 0,
+  requires_nft: false,
+  spotify_url: null,
+};
+
 const PantiesOnMyPiano = () => {
   const [activeIdx, setActiveIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const countdown = useCountdown(MINT_DATE);
+  const { playTrack, currentTrack, isPlaying, togglePlay } = usePlayerStore();
+
+  // Set cover_art_url from the active cover (resolved import)
+  const pompTrack = { ...POMP_TRACK, cover_art_url: COVERS[0].src };
+
+  const handlePlay = () => {
+    if (currentTrack?.id === POMP_TRACK.id) {
+      togglePlay();
+    } else {
+      playTrack(pompTrack);
+    }
+  };
+  const isPompPlaying = currentTrack?.id === POMP_TRACK.id && isPlaying;
 
   // Auto-morph covers
   useEffect(() => {
@@ -477,6 +511,16 @@ const PantiesOnMyPiano = () => {
               <p className="mt-4 text-muted-foreground text-sm md:text-base max-w-md mx-auto">
                 A Web3 music release experience. Limited NFT editions. Interactive AI studio.
               </p>
+              <motion.button
+                onClick={handlePlay}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.6 }}
+                className="mt-6 inline-flex items-center gap-2 px-8 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm uppercase tracking-wider transition-colors shadow-lg shadow-red-900/40"
+              >
+                {isPompPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                {isPompPlaying ? "Pause" : "Play Now"}
+              </motion.button>
             </motion.div>
 
             {/* Scroll indicator */}
