@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useAnimation, useMotionValue, useTransform } f
 import { Link } from "react-router-dom";
 import mascotImage from "@/assets/mr-cap-mascot.png";
 import albumCover from "@/assets/album-art-of-ism.png";
+import { usePlayerStore } from "@/stores/playerStore";
 
 const TIPS = [
   { text: "Check out the latest drops 🎵", href: "/music" },
@@ -28,6 +29,7 @@ const FloatingMascot = () => {
   const [isAlbumMode, setIsAlbumMode] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgControls = useAnimation();
+  const { isPlaying } = usePlayerStore();
 
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
@@ -171,8 +173,8 @@ const FloatingMascot = () => {
           className="absolute -inset-6 rounded-full blur-3xl pointer-events-none"
           style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.2) 0%, transparent 70%)" }}
           animate={{
-            opacity: isHovered ? 0.9 : 0.3,
-            scale: isHovered ? 1.4 : 1,
+            opacity: isPlaying ? 0.8 : isHovered ? 0.9 : 0.3,
+            scale: isPlaying ? [1.1, 1.4, 1.1] : isHovered ? 1.4 : 1,
           }}
           transition={{ duration: 0.5 }}
         />
@@ -210,13 +212,21 @@ const FloatingMascot = () => {
           )}
         </AnimatePresence>
 
-        {/* Idle body-language wrapper */}
+        {/* Idle / Dance body-language wrapper */}
         <motion.div
-          animate={{
+          animate={isPlaying ? {
+            y: [0, -14, 0],
+            x: [0, 6, -6, 0],
+            rotate: [0, -6, 6, 0],
+          } : {
             y: [0, -8, 0],
             ...idleVariants[idlePhase],
           }}
-          transition={{
+          transition={isPlaying ? {
+            y: { duration: 0.5, repeat: Infinity, ease: "easeInOut" },
+            x: { duration: 0.8, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 0.6, repeat: Infinity, ease: "easeInOut" },
+          } : {
             y: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
             rotate: { duration: 1.2, ease: "easeInOut" },
             x: { duration: 1.2, ease: "easeInOut" },
