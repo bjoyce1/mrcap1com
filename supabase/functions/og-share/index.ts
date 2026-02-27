@@ -6,7 +6,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const SITE = "https://mrcap1.com";
+const SITE = Deno.env.get("SITE_URL") || "https://mrcap1com.lovable.app";
 const DEFAULT_IMAGE = "https://mrcap1.com/images/opk-og-image.jpg";
 
 Deno.serve(async (req) => {
