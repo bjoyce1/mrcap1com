@@ -1,23 +1,30 @@
 
 
-# Fix Share Link Redirect and OG Previews
+## Plan: Add missing OG meta tags to og-share edge function
 
-## Root Cause
-The backend gateway overrides `Content-Type` to `text/plain` and adds `Content-Security-Policy: default-src 'none'; sandbox` to edge function responses. This prevents browsers from rendering the HTML or executing the JavaScript redirect.
+### Identified gaps
+1. Missing `og:image:width`, `og:image:height`, `og:image:type`, and `og:image:alt` meta tags
+2. `og:type` is hardcoded to `music.song` even for albums (should be `music.album`)
 
-## Solution
-Use **User-Agent detection** to serve different responses:
-- **Social crawlers** (Twitterbot, facebookexternalhit, etc.) → Return OG HTML (crawlers parse tags regardless of Content-Type)
-- **Real browsers** → Return a **302 redirect** with `Location` header (HTTP-level redirect, no HTML parsing needed)
+### Changes
 
-## Changes
+**File: `supabase/functions/og-share/index.ts`**
 
-### 1. `supabase/functions/og-share/index.ts`
-- Add a crawler User-Agent detection list (Twitterbot, facebookexternalhit, LinkedInBot, Slackbot, Discordbot, WhatsApp, TelegramBot, etc.)
-- If crawler: return current OG HTML response (status 200)
-- If browser: return `Response.redirect(canonical, 302)` with `Location` header pointing to the track/album page
-- This completely bypasses both the Content-Type and CSP gateway restrictions for real users
+1. Add `og:image:width` (1200), `og:image:height` (630), and `og:image:alt` meta tags to the HTML template
+2. Add `og:image:type` that infers JPEG/PNG/WebP from the image URL extension
+3. Set `og:type` dynamically: `music.song` for tracks, `music.album` for albums
+4. Add `og:site_name` meta tag (`Mr. CAP`)
 
-### 2. No other file changes needed
-The `shareTrack.ts` and all share button integrations remain the same.
+### Technical details
+
+The HTML `<head>` block will gain these additional tags:
+```html
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:type" content="image/jpeg"/>
+<meta property="og:image:alt" content="Cover art for Track Title"/>
+<meta property="og:site_name" content="Mr. CAP"/>
+```
+
+The `og:type` will switch between `music.song` and `music.album` based on the `type` query parameter. The image MIME type will be inferred from the file extension (`.jpg`→`image/jpeg`, `.png`→`image/png`, `.webp`→`image/webp`).
 
