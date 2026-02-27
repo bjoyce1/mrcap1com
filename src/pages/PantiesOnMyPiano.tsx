@@ -385,7 +385,7 @@ const BehindTheSong = () => (
 
 /* ─── Main Page ─── */
 const POMP_TRACK = {
-  id: "pomp-single",
+  id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
   title: "Panties on My Piano",
   slug: "panties-on-my-piano",
   artist: "MR. CAP",
