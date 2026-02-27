@@ -36,6 +36,7 @@ Deno.serve(async (req) => {
   let description = "Listen now on mrcap1.com";
   let image = DEFAULT_IMAGE;
   let redirectPath = "/";
+  let ogType = "music.song";
 
   if (type === "track") {
     const { data } = await supabase
@@ -52,6 +53,7 @@ Deno.serve(async (req) => {
         : "Listen now on mrcap1.com";
       image = resolveImage(data.cover_art_url);
       redirectPath = `/track/${slug}`;
+      ogType = "music.song";
     }
   } else if (type === "album") {
     const { data } = await supabase
@@ -66,10 +68,12 @@ Deno.serve(async (req) => {
       description = data.description || `${data.track_count} tracks • Listen now`;
       image = resolveImage(data.cover_art_url);
       redirectPath = `/album/${slug}`;
+      ogType = "music.album";
     }
   }
 
   const canonical = `${SITE}${redirectPath}`;
+  const imageMime = inferMime(image);
 
   // Real browsers get a 302 redirect (bypasses Content-Type/CSP issues)
   if (!isCrawler) {
@@ -85,15 +89,21 @@ Deno.serve(async (req) => {
 <head>
 <meta charset="utf-8"/>
 <title>${esc(title)}</title>
+<meta property="og:site_name" content="Mr. CAP"/>
 <meta property="og:title" content="${esc(title)}"/>
 <meta property="og:description" content="${esc(description)}"/>
 <meta property="og:image" content="${esc(image)}"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:type" content="${imageMime}"/>
+<meta property="og:image:alt" content="Cover art for ${esc(title)}"/>
 <meta property="og:url" content="${esc(canonical)}"/>
-<meta property="og:type" content="music.song"/>
+<meta property="og:type" content="${ogType}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="${esc(title)}"/>
 <meta name="twitter:description" content="${esc(description)}"/>
 <meta name="twitter:image" content="${esc(image)}"/>
+<meta name="twitter:image:alt" content="Cover art for ${esc(title)}"/>
 </head>
 <body></body>
 </html>`;
@@ -108,6 +118,13 @@ function resolveImage(url: string | null): string {
   if (url.startsWith("http")) return url;
   if (url.startsWith("/")) return `${SITE}${url}`;
   return DEFAULT_IMAGE;
+}
+
+function inferMime(url: string): string {
+  const ext = url.split(".").pop()?.toLowerCase();
+  if (ext === "png") return "image/png";
+  if (ext === "webp") return "image/webp";
+  return "image/jpeg";
 }
 
 function esc(s: string): string {
