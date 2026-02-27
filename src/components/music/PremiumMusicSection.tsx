@@ -44,6 +44,7 @@ import {
 import { useAlbums, useAllTracks, useAlbumTracks } from "@/hooks/useStreamingData";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
 import { usePlayerStore, type Track } from "@/stores/playerStore";
+import { shareMusic } from "@/lib/shareTrack";
 
 const ART_OF_ISM_ALBUM_ID = "b90a99fe-a3ea-4ed6-b6d7-a6fa236b4965";
 
@@ -269,17 +270,13 @@ export default function PremiumMusicSection() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
-                      onClick={() =>
-                        navigator?.clipboard
-                          ?.writeText?.(window.location.href)
-                          .catch(() => {})
-                      }
+                      onClick={() => shareMusic({ title: hero.title, artist: hero.artist, slug: hero.slug })}
                       className="w-10 h-10 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-colors"
                     >
                       <Share2 className="w-4 h-4" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>Copy page link</TooltipContent>
+                  <TooltipContent>Share track</TooltipContent>
                 </Tooltip>
               </div>
             </div>
@@ -509,7 +506,7 @@ export default function PremiumMusicSection() {
                               </div>
                             )}
 
-                            {/* Play + Like overlay */}
+                            {/* Play + Like + Share overlay */}
                             <div className="absolute bottom-2 right-2 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
                               <span className="w-10 h-10 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-lg shadow-primary/30">
                                 {isTrackPlaying ? (
@@ -517,6 +514,16 @@ export default function PremiumMusicSection() {
                                 ) : (
                                   <Play className="w-4 h-4 text-primary-foreground ml-0.5" />
                                 )}
+                              </span>
+                              <span
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  shareMusic({ title: t.title, artist: t.artist, slug: t.slug });
+                                }}
+                                className="w-8 h-8 rounded-full backdrop-blur-sm flex items-center justify-center bg-black/30 text-white/70 hover:text-white transition-colors"
+                              >
+                                <Share2 className="w-3.5 h-3.5" />
                               </span>
                               <span
                                 onClick={(e) => {
@@ -667,6 +674,16 @@ export default function PremiumMusicSection() {
 
                           {/* Actions */}
                           <span className="hidden sm:flex items-center gap-2">
+                            <span
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                shareMusic({ title: t.title, artist: t.artist, slug: t.slug });
+                              }}
+                              className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground/40 hover:text-foreground transition-colors"
+                            >
+                              <Share2 className="w-3.5 h-3.5" />
+                            </span>
                             <span
                               onClick={(e) => {
                                 e.preventDefault();
@@ -931,6 +948,14 @@ export default function PremiumMusicSection() {
                     </p>
                   </div>
                 )}
+
+                <Button
+                  variant="outline"
+                  className="w-full rounded-full gap-2"
+                  onClick={() => shareMusic({ title: activeDetail.title, artist: activeDetail.artist, slug: activeDetail.slug })}
+                >
+                  <Share2 className="w-4 h-4" /> Share Track
+                </Button>
 
                 {activeDetail.spotify_url && (
                   <Button
