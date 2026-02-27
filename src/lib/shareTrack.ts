@@ -11,15 +11,20 @@ interface ShareOptions {
  * Share a track or album via Web Share API (mobile) or clipboard fallback.
  * Shows a toast on success.
  */
-export function shareMusic({ title, artist, slug, type = "track" }: ShareOptions) {
-  const url = `https://qisamkiggoibjkkdtkxq.supabase.co/functions/v1/og-share?type=${type}&slug=${encodeURIComponent(slug)}`;
+export async function shareMusic({ title, artist, slug, type = "track" }: ShareOptions) {
+  const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+  const url = `https://${projectId}.supabase.co/functions/v1/og-share?type=${type}&slug=${encodeURIComponent(slug)}`;
   const text = `${title} — ${artist}`;
 
   if (navigator.share) {
-    navigator.share({ title: text, url }).catch(() => {});
+    try {
+      await navigator.share({ title: text, url });
+      toast.success("Shared!", { description: `${text}` });
+    } catch {
+      // User cancelled share sheet — do nothing
+    }
   } else {
-    navigator.clipboard.writeText(url).catch(() => {});
+    await navigator.clipboard.writeText(url).catch(() => {});
+    toast.success("Link copied!", { description: `${text} — share it everywhere.` });
   }
-
-  toast.success("Link copied!", { description: `${text} — share it everywhere.` });
 }
