@@ -9,10 +9,15 @@ const corsHeaders = {
 const SITE = Deno.env.get("SITE_URL") || "https://mrcap1com.lovable.app";
 const DEFAULT_IMAGE = "https://mrcap1.com/images/opk-og-image.jpg";
 
+const CRAWLER_UA = /Twitterbot|facebookexternalhit|LinkedInBot|Slackbot|Discordbot|WhatsApp|TelegramBot|Googlebot|bingbot|Embedly|Quora|Pinterest|Applebot/i;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
+
+  const ua = req.headers.get("user-agent") || "";
+  const isCrawler = CRAWLER_UA.test(ua);
 
   const url = new URL(req.url);
   const type = url.searchParams.get("type") || "track";
@@ -66,6 +71,15 @@ Deno.serve(async (req) => {
 
   const canonical = `${SITE}${redirectPath}`;
 
+  // Real browsers get a 302 redirect (bypasses Content-Type/CSP issues)
+  if (!isCrawler) {
+    return new Response(null, {
+      status: 302,
+      headers: { Location: canonical, ...corsHeaders },
+    });
+  }
+
+  // Crawlers get OG meta tags
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,11 +94,8 @@ Deno.serve(async (req) => {
 <meta name="twitter:title" content="${esc(title)}"/>
 <meta name="twitter:description" content="${esc(description)}"/>
 <meta name="twitter:image" content="${esc(image)}"/>
-<meta http-equiv="refresh" content="0;url=${esc(canonical)}"/>
 </head>
-<body>
-<script>window.location.replace("${canonical}");</script>
-</body>
+<body></body>
 </html>`;
 
   return new Response(html, {
