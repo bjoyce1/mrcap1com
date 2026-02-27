@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.stream-track]
 verify_jwt = false
+
+[functions.og-share]
+verify_jwt = false
