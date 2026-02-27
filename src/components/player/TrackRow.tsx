@@ -3,6 +3,7 @@ import { Play, Pause, Lock, Heart, Share2, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePlayerStore, Track } from "@/stores/playerStore";
 import NFTGate from "./NFTGate";
+import { toast } from "sonner";
 
 interface TrackRowProps {
   track: Track;
@@ -138,9 +139,15 @@ const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration 
           <button
             onClick={(e) => {
               e.stopPropagation();
-              navigator.clipboard.writeText(`https://mrcap1.com/track/${track.slug}`);
+              const url = `https://mrcap1.com/track/${track.slug}`;
+              if (navigator.share) {
+                navigator.share({ title: `${track.title} — ${track.artist}`, url }).catch(() => {});
+              } else {
+                navigator.clipboard.writeText(url);
+              }
+              toast.success("Link copied!", { description: `${track.title} — share it everywhere.` });
             }}
-            className="text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-110 hidden sm:block"
+            className="text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-110"
             aria-label="Share"
           >
             <Share2 className="w-4 h-4" />
