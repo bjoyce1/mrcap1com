@@ -1,56 +1,36 @@
 
-# Merch Page Premium Overhaul
 
-Elevate the merch shopping experience with 3D hover effects, smooth layout animations on filtering, a sticky glassmorphism category bar, and a red accent color scheme matching the Trap University brand.
+# Dynamic OG Images for Shared Tracks
+
+## Problem
+Social media platforms (Twitter, Facebook, iMessage, etc.) don't execute JavaScript. When a track link is shared, crawlers see only the static `index.html` OG tags — showing a generic Mr. CAP image instead of the track's cover art.
+
+## Solution
+Create a backend function that serves a lightweight HTML page with the correct OG meta tags (cover art, title, artist) for each track. This page includes a JavaScript redirect so real users land on the actual track page, while crawlers get the rich preview they need.
 
 ## What Changes
 
-### 1. Sticky Glassmorphism Category Bar
-- Restyle `MerchCategoryTabs` with `sticky top-0 z-40`, `backdrop-blur-xl`, and a frosted-glass dark background
-- Replace the blue active-tab highlight with a red pill using Framer Motion's `layoutId` for a smooth sliding indicator
-- Remove emoji icons, use uppercase text-only labels for a cleaner streetwear aesthetic
+### 1. New Edge Function: `og-share`
+- Accepts query params: `type` (track/album) and `slug`
+- Queries the database for the track/album record
+- Returns a minimal HTML page with:
+  - `og:image` set to the track's `cover_art_url`
+  - `og:title` set to track title + artist
+  - `og:description` with track details
+  - `twitter:card`, `twitter:image` tags
+  - A `<meta http-equiv="refresh">` and JS `window.location` redirect to `https://mrcap1.com/track/{slug}`
 
-### 2. Layout Animations on Filtering
-- Add `layout` prop to the product grid and each card wrapper in `PrintfulProductGrid`
-- Wrap products in `AnimatePresence mode="popLayout"` so filtered-out items animate away and remaining items smoothly reposition
-- Cards scale/fade in when entering and scale/fade out when leaving
+### 2. Update `shareTrack.ts`
+- Change the shared URL from `https://mrcap1.com/track/{slug}` to the edge function URL: `https://qisamkiggoibjkkdtkxq.supabase.co/functions/v1/og-share?type=track&slug={slug}`
+- Real users who click the link get redirected to the actual page instantly
+- Crawlers see the correct OG tags with the cover art image
 
-### 3. Premium Product Cards with 3D Hover
-- Taller `aspect-[4/5]` image ratio for a fashion-forward look
-- Image zooms to `scale-110` on hover with a 700ms ease
-- Hover overlay with backdrop blur reveals a red "Quick Add" button that slides up, plus a "Quick View" link
-- Variant badge restyled with dark glassmorphism pill (`bg-black/80 backdrop-blur-md border border-white/10`)
-- Card border transitions from `white/5` to `red-500/30` on hover
-- Red accent on product name hover state
+### 3. Files Modified
+- **New:** `supabase/functions/og-share/index.ts` — edge function serving dynamic OG HTML
+- **Modified:** `src/lib/shareTrack.ts` — update share URL to point to the OG proxy
 
-### 4. Color Scheme Alignment
-- Switch all blue accents to red (`red-600`, `red-500`, `red-400`) across `PrintfulProductGrid`, `MerchCategoryTabs`, and `PrintfulProductCard`
-- Remove non-functional ChevronLeft/ChevronRight navigation arrows from the grid
+### Technical Notes
+- The edge function uses the Supabase service client to query `tracks` or `albums` tables by slug
+- Falls back to default OG image if track has no cover art
+- No database migrations needed — reads existing tables only
 
----
-
-## Technical Details
-
-### Files Modified
-
-**`src/components/merch/MerchCategoryTabs.tsx`**
-- Add sticky positioning with glassmorphism: `sticky top-0 z-40 bg-[#0a0a0a]/80 backdrop-blur-xl`
-- Framer Motion `layoutId="activeCategoryTab"` animated red pill behind active button
-- Uppercase text-only labels, no emojis
-
-**`src/components/merch/PrintfulProductCard.tsx`**
-- `aspect-[4/5]` image container, `whileHover={{ y: -8 }}` lift
-- Red overlay button (`bg-red-600 hover:bg-red-500`) slides up on group hover
-- "Quick View" text link below button
-- Glassmorphism variant badge, red hover text accent
-
-**`src/components/merch/PrintfulProductGrid.tsx`**
-- `layout` prop on grid and card wrappers
-- `AnimatePresence mode="popLayout"` with enter/exit transitions
-- Red loading spinner and section accents
-- Remove non-functional navigation arrows
-
-### Performance
-- All animations use `transform` and `opacity` (GPU-accelerated)
-- Layout animations use Framer Motion's FLIP technique
-- Image `loading="lazy"` preserved
