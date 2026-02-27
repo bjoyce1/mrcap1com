@@ -1,12 +1,13 @@
 import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2 } from "lucide-react";
 import { reportQualifiedStream } from "@/lib/streamTracking";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/stores/playerStore";
 import { Slider } from "@/components/ui/slider";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import QueueDrawer from "./QueueDrawer";
+import { shareMusic } from "@/lib/shareTrack";
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -231,8 +232,15 @@ const StickyPlayer = () => {
                 </div>
               </div>
 
-              {/* Volume + Queue + Actions */}
-              <div className="hidden md:flex items-center gap-2 w-48 justify-end">
+              {/* Volume + Queue + Share + Actions */}
+              <div className="hidden md:flex items-center gap-2 w-56 justify-end">
+                <button
+                  onClick={() => shareMusic({ title: currentTrack.title, artist: currentTrack.artist, slug: currentTrack.slug })}
+                  className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                  title="Share"
+                >
+                  <Share2 className="w-4 h-4" />
+                </button>
                 <button
                   onClick={toggleQueue}
                   className={cn("p-1.5 transition-colors", isQueueOpen ? "text-primary" : "text-muted-foreground hover:text-foreground")}

@@ -9,6 +9,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import { shareMusic } from "@/lib/shareTrack";
 import StoryBlock from "@/components/player/StoryBlock";
 import type { Album } from "@/stores/playerStore";
 
@@ -66,11 +67,9 @@ const TrackPage = () => {
   };
 
   const handleShare = () => {
-    const url = `https://mrcap1.com/track/${trackSlug}`;
-    navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-    trackEvent("share_track", { track_id: track?.id, page_path: url });
+    if (!track) return;
+    shareMusic({ title: track.title, artist: track.artist, slug: track.slug });
+    trackEvent("share_track", { track_id: track?.id, page_path: `https://mrcap1.com/track/${trackSlug}` });
   };
 
   if (isLoading) {
