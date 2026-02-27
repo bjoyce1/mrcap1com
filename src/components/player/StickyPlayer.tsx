@@ -4,6 +4,7 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, Che
 import { reportQualifiedStream } from "@/lib/streamTracking";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/stores/playerStore";
+import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
 import { Slider } from "@/components/ui/slider";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import QueueDrawer from "./QueueDrawer";
@@ -87,6 +88,24 @@ const StickyPlayer = () => {
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume;
   }, [volume]);
+
+  // Wire audio analyzer
+  const { connect, startLoop, stopLoop } = useAudioAnalyzerStore();
+  useEffect(() => {
+    if (!audioRef.current) return;
+    connect(audioRef.current);
+  }, [currentTrack?.id]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      // Resume AudioContext if suspended (browser autoplay policy)
+      const ctx = useAudioAnalyzerStore.getState()._ctx;
+      if (ctx?.state === "suspended") ctx.resume();
+      startLoop();
+    } else {
+      stopLoop();
+    }
+  }, [isPlaying, startLoop, stopLoop]);
 
   // Qualified stream: fire once per track when 30s reached
   useEffect(() => {

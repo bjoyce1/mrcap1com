@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import {
@@ -12,6 +12,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { usePlayerStore } from "@/stores/playerStore";
+import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
 
 import coverStandard from "@/assets/pomp-standard.png";
 import coverStudio from "@/assets/pomp-studio.png";
@@ -77,26 +78,32 @@ function useCountdown(target: Date) {
   return t;
 }
 
-/* ─── Waveform Visualizer ─── */
-const WaveformBars = ({ barCount = 5, className = "", barClassName = "" }: { barCount?: number; className?: string; barClassName?: string }) => (
-  <div className={`flex items-end justify-center gap-[3px] ${className}`}>
-    {Array.from({ length: barCount }).map((_, i) => (
-      <motion.div
-        key={i}
-        className={`w-[3px] rounded-full bg-red-500 ${barClassName}`}
-        animate={{
-          height: ["30%", `${50 + Math.random() * 50}%`, "20%", `${40 + Math.random() * 40}%`, "30%"],
-        }}
-        transition={{
-          duration: 0.6 + Math.random() * 0.3,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: i * 0.08,
-        }}
-      />
-    ))}
-  </div>
-);
+/* ─── Audio-Reactive Waveform Visualizer ─── */
+const ReactiveWaveform = ({ barCount = 16, className = "", barClassName = "" }: { barCount?: number; className?: string; barClassName?: string }) => {
+  const frequencyData = useAudioAnalyzerStore((s) => s.frequencyData);
+
+  // Sample `barCount` bars evenly from the frequency data
+  const bars = useMemo(() => {
+    if (!frequencyData.length) return Array(barCount).fill(0);
+    const step = Math.max(1, Math.floor(frequencyData.length / barCount));
+    return Array.from({ length: barCount }, (_, i) => {
+      const idx = Math.min(i * step, frequencyData.length - 1);
+      return frequencyData[idx] ?? 0;
+    });
+  }, [frequencyData, barCount]);
+
+  return (
+    <div className={`flex items-end justify-center gap-[3px] ${className}`}>
+      {bars.map((v, i) => (
+        <div
+          key={i}
+          className={`w-[3px] rounded-full bg-red-500 transition-[height] duration-75 ${barClassName}`}
+          style={{ height: `${Math.max(4, v * 100)}%` }}
+        />
+      ))}
+    </div>
+  );
+};
 
 /* ─── Particle Background ─── */
 const DustParticles = () => (
@@ -508,7 +515,7 @@ const PantiesOnMyPiano = () => {
                     {/* Dark scrim */}
                     <div className="absolute inset-0 bg-black/30" />
                     {/* Bottom waveform bars */}
-                    <WaveformBars
+                    <ReactiveWaveform
                       barCount={24}
                       className="absolute bottom-0 left-0 right-0 h-1/3 px-4 pb-4"
                       barClassName="bg-red-500/70"
@@ -571,7 +578,7 @@ const PantiesOnMyPiano = () => {
                       exit={{ opacity: 0, scale: 0.8 }}
                       className="absolute -inset-4 -z-10"
                     >
-                      <WaveformBars barCount={9} className="h-full" barClassName="bg-red-500/30" />
+                      <ReactiveWaveform barCount={9} className="h-full" barClassName="bg-red-500/30" />
                     </motion.div>
                   )}
                 </AnimatePresence>
