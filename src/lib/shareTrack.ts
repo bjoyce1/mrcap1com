@@ -12,7 +12,7 @@ interface ShareOptions {
  * Shows a toast on success.
  */
 export function shareMusic({ title, artist, slug, type = "track" }: ShareOptions) {
-  const url = `https://mrcap1.com/${type}/${slug}`;
+  const url = `https://qisamkiggoibjkkdtkxq.supabase.co/functions/v1/og-share?type=${type}&slug=${encodeURIComponent(slug)}`;
   const text = `${title} — ${artist}`;
 
   if (navigator.share) {
