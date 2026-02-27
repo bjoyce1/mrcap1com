@@ -58,6 +58,7 @@ import FloatingMascot from "./components/FloatingMascot";
 import AdminLibrary from "./pages/AdminLibrary";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import Legacy from "./pages/Legacy";
+import PantiesOnMyPiano from "./pages/PantiesOnMyPiano";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -101,6 +102,8 @@ function AppRoutes() {
           <Route path="/admin/library" element={<PageTransition><AdminLibrary /></PageTransition>} />
           <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />
           <Route path="/legacy" element={<PageTransition><Legacy /></PageTransition>} />
+          {/* Release Pages */}
+          <Route path="/panties-on-my-piano" element={<PageTransition><PantiesOnMyPiano /></PageTransition>} />
           {/* OPK Routes */}
           <Route path="/opk" element={<PageTransition><OPKHub /></PageTransition>} />
           <Route path="/opk/music" element={<PageTransition><OPKMusic /></PageTransition>} />
