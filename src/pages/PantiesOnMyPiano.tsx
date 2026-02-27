@@ -77,6 +77,27 @@ function useCountdown(target: Date) {
   return t;
 }
 
+/* ─── Waveform Visualizer ─── */
+const WaveformBars = ({ barCount = 5, className = "", barClassName = "" }: { barCount?: number; className?: string; barClassName?: string }) => (
+  <div className={`flex items-end justify-center gap-[3px] ${className}`}>
+    {Array.from({ length: barCount }).map((_, i) => (
+      <motion.div
+        key={i}
+        className={`w-[3px] rounded-full bg-red-500 ${barClassName}`}
+        animate={{
+          height: ["30%", `${50 + Math.random() * 50}%`, "20%", `${40 + Math.random() * 40}%`, "30%"],
+        }}
+        transition={{
+          duration: 0.6 + Math.random() * 0.3,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: i * 0.08,
+        }}
+      />
+    ))}
+  </div>
+);
+
 /* ─── Particle Background ─── */
 const DustParticles = () => (
   <div className="pointer-events-none absolute inset-0 overflow-hidden z-[1]">
@@ -473,6 +494,35 @@ const PantiesOnMyPiano = () => {
                   whileHover={{ scale: 1.03 }}
                 />
               </AnimatePresence>
+
+              {/* Waveform overlay on artwork — visible when playing */}
+              <AnimatePresence>
+                {isPompPlaying && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none z-10"
+                  >
+                    {/* Dark scrim */}
+                    <div className="absolute inset-0 bg-black/30" />
+                    {/* Bottom waveform bars */}
+                    <WaveformBars
+                      barCount={24}
+                      className="absolute bottom-0 left-0 right-0 h-1/3 px-4 pb-4"
+                      barClassName="bg-red-500/70"
+                    />
+                    {/* Pulsing ring */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl border-2 border-red-500/40"
+                      animate={{ opacity: [0.3, 0.7, 0.3], scale: [1, 1.02, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Glow behind cover */}
               <div className="absolute -inset-8 bg-red-500/10 rounded-3xl blur-3xl -z-10" />
             </div>
@@ -511,16 +561,31 @@ const PantiesOnMyPiano = () => {
               <p className="mt-4 text-muted-foreground text-sm md:text-base max-w-md mx-auto">
                 A Web3 music release experience. Limited NFT editions. Interactive AI studio.
               </p>
-              <motion.button
-                onClick={handlePlay}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 }}
-                className="mt-6 inline-flex items-center gap-2 px-8 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm uppercase tracking-wider transition-colors shadow-lg shadow-red-900/40"
-              >
-                {isPompPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-                {isPompPlaying ? "Pause" : "Play Now"}
-              </motion.button>
+              <div className="relative mt-6 inline-flex flex-col items-center">
+                {/* Waveform behind play button */}
+                <AnimatePresence>
+                  {isPompPlaying && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="absolute -inset-4 -z-10"
+                    >
+                      <WaveformBars barCount={9} className="h-full" barClassName="bg-red-500/30" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <motion.button
+                  onClick={handlePlay}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 }}
+                  className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm uppercase tracking-wider transition-colors shadow-lg shadow-red-900/40"
+                >
+                  {isPompPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                  {isPompPlaying ? "Pause" : "Play Now"}
+                </motion.button>
+              </div>
             </motion.div>
 
             {/* Scroll indicator */}
