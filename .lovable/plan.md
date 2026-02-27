@@ -1,30 +1,20 @@
 
 
-## Plan: Add missing OG meta tags to og-share edge function
+## Plan: Animate mascot to dance when music is playing
 
-### Identified gaps
-1. Missing `og:image:width`, `og:image:height`, `og:image:type`, and `og:image:alt` meta tags
-2. `og:type` is hardcoded to `music.song` even for albums (should be `music.album`)
+### Approach
+Subscribe to `usePlayerStore`'s `isPlaying` state inside `FloatingMascot`. When `isPlaying` is true, replace the slow idle breathing animation with a faster, bouncier dance loop — rhythmic bobbing, side-to-side sway, and slight rotation.
 
 ### Changes
 
-**File: `supabase/functions/og-share/index.ts`**
+**File: `src/components/FloatingMascot.tsx`**
 
-1. Add `og:image:width` (1200), `og:image:height` (630), and `og:image:alt` meta tags to the HTML template
-2. Add `og:image:type` that infers JPEG/PNG/WebP from the image URL extension
-3. Set `og:type` dynamically: `music.song` for tracks, `music.album` for albums
-4. Add `og:site_name` meta tag (`Mr. CAP`)
+1. Import `usePlayerStore` from `@/stores/playerStore`
+2. Destructure `isPlaying` from the store
+3. Replace the idle body-language `<motion.div>` animation (lines 214-223) with conditional logic:
+   - **When playing**: Fast bounce (`y: [0, -14, 0]` at ~0.5s), side sway (`x: [0, 6, -6, 0]` at ~0.8s), and rotation wiggle (`rotate: [0, -6, 6, 0]` at ~0.6s) — a tight rhythmic dance loop
+   - **When idle**: Keep the existing slow breathing animation unchanged
+4. Add a subtle pulsing glow behind the mascot when dancing (amplify the existing ambient glow)
 
-### Technical details
-
-The HTML `<head>` block will gain these additional tags:
-```html
-<meta property="og:image:width" content="1200"/>
-<meta property="og:image:height" content="630"/>
-<meta property="og:image:type" content="image/jpeg"/>
-<meta property="og:image:alt" content="Cover art for Track Title"/>
-<meta property="og:site_name" content="Mr. CAP"/>
-```
-
-The `og:type` will switch between `music.song` and `music.album` based on the `type` query parameter. The image MIME type will be inferred from the file extension (`.jpg`→`image/jpeg`, `.png`→`image/png`, `.webp`→`image/webp`).
+No new files. No database changes. Single file edit.
 
