@@ -1,24 +1,23 @@
 
 
-# Fix Share Functionality
+# Fix Share Link Redirect and OG Previews
 
-## Problems Found
+## Root Cause
+The backend gateway overrides `Content-Type` to `text/plain` and adds `Content-Security-Policy: default-src 'none'; sandbox` to edge function responses. This prevents browsers from rendering the HTML or executing the JavaScript redirect.
 
-1. **OG image URLs are relative paths** -- The edge function outputs `og:image` as `/images/big-navi-remix-cover.png` (relative). Social media crawlers require **absolute URLs**. The function must prepend `https://mrcap1.com` to any relative `cover_art_url`.
-
-2. **Some cover art paths use `/src/assets/...`** -- These paths (e.g. `/src/assets/betn-on-me.png`) only work in the Vite dev server, not as publicly accessible URLs. The edge function needs to handle this by falling back to the default image for `/src/assets/` paths.
-
-3. **Toast always says "Link copied" even on mobile** -- On mobile, `navigator.share` opens the native share sheet (which may be cancelled), but the toast fires unconditionally. Should only show "Link copied" for the clipboard fallback.
-
-4. **Exposed project URL in share link** -- The shared URL contains the raw backend function URL (`qisamkiggoibjkkdtkxq.supabase.co/functions/v1/...`), which looks unprofessional. Should use the project ID from env var instead of hardcoding.
+## Solution
+Use **User-Agent detection** to serve different responses:
+- **Social crawlers** (Twitterbot, facebookexternalhit, etc.) → Return OG HTML (crawlers parse tags regardless of Content-Type)
+- **Real browsers** → Return a **302 redirect** with `Location` header (HTTP-level redirect, no HTML parsing needed)
 
 ## Changes
 
-### 1. Fix `supabase/functions/og-share/index.ts`
-- When `image` starts with `/` (relative path), prepend `SITE` (`https://mrcap1.com`) to make it absolute
-- When `image` starts with `/src/assets/`, fall back to `DEFAULT_IMAGE` since those aren't publicly accessible
+### 1. `supabase/functions/og-share/index.ts`
+- Add a crawler User-Agent detection list (Twitterbot, facebookexternalhit, LinkedInBot, Slackbot, Discordbot, WhatsApp, TelegramBot, etc.)
+- If crawler: return current OG HTML response (status 200)
+- If browser: return `Response.redirect(canonical, 302)` with `Location` header pointing to the track/album page
+- This completely bypasses both the Content-Type and CSP gateway restrictions for real users
 
-### 2. Fix `src/lib/shareTrack.ts`
-- Only show "Link copied" toast on clipboard fallback, not when Web Share API is used
-- On mobile share, show toast only if share completes successfully (or show nothing on cancel)
+### 2. No other file changes needed
+The `shareTrack.ts` and all share button integrations remain the same.
 
