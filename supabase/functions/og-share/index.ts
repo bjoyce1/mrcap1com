@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
       description = data.featured_artists
         ? `ft. ${data.featured_artists} • Listen now`
         : "Listen now on mrcap1.com";
-      image = data.cover_art_url || DEFAULT_IMAGE;
+      image = resolveImage(data.cover_art_url);
       redirectPath = `/track/${slug}`;
     }
   } else if (type === "album") {
@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
     if (data) {
       title = `${data.title} — ${data.artist}`;
       description = data.description || `${data.track_count} tracks • Listen now`;
-      image = data.cover_art_url || DEFAULT_IMAGE;
+      image = resolveImage(data.cover_art_url);
       redirectPath = `/album/${slug}`;
     }
   }
@@ -91,6 +91,13 @@ Deno.serve(async (req) => {
     headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders },
   });
 });
+
+function resolveImage(url: string | null): string {
+  if (!url) return DEFAULT_IMAGE;
+  if (url.startsWith("/src/assets/")) return DEFAULT_IMAGE;
+  if (url.startsWith("/")) return `${SITE}${url}`;
+  return url;
+}
 
 function esc(s: string): string {
   return s
