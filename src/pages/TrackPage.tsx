@@ -116,7 +116,7 @@ const TrackPage = () => {
         title={`${track.title} — ${track.artist} | Stream on mrcap1.com`}
         description={`Stream "${track.title}" by ${track.artist}${track.featured_artists ? ` ft. ${track.featured_artists}` : ""}. ${album ? `From the album ${album.title}.` : ""} Houston hip hop.`}
         canonical={`https://mrcap1.com/track/${track.slug}`}
-        ogImage={track.cover_art_url || undefined}
+        ogImage={track.cover_art_url ? (track.cover_art_url.startsWith("http") ? track.cover_art_url : `https://mrcap1com.lovable.app${track.cover_art_url}`) : undefined}
         jsonLd={jsonLd}
       />
       <Navigation />

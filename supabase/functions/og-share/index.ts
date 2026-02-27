@@ -105,9 +105,9 @@ Deno.serve(async (req) => {
 
 function resolveImage(url: string | null): string {
   if (!url) return DEFAULT_IMAGE;
-  if (url.startsWith("/src/assets/")) return DEFAULT_IMAGE;
+  if (url.startsWith("http")) return url;
   if (url.startsWith("/")) return `${SITE}${url}`;
-  return url;
+  return DEFAULT_IMAGE;
 }
 
 function esc(s: string): string {
