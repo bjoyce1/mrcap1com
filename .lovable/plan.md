@@ -1,36 +1,24 @@
 
 
-# Dynamic OG Images for Shared Tracks
+# Fix Share Functionality
 
-## Problem
-Social media platforms (Twitter, Facebook, iMessage, etc.) don't execute JavaScript. When a track link is shared, crawlers see only the static `index.html` OG tags — showing a generic Mr. CAP image instead of the track's cover art.
+## Problems Found
 
-## Solution
-Create a backend function that serves a lightweight HTML page with the correct OG meta tags (cover art, title, artist) for each track. This page includes a JavaScript redirect so real users land on the actual track page, while crawlers get the rich preview they need.
+1. **OG image URLs are relative paths** -- The edge function outputs `og:image` as `/images/big-navi-remix-cover.png` (relative). Social media crawlers require **absolute URLs**. The function must prepend `https://mrcap1.com` to any relative `cover_art_url`.
 
-## What Changes
+2. **Some cover art paths use `/src/assets/...`** -- These paths (e.g. `/src/assets/betn-on-me.png`) only work in the Vite dev server, not as publicly accessible URLs. The edge function needs to handle this by falling back to the default image for `/src/assets/` paths.
 
-### 1. New Edge Function: `og-share`
-- Accepts query params: `type` (track/album) and `slug`
-- Queries the database for the track/album record
-- Returns a minimal HTML page with:
-  - `og:image` set to the track's `cover_art_url`
-  - `og:title` set to track title + artist
-  - `og:description` with track details
-  - `twitter:card`, `twitter:image` tags
-  - A `<meta http-equiv="refresh">` and JS `window.location` redirect to `https://mrcap1.com/track/{slug}`
+3. **Toast always says "Link copied" even on mobile** -- On mobile, `navigator.share` opens the native share sheet (which may be cancelled), but the toast fires unconditionally. Should only show "Link copied" for the clipboard fallback.
 
-### 2. Update `shareTrack.ts`
-- Change the shared URL from `https://mrcap1.com/track/{slug}` to the edge function URL: `https://qisamkiggoibjkkdtkxq.supabase.co/functions/v1/og-share?type=track&slug={slug}`
-- Real users who click the link get redirected to the actual page instantly
-- Crawlers see the correct OG tags with the cover art image
+4. **Exposed project URL in share link** -- The shared URL contains the raw backend function URL (`qisamkiggoibjkkdtkxq.supabase.co/functions/v1/...`), which looks unprofessional. Should use the project ID from env var instead of hardcoding.
 
-### 3. Files Modified
-- **New:** `supabase/functions/og-share/index.ts` — edge function serving dynamic OG HTML
-- **Modified:** `src/lib/shareTrack.ts` — update share URL to point to the OG proxy
+## Changes
 
-### Technical Notes
-- The edge function uses the Supabase service client to query `tracks` or `albums` tables by slug
-- Falls back to default OG image if track has no cover art
-- No database migrations needed — reads existing tables only
+### 1. Fix `supabase/functions/og-share/index.ts`
+- When `image` starts with `/` (relative path), prepend `SITE` (`https://mrcap1.com`) to make it absolute
+- When `image` starts with `/src/assets/`, fall back to `DEFAULT_IMAGE` since those aren't publicly accessible
+
+### 2. Fix `src/lib/shareTrack.ts`
+- Only show "Link copied" toast on clipboard fallback, not when Web Share API is used
+- On mobile share, show toast only if share completes successfully (or show nothing on cancel)
 
