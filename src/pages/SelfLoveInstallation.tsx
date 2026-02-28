@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 function RoomCard({
   room,
@@ -87,16 +88,47 @@ export default function SelfLoveInstallation() {
           </header>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {([
-            { room: "Room I", year: "2024", title: "The Awakening", tags: ["Recognition", "Vulnerability", "First Truths"] as string[], to: "/self-love/2024" },
-            { room: "Room II", year: "2025", title: "The Becoming", tags: ["Growth", "Boundaries", "Voice"] as string[], to: "/self-love/2025", disabled: true },
-            { room: "Room III", year: "2026", title: "The Ownership", tags: ["Mastery", "Permanence", "Legacy"] as string[], to: "/self-love/2026", disabled: true },
-          ]).map((props, i) => (
-            <ScrollReveal key={props.room} width="100%" delay={0.15 * i}>
-              <RoomCard {...props} />
-            </ScrollReveal>
-          ))}
+        <div style={{ position: 'relative', minHeight: '300px' }}>
+          <ChromaGrid
+            items={([
+              { room: "Room I", year: "2024", title: "The Awakening", tags: ["Recognition", "Vulnerability", "First Truths"] as string[], to: "/self-love/2024" },
+              { room: "Room II", year: "2025", title: "The Becoming", tags: ["Growth", "Boundaries", "Voice"] as string[], to: "/self-love/2025", disabled: true },
+              { room: "Room III", year: "2026", title: "The Ownership", tags: ["Mastery", "Permanence", "Legacy"] as string[], to: "/self-love/2026", disabled: true },
+            ]).map((props) => ({
+              title: `${props.year}: ${props.title}`,
+              subtitle: props.room,
+              borderColor: props.disabled ? "hsl(var(--border))" : "hsl(var(--primary))",
+              gradient: `linear-gradient(145deg, hsl(var(--primary) / ${props.disabled ? '0.04' : '0.1'}), hsl(var(--background)))`,
+              ...props,
+            } as ChromaGridItem))}
+            columns={3}
+            radius={300}
+            damping={0.45}
+            fadeOut={0.6}
+            renderCard={(item) => {
+              const props = item as ChromaGridItem & { room: string; year: string; tags: string[]; to: string; disabled?: boolean };
+              const card = (
+                <article className="relative overflow-hidden p-6 h-full">
+                  <div className="absolute inset-x-0 top-0 h-1 bg-primary/30" />
+                  <p className="text-xs tracking-[0.22em] uppercase text-muted-foreground">{props.room}</p>
+                  <h2 className="mt-2 text-2xl font-semibold text-foreground">{item.title}</h2>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {props.tags.map((t: string) => (
+                      <span key={t} className="rounded-full border border-border/20 bg-muted/30 px-3 py-1 text-xs text-muted-foreground">{t}</span>
+                    ))}
+                  </div>
+                  <div className="mt-6">
+                    <span className={`inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition ${props.disabled ? "bg-muted text-muted-foreground cursor-not-allowed" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}>
+                      {props.disabled ? "Coming Soon" : "Enter Room"}
+                    </span>
+                  </div>
+                </article>
+              );
+              return props.disabled ? card : (
+                <Link to={props.to} className="block h-full" onClick={(e) => e.stopPropagation()}>{card}</Link>
+              );
+            }}
+          />
         </div>
 
         <ScrollReveal width="100%" delay={0.5}>

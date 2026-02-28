@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Play, ExternalLink, ChevronRight, Disc3, Music } from "lucide-react";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 import albumTies from "@/assets/album-ties.jpg";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
@@ -232,56 +233,49 @@ const Discography = () => {
                 <h2 className="text-2xl md:text-3xl font-display font-bold">Studio & Collab Albums</h2>
               </div>
               
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {studioAlbums.map((album, index) => (
-                  <div 
-                    key={index}
-                    className={`group bg-card/50 border rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300 ${album.featured ? 'border-primary/50' : 'border-border/50'}`}
-                  >
-                    <div className="relative aspect-square overflow-hidden bg-muted">
-                      <img 
-                        src={album.image} 
-                        alt={`${album.title} album cover`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
-                      {album.featured && (
-                        <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
-                          LATEST
+              <div style={{ position: 'relative', minHeight: '400px' }}>
+                <ChromaGrid
+                  items={studioAlbums.map((album) => ({
+                    image: album.image,
+                    title: album.title,
+                    subtitle: album.role,
+                    handle: album.artist,
+                    borderColor: album.featured ? "hsl(var(--primary))" : "hsl(var(--border))",
+                    gradient: `linear-gradient(145deg, hsl(var(--primary) / ${album.featured ? '0.12' : '0.06'}), hsl(var(--background)))`,
+                    album,
+                  } as ChromaGridItem))}
+                  columns={4}
+                  radius={250}
+                  damping={0.45}
+                  fadeOut={0.6}
+                  renderCard={(item) => {
+                    const album = item.album as typeof studioAlbums[0];
+                    return (
+                      <div className="flex flex-col h-full">
+                        <div className="relative aspect-square overflow-hidden bg-muted rounded-t-[20px]">
+                          <img src={album.image} alt={`${album.title} album cover`} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
+                          {album.featured && (
+                            <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">LATEST</div>
+                          )}
+                          <div className="absolute bottom-3 left-3"><span className="px-2 py-0.5 rounded bg-background/80 text-xs font-medium">{album.year}</span></div>
                         </div>
-                      )}
-                      <div className="absolute bottom-3 left-3 right-3">
-                        <span className="px-2 py-0.5 rounded bg-background/80 text-xs font-medium">
-                          {album.year}
-                        </span>
+                        <div className="p-4">
+                          <h3 className="font-medium text-foreground mb-1 line-clamp-1">{album.title}</h3>
+                          <p className="text-xs text-muted-foreground mb-2">{album.artist}</p>
+                          <p className="text-xs text-muted-foreground/70">{album.label}</p>
+                          <p className="text-xs text-primary/70 mt-1">{album.role}</p>
+                          {(album.spotify || album.apple) && (
+                            <div className="flex gap-2 mt-3">
+                              {album.spotify && <Button variant="flux" size="sm" className="flex-1" asChild><a href={album.spotify} target="_blank" rel="noopener noreferrer"><Play className="w-3 h-3" /></a></Button>}
+                              {album.apple && <Button variant="fluxOutline" size="sm" className="flex-1" asChild><a href={album.apple} target="_blank" rel="noopener noreferrer"><ExternalLink className="w-3 h-3" /></a></Button>}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-medium text-foreground mb-1 line-clamp-1">{album.title}</h3>
-                      <p className="text-xs text-muted-foreground mb-2">{album.artist}</p>
-                      <p className="text-xs text-muted-foreground/70">{album.label}</p>
-                      <p className="text-xs text-primary/70 mt-1">{album.role}</p>
-                      {(album.spotify || album.apple) && (
-                        <div className="flex gap-2 mt-3">
-                          {album.spotify && (
-                            <Button variant="flux" size="sm" className="flex-1" asChild>
-                              <a href={album.spotify} target="_blank" rel="noopener noreferrer">
-                                <Play className="w-3 h-3" />
-                              </a>
-                            </Button>
-                          )}
-                          {album.apple && (
-                            <Button variant="fluxOutline" size="sm" className="flex-1" asChild>
-                              <a href={album.apple} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="w-3 h-3" />
-                              </a>
-                            </Button>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                    );
+                  }}
+                />
               </div>
             </section>
 
@@ -299,28 +293,34 @@ const Discography = () => {
                       <span className="text-sm font-semibold text-primary">{yearGroup.year}</span>
                       <div className="flex-1 h-px bg-border/50" />
                     </div>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                      {yearGroup.tracks.map((track, trackIndex) => (
-                        <div 
-                          key={trackIndex}
-                          className={`group flex items-center gap-3 p-3 rounded-lg bg-card/50 border hover:border-primary/30 transition-colors cursor-pointer ${track.nft ? 'border-amber-500/50' : 'border-border/50'}`}
-                        >
-                          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-                            <Play className="w-4 h-4 text-primary" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <p className="font-medium text-foreground text-sm line-clamp-1">{track.title}</p>
-                              {track.nft && (
-                                <span className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                                  NFT
-                                </span>
-                              )}
+                    <div style={{ position: 'relative', minHeight: '80px' }}>
+                      <ChromaGrid
+                        items={yearGroup.tracks.map((track) => ({
+                          title: track.title,
+                          subtitle: track.artist,
+                          borderColor: track.nft ? "#f59e0b" : "hsl(var(--primary))",
+                          gradient: `linear-gradient(145deg, ${track.nft ? 'rgba(245,158,11,0.08)' : 'hsl(var(--primary) / 0.06)'}, hsl(var(--background)))`,
+                          nft: track.nft,
+                        } as ChromaGridItem))}
+                        columns={3}
+                        radius={200}
+                        damping={0.4}
+                        fadeOut={0.5}
+                        renderCard={(item) => (
+                          <div className="flex items-center gap-3 p-3">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                              <Play className="w-4 h-4 text-primary" />
                             </div>
-                            <p className="text-xs text-muted-foreground line-clamp-1">{track.artist}</p>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
+                                {item.nft && <span className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">NFT</span>}
+                              </div>
+                              <p className="text-xs text-muted-foreground line-clamp-1">{item.subtitle}</p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )}
+                      />
                     </div>
                   </div>
                 ))}

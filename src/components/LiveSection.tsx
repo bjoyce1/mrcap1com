@@ -1,6 +1,7 @@
 import { Mic2, MapPin, Users, CheckCircle, Calendar, Clock, Ticket, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 import spcPoster from "@/assets/spc-austin-2025.png";
 
 const LiveSection = () => {
@@ -16,6 +17,21 @@ const LiveSection = () => {
     "Professional sound system with competent engineer",
     "Stereo playback via DJ controller or laptop (USB or auxiliary)",
     "Minimum stage area suitable for full movement and interaction",
+  ];
+
+  const panelItems: ChromaGridItem[] = [
+    {
+      title: "Performance Highlights",
+      borderColor: "hsl(var(--primary))",
+      gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.08), hsl(var(--background)))",
+      panelType: "highlights",
+    },
+    {
+      title: "Technical Rider",
+      borderColor: "hsl(var(--cap-gold))",
+      gradient: "linear-gradient(210deg, hsl(var(--cap-gold) / 0.08), hsl(var(--background)))",
+      panelType: "rider",
+    },
   ];
 
   return (
@@ -88,62 +104,72 @@ const LiveSection = () => {
           </div>
         </ScrollReveal>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          <ScrollReveal width="100%">
-            <div className="glass rounded-2xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Mic2 className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-editorial text-2xl">Performance Highlights</h3>
-              </div>
-              <ul className="space-y-4">
-                {highlights.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-cap-gold shrink-0 mt-0.5" />
-                    <span className="text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 p-5 rounded-xl bg-white/[0.02] border border-white/5">
-                <h4 className="font-editorial text-lg mb-3">Performance Style</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed text-balance">
-                  Expect a set that blends storytelling, street anthems, and reflective records,
-                  supported by professional show pacing, call-and-response moments, and crowd-ready hooks.
-                </p>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal width="100%" delay={0.15}>
-            <div className="glass rounded-2xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-cap-gold/15 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-cap-gold" />
-                </div>
-                <h3 className="font-editorial text-2xl">Technical Rider</h3>
-              </div>
-              <p className="text-sm text-muted-foreground mb-6">
-                Short summary of technical requirements. Full rider available upon request.
-              </p>
-              <ul className="space-y-4 mb-8">
-                {technicalRequirements.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center shrink-0 mt-0.5">
-                      <span className="text-xs font-medium text-muted-foreground">{index + 1}</span>
+        <div style={{ position: 'relative', minHeight: '400px' }}>
+          <ChromaGrid
+            items={panelItems}
+            columns={2}
+            radius={350}
+            damping={0.45}
+            fadeOut={0.6}
+            renderCard={(item) => {
+              if (item.panelType === "highlights") {
+                return (
+                  <div className="p-8 h-full">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Mic2 className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-editorial text-2xl text-foreground">Performance Highlights</h3>
                     </div>
-                    <span className="text-sm text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button variant="hero" className="w-full rounded-full" asChild>
-                <a href="#contact">
-                  <MapPin className="w-4 h-4" />
-                  Request Full Rider & Availability
-                </a>
-              </Button>
-            </div>
-          </ScrollReveal>
+                    <ul className="space-y-4">
+                      {highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-cap-gold shrink-0 mt-0.5" />
+                          <span className="text-muted-foreground">{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-8 p-5 rounded-xl bg-white/[0.02] border border-border">
+                      <h4 className="font-editorial text-lg mb-3 text-foreground">Performance Style</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed text-balance">
+                        Expect a set that blends storytelling, street anthems, and reflective records,
+                        supported by professional show pacing, call-and-response moments, and crowd-ready hooks.
+                      </p>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <div className="p-8 h-full">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-cap-gold/15 flex items-center justify-center">
+                      <Users className="w-5 h-5 text-cap-gold" />
+                    </div>
+                    <h3 className="font-editorial text-2xl text-foreground">Technical Rider</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-6">
+                    Short summary of technical requirements. Full rider available upon request.
+                  </p>
+                  <ul className="space-y-4 mb-8">
+                    {technicalRequirements.map((r, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center shrink-0 mt-0.5">
+                          <span className="text-xs font-medium text-muted-foreground">{i + 1}</span>
+                        </div>
+                        <span className="text-sm text-muted-foreground">{r}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button variant="hero" className="w-full rounded-full" asChild>
+                    <a href="#contact">
+                      <MapPin className="w-4 h-4" />
+                      Request Full Rider & Availability
+                    </a>
+                  </Button>
+                </div>
+              );
+            }}
+          />
         </div>
       </div>
     </section>

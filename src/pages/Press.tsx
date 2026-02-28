@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, ExternalLink, Quote, Mail, FileText, Image, Mic, Award, Music, Users, Calendar, MapPin, Globe } from "lucide-react";
 import BookingCard from "@/components/BookingCard";
 import PressSection from "@/components/PressSection";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 // Featured press article (Houston Press)
 const featuredArticle = {
@@ -502,11 +503,25 @@ const Press = () => {
                   <FileText className="w-6 h-6 text-primary" />
                   Quick Facts
                 </h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {keyFacts.map((fact, index) => <div key={index} className="bg-card/50 border border-border/50 rounded-lg p-4 flex justify-between items-start">
-                      <span className="text-muted-foreground font-medium">{fact.label}</span>
-                      <span className="text-foreground text-right max-w-[60%]">{fact.value}</span>
-                    </div>)}
+                <div style={{ position: 'relative', minHeight: '200px' }}>
+                  <ChromaGrid
+                    items={keyFacts.map((fact) => ({
+                      title: fact.label,
+                      subtitle: fact.value,
+                      borderColor: "hsl(var(--border))",
+                      gradient: "linear-gradient(145deg, hsl(var(--card) / 0.5), hsl(var(--background)))",
+                    } as ChromaGridItem))}
+                    columns={2}
+                    radius={250}
+                    damping={0.4}
+                    fadeOut={0.5}
+                    renderCard={(item) => (
+                      <div className="p-4 flex justify-between items-start">
+                        <span className="text-muted-foreground font-medium">{item.title}</span>
+                        <span className="text-foreground text-right max-w-[60%]">{item.subtitle}</span>
+                      </div>
+                    )}
+                  />
                 </div>
               </div>
             </div>
@@ -520,12 +535,30 @@ const Press = () => {
                   <Mic className="w-6 h-6 text-primary" />
                   Story Angles
                 </h2>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {storyAngles.map((angle, index) => <div key={index} className="bg-card/30 border border-border/50 rounded-xl p-6 hover:border-primary/50 transition-colors">
-                      <angle.icon className="w-8 h-8 text-primary mb-4" />
-                      <h3 className="font-bold text-lg mb-2">{angle.title}</h3>
-                      <p className="text-muted-foreground">{angle.description}</p>
-                    </div>)}
+                <div style={{ position: 'relative', minHeight: '200px' }}>
+                  <ChromaGrid
+                    items={storyAngles.map((angle) => ({
+                      title: angle.title,
+                      subtitle: angle.description,
+                      borderColor: "hsl(var(--primary))",
+                      gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.06), hsl(var(--background)))",
+                      icon: angle.icon,
+                    } as ChromaGridItem))}
+                    columns={2}
+                    radius={250}
+                    damping={0.45}
+                    fadeOut={0.6}
+                    renderCard={(item) => {
+                      const Icon = item.icon as React.ComponentType<{ className?: string }>;
+                      return (
+                        <div className="p-6">
+                          <Icon className="w-8 h-8 text-primary mb-4" />
+                          <h3 className="font-bold text-lg mb-2 text-foreground">{item.title}</h3>
+                          <p className="text-muted-foreground">{item.subtitle}</p>
+                        </div>
+                      );
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -621,12 +654,26 @@ const Press = () => {
             <div className="container mx-auto px-4">
               <h2 className="text-2xl font-display font-bold mb-8 text-center">What They're Saying</h2>
               
-              <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                {quotes.map((quote, index) => <div key={index} className="bg-card/50 border border-border/50 rounded-xl p-6">
-                    <Quote className="w-8 h-8 text-primary/50 mb-4" />
-                    <p className="text-foreground italic mb-4">"{quote.text}"</p>
-                    <p className="text-sm text-muted-foreground">— {quote.source}</p>
-                  </div>)}
+              <div style={{ position: 'relative', minHeight: '300px' }}>
+                <ChromaGrid
+                  items={quotes.map((quote) => ({
+                    title: quote.text,
+                    subtitle: quote.source,
+                    borderColor: "hsl(var(--border))",
+                    gradient: "linear-gradient(145deg, hsl(var(--card) / 0.5), hsl(var(--background)))",
+                  } as ChromaGridItem))}
+                  columns={2}
+                  radius={300}
+                  damping={0.45}
+                  fadeOut={0.6}
+                  renderCard={(item) => (
+                    <div className="p-6">
+                      <Quote className="w-8 h-8 text-primary/50 mb-4" />
+                      <p className="text-foreground italic mb-4">"{item.title}"</p>
+                      <p className="text-sm text-muted-foreground">— {item.subtitle}</p>
+                    </div>
+                  )}
+                />
               </div>
             </div>
           </section>

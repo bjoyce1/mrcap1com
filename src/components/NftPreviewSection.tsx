@@ -1,8 +1,30 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Wallet } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const NftPreviewSection = () => {
+  const statItems: ChromaGridItem[] = [
+    {
+      title: "11",
+      subtitle: "Album Tracks",
+      borderColor: "hsl(var(--primary))",
+      gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.12), hsl(var(--background)))",
+    },
+    {
+      title: "30+",
+      subtitle: "Collectibles",
+      borderColor: "hsl(var(--accent))",
+      gradient: "linear-gradient(180deg, hsl(var(--accent) / 0.12), hsl(var(--background)))",
+    },
+    {
+      title: "ETH",
+      subtitle: "Blockchain",
+      borderColor: "hsl(var(--foreground))",
+      gradient: "linear-gradient(210deg, hsl(var(--foreground) / 0.08), hsl(var(--background)))",
+    },
+  ];
+
   return (
     <section className="py-20 md:py-28 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-red-glow opacity-20 pointer-events-none" />
@@ -34,19 +56,20 @@ const NftPreviewSection = () => {
           </ScrollReveal>
 
           <ScrollReveal width="100%" delay={0.3}>
-            <div className="flex justify-center gap-8 md:gap-16 mb-10">
-              <div className="text-center">
-                <p className="text-2xl md:text-3xl font-display text-primary">11</p>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">Album Tracks</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl md:text-3xl font-display text-accent">30+</p>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">Collectibles</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl md:text-3xl font-display text-foreground">ETH</p>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">Blockchain</p>
-              </div>
+            <div style={{ position: 'relative', minHeight: '100px' }}>
+              <ChromaGrid
+                items={statItems}
+                columns={3}
+                radius={200}
+                damping={0.4}
+                fadeOut={0.5}
+                renderCard={(item) => (
+                  <div className="text-center py-4 px-2">
+                    <p className="text-2xl md:text-3xl font-display text-foreground">{item.title}</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">{item.subtitle}</p>
+                  </div>
+                )}
+              />
             </div>
           </ScrollReveal>
 
@@ -55,7 +78,7 @@ const NftPreviewSection = () => {
               to="/nft"
               className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground
                          rounded-xl font-medium text-lg transition-all duration-300
-                         hover:bg-primary/90 hover:shadow-glow hover:-translate-y-1 card-lift"
+                         hover:bg-primary/90 hover:shadow-glow hover:-translate-y-1 card-lift mt-6"
             >
               <span>View Full NFT Portfolio</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

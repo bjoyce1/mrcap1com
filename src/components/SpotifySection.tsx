@@ -1,10 +1,39 @@
 import { Music2, ExternalLink, Play, Shuffle, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const SpotifySection = () => {
   const spotifyArtistId = "69pjfQNXA1xjusnI2wfgug";
   const spotifyArtistUrl = `https://open.spotify.com/artist/${spotifyArtistId}`;
+
+  const statItems: ChromaGridItem[] = [
+    {
+      title: "20+",
+      subtitle: "Years Active",
+      borderColor: "hsl(var(--foreground))",
+      gradient: "linear-gradient(145deg, hsl(var(--foreground) / 0.05), hsl(var(--background)))",
+    },
+    {
+      title: "4",
+      subtitle: "Studio Albums",
+      borderColor: "#1DB954",
+      gradient: "linear-gradient(180deg, rgba(29,185,84,0.12), hsl(var(--background)))",
+    },
+    {
+      title: "14+",
+      subtitle: "Singles & EPs",
+      borderColor: "hsl(var(--cap-gold))",
+      gradient: "linear-gradient(210deg, hsl(var(--cap-gold) / 0.12), hsl(var(--background)))",
+    },
+  ];
+
+  const platformItems: ChromaGridItem[] = [
+    { title: "Apple Music", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+    { title: "YouTube Music", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+    { title: "Amazon Music", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+    { title: "Tidal", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+  ];
 
   return (
     <section id="spotify" className="section-spacing bg-hero-gradient relative overflow-hidden">
@@ -110,23 +139,24 @@ const SpotifySection = () => {
 
         <ScrollReveal width="100%">
           <div className="glass rounded-2xl p-10 text-center">
-            <div className="flex flex-wrap justify-center gap-10 md:gap-20 mb-10">
-              <div>
-                <p className="font-display text-4xl md:text-5xl text-foreground">20+</p>
-                <p className="text-muted-foreground text-sm mt-1">Years Active</p>
-              </div>
-              <div>
-                <p className="font-display text-4xl md:text-5xl text-[#1DB954]">4</p>
-                <p className="text-muted-foreground text-sm mt-1">Studio Albums</p>
-              </div>
-              <div>
-                <p className="font-display text-4xl md:text-5xl text-cap-gold">14+</p>
-                <p className="text-muted-foreground text-sm mt-1">Singles & EPs</p>
-              </div>
+            <div style={{ position: 'relative', minHeight: '100px' }}>
+              <ChromaGrid
+                items={statItems}
+                columns={3}
+                radius={250}
+                damping={0.4}
+                fadeOut={0.5}
+                renderCard={(item) => (
+                  <div className="text-center py-4">
+                    <p className="font-display text-4xl md:text-5xl text-foreground">{item.title}</p>
+                    <p className="text-muted-foreground text-sm mt-1">{item.subtitle}</p>
+                  </div>
+                )}
+              />
             </div>
             <Button
               size="lg"
-              className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-semibold px-10 rounded-full"
+              className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-semibold px-10 rounded-full mt-6"
               onClick={() => window.open(spotifyArtistUrl, '_blank')}
             >
               <Shuffle className="w-5 h-5" />
@@ -136,25 +166,22 @@ const SpotifySection = () => {
         </ScrollReveal>
 
         <ScrollReveal width="100%">
-          <div className="mt-16 pt-10 border-t border-white/5 text-center">
+          <div className="mt-16 pt-10 border-t border-border text-center">
             <p className="text-sm text-muted-foreground mb-5">Also available on:</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button variant="outline" size="sm" className="border-white/10 rounded-full">
-                <Music2 className="w-4 h-4" />
-                Apple Music
-              </Button>
-              <Button variant="outline" size="sm" className="border-white/10 rounded-full">
-                <Music2 className="w-4 h-4" />
-                YouTube Music
-              </Button>
-              <Button variant="outline" size="sm" className="border-white/10 rounded-full">
-                <Music2 className="w-4 h-4" />
-                Amazon Music
-              </Button>
-              <Button variant="outline" size="sm" className="border-white/10 rounded-full">
-                <Music2 className="w-4 h-4" />
-                Tidal
-              </Button>
+            <div style={{ position: 'relative', minHeight: '60px' }}>
+              <ChromaGrid
+                items={platformItems}
+                columns={4}
+                radius={200}
+                damping={0.4}
+                fadeOut={0.5}
+                renderCard={(item) => (
+                  <div className="flex items-center justify-center gap-2 py-2 px-4">
+                    <Music2 className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm text-foreground">{item.title}</span>
+                  </div>
+                )}
+              />
             </div>
           </div>
         </ScrollReveal>
