@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import ChromaGrid from "@/components/ui/ChromaGrid";
 import { Link } from "react-router-dom";
 import { ChevronRight, CheckCircle2, Clock, Circle } from "lucide-react";
 
@@ -178,18 +179,29 @@ const AdminRoadmap = () => {
           </p>
 
           {/* Status Summary */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            <button onClick={() => setFilter("all")} className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${filter === "all" ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground hover:text-foreground"}`}>
-              All ({items.length})
-            </button>
-            {(Object.keys(statusConfig) as Status[]).map((s) => {
-              const config = statusConfig[s];
-              return (
-                <button key={s} onClick={() => setFilter(s)} className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${filter === s ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground hover:text-foreground"}`}>
-                  {config.label} ({counts[s]})
+          <div className="mb-8" style={{ height: '80px', position: 'relative' }}>
+            <ChromaGrid
+              items={[
+                { title: `All (${items.length})`, borderColor: filter === "all" ? "hsl(var(--foreground))" : "transparent", gradient: filter === "all" ? "linear-gradient(145deg, hsl(var(--foreground) / 0.1), hsl(var(--background)))" : "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))", _filter: "all" as const },
+                ...((Object.keys(statusConfig) as Status[]).map((s) => ({
+                  title: `${statusConfig[s].label} (${counts[s]})`,
+                  borderColor: filter === s ? "hsl(var(--foreground))" : "transparent",
+                  gradient: filter === s ? "linear-gradient(145deg, hsl(var(--foreground) / 0.1), hsl(var(--background)))" : "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))",
+                  _filter: s as string,
+                }))),
+              ]}
+              columns={4}
+              radius={150}
+              fadeOut={0}
+              renderCard={(item) => (
+                <button
+                  onClick={() => setFilter(item._filter as Status | "all")}
+                  className="w-full h-full flex items-center justify-center px-4 py-2 text-sm font-medium text-foreground"
+                >
+                  {item.title}
                 </button>
-              );
-            })}
+              )}
+            />
           </div>
 
           {/* Items */}

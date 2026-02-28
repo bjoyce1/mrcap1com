@@ -1,5 +1,6 @@
-import { Instagram, Twitter, Youtube, Lock } from "lucide-react";
+import { Instagram, Twitter, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -33,84 +34,66 @@ const socialLinks = [
   { icon: TikTokIcon, href: "https://www.tiktok.com/@mrcapism", label: "TikTok" },
 ];
 
+const footerColumns = [
+  { title: "Shop", links: shopLinks, borderColor: "#3B82F6", gradient: "linear-gradient(145deg, rgba(59,130,246,0.08), #0A0A0A)" },
+  { title: "Support", links: supportLinks, borderColor: "#10B981", gradient: "linear-gradient(210deg, rgba(16,185,129,0.08), #0A0A0A)" },
+  { title: "Legal", links: legalLinks, borderColor: "#F59E0B", gradient: "linear-gradient(165deg, rgba(245,158,11,0.08), #0A0A0A)" },
+];
+
 export const MerchFooter = () => {
+  const chromaItems: ChromaGridItem[] = footerColumns.map((col) => ({
+    title: col.title,
+    borderColor: col.borderColor,
+    gradient: col.gradient,
+    _links: col.links,
+  }));
+
   return (
     <footer className="bg-[#0A0A0A] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-1">
-            <Link to="/" className="text-xl font-bold tracking-tight text-foreground">
-              MrCap1
-            </Link>
+            <Link to="/" className="text-xl font-bold tracking-tight text-foreground">MrCap1</Link>
             <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
               Official merchandise store. Premium quality apparel and accessories for the community.
             </p>
             <div className="flex items-center gap-3 mt-6">
               {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
+                <a key={index} href={social.href} target="_blank" rel="noreferrer"
                   className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-blue-400 hover:bg-blue-500/10 transition-all"
-                  aria-label={social.label}
-                >
+                  aria-label={social.label}>
                   <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Shop Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Shop</h4>
-            <ul className="space-y-3">
-              {shopLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Support</h4>
-            <ul className="space-y-3">
-              {supportLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Legal</h4>
-            <ul className="space-y-3">
-              {legalLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {/* Link Columns via ChromaGrid */}
+          <div className="lg:col-span-3" style={{ height: '260px', position: 'relative' }}>
+            <ChromaGrid
+              items={chromaItems}
+              columns={3}
+              radius={200}
+              fadeOut={0.3}
+              renderCard={(item) => {
+                const links = item._links as { label: string; href: string }[];
+                return (
+                  <div className="p-6">
+                    <h4 className="text-sm font-semibold text-foreground mb-4">{item.title}</h4>
+                    <ul className="space-y-3">
+                      {links.map((link) => (
+                        <li key={link.label}>
+                          <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              }}
+            />
           </div>
         </div>
       </div>
@@ -118,12 +101,9 @@ export const MerchFooter = () => {
       {/* Bottom Bar */}
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} MrCap1. All rights reserved.
-          </p>
+          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} MrCap1. All rights reserved.</p>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Lock className="w-3 h-3" />
-            <span>Secure Checkout</span>
+            <Lock className="w-3 h-3" /><span>Secure Checkout</span>
           </div>
         </div>
       </div>

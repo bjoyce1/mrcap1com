@@ -2,12 +2,13 @@ import { Helmet } from "react-helmet-async";
 import { Download, Music, Mic, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import OPKLayout from "@/components/OPKLayout";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const artistSnapshot = [
-  { label: "Genre", value: "Hip-Hop (Southern / Houston)" },
-  { label: "Origin", value: "Houston, Texas" },
-  { label: "Affiliation", value: "South Park Coalition (SPC)" },
-  { label: "Performance Formats", value: "Full Set & Feature Appearance" },
+  { label: "Genre", value: "Hip-Hop (Southern / Houston)", borderColor: "#3B82F6", gradient: "linear-gradient(145deg, #3B82F6, hsl(var(--background)))" },
+  { label: "Origin", value: "Houston, Texas", borderColor: "#10B981", gradient: "linear-gradient(210deg, #10B981, hsl(var(--background)))" },
+  { label: "Affiliation", value: "South Park Coalition (SPC)", borderColor: "#F59E0B", gradient: "linear-gradient(165deg, #F59E0B, hsl(var(--background)))" },
+  { label: "Performance Formats", value: "Full Set & Feature Appearance", borderColor: "#8B5CF6", gradient: "linear-gradient(195deg, #8B5CF6, hsl(var(--background)))" },
 ];
 
 const musicHighlights = [
@@ -17,14 +18,18 @@ const musicHighlights = [
 ];
 
 const OPKMusic = () => {
+  const snapshotItems: ChromaGridItem[] = artistSnapshot.map((item) => ({
+    title: item.value,
+    subtitle: item.label,
+    borderColor: item.borderColor,
+    gradient: item.gradient,
+  }));
+
   return (
     <>
       <Helmet>
         <title>Mr. CAP | Booking OPK – Live Hip Hop Performer</title>
-        <meta 
-          name="description" 
-          content="Book Mr. CAP, Houston hip-hop artist and South Park Coalition member, for full set or feature appearances. Download the booking OPK." 
-        />
+        <meta name="description" content="Book Mr. CAP, Houston hip-hop artist and South Park Coalition member, for full set or feature appearances. Download the booking OPK." />
         <link rel="canonical" href="https://mrcap1.com/opk/music" />
         <meta property="og:title" content="Mr. CAP | Booking OPK – Live Hip Hop Performer" />
         <meta property="og:description" content="Book Mr. CAP for live performances. Full sets, features, festivals." />
@@ -47,27 +52,13 @@ const OPKMusic = () => {
               "@id": "https://mrcap1.com/#musicgroup",
               "name": "Mr. CAP",
               "genre": ["Hip-Hop", "Southern Hip-Hop", "Houston Rap"],
-              "foundingLocation": {
-                "@type": "Place",
-                "name": "Houston, Texas"
-              },
-              "member": {
-                "@type": "Person",
-                "@id": "https://mrcap1.com/#person",
-                "name": "Mr. CAP"
-              },
+              "foundingLocation": { "@type": "Place", "name": "Houston, Texas" },
+              "member": { "@type": "Person", "@id": "https://mrcap1.com/#person", "name": "Mr. CAP" },
               "event": {
                 "@type": "Event",
                 "name": "Book Mr. CAP Live Performance",
-                "performer": {
-                  "@type": "Person",
-                  "name": "Mr. CAP"
-                },
-                "organizer": {
-                  "@type": "Organization",
-                  "name": "South Park Coalition LLC",
-                  "email": "southparkcoalitionllc@gmail.com"
-                }
+                "performer": { "@type": "Person", "name": "Mr. CAP" },
+                "organizer": { "@type": "Organization", "name": "South Park Coalition LLC", "email": "southparkcoalitionllc@gmail.com" }
               }
             },
             "breadcrumb": {
@@ -94,15 +85,18 @@ const OPKMusic = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <h2 className="gsap-item text-2xl font-display font-bold mb-8 text-center">Artist Snapshot</h2>
-              <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-8">
-                <div className="grid md:grid-cols-2 gap-6">
-                  {artistSnapshot.map((item) => (
-                    <div key={item.label}>
-                      <span className="text-sm text-muted-foreground">{item.label}</span>
-                      <p className="font-bold text-foreground">{item.value}</p>
+              <div style={{ height: '280px', position: 'relative' }}>
+                <ChromaGrid
+                  items={snapshotItems}
+                  columns={2}
+                  radius={200}
+                  renderCard={(item) => (
+                    <div className="p-6">
+                      <span className="text-sm text-muted-foreground">{item.subtitle}</span>
+                      <p className="font-bold text-foreground">{item.title}</p>
                     </div>
-                  ))}
-                </div>
+                  )}
+                />
               </div>
             </div>
           </div>
@@ -114,7 +108,7 @@ const OPKMusic = () => {
             <div className="max-w-3xl mx-auto">
               <h2 className="gsap-item text-2xl font-display font-bold mb-6 text-center">Booking Bio</h2>
               <p className="gsap-item text-lg text-muted-foreground leading-relaxed text-center">
-                Mr. CAP is a Houston hip-hop artist and proud member of the legendary South Park Coalition. With deep roots in the Screwed Up Click era, his career represents longevity, independence, and authenticity. Known for commanding stage presence and polished delivery, Mr. CAP brings Southern grit with modern energy—making him a strong fit for clubs, showcases, and festivals nationwide.
+                Mr. CAP is a Houston hip-hop artist and proud member of the legendary South Park Coalition. With deep roots in the Screwed Up Click era, his career represents longevity, independence, and authenticity.
               </p>
             </div>
           </div>
@@ -133,15 +127,13 @@ const OPKMusic = () => {
                   </li>
                 ))}
               </ul>
-              
-              {/* Spotify Embed */}
               <div className="gsap-item mt-8">
-                <iframe 
-                  src="https://open.spotify.com/embed/artist/69pjfQNXA1xjusnI2wfgug?utm_source=generator&theme=0" 
-                  width="100%" 
-                  height="352" 
-                  frameBorder="0" 
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                <iframe
+                  src="https://open.spotify.com/embed/artist/69pjfQNXA1xjusnI2wfgug?utm_source=generator&theme=0"
+                  width="100%"
+                  height="352"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
                   className="rounded-xl"
                 />
