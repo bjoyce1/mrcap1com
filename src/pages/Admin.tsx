@@ -23,6 +23,7 @@ import {
   Download,
   Music
 } from 'lucide-react';
+import ChromaGrid from '@/components/ui/ChromaGrid';
 import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import {
@@ -227,57 +228,33 @@ const Admin = () => {
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 py-8">
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-card/50 rounded-xl border border-white/5 p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-2xl font-display font-medium">{bookings.length}</p>
-                  <p className="text-xs text-muted-foreground">Bookings</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-card/50 rounded-xl border border-white/5 p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-yellow-400/10 flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-yellow-400" />
-                </div>
-                <div>
-                  <p className="text-2xl font-display font-medium">
-                    {bookings.filter(b => b.status === 'pending').length}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Pending</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-card/50 rounded-xl border border-white/5 p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-green-400/10 flex items-center justify-center">
-                  <Check className="w-5 h-5 text-green-400" />
-                </div>
-                <div>
-                  <p className="text-2xl font-display font-medium">
-                    {bookings.filter(b => b.status === 'confirmed').length}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Confirmed</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-card/50 rounded-xl border border-white/5 p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-400/10 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-blue-400" />
-                </div>
-                <div>
-                  <p className="text-2xl font-display font-medium">
-                    {subscribers.filter(s => s.is_active).length}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Subscribers</p>
-                </div>
-              </div>
-            </div>
+          <div className="mb-8" style={{ height: '120px', position: 'relative' }}>
+            <ChromaGrid
+              items={[
+                { title: String(bookings.length), subtitle: "Bookings", borderColor: "hsl(var(--primary))", gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.1), hsl(var(--background)))", _icon: "calendar" },
+                { title: String(bookings.filter(b => b.status === 'pending').length), subtitle: "Pending", borderColor: "#EAB308", gradient: "linear-gradient(210deg, rgba(234,179,8,0.1), hsl(var(--background)))", _icon: "clock" },
+                { title: String(bookings.filter(b => b.status === 'confirmed').length), subtitle: "Confirmed", borderColor: "#22C55E", gradient: "linear-gradient(165deg, rgba(34,197,94,0.1), hsl(var(--background)))", _icon: "check" },
+                { title: String(subscribers.filter(s => s.is_active).length), subtitle: "Subscribers", borderColor: "#3B82F6", gradient: "linear-gradient(195deg, rgba(59,130,246,0.1), hsl(var(--background)))", _icon: "users" },
+              ]}
+              columns={4}
+              radius={200}
+              fadeOut={0}
+              renderCard={(item) => {
+                const iconMap: Record<string, React.ComponentType<{className?: string}>> = { calendar: Calendar, clock: Clock, check: Check, users: Users };
+                const Icon = iconMap[item._icon as string] || Calendar;
+                return (
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-display font-medium text-foreground">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">{item.subtitle}</p>
+                    </div>
+                  </div>
+                );
+              }}
+            />
           </div>
 
           {/* Quick Links */}

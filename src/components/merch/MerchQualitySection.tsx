@@ -1,36 +1,24 @@
 import { motion } from "framer-motion";
 import { Leaf, Truck, RotateCcw, Sparkles } from "lucide-react";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const features = [
-  {
-    icon: Leaf,
-    title: "Premium Cotton",
-    description: "100% organic cotton, ethically sourced and sustainably produced.",
-    highlighted: true,
-  },
-  {
-    icon: Sparkles,
-    title: "Custom Embroidery",
-    description: "Detailed stitching",
-  },
-  {
-    icon: Leaf,
-    title: "Sustainable",
-    description: "Eco-friendly packaging",
-  },
-  {
-    icon: Truck,
-    title: "Fast Shipping",
-    description: "Worldwide delivery",
-  },
-  {
-    icon: RotateCcw,
-    title: "Easy Returns",
-    description: "30-day guarantee",
-  },
+  { icon: Leaf, title: "Premium Cotton", description: "100% organic cotton, ethically sourced and sustainably produced.", borderColor: "#3B82F6", gradient: "linear-gradient(145deg, rgba(59,130,246,0.1), #0A0A0A)" },
+  { icon: Sparkles, title: "Custom Embroidery", description: "Detailed stitching", borderColor: "#F59E0B", gradient: "linear-gradient(165deg, rgba(245,158,11,0.1), #0A0A0A)" },
+  { icon: Leaf, title: "Sustainable", description: "Eco-friendly packaging", borderColor: "#10B981", gradient: "linear-gradient(195deg, rgba(16,185,129,0.1), #0A0A0A)" },
+  { icon: Truck, title: "Fast Shipping", description: "Worldwide delivery", borderColor: "#8B5CF6", gradient: "linear-gradient(210deg, rgba(139,92,246,0.1), #0A0A0A)" },
+  { icon: RotateCcw, title: "Easy Returns", description: "30-day guarantee", borderColor: "#06B6D4", gradient: "linear-gradient(225deg, rgba(6,182,212,0.1), #0A0A0A)" },
 ];
 
 export const MerchQualitySection = () => {
+  const chromaItems: ChromaGridItem[] = features.map((f) => ({
+    title: f.title,
+    subtitle: f.description,
+    borderColor: f.borderColor,
+    gradient: f.gradient,
+    _icon: f.icon,
+  }));
+
   return (
     <section className="py-20 px-6 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto">
@@ -48,96 +36,24 @@ export const MerchQualitySection = () => {
           </p>
         </motion.div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {/* Large Featured Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="col-span-2 row-span-2 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-2xl p-8 flex flex-col justify-between"
-          >
-            <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-6">
-              <Leaf className="w-6 h-6 text-blue-400" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
-                Premium Cotton
-              </h3>
-              <p className="text-muted-foreground">
-                100% organic cotton, ethically sourced and sustainably produced.
-              </p>
-              <button className="mt-4 text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors">
-                Learn More →
-              </button>
-            </div>
-          </motion.div>
-
-          {/* Smaller Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="bg-[#111111] border border-white/5 rounded-2xl p-6"
-          >
-            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-4">
-              <Sparkles className="w-5 h-5 text-muted-foreground" />
-            </div>
-            <h3 className="text-sm font-semibold text-foreground mb-1">
-              Custom Embroidery
-            </h3>
-            <p className="text-xs text-muted-foreground">Detailed stitching</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="bg-[#111111] border border-white/5 rounded-2xl p-6"
-          >
-            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-4">
-              <Leaf className="w-5 h-5 text-muted-foreground" />
-            </div>
-            <h3 className="text-sm font-semibold text-foreground mb-1">
-              Sustainable
-            </h3>
-            <p className="text-xs text-muted-foreground">Eco-friendly packaging</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="bg-[#111111] border border-white/5 rounded-2xl p-6"
-          >
-            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-4">
-              <Truck className="w-5 h-5 text-muted-foreground" />
-            </div>
-            <h3 className="text-sm font-semibold text-foreground mb-1">
-              Fast Shipping
-            </h3>
-            <p className="text-xs text-muted-foreground">Worldwide delivery</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="bg-[#111111] border border-white/5 rounded-2xl p-6"
-          >
-            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-4">
-              <RotateCcw className="w-5 h-5 text-muted-foreground" />
-            </div>
-            <h3 className="text-sm font-semibold text-foreground mb-1">
-              Easy Returns
-            </h3>
-            <p className="text-xs text-muted-foreground">30-day guarantee</p>
-          </motion.div>
+        <div style={{ height: '380px', position: 'relative' }}>
+          <ChromaGrid
+            items={chromaItems}
+            columns={3}
+            radius={250}
+            renderCard={(item) => {
+              const Icon = item._icon as React.ComponentType<{ className?: string }>;
+              return (
+                <div className="flex flex-col p-6 h-full">
+                  <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-foreground mb-1">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground">{item.subtitle}</p>
+                </div>
+              );
+            }}
+          />
         </div>
       </div>
     </section>

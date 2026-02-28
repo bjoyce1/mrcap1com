@@ -102,7 +102,7 @@ export function NftDetailModal({ nft, open, onOpenChange }: NftDetailModalProps)
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl bg-card border-border/50 p-0 overflow-hidden">
-        <div className="grid md:grid-cols-2 gap-0">
+        <div className="grid md:grid-cols-2 gap-0" style={{ minHeight: '400px' }}>
           {/* Media Section */}
           <div className="relative aspect-square bg-secondary overflow-hidden">
             {isVideo && animationUrl ? (

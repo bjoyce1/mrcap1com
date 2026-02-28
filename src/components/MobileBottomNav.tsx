@@ -3,6 +3,7 @@ import { Home, Music, Radio, ShoppingBag, MoreHorizontal, X } from "lucide-react
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { usePlayerStore } from "@/stores/playerStore";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const primaryTabs = [
   { to: "/", label: "Home", icon: Home },
@@ -37,6 +38,15 @@ const MobileBottomNav = () => {
 
   const playerVisible = isPlayerVisible && !!currentTrack;
 
+  const moreItems: ChromaGridItem[] = moreLinks.map((link, i) => ({
+    title: link.label,
+    borderColor: isActive(link.to) ? "hsl(var(--primary))" : "transparent",
+    gradient: isActive(link.to)
+      ? "linear-gradient(145deg, hsl(var(--primary) / 0.15), hsl(var(--card)))"
+      : `linear-gradient(${145 + i * 15}deg, hsl(var(--card)), hsl(var(--background)))`,
+    _to: link.to,
+  }));
+
   return (
     <>
       {/* More menu overlay */}
@@ -53,22 +63,25 @@ const MobileBottomNav = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-1 p-3">
-              {moreLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMoreOpen(false)}
-                  className={cn(
-                    "flex items-center px-4 py-3.5 rounded-xl text-sm font-medium transition-colors",
-                    isActive(link.to)
-                      ? "bg-primary/15 text-primary"
-                      : "text-muted-foreground active:bg-white/5"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <div style={{ height: '340px', position: 'relative' }} className="p-3">
+              <ChromaGrid
+                items={moreItems}
+                columns={2}
+                radius={150}
+                fadeOut={0}
+                renderCard={(item) => (
+                  <Link
+                    to={item._to as string}
+                    onClick={() => setMoreOpen(false)}
+                    className={cn(
+                      "flex items-center px-4 py-3.5 rounded-xl text-sm font-medium transition-colors w-full h-full",
+                      isActive(item._to as string) ? "text-primary" : "text-muted-foreground"
+                    )}
+                  >
+                    {item.title}
+                  </Link>
+                )}
+              />
             </div>
           </div>
         </div>

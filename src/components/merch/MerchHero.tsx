@@ -1,17 +1,13 @@
 import { ArrowUpRight, Search, Menu } from "lucide-react";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+  Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { CartDrawer } from "./CartDrawer";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const categories = [
   {
@@ -44,6 +40,14 @@ const navigation = [
 ];
 
 export const MerchHero = () => {
+  const chromaItems: ChromaGridItem[] = categories.map((cat, i) => ({
+    image: cat.image,
+    title: cat.title,
+    url: cat.href,
+    borderColor: ["#EF4444", "#F59E0B", "#3B82F6", "#8B5CF6"][i],
+    gradient: `linear-gradient(${145 + i * 30}deg, ${["#EF4444", "#F59E0B", "#3B82F6", "#8B5CF6"][i]}, #000)`,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       {/* Top Section */}
@@ -51,25 +55,16 @@ export const MerchHero = () => {
         {/* Navigation */}
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between py-4">
-            {/* Logo */}
-            <Link to="/" className="text-xl font-bold tracking-tight">
-              Mr. CAP_
-            </Link>
+            <Link to="/" className="text-xl font-bold tracking-tight">Mr. CAP_</Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
+                <Link key={item.name} to={item.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   {item.name}
                 </Link>
               ))}
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Search className="h-4 w-4" />
-              </Button>
+              <Button variant="ghost" size="icon" className="rounded-full"><Search className="h-4 w-4" /></Button>
               <CartDrawer />
             </nav>
 
@@ -78,41 +73,25 @@ export const MerchHero = () => {
               <CartDrawer />
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full">
-                    <Menu className="h-5 w-5" />
-                  </Button>
+                  <Button variant="ghost" size="icon" className="rounded-full"><Menu className="h-5 w-5" /></Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80">
                   <SheetHeader className="text-left">
-                    <SheetTitle>
-                      <Link to="/" className="text-xl font-bold">
-                        Mr. CAP_
-                      </Link>
-                    </SheetTitle>
+                    <SheetTitle><Link to="/" className="text-xl font-bold">Mr. CAP_</Link></SheetTitle>
                   </SheetHeader>
                   <nav className="flex flex-col gap-4 mt-8">
                     {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <Link key={item.name} to={item.href} className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors">
                         {item.name}
                       </Link>
                     ))}
                   </nav>
                   <Separator className="my-6" />
                   <div className="flex flex-col gap-4">
-                    <Button variant="ghost" className="justify-start gap-2">
-                      <Search className="h-4 w-4" />
-                      Search
-                    </Button>
+                    <Button variant="ghost" className="justify-start gap-2"><Search className="h-4 w-4" />Search</Button>
                   </div>
                   <Separator className="my-6" />
-                  <Button className="w-full gap-2">
-                    Log In
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Button>
+                  <Button className="w-full gap-2">Log In<ArrowUpRight className="h-4 w-4" /></Button>
                 </SheetContent>
               </Sheet>
             </div>
@@ -121,78 +100,32 @@ export const MerchHero = () => {
             <div className="hidden md:flex items-center gap-4">
               <Button variant="outline" className="rounded-full gap-2">
                 Log In
-                <span className="bg-foreground text-background rounded-full p-0.5">
-                  <ArrowUpRight className="h-3 w-3" />
-                </span>
+                <span className="bg-foreground text-background rounded-full p-0.5"><ArrowUpRight className="h-3 w-3" /></span>
               </Button>
             </div>
           </div>
 
           {/* Hero Content */}
           <div className="py-16 lg:py-24">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-3xl"
-            >
-              <p className="text-sm font-medium text-muted-foreground mb-4">
-                Official Merchandise
-              </p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-3xl">
+              <p className="text-sm font-medium text-muted-foreground mb-4">Official Merchandise</p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
-                <span className="text-muted-foreground">Curate your style</span>
-                <br />
+                <span className="text-muted-foreground">Curate your style</span><br />
                 <span className="text-foreground">with exclusive drops.</span>
               </h1>
-              <p className="text-muted-foreground max-w-xl text-lg">
-                Premium quality apparel and accessories. Limited edition releases from Mr. CAP's creative universe.
-              </p>
+              <p className="text-muted-foreground max-w-xl text-lg">Premium quality apparel and accessories. Limited edition releases from Mr. CAP's creative universe.</p>
             </motion.div>
           </div>
         </div>
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4">
-        {categories.map((category, index) => (
-          <motion.a
-            key={category.title}
-            href={category.href}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className={cn(
-              "group relative aspect-square overflow-hidden cursor-pointer",
-              "border-r border-b border-border last:border-r-0",
-              "lg:[&:nth-child(4)]:border-r-0"
-            )}
-          >
-            <div className="absolute inset-0 bg-secondary/50 group-hover:bg-secondary/30 transition-colors duration-300" />
-            
-            {/* Category Title */}
-            <div className="absolute top-4 left-4 z-10">
-              <span className="text-sm font-medium text-foreground">
-                {category.title}
-              </span>
-            </div>
-
-            {/* Arrow */}
-            <div className="absolute top-4 right-4 z-10">
-              <div className="w-8 h-8 rounded-full bg-foreground/10 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all duration-300">
-                <ArrowUpRight className="h-4 w-4" />
-              </div>
-            </div>
-
-            {/* Category Image */}
-            <div className="absolute inset-0 flex items-center justify-center p-8">
-              <img
-                src={category.image}
-                alt={category.title}
-                className="w-full h-full object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
-              />
-            </div>
-          </motion.a>
-        ))}
+      <div style={{ height: '420px', position: 'relative' }}>
+        <ChromaGrid
+          items={chromaItems}
+          columns={4}
+          radius={250}
+        />
       </div>
     </div>
   );

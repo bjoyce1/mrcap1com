@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import {
   Loader2, Plus, Trash2, Edit, Music, Disc3, Save, ArrowLeft, Upload,
 } from "lucide-react";
+import ChromaGrid from "@/components/ui/ChromaGrid";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog";
@@ -182,15 +183,22 @@ const AdminLibrary = () => {
 
         <main className="max-w-7xl mx-auto px-4 py-8">
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <div className="bg-card/50 rounded-xl border border-border/30 p-4 flex items-center gap-3">
-              <Disc3 className="w-8 h-8 text-primary" />
-              <div><p className="text-2xl font-display">{albums.length}</p><p className="text-xs text-muted-foreground">Albums</p></div>
-            </div>
-            <div className="bg-card/50 rounded-xl border border-border/30 p-4 flex items-center gap-3">
-              <Music className="w-8 h-8 text-primary" />
-              <div><p className="text-2xl font-display">{tracks.length}</p><p className="text-xs text-muted-foreground">Tracks</p></div>
-            </div>
+          <div className="mb-6" style={{ height: '100px', position: 'relative' }}>
+            <ChromaGrid
+              items={[
+                { title: String(albums.length), subtitle: "Albums", borderColor: "hsl(var(--primary))", gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.1), hsl(var(--background)))" },
+                { title: String(tracks.length), subtitle: "Tracks", borderColor: "#3B82F6", gradient: "linear-gradient(210deg, rgba(59,130,246,0.1), hsl(var(--background)))" },
+              ]}
+              columns={2}
+              radius={150}
+              fadeOut={0}
+              renderCard={(item) => (
+                <div className="flex items-center gap-3 p-4">
+                  {item.subtitle === "Albums" ? <Disc3 className="w-8 h-8 text-primary" /> : <Music className="w-8 h-8 text-primary" />}
+                  <div><p className="text-2xl font-display text-foreground">{item.title}</p><p className="text-xs text-muted-foreground">{item.subtitle}</p></div>
+                </div>
+              )}
+            />
           </div>
 
           {/* Tabs */}

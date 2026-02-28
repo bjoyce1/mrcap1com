@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { MagneticWrapper } from '@/hooks/useMagneticHover';
 import { Progress } from '@/components/ui/progress';
+import ChromaGrid, { ChromaGridItem } from '@/components/ui/ChromaGrid';
 
-// --- Marquee platforms ---
 const PLATFORMS = [
   { name: "OpenSea", icon: Hexagon },
   { name: "Ethereum", icon: Triangle },
@@ -46,13 +46,9 @@ const TiltCard = ({ children, className }: { children: React.ReactNode; classNam
   const onLeave = useCallback(() => { x.set(0); y.set(0); }, [x, y]);
 
   return (
-    <motion.div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
+    <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}
       style={{ rotateX, rotateY, transformPerspective: 800 }}
-      className={cn('will-change-transform', className)}
-    >
+      className={cn('will-change-transform', className)}>
       {children}
     </motion.div>
   );
@@ -65,74 +61,48 @@ export const NFTHeroSection = ({
 }: NFTHeroSectionProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // GSAP entrance animation removed in favor of CSS keyframes for reliability on mobile
+  const statsItems: ChromaGridItem[] = [
+    { title: "2021", subtitle: "First Mint", borderColor: "hsl(var(--primary))", gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.1), hsl(var(--background)))" },
+    { title: "ETH", subtitle: "Blockchain", borderColor: "#8B5CF6", gradient: "linear-gradient(210deg, rgba(139,92,246,0.1), hsl(var(--background)))" },
+    { title: "1st", subtitle: "Houston NFT", borderColor: "#10B981", gradient: "linear-gradient(165deg, rgba(16,185,129,0.1), hsl(var(--background)))" },
+  ];
 
   return (
-    <section
-      ref={sectionRef}
-      className={cn(
-        'relative w-full overflow-hidden bg-background text-foreground pt-24 pb-12 md:pt-40 md:pb-28',
-        className
-      )}
-    >
-      {/* Scoped marquee animation */}
+    <section ref={sectionRef} className={cn('relative w-full overflow-hidden bg-background text-foreground pt-24 pb-12 md:pt-40 md:pb-28', className)}>
       <style>{`
-        @keyframes nft-marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
+        @keyframes nft-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .animate-nft-marquee { animation: nft-marquee 35s linear infinite; }
       `}</style>
 
-      {/* Background gradient mask - using pointer-events-none to ensure content is accessible */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background/80 to-accent/5 pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,hsl(var(--primary)/0.15),transparent)] pointer-events-none" aria-hidden="true" />
 
-      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 overflow-hidden">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-0 lg:min-h-[60vh]">
 
-          {/* --- LEFT COLUMN --- */}
+          {/* LEFT COLUMN */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left overflow-hidden">
-
-            {/* Badge */}
             <div className="hero-animate inline-flex items-center gap-2 px-4 py-1.5 rounded-full ring-1 ring-primary/20 bg-primary/5 mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-medium tracking-widest uppercase text-primary">
-                Web3 · Live On-Chain
-              </span>
+              <span className="text-xs font-medium tracking-widest uppercase text-primary">Web3 · Live On-Chain</span>
             </div>
 
-            {/* Heading */}
             <h1 className="hero-animate text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-medium tracking-tighter leading-[0.95]">
-              Pioneering
-              <br />
-              <span className="text-gradient-orange">Digital Art</span>
-              <br />
-              On-Chain
+              Pioneering<br /><span className="text-gradient-orange">Digital Art</span><br />On-Chain
             </h1>
 
-            {/* Description */}
             <p className="hero-animate mt-4 md:mt-6 text-sm md:text-lg text-muted-foreground leading-relaxed font-light">
-              Houston hip-hop meets Web3. Explore MR. CAP's tokenized music,
-              exclusive collaborations, and blockchain collectibles — crafted for collectors.
+              Houston hip-hop meets Web3. Explore MR. CAP's tokenized music, exclusive collaborations, and blockchain collectibles — crafted for collectors.
             </p>
 
-            {/* CTA Buttons */}
             <div className="hero-animate flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-4 mt-6 md:mt-8 w-full">
               <MagneticWrapper strength={0.25}>
-                <a
-                  href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://opensea.io/0xf69120023756f1d1f539c23ade135efb66e3f494" target="_blank" rel="noopener noreferrer">
                   <Button variant="flux" size="lg" className="h-12 px-8 text-base">
-                    Explore Collection
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    Explore Collection<ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </a>
               </MagneticWrapper>
-
               <a href="#collection" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group">
                 <span className="flex items-center justify-center w-10 h-10 rounded-full ring-1 ring-border group-hover:ring-primary/40 transition-colors">
                   <Play className="w-4 h-4 text-primary fill-primary" />
@@ -142,16 +112,12 @@ export const NFTHeroSection = ({
             </div>
           </div>
 
-          {/* --- RIGHT COLUMN --- */}
+          {/* RIGHT COLUMN */}
           <div className="flex flex-col gap-5 overflow-hidden">
-
-            {/* Stats Card (glassmorphism) */}
+            {/* Stats Card */}
             <div className="hero-animate relative rounded-2xl ring-1 ring-border bg-card/60 backdrop-blur-xl p-4 sm:p-6 overflow-hidden">
-              {/* Glow */}
               <div className="absolute -top-20 -right-20 w-48 h-48 bg-primary/15 blur-[80px] rounded-full pointer-events-none" />
-
               <div className="relative z-10 space-y-5">
-                {/* Top row */}
                 <div className="flex items-center gap-4">
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 ring-1 ring-primary/20">
                     <Crown className="w-6 h-6 text-primary" />
@@ -161,8 +127,6 @@ export const NFTHeroSection = ({
                     <p className="text-xs text-muted-foreground">Tracks Tokenized</p>
                   </div>
                 </div>
-
-                {/* Progress */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Collection Minted</span>
@@ -170,38 +134,41 @@ export const NFTHeroSection = ({
                   </div>
                   <Progress value={100} className="h-2 bg-muted" />
                 </div>
-
                 <div className="h-px bg-border" />
 
-                {/* Mini stats */}
-                <div className="grid grid-cols-3 gap-2 sm:gap-4">
-                  <StatItem value="2021" label="First Mint" />
-                  <StatItem value="ETH" label="Blockchain" />
-                  <StatItem value="1st" label="Houston NFT" />
+                {/* Mini stats via ChromaGrid */}
+                <div style={{ height: '80px', position: 'relative' }}>
+                  <ChromaGrid
+                    items={statsItems}
+                    columns={3}
+                    radius={120}
+                    fadeOut={0}
+                    renderCard={(item) => (
+                      <div className="text-center p-2">
+                        <p className="text-2xl font-display font-semibold text-foreground">{item.title}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{item.subtitle}</p>
+                      </div>
+                    )}
+                  />
                 </div>
 
-                {/* Pills */}
                 <div className="flex items-center gap-3">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ring-1 ring-[hsl(142_76%_36%/0.3)] bg-[hsl(142_76%_36%/0.1)] text-[hsl(142_71%_45%)]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[hsl(142_71%_45%)] animate-pulse" />
-                    LIVE
+                    <span className="w-1.5 h-1.5 rounded-full bg-[hsl(142_71%_45%)] animate-pulse" />LIVE
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ring-1 ring-primary/30 bg-primary/10 text-primary">
-                    <Star className="w-3 h-3" />
-                    PIONEER
+                    <Star className="w-3 h-3" />PIONEER
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* NFT Preview Cards — independent tilt */}
+            {/* NFT Preview Cards */}
             <div className="hero-animate relative h-[180px] sm:h-[260px] md:h-[320px]">
-              {/* Back card */}
               <TiltCard className="absolute right-0 sm:right-4 top-4 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-border rotate-3 shadow-2xl shadow-primary/10">
                 <img src={imageUrl2} alt="NFT Preview 2" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
               </TiltCard>
-              {/* Front card */}
               <TiltCard className="absolute left-0 sm:left-4 top-0 w-[55%] h-full rounded-2xl overflow-hidden ring-1 ring-primary/20 -rotate-3 shadow-2xl shadow-primary/20">
                 <img src={imageUrl1} alt="NFT Preview 1" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent" />
@@ -210,9 +177,7 @@ export const NFTHeroSection = ({
 
             {/* Marquee Card */}
             <div className="hero-animate rounded-2xl ring-1 ring-border bg-card/60 backdrop-blur-xl p-4 overflow-hidden">
-              <p className="text-xs text-muted-foreground uppercase tracking-widest mb-3 text-center">
-                Available On Leading Platforms
-              </p>
+              <p className="text-xs text-muted-foreground uppercase tracking-widest mb-3 text-center">Available On Leading Platforms</p>
               <div className="relative overflow-hidden">
                 <div className="flex animate-nft-marquee w-max">
                   {[...PLATFORMS, ...PLATFORMS, ...PLATFORMS].map((p, i) => (
@@ -224,7 +189,6 @@ export const NFTHeroSection = ({
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
