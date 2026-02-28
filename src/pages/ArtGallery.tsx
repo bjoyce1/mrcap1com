@@ -7,6 +7,7 @@ import { gsap } from "@/hooks/useGSAP";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import mrCapCoin from "@/assets/mr-cap-coin.png";
 import { Button } from "@/components/ui/button";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 // 2025 Collection Artwork Imports
 import selfAi1Img from "@/assets/self-love/self-ai-1.png";
@@ -433,25 +434,31 @@ const ArtGallery = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {artwork2025.map((artwork) => (
-                <button
-                  key={artwork.id}
-                  onClick={() => setSelectedArtwork(artwork)}
-                  className="gsap-artwork-card group relative aspect-[2/3] rounded-xl overflow-hidden ring-1 ring-border hover:ring-primary/50 transition-all duration-300"
-                >
-                  <img
-                    src={artwork.image}
-                    alt={artwork.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="font-display font-bold text-sm uppercase tracking-wide">{artwork.title}</h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">{artwork.meaning}</p>
+            <div style={{ position: 'relative', minHeight: '400px' }}>
+              <ChromaGrid
+                items={artwork2025.map((a) => ({
+                  image: a.image,
+                  title: a.title,
+                  subtitle: a.meaning,
+                  borderColor: "hsl(var(--primary))",
+                  gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.1), hsl(var(--background)))",
+                  onClick: () => setSelectedArtwork(a),
+                } as ChromaGridItem))}
+                columns={4}
+                radius={250}
+                damping={0.45}
+                fadeOut={0.6}
+                renderCard={(item) => (
+                  <div className="relative aspect-[2/3] overflow-hidden rounded-[20px]">
+                    <img src={item.image as string} alt={item.title || ''} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <h3 className="font-display font-bold text-sm uppercase tracking-wide text-foreground">{item.title}</h3>
+                      <p className="text-xs text-muted-foreground mt-0.5">{item.subtitle}</p>
+                    </div>
                   </div>
-                </button>
-              ))}
+                )}
+              />
             </div>
           </div>
         </section>
@@ -472,25 +479,31 @@ const ArtGallery = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-              {artwork2026.map((artwork) => (
-                <button
-                  key={artwork.id}
-                  onClick={() => setSelectedArtwork(artwork)}
-                  className="gsap-artwork-card group relative aspect-[3/2] rounded-xl overflow-hidden ring-1 ring-border hover:ring-primary/50 transition-all duration-300"
-                >
-                  <img
-                    src={artwork.image}
-                    alt={artwork.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="font-display font-bold text-sm uppercase tracking-wide">{artwork.title}</h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">{artwork.meaning}</p>
+            <div style={{ position: 'relative', minHeight: '400px' }}>
+              <ChromaGrid
+                items={artwork2026.map((a) => ({
+                  image: a.image,
+                  title: a.title,
+                  subtitle: a.meaning,
+                  borderColor: "hsl(var(--primary))",
+                  gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.1), hsl(var(--background)))",
+                  onClick: () => setSelectedArtwork(a),
+                } as ChromaGridItem))}
+                columns={5}
+                radius={250}
+                damping={0.45}
+                fadeOut={0.6}
+                renderCard={(item) => (
+                  <div className="relative aspect-[3/2] overflow-hidden rounded-[20px]">
+                    <img src={item.image as string} alt={item.title || ''} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <h3 className="font-display font-bold text-sm uppercase tracking-wide text-foreground">{item.title}</h3>
+                      <p className="text-xs text-muted-foreground mt-0.5">{item.subtitle}</p>
+                    </div>
                   </div>
-                </button>
-              ))}
+                )}
+              />
             </div>
           </div>
         </section>

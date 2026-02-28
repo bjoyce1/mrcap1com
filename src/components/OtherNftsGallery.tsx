@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { NftDetailModal } from "./NftDetailModal";
 import { NFTCard } from "./nft/NFTCard";
 import { NFTFilterToolbar } from "./nft/NFTFilterToolbar";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 type RawNft = {
   identifier?: string;
@@ -113,14 +114,26 @@ export function OtherNftsGallery() {
       />
 
       {/* Grid */}
-      <div className={`grid gap-4 sm:gap-5 ${
-        viewMode === "compact"
-          ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-          : "grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
-      }`}>
-        {nfts.map((nft, idx) => (
-          <NFTCard key={`nft-${nft.identifier}-${idx}`} nft={nft} index={idx} onClick={handleNftClick} />
-        ))}
+      <div style={{ position: 'relative', minHeight: '400px' }}>
+        <ChromaGrid
+          items={nfts.map((nft) => ({
+            image: nft.display_image_url || nft.image_url || nft.image?.url,
+            title: nft.name,
+            borderColor: "hsl(var(--primary))",
+            gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.08), hsl(var(--background)))",
+            onClick: () => handleNftClick(nft),
+            nft,
+          } as ChromaGridItem))}
+          columns={viewMode === "compact" ? 5 : 4}
+          radius={300}
+          damping={0.45}
+          fadeOut={0.6}
+          renderCard={(item) => {
+            const nft = item.nft as RawNft;
+            const idx = nfts.indexOf(nft);
+            return <NFTCard nft={nft} index={idx} onClick={handleNftClick} />;
+          }}
+        />
       </div>
 
       {/* Show More */}

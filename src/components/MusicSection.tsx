@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import { trackMusicPlay } from "@/components/GoogleAnalytics";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 import albumTies from "@/assets/album-ties.jpg";
 import albumGrave from "@/assets/album-grave.jpg";
 import betnOnMe from "@/assets/betn-on-me.png";
@@ -119,6 +120,16 @@ const MusicSection = () => {
     }
   };
 
+  const albumItems: ChromaGridItem[] = albums.map((album) => ({
+    image: album.image,
+    title: album.title,
+    subtitle: album.role,
+    handle: album.artist,
+    borderColor: "hsl(var(--primary))",
+    gradient: `linear-gradient(145deg, hsl(var(--primary) / 0.1), hsl(var(--background)))`,
+    year: album.year,
+  }));
+
   return (
     <section id="music" className="section-spacing relative overflow-hidden">
       <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[500px] h-[500px] bg-primary/4 blur-[140px] rounded-full pointer-events-none" />
@@ -144,6 +155,7 @@ const MusicSection = () => {
           </div>
         </ScrollReveal>
 
+        {/* Featured Single - Bet'n On Me */}
         <ScrollReveal width="100%">
           <div className="mb-20">
             <div className="group glass rounded-2xl overflow-hidden card-lift">
@@ -191,6 +203,7 @@ const MusicSection = () => {
           </div>
         </ScrollReveal>
 
+        {/* Albums Grid - ChromaGrid */}
         <div className="mb-20">
           <ScrollReveal width="100%">
             <div className="flex items-center gap-3 mb-8">
@@ -198,13 +211,18 @@ const MusicSection = () => {
               <h3 className="font-editorial text-2xl">Studio & Collab Albums</h3>
             </div>
           </ScrollReveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {albums.map((album, index) => (
-              <ScrollReveal key={index} width="100%" delay={0.1 * index}>
-                <div className="album-card group glass rounded-xl overflow-hidden card-lift">
-                  <div className="relative aspect-square overflow-hidden bg-muted">
-                    {album.image ? (
-                      <img src={album.image} alt={`${album.title} Album Cover`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          <div style={{ position: 'relative', minHeight: '300px' }}>
+            <ChromaGrid
+              items={albumItems}
+              columns={4}
+              radius={250}
+              damping={0.45}
+              fadeOut={0.6}
+              renderCard={(item) => (
+                <div className="flex flex-col h-full">
+                  <div className="relative aspect-square overflow-hidden bg-muted rounded-t-[20px]">
+                    {item.image ? (
+                      <img src={item.image as string} alt={`${item.title} Album Cover`} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                         <Disc3 className="w-16 h-16 text-primary/30" />
@@ -212,20 +230,21 @@ const MusicSection = () => {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
                     <div className="absolute bottom-3 left-3">
-                      <span className="px-2 py-0.5 rounded glass text-xs font-medium">{album.year}</span>
+                      <span className="px-2 py-0.5 rounded glass text-xs font-medium text-foreground">{item.year as string}</span>
                     </div>
                   </div>
                   <div className="p-4">
-                    <h4 className="font-medium text-foreground mb-1 line-clamp-1">{album.title}</h4>
-                    <p className="text-xs text-muted-foreground mb-1">{album.artist}</p>
-                    <p className="text-xs text-primary/60">{album.role}</p>
+                    <h4 className="font-medium text-foreground mb-1 line-clamp-1">{item.title}</h4>
+                    <p className="text-xs text-muted-foreground mb-1">{item.handle}</p>
+                    <p className="text-xs text-primary/60">{item.subtitle}</p>
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
+              )}
+            />
           </div>
         </div>
 
+        {/* Singles & EPs - ChromaGrid per year */}
         <div>
           <ScrollReveal width="100%">
             <div className="flex items-center gap-3 mb-8">
@@ -234,34 +253,50 @@ const MusicSection = () => {
             </div>
           </ScrollReveal>
           <div className="space-y-8">
-            {singles.map((yearGroup, yearIndex) => (
-              <ScrollReveal key={yearIndex} width="100%" delay={0.05 * yearIndex}>
-                <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-lg font-display text-primary">{yearGroup.year}</span>
-                    <div className="flex-1 h-px bg-white/5" />
+            {singles.map((yearGroup, yearIndex) => {
+              const trackItems: ChromaGridItem[] = yearGroup.tracks.map((track) => ({
+                title: track.title,
+                subtitle: track.artist,
+                borderColor: "hsl(var(--primary))",
+                gradient: `linear-gradient(145deg, hsl(var(--primary) / 0.08), hsl(var(--background)))`,
+              }));
+
+              return (
+                <ScrollReveal key={yearIndex} width="100%" delay={0.05 * yearIndex}>
+                  <div>
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-lg font-display text-primary">{yearGroup.year}</span>
+                      <div className="flex-1 h-px bg-border" />
+                    </div>
+                    <div style={{ position: 'relative', minHeight: '100px' }}>
+                      <ChromaGrid
+                        items={trackItems}
+                        columns={3}
+                        radius={200}
+                        damping={0.4}
+                        fadeOut={0.5}
+                        renderCard={(item) => (
+                          <div className="flex items-center gap-3 p-4">
+                            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                              <Play className="w-5 h-5 text-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
+                              <p className="text-xs text-muted-foreground line-clamp-1">{item.subtitle}</p>
+                            </div>
+                          </div>
+                        )}
+                      />
+                    </div>
                   </div>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {yearGroup.tracks.map((track, trackIndex) => (
-                      <div key={trackIndex} className="group flex items-center gap-3 p-4 rounded-xl glass cursor-pointer hover:border-primary/20 transition-all">
-                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all shrink-0">
-                          <Play className="w-5 h-5 text-primary" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-foreground text-sm line-clamp-1">{track.title}</p>
-                          <p className="text-xs text-muted-foreground line-clamp-1">{track.artist}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
 
         <ScrollReveal width="100%">
-          <div className="mt-16 pt-10 border-t border-white/5">
+          <div className="mt-16 pt-10 border-t border-border">
             <p className="text-sm text-muted-foreground mb-5">Stream on all major platforms:</p>
             <div className="flex flex-wrap gap-3">
               <Button variant="fluxOutline" size="sm" className="rounded-full" asChild>

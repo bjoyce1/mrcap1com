@@ -2,8 +2,24 @@ import { Mail, Phone, Globe, User, Briefcase } from "lucide-react";
 import BookingForm from "@/components/BookingForm";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import ScrollReveal from "@/components/ScrollReveal";
+import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const ContactSection = () => {
+  const contactCards: ChromaGridItem[] = [
+    {
+      title: "Booking & Business",
+      borderColor: "hsl(var(--primary))",
+      gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.08), hsl(var(--background)))",
+      cardType: "booking",
+    },
+    {
+      title: "Artist Contact",
+      borderColor: "hsl(var(--primary))",
+      gradient: "linear-gradient(210deg, hsl(var(--primary) / 0.08), hsl(var(--background)))",
+      cardType: "artist",
+    },
+  ];
+
   return (
     <section id="contact" className="section-spacing relative overflow-hidden">
       <div className="absolute top-0 inset-x-0 section-divider" />
@@ -41,57 +57,71 @@ const ContactSection = () => {
 
           <ScrollReveal width="100%" delay={0.15}>
             <div className="space-y-6">
-              <div className="grid gap-6">
-                <div className="glass rounded-2xl p-6 hover:border-primary/20 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Briefcase className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-editorial text-lg">Booking & Business</h3>
-                      <p className="text-xs text-muted-foreground">South Park Coalition LLC</p>
-                    </div>
-                  </div>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <p className="font-medium text-foreground">Reginald Gilliand</p>
-                      <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
-                    </div>
-                    <a href="mailto:pointblank@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                      <Mail className="w-4 h-4" /> pointblank@southparkcoalitionllc.com
-                    </a>
-                    <a href="tel:7135503001" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                      <Phone className="w-4 h-4" /> 713-550-3001
-                    </a>
-                  </div>
-                </div>
-
-                <div className="glass rounded-2xl p-6 hover:border-primary/20 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <User className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-editorial text-lg">Artist Contact</h3>
-                      <p className="text-xs text-muted-foreground">Direct Inquiries</p>
-                    </div>
-                  </div>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <p className="font-medium text-foreground">Cornelius A. Pratt (Mr. CAP)</p>
-                      <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
-                    </div>
-                    <a href="mailto:mrcap@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                      <Mail className="w-4 h-4" /> mrcap@southparkcoalitionllc.com
-                    </a>
-                    <a href="tel:8327744473" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                      <Phone className="w-4 h-4" /> 832-774-4473
-                    </a>
-                    <a href="https://www.mrcap1.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                      <Globe className="w-4 h-4" /> www.mrcap1.com
-                    </a>
-                  </div>
-                </div>
+              <div style={{ position: 'relative', minHeight: '200px' }}>
+                <ChromaGrid
+                  items={contactCards}
+                  columns={1}
+                  radius={300}
+                  damping={0.45}
+                  fadeOut={0.6}
+                  renderCard={(item) => {
+                    if (item.cardType === "booking") {
+                      return (
+                        <div className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                              <Briefcase className="w-5 h-5 text-primary" />
+                            </div>
+                            <div>
+                              <h3 className="font-editorial text-lg text-foreground">Booking & Business</h3>
+                              <p className="text-xs text-muted-foreground">South Park Coalition LLC</p>
+                            </div>
+                          </div>
+                          <div className="space-y-3 text-sm">
+                            <div>
+                              <p className="font-medium text-foreground">Reginald Gilliand</p>
+                              <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
+                            </div>
+                            <a href="mailto:pointblank@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                              <Mail className="w-4 h-4" /> pointblank@southparkcoalitionllc.com
+                            </a>
+                            <a href="tel:7135503001" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                              <Phone className="w-4 h-4" /> 713-550-3001
+                            </a>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div className="p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <User className="w-5 h-5 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="font-editorial text-lg text-foreground">Artist Contact</h3>
+                            <p className="text-xs text-muted-foreground">Direct Inquiries</p>
+                          </div>
+                        </div>
+                        <div className="space-y-3 text-sm">
+                          <div>
+                            <p className="font-medium text-foreground">Cornelius A. Pratt (Mr. CAP)</p>
+                            <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
+                          </div>
+                          <a href="mailto:mrcap@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                            <Mail className="w-4 h-4" /> mrcap@southparkcoalitionllc.com
+                          </a>
+                          <a href="tel:8327744473" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                            <Phone className="w-4 h-4" /> 832-774-4473
+                          </a>
+                          <a href="https://www.mrcap1.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                            <Globe className="w-4 h-4" /> www.mrcap1.com
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  }}
+                />
               </div>
 
               <NewsletterSignup source="contact-page" variant="hero" />
