@@ -112,7 +112,7 @@ export const CartDrawer = () => {
 
       {/* Cart Footer */}
       {items.length > 0 && (
-        <div className="flex-shrink-0 border-t border-border/50 p-4 sm:p-6 space-y-4 bg-background">
+        <div className="flex-shrink-0 p-4 sm:p-6 space-y-4 bg-background shadow-[0_-4px_24px_hsl(0_0%_0%/0.3)]">
           <div className="flex items-center justify-between text-lg">
             <span className="font-medium">Subtotal</span>
             <span className="font-bold">${subtotal.toFixed(2)}</span>
@@ -163,7 +163,7 @@ export const CartDrawer = () => {
           {TriggerButton}
         </DrawerTrigger>
         <DrawerContent className="max-h-[90vh]">
-          <DrawerHeader className="border-b border-border/50">
+          <DrawerHeader className="shadow-[0_4px_12px_hsl(0_0%_0%/0.2)]">
             <DrawerTitle className="font-mono uppercase tracking-wider">
               Shopping Cart ({itemCount})
             </DrawerTitle>
@@ -180,7 +180,7 @@ export const CartDrawer = () => {
         {TriggerButton}
       </SheetTrigger>
       <SheetContent className="w-full sm:w-[420px] p-0 flex flex-col">
-        <SheetHeader className="flex-shrink-0 p-4 sm:p-6 border-b border-border/50">
+        <SheetHeader className="flex-shrink-0 p-4 sm:p-6 shadow-[0_4px_12px_hsl(0_0%_0%/0.2)]">
           <SheetTitle className="font-mono uppercase tracking-wider">
             Shopping Cart ({itemCount})
           </SheetTitle>

@@ -230,7 +230,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
   const Content = () => (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="flex-shrink-0 flex items-center justify-between p-4 sm:p-6 border-b border-border/50">
+      <div className="flex-shrink-0 flex items-center justify-between p-4 sm:p-6 shadow-[0_4px_12px_hsl(0_0%_0%/0.2)]">
         <div className="flex items-center gap-3">
           {step !== 'confirm' && (
             <Button variant="ghost" size="icon" onClick={handleBack} className="h-8 w-8">
@@ -269,7 +269,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
                   <p className="text-sm font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               ))}
-              <div className="border-t border-border/50 pt-3 flex justify-between">
+              <div className="pt-3 flex justify-between">
                 <span className="font-medium">Subtotal</span>
                 <span className="font-bold">${subtotal.toFixed(2)}</span>
               </div>
@@ -392,7 +392,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
                 <span className="text-muted-foreground">Shipping</span>
                 <span className="text-muted-foreground">Calculated by carrier</span>
               </div>
-              <div className="border-t border-border/50 pt-3 flex justify-between">
+              <div className="pt-3 flex justify-between">
                 <span className="font-medium">Total</span>
                 <span className="font-bold text-lg">${subtotal.toFixed(2)}</span>
               </div>
@@ -466,7 +466,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
 
       {/* Footer */}
       {step === 'shipping' && (
-        <div className="flex-shrink-0 border-t border-border/50 p-4 sm:p-6 bg-background">
+        <div className="flex-shrink-0 p-4 sm:p-6 bg-background shadow-[0_-4px_24px_hsl(0_0%_0%/0.3)]">
           <Button 
             className="w-full" 
             size="lg"
@@ -508,7 +508,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-y-0 right-0 w-full sm:w-[480px] bg-background z-50 flex flex-col shadow-2xl border-l border-border/50"
+            className="fixed inset-y-0 right-0 w-full sm:w-[480px] bg-background z-50 flex flex-col shadow-[0_0_40px_hsl(0_0%_0%/0.5)]"
           >
             <Content />
           </motion.div>

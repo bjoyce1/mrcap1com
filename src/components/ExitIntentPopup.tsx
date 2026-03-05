@@ -110,7 +110,7 @@ const ExitIntentPopup = () => {
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="relative w-full max-w-md bg-background border border-border/50 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="relative w-full max-w-md bg-background rounded-2xl shadow-[0_8px_40px_hsl(0_0%_0%/0.5)] overflow-hidden">
               {/* Close button */}
               <button
                 onClick={handleClose}
