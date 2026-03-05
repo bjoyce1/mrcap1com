@@ -28,7 +28,7 @@ import WhoIsMrCap from "./pages/WhoIsMrCap";
 import Discography from "./pages/Discography";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
-import Booking from "./pages/Booking";
+
 import Links from "./pages/Links";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
@@ -95,7 +95,7 @@ function AppRoutes() {
           <Route path="/texas-underground-hip-hop" element={<PageTransition><TexasUndergroundHipHop /></PageTransition>} />
           <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
           <Route path="/mr-cap-discography" element={<PageTransition><Discography /></PageTransition>} />
-          <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
+          <Route path="/booking" element={(() => { window.location.href = "https://bookspc.com/artists/mr-cap"; return null; })()} />
           <Route path="/links" element={<PageTransition><Links /></PageTransition>} />
           <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
           <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />

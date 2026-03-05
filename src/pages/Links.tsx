@@ -17,8 +17,8 @@ const links = [
   {
     title: "🎤 Book a Show",
     description: "Bring Mr. CAP to your event",
-    url: "/booking",
-    internal: true,
+    url: "https://bookspc.com/artists/mr-cap",
+    internal: false,
     icon: Calendar,
   },
   {

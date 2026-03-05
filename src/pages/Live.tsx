@@ -273,10 +273,10 @@ const Live = () => {
                 
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button variant="flux" size="lg" asChild>
-                    <Link to="/booking">
+                    <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer">
                       <Calendar className="mr-2 h-5 w-5" />
                       Submit Booking Request
-                    </Link>
+                    </a>
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild>
                     <Link to="/cities">

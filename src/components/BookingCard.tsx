@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Calendar, Mic2, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
@@ -24,7 +23,7 @@ const BookingCard = ({ variant = "default" }: BookingCardProps) => {
           </p>
         </div>
         <Button variant="flux" asChild className="shrink-0">
-          <Link to="/booking">Book Now</Link>
+          <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer">Book Now</a>
         </Button>
       </div>
     );
@@ -62,7 +61,7 @@ const BookingCard = ({ variant = "default" }: BookingCardProps) => {
         />
       </div>
       <Button variant="flux" asChild className="w-full sm:w-auto mt-6">
-        <Link to="/booking">Request Booking</Link>
+        <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer">Request Booking</a>
       </Button>
     </div>
   );

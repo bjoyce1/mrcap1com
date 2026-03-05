@@ -22,7 +22,7 @@ const moreLinks = [
   { to: "/nft", label: "NFT Gallery" },
   { to: "/innovation", label: "Tech" },
   { to: "/opk", label: "Online Press Kit" },
-  { to: "/booking", label: "Booking" },
+  { to: "https://bookspc.com/artists/mr-cap", label: "Booking" },
   { to: "/links", label: "Links" },
 ];
 
@@ -69,18 +69,38 @@ const MobileBottomNav = () => {
                 columns={2}
                 radius={150}
                 fadeOut={0}
-                renderCard={(item) => (
-                  <Link
-                    to={item._to as string}
-                    onClick={() => setMoreOpen(false)}
-                    className={cn(
-                      "flex items-center px-4 py-3.5 rounded-xl text-sm font-medium transition-colors w-full h-full",
-                      isActive(item._to as string) ? "text-primary" : "text-muted-foreground"
-                    )}
-                  >
-                    {item.title}
-                  </Link>
-                )}
+                renderCard={(item) => {
+                  const href = item._to as string;
+                  const isExternal = href.startsWith('http');
+                  if (isExternal) {
+                    return (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setMoreOpen(false)}
+                        className={cn(
+                          "flex items-center px-4 py-3.5 rounded-xl text-sm font-medium transition-colors w-full h-full",
+                          "text-muted-foreground"
+                        )}
+                      >
+                        {item.title}
+                      </a>
+                    );
+                  }
+                  return (
+                    <Link
+                      to={href}
+                      onClick={() => setMoreOpen(false)}
+                      className={cn(
+                        "flex items-center px-4 py-3.5 rounded-xl text-sm font-medium transition-colors w-full h-full",
+                        isActive(href) ? "text-primary" : "text-muted-foreground"
+                      )}
+                    >
+                      {item.title}
+                    </Link>
+                  );
+                }}
               />
             </div>
           </div>
