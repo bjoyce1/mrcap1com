@@ -14,4 +14,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://mrcapmusic.com/sitemap.xml
+Sitemap: https://mrcap1.com/sitemap.xml
