@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
@@ -65,6 +66,11 @@ const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
 
 const queryClient = new QueryClient();
 
+const ExternalRedirect = ({ url }: { url: string }) => {
+  useEffect(() => { window.location.href = url; }, [url]);
+  return null;
+};
+
 function AppRoutes() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location } | null;
@@ -95,7 +101,7 @@ function AppRoutes() {
           <Route path="/texas-underground-hip-hop" element={<PageTransition><TexasUndergroundHipHop /></PageTransition>} />
           <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
           <Route path="/mr-cap-discography" element={<PageTransition><Discography /></PageTransition>} />
-          <Route path="/booking" element={(() => { window.location.href = "https://bookspc.com/artists/mr-cap"; return null; })()} />
+          <Route path="/booking" element={<ExternalRedirect url="https://bookspc.com/artists/mr-cap" />} />
           <Route path="/links" element={<PageTransition><Links /></PageTransition>} />
           <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
           <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
