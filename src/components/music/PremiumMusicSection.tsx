@@ -140,7 +140,7 @@ export default function PremiumMusicSection() {
                 <img
                   src={hero.cover_art_url || "/placeholder.svg"}
                   alt={hero.title}
-                  className="w-48 h-48 sm:w-56 sm:h-56 rounded-xl object-cover shadow-2xl ring-1 ring-border/20 group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-48 h-48 sm:w-56 sm:h-56 rounded-xl object-cover shadow-2xl group-hover:scale-[1.02] transition-transform duration-500"
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
                   <button
@@ -252,10 +252,10 @@ export default function PremiumMusicSection() {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => toggleLike(hero.id)}
-                      className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow-[0_2px_10px_hsl(0_0%_0%/0.2)] ${
                         liked[hero.id]
-                          ? "border-red-500/50 bg-red-500/10 text-red-400"
-                          : "border-border/40 text-muted-foreground hover:text-foreground hover:border-border"
+                          ? "bg-red-500/10 text-red-400"
+                          : "text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       <Heart
@@ -271,7 +271,7 @@ export default function PremiumMusicSection() {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => shareMusic({ title: hero.title, artist: hero.artist, slug: hero.slug })}
-                      className="w-10 h-10 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-colors"
+                      className="w-10 h-10 rounded-full shadow-[0_2px_10px_hsl(0_0%_0%/0.2)] flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                     >
                       <Share2 className="w-4 h-4" />
                     </button>
@@ -285,8 +285,8 @@ export default function PremiumMusicSection() {
 
         {/* ═══════ ART OF ISM ALBUM PLAYER ═══════ */}
         {artOfIsmTracks && artOfIsmTracks.length > 0 && (
-          <div className="mb-12 rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl overflow-hidden">
-            <div className="flex flex-col sm:flex-row gap-6 p-6 sm:p-8 border-b border-border/10">
+          <div className="mb-12 rounded-2xl bg-card/30 backdrop-blur-xl overflow-hidden shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
+            <div className="flex flex-col sm:flex-row gap-6 p-6 sm:p-8">
               <div className="relative group shrink-0 self-center sm:self-start">
                 <img
                   src={albumArtOfIsm}
@@ -306,7 +306,7 @@ export default function PremiumMusicSection() {
                 </div>
               </div>
               <div className="flex-1 text-center sm:text-left flex flex-col justify-center">
-                <Badge variant="secondary" className="text-[10px] w-fit mx-auto sm:mx-0 mb-2 bg-primary/10 text-primary border-primary/20">
+                <Badge variant="secondary" className="text-[10px] w-fit mx-auto sm:mx-0 mb-2 bg-primary/10 text-primary">
                   <Disc3 className="w-3 h-3 mr-1" /> Album · 11 Tracks
                 </Badge>
                 <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight mb-1">
@@ -338,7 +338,7 @@ export default function PremiumMusicSection() {
             </div>
 
             {/* Track listing */}
-            <div className="hidden sm:grid grid-cols-[40px_1fr_60px] gap-3 px-6 py-2.5 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/5">
+            <div className="hidden sm:grid grid-cols-[40px_1fr_60px] gap-3 px-6 py-2.5 text-xs text-muted-foreground uppercase tracking-wider">
               <span>#</span>
               <span>Title</span>
               <span className="text-right"><Clock className="w-3.5 h-3.5 inline" /></span>
@@ -350,7 +350,7 @@ export default function PremiumMusicSection() {
                 <button
                   key={track.id}
                   onClick={() => handlePlay(track, artOfIsmTracks, i)}
-                  className={`group w-full grid grid-cols-[40px_1fr_60px] gap-3 px-6 py-3 text-left transition-colors border-b border-border/5 last:border-b-0 ${
+                  className={`group w-full grid grid-cols-[40px_1fr_60px] gap-3 px-6 py-3 text-left transition-colors last:border-b-0 ${
                     isCurrent ? "bg-primary/5" : "hover:bg-secondary/40"
                   }`}
                 >
@@ -393,7 +393,7 @@ export default function PremiumMusicSection() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search songs, artists…"
-              className="pl-9 rounded-2xl bg-card/50 ring-1 ring-border/20 border-0"
+              className="pl-9 rounded-2xl bg-card/50 border-0 shadow-[0_2px_10px_hsl(0_0%_0%/0.2)]"
             />
           </div>
 
@@ -403,7 +403,7 @@ export default function PremiumMusicSection() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-full gap-1 border-border/30 bg-card/50"
+                  className="rounded-full gap-1 border-0 bg-card/50 shadow-[0_2px_10px_hsl(0_0%_0%/0.2)]"
                 >
                   Sort:{" "}
                   {sort === "new"
@@ -429,7 +429,7 @@ export default function PremiumMusicSection() {
 
             <Separator orientation="vertical" className="h-6" />
 
-            <div className="flex rounded-full border border-border/30 overflow-hidden">
+            <div className="flex rounded-full overflow-hidden shadow-[0_2px_10px_hsl(0_0%_0%/0.2)]">
               <button
                 className={`p-2 transition-colors ${view === "grid" ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
                 onClick={() => setView("grid")}
@@ -448,7 +448,7 @@ export default function PremiumMusicSection() {
 
         {/* ═══════ TABS + CONTENT ═══════ */}
         <Tabs defaultValue="tracks" className="space-y-8">
-          <TabsList className="bg-card/50 border border-border/20 rounded-full p-1">
+          <TabsList className="bg-card/50 rounded-full p-1 shadow-[0_2px_10px_hsl(0_0%_0%/0.2)]">
             <TabsTrigger value="tracks" className="rounded-full text-sm">
               Tracks
             </TabsTrigger>
@@ -486,7 +486,7 @@ export default function PremiumMusicSection() {
                           onClick={() => handlePlay(t, filtered, i)}
                           className="group relative block w-full text-left"
                         >
-                          <div className="relative aspect-square rounded-xl overflow-hidden mb-3 ring-1 ring-border/10 group-hover:ring-primary/30 transition-all">
+                          <div className="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-[0_4px_16px_hsl(0_0%_0%/0.25)] group-hover:shadow-[0_6px_24px_hsl(0_0%_0%/0.35)] transition-all">
                             <img
                               src={t.cover_art_url || "/placeholder.svg"}
                               alt={t.title}
@@ -587,10 +587,10 @@ export default function PremiumMusicSection() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl overflow-hidden"
+                  className="rounded-2xl bg-card/30 backdrop-blur-xl overflow-hidden shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]"
                 >
                   {/* List header */}
-                  <div className="hidden sm:grid grid-cols-[40px_1fr_1fr_100px_60px_80px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/10">
+                  <div className="hidden sm:grid grid-cols-[40px_1fr_1fr_100px_60px_80px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider">
                     <span>#</span>
                     <span>Title</span>
                     <span>Album</span>
@@ -611,7 +611,7 @@ export default function PremiumMusicSection() {
                       <React.Fragment key={t.id}>
                         <button
                           onClick={() => handlePlay(t, filtered, i)}
-                          className={`group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_1fr_100px_60px_80px] gap-3 px-5 py-3 text-left transition-colors border-b border-border/5 last:border-b-0 ${
+                          className={`group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_1fr_100px_60px_80px] gap-3 px-5 py-3 text-left transition-colors last:border-b-0 ${
                             isCurrent
                               ? "bg-primary/5"
                               : "hover:bg-secondary/40"
@@ -737,7 +737,7 @@ export default function PremiumMusicSection() {
                       to={`/album/${album.slug}`}
                       className="group text-left"
                     >
-                      <div className="relative aspect-square rounded-xl overflow-hidden mb-3 ring-1 ring-border/10 hover:ring-primary/30 transition-all">
+                      <div className="relative aspect-square rounded-xl overflow-hidden mb-3 shadow-[0_4px_16px_hsl(0_0%_0%/0.25)] hover:shadow-[0_6px_24px_hsl(0_0%_0%/0.35)] transition-all">
                         <img
                           src={album.cover_art_url || "/placeholder.svg"}
                           alt={album.title}
@@ -771,8 +771,8 @@ export default function PremiumMusicSection() {
                     <Music className="w-4 h-4 text-primary" /> Singles &amp;
                     Features
                   </h3>
-                  <div className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl overflow-hidden">
-                    <div className="hidden sm:grid grid-cols-[40px_1fr_100px_60px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider border-b border-border/10">
+                  <div className="rounded-2xl bg-card/30 backdrop-blur-xl overflow-hidden shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
+                    <div className="hidden sm:grid grid-cols-[40px_1fr_100px_60px] gap-3 px-5 py-3 text-xs text-muted-foreground uppercase tracking-wider">
                       <span>#</span>
                       <span>Title</span>
                       <span>Year</span>
@@ -784,7 +784,7 @@ export default function PremiumMusicSection() {
                       <button
                         key={track.id}
                         onClick={() => handlePlay(track, singles, i)}
-                        className="group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_100px_60px] gap-3 px-5 py-3 text-left hover:bg-secondary/40 transition-colors border-b border-border/5 last:border-b-0"
+                        className="group w-full grid grid-cols-[40px_1fr_60px] sm:grid-cols-[40px_1fr_100px_60px] gap-3 px-5 py-3 text-left hover:bg-secondary/40 transition-colors last:border-b-0"
                       >
                         <span className="flex items-center text-sm text-muted-foreground tabular-nums">
                           <span className="group-hover:hidden">{i + 1}</span>
@@ -824,7 +824,7 @@ export default function PremiumMusicSection() {
 
           {/* ── FEATURED TAB ── */}
           <TabsContent value="featured">
-            <div className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl p-8 text-center">
+            <div className="rounded-2xl bg-card/30 backdrop-blur-xl p-8 text-center shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
@@ -852,7 +852,7 @@ export default function PremiumMusicSection() {
             </svg>
             Full Catalog on Spotify
           </h2>
-          <div className="rounded-2xl border border-border/20 bg-card/30 backdrop-blur-xl p-4">
+          <div className="rounded-2xl bg-card/30 backdrop-blur-xl p-4 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
             <iframe
               style={{ borderRadius: 12 }}
               src="https://open.spotify.com/embed/artist/69pjfQNXA1xjusnI2wfgug?utm_source=generator&theme=0"
