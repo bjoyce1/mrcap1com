@@ -83,7 +83,7 @@ export default function PressTimeline() {
       {/* Timeline */}
       <div className="relative">
         {/* Vertical line */}
-        <div className="absolute left-3 top-0 h-full w-px bg-border" />
+        <div className="absolute left-3 top-0 h-full w-px bg-muted-foreground/20" />
 
         <div className="space-y-12">
           {Object.keys(grouped)
@@ -99,9 +99,7 @@ export default function PressTimeline() {
                       <div className="absolute left-[9px] top-4 h-2.5 w-2.5 rounded-full bg-primary" />
 
                       <div
-                        className={`rounded-2xl border border-border bg-card/50 p-6 transition-colors hover:border-primary/50 ${
-                          item.prominent ? "shadow-lg" : ""
-                        }`}
+                        className={`rounded-2xl bg-card/50 p-6 transition-shadow hover:shadow-[0_6px_28px_hsl(0_0%_0%/0.35)] shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]`}
                       >
                         <div className="flex flex-wrap items-baseline justify-between gap-3">
                           <div className="min-w-0 flex-1">
@@ -142,7 +140,7 @@ export default function PressTimeline() {
                               href={item.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-medium text-foreground hover:border-primary hover:text-primary transition-colors"
+                              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium text-foreground bg-muted/50 hover:text-primary transition-colors shadow-[0_2px_8px_hsl(0_0%_0%/0.2)]"
                             >
                               Read
                               <ExternalLink className="h-3.5 w-3.5" />

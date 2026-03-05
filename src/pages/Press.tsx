@@ -11,7 +11,6 @@ import BookingCard from "@/components/BookingCard";
 import PressSection from "@/components/PressSection";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
-// Featured press article (Houston Press)
 const featuredArticle = {
   outlet: "Houston Press",
   title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
@@ -23,8 +22,6 @@ const featuredArticle = {
   quote: "I have nothing to do with Wiz Khalifa…I've seen his Instagram followers…even though I'm not a mainstream artist with mainstream exposure, people know who Mr. CAP is. And that's me.",
   summary: "This feature from Houston Press profiles Mr. CAP's career and clarifies a notable identity mix-up with Wiz Khalifa. It highlights his deep roots in Houston's hip-hop scene and long-standing commitment to his craft and community."
 };
-
-// Press features moved to PressTimeline component
 
 const quotes = [{
   text: "I have nothing to do with Wiz Khalifa…I've seen his Instagram followers…even though I'm not a mainstream artist with mainstream exposure, people know who Mr. CAP is. And that's me.",
@@ -43,10 +40,8 @@ const quotes = [{
   source: "NFT Now"
 }];
 
-// Short bio for quick copy
 const shortBio = `Mr. CAP is a Houston-born rapper and founding member of the South Park Coalition, with 30+ years in underground hip-hop. First Houston rapper to sell a Hip Hop NFT (2021).`;
 
-// Full media bio
 const mediaBio = `Cornelius A. Pratt, professionally known as Mr. CAP (Creative Artist Promoter), is a Houston-born rapper, writer, and creative technologist. As a founding member of the legendary South Park Coalition (SPC), he has been a pivotal force in Houston's underground hip-hop scene since the late 1980s.
 
 With over three decades in the music industry, Mr. CAP has released multiple critically acclaimed albums including "Art of Ism," "Cold Ass Pimp," "To Tha Grave," and his latest "The Ties That Bind Us." His 2024 single "Bet'n On Me" continues to showcase his lyrical prowess and cultural relevance.
@@ -55,7 +50,6 @@ In 2021, Mr. CAP made history as the first Houston rapper to sell a Hip Hop NFT 
 
 Beyond music, Mr. CAP is a cultural historian, documenting Houston's rich hip-hop heritage and mentoring the next generation of artists. His work has been featured in Houston Chronicle, Complex, AllHipHop, HipHopDX, and Sound.xyz.`;
 
-// Key facts for journalists
 const keyFacts = [{
   label: "Real Name",
   value: "Cornelius A. Pratt"
@@ -82,7 +76,6 @@ const keyFacts = [{
   value: "Art of Ism, Cold Ass Pimp, To Tha Grave, The Ties That Bind Us"
 }];
 
-// Story angles for journalists
 const storyAngles = [{
   title: "Houston Hip-Hop Pioneer",
   description: "30+ years documenting and shaping the South Park Coalition legacy alongside K-Rino",
@@ -101,9 +94,8 @@ const storyAngles = [{
   icon: Users
 }];
 
-// Interview topics
 const interviewTopics = ["The history and legacy of Houston's South Park Coalition", "Web3, NFTs, and the future of music ownership for independent artists", "30+ years of navigating the music industry as an independent artist", "Houston's influence on Southern hip-hop and national trends", "The evolution of underground hip-hop from 1988 to present", "Preserving hip-hop culture and mentoring the next generation"];
-// Featured Article Slideshow Component
+
 const FeaturedArticleSlideshow = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -115,7 +107,7 @@ const FeaturedArticleSlideshow = () => {
   }, []);
 
   return (
-    <div className="bg-card/50 border border-border/50 rounded-2xl overflow-hidden">
+    <div className="bg-card/50 rounded-2xl overflow-hidden shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
       <div className="grid lg:grid-cols-2 gap-0">
         {/* Image Slideshow */}
         <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
@@ -456,7 +448,7 @@ const Press = () => {
         
         <main className="pt-24">
           {/* Header */}
-          <section className="py-16 border-b border-border/50">
+          <section className="py-16">
             <div className="container mx-auto px-4">
               <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
                 <Link to="/" className="hover:text-primary transition-colors">Home</Link>
@@ -478,7 +470,7 @@ const Press = () => {
           </section>
 
           {/* Featured Article - Houston Press */}
-          <section className="py-16 bg-gradient-to-b from-primary/5 to-transparent border-b border-border/50">
+          <section className="py-16 bg-gradient-to-b from-primary/5 to-transparent">
             <div className="container mx-auto px-4">
               <div className="max-w-7xl mx-auto">
                 <div className="flex items-center gap-2 mb-6">
@@ -496,7 +488,7 @@ const Press = () => {
           <PressSection />
 
           {/* Quick Facts for Journalists */}
-          <section className="py-16 bg-card/20 border-b border-border/50">
+          <section className="py-16 bg-card/20">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
@@ -508,7 +500,7 @@ const Press = () => {
                     items={keyFacts.map((fact) => ({
                       title: fact.label,
                       subtitle: fact.value,
-                      borderColor: "hsl(var(--border))",
+                      borderColor: "transparent",
                       gradient: "linear-gradient(145deg, hsl(var(--card) / 0.5), hsl(var(--background)))",
                     } as ChromaGridItem))}
                     columns={2}
@@ -528,7 +520,7 @@ const Press = () => {
           </section>
 
           {/* Story Angles */}
-          <section className="py-16 border-b border-border/50">
+          <section className="py-16">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
@@ -540,7 +532,7 @@ const Press = () => {
                     items={storyAngles.map((angle) => ({
                       title: angle.title,
                       subtitle: angle.description,
-                      borderColor: "hsl(var(--primary))",
+                      borderColor: "transparent",
                       gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.06), hsl(var(--background)))",
                       icon: angle.icon,
                     } as ChromaGridItem))}
@@ -565,7 +557,7 @@ const Press = () => {
           </section>
 
           {/* Media Bios */}
-          <section className="py-16 bg-card/20 border-b border-border/50">
+          <section className="py-16 bg-card/20">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-2xl font-display font-bold mb-8">Media-Ready Bios</h2>
@@ -573,7 +565,7 @@ const Press = () => {
                 {/* Short Bio */}
                 <div className="mb-8">
                   <h3 className="text-lg font-semibold mb-4 text-primary">Short Bio (1 sentence)</h3>
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                  <div className="bg-card/50 rounded-xl p-6 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                     <p className="text-muted-foreground leading-relaxed">{shortBio}</p>
                     <button onClick={() => navigator.clipboard.writeText(shortBio)} className="mt-4 text-sm text-primary hover:underline flex items-center gap-2">
                       <FileText className="w-4 h-4" />
@@ -585,7 +577,7 @@ const Press = () => {
                 {/* Full Bio */}
                 <div>
                   <h3 className="text-lg font-semibold mb-4 text-primary">Full Bio (Feature-length)</h3>
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                  <div className="bg-card/50 rounded-xl p-6 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                     <div className="text-muted-foreground leading-relaxed whitespace-pre-line">{mediaBio}</div>
                     <button onClick={() => navigator.clipboard.writeText(mediaBio)} className="mt-4 text-sm text-primary hover:underline flex items-center gap-2">
                       <FileText className="w-4 h-4" />
@@ -598,14 +590,14 @@ const Press = () => {
           </section>
 
           {/* Interview Topics */}
-          <section className="py-16 border-b border-border/50">
+          <section className="py-16">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-2xl font-display font-bold mb-8 flex items-center gap-3">
                   <Mic className="w-6 h-6 text-primary" />
                   Interview Topics
                 </h2>
-                <div className="bg-card/30 border border-border/50 rounded-xl p-6">
+                <div className="bg-card/30 rounded-xl p-6 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                   <p className="text-muted-foreground mb-6">Mr. CAP is available to discuss the following topics for podcasts, articles, and video features:</p>
                   <ul className="space-y-3">
                     {interviewTopics.map((topic, index) => <li key={index} className="flex items-start gap-3">
@@ -619,7 +611,7 @@ const Press = () => {
           </section>
 
           {/* Press Kit Download */}
-          <section className="py-16 bg-card/20 border-b border-border/50">
+          <section className="py-16 bg-card/20">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
                 <Download className="w-16 h-16 text-primary mx-auto mb-6" />
@@ -650,7 +642,7 @@ const Press = () => {
           <PressTimeline />
 
           {/* Quotes / Testimonials */}
-          <section className="py-20 bg-card/20 border-b border-border/50">
+          <section className="py-20 bg-card/20">
             <div className="container mx-auto px-4">
               <h2 className="text-2xl font-display font-bold mb-8 text-center">What They're Saying</h2>
               
@@ -659,7 +651,7 @@ const Press = () => {
                   items={quotes.map((quote) => ({
                     title: quote.text,
                     subtitle: quote.source,
-                    borderColor: "hsl(var(--border))",
+                    borderColor: "transparent",
                     gradient: "linear-gradient(145deg, hsl(var(--card) / 0.5), hsl(var(--background)))",
                   } as ChromaGridItem))}
                   columns={2}
@@ -679,11 +671,11 @@ const Press = () => {
           </section>
 
           {/* Official Links */}
-          <section className="py-20 border-b border-border/50">
+          <section className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto">
                 <h2 className="text-2xl font-display font-bold mb-6 text-center">Official Links</h2>
-                <div className="bg-card/50 border border-border/50 rounded-xl p-8">
+                <div className="bg-card/50 rounded-xl p-8 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                   <div className="grid gap-3 text-center md:text-left">
                     <p className="text-foreground">
                       <span className="text-muted-foreground">Website:</span>{" "}
@@ -728,7 +720,7 @@ const Press = () => {
                 <p className="text-muted-foreground mb-8">
                   For interview requests, press inquiries, podcast appearances, and media partnerships:
                 </p>
-                <div className="bg-card/50 border border-border/50 rounded-xl p-8">
+                <div className="bg-card/50 rounded-xl p-8 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                   <p className="text-lg font-medium mb-2">Press Contact</p>
                   <a href="mailto:wrecklessent@gmail.com?subject=Press Inquiry - Mr. CAP" className="text-primary hover:underline text-xl font-semibold">
                     wrecklessent@gmail.com
@@ -745,12 +737,12 @@ const Press = () => {
           </section>
 
           {/* Suggested Citation */}
-          <section className="py-16 bg-card/20 border-t border-border/50">
+          <section className="py-16 bg-card/20">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-xl font-display font-bold mb-4">Suggested Citation</h2>
                 <p className="text-muted-foreground mb-4">When referencing Mr. CAP in articles or academic work:</p>
-                <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                <div className="bg-card/50 rounded-xl p-6 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                   <code className="text-sm text-foreground">
                     Mr. CAP (Cornelius A. Pratt). South Park Coalition. Houston, Texas. https://mrcap1.com
                   </code>
@@ -770,9 +762,9 @@ const Press = () => {
           </section>
         </main>
 
-        <CitationBlock />
         <Footer />
       </div>
     </>;
 };
+
 export default Press;

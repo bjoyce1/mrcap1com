@@ -60,7 +60,7 @@ const PressSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="press" className="py-24 md:py-32 bg-section-gradient border-b border-border">
+    <section ref={sectionRef} id="press" className="py-24 md:py-32 bg-section-gradient">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Header */}
         <div ref={headerRef} className="mb-12">
