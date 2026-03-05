@@ -172,7 +172,7 @@ const Music = () => {
           <section className="relative z-10 pt-16">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="relative mt-8 sm:mt-16">
-                <div className="relative rounded-2xl bg-card/50 border border-border/20 overflow-hidden max-w-5xl mx-auto p-6 sm:p-10">
+                <div className="relative rounded-2xl bg-card/50 overflow-hidden max-w-5xl mx-auto p-6 sm:p-10 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                   <div className="flex flex-col md:flex-row gap-8 items-center">
                     <div className="relative group shrink-0">
                       <img
@@ -197,12 +197,12 @@ const Music = () => {
                         More than an album—it's a life story scored in 808s. From Third Ward lessons to blockchain boardrooms, Mr. CAP turns years of struggle into a soundtrack for people betting on themselves.
                       </p>
                       <div className="flex items-center gap-3 justify-center md:justify-start">
-                        <Button variant="outline" className="rounded-full gap-2 px-6 border-border/40 hover:bg-secondary/50" asChild>
+                        <Button variant="outline" className="rounded-full gap-2 px-6 border-0 shadow-[0_2px_12px_hsl(0_0%_0%/0.2)] hover:bg-secondary/50" asChild>
                           <Link to="/album/the-ties-that-bind-us">
                             <Play className="w-4 h-4" /> Play Now
                           </Link>
                         </Button>
-                        <button className="w-10 h-10 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-colors">
+                        <button className="w-10 h-10 rounded-full shadow-[0_2px_12px_hsl(0_0%_0%/0.2)] flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
                           <Heart className="w-4 h-4" />
                         </button>
                       </div>
@@ -214,7 +214,7 @@ const Music = () => {
           </section>
 
           {/* Streaming Platforms */}
-          <section className="py-12 mt-16 border-y border-border/20 bg-card/30" style={{ backdropFilter: 'blur(20px)' }}>
+          <section className="py-12 mt-16 bg-card/30 shadow-[0_-2px_16px_hsl(0_0%_0%/0.15),0_2px_16px_hsl(0_0%_0%/0.15)]" style={{ backdropFilter: 'blur(20px)' }}>
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
               <p className="text-center text-muted-foreground mb-6">Stream on your favorite platform</p>
               <div className="flex flex-wrap justify-center gap-3">
@@ -224,7 +224,7 @@ const Music = () => {
                     href={platform.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 bg-card/50 border border-border/30 rounded-full px-5 py-2.5 hover:bg-card/80 transition-colors"
+                    className="flex items-center gap-2 bg-card/50 rounded-full px-5 py-2.5 hover:bg-card/80 transition-colors shadow-[0_2px_10px_hsl(0_0%_0%/0.2)]"
                     style={{ backdropFilter: 'blur(12px)' }}
                   >
                     <div className={`w-2 h-2 rounded-full ${platform.color}`} />
@@ -240,9 +240,9 @@ const Music = () => {
           <PremiumMusicSection />
 
           {/* CTA */}
-          <section className="py-20 px-4 sm:px-6 border-t border-border/20">
+          <section className="py-20 px-4 sm:px-6">
             <div className="max-w-6xl mx-auto text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-violet-500/20 to-indigo-500/20 border border-border/30 mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-violet-500/20 to-indigo-500/20 shadow-[0_2px_12px_hsl(0_0%_0%/0.2)] mb-6">
                 <MusicIcon className="w-8 h-8 text-violet-400" />
               </div>
               <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4 tracking-tight">
