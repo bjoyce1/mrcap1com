@@ -24,32 +24,32 @@ const HeroSection = () => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.set(imageRef.current, { scale: 1.1, opacity: 0 });
-      gsap.set(nameRef.current, { y: 60, opacity: 0 });
-      gsap.set(releaseRef.current, { y: 40, opacity: 0 });
-      gsap.set(ctaRef.current, { y: 30, opacity: 0 });
+      gsap.set(imageRef.current, { scale: 1.1, autoAlpha: 0 });
+      gsap.set(nameRef.current, { y: 60, autoAlpha: 0 });
+      gsap.set(releaseRef.current, { y: 40, autoAlpha: 0 });
+      gsap.set(ctaRef.current, { y: 30, autoAlpha: 0 });
 
       const tl = gsap.timeline({ delay: 0.2 });
 
       tl.to(imageRef.current, {
         scale: 1,
-        opacity: 1,
+        autoAlpha: 1,
         duration: 1.4,
         ease: "power3.out",
       })
         .to(
           nameRef.current,
-          { y: 0, opacity: 1, duration: 1, ease: "power4.out" },
+          { y: 0, autoAlpha: 1, duration: 1, ease: "power4.out" },
           "-=0.8"
         )
         .to(
           releaseRef.current,
-          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+          { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" },
           "-=0.6"
         )
         .to(
           ctaRef.current,
-          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+          { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" },
           "-=0.5"
         );
 
