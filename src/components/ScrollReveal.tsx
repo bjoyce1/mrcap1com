@@ -27,15 +27,16 @@ export default function ScrollReveal({
   }, [isInView, mainControls]);
 
   return (
-    <div ref={ref} style={{ position: "relative", width, overflow: "hidden" }}>
+    <div ref={ref} style={{ position: "relative", width }}>
       <motion.div
         variants={{
           hidden: { opacity: 0, y: yOffset },
           visible: { opacity: 1, y: 0 },
         }}
-        initial="hidden"
+        initial="visible"
         animate={mainControls}
         transition={{ duration, delay, ease: "easeOut" }}
+        style={!isInView ? { opacity: 0, transform: `translateY(${yOffset}px)` } : undefined}
       >
         {children}
       </motion.div>
