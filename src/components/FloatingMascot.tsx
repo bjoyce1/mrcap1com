@@ -9,7 +9,7 @@ const TIPS = [
   { text: "Check out the latest drops 🎵", href: "/music" },
   { text: "Scroll down to explore more!", href: null },
   { text: "Hit up the merch store 🔥", href: "/merch" },
-  { text: "Book a show — let's connect!", href: "/booking" },
+  { text: "Book a show — let's connect!", href: "https://bookspc.com/artists/mr-cap" },
   { text: "Stream the new album now 🎧", href: "/music" },
   { text: "Peep the NFT collection 🖼️", href: "/nft-gallery" },
   { text: "Read what the press says 📰", href: "/press" },

@@ -207,7 +207,7 @@ const Legacy = () => {
                   <Link to="/music">Stream the Music</Link>
                 </Button>
                 <Button variant="fluxOutline" asChild>
-                  <Link to="/booking">Book Mr. CAP</Link>
+                  <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer">Book Mr. CAP</a>
                 </Button>
                 <Button variant="fluxGhost" asChild>
                   <Link to="/press">Press & Media</Link>
