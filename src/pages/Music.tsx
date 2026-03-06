@@ -1,273 +1,78 @@
-import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { useRef, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import CitationBlock from "@/components/CitationBlock";
-import { Button } from "@/components/ui/button";
-import { ChevronRight, Play, ExternalLink, Music as MusicIcon, Disc3, ArrowRight, Headphones, Heart, Clock } from "lucide-react";
-import TrackRow from "@/components/player/TrackRow";
-import { useAlbums, useLatestTracks, useAllTracks } from "@/hooks/useStreamingData";
-import { usePlayerStore } from "@/stores/playerStore";
-import { trackEvent } from "@/components/GoogleAnalytics";
-import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
-import PremiumMusicSection from "@/components/music/PremiumMusicSection";
-
-import albumBetn from "@/assets/betn-on-me.png";
-import albumArtOfIsm from "@/assets/album-art-of-ism.png";
-import albumTies from "@/assets/album-ties.jpg";
-import dippinMetaverse from "@/assets/dippin-metaverse.png";
-import limitless from "@/assets/limitless.webp";
-import socialMediaHoStroll from "@/assets/social-media-ho-stroll.jpg";
-
-const streamingPlatforms = [
-  { name: "Spotify", url: "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug", color: "bg-[#1DB954]" },
-  { name: "Apple Music", url: "https://music.apple.com/us/artist/mr-cap/1506719540", color: "bg-[#FA2D48]" },
-  { name: "YouTube Music", url: "https://www.youtube.com/@mrcap1", color: "bg-[#FF0000]" },
-  { name: "Amazon Music", url: "https://music.amazon.com/artists/mr-cap", color: "bg-[#FF9900]" },
-  { name: "Tidal", url: "https://tidal.com/artist/mr-cap", color: "bg-[#000000] ring-1 ring-white/20" },
-];
+import SEO from "@/components/SEO";
+import PageHero from "@/components/blocks/PageHero";
+import SectionIntro from "@/components/blocks/SectionIntro";
+import CitationBlock from "@/components/blocks/CitationBlock";
+import CTAButtonRow from "@/components/blocks/CTAButtonRow";
+import StartHereCards from "@/components/music/StartHereCards";
+import CatalogReleaseList from "@/components/music/CatalogReleaseList";
+import StoryNotesBlock from "@/components/music/StoryNotesBlock";
+import { musicPageData as data } from "@/content/music";
 
 const Music = () => {
-  const { data: albums, isLoading: albumsLoading } = useAlbums();
-  const { data: latestTracks, isLoading: tracksLoading } = useLatestTracks(8);
-  const { data: allTracks } = useAllTracks();
-  const { playTrack } = usePlayerStore();
-
-  const startHereRef = useRef<HTMLDivElement>(null);
-  const latestRef = useRef<HTMLDivElement>(null);
-  const albumsRef = useRef<HTMLDivElement>(null);
-  const singlesRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    trackEvent("player_loaded", { page_path: "/music", source: "music" });
-  }, []);
-
-  // GSAP scroll animations
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      [startHereRef, latestRef, albumsRef, singlesRef].forEach((ref) => {
-        if (ref.current) {
-          gsap.from(ref.current, {
-            y: 40, opacity: 0, duration: 0.7, ease: "power2.out",
-            scrollTrigger: { trigger: ref.current, start: "top 85%", toggleActions: "play none none none" },
-          });
-        }
-      });
-    });
-    return () => ctx.revert();
-  }, [latestTracks, albums, allTracks]);
-
-  const singles = allTracks?.filter(t => !t.album_id) || [];
-
-  const handlePlayAll = () => {
-    if (allTracks && allTracks.length > 0) {
-      const playable = allTracks.filter(t => t.audio_url);
-      if (playable.length > 0) {
-        playTrack(playable[0], playable, 0);
-        trackEvent("album_play", { page_path: "/music", source: "music" });
-      }
-    }
-  };
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "MusicPlaylist",
-        "name": "Mr. CAP Discography",
-        "description": "Complete discography of Houston hip-hop artist Mr. CAP including albums, singles, and collaborations.",
-        "url": "https://mrcap1.com/music",
-        "numTracks": allTracks?.length || 0,
-      },
-      {
-        "@type": "MusicAlbum",
-        "name": "The Ties That Bind Us",
-        "byArtist": { "@type": "MusicGroup", "name": "South Park Coalition" },
-        "genre": ["Hip-Hop", "Southern Rap"],
-        "datePublished": "2024-10-18",
-        "numTracks": 19,
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Music", "item": "https://mrcap1.com/music" }
-        ]
-      }
-    ]
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "MusicPlaylist",
+      name: "Mr. CAP Official Catalog",
+      url: "https://mrcap1.com/music",
+      numTracks: 5,
+      track: data.catalog.map((r) => ({
+        "@type": "MusicRecording",
+        name: r.title,
+        datePublished: r.year,
+        description: r.summary,
+        byArtist: { "@type": "Person", name: "Mr. CAP" },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
+        { "@type": "ListItem", position: 2, name: "Music", item: "https://mrcap1.com/music" },
+      ],
+    },
+  ];
 
   return (
-    <>
-      <Helmet>
-        <title>Music by Mr. CAP | Stream, Albums & Discography | Houston Hip-Hop</title>
-        <meta name="description" content="Stream Mr. CAP's full catalog — albums, singles and music from Houston's underground hip-hop pioneer. South Park Coalition original member." />
-        <link rel="canonical" href="https://mrcap1.com/music" />
-        <meta property="og:title" content="Music by Mr. CAP | Stream & Discography" />
-        <meta property="og:description" content="Stream the complete discography of Houston hip-hop pioneer Mr. CAP." />
-        <meta property="og:type" content="music.album" />
-        <meta property="og:url" content="https://mrcap1.com/music" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+    <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Mr. CAP Music | The Ties That Bind Us, The Art of ISM, 2 Tha Grave & More"
+        description="Stream the official Mr. CAP catalog, from The Ties That Bind Us to The Art of ISM, 2 Tha Grave, O.N.E. on O.N.E., and Cold Ass Pimp."
+        canonical="https://mrcap1.com/music"
+        jsonLd={jsonLd}
+      />
+      <Navigation />
 
-      <div className="min-h-screen bg-background text-foreground">
-        <Navigation />
+      <main>
+        <PageHero
+          kicker={data.hero.kicker}
+          title={data.hero.title}
+          description={data.hero.description}
+          ctas={data.hero.ctas}
+        />
 
-        <main>
-          {/* Video Hero Section */}
-          <section className="relative w-full h-[70vh] sm:h-[80vh] overflow-hidden">
-            <div className="absolute inset-0">
-              <iframe
-                src="https://www.youtube.com/embed/3G3_rIwKRTE?autoplay=1&mute=1&loop=1&playlist=3G3_rIwKRTE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-                title="Mr. CAP – Music Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] sm:w-[200%] sm:h-[200%] pointer-events-none"
-                style={{ border: 'none' }}
-              />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent" />
+        <SectionIntro body={data.intro} />
 
-            <div className="relative z-10 h-full flex flex-col justify-end max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
-              <nav className="absolute top-28 left-4 sm:left-6 lg:left-8 flex items-center gap-2 text-sm text-muted-foreground animate-fade-in">
-                <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
-                <ChevronRight className="w-4 h-4" />
-                <span className="text-foreground">Music</span>
-              </nav>
+        <StartHereCards cards={data.startHere} />
 
-              <div className="flex items-center gap-2 mb-4">
-                <Headphones className="w-5 h-5 text-primary" />
-                <span className="text-xs uppercase tracking-widest text-primary font-medium">CAP STREAM</span>
-              </div>
+        <CatalogReleaseList releases={data.catalog} />
 
-              <div className="flex flex-col sm:flex-row gap-8 items-end justify-between">
-                <div className="flex-1">
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight text-foreground leading-tight drop-shadow-2xl">
-                    20+ Years. 6 Albums. Stream Direct.
-                  </h1>
-                </div>
-                <div className="flex flex-col flex-1 text-left sm:text-right max-w-md space-y-4 items-start sm:items-end">
-                  <p className="text-base sm:text-lg text-muted-foreground max-w-sm drop-shadow-lg">
-                    Mr. CAP's full catalog — Houston hip hop straight from the source. No middleman.
-                  </p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span>{allTracks?.length || 0} tracks</span>
-                    <span className="w-1 h-1 rounded-full bg-muted-foreground" />
-                    <span>{albums?.length || 0} albums</span>
-                  </div>
-                  <button
-                    onClick={handlePlayAll}
-                    className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105"
-                  >
-                    <Play className="w-5 h-5" /> Play All
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
+        <StoryNotesBlock body={data.storyNotes} />
 
-          {/* Featured Album */}
-          <section className="relative z-10 pt-16">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="relative mt-8 sm:mt-16">
-                <div className="relative rounded-2xl bg-card/50 overflow-hidden max-w-5xl mx-auto p-6 sm:p-10 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
-                  <div className="flex flex-col md:flex-row gap-8 items-center">
-                    <div className="relative group shrink-0">
-                      <img
-                        src={albumTies}
-                        alt="The Ties That Bind Us album cover"
-                        className="w-40 h-40 sm:w-44 sm:h-44 rounded-xl object-cover shadow-2xl group-hover:scale-[1.02] transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
-                        <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                          <Play className="w-7 h-7 text-white ml-0.5" fill="white" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex-1 text-center md:text-left">
-                      <span className="text-xs font-semibold uppercase tracking-widest text-primary mb-3 block">
-                        Featured Album
-                      </span>
-                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-foreground mb-3 tracking-tight leading-tight">
-                        The Ties That<br className="hidden sm:block" /> Bind Us
-                      </h2>
-                      <p className="text-sm text-muted-foreground mb-6 max-w-md">
-                        More than an album—it's a life story scored in 808s. From Third Ward lessons to blockchain boardrooms, Mr. CAP turns years of struggle into a soundtrack for people betting on themselves.
-                      </p>
-                      <div className="flex items-center gap-3 justify-center md:justify-start">
-                        <Button variant="outline" className="rounded-full gap-2 px-6 border-0 shadow-[0_2px_12px_hsl(0_0%_0%/0.2)] hover:bg-secondary/50" asChild>
-                          <Link to="/album/the-ties-that-bind-us">
-                            <Play className="w-4 h-4" /> Play Now
-                          </Link>
-                        </Button>
-                        <button className="w-10 h-10 rounded-full shadow-[0_2px_12px_hsl(0_0%_0%/0.2)] flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
-                          <Heart className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+        <CitationBlock
+          canonicalUrl={data.citation.canonicalUrl}
+          description={data.citation.description}
+          links={data.citation.links}
+        />
 
-          {/* Streaming Platforms */}
-          <section className="py-12 mt-16 bg-card/30 shadow-[0_-2px_16px_hsl(0_0%_0%/0.15),0_2px_16px_hsl(0_0%_0%/0.15)]" style={{ backdropFilter: 'blur(20px)' }}>
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
-              <p className="text-center text-muted-foreground mb-6">Stream on your favorite platform</p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {streamingPlatforms.map((platform) => (
-                  <a
-                    key={platform.name}
-                    href={platform.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 bg-card/50 rounded-full px-5 py-2.5 hover:bg-card/80 transition-colors shadow-[0_2px_10px_hsl(0_0%_0%/0.2)]"
-                    style={{ backdropFilter: 'blur(12px)' }}
-                  >
-                    <div className={`w-2 h-2 rounded-full ${platform.color}`} />
-                    <span className="text-sm font-medium text-foreground">{platform.name}</span>
-                    <ExternalLink className="w-3 h-3 text-muted-foreground" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
+        <CTAButtonRow items={data.finalCTAs} />
+      </main>
 
-          {/* ── Premium Music Section ── */}
-          <PremiumMusicSection />
-
-          {/* CTA */}
-          <section className="py-20 px-4 sm:px-6">
-            <div className="max-w-6xl mx-auto text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-violet-500/20 to-indigo-500/20 shadow-[0_2px_12px_hsl(0_0%_0%/0.2)] mb-6">
-                <MusicIcon className="w-8 h-8 text-violet-400" />
-              </div>
-              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4 tracking-tight">
-                Experience Live
-              </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-                Whether it's a packed Houston club or a festival stage in another city, Mr. CAP brings a raw, 
-                honest performance—built on decades of experience and a lifetime of stories.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button variant="flux" asChild>
-                  <Link to="/live">View Live Shows</Link>
-                </Button>
-                <Button variant="fluxOutline" asChild>
-                  <Link to="/nft">NFT Collection</Link>
-                </Button>
-              </div>
-            </div>
-          </section>
-        </main>
-
-        <CitationBlock />
-        <Footer />
-      </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
