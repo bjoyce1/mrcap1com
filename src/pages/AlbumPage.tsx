@@ -79,7 +79,7 @@ const AlbumPage = () => {
     byArtist: { "@type": "MusicGroup", name: album.artist },
     datePublished: `${album.release_year}`,
     numTracks: album.track_count,
-    url: `https://mrcap1.com/album/${album.slug}`,
+    url: `https://mrcap1.com/albums/${album.slug}`,
     image: album.cover_art_url,
     ...(tracks && {
       track: tracks.map((t, i) => ({
@@ -87,7 +87,7 @@ const AlbumPage = () => {
         name: t.title,
         position: i + 1,
         duration: `PT${Math.floor(t.duration / 60)}M${t.duration % 60}S`,
-        url: `https://mrcap1.com/track/${t.slug}`,
+        url: `https://mrcap1.com/music/${t.slug}`,
       })),
     }),
   };
