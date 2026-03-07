@@ -7,6 +7,8 @@ import ProofStrip from "@/components/home/ProofStrip";
 import CatalogPreview from "@/components/home/CatalogPreview";
 import BookingCTABand from "@/components/home/BookingCTABand";
 import DigitalArtFeature from "@/components/home/DigitalArtFeature";
+import LatestPressFeature from "@/components/home/LatestPressFeature";
+import FanCaptureBanner from "@/components/FanCaptureBanner";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
 
@@ -169,8 +171,15 @@ const Index = () => {
           <ReleaseSpotlight />
           <ProofStrip />
           <CatalogPreview />
+          <LatestPressFeature />
           <BookingCTABand />
           <DigitalArtFeature />
+          <FanCaptureBanner
+            sourcePage="homepage"
+            headline="Join CAP Legacy"
+            subheadline="Be the first to hear new music, see new visuals, and get show alerts."
+            className="mx-6 md:mx-auto max-w-4xl mb-16"
+          />
         </main>
         <CitationBlock />
         <Footer />

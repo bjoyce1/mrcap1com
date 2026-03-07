@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface TimelineEntry {
   outlet: string;
@@ -8,6 +9,10 @@ interface TimelineEntry {
   date: string;
   summary: string;
   url?: string;
+}
+
+function isInternal(url: string) {
+  return url.startsWith("/");
 }
 
 const PressTimelineNew = ({ entries }: { entries: TimelineEntry[] }) => (
@@ -26,7 +31,6 @@ const PressTimelineNew = ({ entries }: { entries: TimelineEntry[] }) => (
             transition={{ duration: 0.35, delay: i * 0.05 }}
             className="relative"
           >
-            {/* Dot */}
             <div className="absolute -left-[calc(1.5rem+5px)] top-1 w-2.5 h-2.5 rounded-full bg-primary/80" />
 
             <div className="bg-card/30 border border-border/20 rounded-2xl p-5 hover:border-primary/20 transition-colors">
@@ -42,14 +46,23 @@ const PressTimelineNew = ({ entries }: { entries: TimelineEntry[] }) => (
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{entry.summary}</p>
               {entry.url && (
-                <a
-                  href={entry.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline mt-3"
-                >
-                  Read Article <ExternalLink className="w-3 h-3" />
-                </a>
+                isInternal(entry.url) ? (
+                  <Link
+                    to={entry.url}
+                    className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline mt-3"
+                  >
+                    Read Article <ExternalLink className="w-3 h-3" />
+                  </Link>
+                ) : (
+                  <a
+                    href={entry.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline mt-3"
+                  >
+                    Read Article <ExternalLink className="w-3 h-3" />
+                  </a>
+                )
               )}
             </div>
           </motion.article>
