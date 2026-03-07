@@ -40,11 +40,11 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>Blog | Mr. CAP – Houston Hip-Hop, Music Industry & Blockchain Insights</title>
-        <meta name="description" content="Insights from Mr. CAP on Houston hip-hop history, South Park Coalition legacy, music industry success strategies, and blockchain innovation for independent artists." />
+        <title>News & Stories | Mr. CAP Updates, Releases & Commentary</title>
+        <meta name="description" content="Read updates, release notes, stories, and announcements from Mr. CAP." />
         <link rel="canonical" href="https://mrcap1.com/blog" />
-        <meta property="og:title" content="Blog | Mr. CAP" />
-        <meta property="og:description" content="Insights on Houston hip-hop, music industry, and blockchain innovation from Mr. CAP." />
+        <meta property="og:title" content="News & Stories | Mr. CAP Updates, Releases & Commentary" />
+        <meta property="og:description" content="Read updates, release notes, stories, and announcements from Mr. CAP." />
         <meta property="og:type" content="blog" />
         <meta property="og:url" content="https://mrcap1.com/blog" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>

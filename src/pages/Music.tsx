@@ -39,8 +39,8 @@ const Music = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Mr. CAP Music | The Ties That Bind Us, The Art of ISM, 2 Tha Grave & More"
-        description="Stream the official Mr. CAP catalog, from The Ties That Bind Us to The Art of ISM, 2 Tha Grave, O.N.E. on O.N.E., and Cold Ass Pimp."
+        title="Music | Mr. CAP Discography, New Releases & Essential Catalog"
+        description="Explore Mr. CAP's latest release and catalog, with streaming links, credits, and release details."
         canonical="https://mrcap1.com/music"
         jsonLd={jsonLd}
       />

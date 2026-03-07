@@ -134,12 +134,12 @@ const Live = () => {
   };
   return <>
       <Helmet>
-        <title>Live Shows & Booking | Mr. CAP – Houston Hip-Hop Concerts & Events</title>
-        <meta name="description" content="Book Mr. CAP for live shows across Houston, Texas, and Louisiana. View upcoming tour dates, past performances, and submit booking requests for concerts, festivals, and special events." />
+        <title>Live & Appearances | Book Mr. CAP for Shows, Interviews & Speaking</title>
+        <meta name="description" content="Submit a booking inquiry for performances, features, interviews, and speaking engagements." />
         <link rel="canonical" href="https://mrcap1.com/live" />
         
-        <meta property="og:title" content="Live Shows & Booking | Mr. CAP" />
-        <meta property="og:description" content="Book Mr. CAP for shows across Houston, Texas, and Louisiana. View upcoming tour dates and booking info." />
+        <meta property="og:title" content="Live & Appearances | Book Mr. CAP for Shows, Interviews & Speaking" />
+        <meta property="og:description" content="Submit a booking inquiry for performances, features, interviews, and speaking engagements." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mrcap1.com/live" />
         
