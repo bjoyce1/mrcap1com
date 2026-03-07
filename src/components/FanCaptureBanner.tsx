@@ -44,7 +44,7 @@ export default function FanCaptureBanner({
       toast({ title: "Something went wrong", description: error.message, variant: "destructive" });
     } else {
       setSubmitted(true);
-      toast({ title: "You're in! 🎶", description: "Welcome to CAP Legacy." });
+      toast({ title: "You're in! 🎶", description: "Welcome to Mr. CAP Legacy." });
     }
   };
 
@@ -124,7 +124,7 @@ export default function FanCaptureBanner({
             className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-            Join CAP Legacy
+            Join Mr. CAP Legacy
           </button>
         </form>
       </div>

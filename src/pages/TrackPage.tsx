@@ -108,7 +108,7 @@ const TrackPage = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SEO
         title={`${track.title} | Mr. CAP`}
-        description={`Official release page for "${track.title}" by ${track.artist}${track.featured_artists ? ` ft. ${track.featured_artists}` : ""}. Listen, read credits, view lyrics, and get the latest updates from CAP Legacy.`}
+        description={`Official release page for "${track.title}" by ${track.artist}${track.featured_artists ? ` ft. ${track.featured_artists}` : ""}. Listen, read credits, view lyrics, and get the latest updates from Mr. CAP Legacy.`}
         canonical={`https://mrcap1.com/music/${track.slug}`}
         ogImage={track.cover_art_url ? (track.cover_art_url.startsWith("http") ? track.cover_art_url : `https://mrcap1com.lovable.app${track.cover_art_url}`) : undefined}
         jsonLd={jsonLd}

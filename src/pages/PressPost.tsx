@@ -144,7 +144,7 @@ const PressPost = () => {
           <FanCaptureBanner
             sourcePage={`press-${pressSlug}`}
             headline="Stay Updated"
-            subheadline="Get new releases, press updates, and show alerts from CAP Legacy."
+            subheadline="Get new releases, press updates, and show alerts from Mr. CAP Legacy."
             className="mt-10"
           />
         </div>

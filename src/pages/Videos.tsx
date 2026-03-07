@@ -145,7 +145,7 @@ const Videos = () => {
         <FanCaptureBanner
           sourcePage="videos"
           headline="Get New Visuals First"
-          subheadline="Join CAP Legacy for exclusive video drops, new releases, and show alerts."
+          subheadline="Join Mr. CAP Legacy for exclusive video drops, new releases, and show alerts."
           className="mx-6 md:mx-auto max-w-5xl mb-16"
         />
       </main>

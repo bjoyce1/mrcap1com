@@ -105,7 +105,7 @@ const AlbumPage = () => {
     <div className="min-h-screen bg-background text-foreground relative">
       <SEO
         title={`${album.title} | Album by Mr. CAP`}
-        description={`Official release page for "${album.title}" by ${album.artist}. ${album.track_count} tracks, released ${album.release_year}. Listen, explore credits, and get updates from CAP Legacy.`}
+        description={`Official release page for "${album.title}" by ${album.artist}. ${album.track_count} tracks, released ${album.release_year}. Listen, explore credits, and get updates from Mr. CAP Legacy.`}
         canonical={`https://mrcap1.com/albums/${album.slug}`}
         ogImage={album.cover_art_url || undefined}
         jsonLd={jsonLd}
