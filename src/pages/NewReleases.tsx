@@ -117,7 +117,7 @@ export default function NewReleases() {
     "@type": "CollectionPage",
     name: "New Releases | Mr. CAP",
     url: "https://mrcap1.com/new-releases",
-    description: "Explore the latest official releases from Mr. CAP on CAP Legacy.",
+    description: "Explore the latest official releases from Mr. CAP on Mr. CAP Legacy.",
     isPartOf: { "@type": "WebSite", name: "Mr. CAP", url: "https://mrcap1.com" },
   };
 
@@ -125,7 +125,7 @@ export default function NewReleases() {
     <>
       <SEO
         title="New Releases | Mr. CAP"
-        description="Explore the latest official releases from Mr. CAP on CAP Legacy, including music, stories, visuals, and release updates."
+        description="Explore the latest official releases from Mr. CAP on Mr. CAP Legacy, including music, stories, visuals, and release updates."
         canonical="https://mrcap1.com/new-releases"
         jsonLd={jsonLd}
       />
@@ -153,7 +153,7 @@ export default function NewReleases() {
                 animate={{ opacity: 1, y: 0 }}
                 className="text-xs tracking-[0.3em] uppercase text-primary mb-4"
               >
-                CAP Legacy
+                Mr. CAP Legacy
               </motion.p>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -185,7 +185,7 @@ export default function NewReleases() {
                   </Button>
                 )}
                 <Button asChild variant="outline" size="lg">
-                  <a href="#fan-capture">Join CAP Legacy</a>
+                  <a href="#fan-capture">Join Mr. CAP Legacy</a>
                 </Button>
               </motion.div>
             </div>
@@ -230,7 +230,7 @@ export default function NewReleases() {
                       {latest.artist} · {latest.type} · {latest.releaseYear ?? ""}
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
-                      The newest official release from Mr.&nbsp;CAP — available now on CAP Legacy. Stream, explore the story behind the music, and discover the full content ecosystem.
+                      The newest official release from Mr.&nbsp;CAP — available now on Mr. CAP Legacy. Stream, explore the story behind the music, and discover the full content ecosystem.
                     </p>
                     <div className="flex flex-wrap gap-3 pt-2">
                       <Button asChild>
@@ -380,7 +380,7 @@ export default function NewReleases() {
             <FanCaptureBanner
               sourcePage="new-releases"
               headline="Get New Releases First"
-              subheadline="Join CAP Legacy — stay updated on new music, videos, and shows from Mr. CAP."
+              subheadline="Join Mr. CAP Legacy — stay updated on new music, videos, and shows from Mr. CAP."
               className="mx-6 md:mx-auto max-w-4xl"
             />
           </section>

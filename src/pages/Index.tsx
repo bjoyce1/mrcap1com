@@ -184,7 +184,7 @@ const Index = () => {
           <div id="fan-capture">
             <FanCaptureBanner
               sourcePage="homepage"
-              headline="Join CAP Legacy"
+              headline="Join Mr. CAP Legacy"
               subheadline="Be the first to hear new music, see new visuals, and get show alerts."
               className="mx-6 md:mx-auto max-w-4xl mb-16"
             />
