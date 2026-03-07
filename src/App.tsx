@@ -63,6 +63,7 @@ import Legacy from "./pages/Legacy";
 import PantiesOnMyPiano from "./pages/PantiesOnMyPiano";
 import Privacy from "./pages/Privacy";
 import Videos from "./pages/Videos";
+import PressPost from "./pages/PressPost";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -92,6 +93,7 @@ function AppRoutes() {
           <Route path="/music" element={<PageTransition><Music /></PageTransition>} />
           <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
           <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
+          <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
           <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
           <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
           <Route path="/cities" element={<PageTransition><Cities /></PageTransition>} />
@@ -143,6 +145,9 @@ function AppRoutes() {
           <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
           {/* Streaming Routes */}
           <Route path="/listen" element={<Navigate to="/music" replace />} />
+          <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
+          <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
+          {/* Legacy redirects for old URLs */}
           <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
           <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
