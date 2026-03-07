@@ -153,9 +153,7 @@ const HeroSection = () => {
               asChild
             >
               <a
-                href="https://www.sound.xyz/mrcap/releases"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/music"
               >
                 <Play className="mr-2 h-4 w-4" />
                 Listen Now
