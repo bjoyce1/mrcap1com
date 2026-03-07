@@ -186,10 +186,6 @@ For press inquiries, booking, and media resources, visit mrcap1.com/press or con
       date: "2014-04-07",
       summary:
         "A Houston Chronicle profile on Mr. CAP's return to Houston, his musical lineage, and his independent push as a South Park Coalition artist.",
-      author: "Andrew Dansby",
-      date: "2014-04-07",
-      summary:
-        "A Houston Chronicle profile on Mr. CAP's return to Houston, his musical lineage, and his independent push as a South Park Coalition artist.",
     },
     {
       outlet: "Houston Press",
