@@ -107,6 +107,36 @@ export type Database = {
         }
         Relationships: []
       }
+      fan_signups: {
+        Row: {
+          city: string | null
+          created_at: string
+          email: string
+          favorite_song: string | null
+          id: string
+          name: string | null
+          source_page: string | null
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          email: string
+          favorite_song?: string | null
+          id?: string
+          name?: string | null
+          source_page?: string | null
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          email?: string
+          favorite_song?: string | null
+          id?: string
+          name?: string | null
+          source_page?: string | null
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           email: string
