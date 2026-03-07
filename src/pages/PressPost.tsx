@@ -2,10 +2,10 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Calendar, User, ExternalLink } from "lucide-react";
-import { pressPageData } from "@/content/press";
+import { ArrowLeft, Calendar, User, ExternalLink, Music } from "lucide-react";
+import { pressPageData, type PressEntry } from "@/content/press";
 import { useSanityPressEntries, type SanityPressEntry } from "@/hooks/useSanity";
-import NewsletterSignup from "@/components/NewsletterSignup";
+import FanCaptureBanner from "@/components/FanCaptureBanner";
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -15,10 +15,12 @@ const PressPost = () => {
   const { pressSlug } = useParams<{ pressSlug: string }>();
   const { data: sanityPress } = useSanityPressEntries();
 
-  // Try Sanity first, fall back to static
-  const allEntries = (sanityPress && sanityPress.length > 0)
+  const allEntries: PressEntry[] = (sanityPress && sanityPress.length > 0)
     ? sanityPress.map((e) => ({ ...e, slug: slugify(e.title) }))
-    : pressPageData.timeline.map((e) => ({ ...e, slug: slugify(e.title), _id: slugify(e.title) }));
+    : pressPageData.timeline.map((e) => ({
+        ...e,
+        slug: e.slug || slugify(e.title),
+      }));
 
   const entry = allEntries.find((e) => e.slug === pressSlug);
 
@@ -41,16 +43,20 @@ const PressPost = () => {
     author: entry.author ? { "@type": "Person", name: entry.author } : undefined,
     publisher: { "@type": "Organization", name: entry.outlet },
     datePublished: entry.date,
-    description: entry.summary,
+    description: entry.seoDescription || entry.summary,
     url: `https://mrcap1.com/press/${pressSlug}`,
     about: { "@type": "Person", name: "Mr. CAP" },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://mrcap1.com/press/${pressSlug}`,
+    },
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title={`${entry.title} | Mr. CAP Press`}
-        description={entry.summary}
+        title={entry.seoTitle || `${entry.title} | Mr. CAP Press`}
+        description={entry.seoDescription || entry.summary}
         canonical={`https://mrcap1.com/press/${pressSlug}`}
         jsonLd={jsonLd}
       />
@@ -73,11 +79,49 @@ const PressPost = () => {
             </div>
           </div>
 
-          <div className="prose prose-invert max-w-none">
-            <p className="text-lg text-foreground/90 leading-relaxed">{entry.summary}</p>
-          </div>
+          {/* Article body */}
+          {entry.body ? (
+            <div className="prose prose-invert max-w-none">
+              {entry.body.split("\n\n").map((paragraph, i) => {
+                if (paragraph.startsWith("## ")) {
+                  return <h2 key={i} className="text-xl font-display text-foreground mt-8 mb-3">{paragraph.replace("## ", "")}</h2>;
+                }
+                if (paragraph.startsWith("- ")) {
+                  return (
+                    <ul key={i} className="list-disc list-inside space-y-1 text-foreground/80 text-sm mb-4">
+                      {paragraph.split("\n").map((line, j) => (
+                        <li key={j}>{line.replace("- ", "")}</li>
+                      ))}
+                    </ul>
+                  );
+                }
+                return <p key={i} className="text-base text-foreground/90 leading-relaxed mb-4">{paragraph}</p>;
+              })}
+            </div>
+          ) : (
+            <div className="prose prose-invert max-w-none">
+              <p className="text-lg text-foreground/90 leading-relaxed">{entry.summary}</p>
+            </div>
+          )}
 
-          {entry.url && (
+          {/* Related Release Link */}
+          {entry.relatedRelease && (
+            <div className="mt-10 p-6 rounded-2xl border border-primary/20 bg-primary/5">
+              <div className="flex items-center gap-2 mb-2">
+                <Music className="w-4 h-4 text-primary" />
+                <span className="text-xs uppercase tracking-widest text-primary font-medium">Related Release</span>
+              </div>
+              <Link
+                to={entry.relatedRelease.includes("ties") ? `/albums/${entry.relatedRelease}` : `/music/${entry.relatedRelease}`}
+                className="text-lg font-display text-foreground hover:text-primary transition-colors"
+              >
+                Listen to the release →
+              </Link>
+            </div>
+          )}
+
+          {/* External link for third-party articles */}
+          {entry.url && !entry.url.startsWith("/press/") && (
             <a
               href={entry.url}
               target="_blank"
@@ -97,9 +141,12 @@ const PressPost = () => {
           </div>
 
           {/* Fan Capture */}
-          <section className="mt-8">
-            <NewsletterSignup source={`press-${pressSlug}`} variant="compact" />
-          </section>
+          <FanCaptureBanner
+            sourcePage={`press-${pressSlug}`}
+            headline="Stay Updated"
+            subheadline="Get new releases, press updates, and show alerts from CAP Legacy."
+            className="mt-10"
+          />
         </div>
       </article>
 
