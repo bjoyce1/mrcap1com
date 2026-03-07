@@ -97,6 +97,89 @@ The South Park Coalition has been a cornerstone of Houston hip-hop since the ear
 For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
     },
     {
+      outlet: "CAP Legacy",
+      title: "\"Dippin' Thru the Metaverse\": Mr. CAP Bridges Houston Rap and the Digital Frontier",
+      slug: "dippin-thru-the-metaverse-release",
+      author: "ISM",
+      date: "2023-11-15",
+      summary:
+        "Mr. CAP releases \"Dippin' Thru the Metaverse,\" a track that fuses classic Southern rap swagger with the language of blockchain, NFTs, and emerging digital culture.",
+      url: "/press/dippin-thru-the-metaverse-release",
+      relatedRelease: "dippin-thru-the-metaverse",
+      seoTitle: "Dippin' Thru the Metaverse | Press | Mr. CAP",
+      seoDescription: "Read the official CAP Legacy press feature on \"Dippin' Thru the Metaverse\" by Mr. CAP.",
+      body: `Houston, TX — Mr. CAP has released "Dippin' Thru the Metaverse," a track that positions the Houston-born rapper at the intersection of two worlds: the streets that raised him and the digital frontier that defines the future of independent music.
+
+## Where Houston Meets the Metaverse
+
+The track blends Mr. CAP's signature Southern flow with references to blockchain technology, NFT culture, and the evolving landscape of digital ownership. It's not a gimmick — it's a natural extension of the same independence that has defined his career since the early days of the South Park Coalition.
+
+"I've always owned my masters, my distribution, my brand," Mr. CAP explains. "The metaverse is just the next territory. I'm not waiting for permission to show up there."
+
+## A Pioneer's Track Record
+
+Mr. CAP became the first Houston rapper to sell a Hip-Hop NFT in 2021, establishing himself as an early adopter in a space that most traditional artists were still skeptical about. "Dippin' Thru the Metaverse" is the sonic companion to that pioneering move — a record that sounds like cruising through a digital landscape in a candy-painted slab.
+
+## The CAP Legacy Platform
+
+The release is part of Mr. CAP's broader strategy of building mrcap1.com into a self-contained release platform. Each track gets its own dedicated page with credits, streaming links, story context, and fan engagement tools — creating a direct relationship between artist and audience that doesn't depend on third-party algorithms.
+
+## What It Means
+
+"Dippin' Thru the Metaverse" isn't just a song about technology. It's about adaptation, independence, and the refusal to be left behind. It's Mr. CAP doing what he's always done: moving first, moving independently, and making it sound effortless.
+
+For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
+    },
+    {
+      outlet: "CAP Legacy",
+      title: "30 Years Independent: The Mr. CAP Story",
+      slug: "30-years-independent-mr-cap-story",
+      author: "ISM",
+      date: "2025-01-15",
+      summary:
+        "From South Park to the metaverse — how Mr. CAP built a three-decade independent career in Houston hip-hop without ever signing away ownership.",
+      url: "/press/30-years-independent-mr-cap-story",
+      seoTitle: "30 Years Independent: The Mr. CAP Story | CAP Legacy",
+      seoDescription: "The full story of Mr. CAP — three decades of independent hip-hop, South Park Coalition legacy, and creative ownership from Houston to the blockchain.",
+      body: `Houston, TX — In an industry that measures careers in album cycles, Mr. CAP has been building for over thirty years. From the neighborhoods of South Park to the stages of Warehouse Live, from physical tape distribution to blockchain-powered NFTs, the arc of his career reads like a blueprint for independent artistic survival.
+
+## South Park Origins
+
+Cornelius A. Pratt — known to Houston as Mr. CAP — grew up in the same South Park neighborhood that produced some of the city's most influential underground voices. As an original member of the South Park Coalition alongside K-Rino, Point Blank, and Klondike Kat, he was part of a movement that proved Houston hip-hop could thrive without major label infrastructure.
+
+"We didn't have a model to follow," Mr. CAP recalls. "We just knew that if we owned it, nobody could take it. That was the foundation of everything."
+
+## The Catalog
+
+Over three decades, Mr. CAP has built a deep catalog that spans studio albums, singles, collaborative projects, and digital releases:
+
+- O.N.E. on O.N.E. (2005) — his debut solo album
+- Tha Cold Ass Pimp — a street-level classic
+- 2 Tha Grave (2011) — a mature, reflective project
+- The Art of ISM (2019) — distributed through Sony Music / The Orchard
+- The Ties That Bind Us (2024) — a 19-track South Park Coalition group album
+
+Each project represents a different chapter, but the throughline is consistent: ownership, authenticity, and Houston identity.
+
+## The Technology Pivot
+
+In 2021, Mr. CAP became the first Houston rapper to sell a Hip-Hop NFT, establishing himself as an early mover in the Web3 space. This wasn't a trend chase — it was a logical extension of the same independence philosophy that had defined his entire career.
+
+"Blockchain is just another way to own your work," he explains. "I've been doing that since before the internet. The tools change, the principle doesn't."
+
+## CAP Legacy: The Platform
+
+The creation of mrcap1.com as a full release platform — CAP Legacy — represents the culmination of Mr. CAP's vision. Every release gets a dedicated page with credits, lyrics, story context, and structured metadata. Press coverage lives alongside music. Fan engagement tools create direct connections. The entire site functions as a living catalog and media hub.
+
+## What's Next
+
+Mr. CAP continues to release music, expand the CAP Legacy platform, and explore new intersections between hip-hop and technology. Recent releases include "Big Navi" featuring Big Prez, "Bet'n On Me," and "Dippin' Thru the Metaverse."
+
+"I'm not retiring," he says simply. "I'm expanding."
+
+For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
+    },
+    {
       outlet: "Houston Chronicle",
       title: "Mr. CAP Returns to His Musical Roots",
       author: "Andrew Dansby",
