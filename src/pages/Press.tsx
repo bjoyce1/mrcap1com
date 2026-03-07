@@ -59,8 +59,8 @@ const Press = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Mr. CAP Press | Houston Chronicle, Houston Press & Media Mentions"
-        description="Browse third-party coverage of Mr. CAP, including Houston Chronicle and Houston Press references documenting his Houston roots, SPC legacy, and independent music career."
+        title="Press Kit | Mr. CAP Bios, Photos, Logos & Media Resources"
+        description="Download approved bios, press photos, logos, and media resources for coverage, interviews, and event promotion."
         canonical="https://mrcap1.com/press"
         jsonLd={jsonLd}
       />

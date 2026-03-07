@@ -104,12 +104,12 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>About Mr. CAP | Houston Rapper, South Park Coalition Original Member & Technologist</title>
-        <meta name="description" content="Learn the story of Mr. CAP (Cornelius A. Pratt) – Houston-born rapper, South Park Coalition original member, Jack Yates graduate, and creative technologist connecting hip-hop, business, and blockchain." />
+        <title>About Mr. CAP | Houston Legacy, South Park Coalition Roots & Future Vision</title>
+        <meta name="description" content="Read the story behind Mr. CAP, from Houston roots and SPC history to current work across music and technology." />
         <link rel="canonical" href="https://mrcap1.com/about" />
         
-        <meta property="og:title" content="About Mr. CAP | Houston Rapper, South Park Coalition Original Member" />
-        <meta property="og:description" content="Learn the story of Mr. CAP – Cornelius A. Pratt – Houston-born rapper, South Park Coalition original member, and creative technologist." />
+        <meta property="og:title" content="About Mr. CAP | Houston Legacy, South Park Coalition Roots & Future Vision" />
+        <meta property="og:description" content="Read the story behind Mr. CAP, from Houston roots and SPC history to current work across music and technology." />
         <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://mrcap1.com/about" />
         

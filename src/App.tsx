@@ -61,6 +61,7 @@ import AdminLibrary from "./pages/AdminLibrary";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import Legacy from "./pages/Legacy";
 import PantiesOnMyPiano from "./pages/PantiesOnMyPiano";
+import Privacy from "./pages/Privacy";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -109,6 +110,10 @@ function AppRoutes() {
           <Route path="/admin/library" element={<PageTransition><AdminLibrary /></PageTransition>} />
           <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />
           <Route path="/legacy" element={<PageTransition><Legacy /></PageTransition>} />
+          <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+          {/* PRD Redirects: /epk → /press, /digital-art → /nft */}
+          <Route path="/epk" element={<Navigate to="/press" replace />} />
+          <Route path="/digital-art" element={<Navigate to="/nft" replace />} />
           {/* Release Pages */}
           <Route path="/panties-on-my-piano" element={<PageTransition><PantiesOnMyPiano /></PageTransition>} />
           {/* OPK Routes */}

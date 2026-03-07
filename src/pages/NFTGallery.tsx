@@ -49,8 +49,8 @@ const NFTGallery = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Mr. CAP NFT | Digital Art, Collector Access & Verified On-Chain Details"
-        description="Explore Mr. CAP's NFT and digital art ecosystem, including verified on-chain details, collector access, and token-gated content."
+        title="Digital Art & Web3 | Mr. CAP Collections, Context & Links"
+        description="Explore the intersection of hip-hop and digital ownership through Mr. CAP's digital-art and Web3 work."
         canonical="https://mrcap1.com/nft"
         jsonLd={jsonLd}
       />

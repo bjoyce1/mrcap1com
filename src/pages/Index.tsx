@@ -175,12 +175,12 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Tech Innovator</title>
-        <meta name="description" content="Official site of Mr. CAP – Houston-born rapper, South Park Coalition original member, and tech innovator. Stream 'The Ties That Bind Us', explore the NFT collection, and book a show." />
+        <title>Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist</title>
+        <meta name="description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <link rel="canonical" href="https://mrcap1.com" />
         
-        <meta property="og:title" content="Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Tech Innovator" />
-        <meta property="og:description" content="Official site of Mr. CAP – Houston-born rapper, South Park Coalition original member, and tech innovator. Stream the music, book a show." />
+        <meta property="og:title" content="Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist" />
+        <meta property="og:description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <meta property="og:url" content="https://mrcap1.com" />
         <meta property="og:type" content="website" />
         
