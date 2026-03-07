@@ -61,6 +61,7 @@ import AdminLibrary from "./pages/AdminLibrary";
 import AdminRoadmap from "./pages/AdminRoadmap";
 import Legacy from "./pages/Legacy";
 import PantiesOnMyPiano from "./pages/PantiesOnMyPiano";
+import Privacy from "./pages/Privacy";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
