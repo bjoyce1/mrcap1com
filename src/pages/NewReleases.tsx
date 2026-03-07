@@ -136,7 +136,17 @@ export default function NewReleases() {
         <main className="pt-20">
           {/* ── 1. HERO ── */}
           <section className="relative overflow-hidden py-24 md:py-32">
-            <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
+            {latest?.coverArt && (
+              <div className="absolute inset-0 pointer-events-none">
+                <img
+                  src={latest.coverArt}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-full h-full object-cover opacity-[0.12] blur-sm scale-105"
+                />
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background pointer-events-none" />
             <div className="max-w-5xl mx-auto px-6 text-center relative">
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
