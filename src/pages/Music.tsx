@@ -9,16 +9,43 @@ import StartHereCards from "@/components/music/StartHereCards";
 import CatalogReleaseList from "@/components/music/CatalogReleaseList";
 import StoryNotesBlock from "@/components/music/StoryNotesBlock";
 import { musicPageData as data } from "@/content/music";
+import { useSanityReleases, type SanityRelease } from "@/hooks/useSanity";
+
+function releaseToCatalogEntry(r: SanityRelease) {
+  return {
+    title: r.title,
+    year: r.releaseDate?.slice(0, 4) || "",
+    tag: r.type || "release",
+    summary: r.description || "",
+  };
+}
+
+function releaseToStartHere(r: SanityRelease) {
+  const slug = typeof r.slug === "object" ? r.slug?.current : r.slug;
+  return {
+    title: r.title,
+    meta: r.releaseDate?.slice(0, 4) || "",
+    summary: r.description || "",
+    slug: slug || r.title.toLowerCase().replace(/\s+/g, "-"),
+    image: r.coverArt || "/placeholder.svg",
+  };
+}
 
 const Music = () => {
+  const { data: sanityReleases } = useSanityReleases();
+  const hasSanity = sanityReleases && sanityReleases.length > 0;
+
+  const catalog = hasSanity ? sanityReleases.map(releaseToCatalogEntry) : data.catalog;
+  const startHere = hasSanity ? sanityReleases.slice(0, 3).map(releaseToStartHere) : data.startHere;
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "MusicPlaylist",
       name: "Mr. CAP Official Catalog",
       url: "https://mrcap1.com/music",
-      numTracks: 5,
-      track: data.catalog.map((r) => ({
+      numTracks: catalog.length,
+      track: catalog.map((r) => ({
         "@type": "MusicRecording",
         name: r.title,
         datePublished: r.year,
@@ -56,9 +83,9 @@ const Music = () => {
 
         <SectionIntro body={data.intro} />
 
-        <StartHereCards cards={data.startHere} />
+        <StartHereCards cards={startHere} />
 
-        <CatalogReleaseList releases={data.catalog} />
+        <CatalogReleaseList releases={catalog} />
 
         <StoryNotesBlock body={data.storyNotes} />
 

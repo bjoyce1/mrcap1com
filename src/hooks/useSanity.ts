@@ -70,6 +70,16 @@ export function useSanityReleases() {
   );
 }
 
+/** Fetch press entries */
+export function useSanityPressEntries() {
+  return useSanityQuery<SanityPressEntry[]>(
+    ["press-entries"],
+    `*[_type == "pressEntry" && !(_id in path("drafts.**"))] | order(date desc) {
+      _id, outlet, title, author, date, summary, url
+    }`
+  );
+}
+
 // ── Type definitions matching expected Sanity schemas ──
 
 export interface SanityBlogPost {
@@ -109,4 +119,14 @@ export interface SanityRelease {
   spotifyUrl?: string;
   appleMusicUrl?: string;
   youtubeMusicUrl?: string;
+}
+
+export interface SanityPressEntry {
+  _id: string;
+  outlet: string;
+  title: string;
+  author?: string;
+  date: string;
+  summary: string;
+  url?: string;
 }
