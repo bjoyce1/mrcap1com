@@ -9,6 +9,24 @@ export const pressPageData = {
     "This page is the official press archive for Mr. CAP — designed for journalists, promoters, curators, and anyone researching the catalog, the legacy, and the Houston connection.",
   timeline: [
     {
+      outlet: "CAP Legacy",
+      title: "Mr. CAP Releases \"Bet'n On Me\" as a Statement of Confidence and Legacy",
+      author: "ISM",
+      date: "2024-09-20",
+      summary:
+        "Mr. CAP unveils \"Bet'n On Me,\" a bold new release centered on confidence, ambition, and legacy. The single marks a pivotal moment in the CAP Legacy catalog — a declaration of purpose from an artist who has spent decades building independently.",
+      url: "/press/mrcap-releases-betn-on-me",
+    },
+    {
+      outlet: "CAP Legacy",
+      title: "Inside \"The Ties That Bind Us\": Mr. CAP Expands the CAP Legacy Catalog",
+      author: "ISM",
+      date: "2024-09-18",
+      summary:
+        "Mr. CAP continues building his legacy with \"The Ties That Bind Us,\" a 19-track South Park Coalition group album designed to stand as a major chapter in his evolving catalog.",
+      url: "/press/inside-the-ties-that-bind-us",
+    },
+    {
       outlet: "Houston Chronicle",
       title: "Mr. CAP Returns to His Musical Roots",
       author: "Andrew Dansby",
