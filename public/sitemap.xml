@@ -386,4 +386,14 @@
   <url><loc>https://mrcap1.com/city/houma</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mrcap1.com/city/slidell</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mrcap1.com/city/bossier-city</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <!-- Release Pages -->
+  <url><loc>https://mrcap1.com/music/betn-on-me</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/big-navi</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/dippin-thru-the-metaverse</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/albums/the-ties-that-bind-us</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <!-- Press Posts -->
+  <url><loc>https://mrcap1.com/press/mrcap-releases-betn-on-me</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/press/inside-the-ties-that-bind-us</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/press/dippin-thru-the-metaverse-release</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/press/30-years-independent-mr-cap-story</loc><lastmod>2026-03-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
