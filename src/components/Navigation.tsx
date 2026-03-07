@@ -11,14 +11,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const primaryLinks = [
+  { to: "/new-releases", label: "New Releases" },
   { to: "/listen", label: "Music" },
-  { to: "/live", label: "Live" },
-  { to: "/nft", label: "NFT" },
-  { to: "/who-is-mr-cap", label: "About" },
   { to: "/press", label: "Press" },
+  { to: "/videos", label: "Videos" },
+  { to: "/booking", label: "Booking" },
+  { to: "/who-is-mr-cap", label: "About" },
 ];
 
 const moreLinks = [
+  { to: "/live", label: "Live" },
+  { to: "/nft", label: "NFT" },
   { to: "/opk", label: "OPK" },
   { to: "/merch", label: "Merch" },
   { to: "/innovation", label: "Tech" },
