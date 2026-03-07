@@ -1,24 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import TrafficMagnetSection from "@/components/TrafficMagnetSection";
-import AboutSection from "@/components/AboutSection";
-import MusicSection from "@/components/MusicSection";
-import SpotifySection from "@/components/SpotifySection";
-import LiveSection from "@/components/LiveSection";
-
-import VideoSection from "@/components/VideoSection";
-import VenturesSection from "@/components/VenturesSection";
-import NftMilestoneSection from "@/components/NftMilestoneSection";
-import NftPreviewSection from "@/components/NftPreviewSection";
-import ContactSection from "@/components/ContactSection";
+import AnnouncementStrip from "@/components/home/AnnouncementStrip";
+import ReleaseSpotlight from "@/components/home/ReleaseSpotlight";
+import ProofStrip from "@/components/home/ProofStrip";
+import CatalogPreview from "@/components/home/CatalogPreview";
+import BookingCTABand from "@/components/home/BookingCTABand";
+import DigitalArtFeature from "@/components/home/DigitalArtFeature";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
-import BookingCard from "@/components/BookingCard";
-
-const SectionDivider = () => (
-  <div className="section-divider max-w-4xl mx-auto" />
-);
 
 const Index = () => {
   const jsonLd = {
@@ -72,7 +62,7 @@ const Index = () => {
         "@id": "https://mrcap1.com/#organization",
         "name": "CAP Distributions",
         "alternateName": "Wreckless Entertainment",
-        "description": "Independent music label and distribution company founded by Mr. CAP, focusing on digital distribution, blockchain music, and artist development.",
+        "description": "Independent music label and distribution company founded by Mr. CAP.",
         "url": "https://mrcap1.com",
         "logo": "https://mrcap1.com/favicon.ico",
         "founder": { "@id": "https://mrcap1.com/#person" },
@@ -107,23 +97,9 @@ const Index = () => {
             "numTracks": 19,
             "track": { "@type": "MusicRecording", "name": "Bet'n On Me" }
           },
-          {
-            "@type": "MusicAlbum",
-            "name": "The Art of ISM",
-            "datePublished": "2019",
-            "recordLabel": "Sony Music / The Orchard",
-            "numTracks": 11
-          },
-          {
-            "@type": "MusicAlbum",
-            "name": "2 Tha Grave",
-            "datePublished": "2011"
-          },
-          {
-            "@type": "MusicAlbum",
-            "name": "O.N.E. on O.N.E.",
-            "datePublished": "2005"
-          }
+          { "@type": "MusicAlbum", "name": "The Art of ISM", "datePublished": "2019", "recordLabel": "Sony Music / The Orchard", "numTracks": 11 },
+          { "@type": "MusicAlbum", "name": "2 Tha Grave", "datePublished": "2011" },
+          { "@type": "MusicAlbum", "name": "O.N.E. on O.N.E.", "datePublished": "2005" }
         ]
       },
       {
@@ -178,47 +154,25 @@ const Index = () => {
         <title>Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist</title>
         <meta name="description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <link rel="canonical" href="https://mrcap1.com" />
-        
         <meta property="og:title" content="Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist" />
         <meta property="og:description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <meta property="og:url" content="https://mrcap1.com" />
         <meta property="og:type" content="website" />
-        
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
+        <AnnouncementStrip />
         <Navigation />
         <main>
           <HeroSection />
-          <SectionDivider />
-          <TrafficMagnetSection />
-          <SectionDivider />
-          <AboutSection />
-          <SectionDivider />
-          <MusicSection />
-          <SectionDivider />
-          <SpotifySection />
-          <SectionDivider />
-          <LiveSection />
-          <SectionDivider />
-          <VideoSection />
-          <SectionDivider />
-          <VenturesSection />
-          <SectionDivider />
-          <NftMilestoneSection />
-          <NftPreviewSection />
-          <SectionDivider />
-          <section className="section-spacing px-4">
-            <div className="max-w-5xl mx-auto">
-              <BookingCard />
-            </div>
-          </section>
-          <ContactSection />
+          <ReleaseSpotlight />
+          <ProofStrip />
+          <CatalogPreview />
+          <BookingCTABand />
+          <DigitalArtFeature />
         </main>
-        
         <CitationBlock />
-        
         <Footer />
       </div>
     </>
