@@ -4,11 +4,29 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { blogPosts, blogCategories } from "@/data/blogPosts";
+import { useSanityBlogPosts, SanityBlogPost } from "@/hooks/useSanity";
 import { ChevronRight, Clock } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
+/** Map a Sanity blog post to the shape used by the static data */
+const sanityToLocal = (s: SanityBlogPost) => ({
+  slug: typeof s.slug === "string" ? s.slug : s.slug?.current ?? "",
+  title: s.title,
+  excerpt: s.excerpt ?? "",
+  category: s.category ?? "",
+  date: s.publishedAt,
+  author: s.author ?? "Mr. CAP",
+  image: s.coverImage,
+  readTime: s.readTime ? `${s.readTime} min` : "5 min",
+  tags: s.tags ?? [],
+  content: "", // body rendered separately on detail page
+});
+
 const Blog = () => {
+  const { data: sanityPosts } = useSanityBlogPosts();
+  const hasSanity = sanityPosts && sanityPosts.length > 0;
+  const posts = hasSanity ? sanityPosts.map(sanityToLocal) : blogPosts;
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -18,7 +36,7 @@ const Blog = () => {
         "description": "Insights on Houston hip-hop history, South Park Coalition, music industry success, blockchain innovation, and independent artist strategies.",
         "url": "https://mrcap1.com/blog",
         "author": { "@type": "Person", "name": "Mr. CAP" },
-        "blogPost": blogPosts.map(post => ({
+        "blogPost": posts.map(post => ({
           "@type": "BlogPosting",
           "headline": post.title,
           "datePublished": post.date,
@@ -94,8 +112,8 @@ const Blog = () => {
           <section className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-5xl mx-auto" style={{ position: 'relative', minHeight: '400px' }}>
-                <ChromaGrid
-                  items={blogPosts.map((post) => ({
+              <ChromaGrid
+                  items={posts.map((post) => ({
                     image: post.image,
                     title: post.title,
                     subtitle: post.excerpt,

@@ -1,30 +1,64 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { getBlogPostBySlug, blogPosts } from "@/data/blogPosts";
+import { useSanityBlogPost, useSanityBlogPosts } from "@/hooks/useSanity";
 import { ChevronRight, Clock, Calendar, Tag, Share2, Twitter, Facebook, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackBlogRead } from "@/components/GoogleAnalytics";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getBlogPostBySlug(slug) : undefined;
 
-  // Track blog read on mount
-  useEffect(() => {
-    if (post) {
-      trackBlogRead(post.slug, post.title);
+  // Try Sanity first, fall back to static
+  const { data: sanityPost } = useSanityBlogPost(slug ?? "");
+  const { data: sanityAll } = useSanityBlogPosts();
+  const staticPost = slug ? getBlogPostBySlug(slug) : undefined;
+
+  const post = useMemo(() => {
+    if (sanityPost) {
+      const s = sanityPost;
+      const resolvedSlug = typeof s.slug === "string" ? s.slug : s.slug?.current ?? "";
+      return {
+        slug: resolvedSlug,
+        title: s.title,
+        excerpt: s.excerpt ?? "",
+        category: s.category ?? "",
+        date: s.publishedAt,
+        author: s.author ?? "Mr. CAP",
+        image: s.coverImage,
+        readTime: s.readTime ? `${s.readTime} min` : "5 min",
+        tags: s.tags ?? [],
+        content: "", // Portable Text body handled below
+        body: s.body, // raw Portable Text
+      };
     }
-  }, [post]);
+    return staticPost ? { ...staticPost, body: undefined } : undefined;
+  }, [sanityPost, staticPost]);
 
-  if (!post) {
-    return <Navigate to="/blog" replace />;
-  }
-
-  const relatedPosts = blogPosts.filter(p => p.slug !== post.slug && p.category === post.category).slice(0, 2);
+  // Related posts
+  const relatedPosts = useMemo(() => {
+    if (sanityAll && sanityAll.length > 0 && post) {
+      return sanityAll
+        .filter((p) => {
+          const pSlug = typeof p.slug === "string" ? p.slug : p.slug?.current ?? "";
+          return pSlug !== post.slug && p.category === post.category;
+        })
+        .slice(0, 2)
+        .map((p) => ({
+          slug: typeof p.slug === "string" ? p.slug : p.slug?.current ?? "",
+          title: p.title,
+          category: p.category ?? "",
+          readTime: p.readTime ? `${p.readTime} min` : "5 min",
+        }));
+    }
+    return blogPosts
+      .filter((p) => post && p.slug !== post.slug && p.category === post.category)
+      .slice(0, 2);
+  }, [sanityAll, post]);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -131,7 +165,6 @@ const BlogPost = () => {
             </section>
           )}
 
-          {/* Content */}
           <section className="py-16">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
@@ -144,13 +177,26 @@ const BlogPost = () => {
                     prose-strong:text-foreground
                     prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
                 >
-                  {post.content.split(/\n/).map((block, i) => {
-                    if (block.startsWith('## ')) {
-                      return <h2 key={i}>{block.slice(3)}</h2>;
-                    }
-                    if (block.trim() === '') return null;
-                    return <p key={i}>{block}</p>;
-                  })}
+                  {/* If Sanity Portable Text body exists, render blocks; else parse static content */}
+                  {(post as any).body && Array.isArray((post as any).body)
+                    ? (post as any).body.map((block: any, i: number) => {
+                        if (block._type === "block") {
+                          const Tag = block.style === "h2" ? "h2" : block.style === "h3" ? "h3" : block.style === "h4" ? "h4" : block.style === "blockquote" ? "blockquote" : "p";
+                          const text = block.children?.map((c: any) => c.text).join("") ?? "";
+                          if (!text.trim()) return null;
+                          return <Tag key={block._key || i}>{text}</Tag>;
+                        }
+                        if (block._type === "image" && block.asset?._ref) {
+                          return <img key={block._key || i} alt={block.alt || ""} className="rounded-lg" />;
+                        }
+                        return null;
+                      })
+                    : post.content.split(/\n/).map((line, i) => {
+                        if (line.startsWith('## ')) return <h2 key={i}>{line.slice(3)}</h2>;
+                        if (line.trim() === '') return null;
+                        return <p key={i}>{line}</p>;
+                      })
+                  }
                 </div>
                 
                 {/* Tags */}
