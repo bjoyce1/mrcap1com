@@ -8,5 +8,6 @@ import blogPost from "./blogPost";
 import event from "./event";
 import pressEntry from "./pressEntry";
 import release from "./release";
+import track from "./track";
 
-export const schemaTypes = [blogPost, event, pressEntry, release];
+export const schemaTypes = [blogPost, event, pressEntry, release, track];

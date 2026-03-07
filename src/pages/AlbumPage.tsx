@@ -6,6 +6,10 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import TrackRow from "@/components/player/TrackRow";
 import StoryBlock from "@/components/player/StoryBlock";
+import CreditsGrid from "@/components/music/CreditsGrid";
+import DSPLinks from "@/components/music/DSPLinks";
+import RelatedReleases from "@/components/music/RelatedReleases";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
@@ -33,11 +37,7 @@ const AlbumPage = () => {
       const playable = tracks.filter(t => t.audio_url);
       if (playable.length > 0) {
         playTrack(playable[0], playable, 0);
-        trackEvent("album_play", {
-          album_id: album?.id,
-          page_path: `/album/${albumSlug}`,
-          source: "album",
-        });
+        trackEvent("album_play", { album_id: album?.id, page_path: `/album/${albumSlug}`, source: "album" });
       } else {
         playTrack(tracks[0], tracks, 0);
       }
@@ -101,15 +101,9 @@ const AlbumPage = () => {
         jsonLd={jsonLd}
       />
 
-      {/* Faded background image — only for Art of ISM */}
       {album.slug === "the-art-of-ism" && (
         <div className="fixed inset-0 z-0 pointer-events-none">
-          <img
-            src={artOfIsmBg}
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover opacity-[0.35]"
-          />
+          <img src={artOfIsmBg} alt="" aria-hidden="true" className="w-full h-full object-cover opacity-[0.35]" />
           <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
         </div>
       )}
@@ -124,11 +118,7 @@ const AlbumPage = () => {
 
           {/* Album Header */}
           <div className="flex flex-col md:flex-row gap-8 mb-10">
-            <img
-              src={album.cover_art_url || "/placeholder.svg"}
-              alt={album.title}
-              className="w-full md:w-64 aspect-square rounded-xl object-cover shadow-2xl border border-border/30"
-            />
+            <img src={album.cover_art_url || "/placeholder.svg"} alt={album.title} className="w-full md:w-64 aspect-square rounded-xl object-cover shadow-2xl border border-border/30" />
             <div className="flex flex-col justify-end">
               <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Album</p>
               <h1 className="text-3xl md:text-5xl font-display text-foreground mb-2">{album.title}</h1>
@@ -136,20 +126,12 @@ const AlbumPage = () => {
                 {album.artist} · {album.release_year} · {album.track_count} tracks
                 {tracks && ` · ${formatTotalDuration(tracks)}`}
               </p>
-              {album.description && (
-                <p className="text-sm text-muted-foreground mb-4 max-w-lg">{album.description}</p>
-              )}
+              {album.description && <p className="text-sm text-muted-foreground mb-4 max-w-lg">{album.description}</p>}
               <div className="flex items-center gap-3">
-                <button
-                  onClick={handlePlayAll}
-                  className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30"
-                >
+                <button onClick={handlePlayAll} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30">
                   <Play className="w-5 h-5" /> Play
                 </button>
-                <button
-                  onClick={handleShare}
-                  className="flex items-center gap-2 border border-border/50 text-foreground px-4 py-3 rounded-full hover:bg-secondary transition-colors"
-                >
+                <button onClick={handleShare} className="flex items-center gap-2 border border-border/50 text-foreground px-4 py-3 rounded-full hover:bg-secondary transition-colors">
                   <Share2 className="w-4 h-4" /> Share
                 </button>
               </div>
@@ -173,18 +155,22 @@ const AlbumPage = () => {
             )}
           </div>
 
-          <StoryBlock
-            description={album.description}
-            releaseYear={album.release_year}
-            className="mt-8"
-          />
+          {/* Story Block */}
+          <StoryBlock description={album.description} releaseYear={album.release_year} className="mt-8" />
 
-          {album.credits && (
-            <div className="mt-8 text-sm text-muted-foreground">
-              <h3 className="text-foreground font-medium mb-2">Credits</h3>
-              <p>{album.credits}</p>
-            </div>
-          )}
+          {/* Credits Grid */}
+          <CreditsGrid credits={album.credits} className="mt-4" />
+
+          {/* DSP Links — placeholder for future album-level links */}
+          <DSPLinks className="mt-4" />
+
+          {/* Related Releases */}
+          <RelatedReleases currentAlbumId={album.id} className="mt-8" />
+
+          {/* Fan Capture */}
+          <section className="mt-12 border-t border-border/20 pt-8">
+            <NewsletterSignup source={`album-${album.slug}`} variant="compact" />
+          </section>
         </div>
       </section>
 
