@@ -9,6 +9,7 @@ import StoryBlock from "@/components/player/StoryBlock";
 import CreditsGrid from "@/components/music/CreditsGrid";
 import DSPLinks from "@/components/music/DSPLinks";
 import RelatedReleases from "@/components/music/RelatedReleases";
+import ReleaseLinks from "@/components/music/ReleaseLinks";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
