@@ -9,8 +9,24 @@ import OfficialLinksBlock from "@/components/blocks/OfficialLinksBlock";
 import PressTimelineNew from "@/components/press/PressTimelineNew";
 import MediaKitBlock from "@/components/press/MediaKitBlock";
 import { pressPageData as data } from "@/content/press";
+import { useSanityPressEntries, type SanityPressEntry } from "@/hooks/useSanity";
+
+function sanityToTimeline(e: SanityPressEntry) {
+  return {
+    outlet: e.outlet,
+    title: e.title,
+    author: e.author,
+    date: e.date,
+    summary: e.summary,
+    url: e.url,
+  };
+}
 
 const Press = () => {
+  const { data: sanityPress } = useSanityPressEntries();
+  const hasSanity = sanityPress && sanityPress.length > 0;
+  const timeline = hasSanity ? sanityPress.map(sanityToTimeline) : data.timeline;
+
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -32,7 +48,7 @@ const Press = () => {
       "@context": "https://schema.org",
       "@type": "ItemList",
       name: "Press Mentions",
-      itemListElement: data.timeline.map((entry, i) => ({
+      itemListElement: timeline.map((entry, i) => ({
         "@type": "ListItem",
         position: i + 1,
         item: {
@@ -75,7 +91,7 @@ const Press = () => {
 
         <SectionIntro body={data.intro} />
 
-        <PressTimelineNew entries={data.timeline} />
+        <PressTimelineNew entries={timeline} />
 
         <InfoStrip label={data.infoStrip.label} body={data.infoStrip.body} />
 
