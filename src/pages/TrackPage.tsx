@@ -189,6 +189,9 @@ const TrackPage = () => {
           {/* Credits Grid */}
           <CreditsGrid credits={track.credits} featuredArtists={track.featured_artists} className="mt-4" />
 
+          {/* Cross-links */}
+          <ReleaseLinks trackSlug={track.slug} className="mt-4" />
+
           {/* Related Releases */}
           <RelatedReleases currentTrackId={track.id} currentAlbumId={track.album_id || undefined} className="mt-8" />
 
