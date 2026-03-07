@@ -320,7 +320,7 @@ const WhoIsMrCap = () => {
                       </div>
                     </div>
                     <div className="p-4">
-                      <a href="https://www.sound.xyz/mrcap/releases" target="_blank" rel="noopener noreferrer" className="font-bold hover:text-primary transition-colors">Dippin Thru the Metaverse</a>
+                      <a href="/nft" className="font-bold hover:text-primary transition-colors">Dippin Thru the Metaverse</a>
                       <p className="text-sm text-muted-foreground">Bridging hip-hop, tech & blockchain</p>
                     </div>
                   </div>

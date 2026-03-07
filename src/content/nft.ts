@@ -7,7 +7,7 @@ export const nftPageData = {
     ctas: [
       { label: "Connect Wallet", href: "#wallet-connect", variant: "primary" as const },
       { label: "View on OpenSea", href: "https://opensea.io/mrcap1/created", variant: "secondary" as const },
-      { label: "View on Sound.xyz", href: "https://www.sound.xyz/mrcap", variant: "ghost" as const },
+      { label: "Browse Collection", href: "/nft", variant: "ghost" as const },
     ],
   },
   intro:
@@ -37,7 +37,7 @@ export const nftPageData = {
     },
     {
       question: "Where can I collect?",
-      answer: "OpenSea and Sound.xyz.",
+      answer: "OpenSea.",
     },
   ],
   citation: {

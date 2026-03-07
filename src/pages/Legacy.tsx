@@ -73,7 +73,7 @@ const timelineEras = [
     color: "from-cyan-500/20 to-transparent",
     events: [
       { year: "2021", title: "First Houston Rapper to Sell a Hip Hop NFT", desc: "Makes history by minting and selling 'Limitless' on OpenSea, becoming the first Houston rapper to enter the NFT space. The move pioneers blockchain-based music ownership for independent artists." },
-      { year: "2022", title: "Sound.xyz & Collector Community", desc: "Expands into Sound.xyz, building a collector community around exclusive music drops and proving that independent artists can thrive in Web3." },
+      { year: "2022", title: "Web3 Collector Community", desc: "Builds a collector community around exclusive music drops and NFT releases, proving that independent artists can thrive in Web3." },
       { year: "2023", title: "Art of ISM NFT Collection", desc: "Launches a curated NFT art collection, further bridging hip-hop culture with digital art and blockchain technology." },
     ],
   },
