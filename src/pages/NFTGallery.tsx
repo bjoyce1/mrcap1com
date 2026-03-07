@@ -24,7 +24,7 @@ const NFTGallery = () => {
       mainEntity: {
         "@type": "Person",
         name: "Mr. CAP",
-        sameAs: ["https://opensea.io/mrcap1/created", "https://www.sound.xyz/mrcap"],
+        sameAs: ["https://opensea.io/mrcap1/created"],
       },
     },
     {

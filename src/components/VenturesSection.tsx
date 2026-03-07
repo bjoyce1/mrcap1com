@@ -30,7 +30,7 @@ const VenturesSection = () => {
       color: "primary",
       borderColor: "hsl(var(--primary))",
       gradient: "linear-gradient(210deg, hsl(var(--primary) / 0.15), hsl(var(--background)))",
-      url: "https://www.sound.xyz/mrcap/releases",
+      url: "/nft",
     },
   ];
 
