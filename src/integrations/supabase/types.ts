@@ -215,14 +215,19 @@ export type Database = {
           featured_artists: string | null
           id: string
           is_public: boolean
+          isrc: string | null
+          lyrics: string | null
           play_count: number
+          producers: string | null
           release_year: number | null
           requires_nft: boolean
           slug: string
           spotify_url: string | null
+          story_behind: string | null
           title: string
           track_number: number | null
           updated_at: string
+          writers: string | null
         }
         Insert: {
           album_id?: string | null
@@ -236,14 +241,19 @@ export type Database = {
           featured_artists?: string | null
           id?: string
           is_public?: boolean
+          isrc?: string | null
+          lyrics?: string | null
           play_count?: number
+          producers?: string | null
           release_year?: number | null
           requires_nft?: boolean
           slug: string
           spotify_url?: string | null
+          story_behind?: string | null
           title: string
           track_number?: number | null
           updated_at?: string
+          writers?: string | null
         }
         Update: {
           album_id?: string | null
@@ -257,14 +267,19 @@ export type Database = {
           featured_artists?: string | null
           id?: string
           is_public?: boolean
+          isrc?: string | null
+          lyrics?: string | null
           play_count?: number
+          producers?: string | null
           release_year?: number | null
           requires_nft?: boolean
           slug?: string
           spotify_url?: string | null
+          story_behind?: string | null
           title?: string
           track_number?: number | null
           updated_at?: string
+          writers?: string | null
         }
         Relationships: [
           {

@@ -9,6 +9,7 @@ import StoryBlock from "@/components/player/StoryBlock";
 import CreditsGrid from "@/components/music/CreditsGrid";
 import DSPLinks from "@/components/music/DSPLinks";
 import RelatedReleases from "@/components/music/RelatedReleases";
+import ReleaseLinks from "@/components/music/ReleaseLinks";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
@@ -78,7 +79,7 @@ const AlbumPage = () => {
     byArtist: { "@type": "MusicGroup", name: album.artist },
     datePublished: `${album.release_year}`,
     numTracks: album.track_count,
-    url: `https://mrcap1.com/album/${album.slug}`,
+    url: `https://mrcap1.com/albums/${album.slug}`,
     image: album.cover_art_url,
     ...(tracks && {
       track: tracks.map((t, i) => ({
@@ -86,7 +87,7 @@ const AlbumPage = () => {
         name: t.title,
         position: i + 1,
         duration: `PT${Math.floor(t.duration / 60)}M${t.duration % 60}S`,
-        url: `https://mrcap1.com/track/${t.slug}`,
+        url: `https://mrcap1.com/music/${t.slug}`,
       })),
     }),
   };
@@ -94,9 +95,9 @@ const AlbumPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
       <SEO
-        title={`${album.title} — ${album.artist} | Stream on mrcap1.com`}
-        description={album.description || `Listen to ${album.title} by ${album.artist}. ${album.track_count} tracks, released ${album.release_year}.`}
-        canonical={`https://mrcap1.com/album/${album.slug}`}
+        title={`${album.title} | Album by Mr. CAP`}
+        description={`Official release page for "${album.title}" by ${album.artist}. ${album.track_count} tracks, released ${album.release_year}. Listen, explore credits, and get updates from CAP Legacy.`}
+        canonical={`https://mrcap1.com/albums/${album.slug}`}
         ogImage={album.cover_art_url || undefined}
         jsonLd={jsonLd}
       />
@@ -161,8 +162,11 @@ const AlbumPage = () => {
           {/* Credits Grid */}
           <CreditsGrid credits={album.credits} className="mt-4" />
 
-          {/* DSP Links — placeholder for future album-level links */}
+          {/* DSP Links */}
           <DSPLinks className="mt-4" />
+
+          {/* Cross-links */}
+          <ReleaseLinks albumSlug={album.slug} className="mt-4" />
 
           {/* Related Releases */}
           <RelatedReleases currentAlbumId={album.id} className="mt-8" />
