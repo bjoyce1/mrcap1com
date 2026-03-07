@@ -1,0 +1,1 @@
+UPDATE public.tracks SET cover_art_url = '/images/covers/panties-on-my-piano.png' WHERE id = '18deec88-3ae2-4a17-9e1f-32a0ea860da5';
