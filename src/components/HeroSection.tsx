@@ -166,7 +166,7 @@ const HeroSection = () => {
               asChild
             >
               <a href="#fan-capture">
-                Join CAP Legacy
+                Join Mr. CAP Legacy
               </a>
             </Button>
           </MagneticWrapper>

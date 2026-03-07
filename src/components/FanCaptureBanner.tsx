@@ -15,7 +15,7 @@ interface Props {
 export default function FanCaptureBanner({
   sourcePage,
   headline = "Get New Releases First",
-  subheadline = "Join CAP Legacy — be the first to hear new music, see new visuals, and get show alerts.",
+  subheadline = "Join Mr. CAP Legacy — be the first to hear new music, see new visuals, and get show alerts.",
   variant = "banner",
   className = "",
 }: Props) {
