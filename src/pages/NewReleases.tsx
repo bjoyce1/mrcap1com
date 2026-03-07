@@ -127,8 +127,6 @@ export default function NewReleases() {
         title="New Releases | Mr. CAP"
         description="Explore the latest official releases from Mr. CAP on CAP Legacy, including music, stories, visuals, and release updates."
         canonical="https://mrcap1.com/new-releases"
-        ogTitle="New Releases | Mr. CAP"
-        ogDescription="Explore the latest official releases from Mr. CAP on CAP Legacy."
         jsonLd={jsonLd}
       />
 
