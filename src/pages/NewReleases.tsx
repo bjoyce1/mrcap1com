@@ -142,7 +142,7 @@ export default function NewReleases() {
                   src={latest.coverArt}
                   alt=""
                   aria-hidden="true"
-                  className="w-full h-full object-cover opacity-[0.12] blur-sm scale-105"
+                  className="w-full h-full object-cover opacity-[0.22] blur-sm scale-105"
                 />
               </div>
             )}
