@@ -1,8 +1,10 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import FanCaptureBanner from "@/components/FanCaptureBanner";
 import PageHero from "@/components/blocks/PageHero";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Play } from "lucide-react";
 
 interface Video {
@@ -13,13 +15,15 @@ interface Video {
   thumbnail?: string;
   year?: number;
   description?: string;
+  relatedRelease?: string;
 }
 
 const VIDEOS: Video[] = [
   { id: "1", title: "Limitless (Official Music Video)", category: "official", youtubeId: "limitless-music-video", year: 2024, description: "The official visual for Limitless." },
-  { id: "2", title: "Dippin' Thru the Metaverse", category: "official", youtubeId: "dippin-thru-metaverse", year: 2023 },
-  { id: "3", title: "H-Town Fight Minnies (Promo)", category: "promo", youtubeId: "htown-fight-minnies", year: 2024 },
-  { id: "4", title: "Art of ISM (NFT Promo)", category: "promo", youtubeId: "limitless-nft", year: 2024 },
+  { id: "2", title: "Dippin' Thru the Metaverse (Official Visual)", category: "official", youtubeId: "dippin-thru-metaverse", year: 2023, description: "Official visual for Dippin' Thru the Metaverse — Houston meets the digital frontier.", relatedRelease: "/music/dippin-thru-the-metaverse" },
+  { id: "3", title: "Bet'n On Me (Promo Visual)", category: "promo", youtubeId: "fight-minnies-promo", year: 2024, description: "Promotional visual for the lead single from The Ties That Bind Us.", relatedRelease: "/music/betn-on-me" },
+  { id: "4", title: "H-Town Fight Minnies (Promo)", category: "promo", youtubeId: "htown-fight-minnies", year: 2024 },
+  { id: "5", title: "Art of ISM (NFT Promo)", category: "promo", youtubeId: "limitless-nft", year: 2024 },
 ];
 
 const CATEGORIES = [
@@ -80,6 +84,11 @@ const Videos = () => {
             <h2 className="text-xl font-display text-foreground mt-4">{activeVideo.title}</h2>
             {activeVideo.description && (
               <p className="text-sm text-muted-foreground mt-1">{activeVideo.description}</p>
+            )}
+            {activeVideo.relatedRelease && (
+              <Link to={activeVideo.relatedRelease} className="inline-flex items-center gap-1 text-sm text-primary hover:underline mt-2">
+                <Play className="w-3.5 h-3.5" /> View Release Page →
+              </Link>
             )}
           </section>
         )}
