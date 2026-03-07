@@ -145,18 +145,28 @@ const HeroSection = () => {
           <span className="text-foreground/50">Out Now</span>
         </div>
 
-        <div ref={ctaRef} className="mt-10 will-change-transform">
+        <div ref={ctaRef} className="mt-10 flex flex-col sm:flex-row items-center gap-4 will-change-transform">
           <MagneticWrapper strength={0.15}>
             <Button
               size="lg"
               className="rounded-full bg-primary/10 border border-primary/30 text-foreground hover:bg-primary/20 hover:border-primary/50 font-semibold uppercase tracking-wider px-10 py-6 text-sm transition-all duration-500 shadow-[0_0_30px_hsl(var(--primary)/0.1)] hover:shadow-[0_0_50px_hsl(var(--primary)/0.2)]"
               asChild
             >
-              <a
-                href="/music"
-              >
+              <a href="/music">
                 <Play className="mr-2 h-4 w-4" />
                 Listen Now
+              </a>
+            </Button>
+          </MagneticWrapper>
+          <MagneticWrapper strength={0.15}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-full border-foreground/20 text-foreground/80 hover:border-primary/40 hover:text-foreground font-medium uppercase tracking-wider px-8 py-6 text-sm transition-all duration-500"
+              asChild
+            >
+              <a href="#fan-capture">
+                Join CAP Legacy
               </a>
             </Button>
           </MagneticWrapper>

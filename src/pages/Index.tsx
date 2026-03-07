@@ -174,12 +174,14 @@ const Index = () => {
           <LatestPressFeature />
           <BookingCTABand />
           <DigitalArtFeature />
-          <FanCaptureBanner
-            sourcePage="homepage"
-            headline="Join CAP Legacy"
-            subheadline="Be the first to hear new music, see new visuals, and get show alerts."
-            className="mx-6 md:mx-auto max-w-4xl mb-16"
-          />
+          <div id="fan-capture">
+            <FanCaptureBanner
+              sourcePage="homepage"
+              headline="Join CAP Legacy"
+              subheadline="Be the first to hear new music, see new visuals, and get show alerts."
+              className="mx-6 md:mx-auto max-w-4xl mb-16"
+            />
+          </div>
         </main>
         <CitationBlock />
         <Footer />
