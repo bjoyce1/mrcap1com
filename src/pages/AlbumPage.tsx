@@ -162,8 +162,11 @@ const AlbumPage = () => {
           {/* Credits Grid */}
           <CreditsGrid credits={album.credits} className="mt-4" />
 
-          {/* DSP Links — placeholder for future album-level links */}
+          {/* DSP Links */}
           <DSPLinks className="mt-4" />
+
+          {/* Cross-links */}
+          <ReleaseLinks albumSlug={album.slug} className="mt-4" />
 
           {/* Related Releases */}
           <RelatedReleases currentAlbumId={album.id} className="mt-8" />
