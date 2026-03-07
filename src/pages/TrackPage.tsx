@@ -95,7 +95,7 @@ const TrackPage = () => {
     name: track.title,
     byArtist: { "@type": "MusicGroup", name: track.artist },
     duration: `PT${Math.floor(track.duration / 60)}M${track.duration % 60}S`,
-    url: `https://mrcap1.com/track/${track.slug}`,
+    url: `https://mrcap1.com/music/${track.slug}`,
     image: track.cover_art_url,
     ...(album && {
       inAlbum: { "@type": "MusicAlbum", name: album.title, url: `https://mrcap1.com/album/${album.slug}` },
@@ -105,9 +105,9 @@ const TrackPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title={`${track.title} — ${track.artist} | Stream on mrcap1.com`}
-        description={`Stream "${track.title}" by ${track.artist}${track.featured_artists ? ` ft. ${track.featured_artists}` : ""}. ${album ? `From the album ${album.title}.` : ""} Houston hip hop.`}
-        canonical={`https://mrcap1.com/track/${track.slug}`}
+        title={`${track.title} | Mr. CAP`}
+        description={`Official release page for "${track.title}" by ${track.artist}${track.featured_artists ? ` ft. ${track.featured_artists}` : ""}. Listen, read credits, view lyrics, and get the latest updates from CAP Legacy.`}
+        canonical={`https://mrcap1.com/music/${track.slug}`}
         ogImage={track.cover_art_url ? (track.cover_art_url.startsWith("http") ? track.cover_art_url : `https://mrcap1com.lovable.app${track.cover_art_url}`) : undefined}
         jsonLd={jsonLd}
       />
