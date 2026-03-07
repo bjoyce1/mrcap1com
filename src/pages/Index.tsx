@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
@@ -169,6 +171,11 @@ const Index = () => {
         <main>
           <HeroSection />
           <ReleaseSpotlight />
+          <section className="py-12 text-center">
+            <Link to="/new-releases" className="inline-flex items-center gap-2 text-primary hover:underline font-display text-lg tracking-wide">
+              See All New Releases <ArrowRight className="w-4 h-4" />
+            </Link>
+          </section>
           <ProofStrip />
           <CatalogPreview />
           <LatestPressFeature />
