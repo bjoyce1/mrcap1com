@@ -1,19 +1,22 @@
 import { useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Play, Clock, ArrowLeft, Share2 } from "lucide-react";
+import { Clock, ArrowLeft } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import TrackRow from "@/components/player/TrackRow";
 import StoryBlock from "@/components/player/StoryBlock";
-import CreditsGrid from "@/components/music/CreditsGrid";
+import ReleaseHero from "@/components/music/ReleaseHero";
+import ReleaseFactsGrid from "@/components/music/ReleaseFactsGrid";
 import DSPLinks from "@/components/music/DSPLinks";
-import RelatedReleases from "@/components/music/RelatedReleases";
+import ShareButtons from "@/components/music/ShareButtons";
 import ReleaseLinks from "@/components/music/ReleaseLinks";
-import NewsletterSignup from "@/components/NewsletterSignup";
+import RelatedReleases from "@/components/music/RelatedReleases";
+import FanCaptureBanner from "@/components/FanCaptureBanner";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import { shareMusic } from "@/lib/shareTrack";
 import artOfIsmBg from "@/assets/art-of-ism-bg.jpg";
 
 function formatTotalDuration(tracks: { duration: number }[]): string {
@@ -26,19 +29,25 @@ const AlbumPage = () => {
   const { albumSlug } = useParams<{ albumSlug: string }>();
   const { data: album, isLoading: albumLoading } = useAlbumBySlug(albumSlug || "");
   const { data: tracks, isLoading: tracksLoading } = useAlbumTracks(album?.id);
-  const { playTrack } = usePlayerStore();
+  const { playTrack, currentTrack, isPlaying, togglePlay } = usePlayerStore();
   const [expandedTrackId, setExpandedTrackId] = useState<string | null>(null);
 
   const handleToggleExpand = useCallback((trackId: string) => {
     setExpandedTrackId(prev => prev === trackId ? null : trackId);
   }, []);
 
+  const isActive = tracks?.some(t => t.id === currentTrack?.id) || false;
+
   const handlePlayAll = () => {
+    if (isActive) {
+      togglePlay();
+      return;
+    }
     if (tracks && tracks.length > 0) {
       const playable = tracks.filter(t => t.audio_url);
       if (playable.length > 0) {
         playTrack(playable[0], playable, 0);
-        trackEvent("album_play", { album_id: album?.id, page_path: `/album/${albumSlug}`, source: "album" });
+        trackEvent("album_play", { album_id: album?.id, page_path: `/albums/${albumSlug}`, source: "album" });
       } else {
         playTrack(tracks[0], tracks, 0);
       }
@@ -46,9 +55,9 @@ const AlbumPage = () => {
   };
 
   const handleShare = () => {
-    const url = `https://mrcap1.com/album/${albumSlug}`;
-    navigator.clipboard.writeText(url);
-    trackEvent("share_track", { album_id: album?.id, page_path: url });
+    if (!album) return;
+    shareMusic({ title: album.title, artist: album.artist, slug: album.slug });
+    trackEvent("share_track", { album_id: album?.id, page_path: `https://mrcap1.com/albums/${albumSlug}` });
   };
 
   if (albumLoading) {
@@ -117,29 +126,39 @@ const AlbumPage = () => {
             <ArrowLeft className="w-4 h-4" /> Back to Music
           </Link>
 
-          {/* Album Header */}
-          <div className="flex flex-col md:flex-row gap-8 mb-10">
-            <img src={album.cover_art_url || "/placeholder.svg"} alt={album.title} className="w-full md:w-64 aspect-square rounded-xl object-cover shadow-2xl border border-border/30" />
-            <div className="flex flex-col justify-end">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Album</p>
-              <h1 className="text-3xl md:text-5xl font-display text-foreground mb-2">{album.title}</h1>
-              <p className="text-muted-foreground mb-4">
-                {album.artist} · {album.release_year} · {album.track_count} tracks
-                {tracks && ` · ${formatTotalDuration(tracks)}`}
-              </p>
-              {album.description && <p className="text-sm text-muted-foreground mb-4 max-w-lg">{album.description}</p>}
-              <div className="flex items-center gap-3">
-                <button onClick={handlePlayAll} className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30">
-                  <Play className="w-5 h-5" /> Play
-                </button>
-                <button onClick={handleShare} className="flex items-center gap-2 border border-border/50 text-foreground px-4 py-3 rounded-full hover:bg-secondary transition-colors">
-                  <Share2 className="w-4 h-4" /> Share
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* 1. Hero */}
+          <ReleaseHero
+            title={album.title}
+            artist={album.artist}
+            releaseType="Album"
+            releaseYear={album.release_year}
+            coverArtUrl={album.cover_art_url}
+            isActive={isActive}
+            isPlaying={isActive && isPlaying}
+            onPlay={handlePlayAll}
+            onShare={handleShare}
+            duration={tracks ? formatTotalDuration(tracks) : undefined}
+          />
 
-          {/* Tracklist */}
+          {album.description && (
+            <p className="text-sm text-muted-foreground mb-8 max-w-2xl">{album.description}</p>
+          )}
+
+          {/* 2. Listen — DSP Links */}
+          <DSPLinks className="mb-6" />
+
+          {/* 3. Release Facts Grid */}
+          <ReleaseFactsGrid
+            artist={album.artist}
+            releaseType="Album"
+            releaseYear={album.release_year}
+            trackCount={album.track_count}
+            totalDuration={tracks ? formatTotalDuration(tracks) : undefined}
+            credits={album.credits}
+            className="mb-8"
+          />
+
+          {/* 4. Tracklist */}
           <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden">
             <div className="flex items-center gap-3 px-3 py-2 border-b border-border/20 text-xs text-muted-foreground uppercase tracking-widest">
               <div className="w-8 text-center">#</div>
@@ -156,25 +175,23 @@ const AlbumPage = () => {
             )}
           </div>
 
-          {/* Story Block */}
+          {/* 5. Story Block */}
           <StoryBlock description={album.description} releaseYear={album.release_year} className="mt-8" />
 
-          {/* Credits Grid */}
-          <CreditsGrid credits={album.credits} className="mt-4" />
+          {/* 6. Share */}
+          <div className="mt-8 border-t border-border/20 pt-6">
+            <h3 className="text-foreground font-medium text-sm mb-3">Share This Album</h3>
+            <ShareButtons title={album.title} artist={album.artist} slug={album.slug} type="album" />
+          </div>
 
-          {/* DSP Links */}
-          <DSPLinks className="mt-4" />
+          {/* 7. Cross-links */}
+          <ReleaseLinks albumSlug={album.slug} className="mt-6" />
 
-          {/* Cross-links */}
-          <ReleaseLinks albumSlug={album.slug} className="mt-4" />
-
-          {/* Related Releases */}
+          {/* 8. Related Releases */}
           <RelatedReleases currentAlbumId={album.id} className="mt-8" />
 
-          {/* Fan Capture */}
-          <section className="mt-12 border-t border-border/20 pt-8">
-            <NewsletterSignup source={`album-${album.slug}`} variant="compact" />
-          </section>
+          {/* 9. Fan Capture */}
+          <FanCaptureBanner sourcePage={`/albums/${album.slug}`} className="mt-12" />
         </div>
       </section>
 
