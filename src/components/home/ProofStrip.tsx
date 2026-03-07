@@ -1,23 +1,68 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 const stats = [
-  { value: "30+", label: "Years in the Game" },
-  { value: "5", label: "Studio Albums" },
-  { value: "1st", label: "Houston NFT Rapper" },
-  { value: "SPC", label: "Original Member" },
+  { value: 30, suffix: "+", label: "Years in the Game" },
+  { value: 5, suffix: "", label: "Studio Albums" },
+  { value: 1, suffix: "st", label: "Houston NFT Rapper" },
+  { value: 0, suffix: "", label: "SPC", isText: true, textValue: "SPC" },
 ];
 
 const ProofStrip = () => {
   const stripRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const valueRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.3 }
-    );
-    if (stripRef.current) observer.observe(stripRef.current);
-    return () => observer.disconnect();
+    if (!stripRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Staggered item reveal
+      gsap.fromTo(
+        itemRefs.current.filter(Boolean),
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: stripRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Counter animations for numeric values
+      stats.forEach((stat, i) => {
+        if (stat.isText) return;
+        const el = valueRefs.current[i];
+        if (!el) return;
+
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: stat.value,
+          duration: 1.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: stripRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+            onLeaveBack: () => {
+              obj.val = 0;
+              el.textContent = "0" + stat.suffix;
+            },
+          },
+          onUpdate: () => {
+            el.textContent = Math.round(obj.val) + stat.suffix;
+          },
+        });
+      });
+    }, stripRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -30,15 +75,15 @@ const ProofStrip = () => {
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center transition-all duration-700 ${
-                visible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-              style={{ transitionDelay: `${i * 120}ms` }}
+              ref={(el) => { itemRefs.current[i] = el; }}
+              className="text-center"
+              style={{ opacity: 0 }}
             >
-              <p className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-1">
-                {stat.value}
+              <p
+                ref={(el) => { valueRefs.current[i] = el; }}
+                className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-1"
+              >
+                {stat.isText ? stat.textValue : `0${stat.suffix}`}
               </p>
               <p className="text-xs md:text-sm text-muted-foreground uppercase tracking-widest font-medium">
                 {stat.label}
