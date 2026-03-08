@@ -1,7 +1,7 @@
 import { Share2, Check, Link2 } from "lucide-react";
 import { useState } from "react";
 import { shareMusic } from "@/lib/shareTrack";
-import { trackEvent } from "@/components/GoogleAnalytics";
+import { trackEvent, trackSocialShare } from "@/components/GoogleAnalytics";
 
 interface Props {
   title: string;
@@ -24,14 +24,21 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
   const handleShare = () => {
     shareMusic({ title, artist, slug });
     trackEvent("share_track", { page_path: url });
+    trackSocialShare("native_share", type);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(url);
+    trackSocialShare("copy_link", type);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const trackPlatformClick = (platform: string) => {
+    trackSocialShare(platform, type);
+    trackEvent("social_share_click", { platform, content_title: title, content_type: type, slug });
   };
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
