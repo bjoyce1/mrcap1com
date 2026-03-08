@@ -418,7 +418,7 @@ const Admin = () => {
                 </Accordion>
               )}
             </div>
-          ) : (
+          ) : activeTab === 'newsletter' ? (
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-display text-xl font-medium">Newsletter Subscribers</h2>
@@ -479,7 +479,7 @@ const Admin = () => {
             </div>
           ) : activeTab === 'shares' ? (
             <ShareAnalyticsTab shareEvents={shareEvents} />
-          ) : null)}
+          ) : null}
         </main>
       </div>
     </>
