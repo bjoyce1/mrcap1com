@@ -68,6 +68,162 @@ interface NewsletterSubscriber {
   is_active: boolean;
 }
 
+// --- Share Analytics Tab ---
+interface ShareEvent {
+  platform: string;
+  content_type: string;
+  content_title: string | null;
+  slug: string | null;
+  created_at: string;
+}
+
+const PLATFORM_LABELS: Record<string, string> = {
+  twitter: '𝕏 / Twitter',
+  facebook: 'Facebook',
+  whatsapp: 'WhatsApp',
+  instagram: 'Instagram',
+  tiktok: 'TikTok',
+  native_share: 'Native Share',
+  copy_link: 'Copy Link',
+};
+
+const PLATFORM_COLORS: Record<string, string> = {
+  twitter: 'bg-sky-500',
+  facebook: 'bg-blue-600',
+  whatsapp: 'bg-green-500',
+  instagram: 'bg-pink-500',
+  tiktok: 'bg-fuchsia-500',
+  native_share: 'bg-primary',
+  copy_link: 'bg-amber-500',
+};
+
+function ShareAnalyticsTab({ shareEvents }: { shareEvents: ShareEvent[] }) {
+  const totalShares = shareEvents.length;
+
+  // Count by platform
+  const platformCounts = shareEvents.reduce<Record<string, number>>((acc, e) => {
+    acc[e.platform] = (acc[e.platform] || 0) + 1;
+    return acc;
+  }, {});
+
+  const sortedPlatforms = Object.entries(platformCounts).sort((a, b) => b[1] - a[1]);
+  const maxCount = sortedPlatforms[0]?.[1] || 1;
+
+  // Top shared content
+  const contentCounts = shareEvents.reduce<Record<string, { title: string; slug: string; count: number }>>((acc, e) => {
+    const key = e.slug || e.content_title || 'unknown';
+    if (!acc[key]) acc[key] = { title: e.content_title || key, slug: e.slug || '', count: 0 };
+    acc[key].count++;
+    return acc;
+  }, {});
+  const topContent = Object.values(contentCounts).sort((a, b) => b.count - a.count).slice(0, 10);
+
+  // Recent shares
+  const recentShares = shareEvents.slice(0, 20);
+
+  // Shares last 7 days
+  const now = new Date();
+  const last7 = shareEvents.filter(e => (now.getTime() - new Date(e.created_at).getTime()) < 7 * 86400000).length;
+
+  return (
+    <div className="space-y-6">
+      {/* Summary cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { label: 'Total Shares', value: totalShares, icon: Share2 },
+          { label: 'Last 7 Days', value: last7, icon: BarChart3 },
+          { label: 'Platforms', value: sortedPlatforms.length, icon: Users },
+          { label: 'Unique Content', value: Object.keys(contentCounts).length, icon: Music },
+        ].map(({ label, value, icon: Icon }) => (
+          <div key={label} className="bg-card/50 rounded-xl border border-border/10 p-4 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Icon className="w-4 h-4 text-primary" />
+            </div>
+            <div>
+              <p className="text-xl font-display font-medium text-foreground">{value}</p>
+              <p className="text-xs text-muted-foreground">{label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Platform breakdown */}
+      <div className="bg-card/50 rounded-xl border border-border/10 p-5">
+        <h3 className="font-display text-lg font-medium mb-4">Shares by Platform</h3>
+        {sortedPlatforms.length === 0 ? (
+          <p className="text-muted-foreground text-sm">No share data yet</p>
+        ) : (
+          <div className="space-y-3">
+            {sortedPlatforms.map(([platform, count]) => (
+              <div key={platform} className="flex items-center gap-3">
+                <span className="text-sm w-28 truncate">{PLATFORM_LABELS[platform] || platform}</span>
+                <div className="flex-1 h-6 bg-secondary/30 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full ${PLATFORM_COLORS[platform] || 'bg-primary'} transition-all`}
+                    style={{ width: `${(count / maxCount) * 100}%` }}
+                  />
+                </div>
+                <span className="text-sm font-medium w-10 text-right">{count}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Top shared content */}
+      <div className="bg-card/50 rounded-xl border border-border/10 p-5">
+        <h3 className="font-display text-lg font-medium mb-4">Most Shared Content</h3>
+        {topContent.length === 0 ? (
+          <p className="text-muted-foreground text-sm">No share data yet</p>
+        ) : (
+          <div className="space-y-2">
+            {topContent.map((item, i) => (
+              <div key={item.slug || i} className="flex items-center justify-between py-2 border-b border-border/5 last:border-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground w-5">{i + 1}.</span>
+                  <span className="text-sm">{item.title}</span>
+                </div>
+                <span className="text-sm font-medium text-primary">{item.count} shares</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Recent activity */}
+      <div className="bg-card/50 rounded-xl border border-border/10 p-5">
+        <h3 className="font-display text-lg font-medium mb-4">Recent Shares</h3>
+        {recentShares.length === 0 ? (
+          <p className="text-muted-foreground text-sm">No share data yet</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-border/10">
+                  <th className="text-left text-xs text-muted-foreground font-medium px-3 py-2">Platform</th>
+                  <th className="text-left text-xs text-muted-foreground font-medium px-3 py-2">Content</th>
+                  <th className="text-left text-xs text-muted-foreground font-medium px-3 py-2 hidden sm:table-cell">Type</th>
+                  <th className="text-left text-xs text-muted-foreground font-medium px-3 py-2">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentShares.map((e, i) => (
+                  <tr key={i} className="border-b border-border/5 last:border-0">
+                    <td className="px-3 py-2 text-sm">{PLATFORM_LABELS[e.platform] || e.platform}</td>
+                    <td className="px-3 py-2 text-sm truncate max-w-[200px]">{e.content_title || '-'}</td>
+                    <td className="px-3 py-2 text-sm text-muted-foreground capitalize hidden sm:table-cell">{e.content_type}</td>
+                    <td className="px-3 py-2 text-xs text-muted-foreground">{new Date(e.created_at).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 const Admin = () => {
   const { user, isAdmin, loading, signOut } = useAuth();
   const navigate = useNavigate();
