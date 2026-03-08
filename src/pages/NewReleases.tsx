@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
+import ShareButtons from "@/components/music/ShareButtons";
 import { motion } from "framer-motion";
 import { Play, ArrowRight, Newspaper, Film, Disc3, Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -289,7 +290,16 @@ export default function NewReleases() {
                           <h3 className="font-display text-lg text-foreground group-hover:text-primary transition-colors">
                             {r.title}
                           </h3>
-                          <p className="text-sm text-muted-foreground">{r.artist}</p>
+                          <div className="flex items-center justify-between">
+                            <p className="text-sm text-muted-foreground">{r.artist}</p>
+                            <ShareButtons
+                              title={r.title}
+                              artist={r.artist}
+                              slug={r.slug}
+                              type={r.type === "Album" ? "album" : "track"}
+                              compact
+                            />
+                          </div>
                         </div>
                       </Link>
                     </motion.div>

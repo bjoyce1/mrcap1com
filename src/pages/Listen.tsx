@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Play, Disc3, Music, Headphones, Share2 } from "lucide-react";
+import ShareButtons from "@/components/music/ShareButtons";
 import { useRef, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -182,10 +183,15 @@ const Listen = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-3">
-                      <p className="text-sm font-medium text-foreground truncate">{album.title}</p>
-                      <p className="text-xs text-muted-foreground">{album.release_year} · {album.artist}</p>
-                    </div>
+                     <div className="absolute bottom-0 left-0 right-0 p-3">
+                       <div className="flex items-center justify-between">
+                         <div className="min-w-0">
+                           <p className="text-sm font-medium text-foreground truncate">{album.title}</p>
+                           <p className="text-xs text-muted-foreground">{album.release_year} · {album.artist}</p>
+                         </div>
+                         <ShareButtons title={album.title} artist={album.artist} slug={album.slug} type="album" compact />
+                       </div>
+                     </div>
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-lg shadow-primary/40">
                         <Play className="w-6 h-6" />
