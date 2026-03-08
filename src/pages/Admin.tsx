@@ -475,11 +475,11 @@ const Admin = () => {
                     </tbody>
                   </table>
                 </div>
+              )}
+            </div>
           ) : activeTab === 'shares' ? (
             <ShareAnalyticsTab shareEvents={shareEvents} />
-          ) : null}
-            </div>
-          )}
+          ) : null)}
         </main>
       </div>
     </>
