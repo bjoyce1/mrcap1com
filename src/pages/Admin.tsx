@@ -297,6 +297,17 @@ const Admin = () => {
               <Mail className="w-4 h-4 inline-block mr-2" />
               Newsletter
             </button>
+            <button
+              onClick={() => setActiveTab('shares')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === 'shares'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary/50 text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Share2 className="w-4 h-4 inline-block mr-2" />
+              Share Analytics
+            </button>
           </div>
 
           {/* Content */}
@@ -464,7 +475,9 @@ const Admin = () => {
                     </tbody>
                   </table>
                 </div>
-              )}
+          ) : activeTab === 'shares' ? (
+            <ShareAnalyticsTab shareEvents={shareEvents} />
+          ) : null}
             </div>
           )}
         </main>
