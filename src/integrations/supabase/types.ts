@@ -194,6 +194,33 @@ export type Database = {
         }
         Relationships: []
       }
+      share_events: {
+        Row: {
+          content_title: string | null
+          content_type: string
+          created_at: string
+          id: string
+          platform: string
+          slug: string | null
+        }
+        Insert: {
+          content_title?: string | null
+          content_type?: string
+          created_at?: string
+          id?: string
+          platform: string
+          slug?: string | null
+        }
+        Update: {
+          content_title?: string | null
+          content_type?: string
+          created_at?: string
+          id?: string
+          platform?: string
+          slug?: string | null
+        }
+        Relationships: []
+      }
       stream_logs: {
         Row: {
           created_at: string
