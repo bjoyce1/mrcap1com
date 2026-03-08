@@ -2,6 +2,7 @@ import { Share2, Check, Link2 } from "lucide-react";
 import { useState } from "react";
 import { shareMusic } from "@/lib/shareTrack";
 import { trackEvent, trackSocialShare } from "@/components/GoogleAnalytics";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Props {
   title: string;
@@ -25,6 +26,7 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
     shareMusic({ title, artist, slug });
     trackEvent("share_track", { page_path: url });
     trackSocialShare("native_share", type);
+    logShareEvent("native_share");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -32,13 +34,24 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
   const handleCopyLink = () => {
     navigator.clipboard.writeText(url);
     trackSocialShare("copy_link", type);
+    logShareEvent("copy_link");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const logShareEvent = (platform: string) => {
+    supabase.from('share_events').insert({
+      platform,
+      content_type: type,
+      content_title: title,
+      slug,
+    }).then();
   };
 
   const trackPlatformClick = (platform: string) => {
     trackSocialShare(platform, type);
     trackEvent("social_share_click", { platform, content_title: title, content_type: type, slug });
+    logShareEvent(platform);
   };
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
