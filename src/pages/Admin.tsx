@@ -21,7 +21,9 @@ import {
   ChevronDown,
   Trash2,
   Download,
-  Music
+  Music,
+  Share2,
+  BarChart3
 } from 'lucide-react';
 import ChromaGrid from '@/components/ui/ChromaGrid';
 import { Link } from 'react-router-dom';
@@ -69,10 +71,11 @@ interface NewsletterSubscriber {
 const Admin = () => {
   const { user, isAdmin, loading, signOut } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'bookings' | 'newsletter'>('bookings');
+  const [activeTab, setActiveTab] = useState<'bookings' | 'newsletter' | 'shares'>('bookings');
   const [bookings, setBookings] = useState<BookingRequest[]>([]);
   const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([]);
   const [loadingData, setLoadingData] = useState(true);
+  const [shareEvents, setShareEvents] = useState<Array<{ platform: string; content_type: string; content_title: string | null; slug: string | null; created_at: string }>>([]);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -89,13 +92,15 @@ const Admin = () => {
   const fetchData = async () => {
     setLoadingData(true);
     
-    const [bookingsRes, subscribersRes] = await Promise.all([
+    const [bookingsRes, subscribersRes, sharesRes] = await Promise.all([
       supabase.from('booking_requests').select('*').order('created_at', { ascending: false }),
-      supabase.from('newsletter_subscribers').select('*').order('subscribed_at', { ascending: false })
+      supabase.from('newsletter_subscribers').select('*').order('subscribed_at', { ascending: false }),
+      supabase.from('share_events').select('*').order('created_at', { ascending: false }).limit(500)
     ]);
 
     if (bookingsRes.data) setBookings(bookingsRes.data as BookingRequest[]);
     if (subscribersRes.data) setSubscribers(subscribersRes.data);
+    if (sharesRes.data) setShareEvents(sharesRes.data as typeof shareEvents);
     
     setLoadingData(false);
   };
