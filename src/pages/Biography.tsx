@@ -130,7 +130,7 @@ const Biography = () => {
       <article className="py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-3xl space-y-12">
           {/* Early Life */}
-          <motion.section {...fadeUp} viewport={{ once: true, margin: "-60px" }} whileInView="show" initial="hidden">
+          <motion.section {...sectionAnim}>
             <h2 className="text-2xl font-display font-bold text-foreground mb-4">Early Life & Roots</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
