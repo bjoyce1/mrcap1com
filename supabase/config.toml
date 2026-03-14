@@ -1,28 +1,23 @@
 project_id = "qisamkiggoibjkkdtkxq"
 
-[functions.youtube-videos]
-verify_jwt = false
-
-[functions.opensea-wallet-nfts]
-verify_jwt = false
-
-[functions.printful-products]
-verify_jwt = false
-
-[functions.printful-checkout]
-verify_jwt = false
-
-[functions.paypal-checkout]
-verify_jwt = false
-
-[functions.stream-track]
-verify_jwt = false
-
-[functions.og-share]
-verify_jwt = false
-
-[functions.pomp-chat]
-verify_jwt = false
-
-[functions.process-email-queue]
-verify_jwt = true
+[functions]
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.og-share]
+    verify_jwt = false
+  [functions.opensea-wallet-nfts]
+    verify_jwt = false
+  [functions.paypal-checkout]
+    verify_jwt = false
+  [functions.pomp-chat]
+    verify_jwt = false
+  [functions.printful-checkout]
+    verify_jwt = false
+  [functions.printful-products]
+    verify_jwt = false
+  [functions.process-email-queue]
+    verify_jwt = true
+  [functions.stream-track]
+    verify_jwt = false
+  [functions.youtube-videos]
+    verify_jwt = false
