@@ -65,6 +65,7 @@ import PantiesOnMyPiano from "./pages/PantiesOnMyPiano";
 import Privacy from "./pages/Privacy";
 import Videos from "./pages/Videos";
 import PressPost from "./pages/PressPost";
+import Biography from "./pages/Biography";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
