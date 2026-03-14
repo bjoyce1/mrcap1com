@@ -153,7 +153,7 @@ const Biography = () => {
           </motion.section>
 
           {/* Entrepreneurship */}
-          <motion.section {...fadeUp} viewport={{ once: true, margin: "-60px" }} whileInView="show" initial="hidden">
+          <motion.section {...sectionAnim}>
             <h2 className="text-2xl font-display font-bold text-foreground mb-4">Entrepreneurship & Ventures</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
