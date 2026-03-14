@@ -42,6 +42,13 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
+const sectionAnim = {
+  variants: fadeUp,
+  initial: "hidden" as const,
+  whileInView: "show" as const,
+  viewport: { once: true, margin: "-60px" },
+};
+
 const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
