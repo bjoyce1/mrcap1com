@@ -28,6 +28,7 @@ const moreLinks = [
   { to: "/blog", label: "Blog" },
   { to: "/mr-cap-discography", label: "Discography" },
   { to: "/legacy", label: "Legacy" },
+  { to: "/biography", label: "Biography" },
 ];
 
 const Navigation = () => {
