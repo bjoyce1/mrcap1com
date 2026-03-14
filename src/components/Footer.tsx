@@ -20,6 +20,7 @@ const Footer = () => {
   const siteLinks = [
     { label: "Music", href: "/music", isRoute: true },
     { label: "Discography", href: "/mr-cap-discography", isRoute: true },
+    { label: "Biography", href: "/biography", isRoute: true },
     { label: "NFT Gallery", href: "/nft", isRoute: true },
     { label: "About", href: "/who-is-mr-cap", isRoute: true },
     { label: "Press", href: "/press", isRoute: true },
