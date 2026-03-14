@@ -230,7 +230,7 @@ const Biography = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
           <CTAButtonRow
-            buttons={[
+            items={[
               { label: "View Full Legacy", href: "/legacy" },
               { label: "Press & Media Kit", href: "/press", variant: "secondary" },
               { label: "Contact & Booking", href: "/booking", variant: "ghost" },
