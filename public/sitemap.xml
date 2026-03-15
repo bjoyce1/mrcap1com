@@ -170,6 +170,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Videos -->
+  <url>
+    <loc>https://mrcap1.com/videos</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Merch -->
   <url>
     <loc>https://mrcap1.com/merch</loc>
