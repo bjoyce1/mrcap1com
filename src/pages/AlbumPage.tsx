@@ -145,7 +145,11 @@ const AlbumPage = () => {
           )}
 
           {/* 2. Listen — DSP Links */}
-          <DSPLinks className="mb-6" />
+          <DSPLinks
+            spotifyUrl={tracks?.[0]?.spotify_url}
+            appleMusicUrl={(tracks?.[0] as any)?.apple_music_url}
+            className="mb-6"
+          />
 
           {/* 3. Release Facts Grid */}
           <ReleaseFactsGrid
