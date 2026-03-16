@@ -147,28 +147,54 @@ const HeroSection = () => {
           <span className="text-foreground/50">Out Now</span>
         </div>
 
-        <div ref={ctaRef} className="mt-10 flex flex-col sm:flex-row items-center gap-4 will-change-transform">
+        <div ref={ctaRef} className="mt-10 flex flex-col items-center gap-4 will-change-transform">
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <MagneticWrapper strength={0.15}>
+              <Button
+                size="lg"
+                className="rounded-full bg-primary/10 border border-primary/30 text-foreground hover:bg-primary/20 hover:border-primary/50 font-semibold uppercase tracking-wider px-10 py-6 text-sm transition-all duration-500 shadow-[0_0_30px_hsl(var(--primary)/0.1)] hover:shadow-[0_0_50px_hsl(var(--primary)/0.2)]"
+                asChild
+              >
+                <a href="/music">
+                  <Play className="mr-2 h-4 w-4" />
+                  Stream the Music
+                </a>
+              </Button>
+            </MagneticWrapper>
+            <MagneticWrapper strength={0.15}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-foreground/20 text-foreground/80 hover:border-primary/40 hover:text-foreground font-medium uppercase tracking-wider px-8 py-6 text-sm transition-all duration-500"
+                asChild
+              >
+                <a href="/videos">
+                  Watch Videos
+                </a>
+              </Button>
+            </MagneticWrapper>
+            <MagneticWrapper strength={0.15}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-foreground/20 text-foreground/80 hover:border-primary/40 hover:text-foreground font-medium uppercase tracking-wider px-8 py-6 text-sm transition-all duration-500"
+                asChild
+              >
+                <a href="/booking">
+                  Book Mr. CAP
+                </a>
+              </Button>
+            </MagneticWrapper>
+          </div>
           <MagneticWrapper strength={0.15}>
             <Button
-              size="lg"
-              className="rounded-full bg-primary/10 border border-primary/30 text-foreground hover:bg-primary/20 hover:border-primary/50 font-semibold uppercase tracking-wider px-10 py-6 text-sm transition-all duration-500 shadow-[0_0_30px_hsl(var(--primary)/0.1)] hover:shadow-[0_0_50px_hsl(var(--primary)/0.2)]"
-              asChild
-            >
-              <a href="/music">
-                <Play className="mr-2 h-4 w-4" />
-                Listen Now
-              </a>
-            </Button>
-          </MagneticWrapper>
-          <MagneticWrapper strength={0.15}>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-full border-foreground/20 text-foreground/80 hover:border-primary/40 hover:text-foreground font-medium uppercase tracking-wider px-8 py-6 text-sm transition-all duration-500"
+              size="sm"
+              variant="ghost"
+              className="rounded-full text-foreground/50 hover:text-primary font-medium uppercase tracking-wider text-xs transition-all duration-500"
               asChild
             >
               <a href="#fan-capture">
-                Join Mr. CAP Legacy
+                Join the Legacy List →
               </a>
             </Button>
           </MagneticWrapper>
