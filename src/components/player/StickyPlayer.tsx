@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2 } from "lucide-react";
 import { reportQualifiedStream } from "@/lib/streamTracking";
+import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/stores/playerStore";
 import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
