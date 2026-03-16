@@ -126,8 +126,21 @@ const StickyPlayer = () => {
     if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
   }, [setCurrentTime]);
 
+  const syncedRef = useRef<Record<string, boolean>>({});
+
   const handleLoadedMetadata = useCallback(() => {
-    if (audioRef.current) setDuration(audioRef.current.duration);
+    if (!audioRef.current) return;
+    const realDuration = audioRef.current.duration;
+    setDuration(realDuration);
+
+    // If stored duration is 0, persist the real duration
+    const track = usePlayerStore.getState().currentTrack;
+    if (track && track.duration === 0 && realDuration > 0 && !syncedRef.current[track.id]) {
+      syncedRef.current[track.id] = true;
+      supabase.functions.invoke("sync-track-duration", {
+        body: { trackId: track.id, duration: realDuration },
+      }).catch(() => {});
+    }
   }, [setDuration]);
 
   const handleEnded = useCallback(() => {
