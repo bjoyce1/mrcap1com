@@ -144,7 +144,7 @@ const TrackPage = () => {
           )}
 
           {/* 2. Listen Section — DSP + Spotify Embed */}
-          <DSPLinks spotifyUrl={track.spotify_url} />
+          <DSPLinks spotifyUrl={track.spotify_url} appleMusicUrl={(track as any).apple_music_url} />
 
           {track.spotify_url && (
             <div className="mt-6 border-t border-border/20 pt-6">
