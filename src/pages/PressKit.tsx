@@ -110,6 +110,75 @@ const PressKit = () => {
           ]}
         />
 
+        {/* ── Download Full Press Kit ── */}
+        <motion.section {...fadeUp} className="py-6">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <Download className="w-4 h-4 text-primary" />
+                <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+                  One-Click Download
+                </span>
+              </div>
+              <p className="text-muted-foreground text-sm mb-4">
+                Download the complete press kit — bios, photos, logos, and discography — in a printer-friendly format.
+              </p>
+              <Button
+                variant="flux"
+                size="lg"
+                className="rounded-full gap-2"
+                onClick={() => {
+                  const printWindow = window.open("", "_blank");
+                  if (!printWindow) return;
+                  printWindow.document.write(`<!DOCTYPE html><html><head><title>Mr. CAP — Press Kit</title><style>
+                    body{font-family:system-ui,sans-serif;max-width:700px;margin:40px auto;padding:0 20px;color:#111;line-height:1.6}
+                    h1{font-size:28px;margin-bottom:4px}h2{font-size:18px;margin-top:28px;border-bottom:1px solid #ddd;padding-bottom:6px}
+                    .label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#888;margin-bottom:4px}
+                    .item{margin:8px 0}.meta{font-size:13px;color:#666}
+                    img{max-width:200px;margin:8px 8px 8px 0}
+                    @media print{body{margin:20px}}
+                  </style></head><body>
+                    <h1>Mr. CAP — Official Press Kit</h1>
+                    <p class="meta">Cornelius A. Pratt | Houston Hip-Hop Artist | South Park Coalition<br/>
+                    Contact: wrecklessent@gmail.com | mrcap1.com</p>
+                    
+                    <h2>Short Bio</h2>
+                    <p>${SHORT_BIO}</p>
+                    
+                    <h2>Extended Bio</h2>
+                    <p>${LONG_BIO}</p>
+                    
+                    <h2>Discography Highlights</h2>
+                    ${DISCOGRAPHY_HIGHLIGHTS.map(a => `<div class="item"><strong>${a.title}</strong> (${a.year}) — ${a.role}</div>`).join("")}
+                    
+                    <h2>Press References</h2>
+                    ${PRESS_MENTIONS.map(m => `<div class="item"><strong>${m.title}</strong><br/><span class="meta">${m.outlet} · ${m.date}</span></div>`).join("")}
+                    
+                    <h2>Press Photos</h2>
+                    <p class="meta">High-resolution images available at mrcap1.com/press-kit</p>
+                    ${PHOTO_ASSETS.map(p => `<img src="https://mrcap1.com${p.file}" alt="${p.label}"/>`).join("")}
+                    
+                    <h2>Official Links</h2>
+                    <div class="item">Website: mrcap1.com</div>
+                    <div class="item">Spotify: open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug</div>
+                    <div class="item">Instagram: @mrcapism</div>
+                    <div class="item">YouTube: @mrcap1</div>
+                    <div class="item">X/Twitter: @mrcap1</div>
+                    
+                    <hr style="margin-top:30px"/>
+                    <p class="meta">Generated from mrcap1.com/press-kit · ${new Date().toLocaleDateString()}</p>
+                  </body></html>`);
+                  printWindow.document.close();
+                  setTimeout(() => printWindow.print(), 500);
+                }}
+              >
+                <Download className="w-4 h-4" />
+                Download Press Kit (PDF)
+              </Button>
+            </div>
+          </div>
+        </motion.section>
+
         {/* ── Short Bio ── */}
         <motion.section {...fadeUp} className="py-12">
           <div className="container mx-auto px-4 max-w-3xl">

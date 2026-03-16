@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 const stats = [
-  { value: 30, suffix: "+", label: "Years in the Game" },
+  { value: 30, suffix: "+", label: "Years in Hip-Hop" },
   { value: 5, suffix: "", label: "Studio Albums" },
   { value: 1, suffix: "st", label: "Houston NFT Rapper" },
-  { value: 0, suffix: "", label: "SPC", isText: true, textValue: "SPC" },
+  { value: 0, suffix: "", label: "Original Member", isText: true, textValue: "SPC" },
 ];
 
 const ProofStrip = () => {

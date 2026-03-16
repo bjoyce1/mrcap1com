@@ -10,6 +10,7 @@ import CatalogPreview from "@/components/home/CatalogPreview";
 import BookingCTABand from "@/components/home/BookingCTABand";
 import DigitalArtFeature from "@/components/home/DigitalArtFeature";
 import LatestPressFeature from "@/components/home/LatestPressFeature";
+import SocialFeedSection from "@/components/home/SocialFeedSection";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
@@ -181,6 +182,7 @@ const Index = () => {
           <LatestPressFeature />
           <BookingCTABand />
           <DigitalArtFeature />
+          <SocialFeedSection />
           <div id="fan-capture">
             <FanCaptureBanner
               sourcePage="homepage"
