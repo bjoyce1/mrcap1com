@@ -89,12 +89,12 @@ const StickyPlayer = () => {
     if (audioRef.current) audioRef.current.volume = volume;
   }, [volume]);
 
-  // Wire audio analyzer
+  // Wire audio analyzer — only once since the audio element never changes
   const { connect, startLoop, stopLoop } = useAudioAnalyzerStore();
   useEffect(() => {
     if (!audioRef.current) return;
     connect(audioRef.current);
-  }, [currentTrack?.id]);
+  }, []);
 
   useEffect(() => {
     if (isPlaying) {

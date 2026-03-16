@@ -42,11 +42,16 @@ export const useAudioAnalyzerStore = create<AudioAnalyzerStore>()((set, get) => 
   connect: (audio: HTMLAudioElement) => {
     const state = get();
 
-    // Already wired to this element — skip
+    // Already wired to this exact element — skip
     if (state._connectedEl === audio && state._ctx) return;
 
-    // Tear down previous connection if any
-    get().disconnect();
+    // If switching to a different audio element, tear down fully
+    if (state._connectedEl && state._connectedEl !== audio) {
+      get().disconnect();
+    }
+
+    // If we already have a context + source for this element, reuse it
+    if (state._ctx && state._connectedEl === audio) return;
 
     try {
       const ctx = new AudioContext();
