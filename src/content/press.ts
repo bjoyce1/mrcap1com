@@ -32,8 +32,8 @@ export const pressPageData = {
         "Mr. CAP unveils \"Bet'n On Me,\" a bold new release centered on confidence, ambition, and legacy. The single marks a pivotal moment in the Mr. CAP Legacy catalog — a declaration of purpose from an artist who has spent decades building independently.",
       url: "/press/mrcap-releases-betn-on-me",
       relatedRelease: "betn-on-me",
-      seoTitle: "Mr. CAP Releases \"Bet'n On Me\" | Press",
-      seoDescription: "Read the official Mr. CAP Legacy press announcement for \"Bet'n On Me\" by Mr. CAP.",
+      seoTitle: "South Park Coalition Releases \"Bet'n On Me\" | Press",
+      seoDescription: "Read the official South Park Coalition press announcement for \"Bet'n On Me\".",
       body: `Houston, TX — Mr. CAP, the Houston-born rapper and original member of the South Park Coalition, has released "Bet'n On Me," a powerful new single that serves as both a personal anthem and a statement of artistic conviction.
 
 The track arrives as part of the Mr. CAP Legacy platform's ongoing mission to establish mrcap1.com as the definitive destination for Mr. CAP's music, press, and creative output. "Bet'n On Me" is not just a song — it is a declaration. It captures the spirit of an artist who has spent over three decades betting on himself, building independently, and refusing to compromise his vision.
