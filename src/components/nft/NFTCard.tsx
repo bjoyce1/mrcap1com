@@ -1,6 +1,6 @@
 import { Heart, ExternalLink, Play } from "lucide-react";
-import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState, useRef, useCallback } from "react";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 type RawNft = {
   identifier?: string;
