@@ -182,6 +182,7 @@ const Index = () => {
           <LatestPressFeature />
           <BookingCTABand />
           <DigitalArtFeature />
+          <SocialFeedSection />
           <div id="fan-capture">
             <FanCaptureBanner
               sourcePage="homepage"
