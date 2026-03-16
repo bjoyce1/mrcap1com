@@ -34,15 +34,13 @@ const SocialFeedSection = () => {
                 Latest Video
               </span>
             </div>
-            <div className="aspect-video">
-              <iframe
-                src="https://www.youtube.com/embed?listType=user_uploads&list=mrcap1&max-results=1"
-                title="Mr. CAP — Latest YouTube Video"
-                className="w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
+            <div className="aspect-video bg-black">
+              <video
+                src="/video/limitless-music-video.mp4"
+                poster="/images/covers/limitless.webp"
+                controls
+                preload="none"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="px-5 py-3">

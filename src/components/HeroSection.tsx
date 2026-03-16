@@ -111,7 +111,6 @@ const HeroSection = () => {
           src={heroImage}
           alt="Mr. CAP"
           className="h-full w-full object-cover object-top"
-          fetchPriority="high"
           decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
