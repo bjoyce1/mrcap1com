@@ -36,7 +36,7 @@ const SocialFeedSection = () => {
             </div>
             <div className="aspect-video">
               <iframe
-                src="https://www.youtube.com/embed?listType=user_uploads&list=mrcap1&max-results=1"
+                src="https://www.youtube.com/embed/videoseries?list=UU_mrcap1_uploads&si=1"
                 title="Mr. CAP — Latest YouTube Video"
                 className="w-full h-full"
                 frameBorder="0"
