@@ -1,6 +1,6 @@
 import { Heart, ExternalLink, Play } from "lucide-react";
-import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState, useRef, useCallback } from "react";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 type RawNft = {
   identifier?: string;
@@ -33,6 +33,25 @@ export function NFTCard({ nft, index, onClick }: NFTCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-40px" });
 
+  // Parallax tilt
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+  const rotateX = useSpring(useTransform(mouseY, [0, 1], [8, -8]), { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-8, 8]), { stiffness: 200, damping: 20 });
+  const glareX = useTransform(mouseX, [0, 1], [0, 100]);
+  const glareY = useTransform(mouseY, [0, 1], [0, 100]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width);
+    mouseY.set((e.clientY - rect.top) / rect.height);
+  }, [mouseX, mouseY]);
+
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  }, [mouseX, mouseY]);
+
   const image = nft.display_image_url || nft.image_url || nft.image?.url;
   const name = nft.name || `${nft.collection ?? "NFT"} #${nft.identifier ?? index}`;
   const hasMedia = !!nft.display_animation_url;
@@ -50,11 +69,24 @@ export function NFTCard({ nft, index, onClick }: NFTCardProps) {
       initial={{ opacity: 0, y: 32 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
       transition={{ duration: 0.45, delay: (index % 6) * 0.07, ease: "easeOut" }}
+      style={{ rotateX, rotateY, transformPerspective: 800 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className="group relative rounded-2xl overflow-hidden bg-[hsl(220_14%_10%)] ring-1 ring-white/5
-                 transition-all duration-300 hover:ring-primary/30 hover:-translate-y-1 hover:shadow-[0_8px_32px_hsl(200_80%_50%/0.12)]
-                 cursor-pointer flex flex-col"
+                 transition-shadow duration-300 hover:ring-primary/30 hover:shadow-[0_8px_32px_hsl(200_80%_50%/0.12)]
+                 cursor-pointer flex flex-col will-change-transform"
       onClick={() => onClick(nft)}
     >
+      {/* Glare overlay */}
+      <motion.div
+        className="pointer-events-none absolute inset-0 z-20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: useTransform(
+            [glareX, glareY],
+            ([x, y]) => `radial-gradient(circle at ${x}% ${y}%, hsl(var(--primary) / 0.12) 0%, transparent 60%)`
+          ),
+        }}
+      />
       {/* Image */}
       <div className="relative aspect-square overflow-hidden">
         {image ? (
