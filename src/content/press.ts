@@ -24,7 +24,7 @@ export const pressPageData = {
   timeline: [
     {
       outlet: "Mr. CAP Legacy",
-      title: "Mr. CAP Releases \"Bet'n On Me\" as a Statement of Confidence and Legacy",
+      title: "South Park Coalition Releases \"Bet'n On Me\" as a Statement of Confidence and Legacy",
       slug: "mrcap-releases-betn-on-me",
       author: "ISM",
       date: "2024-09-20",
