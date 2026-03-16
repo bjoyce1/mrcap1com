@@ -26,7 +26,8 @@ const sanityToLocal = (s: SanityBlogPost) => ({
 const Blog = () => {
   const { data: sanityPosts } = useSanityBlogPosts();
   const hasSanity = sanityPosts && sanityPosts.length > 0;
-  const posts = hasSanity ? sanityPosts.map(sanityToLocal) : blogPosts;
+  const posts = (hasSanity ? sanityPosts.map(sanityToLocal) : [...blogPosts])
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
