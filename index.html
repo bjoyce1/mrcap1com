@@ -6,42 +6,87 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Default meta — overridden per-route by prerender script + react-helmet-async -->
     <title>Mr. CAP — Official Site</title>
-    <meta name="description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more.">
+    <meta name="description" id="meta-description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more.">
+    <link rel="canonical" id="meta-canonical" href="https://mrcap1.com">
     <meta name="author" content="Mr. CAP - Cornelius A. Pratt" />
     <meta name="keywords" content="Mr. CAP, South Park Coalition, SPC, Houston hip hop, Houston rapper, The Ties That Bind Us, Bet&#39;n On Me, Texas rap, underground hip hop, NFT music, blockchain artist, Third Ward, Jack Yates">
-    
+
     <!-- Robots -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
     <meta name="google-site-verification" content="iNIzRwhs8H2I_Oj7m2t_sexjtCtl5yRjb9gZE4KbTOY" />
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Canonical — set dynamically per route by react-helmet-async -->
-    
-    <!-- Open Graph -->
+
+    <!-- Open Graph (defaults — overridden by prerender script below) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Mr. CAP Music" />
     <meta property="og:locale" content="en_US" />
-    
-    
-    <meta property="og:url" content="https://mrcap1.com" />
+    <meta property="og:title" id="og-title" content="Mr. CAP — Official Site" />
+    <meta property="og:description" id="og-description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur." />
+    <meta property="og:url" id="og-url" content="https://mrcap1.com" />
     <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp">
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Mr. CAP - Houston Hip-Hop Artist" />
 
-    <!-- Twitter Card -->
+    <!-- Twitter Card (defaults — overridden by prerender script below) -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@mrcap1" />
     <meta name="twitter:creator" content="@mrcap1" />
-    
-    
+    <meta name="twitter:title" id="tw-title" content="Mr. CAP — Official Site" />
+    <meta name="twitter:description" id="tw-description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur." />
     <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp">
+
+    <!-- Prerender: set route-specific meta before React hydrates -->
+    <script>
+    (function(){
+      var routes={
+        "/":{
+          t:"Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Tech Innovator",
+          d:"Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more."
+        },
+        "/music":{
+          t:"Mr. CAP Music | Full Catalog, Albums & Streaming Links",
+          d:"Explore Mr. CAP's full music catalog — albums, singles, and streaming links. From The Ties That Bind Us to The Art of ISM and beyond."
+        },
+        "/press":{
+          t:"Press Kit | Mr. CAP Bios, Photos, Logos & Media Resources",
+          d:"Download approved bios, press photos, logos, and media resources for coverage, interviews, and event promotion."
+        },
+        "/booking":{
+          t:"Booking Mr. CAP | Shows, Features, Interviews & Speaking Requests",
+          d:"Submit a qualified booking request for Mr. CAP, including event details, timeline, and contact information."
+        },
+        "/about":{
+          t:"About Mr. CAP | Biography, Timeline & Houston Legacy",
+          d:"Learn about Mr. CAP — Houston-born rapper, South Park Coalition original member, and creative technologist bridging hip-hop, business, and blockchain."
+        },
+        "/nft":{
+          t:"Mr. CAP NFT | Web3 Collections, Verified Contracts & Collector Access",
+          d:"Explore verified NFT collections by Mr. CAP — on-chain music, digital art, and exclusive collector utility on Ethereum."
+        }
+      };
+      var p=location.pathname.replace(/\/$/,"") || "/";
+      var r=routes[p];
+      if(r){
+        document.title=r.t;
+        var u="https://mrcap1.com"+(p==="/"?"":p);
+        document.getElementById("meta-description").setAttribute("content",r.d);
+        document.getElementById("meta-canonical").setAttribute("href",u);
+        document.getElementById("og-title").setAttribute("content",r.t);
+        document.getElementById("og-description").setAttribute("content",r.d);
+        document.getElementById("og-url").setAttribute("content",u);
+        document.getElementById("tw-title").setAttribute("content",r.t);
+        document.getElementById("tw-description").setAttribute("content",r.d);
+      }
+    })();
+    </script>
     
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/png" href="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/uploads/1770684666573-capfavicon.png">
