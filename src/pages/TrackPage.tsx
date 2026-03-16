@@ -144,13 +144,13 @@ const TrackPage = () => {
           )}
 
           {/* 2. Listen Section — DSP + Spotify Embed */}
-          <DSPLinks spotifyUrl={track.spotify_url} />
+          <DSPLinks spotifyUrl={track.spotify_url} appleMusicUrl={(track as any).apple_music_url} />
 
           {track.spotify_url && (
             <div className="mt-6 border-t border-border/20 pt-6">
               <div className="rounded-xl overflow-hidden">
                 <iframe
-                  src={track.spotify_url.replace("open.spotify.com/track/", "open.spotify.com/embed/track/") + "?utm_source=generator&theme=0"}
+                  src={track.spotify_url.replace("open.spotify.com/track/", "open.spotify.com/embed/track/").replace("open.spotify.com/album/", "open.spotify.com/embed/album/") + "?utm_source=generator&theme=0"}
                   width="100%" height="152" frameBorder="0"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy" className="rounded-xl"

@@ -373,6 +373,7 @@ export type Database = {
       tracks: {
         Row: {
           album_id: string | null
+          apple_music_url: string | null
           artist: string
           audio_url: string | null
           cover_art_url: string | null
@@ -399,6 +400,7 @@ export type Database = {
         }
         Insert: {
           album_id?: string | null
+          apple_music_url?: string | null
           artist?: string
           audio_url?: string | null
           cover_art_url?: string | null
@@ -425,6 +427,7 @@ export type Database = {
         }
         Update: {
           album_id?: string | null
+          apple_music_url?: string | null
           artist?: string
           audio_url?: string | null
           cover_art_url?: string | null
