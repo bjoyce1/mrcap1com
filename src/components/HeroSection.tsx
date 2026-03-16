@@ -138,9 +138,12 @@ const HeroSection = () => {
           Mr. CAP
         </h1>
 
+        <p className="mt-3 text-sm md:text-base font-medium tracking-[0.15em] uppercase text-foreground/60 will-change-transform">
+          Houston Hip-Hop Artist · South Park Coalition
+        </p>
         <div
           ref={releaseRef}
-          className="mt-5 flex items-center gap-3 text-sm md:text-base font-medium tracking-[0.2em] uppercase will-change-transform"
+          className="mt-4 flex items-center gap-3 text-xs md:text-sm font-medium tracking-[0.2em] uppercase will-change-transform"
         >
           <span className="text-foreground/90">The Ties That Bind Us</span>
           <span className="w-1 h-1 rounded-full bg-primary" />
