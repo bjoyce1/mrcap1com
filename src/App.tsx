@@ -117,6 +117,7 @@ function AppRoutes() {
           <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />
           <Route path="/legacy" element={<PageTransition><Legacy /></PageTransition>} />
           <Route path="/biography" element={<PageTransition><Biography /></PageTransition>} />
+          <Route path="/press-kit" element={<PageTransition><PressKit /></PageTransition>} />
           <Route path="/new-releases" element={<PageTransition><NewReleases /></PageTransition>} />
           <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
           {/* PRD Redirects: /epk → /press, /digital-art → /nft */}
