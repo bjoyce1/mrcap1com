@@ -282,7 +282,20 @@ const MusicSection = () => {
                               <Play className="w-5 h-5 text-primary" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
+                              <div className="flex items-center gap-2">
+                                <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
+                                {(item as any).nftUrl && (
+                                  <a
+                                    href={(item as any).nftUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full hover:bg-amber-400 transition-colors shrink-0"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    Buy NFT
+                                  </a>
+                                )}
+                              </div>
                               <p className="text-xs text-muted-foreground line-clamp-1">{item.subtitle}</p>
                             </div>
                           </div>
