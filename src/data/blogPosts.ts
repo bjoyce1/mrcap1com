@@ -551,6 +551,7 @@ And if you're just now finding out who he is, you're not late. You're right on t
     date: "2024-12-03",
     author: "Mr. CAP",
     readTime: "10 min",
+    image: "/images/untold-story-mrcap-blog.png",
     tags: ["Biography", "Houston", "South Park Coalition", "Underground Hip-Hop", "Third Ward"],
   },
   {
