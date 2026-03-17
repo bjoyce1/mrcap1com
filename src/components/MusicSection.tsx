@@ -257,8 +257,9 @@ const MusicSection = () => {
               const trackItems: ChromaGridItem[] = yearGroup.tracks.map((track) => ({
                 title: track.title,
                 subtitle: track.artist,
-                borderColor: "hsl(var(--primary))",
-                gradient: `linear-gradient(145deg, hsl(var(--primary) / 0.08), hsl(var(--background)))`,
+                borderColor: (track as any).nftUrl ? "#f59e0b" : "hsl(var(--primary))",
+                gradient: `linear-gradient(145deg, ${(track as any).nftUrl ? 'rgba(245,158,11,0.08)' : 'hsl(var(--primary) / 0.08)'}, hsl(var(--background)))`,
+                nftUrl: (track as any).nftUrl,
               }));
 
               return (
