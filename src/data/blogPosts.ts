@@ -606,6 +606,7 @@ That's what Mr. CAP has been building toward for 30+ years. Blockchain is just t
     date: "2024-11-20",
     author: "Mr. CAP",
     readTime: "8 min",
+    image: "/images/blockchain-nfts-hiphop-blog.png",
     tags: ["NFT", "Blockchain", "Web3", "Music Industry", "Innovation", "Ownership"],
   },
   {
