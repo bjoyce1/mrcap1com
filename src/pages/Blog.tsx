@@ -33,11 +33,22 @@ const sanityToLocal = (s: SanityBlogPost) => ({
   content: "", // body rendered separately on detail page
 });
 
+const POSTS_PER_PAGE = 10;
+
 const Blog = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { data: sanityPosts } = useSanityBlogPosts();
   const hasSanity = sanityPosts && sanityPosts.length > 0;
-  const posts = (hasSanity ? sanityPosts.map(sanityToLocal) : [...blogPosts])
+  const allPosts = (hasSanity ? sanityPosts.map(sanityToLocal) : [...blogPosts])
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const posts = allPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
