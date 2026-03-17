@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
@@ -8,6 +9,15 @@ import { useSanityBlogPosts, SanityBlogPost } from "@/hooks/useSanity";
 import { ChevronRight, Clock } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 
 /** Map a Sanity blog post to the shape used by the static data */
 const sanityToLocal = (s: SanityBlogPost) => ({
