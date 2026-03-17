@@ -196,6 +196,56 @@ const Blog = () => {
                   )}
                 />
               </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination className="mt-12">
+                  <PaginationContent>
+                    {currentPage > 1 && (
+                      <PaginationItem>
+                        <PaginationPrevious
+                          href="#"
+                          onClick={(e) => { e.preventDefault(); goToPage(currentPage - 1); }}
+                        />
+                      </PaginationItem>
+                    )}
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      if (
+                        page === 1 ||
+                        page === totalPages ||
+                        Math.abs(page - currentPage) <= 1
+                      ) {
+                        return (
+                          <PaginationItem key={page}>
+                            <PaginationLink
+                              href="#"
+                              isActive={page === currentPage}
+                              onClick={(e) => { e.preventDefault(); goToPage(page); }}
+                            >
+                              {page}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      }
+                      if (page === 2 && currentPage > 3) {
+                        return <PaginationItem key="start-ellipsis"><PaginationEllipsis /></PaginationItem>;
+                      }
+                      if (page === totalPages - 1 && currentPage < totalPages - 2) {
+                        return <PaginationItem key="end-ellipsis"><PaginationEllipsis /></PaginationItem>;
+                      }
+                      return null;
+                    })}
+                    {currentPage < totalPages && (
+                      <PaginationItem>
+                        <PaginationNext
+                          href="#"
+                          onClick={(e) => { e.preventDefault(); goToPage(currentPage + 1); }}
+                        />
+                      </PaginationItem>
+                    )}
+                  </PaginationContent>
+                </Pagination>
+              )}
             </div>
           </section>
 
