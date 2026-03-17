@@ -314,7 +314,17 @@ const Discography = () => {
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2">
                                 <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
-                                {item.nft && <span className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">NFT</span>}
+                                {item.nft && (
+                                  <a
+                                    href="https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full hover:bg-amber-400 transition-colors"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    Buy NFT
+                                  </a>
+                                )}
                               </div>
                               <p className="text-xs text-muted-foreground line-clamp-1">{item.subtitle}</p>
                             </div>

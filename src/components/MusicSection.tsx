@@ -71,7 +71,7 @@ const singles = [{
   ]
 }, {
   year: "2019",
-  tracks: [{ title: "Limitless", artist: "Mr. CAP", label: "Independent" }]
+  tracks: [{ title: "Limitless", artist: "Mr. CAP", label: "Independent", nftUrl: "https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353" }]
 }, {
   year: "2018",
   tracks: [{ title: "Today Was A Great Day", artist: "Mr. CAP", label: "Independent" }]
