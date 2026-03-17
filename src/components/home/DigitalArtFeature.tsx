@@ -6,10 +6,12 @@ import nftArtOfIsm from "@/assets/nft-art-of-ism.png";
 import nftLimitless from "@/assets/nft-limitless.png";
 import limitlessCover from "@/assets/limitless-cover.png";
 
+const LIMITLESS_NFT_URL = "https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353";
+
 const highlights = [
-  { image: nftArtOfIsm, title: "The Art of ISM Collection", subtitle: "11-track album NFT" },
-  { image: nftLimitless, title: "Limitless NFT", subtitle: "Historic Houston NFT" },
-  { image: limitlessCover, title: "Limitless Music Video", subtitle: "NFT + Music Video" },
+  { image: nftArtOfIsm, title: "The Art of ISM Collection", subtitle: "11-track album NFT", href: "/nft" },
+  { image: nftLimitless, title: "Limitless NFT", subtitle: "Historic Houston NFT", href: LIMITLESS_NFT_URL },
+  { image: limitlessCover, title: "Limitless Music Video", subtitle: "NFT + Music Video", href: LIMITLESS_NFT_URL },
 ];
 
 const DigitalArtFeature = () => {
