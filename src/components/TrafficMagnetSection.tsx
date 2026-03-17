@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, Download, Video, BookOpen, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause, Download, Video, BookOpen, Volume2, VolumeX, ShoppingBag } from "lucide-react";
 import betnOnMe from "@/assets/betn-on-me.png";
 import opkCover from "@/assets/opk-cover.png";
 
