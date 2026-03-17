@@ -71,7 +71,7 @@ const singles = [{
   ]
 }, {
   year: "2019",
-  tracks: [{ title: "Limitless", artist: "Mr. CAP", label: "Independent" }]
+  tracks: [{ title: "Limitless", artist: "Mr. CAP", label: "Independent", nftUrl: "https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353" }]
 }, {
   year: "2018",
   tracks: [{ title: "Today Was A Great Day", artist: "Mr. CAP", label: "Independent" }]
@@ -257,8 +257,9 @@ const MusicSection = () => {
               const trackItems: ChromaGridItem[] = yearGroup.tracks.map((track) => ({
                 title: track.title,
                 subtitle: track.artist,
-                borderColor: "hsl(var(--primary))",
-                gradient: `linear-gradient(145deg, hsl(var(--primary) / 0.08), hsl(var(--background)))`,
+                borderColor: (track as any).nftUrl ? "#f59e0b" : "hsl(var(--primary))",
+                gradient: `linear-gradient(145deg, ${(track as any).nftUrl ? 'rgba(245,158,11,0.08)' : 'hsl(var(--primary) / 0.08)'}, hsl(var(--background)))`,
+                nftUrl: (track as any).nftUrl,
               }));
 
               return (
@@ -281,7 +282,20 @@ const MusicSection = () => {
                               <Play className="w-5 h-5 text-primary" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
+                              <div className="flex items-center gap-2">
+                                <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
+                                {(item as any).nftUrl && (
+                                  <a
+                                    href={(item as any).nftUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full hover:bg-amber-400 transition-colors shrink-0"
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    Buy NFT
+                                  </a>
+                                )}
+                              </div>
                               <p className="text-xs text-muted-foreground line-clamp-1">{item.subtitle}</p>
                             </div>
                           </div>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, Download, Video, BookOpen, Volume2, VolumeX } from "lucide-react";
+import { Play, Pause, Download, Video, BookOpen, Volume2, VolumeX, ShoppingBag } from "lucide-react";
 import betnOnMe from "@/assets/betn-on-me.png";
 import opkCover from "@/assets/opk-cover.png";
 
@@ -167,7 +167,7 @@ const TrafficMagnetSection = () => {
                 </div>
               </div>
               <Button variant="fluxOutline" size="sm" className="w-full mt-4" asChild>
-                <Link to="/nft"><Play className="w-4 h-4 mr-2" /> Watch Full Video</Link>
+                <a href="https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353" target="_blank" rel="noopener noreferrer"><ShoppingBag className="w-4 h-4 mr-2" /> Buy NFT on OpenSea</a>
               </Button>
             </div>
 
