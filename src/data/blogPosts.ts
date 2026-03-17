@@ -764,7 +764,7 @@ Releasing through Sony Music / The Orchard gave the album the distribution it de
     slug: "why-betn-on-me-is-more-than-a-song",
     title: "Why 'Bet'n On Me' Is More Than a Song",
     excerpt: "The lead single from 'The Ties That Bind Us' isn't just a record — it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.",
-    image: "/images/betn-on-me-story.jpg",
+    image: "/images/betn-on-me-blog.jpg",
     content: `
 ## A Philosophy Shaped by Decades
 
