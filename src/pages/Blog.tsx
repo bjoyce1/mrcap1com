@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
@@ -8,6 +9,15 @@ import { useSanityBlogPosts, SanityBlogPost } from "@/hooks/useSanity";
 import { ChevronRight, Clock } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 
 /** Map a Sanity blog post to the shape used by the static data */
 const sanityToLocal = (s: SanityBlogPost) => ({
@@ -23,11 +33,22 @@ const sanityToLocal = (s: SanityBlogPost) => ({
   content: "", // body rendered separately on detail page
 });
 
+const POSTS_PER_PAGE = 10;
+
 const Blog = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { data: sanityPosts } = useSanityBlogPosts();
   const hasSanity = sanityPosts && sanityPosts.length > 0;
-  const posts = (hasSanity ? sanityPosts.map(sanityToLocal) : [...blogPosts])
+  const allPosts = (hasSanity ? sanityPosts.map(sanityToLocal) : [...blogPosts])
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const posts = allPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -175,6 +196,56 @@ const Blog = () => {
                   )}
                 />
               </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination className="mt-12">
+                  <PaginationContent>
+                    {currentPage > 1 && (
+                      <PaginationItem>
+                        <PaginationPrevious
+                          href="#"
+                          onClick={(e) => { e.preventDefault(); goToPage(currentPage - 1); }}
+                        />
+                      </PaginationItem>
+                    )}
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      if (
+                        page === 1 ||
+                        page === totalPages ||
+                        Math.abs(page - currentPage) <= 1
+                      ) {
+                        return (
+                          <PaginationItem key={page}>
+                            <PaginationLink
+                              href="#"
+                              isActive={page === currentPage}
+                              onClick={(e) => { e.preventDefault(); goToPage(page); }}
+                            >
+                              {page}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      }
+                      if (page === 2 && currentPage > 3) {
+                        return <PaginationItem key="start-ellipsis"><PaginationEllipsis /></PaginationItem>;
+                      }
+                      if (page === totalPages - 1 && currentPage < totalPages - 2) {
+                        return <PaginationItem key="end-ellipsis"><PaginationEllipsis /></PaginationItem>;
+                      }
+                      return null;
+                    })}
+                    {currentPage < totalPages && (
+                      <PaginationItem>
+                        <PaginationNext
+                          href="#"
+                          onClick={(e) => { e.preventDefault(); goToPage(currentPage + 1); }}
+                        />
+                      </PaginationItem>
+                    )}
+                  </PaginationContent>
+                </Pagination>
+              )}
             </div>
           </section>
 
