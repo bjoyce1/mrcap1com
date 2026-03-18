@@ -84,13 +84,7 @@ export default function BetOnHer() {
   };
 
   const handleShare = async () => {
-    const url = "https://mrcap1.com/bet-on-her";
-    if (navigator.share) {
-      await navigator.share({ title: "Bet On Her – Mr. CAP ft. Billy Cook", url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      toast.success("Link copied!");
-    }
+    await shareMusic({ title: "Bet On Her", artist: "Mr. CAP ft. Billy Cook", slug: "bet-on-her", type: "track" });
   };
 
   const socialLinks = [
