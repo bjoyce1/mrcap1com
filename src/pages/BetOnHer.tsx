@@ -319,9 +319,59 @@ export default function BetOnHer() {
             <h2 className="font-[Playfair_Display] text-4xl md:text-5xl font-bold text-white mb-8">
               The Story
             </h2>
-            <p className="text-white/60 text-lg leading-relaxed">
+            <p className="text-white/60 text-lg leading-relaxed mb-6">
               "Bet On Her" is a high-stakes anthem about recognizing real value in a world full of illusions. Inspired by the energy of Las Vegas, Mr. CAP flips the concept of gambling into a metaphor for relationships, loyalty, and choosing right. With silky vocals from Houston legend Billy Cook, the record blends cinematic production with street-level storytelling — a sonic bet that pays out every time.
             </p>
+            <p className="text-white/60 text-lg leading-relaxed">
+              "Bet On Her" explores themes of loyalty, discernment, and recognizing real value in a world driven by illusion. With polished production by Ciddy Boi Music, the track stands as both a musical statement and a mindset — encouraging listeners to invest in what truly matters.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════ PRESS RELEASE ═══════════════ */}
+      <section className="relative py-24 bg-black overflow-hidden">
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/3 rounded-full blur-[120px] pointer-events-none" />
+        <div className="container mx-auto px-4 max-w-3xl relative z-10">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="bg-white/[0.02] border border-white/8 rounded-2xl p-8 md:p-12"
+          >
+            <p className="text-[10px] tracking-[0.4em] uppercase text-amber-500/50 mb-2 font-medium">For Immediate Release</p>
+            <h2 className="font-[Playfair_Display] text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
+              Mr. CAP Releases "Bet On Her" Featuring Billy Cook — A High-Stakes Anthem Blending Houston Hip-Hop with Luxury Casino Energy
+            </h2>
+            <p className="text-amber-500/60 text-xs mb-8 tracking-wide">Houston, TX — March 17, 2026</p>
+
+            <div className="space-y-5 text-white/55 text-[15px] leading-relaxed">
+              <p>
+                Houston hip-hop veteran Mr. CAP returns with a powerful new single, "Bet On Her," featuring acclaimed vocalist Billy Cook. The release delivers a cinematic experience inspired by the high-stakes world of Las Vegas, combining smooth melodies with street-level authenticity.
+              </p>
+              <p>
+                Accompanying the release is an exclusive NFT collaboration with digital artist Ali Sabet, marking another step in Mr. CAP's continued innovation at the intersection of music and blockchain technology. The NFT collection provides fans with a unique opportunity to own a piece of the release while engaging with the evolving digital art landscape.
+              </p>
+              <p>
+                With over three decades in the game and a legacy rooted in the South Park Coalition, Mr. CAP continues to push boundaries, bridging traditional hip-hop culture with forward-thinking digital strategy.
+              </p>
+            </div>
+
+            <div className="mt-10 pt-8 border-t border-white/5 space-y-3 text-xs text-white/30">
+              <p>
+                <span className="text-white/50">Press & Booking:</span>{" "}
+                <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer" className="text-amber-500/60 hover:text-amber-400 transition-colors">
+                  bookspc.com/artists/mr-cap
+                </a>
+              </p>
+              <p>
+                <span className="text-white/50">Follow:</span>{" "}
+                <a href="https://instagram.com/mrcapism" target="_blank" rel="noopener noreferrer" className="text-amber-500/60 hover:text-amber-400 transition-colors">@mrcapism</a>
+                {" · "}
+                <a href="https://x.com/mrcap1" target="_blank" rel="noopener noreferrer" className="text-amber-500/60 hover:text-amber-400 transition-colors">@mrcap1</a>
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
