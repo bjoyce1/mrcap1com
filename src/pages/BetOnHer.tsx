@@ -5,9 +5,6 @@ import SEO from "@/components/SEO";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { shareMusic } from "@/lib/shareTrack";
 import ShareButtons from "@/components/music/ShareButtons";
 
 const COVER_ART_URL = "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(cover%20art).png";
