@@ -484,7 +484,7 @@ export default function BetOnHer() {
       </section>
 
       {/* ═══════════════ SHARE ═══════════════ */}
-      <section className="relative py-16 bg-black border-t border-white/5">
+      <section id="share-release" className="relative py-16 bg-black border-t border-white/5 scroll-mt-28">
         <div className="container mx-auto px-4 max-w-3xl">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}>
             <h3 className="text-xs tracking-[0.3em] uppercase text-amber-500/50 mb-4 text-center">Share This Release</h3>
