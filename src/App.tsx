@@ -67,6 +67,7 @@ import Videos from "./pages/Videos";
 import PressPost from "./pages/PressPost";
 import Biography from "./pages/Biography";
 import PressKit from "./pages/PressKit";
+import BetOnHer from "./pages/BetOnHer";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -128,6 +129,7 @@ function AppRoutes() {
           <Route path="/tour" element={<Navigate to="/live" replace />} />
           {/* Release Pages */}
           <Route path="/panties-on-my-piano" element={<PageTransition><PantiesOnMyPiano /></PageTransition>} />
+          <Route path="/bet-on-her" element={<PageTransition><BetOnHer /></PageTransition>} />
           {/* OPK Routes */}
           <Route path="/opk" element={<PageTransition><OPKHub /></PageTransition>} />
           <Route path="/opk/music" element={<PageTransition><OPKMusic /></PageTransition>} />
