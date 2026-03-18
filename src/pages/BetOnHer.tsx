@@ -483,6 +483,18 @@ export default function BetOnHer() {
         </div>
       </section>
 
+      {/* ═══════════════ SHARE ═══════════════ */}
+      <section className="relative py-16 bg-black border-t border-white/5">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}>
+            <h3 className="text-xs tracking-[0.3em] uppercase text-amber-500/50 mb-4 text-center">Share This Release</h3>
+            <div className="flex justify-center">
+              <ShareButtons title="Bet On Her" artist="Mr. CAP ft. Billy Cook" slug="bet-on-her" type="track" />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ═══════════════ FAN CAPTURE ═══════════════ */}
       <section id="fan-capture" className="relative py-24 bg-black">
         <div className="absolute inset-0 bg-gradient-to-t from-amber-950/10 via-transparent to-transparent pointer-events-none" />
