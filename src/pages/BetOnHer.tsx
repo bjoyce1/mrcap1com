@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { shareMusic } from "@/lib/shareTrack";
+import ShareButtons from "@/components/music/ShareButtons";
 
 const COVER_ART_URL = "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(cover%20art).png";
 const AUDIO_URL = `https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(Master).wav`;
@@ -82,13 +84,7 @@ export default function BetOnHer() {
   };
 
   const handleShare = async () => {
-    const url = "https://mrcap1.com/bet-on-her";
-    if (navigator.share) {
-      await navigator.share({ title: "Bet On Her – Mr. CAP ft. Billy Cook", url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      toast.success("Link copied!");
-    }
+    await shareMusic({ title: "Bet On Her", artist: "Mr. CAP ft. Billy Cook", slug: "bet-on-her", type: "track" });
   };
 
   const socialLinks = [
@@ -482,6 +478,18 @@ export default function BetOnHer() {
                   <span className="text-white/80 text-sm">{c.name}</span>
                 </div>
               ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════ SHARE ═══════════════ */}
+      <section className="relative py-16 bg-black border-t border-white/5">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}>
+            <h3 className="text-xs tracking-[0.3em] uppercase text-amber-500/50 mb-4 text-center">Share This Release</h3>
+            <div className="flex justify-center">
+              <ShareButtons title="Bet On Her" artist="Mr. CAP ft. Billy Cook" slug="bet-on-her" type="track" />
             </div>
           </motion.div>
         </div>
