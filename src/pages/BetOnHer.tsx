@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 const COVER_ART_URL = `https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(cover%20art).png`;
 const AUDIO_URL = `https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(Master).wav`;
-const NFT_URL = "https://opensea.io/collection/mr-cap";
+const NFT_URL = "https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812144842719625316";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
