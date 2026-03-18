@@ -111,9 +111,18 @@ export default function BetOnHer() {
           "@type": "MusicRecording",
           name: "Bet On Her",
           byArtist: { "@type": "MusicGroup", name: "Mr. CAP" },
-          url: "https://mrcap1.com/bet-on-her",
+          featuredArtist: { "@type": "MusicGroup", name: "Billy Cook" },
+          datePublished: "2026-03-17",
+          genre: ["Hip-Hop", "Rap"],
+          description: "Bet On Her is a high-stakes hip-hop anthem by Mr. CAP featuring Billy Cook, blending luxury Vegas vibes with themes of loyalty and value.",
           image: COVER_ART_URL,
-          genre: "Hip-Hop",
+          url: "https://mrcap1.com/bet-on-her",
+          publisher: { "@type": "Organization", name: "Ciddy Boi Music" },
+          offers: {
+            "@type": "Offer",
+            url: "https://mrcap1.com/bet-on-her",
+            availability: "https://schema.org/InStock",
+          },
         }}
       />
       <Navigation />
