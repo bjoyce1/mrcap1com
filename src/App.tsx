@@ -67,6 +67,7 @@ import Videos from "./pages/Videos";
 import PressPost from "./pages/PressPost";
 import Biography from "./pages/Biography";
 import PressKit from "./pages/PressKit";
+import BetOnHer from "./pages/BetOnHer";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
