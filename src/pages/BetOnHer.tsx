@@ -83,8 +83,8 @@ export default function BetOnHer() {
     playerRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleShare = async () => {
-    await shareMusic({ title: "Bet On Her", artist: "Mr. CAP ft. Billy Cook", slug: "bet-on-her", type: "track" });
+  const handleShare = () => {
+    document.getElementById("share-release")?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const socialLinks = [
