@@ -129,6 +129,7 @@ function AppRoutes() {
           <Route path="/tour" element={<Navigate to="/live" replace />} />
           {/* Release Pages */}
           <Route path="/panties-on-my-piano" element={<PageTransition><PantiesOnMyPiano /></PageTransition>} />
+          <Route path="/bet-on-her" element={<PageTransition><BetOnHer /></PageTransition>} />
           {/* OPK Routes */}
           <Route path="/opk" element={<PageTransition><OPKHub /></PageTransition>} />
           <Route path="/opk/music" element={<PageTransition><OPKMusic /></PageTransition>} />
