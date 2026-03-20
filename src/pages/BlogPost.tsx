@@ -203,6 +203,25 @@ const BlogPost = () => {
                             </figure>
                           );
                         }
+                        const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+                        if (linkRegex.test(line)) {
+                          const parts: React.ReactNode[] = [];
+                          let lastIndex = 0;
+                          linkRegex.lastIndex = 0;
+                          let match;
+                          while ((match = linkRegex.exec(line)) !== null) {
+                            if (match.index > lastIndex) parts.push(line.slice(lastIndex, match.index));
+                            const href = match[2];
+                            parts.push(
+                              href.startsWith("/")
+                                ? <Link key={`${i}-${match.index}`} to={href} className="text-primary hover:underline">{match[1]}</Link>
+                                : <a key={`${i}-${match.index}`} href={href} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{match[1]}</a>
+                            );
+                            lastIndex = match.index + match[0].length;
+                          }
+                          if (lastIndex < line.length) parts.push(line.slice(lastIndex));
+                          return <p key={i}>{parts}</p>;
+                        }
                         return <p key={i}>{line}</p>;
                       })
                   }
