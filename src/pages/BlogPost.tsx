@@ -194,6 +194,15 @@ const BlogPost = () => {
                     : post.content.split(/\n/).map((line, i) => {
                         if (line.startsWith('## ')) return <h2 key={i}>{line.slice(3)}</h2>;
                         if (line.trim() === '') return null;
+                        const imgMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+                        if (imgMatch) {
+                          return (
+                            <figure key={i} className="my-8">
+                              <img src={imgMatch[2]} alt={imgMatch[1]} className="w-full rounded-xl border border-border/50 shadow-lg" />
+                              {imgMatch[1] && <figcaption className="text-sm text-muted-foreground mt-3 text-center">{imgMatch[1]}</figcaption>}
+                            </figure>
+                          );
+                        }
                         return <p key={i}>{line}</p>;
                       })
                   }
