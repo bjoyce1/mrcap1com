@@ -964,13 +964,13 @@ Explore the latest from the collective and stay updated on upcoming events by vi
 
 For decades, collecting music meant holding a physical piece of history: a cassette tape, a vinyl record, or a limited-edition CD. However, the digital age stripped away that sense of ownership, replacing it with temporary access via streaming platforms. This is where the landscape shifts once again, merging the grit of the Texas underground with the cutting-edge transparency of the blockchain.
 
-At the forefront of this digital frontier is Mr. CAP, a veteran with over 30 years of experience in the game. By bridging the gap between legacy and technology, he is redefining what it means to be a collector in the modern era.
+At the forefront of this digital frontier is Mr. CAP, a veteran with over 30 years of experience in the game. By bridging the gap between legacy and technology, he is redefining what it means to be a collector in the modern era. You can explore his verified digital art collections and collector access on the [NFT & Digital Art Gallery](/nft).
 
 ## The Groundbreaking Shift from Streaming to Ownership
 
 For the average listener, streaming is a convenience. For the true collector, it is a hollow experience. You don't own the music; you rent the right to hear it. Music NFTs (Non-Fungible Tokens) are dismantling this model by reintroducing the concept of digital scarcity and verifiable ownership.
 
-When you explore music NFTs for sale, you aren't just buying a file. You are acquiring a unique digital asset that is permanently etched into the blockchain. This technology allows fans to own a specific, documented piece of an artist's catalog, creating a level of exclusivity that streaming can never replicate.
+When you explore music NFTs for sale, you aren't just buying a file. You are acquiring a unique digital asset that is permanently etched into the blockchain. This technology allows fans to own a specific, documented piece of an artist's catalog, creating a level of exclusivity that streaming can never replicate. Browse the [full music catalog](/music) to discover the releases behind these collectible moments.
 
 ![Mr. CAP in South Park Coalition (SPC) gear—iconic Houston roots.](https://cdn.marblism.com/7p18rlR80ja.webp)
 
@@ -984,13 +984,13 @@ With a career spanning over three decades, Mr. CAP has witnessed the evolution o
 
 ## Preserving Houston Hip Hop History Through Technology
 
-Music NFTs allow for the implementation of smart contracts. These are automated agreements that ensure artists receive their fair share of royalties every single time an NFT is resold on the secondary market. Imagine a world where a rare track from the South Park Coalition era could be traded like a high-end painting, with the artist benefiting from its growth in value over time.
+Music NFTs allow for the implementation of smart contracts. These are automated agreements that ensure artists receive their fair share of royalties every single time an NFT is resold on the secondary market. Imagine a world where a rare track from the South Park Coalition era could be traded like a high-end painting, with the artist benefiting from its growth in value over time. Dive deeper into the [South Park Coalition legacy](/south-park-coalition) and its influence on the Houston underground.
 
 ![Mr. CAP—internationally acclaimed Houston hip hop legacy.](https://cdn.marblism.com/Rs11ZdPA5aa.webp)
 
 ## Building a Future-Proof Legacy
 
-The bridge between the past and the future is perhaps most evident in Mr. CAP's album, "The Ties That Bind Us". This work is a masterclass in storytelling, reflecting the deep roots of his 30-year journey while embracing the possibilities of the new digital economy.
+The bridge between the past and the future is perhaps most evident in Mr. CAP's album, "The Ties That Bind Us". This work is a masterclass in storytelling, reflecting the deep roots of his 30-year journey while embracing the possibilities of the new digital economy. Listen to the album and explore the full discography on the [music page](/music), or connect your wallet on the [NFT gallery](/nft) to unlock exclusive collector-only content.
 
 ![SPC LEGACY LOGO](https://cdn.marblism.com/7363f76b-1e1c-47c6-a817-6206ad896555-spclegacy2.png)`,
   },
