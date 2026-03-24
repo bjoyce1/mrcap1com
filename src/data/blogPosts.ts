@@ -27,8 +27,8 @@ export const blogCategories = [
 export const blogPosts: BlogPost[] = [
   {
     slug: "the-hustle-doesnt-age-it-evolves-mr-cap-on-legacy-energy-and-building-a-digital-empire",
-    title: "The Hustle Doesn't Age, It Evolves: Mr. CAP on Legacy Energy and Building a Digital Empire",
-    excerpt: "With over 30 years in the game, Mr. CAP isn't just a witness to the culture—he is one of its primary engineers. From the trenches of the South Park Coalition to the cutting edge of Web3, the blueprint has changed, but the architect remains the same.",
+    title: "Mr. CAP: Legacy Energy and Building a Digital Empire",
+    excerpt: "Mr. CAP bridges 30 years of SPC history with the future of Web3 and music NFTs. Discover the evolution of ownership and \"The Ties That Bind Us\".",
     category: "Music Industry Playbook",
     date: "2026-03-24",
     author: "Mr. CAP",
