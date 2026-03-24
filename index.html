@@ -137,6 +137,7 @@
         setMeta("og-url","content",u);
         setMeta("tw-title","content",r.t);
         setMeta("tw-description","content",r.d);
+        if(r.i){setMeta("og-image","content",r.i);setMeta("tw-image","content",r.i);}
       }
       var blogMatch=p.match(/^\/blog\/(.+)$/);
       if(blogMatch){
