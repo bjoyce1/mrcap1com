@@ -111,12 +111,13 @@ const BlogPost = () => {
       <Helmet>
         <title>{post.title} | Mr. CAP Blog</title>
         <meta name="description" content={post.excerpt} />
-        <link rel="canonical" href={`https://mrcapmusic.com/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://mrcap1.com/blog/${post.slug}`} />
         
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
+        <meta property="og:image" content={post.image || "https://mrcap1.com/og-image.png"} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://mrcapmusic.com/blog/${post.slug}`} />
+        <meta property="og:url" content={`https://mrcap1.com/blog/${post.slug}`} />
         <meta property="article:published_time" content={post.date} />
         <meta property="article:author" content={post.author} />
         <meta property="article:section" content={post.category} />
