@@ -60,29 +60,51 @@ const BlogPost = () => {
       .slice(0, 2);
   }, [sanityAll, post]);
 
+  const wordCount = post.content ? post.content.split(/\s+/).length : 0;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
     "datePublished": post.date,
+    "dateModified": post.date,
     "author": {
       "@type": "Person",
-      "name": post.author
+      "name": post.author,
+      "url": "https://mrcap1.com/who-is-mr-cap",
+      "sameAs": [
+        "https://instagram.com/mrcapism",
+        "https://twitter.com/mrcap1"
+      ]
     },
     "publisher": {
-      "@type": "Person",
-      "name": "Mr. CAP"
+      "@type": "Organization",
+      "name": "Mr. CAP",
+      "url": "https://mrcap1.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://mrcap1.com/og-image.png"
+      }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://mrcapmusic.com/blog/${post.slug}`
+      "@id": `https://mrcap1.com/blog/${post.slug}`
     },
     "articleSection": post.category,
-    "keywords": post.tags.join(", ")
+    "keywords": post.tags.join(", "),
+    ...(post.image ? { "image": { "@type": "ImageObject", "url": post.image } } : {}),
+    ...(wordCount > 0 ? { "wordCount": wordCount } : {}),
+    "inLanguage": "en-US",
+    "isAccessibleForFree": true,
+    "about": {
+      "@type": "Person",
+      "name": "Mr. CAP",
+      "description": "Houston hip-hop veteran and Web3 pioneer"
+    }
   };
 
-  const shareUrl = `https://mrcapmusic.com/blog/${post.slug}`;
+  const shareUrl = `https://mrcap1.com/blog/${post.slug}`;
 
   return (
     <>
