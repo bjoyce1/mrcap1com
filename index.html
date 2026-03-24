@@ -97,6 +97,11 @@
         "/who-is-mr-cap":{
           t:"Who Is Mr. CAP? | Houston Rapper, SPC Member & Creative Entrepreneur",
           d:"Discover Mr. CAP — Houston-born rapper, South Park Coalition original member, author, and blockchain innovator bridging hip-hop and technology."
+        },
+        "/bet-on-her":{
+          t:"Bet On Her ft. Billy Cook | Mr. CAP",
+          d:"Listen to Bet On Her by Mr. CAP ft. Billy Cook, produced by C.U.S.H. A high-stakes anthem blending Houston hip-hop with luxury casino energy.",
+          i:"https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(cover%20art).png"
         }
       };
       var blogImages={
@@ -132,6 +137,7 @@
         setMeta("og-url","content",u);
         setMeta("tw-title","content",r.t);
         setMeta("tw-description","content",r.d);
+        if(r.i){setMeta("og-image","content",r.i);setMeta("tw-image","content",r.i);}
       }
       var blogMatch=p.match(/^\/blog\/(.+)$/);
       if(blogMatch){
