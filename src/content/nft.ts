@@ -28,16 +28,24 @@ export const nftPageData = {
   ],
   faq: [
     {
-      question: "What counts as an official Mr. CAP NFT?",
-      answer: "Any verified collection tied to the creator wallet and contract listed on this page.",
+      question: "What is The Art of ISM NFT album by Mr. CAP?",
+      answer: "The Art of ISM is Mr. CAP's pioneering NFT album — a verified on-chain collection on Ethereum (ERC-1155) that bridges Houston hip-hop with digital ownership and collector utility.",
     },
     {
-      question: "Do I need a wallet to browse?",
-      answer: "No. You only need a wallet to unlock collector-only access.",
+      question: "How do NFTs help independent hip-hop artists maintain ownership?",
+      answer: "NFTs allow artists like Mr. CAP to sell music and art directly to collectors without intermediaries, preserving full creative and financial control — the same independence model the South Park Coalition pioneered decades ago.",
     },
     {
-      question: "Where can I collect?",
-      answer: "OpenSea.",
+      question: "How does Mr. CAP use NFTs in music and digital art?",
+      answer: "Mr. CAP uses NFTs to release exclusive music, unlock collector-only content, and create verifiable digital art tied to his catalog. His collections are verified on OpenSea and Ethereum.",
+    },
+    {
+      question: "Where can I buy Mr. CAP NFT collections?",
+      answer: "Official Mr. CAP NFT collections are available on OpenSea. All verified collections are tied to the creator wallet and contract listed on this page.",
+    },
+    {
+      question: "What makes hip-hop NFTs different from traditional music releases?",
+      answer: "Hip-hop NFTs offer verifiable ownership, collector utility like lossless audio and exclusive content, and a direct artist-to-fan relationship that traditional streaming platforms cannot provide.",
     },
   ],
   citation: {

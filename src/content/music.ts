@@ -42,6 +42,28 @@ export const musicPageData = {
     { title: "O.N.E. on O.N.E.", year: "2005", tag: "Independent era release", summary: "An early chapter in the independent catalog." },
     { title: "Cold Ass Pimp", year: "2003", tag: "Foundation release", summary: "A foundational release in the timeline." },
   ],
+  faq: [
+    {
+      question: "What is Mr. CAP known for in Houston hip-hop?",
+      answer: "Mr. CAP is a Houston-born rapper and long-time South Park Coalition member known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
+    },
+    {
+      question: "What is the significance of The Ties That Bind Us album?",
+      answer: "The Ties That Bind Us (2024) is Mr. CAP's latest full-length project — a masterclass in storytelling that reflects 30 years of SPC legacy while embracing digital ownership and the evolving music landscape.",
+    },
+    {
+      question: "Where can I listen to Mr. CAP's music online?",
+      answer: "Mr. CAP's full catalog is available on Spotify, Apple Music, and the official streaming platform at mrcap1.com/music. Exclusive tracks are also available through NFT collector access.",
+    },
+    {
+      question: "Why do independent hip-hop artists like Mr. CAP avoid major labels?",
+      answer: "Independent artists like Mr. CAP prioritize ownership, creative control, and direct audience connection — principles pioneered by the South Park Coalition decades before streaming made independence mainstream.",
+    },
+    {
+      question: "How does Mr. CAP connect hip-hop and NFT culture?",
+      answer: "Mr. CAP bridges hip-hop and NFTs through verified on-chain collections like The Art of ISM, offering collectors exclusive music, digital art, and utility tied to ownership on Ethereum.",
+    },
+  ],
   storyNotes:
     "Mr. CAP's catalog is built on independence, longevity, and Houston perspective. Every release reflects a different chapter of that path — not just songs, but milestones.",
   citation: {

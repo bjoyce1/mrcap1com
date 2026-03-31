@@ -5,6 +5,7 @@ import PageHero from "@/components/blocks/PageHero";
 import SectionIntro from "@/components/blocks/SectionIntro";
 import CitationBlock from "@/components/blocks/CitationBlock";
 import CTAButtonRow from "@/components/blocks/CTAButtonRow";
+import FAQAccordion from "@/components/blocks/FAQAccordion";
 import StartHereCards from "@/components/music/StartHereCards";
 import CatalogReleaseList from "@/components/music/CatalogReleaseList";
 import StoryNotesBlock from "@/components/music/StoryNotesBlock";
@@ -55,6 +56,15 @@ const Music = () => {
     },
     {
       "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: data.faq.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
@@ -88,6 +98,8 @@ const Music = () => {
         <CatalogReleaseList releases={catalog} />
 
         <StoryNotesBlock body={data.storyNotes} />
+
+        <FAQAccordion items={data.faq} />
 
         <CitationBlock
           canonicalUrl={data.citation.canonicalUrl}
