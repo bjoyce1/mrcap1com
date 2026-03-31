@@ -29,6 +29,7 @@ import WhoIsMrCap from "./pages/WhoIsMrCap";
 import Discography from "./pages/Discography";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import ForMedia from "./pages/ForMedia";
 
 import Booking from "./pages/Booking";
 import Links from "./pages/Links";
