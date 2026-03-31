@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Copy, Check } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -8,6 +10,7 @@ import CitationBlock from "@/components/blocks/CitationBlock";
 import OfficialLinksBlock from "@/components/blocks/OfficialLinksBlock";
 import PressTimelineNew from "@/components/press/PressTimelineNew";
 import MediaKitBlock from "@/components/press/MediaKitBlock";
+import QuoteBlock from "@/components/blocks/QuoteBlock";
 import { pressPageData as data } from "@/content/press";
 import { useSanityPressEntries, type SanityPressEntry } from "@/hooks/useSanity";
 
