@@ -184,6 +184,7 @@ const Index = () => {
           <BookingCTABand />
           <DigitalArtFeature />
           <SocialFeedSection />
+          <ExploreHoustonHipHop />
           <div id="fan-capture">
             <FanCaptureBanner
               sourcePage="homepage"
