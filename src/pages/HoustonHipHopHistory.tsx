@@ -98,7 +98,7 @@ const HoustonHipHopHistory = () => {
           kicker="Cultural Archive"
           title="Houston Hip Hop History: South Park Coalition, Independence & the Legacy of Mr. CAP"
           description="Before streaming, before social media, and before major label dominance, Houston built its own hip hop ecosystem — independent, resilient, and rooted in the streets. This is the story from the inside."
-          CTAs={[
+          ctas={[
             { label: "Explore Mr. CAP Music", href: "/music", variant: "primary" },
             { label: "View Press Coverage", href: "/press", variant: "secondary" },
           ]}
