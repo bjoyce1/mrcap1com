@@ -68,6 +68,7 @@ import PressPost from "./pages/PressPost";
 import Biography from "./pages/Biography";
 import PressKit from "./pages/PressKit";
 import BetOnHer from "./pages/BetOnHer";
+import HoustonHipHopHistory from "./pages/HoustonHipHopHistory";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
