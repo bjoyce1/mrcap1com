@@ -8,6 +8,7 @@ import PageHero from "@/components/blocks/PageHero";
 import SectionIntro from "@/components/blocks/SectionIntro";
 import CitationBlock from "@/components/blocks/CitationBlock";
 import QuoteBlock from "@/components/blocks/QuoteBlock";
+import FAQAccordion from "@/components/blocks/FAQAccordion";
 import { Button } from "@/components/ui/button";
 
 const fadeUp = {
