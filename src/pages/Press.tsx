@@ -25,6 +25,24 @@ function sanityToTimeline(e: SanityPressEntry) {
   };
 }
 
+const CopyLinkButton = () => {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText("https://mrcap1.com/press");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <button
+      onClick={handleCopy}
+      className="mt-4 inline-flex items-center gap-2 text-xs px-4 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+    >
+      {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+      {copied ? "Link Copied!" : "Copy Page Link"}
+    </button>
+  );
+};
+
 const Press = () => {
   const { data: sanityPress } = useSanityPressEntries();
   const hasSanity = sanityPress && sanityPress.length > 0;
