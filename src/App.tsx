@@ -68,6 +68,7 @@ import PressPost from "./pages/PressPost";
 import Biography from "./pages/Biography";
 import PressKit from "./pages/PressKit";
 import BetOnHer from "./pages/BetOnHer";
+import HoustonHipHopHistory from "./pages/HoustonHipHopHistory";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -108,6 +109,7 @@ function AppRoutes() {
           <Route path="/houston-rapper-mr-cap" element={<PageTransition><HoustonRapper /></PageTransition>} />
           <Route path="/south-park-coalition-houston" element={<PageTransition><SouthParkCoalition /></PageTransition>} />
           <Route path="/texas-underground-hip-hop" element={<PageTransition><TexasUndergroundHipHop /></PageTransition>} />
+          <Route path="/houston-hip-hop-history" element={<PageTransition><HoustonHipHopHistory /></PageTransition>} />
           <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
           <Route path="/mr-cap-discography" element={<PageTransition><Discography /></PageTransition>} />
           <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
