@@ -7,6 +7,7 @@ import SectionIntro from "@/components/blocks/SectionIntro";
 import CitationBlock from "@/components/blocks/CitationBlock";
 import CTAButtonRow from "@/components/blocks/CTAButtonRow";
 import QuoteBlock from "@/components/blocks/QuoteBlock";
+import FAQAccordion from "@/components/blocks/FAQAccordion";
 import { motion } from "framer-motion";
 import { Music, Newspaper, Gem, CalendarCheck } from "lucide-react";
 
