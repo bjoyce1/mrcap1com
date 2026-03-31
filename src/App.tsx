@@ -29,6 +29,7 @@ import WhoIsMrCap from "./pages/WhoIsMrCap";
 import Discography from "./pages/Discography";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import ForMedia from "./pages/ForMedia";
 
 import Booking from "./pages/Booking";
 import Links from "./pages/Links";
@@ -161,6 +162,8 @@ function AppRoutes() {
           {/* Legacy redirects for old URLs */}
           <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
           <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
+          {/* Media Resources */}
+          <Route path="/for-media" element={<PageTransition><ForMedia /></PageTransition>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
