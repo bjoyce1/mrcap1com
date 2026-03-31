@@ -28,9 +28,26 @@ export const bookingPageData = {
     ],
   },
   faq: [
-    { question: "Where are you based?", answer: "Houston, Texas." },
-    { question: "Do you travel?", answer: "Yes. Mr. CAP is available worldwide." },
-    { question: "What can be booked?", answer: "Live shows, features, interviews, speaking engagements, and select appearances." },
+    {
+      question: "How do I book a Houston hip-hop artist for an event?",
+      answer: "Submit a booking inquiry through this page with your event details, date, and budget. Mr. CAP is available for live shows, features, interviews, and speaking engagements worldwide.",
+    },
+    {
+      question: "What types of events can Mr. CAP be booked for?",
+      answer: "Mr. CAP is available for live performances, verse/feature collaborations, podcast and radio interviews, speaking engagements on hip-hop culture and ownership, and select corporate appearances.",
+    },
+    {
+      question: "How much does it cost to book a hip-hop artist?",
+      answer: "Rates vary by event type, location, and scope. Submit an inquiry with your details for a custom quote. Press materials and EPK are available for download.",
+    },
+    {
+      question: "What should I expect from a live hip-hop performance?",
+      answer: "Mr. CAP delivers professional, high-energy sets backed by 30+ years of stage experience and South Park Coalition credibility. Full set or featured appearance options are available.",
+    },
+    {
+      question: "Where can I hire an independent rapper for a live show?",
+      answer: "You can book Mr. CAP directly through this page. Based in Houston, TX, available worldwide for shows, festivals, and private events.",
+    },
   ],
   citation: {
     canonicalUrl: "https://mrcap1.com/booking",
