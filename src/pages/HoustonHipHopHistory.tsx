@@ -249,6 +249,31 @@ const HoustonHipHopHistory = () => {
           </div>
         </motion.section>
 
+        <FAQAccordion
+          items={[
+            {
+              question: "What is Mr. CAP known for in Houston hip-hop?",
+              answer: "Mr. CAP is a Houston-born rapper and long-time South Park Coalition member known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
+            },
+            {
+              question: "What defines Houston hip-hop culture and its independent sound?",
+              answer: "Houston hip-hop culture is defined by independence, authenticity, and hustle. Artists pressed their own CDs, sold music hand-to-hand, and built loyal audiences without relying on major labels — a model the South Park Coalition helped pioneer.",
+            },
+            {
+              question: "How did the South Park Coalition influence underground rap?",
+              answer: "SPC created the blueprint for independent hip-hop — direct-to-fan distribution, full creative ownership, and community-driven growth — decades before streaming platforms made independence mainstream.",
+            },
+            {
+              question: "Why do independent hip-hop artists like Mr. CAP avoid major labels?",
+              answer: "Independent artists like Mr. CAP prioritize ownership, creative control, and direct audience connection — principles pioneered by the South Park Coalition decades before streaming made independence mainstream.",
+            },
+            {
+              question: "How can I book Mr. CAP for a live performance?",
+              answer: "Visit mrcap1.com/booking to submit a booking inquiry. Mr. CAP is available for live shows, features, interviews, and speaking engagements worldwide.",
+            },
+          ]}
+        />
+
         <CitationBlock
           canonicalUrl="https://mrcap1.com/houston-hip-hop-history"
           description="Mr. CAP is a Houston-based rapper and long-time member of the South Park Coalition. This page is part of the official mrcap1.com archive and is intended for citation, research, and cultural documentation."
