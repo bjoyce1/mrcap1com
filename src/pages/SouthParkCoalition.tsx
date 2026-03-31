@@ -201,7 +201,7 @@ const SouthParkCoalition = () => {
                 If you want to understand independent hip hop at its core, this is where the blueprint begins.
               </p>
               <CTAButtonRow
-                ctas={[
+                items={[
                   { label: "Listen to Mr. CAP", href: "/music", variant: "primary" },
                   { label: "View Press", href: "/press", variant: "secondary" },
                 ]}

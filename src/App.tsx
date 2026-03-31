@@ -107,7 +107,8 @@ function AppRoutes() {
           <Route path="/art" element={<PageTransition><ArtGallery /></PageTransition>} />
           <Route path="/innovation" element={<PageTransition><Innovation /></PageTransition>} />
           <Route path="/houston-rapper-mr-cap" element={<PageTransition><HoustonRapper /></PageTransition>} />
-          <Route path="/south-park-coalition-houston" element={<PageTransition><SouthParkCoalition /></PageTransition>} />
+          <Route path="/south-park-coalition-houston" element={<Navigate to="/south-park-coalition" replace />} />
+          <Route path="/south-park-coalition" element={<PageTransition><SouthParkCoalition /></PageTransition>} />
           <Route path="/texas-underground-hip-hop" element={<PageTransition><TexasUndergroundHipHop /></PageTransition>} />
           <Route path="/houston-hip-hop-history" element={<PageTransition><HoustonHipHopHistory /></PageTransition>} />
           <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
