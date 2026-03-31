@@ -50,26 +50,42 @@ const HoustonHipHopHistory = () => {
       mainEntity: [
         {
           "@type": "Question",
-          name: "What is the South Park Coalition?",
+          name: "What is Mr. CAP known for in Houston hip-hop?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "The South Park Coalition (SPC) is one of the most influential independent hip-hop collectives from Houston, Texas. Founded as a blueprint for artist ownership and independence, it includes members like Mr. CAP, K-Rino, Klondike Kat, and Point Blank.",
+            text: "Mr. CAP is a Houston-born rapper and long-time South Park Coalition member known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
           },
         },
         {
           "@type": "Question",
-          name: "Why is Houston hip hop important?",
+          name: "What defines Houston hip-hop culture and its independent sound?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Houston hip hop pioneered the independent music model — artists pressed their own CDs, built direct-to-fan distribution, and maintained full creative ownership decades before streaming made it mainstream.",
+            text: "Houston hip-hop culture is defined by independence, authenticity, and hustle. Artists pressed their own CDs, sold music hand-to-hand, and built loyal audiences without relying on major labels — a model the South Park Coalition helped pioneer.",
           },
         },
         {
           "@type": "Question",
-          name: "Who is Mr. CAP?",
+          name: "How did the South Park Coalition influence underground rap?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, long-time South Park Coalition member, and creative technologist who bridges traditional hip-hop culture with Web3 and digital innovation.",
+            text: "SPC created the blueprint for independent hip-hop — direct-to-fan distribution, full creative ownership, and community-driven growth — decades before streaming platforms made independence mainstream.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Why do independent hip-hop artists like Mr. CAP avoid major labels?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Independent artists like Mr. CAP prioritize ownership, creative control, and direct audience connection — principles pioneered by the South Park Coalition decades before streaming made independence mainstream.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How can I book Mr. CAP for a live performance?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Visit mrcap1.com/booking to submit a booking inquiry. Mr. CAP is available for live shows, features, interviews, and speaking engagements worldwide.",
           },
         },
       ],

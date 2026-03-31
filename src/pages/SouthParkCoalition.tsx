@@ -226,6 +226,28 @@ const SouthParkCoalition = () => {
             </div>
           </section>
 
+          {/* FAQ */}
+          <FAQAccordion
+            items={[
+              {
+                question: "Who are the key members of the South Park Coalition and their impact?",
+                answer: "Key SPC members include K-Rino (founder), Mr. CAP, Klondike Kat, Dope-E, Point Blank, Low-G, and Ganksta N-I-P. The coalition pioneered independent hip-hop distribution in Texas and proved artists could build sustainable careers without major label support.",
+              },
+              {
+                question: "How did the South Park Coalition influence underground rap?",
+                answer: "SPC created the blueprint for independent hip-hop — direct-to-fan distribution, full creative ownership, and community-driven growth — decades before streaming platforms made independence mainstream.",
+              },
+              {
+                question: "What defines Houston hip-hop culture and its independent sound?",
+                answer: "Houston hip-hop culture is defined by independence, authenticity, and hustle. Artists pressed their own CDs, sold music hand-to-hand, and built loyal audiences without relying on major labels — a model the South Park Coalition helped pioneer.",
+              },
+              {
+                question: "What makes independent hip-hop artists successful long-term?",
+                answer: "Ownership, consistency, and direct audience connection. Artists like Mr. CAP and the South Park Coalition proved that longevity comes from controlling your own catalog, building genuine fan relationships, and never compromising creative vision.",
+              },
+            ]}
+          />
+
           {/* Quote Block */}
           <QuoteBlock
             quote="The South Park Coalition created a blueprint for artist ownership, longevity, and cultural impact in Houston hip hop."
