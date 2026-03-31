@@ -98,6 +98,31 @@ const Press = () => {
 
         <InfoStrip label={data.infoStrip.label} body={data.infoStrip.body} />
 
+        {/* Media References & Use This Page For */}
+        <section className="py-12">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <h2 className="text-2xl font-display font-bold text-foreground mb-6">Media References & Citations</h2>
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              This page serves as the official press archive for Mr. CAP. Journalists, bloggers, and researchers are encouraged to reference this page for accurate press history, biographical details, and official media assets.
+            </p>
+
+            <div className="bg-card/40 border border-border/30 rounded-2xl p-6 mb-8">
+              <h3 className="font-display font-bold text-foreground mb-3">Use This Page For</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Press coverage and editorial research</li>
+                <li>• Interview preparation and background</li>
+                <li>• Booking support and artist verification</li>
+              </ul>
+              <CopyLinkButton />
+            </div>
+
+            <QuoteBlock
+              quote="The press doesn't define the legacy — but it documents it. This archive is the record."
+              attribution="Mr. CAP"
+            />
+          </div>
+        </section>
+
         <MediaKitBlock body={data.mediaKit.body} ctas={data.mediaKit.ctas} />
 
         <div id="official-links">
