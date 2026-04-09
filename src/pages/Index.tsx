@@ -184,7 +184,6 @@ const Index = () => {
           <CatalogPreview />
           <LatestPressFeature />
           <BookingCTABand />
-          <ArtOfIsmFeature />
           <DigitalArtFeature />
           <SocialFeedSection />
           <ExploreHoustonHipHop />
