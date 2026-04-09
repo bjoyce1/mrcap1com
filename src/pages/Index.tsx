@@ -15,6 +15,7 @@ import FanCaptureBanner from "@/components/FanCaptureBanner";
 import ExploreHoustonHipHop from "@/components/home/ExploreHoustonHipHop";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
+import ArtOfIsmFeature from "@/components/home/ArtOfIsmFeature";
 
 const Index = () => {
   const jsonLd = {
@@ -182,6 +183,7 @@ const Index = () => {
           <CatalogPreview />
           <LatestPressFeature />
           <BookingCTABand />
+          <ArtOfIsmFeature />
           <DigitalArtFeature />
           <SocialFeedSection />
           <ExploreHoustonHipHop />

@@ -70,6 +70,7 @@ import Biography from "./pages/Biography";
 import PressKit from "./pages/PressKit";
 import BetOnHer from "./pages/BetOnHer";
 import HoustonHipHopHistory from "./pages/HoustonHipHopHistory";
+import ArtOfIsm from "./pages/ArtOfIsm";
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = "G-PBL8BBQMK4";
@@ -134,6 +135,7 @@ function AppRoutes() {
           {/* Release Pages */}
           <Route path="/panties-on-my-piano" element={<PageTransition><PantiesOnMyPiano /></PageTransition>} />
           <Route path="/bet-on-her" element={<PageTransition><BetOnHer /></PageTransition>} />
+          <Route path="/art-of-ism" element={<PageTransition><ArtOfIsm /></PageTransition>} />
           {/* OPK Routes */}
           <Route path="/opk" element={<PageTransition><OPKHub /></PageTransition>} />
           <Route path="/opk/music" element={<PageTransition><OPKMusic /></PageTransition>} />
