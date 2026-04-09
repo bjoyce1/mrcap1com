@@ -173,6 +173,7 @@ const Index = () => {
         <Navigation />
         <main>
           <HeroSection />
+          <ArtOfIsmFeature />
           <ReleaseSpotlight />
           <section className="py-12 text-center">
             <Link to="/new-releases" className="inline-flex items-center gap-2 text-primary hover:underline font-display text-lg tracking-wide">
@@ -183,7 +184,6 @@ const Index = () => {
           <CatalogPreview />
           <LatestPressFeature />
           <BookingCTABand />
-          <ArtOfIsmFeature />
           <DigitalArtFeature />
           <SocialFeedSection />
           <ExploreHoustonHipHop />
