@@ -55,7 +55,14 @@ const ArtOfIsm = () => {
           {/* Hero Section */}
           <section className="relative overflow-hidden">
             {/* Background */}
+            <img
+              src={artOfIsmBg}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-black via-[hsl(var(--background))] to-[hsl(var(--background))]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.15),transparent_70%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.15),transparent_70%)]" />
 
             <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
