@@ -1,7 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Disc3 } from "lucide-react";
+import { ArrowRight, Disc3, X } from "lucide-react";
+
+const STORAGE_KEY = "announcementDismissed";
 
 const AnnouncementStrip = () => {
+  const [dismissed, setDismissed] = useState(
+    () => sessionStorage.getItem(STORAGE_KEY) === "true"
+  );
+
+  if (dismissed) return null;
+
+  const handleDismiss = () => {
+    sessionStorage.setItem(STORAGE_KEY, "true");
+    setDismissed(true);
+  };
+
   return (
     <div className="relative z-50 bg-primary/10 border-b border-primary/20 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-center gap-3 text-sm">
@@ -16,6 +30,13 @@ const AnnouncementStrip = () => {
         >
           Listen <ArrowRight className="w-3 h-3" />
         </Link>
+        <button
+          onClick={handleDismiss}
+          className="ml-2 p-1 text-foreground/40 hover:text-foreground/80 transition-colors"
+          aria-label="Dismiss announcement"
+        >
+          <X className="w-3.5 h-3.5" />
+        </button>
       </div>
     </div>
   );
