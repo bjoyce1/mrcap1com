@@ -113,6 +113,7 @@ const AdminLibrary = () => {
         release_year: editingTrack.release_year || new Date().getFullYear(),
         credits: editingTrack.credits || null,
         featured_artists: editingTrack.featured_artists || null,
+        isrc: editingTrack.isrc || null,
         is_public: editingTrack.is_public ?? true,
         requires_nft: (editingTrack as any).requires_nft || false,
       };
@@ -310,6 +311,7 @@ const AdminLibrary = () => {
               <div><Label>Audio URL</Label><Input value={editingTrack?.audio_url || ""} onChange={(e) => setEditingTrack(prev => prev ? { ...prev, audio_url: e.target.value } : prev)} placeholder="https://cdn.../track.mp3" /></div>
               <div><Label>Cover Art URL</Label><Input value={editingTrack?.cover_art_url || ""} onChange={(e) => setEditingTrack(prev => prev ? { ...prev, cover_art_url: e.target.value } : prev)} /></div>
               <div><Label>Credits</Label><Textarea value={editingTrack?.credits || ""} onChange={(e) => setEditingTrack(prev => prev ? { ...prev, credits: e.target.value } : prev)} /></div>
+              <div><Label>ISRC</Label><Input value={editingTrack?.isrc || ""} onChange={(e) => setEditingTrack(prev => prev ? { ...prev, isrc: e.target.value } : prev)} placeholder="USRC17607839" /></div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2"><Switch checked={editingTrack?.is_public ?? true} onCheckedChange={(c) => setEditingTrack(prev => prev ? { ...prev, is_public: c } : prev)} /><Label>Public</Label></div>
                 <div className="flex items-center gap-2"><Switch checked={editingTrack?.explicit || false} onCheckedChange={(c) => setEditingTrack(prev => prev ? { ...prev, explicit: c } : prev)} /><Label>Explicit</Label></div>
