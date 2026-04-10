@@ -20,7 +20,7 @@ const Merch = () => {
         <meta property="og:title" content="Official Merch | Mr. CAP" />
         <meta property="og:description" content="Shop exclusive Mr. CAP merchandise. Limited edition apparel, accessories, and collectibles." />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://mrcap.com/merch" />
+        <link rel="canonical" href="https://mrcap1.com/merch" />
       </Helmet>
 
       <div className="min-h-screen bg-[#020202] text-foreground">
