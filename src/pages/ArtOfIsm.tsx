@@ -7,6 +7,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import artOfIsmTitle from "@/assets/art-of-ism-title.png";
 import artOfIsmPoster from "@/assets/art-of-ism-poster.png";
 import artOfIsmQr from "@/assets/art-of-ism-qr.png";
+import artOfIsmBg from "@/assets/art-of-ism-bg.png";
 
 const highlights = [
   { icon: BookOpen, label: "11 Immersive Chapters" },
