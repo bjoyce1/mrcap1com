@@ -3,10 +3,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
-import albumArtOfIsm from "@/assets/album-art-of-ism.png";
-import albumGrave from "@/assets/album-grave.jpg";
-import albumOneOnOne from "@/assets/album-one-on-one.jpg";
-import albumColdAssPimp from "@/assets/album-cold-ass-pimp.jpg";
+
+const albumArtOfIsm = "/images/thumbnails/album-art-of-ism-thumb.webp";
+const albumGrave = "/images/thumbnails/album-grave-thumb.webp";
+const albumOneOnOne = "/images/thumbnails/album-one-on-one-thumb.webp";
+const albumColdAssPimp = "/images/thumbnails/album-cold-ass-pimp-thumb.webp";
 
 const albums = [
   {

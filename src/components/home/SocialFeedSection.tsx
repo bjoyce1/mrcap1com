@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Instagram, Youtube, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import albumArtOfIsm from "@/assets/album-art-of-ism.png";
+import albumGrave from "@/assets/album-grave.jpg";
+import albumTies from "@/assets/album-ties.jpg";
+import limitlessCover from "@/assets/limitless-cover.png";
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -62,28 +66,27 @@ const SocialFeedSection = () => {
                 Instagram
               </span>
             </div>
-            <div className="p-5 flex flex-col items-center justify-center min-h-[300px] text-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 via-purple-500 to-orange-500 flex items-center justify-center mb-4">
-                <Instagram className="w-10 h-10 text-white" />
-              </div>
-              <p className="font-display text-lg font-bold text-foreground">@mrcapism</p>
-              <p className="text-sm text-muted-foreground mt-1 mb-4">
-                Music, culture, and behind-the-scenes from Houston's own.
-              </p>
-              <Button variant="flux" size="sm" className="rounded-full gap-2" asChild>
+            <div className="grid grid-cols-2 gap-1 p-1">
+              {[albumArtOfIsm, albumGrave, albumTies, limitlessCover].map((src, i) => (
+                <div key={i} className="aspect-square overflow-hidden rounded-lg group">
+                  <img
+                    src={src}
+                    alt={`Instagram preview ${i + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="px-5 py-4">
+              <Button variant="flux" size="sm" className="rounded-full gap-2 w-full" asChild>
                 <a href="https://www.instagram.com/mrcapism/" target="_blank" rel="noopener noreferrer">
                   <Instagram className="w-3.5 h-3.5" />
                   Follow on Instagram
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </Button>
-            </div>
-            <div className="grid grid-cols-3 gap-px border-t border-border/10">
-              {["Music drops", "Show recaps", "Studio sessions"].map((label) => (
-                <div key={label} className="bg-muted/20 py-3 text-center">
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">{label}</span>
-                </div>
-              ))}
             </div>
           </motion.div>
         </div>
