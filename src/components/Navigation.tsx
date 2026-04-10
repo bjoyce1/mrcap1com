@@ -17,6 +17,8 @@ const primaryLinks = [
   { to: "/videos", label: "Videos" },
   { to: "/booking", label: "Booking" },
   { to: "/who-is-mr-cap", label: "About" },
+  { to: "/blog", label: "Blog" },
+  { to: "/biography", label: "Bio" },
 ];
 
 const moreLinks = [
@@ -25,10 +27,8 @@ const moreLinks = [
   { to: "/opk", label: "OPK" },
   { to: "/merch", label: "Merch" },
   { to: "/innovation", label: "Tech" },
-  { to: "/blog", label: "Blog" },
   { to: "/mr-cap-discography", label: "Discography" },
   { to: "/legacy", label: "Legacy" },
-  { to: "/biography", label: "Biography" },
 ];
 
 const Navigation = () => {
