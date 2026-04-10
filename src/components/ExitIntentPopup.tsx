@@ -42,10 +42,13 @@ const ExitIntentPopup = () => {
       return;
     }
 
-    // Add event listener for mouse leaving viewport
-    document.addEventListener('mouseleave', handleMouseLeave);
+    // Wait 45 seconds before arming the exit-intent listener
+    const delayId = setTimeout(() => {
+      document.addEventListener('mouseleave', handleMouseLeave);
+    }, 45_000);
 
     return () => {
+      clearTimeout(delayId);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [handleMouseLeave]);
