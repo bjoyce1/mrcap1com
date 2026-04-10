@@ -240,10 +240,15 @@ const About = () => {
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-3xl font-display font-bold mb-6">South Park Coalition Legacy</h2>
-                <p className="text-muted-foreground mb-8">
+                <p className="text-muted-foreground mb-4">
                   As an original member of the legendary South Park Coalition, Mr. CAP carries forward one of the 
                   most respected underground hip-hop movements in Texas. The sound, the message, and the independence 
                   that shaped a generation still live here—just with new tools and new technology.
+                </p>
+                <p className="text-muted-foreground mb-8">
+                  <Link to="/south-park-coalition" className="text-primary hover:underline">Learn more about the South Park Coalition</Link>
+                  {" · "}
+                  <Link to="/houston-hip-hop-history" className="text-primary hover:underline">Explore Houston hip-hop history</Link>
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
                   <Button variant="fluxOutline" asChild>

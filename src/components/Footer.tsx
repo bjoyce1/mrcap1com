@@ -25,6 +25,8 @@ const Footer = () => {
     { label: "About", href: "/who-is-mr-cap", isRoute: true },
     { label: "Press", href: "/press", isRoute: true },
     { label: "Blog", href: "/blog", isRoute: true },
+    { label: "Houston Hip-Hop History", href: "/houston-hip-hop-history", isRoute: true },
+    { label: "South Park Coalition", href: "/south-park-coalition", isRoute: true },
     { label: "Contact", href: "/#contact", isRoute: false },
   ];
 
