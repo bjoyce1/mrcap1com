@@ -54,16 +54,16 @@ const ArtOfIsm = () => {
         <main>
           {/* Hero Section */}
           <section className="relative overflow-hidden">
-            {/* Background */}
+            {/* Background image */}
             <img
               src={artOfIsmBg}
               alt=""
               aria-hidden="true"
-              className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+              className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none z-0"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-[hsl(var(--background))] to-[hsl(var(--background))]" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.15),transparent_70%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.15),transparent_70%)]" />
+            {/* Gradient overlays */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-[hsl(var(--background))/0.7] to-[hsl(var(--background))] z-[1]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.15),transparent_70%)] z-[1]" />
 
             <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
               <ScrollReveal>
