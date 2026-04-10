@@ -21,7 +21,7 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import StickyPlayer from "@/components/player/StickyPlayer";
 import MobileBottomNav from "@/components/MobileBottomNav";
-import FloatingMascot from "@/components/FloatingMascot";
+
 
 // ── Lazy-loaded pages ───────────────────────────────────────
 const Index = lazy(() => import("./pages/Index"));
@@ -182,7 +182,7 @@ function AppRoutes() {
 
       <StickyPlayer />
       <MobileBottomNav />
-      <FloatingMascot />
+      
     </>
   );
 }
