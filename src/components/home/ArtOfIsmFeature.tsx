@@ -4,10 +4,18 @@ import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
 import artOfIsmTitle from "@/assets/art-of-ism-title.png";
 import artOfIsmPoster from "@/assets/art-of-ism-poster.png";
+import artOfIsmBg from "@/assets/art-of-ism-bg.png";
 
 const ArtOfIsmFeature = () => {
   return (
     <section className="py-20 md:py-28 relative overflow-hidden">
+      {/* Background image */}
+      <img
+        src={artOfIsmBg}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+      />
       {/* Accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl pointer-events-none" />
 
