@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/hooks/useGSAP";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
-import heroImage from "@/assets/mrcap-hero-bg.jpg";
+
+const heroImage = "/images/mrcap-hero-bg.jpg";
 
 const HeroSection = () => {
   const [glitching, setGlitching] = useState(false);

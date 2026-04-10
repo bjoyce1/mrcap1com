@@ -19,12 +19,9 @@
     <meta name="google-site-verification" content="iNIzRwhs8H2I_Oj7m2t_sexjtCtl5yRjb9gZE4KbTOY" />
 
     <!-- Preload hero LCP image -->
-    <link rel="preload" as="image" href="/src/assets/mrcap-hero-bg.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/mrcap-hero-bg.jpg" fetchpriority="high" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Fonts loaded via @fontsource packages in JS bundle -->
 
     <!-- Open Graph (defaults — overridden by prerender script below) -->
     <meta property="og:type" content="website" />
@@ -182,114 +179,7 @@
     <meta name="geo.region" content="US-TX" />
     <meta name="geo.placename" content="Houston" />
     
-    <!-- JSON-LD Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://mrcap1.com/#website",
-          "url": "https://mrcap1.com",
-          "name": "Mr. CAP Music",
-          "description": "Official website of Houston hip-hop artist Mr. CAP",
-          "publisher": {
-            "@id": "https://mrcap1.com/#person"
-          },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://mrcap1.com/blog?search={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
-        },
-        {
-          "@type": "Person",
-          "@id": "https://mrcap1.com/#person",
-          "name": "Mr. CAP",
-          "alternateName": ["Cornelius A. Pratt", "Mr CAP", "MrCAP"],
-          "jobTitle": "Rapper, Writer, Technologist",
-          "description": "Houston-born rapper, South Park Coalition original member, and creative technologist bridging hip-hop, business, and blockchain.",
-          "url": "https://mrcap1.com",
-          "image": "https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg",
-          "sameAs": [
-            "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-            "https://www.youtube.com/@mrcap1",
-            "https://twitter.com/mrcap1",
-            "https://instagram.com/mrcapism",
-            "https://www.tiktok.com/@mrcapism",
-            "https://opensea.io/mrcap",
-            "https://music.apple.com/us/artist/mr-cap/1506719540"
-          ],
-          "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "South Park Coalition", "Music Production", "Digital Distribution"],
-          "memberOf": {
-            "@type": "MusicGroup",
-            "name": "South Park Coalition",
-            "foundingLocation": {
-              "@type": "Place",
-              "name": "Houston, Texas"
-            }
-          },
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Houston",
-            "addressRegion": "TX",
-            "addressCountry": "US"
-          }
-        },
-        {
-          "@type": "MusicGroup",
-          "@id": "https://mrcap1.com/#artist",
-          "name": "Mr. CAP",
-          "genre": ["Hip-Hop", "Rap", "Underground Hip-Hop", "Houston Rap"],
-          "foundingLocation": {
-            "@type": "Place",
-            "name": "Houston, Texas"
-          },
-          "album": [
-            {
-              "@type": "MusicAlbum",
-              "name": "The Ties That Bind Us",
-              "datePublished": "2024",
-              "track": [
-                {
-                  "@type": "MusicRecording",
-                  "name": "Bet'n On Me"
-                }
-              ]
-            },
-            {
-              "@type": "MusicAlbum",
-              "name": "The Art of ISM",
-              "datePublished": "2019",
-              "recordLabel": "Sony Music / The Orchard"
-            },
-            {
-              "@type": "MusicAlbum",
-              "name": "2 Tha Grave",
-              "datePublished": "2011"
-            },
-            {
-              "@type": "MusicAlbum",
-              "name": "O.N.E. on O.N.E.",
-              "datePublished": "2005"
-            }
-          ]
-        },
-        {
-          "@type": "BreadcrumbList",
-          "@id": "https://mrcap1.com/#breadcrumb",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://mrcap1.com"
-            }
-          ]
-        }
-      ]
-    }
-    </script>
+    <!-- JSON-LD injected per-page by react-helmet-async (see each page component) -->
     
   
   
@@ -300,20 +190,60 @@
   <body class="antialiased">
     <div id="root">
       <!-- Minimal pre-hydration shell — route-specific content rendered by React -->
-      <div style="background:#0B0C15;min-height:100vh;display:flex;align-items:center;justify-content:center">
+      <div style="background:#0B0C15;min-height:100vh">
         <noscript>
-          <nav aria-label="Main navigation" style="position:absolute;top:0;left:0;right:0;padding:1rem 2rem;display:flex;gap:1.5rem;font-family:sans-serif;color:#fff">
+          <nav aria-label="Main navigation" style="position:relative;top:0;left:0;right:0;padding:1rem 2rem;display:flex;flex-wrap:wrap;gap:1.5rem;font-family:sans-serif;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1)">
             <a href="/" style="color:#D4A843;font-weight:700;font-size:1.25rem;text-decoration:none">Mr.&nbsp;CAP</a>
             <a href="/music" style="color:#ccc;text-decoration:none">Music</a>
+            <a href="/new-releases" style="color:#ccc;text-decoration:none">New Releases</a>
             <a href="/press" style="color:#ccc;text-decoration:none">Press</a>
             <a href="/booking" style="color:#ccc;text-decoration:none">Booking</a>
-            <a href="/about" style="color:#ccc;text-decoration:none">About</a>
+            <a href="/who-is-mr-cap" style="color:#ccc;text-decoration:none">About</a>
             <a href="/blog" style="color:#ccc;text-decoration:none">Blog</a>
+            <a href="/videos" style="color:#ccc;text-decoration:none">Videos</a>
+            <a href="/biography" style="color:#ccc;text-decoration:none">Biography</a>
+            <a href="/nft" style="color:#ccc;text-decoration:none">NFT</a>
+            <a href="/south-park-coalition" style="color:#ccc;text-decoration:none">SPC</a>
           </nav>
-          <main style="color:#fff;font-family:sans-serif;padding:6rem 2rem;max-width:48rem;margin:0 auto;text-align:center">
-            <p style="color:#D4A843;font-weight:700;font-size:1.25rem">Mr. CAP</p>
-            <p style="margin-top:0.5rem;color:#ccc">Houston Hip-Hop Artist &amp; South Park Coalition Member</p>
-            <p style="margin-top:1rem;color:#999;font-size:0.875rem">Enable JavaScript for the full experience, or use the navigation above.</p>
+          <main style="color:#fff;font-family:sans-serif;padding:4rem 2rem;max-width:48rem;margin:0 auto">
+            <h1 style="color:#D4A843;font-weight:700;font-size:2rem;margin-bottom:0.5rem">Mr. CAP</h1>
+            <p style="color:#ccc;font-size:1.1rem;margin-bottom:2rem">Houston Hip-Hop Artist &amp; South Park Coalition Original Member</p>
+
+            <section style="margin-bottom:2rem;text-align:left">
+              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">About Mr. CAP</h2>
+              <p style="color:#aaa;line-height:1.7">Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, writer, and creative entrepreneur. An original member of the legendary South Park Coalition alongside K-Rino, Klondike Kat, and Point Blank, he has been making music for over 30 years. In 2021, he became the first Houston rapper to sell a Hip-Hop NFT, bridging hip-hop culture and blockchain technology.</p>
+            </section>
+
+            <section style="margin-bottom:2rem;text-align:left">
+              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">Discography</h2>
+              <ul style="color:#aaa;line-height:2;list-style:none;padding:0">
+                <li>&#9658; <strong>The Ties That Bind Us</strong> (2024) — SPC group album, 19 tracks</li>
+                <li>&#9658; <strong>The Art of ISM</strong> (2019) — Sony Music / The Orchard</li>
+                <li>&#9658; <strong>2 Tha Grave</strong> (2011)</li>
+                <li>&#9658; <strong>O.N.E. on O.N.E.</strong> (2005)</li>
+              </ul>
+              <p style="margin-top:0.75rem"><a href="/music" style="color:#D4A843">Explore the full catalog &rarr;</a></p>
+            </section>
+
+            <section style="margin-bottom:2rem;text-align:left">
+              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">Booking &amp; Contact</h2>
+              <p style="color:#aaa;line-height:1.7">Mr. CAP is available for concerts, festivals, features, speaking engagements, and interviews. Contact: <a href="mailto:wrecklessent@gmail.com" style="color:#D4A843">wrecklessent@gmail.com</a></p>
+              <p style="margin-top:0.75rem"><a href="/booking" style="color:#D4A843">Submit a booking request &rarr;</a></p>
+            </section>
+
+            <section style="margin-bottom:2rem;text-align:left">
+              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">Stream &amp; Follow</h2>
+              <p style="color:#aaa;line-height:2">
+                <a href="https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug" style="color:#ccc" rel="noreferrer">Spotify</a> &middot;
+                <a href="https://music.apple.com/us/artist/mr-cap/1506719540" style="color:#ccc" rel="noreferrer">Apple Music</a> &middot;
+                <a href="https://www.youtube.com/@mrcap1" style="color:#ccc" rel="noreferrer">YouTube</a> &middot;
+                <a href="https://www.instagram.com/mrcapism/" style="color:#ccc" rel="noreferrer">Instagram</a> &middot;
+                <a href="https://x.com/mrcap1" style="color:#ccc" rel="noreferrer">X / Twitter</a> &middot;
+                <a href="https://www.tiktok.com/@mrcapism" style="color:#ccc" rel="noreferrer">TikTok</a>
+              </p>
+            </section>
+
+            <p style="color:#666;font-size:0.8rem;margin-top:3rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:1rem">&copy; 2026 Mr. CAP. All rights reserved. South Park Coalition &middot; Houston, TX</p>
           </main>
         </noscript>
       </div>

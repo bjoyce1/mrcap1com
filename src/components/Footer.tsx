@@ -102,10 +102,10 @@ const Footer = () => {
             © {new Date().getFullYear()} MR. CAP. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
+            <Link to="/privacy" className="text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
+            </Link>
+            <a href="mailto:wrecklessent@gmail.com" className="text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
               Terms of Service
             </a>
           </div>
