@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
 import artOfIsmTitle from "@/assets/art-of-ism-title.png";
 import artOfIsmPoster from "@/assets/art-of-ism-poster.png";
+import artOfIsmBg from "@/assets/art-of-ism-bg.png";
 
 const ArtOfIsmFeature = () => {
   return (
