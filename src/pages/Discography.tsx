@@ -375,6 +375,25 @@ const Discography = () => {
               </div>
             </section>
           </div>
+
+          {/* Start Here Cards from Music page */}
+          <StartHereCards cards={musicPageData.startHere} />
+
+          {/* Story Notes */}
+          <StoryNotesBlock body={musicPageData.storyNotes} />
+
+          {/* FAQ */}
+          <FAQAccordion items={musicPageData.faq} />
+
+          {/* Citation */}
+          <CitationBlock
+            canonicalUrl="https://mrcap1.com/discography"
+            description={musicPageData.citation.description}
+            links={musicPageData.citation.links}
+          />
+
+          {/* Final CTAs */}
+          <CTAButtonRow items={musicPageData.finalCTAs} />
         </main>
         
         <Footer />
