@@ -24,34 +24,33 @@ export const pressPageData = {
   timeline: [
     {
       outlet: "Mr. CAP Legacy",
-      title: "Ciddi Boy P & Mr. CAP Release New Single \"Big Boy Drip\"",
+      title: "Ciddy Boi P & Mr. CAP Release New Single \"Big Boy Drip\"",
       slug: "big-boy-drip-release",
       author: "ISM",
       date: "2019-06-01",
       summary:
-        "Houston hip-hop veterans Ciddi Boy P and Mr. CAP join forces for \"Big Boy Drip,\" a heavyweight collaboration channeling the raw energy and unapologetic swagger of H-Town's underground legacy.",
+        "Houston hip-hop veterans Ciddy Boi P and Mr. CAP join forces for \"Big Boy Drip,\" a heavyweight collaboration channeling the raw energy and unapologetic swagger of H-Town's underground legacy.",
       url: "/press/big-boy-drip-release",
       relatedRelease: "big-boy-drip",
-      seoTitle: "Ciddi Boy P & Mr. CAP Release \"Big Boy Drip\" | Press",
-      seoDescription: "Read the official press release for \"Big Boy Drip\" by Ciddi Boy P & Mr. CAP — a bold Houston hip-hop single from the land of the Screwzoo.",
-      body: `Houston, TX — Houston hip-hop veterans Ciddi Boy P and Mr. CAP have joined forces for a heavyweight collaboration titled "Big Boy Drip," a bold new single that channels the raw energy and unapologetic swagger of H-Town's underground legacy. From the land of the Screwzoo to the world stage, this record is pure Houston flexology — candy paint, diamond drip, and big boy bars.
+      seoTitle: "Ciddy Boi P & Mr. CAP Release \"Big Boy Drip\" | Press",
+      seoDescription: "Read the official press release for \"Big Boy Drip\" by Ciddy Boi P & Mr. CAP — a bold Houston hip-hop single from the land of the Screwzoo.",
+      body: `Houston, TX — Houston hip-hop veterans Ciddy Boi P and Mr. CAP have joined forces for a heavyweight collaboration titled "Big Boy Drip," a bold new single that channels the raw energy and unapologetic swagger of H-Town's underground legacy. From the land of the Screwzoo to the world stage, this record is pure Houston flexology — candy paint, diamond drip, and big boy bars.
 
-Mr. CAP, an original member of the legendary South Park Coalition — the storied collective that helped define Houston's independent rap movement — brings decades of authenticity and street-level wisdom to the track. Standing 6'6" and dripping in white gold and white diamonds, CAP embodies the larger-than-life presence that makes this record hit different. His presence alongside Ciddi Boy P creates a dynamic pairing that bridges generations of Houston's rich musical heritage.
+Mr. CAP, an original member of the legendary South Park Coalition — the storied collective that helped define Houston's independent rap movement — brings decades of authenticity and street-level wisdom to the track. Standing 6'6" and dripping in white gold and white diamonds, CAP embodies the larger-than-life presence that makes this record hit different. His presence alongside Ciddy Boi P creates a dynamic pairing that bridges generations of Houston's rich musical heritage.
 
 The track moves between braggadocio and philosophy — from "Dow Jones the game and I run with it" to shoutouts to DJ Screw's enduring legacy in the Screwzoo. With hard-hitting production and razor-sharp lyricism, "Big Boy Drip" captures the confidence, resilience, and unmistakable drip that Houston artists are known for worldwide. As CAP puts it: "I'm magical with that lyricism / Cap call it, pure-ism."
 
 ## Track Details
 
 - Title: Big Boy Drip
-- Artists: Ciddi Boy P & Mr. CAP
+- Artists: Ciddy Boi P & Mr. CAP
 - ISRC: QT6WA2602019
-- Genre: Hip-Hop / Rap
 
 ## About the Artists
 
 Mr. CAP (Cornelius A. Pratt) is a Houston-based rapper, entrepreneur, and cultural architect. As an original member of the South Park Coalition alongside K-Rino, he has been a cornerstone of Houston's independent hip-hop scene for decades. Beyond music, Mr. CAP operates across multiple ventures including CAPISM Publishing, Premium Or Nothing Cleaning Service, and emerging Web3 projects. His family lineage traces back to blues legend Johnny "Guitar" Watson.
 
-Ciddi Boy P is a Houston rapper and collaborator known for his commanding presence and authentic approach to the craft. His partnership with Mr. CAP on "Big Boy Drip" showcases two artists operating at the peak of their confidence.
+Ciddy Boi P is a Houston rapper and collaborator known for his commanding presence and authentic approach to the craft. His partnership with Mr. CAP on "Big Boy Drip" showcases two artists operating at the peak of their confidence.
 
 For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
     },
