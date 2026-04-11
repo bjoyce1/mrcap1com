@@ -22,7 +22,7 @@ export const musicPageData = {
     },
     {
       title: "The Art of ISM",
-      meta: "2019",
+      meta: "2026",
       summary: "A sharpened studio album built for replay.",
       slug: "the-art-of-ism",
       image: "/images/art-of-ism-cover.jpg",
@@ -37,7 +37,7 @@ export const musicPageData = {
   ],
   catalog: [
     { title: "The Ties That Bind Us", year: "2024", tag: "Current release", summary: "The current chapter. Start here for the newest statement." },
-    { title: "The Art of ISM", year: "2019", tag: "Studio album", summary: "A sharpened studio album built for replay." },
+    { title: "The Art of ISM", year: "2026", tag: "Studio album", summary: "A sharpened studio album built for replay." },
     { title: "2 Tha Grave", year: "2011", tag: "Debut album", summary: "The debut full-length that established the solo catalog." },
     { title: "O.N.E. on O.N.E.", year: "2005", tag: "Independent era release", summary: "An early chapter in the independent catalog." },
     { title: "Cold Ass Pimp", year: "2003", tag: "Foundation release", summary: "A foundational release in the timeline." },
