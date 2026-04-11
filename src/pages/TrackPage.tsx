@@ -118,8 +118,8 @@ const TrackPage = () => {
       <section className="relative pt-28 pb-16 px-6">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
         <div className="max-w-4xl mx-auto relative">
-          <Link to="/music" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6">
-            <ArrowLeft className="w-4 h-4" /> Back to Music
+          <Link to="/discography" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6">
+            <ArrowLeft className="w-4 h-4" /> Back to Discography
           </Link>
 
           {/* 1. Hero */}
