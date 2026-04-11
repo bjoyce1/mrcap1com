@@ -7,15 +7,13 @@ import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const primaryTabs = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/music", label: "Music", icon: Music },
+  { to: "/discography", label: "Music", icon: Music },
   { to: "/live", label: "Live", icon: Radio },
   { to: "/merch", label: "Merch", icon: ShoppingBag },
 ];
 
 const moreLinks = [
   { to: "/who-is-mr-cap", label: "Who Is Mr. CAP?" },
-  { to: "/music", label: "Catalog" },
-  { to: "/mr-cap-discography", label: "Discography" },
   { to: "/legacy", label: "Legacy" },
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },

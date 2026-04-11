@@ -158,7 +158,7 @@ const HeroSection = () => {
                 className="rounded-full bg-primary/10 border border-primary/30 text-foreground hover:bg-primary/20 hover:border-primary/50 font-semibold uppercase tracking-wider px-10 py-6 text-sm transition-all duration-500 shadow-[0_0_30px_hsl(var(--primary)/0.1)] hover:shadow-[0_0_50px_hsl(var(--primary)/0.2)]"
                 asChild
               >
-                <a href="/music">
+                <a href="/discography">
                   <Play className="mr-2 h-4 w-4" />
                   Stream the Music
                 </a>
