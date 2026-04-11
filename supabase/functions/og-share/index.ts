@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
         ? `ft. ${data.featured_artists} • Listen now`
         : "Listen now on mrcap1.com";
       image = resolveImage(data.cover_art_url);
-      redirectPath = `/track/${slug}`;
+      redirectPath = `/music/${slug}`;
       ogType = "music.song";
     }
   } else if (type === "album") {
@@ -67,7 +67,7 @@ Deno.serve(async (req) => {
       title = `${data.title} — ${data.artist}`;
       description = data.description || `${data.track_count} tracks • Listen now`;
       image = resolveImage(data.cover_art_url);
-      redirectPath = `/album/${slug}`;
+      redirectPath = `/albums/${slug}`;
       ogType = "music.album";
     }
   }
