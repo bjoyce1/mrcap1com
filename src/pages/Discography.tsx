@@ -5,6 +5,12 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Play, ExternalLink, ChevronRight, Disc3, Music } from "lucide-react";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import FAQAccordion from "@/components/blocks/FAQAccordion";
+import StartHereCards from "@/components/music/StartHereCards";
+import StoryNotesBlock from "@/components/music/StoryNotesBlock";
+import CitationBlock from "@/components/blocks/CitationBlock";
+import CTAButtonRow from "@/components/blocks/CTAButtonRow";
+import { musicPageData } from "@/content/music";
 
 import albumTies from "@/assets/album-ties.jpg";
 import albumArtOfIsm from "@/assets/album-art-of-ism.png";
@@ -153,7 +159,7 @@ const Discography = () => {
         "@type": "MusicPlaylist",
         "name": "Mr. CAP Complete Discography",
         "description": metaDescription,
-        "url": "https://mrcap1.com/mr-cap-discography",
+        "url": "https://mrcap1.com/discography",
         "numTracks": studioAlbums.length + allSingles.length,
         "track": [
           ...studioAlbums.map(album => ({
@@ -180,7 +186,7 @@ const Discography = () => {
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Mr. CAP Discography", "item": "https://mrcap1.com/mr-cap-discography" }
+          { "@type": "ListItem", "position": 2, "name": "Discography", "item": "https://mrcap1.com/discography" }
         ]
       }
     ]
@@ -192,12 +198,12 @@ const Discography = () => {
         <title>{pageTitle}</title>
         <meta name="description" content={metaDescription} />
         <meta name="keywords" content="mr cap discography, mr cap albums, mr cap singles, ties that bind us, art of ism, houston rap albums, south park coalition music, mr cap songs, mr cap music list" />
-        <link rel="canonical" href="https://mrcap1.com/mr-cap-discography" />
+        <link rel="canonical" href="https://mrcap1.com/discography" />
         
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="music.album" />
-        <meta property="og:url" content="https://mrcap1.com/mr-cap-discography" />
+        <meta property="og:url" content="https://mrcap1.com/discography" />
         
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@mrcap1" />
