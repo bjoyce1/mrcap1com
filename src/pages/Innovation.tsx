@@ -367,7 +367,7 @@ const Innovation = () => {
                     icon: Network,
                     title: "Web3 Platforms",
                     description: "Music released on Web3 platforms, embracing decentralized distribution and artist ownership.",
-                    link: "/music",
+                    link: "/discography",
                     linkText: "Explore Music"
                   },
                   {

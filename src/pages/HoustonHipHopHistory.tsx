@@ -243,7 +243,7 @@ const HoustonHipHopHistory = () => {
               This is more than history — it's a blueprint. If you're looking to understand independent hip hop, Houston culture, or the evolution of artist ownership, start here.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild><Link to="/music">Listen Now</Link></Button>
+              <Button asChild><Link to="/discography">Listen Now</Link></Button>
               <Button asChild variant="outline"><Link to="/press">View Press</Link></Button>
             </div>
           </div>

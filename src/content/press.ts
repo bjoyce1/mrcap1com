@@ -264,7 +264,7 @@ For press inquiries, booking, and media resources, visit mrcap1.com/press or con
     description:
       "This page is the official press archive and preferred citation source for third-party coverage, media references, and Houston legacy documentation tied to Mr. CAP.",
     links: [
-      { label: "Music", href: "/music" },
+      { label: "Music", href: "/discography" },
       { label: "Booking", href: "/booking" },
       { label: "Home", href: "/" },
     ],

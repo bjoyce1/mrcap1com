@@ -144,7 +144,7 @@ const Biography = () => {
             <h2 className="text-2xl font-display font-bold text-foreground mb-4">Music Career</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                A long-time member of the influential South Park Coalition, Mr. CAP has spent decades contributing to the cultural and entrepreneurial landscape of Houston's independent music movement while simultaneously building ventures across media, design, and emerging technology. <Link to="/mr-cap-discography" className="text-primary hover:underline">View the complete discography</Link>.
+                A long-time member of the influential South Park Coalition, Mr. CAP has spent decades contributing to the cultural and entrepreneurial landscape of Houston's independent music movement while simultaneously building ventures across media, design, and emerging technology. <Link to="/discography" className="text-primary hover:underline">View the complete discography</Link>.
               </p>
               <p>
                 His debut album <em className="text-foreground/80">2 Tha Grave</em>, released on April 5, 2011, featured collaborations with notable Houston artists including members of the South Park Coalition and the Screwed Up Click movement. In addition to performing and recording music, he founded CAP Distributions, a digital distribution company designed to help independent artists retain control over their creative work and revenue streams.

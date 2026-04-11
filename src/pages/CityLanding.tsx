@@ -123,7 +123,7 @@ const CityLanding = () => {
                   </a>
                 </Button>
                 <Button variant="fluxOutline" size="lg" asChild>
-                  <Link to="/music">
+                  <Link to="/discography">
                     <Music className="mr-2 h-5 w-5" />
                     Stream Music
                   </Link>

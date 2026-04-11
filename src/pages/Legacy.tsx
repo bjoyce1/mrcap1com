@@ -204,7 +204,7 @@ const Legacy = () => {
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button variant="flux" asChild>
-                  <Link to="/music">Stream the Music</Link>
+                  <Link to="/discography">Stream the Music</Link>
                 </Button>
                 <Button variant="fluxOutline" asChild>
                   <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer">Book Mr. CAP</a>

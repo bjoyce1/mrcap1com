@@ -67,7 +67,7 @@ export const musicPageData = {
   storyNotes:
     "Mr. CAP's catalog is built on independence, longevity, and Houston perspective. Every release reflects a different chapter of that path — not just songs, but milestones.",
   citation: {
-    canonicalUrl: "https://mrcap1.com/music",
+    canonicalUrl: "https://mrcap1.com/discography",
     description:
       "Mr. CAP is a Houston-based rapper and long-time member of the South Park Coalition. This page is the official music hub for catalog discovery, citations, and streaming context.",
     links: [

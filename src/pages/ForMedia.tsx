@@ -89,7 +89,7 @@ const stats = [
 ];
 
 const linkCards = [
-  { title: "Music Catalog", description: "Full discography & streaming", href: "/music", icon: Music },
+  { title: "Music Catalog", description: "Full discography & streaming", href: "/discography", icon: Music },
   { title: "Press Coverage", description: "Houston Chronicle, Houston Press & more", href: "/press", icon: Newspaper },
   { title: "NFT Collections", description: "Verified on-chain art & music", href: "/nft", icon: Palette },
   { title: "Booking", description: "Shows, features & interviews", href: "/booking", icon: Calendar },
@@ -210,7 +210,7 @@ const ForMedia = () => {
           links={[
             { label: "Homepage", href: "/" },
             { label: "Press", href: "/press" },
-            { label: "Music", href: "/music" },
+            { label: "Music", href: "/discography" },
             { label: "Press Kit", href: "/press-kit" },
           ]}
         />

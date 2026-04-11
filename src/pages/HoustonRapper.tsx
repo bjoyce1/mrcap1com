@@ -135,7 +135,7 @@ const HoustonRapper = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="flux" size="lg" asChild>
-                  <Link to="/music">
+                  <Link to="/discography">
                     <Music className="mr-2 h-5 w-5" />
                     Stream Music
                   </Link>
@@ -294,7 +294,7 @@ const HoustonRapper = () => {
                         <li>• O.N.E. on O.N.E. (2005)</li>
                       </ul>
                       <Button variant="fluxGhost" size="sm" className="mt-4" asChild>
-                        <Link to="/music">
+                        <Link to="/discography">
                           View Full Discography
                           <ChevronRight className="ml-2 h-4 w-4" />
                         </Link>

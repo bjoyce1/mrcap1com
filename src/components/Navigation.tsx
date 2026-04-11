@@ -12,7 +12,7 @@ import {
 
 const primaryLinks = [
   { to: "/new-releases", label: "New Releases" },
-  { to: "/listen", label: "Music" },
+  { to: "/discography", label: "Discography" },
   { to: "/press", label: "Press" },
   { to: "/videos", label: "Videos" },
   { to: "/booking", label: "Booking" },
@@ -27,7 +27,6 @@ const moreLinks = [
   { to: "/opk", label: "OPK" },
   { to: "/merch", label: "Merch" },
   { to: "/innovation", label: "Tech" },
-  { to: "/mr-cap-discography", label: "Discography" },
   { to: "/legacy", label: "Legacy" },
 ];
 

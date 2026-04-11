@@ -252,7 +252,7 @@ const About = () => {
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
                   <Button variant="fluxOutline" asChild>
-                    <Link to="/music">Explore Music</Link>
+                    <Link to="/discography">Explore Music</Link>
                   </Button>
                   <Button variant="fluxGhost" asChild>
                     <Link to="/blog/south-park-coalition-history-houston-hip-hop">Learn the SPC Story</Link>
