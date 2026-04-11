@@ -403,7 +403,7 @@ export default function NewReleases() {
                 Dive deeper into 30+ years of Mr.&nbsp;CAP's music — from early underground classics to modern releases.
               </p>
               <Button asChild size="lg">
-                <Link to="/music">
+                <Link to="/discography">
                   Visit Music Page <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>

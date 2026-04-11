@@ -328,7 +328,7 @@ const WhoIsMrCap = () => {
                 
                 <div className="text-center mt-10">
                   <Button variant="flux" asChild>
-                    <Link to="/mr-cap-discography">
+                    <Link to="/discography">
                       <Disc3 className="mr-2 h-4 w-4" />
                       View Full Discography
                     </Link>
