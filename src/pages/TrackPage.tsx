@@ -85,7 +85,7 @@ const TrackPage = () => {
         <Navigation />
         <div className="pt-32 text-center">
           <p className="text-muted-foreground text-lg">Track not found</p>
-          <Link to="/music" className="text-primary hover:underline mt-2 inline-block">← Back to Music</Link>
+          <Link to="/discography" className="text-primary hover:underline mt-2 inline-block">← Back to Discography</Link>
         </div>
       </div>
     );

@@ -101,7 +101,7 @@ const CatalogPreview = () => {
             </h2>
           </div>
           <Button variant="fluxOutline" size="sm" className="rounded-full hidden md:flex" asChild>
-            <Link to="/music">
+            <Link to="/discography">
               Full Discography <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>
@@ -114,7 +114,7 @@ const CatalogPreview = () => {
               ref={(el) => { cardRefs.current[i] = el; }}
               style={{ opacity: 0 }}
             >
-              <Link to="/music" className="group block">
+              <Link to="/discography" className="group block">
                 <div className="relative aspect-square rounded-xl overflow-hidden mb-3 ring-1 ring-border/10">
                   <img
                     src={album.image}
@@ -141,7 +141,7 @@ const CatalogPreview = () => {
 
         <div className="mt-8 text-center md:hidden">
           <Button variant="fluxOutline" size="sm" className="rounded-full" asChild>
-            <Link to="/music">
+            <Link to="/discography">
               Full Discography <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>
