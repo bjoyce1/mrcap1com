@@ -24,7 +24,7 @@ const albums = [{
 }, {
   title: "The Art Of ISM",
   artist: "Mr. CAP",
-  year: "2019",
+  year: "2026",
   role: "Lead artist (3rd studio album)",
   label: "Sony Music / The Orchard",
   format: "Digital, Album, 11 tracks",
@@ -64,13 +64,13 @@ const singles = [{
 }, {
   year: "2023",
   tracks: [
-    { title: "Dippin Thru the Metaverse", artist: "Mr. CAP (prod. Ciddy Boi P)", label: "CAP Distributions" },
+    { title: "Dippin Thru the Metaverse", artist: "Mr. CAP (prod. ​)", label: "CAP Distributions" },
     { title: "Southern Sounds (Ultra ISM)", artist: "Mr. CAP feat. Venita Vyne", label: "Power Camp" },
-    { title: "H-Town Represent", artist: "Mr. CAP feat. Ciddy Boi P", label: "CAP Distributions" },
+    { title: "H-Town Represent", artist: "Mr. CAP feat. ​", label: "CAP Distributions" },
     { title: "Where the Bag At (Extended)", artist: "Mr. CAP feat. Devyn Kelly", label: "CAP Distributions" },
   ]
 }, {
-  year: "2019",
+  year: "2026",
   tracks: [{ title: "Limitless", artist: "Mr. CAP", label: "Independent", nftUrl: "https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353" }]
 }, {
   year: "2018",

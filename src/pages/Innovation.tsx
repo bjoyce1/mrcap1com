@@ -66,7 +66,7 @@ const Innovation = () => {
         "@type": "MusicRecording",
         "name": "Dippin Thru the Metaverse",
         "byArtist": { "@type": "Person", "name": "Mr. CAP" },
-        "producer": { "@type": "Person", "name": "Ciddy Boi P" },
+        "producer": { "@type": "Person", "name": "​" },
         "datePublished": "2023-12",
         "description": "A groundbreaking blend of Houston street narratives with futuristic production, exploring blockchain and digital innovation."
       },
@@ -218,7 +218,7 @@ const Innovation = () => {
                   
                   <div className="space-y-4 text-neutral-300 leading-relaxed mb-8">
                     <p>
-                      <strong className="text-white">Produced by Ciddy Boi P</strong>, "Dippin Thru the Metaverse" 
+                      <strong className="text-white">Produced by ​</strong>, "Dippin Thru the Metaverse" 
                       represents Mr. CAP's forward-thinking approach to music. The track fuses Houston street 
                       narratives with futuristic production, exploring the intersection of digital and real-world experiences.
                     </p>
