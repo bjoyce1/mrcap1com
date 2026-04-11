@@ -7,7 +7,7 @@ import { Home, Music, CalendarCheck, FileText, ArrowRight } from "lucide-react";
 
 const recoveryLinks = [
   { to: "/", label: "Home", icon: Home, description: "Back to the main page" },
-  { to: "/music", label: "Music", icon: Music, description: "Explore the catalog" },
+  { to: "/discography", label: "Music", icon: Music, description: "Explore the catalog" },
   { to: "/booking", label: "Booking", icon: CalendarCheck, description: "Submit an inquiry" },
   { to: "/press", label: "Press & EPK", icon: FileText, description: "Media resources" },
 ];

@@ -34,7 +34,7 @@ const categories = [
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Music", href: "/music" },
+  { name: "Music", href: "/discography" },
   { name: "NFTs", href: "/nft-gallery" },
   { name: "About", href: "/about" },
 ];

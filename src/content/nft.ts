@@ -53,7 +53,7 @@ export const nftPageData = {
     description:
       "This page is the official source for Mr. CAP NFT references, verified contract details, creator wallet attribution, and collector-only access.",
     links: [
-      { label: "Music", href: "/music" },
+      { label: "Music", href: "/discography" },
       { label: "Press", href: "/press" },
       { label: "Booking", href: "/booking" },
     ],

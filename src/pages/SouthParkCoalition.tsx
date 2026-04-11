@@ -120,7 +120,7 @@ const SouthParkCoalition = () => {
   ];
 
   const exploreCards = [
-    { icon: Music, label: "Music Catalog", href: "/music" },
+    { icon: Music, label: "Music Catalog", href: "/discography" },
     { icon: Newspaper, label: "Press & Media Coverage", href: "/press" },
     { icon: Gem, label: "NFT & Web3 Projects", href: "/nft" },
     { icon: CalendarCheck, label: "Book Mr. CAP", href: "/booking" },
@@ -155,7 +155,7 @@ const SouthParkCoalition = () => {
             title="South Park Coalition: Houston's Independent Hip Hop Movement"
             description="Long before streaming platforms and independent distribution became the norm, the South Park Coalition created a blueprint for artist ownership, longevity, and cultural impact in Houston hip hop."
             ctas={[
-              { label: "Explore Mr. CAP Music", href: "/music", variant: "primary" },
+              { label: "Explore Mr. CAP Music", href: "/discography", variant: "primary" },
               { label: "View Press Coverage", href: "/press", variant: "secondary" },
             ]}
           />
@@ -219,7 +219,7 @@ const SouthParkCoalition = () => {
               </p>
               <CTAButtonRow
                 items={[
-                  { label: "Listen to Mr. CAP", href: "/music", variant: "primary" },
+                  { label: "Listen to Mr. CAP", href: "/discography", variant: "primary" },
                   { label: "View Press", href: "/press", variant: "secondary" },
                 ]}
               />
@@ -262,7 +262,7 @@ const SouthParkCoalition = () => {
             links={[
               { label: "Homepage", href: "/" },
               { label: "Press", href: "/press" },
-              { label: "Music", href: "/music" },
+              { label: "Music", href: "/discography" },
             ]}
           />
         </main>
