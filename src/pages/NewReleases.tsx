@@ -267,7 +267,7 @@ export default function NewReleases() {
                     >
                       <Link
                         to={r.href}
-                        className="group block rounded-xl border border-border/10 bg-card/30 backdrop-blur-sm overflow-hidden hover:border-primary/20 transition-colors"
+                        className="group flex flex-col h-full rounded-xl border border-border/10 bg-card/30 backdrop-blur-sm overflow-hidden hover:border-primary/20 transition-colors"
                       >
                         <div className="aspect-square overflow-hidden">
                           <img
@@ -277,7 +277,7 @@ export default function NewReleases() {
                             loading="lazy"
                           />
                         </div>
-                        <div className="p-5 space-y-1">
+                        <div className="p-5 space-y-1 flex-1 flex flex-col">
                           <p className="text-xs text-muted-foreground tracking-wide uppercase flex items-center gap-2">
                             <Disc3 className="w-3 h-3" /> {r.type}
                             {r.releaseYear && (
@@ -290,7 +290,7 @@ export default function NewReleases() {
                           <h3 className="font-display text-lg text-foreground group-hover:text-primary transition-colors">
                             {r.title}
                           </h3>
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between mt-auto pt-2">
                             <p className="text-sm text-muted-foreground">{r.artist}</p>
                             <ShareButtons
                               title={r.title}
