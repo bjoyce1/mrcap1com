@@ -24,7 +24,15 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { message } = await req.json();
+    const body = await req.json();
+    const message = body?.message;
+    if (typeof message !== "string" || message.trim().length === 0) {
+      return new Response(JSON.stringify({ error: "Invalid message" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const safeMessage = message.slice(0, 500);
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("API key not configured");
 
@@ -38,7 +46,7 @@ Deno.serve(async (req) => {
         model: "google/gemini-2.5-flash-lite",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: message },
+          { role: "user", content: safeMessage },
         ],
       }),
     });
