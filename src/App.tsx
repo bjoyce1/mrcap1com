@@ -26,7 +26,7 @@ import MobileBottomNav from "@/components/MobileBottomNav";
 // ── Lazy-loaded pages ───────────────────────────────────────
 const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
-// Music page removed — merged into Discography
+const Music = lazy(() => import("./pages/Music"));
 const Live = lazy(() => import("./pages/Live"));
 const Press = lazy(() => import("./pages/Press"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -107,7 +107,7 @@ function AppRoutes() {
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
             <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-            <Route path="/music" element={<Navigate to="/discography" replace />} />
+            <Route path="/music" element={<PageTransition><Music /></PageTransition>} />
             <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
             <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
             <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
@@ -124,8 +124,8 @@ function AppRoutes() {
             <Route path="/texas-underground-hip-hop" element={<PageTransition><TexasUndergroundHipHop /></PageTransition>} />
             <Route path="/houston-hip-hop-history" element={<PageTransition><HoustonHipHopHistory /></PageTransition>} />
             <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
-            <Route path="/discography" element={<PageTransition><Discography /></PageTransition>} />
-            <Route path="/mr-cap-discography" element={<Navigate to="/discography" replace />} />
+            <Route path="/discography" element={<Navigate to="/music#discography" replace />} />
+            <Route path="/mr-cap-discography" element={<Navigate to="/music#discography" replace />} />
             <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
             <Route path="/links" element={<PageTransition><Links /></PageTransition>} />
             <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
@@ -135,7 +135,7 @@ function AppRoutes() {
             <Route path="/legacy" element={<PageTransition><Legacy /></PageTransition>} />
             <Route path="/biography" element={<PageTransition><Biography /></PageTransition>} />
             <Route path="/press-kit" element={<PageTransition><PressKit /></PageTransition>} />
-            <Route path="/new-releases" element={<PageTransition><NewReleases /></PageTransition>} />
+            <Route path="/new-releases" element={<Navigate to="/music#new-releases" replace />} />
             <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
             <Route path="/epk" element={<Navigate to="/press" replace />} />
             <Route path="/digital-art" element={<Navigate to="/nft" replace />} />
@@ -162,7 +162,7 @@ function AppRoutes() {
             <Route path="/self-love/2026" element={<PageTransition><div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2026 — Coming Soon</p></div></PageTransition>} />
             {/* Merch & Streaming */}
             <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
-            <Route path="/listen" element={<Navigate to="/discography" replace />} />
+            <Route path="/listen" element={<Navigate to="/music" replace />} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
