@@ -39,12 +39,13 @@ const SocialFeedSection = () => {
               </span>
             </div>
             <div className="aspect-video bg-black">
-              <video
-                src="/video/limitless-music-video.mp4"
-                poster="/images/covers/limitless.webp"
-                controls
-                preload="none"
-                className="w-full h-full object-cover"
+              <iframe
+                src="https://www.youtube.com/embed/nojd0u9jBr0"
+                title="Latest Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+                loading="lazy"
               />
             </div>
             <div className="px-5 py-3">
