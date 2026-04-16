@@ -100,16 +100,8 @@ const Footer = () => {
       <div className="relative z-10 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-muted-foreground/60">
-            © {new Date().getFullYear()} MR. CAP. All rights reserved.
+            © {new Date().getFullYear()} South Park Coalition LLC
           </p>
-          <div className="flex items-center gap-6">
-            <Link to="/privacy" className="text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <a href="mailto:wrecklessent@gmail.com" className="text-[11px] text-muted-foreground/60 hover:text-foreground transition-colors">
-              Terms of Service
-            </a>
-          </div>
         </div>
       </div>
     </footer>

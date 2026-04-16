@@ -192,9 +192,11 @@ const MusicSection = () => {
                       {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                       {isPlaying ? "Pause" : "Play \"Bet'n On Me\""}
                     </Button>
-                    <Button variant="fluxOutline" size="default" className="rounded-full">
-                      <Headphones className="w-4 h-4" />
-                      Stream Album
+                    <Button variant="fluxOutline" size="default" className="rounded-full" asChild>
+                      <a href="https://open.spotify.com/album/1yXlpa8sFzwSCQYOaEBBgR" target="_blank" rel="noopener noreferrer">
+                        <Headphones className="w-4 h-4" />
+                        Stream Album
+                      </a>
                     </Button>
                   </div>
                 </div>

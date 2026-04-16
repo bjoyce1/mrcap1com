@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
@@ -37,13 +37,19 @@ const POSTS_PER_PAGE = 10;
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { data: sanityPosts } = useSanityBlogPosts();
   const hasSanity = sanityPosts && sanityPosts.length > 0;
   const allPosts = (hasSanity ? sanityPosts.map(sanityToLocal) : [...blogPosts])
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
-  const posts = allPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
+  const filteredPosts = useMemo(() => {
+    if (!activeCategory) return allPosts;
+    return allPosts.filter((post) => post.category === activeCategory);
+  }, [activeCategory, allPosts]);
+
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const posts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
@@ -119,10 +125,25 @@ const Blog = () => {
             <div className="container mx-auto px-4">
               <div className="flex flex-wrap gap-3">
                 <span className="text-sm text-muted-foreground py-2">Categories:</span>
+                <button
+                  onClick={() => { setActiveCategory(null); setCurrentPage(1); }}
+                  className={`text-sm rounded-full px-4 py-2 transition-colors ${
+                    !activeCategory
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card/50 border border-border/50 hover:border-primary/50"
+                  }`}
+                >
+                  All
+                </button>
                 {blogCategories.map((category) => (
                   <button
                     key={category}
-                    className="text-sm bg-card/50 border border-border/50 rounded-full px-4 py-2 hover:border-primary/50 transition-colors"
+                    onClick={() => { setActiveCategory(category); setCurrentPage(1); }}
+                    className={`text-sm rounded-full px-4 py-2 transition-colors ${
+                      activeCategory === category
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card/50 border border-border/50 hover:border-primary/50"
+                    }`}
                   >
                     {category}
                   </button>

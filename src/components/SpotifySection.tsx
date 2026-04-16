@@ -28,11 +28,11 @@ const SpotifySection = () => {
     },
   ];
 
-  const platformItems: ChromaGridItem[] = [
-    { title: "Apple Music", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
-    { title: "YouTube Music", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
-    { title: "Amazon Music", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
-    { title: "Tidal", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+  const platformItems: (ChromaGridItem & { href: string })[] = [
+    { title: "Apple Music", href: "https://music.apple.com/us/artist/mr-cap/276295771", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+    { title: "YouTube Music", href: "https://music.youtube.com/channel/UCTBPJTJdwbE2G-mANsRzwqg", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+    { title: "Amazon Music", href: "https://music.amazon.com/artists/B001G5R6E6/mr-cap", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
+    { title: "Tidal", href: "https://tidal.com/browse/artist/5048017", borderColor: "hsl(var(--border))", gradient: "linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)))" },
   ];
 
   return (
@@ -176,10 +176,10 @@ const SpotifySection = () => {
                 damping={0.4}
                 fadeOut={0.5}
                 renderCard={(item) => (
-                  <div className="flex items-center justify-center gap-2 py-2 px-4">
+                  <a href={(item as any).href} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-2 px-4 hover:text-primary transition-colors">
                     <Music2 className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm text-foreground">{item.title}</span>
-                  </div>
+                  </a>
                 )}
               />
             </div>

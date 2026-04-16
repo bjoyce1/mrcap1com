@@ -91,7 +91,7 @@ const WhoIsMrCap = () => {
             "name": "How can I book Mr. CAP for a show?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "You can book Mr. CAP for concerts, festivals, features, or speaking engagements through the official booking page at mrcap1.com/live or by contacting wrecklessent@gmail.com."
+              "text": "You can book Mr. CAP for concerts, festivals, features, or speaking engagements through the official booking page at mrcap1.com/booking or by contacting southparkcoalitionllc@gmail.com."
             }
           }
         ]
@@ -174,7 +174,7 @@ const WhoIsMrCap = () => {
                   </Link>
                 </Button>
                 <Button variant="fluxOutline" size="lg" asChild>
-                  <Link to="/live">
+                  <Link to="/booking">
                     <Calendar className="mr-2 h-5 w-5" />
                     Book Mr. CAP
                   </Link>
@@ -454,7 +454,7 @@ const WhoIsMrCap = () => {
                     </Link>
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild>
-                    <Link to="/live">
+                    <Link to="/booking">
                       <Calendar className="mr-2 h-5 w-5" />
                       Book Mr. CAP
                     </Link>

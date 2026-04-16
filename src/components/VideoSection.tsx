@@ -216,9 +216,11 @@ const VideoSection = () => {
               <Youtube className="w-5 h-5" />
               Subscribe on YouTube
             </Button>
-            <Button variant="outline" size="lg" className="rounded-full border-white/10">
-              <Film className="w-5 h-5" />
-              Request B-Roll / Clean Footage
+            <Button variant="outline" size="lg" className="rounded-full border-white/10" asChild>
+              <a href="mailto:southparkcoalitionllc@gmail.com?subject=B-Roll%20%2F%20Clean%20Footage%20Request">
+                <Film className="w-5 h-5" />
+                Request B-Roll / Clean Footage
+              </a>
             </Button>
           </div>
         </ScrollReveal>
