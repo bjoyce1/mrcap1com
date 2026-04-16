@@ -46,7 +46,7 @@ Deno.serve(async (req) => {
         model: "google/gemini-2.5-flash-lite",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: message },
+          { role: "user", content: safeMessage },
         ],
       }),
     });
