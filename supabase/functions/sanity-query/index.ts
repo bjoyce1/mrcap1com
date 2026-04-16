@@ -50,7 +50,11 @@ serve(async (req) => {
 
     if (!sanityRes.ok) {
       const body = await sanityRes.text();
-      throw new Error(`Sanity API error [${sanityRes.status}]: ${body}`);
+      console.error(`Sanity API error [${sanityRes.status}]:`, body);
+      return new Response(JSON.stringify({ error: "CMS query failed" }), {
+        status: 502,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const data = await sanityRes.json();
@@ -60,8 +64,7 @@ serve(async (req) => {
     });
   } catch (error: unknown) {
     console.error("Sanity query error:", error);
-    const message = error instanceof Error ? error.message : "Unknown error";
-    return new Response(JSON.stringify({ error: message }), {
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
