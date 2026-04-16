@@ -7,7 +7,7 @@ import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const primaryTabs = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/discography", label: "Music", icon: Music },
+  { to: "/music", label: "Music", icon: Music },
   { to: "/live", label: "Live", icon: Radio },
   { to: "/merch", label: "Merch", icon: ShoppingBag },
 ];

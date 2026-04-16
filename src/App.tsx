@@ -107,7 +107,7 @@ function AppRoutes() {
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
             <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-            <Route path="/music" element={<Navigate to="/discography" replace />} />
+            <Route path="/music" element={<PageTransition><Music /></PageTransition>} />
             <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
             <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
             <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
