@@ -145,7 +145,7 @@ const HeroSection = () => {
           ref={releaseRef}
           className="mt-4 flex items-center gap-3 text-xs md:text-sm font-medium tracking-[0.2em] uppercase will-change-transform"
         >
-          <span className="text-foreground/90">The Ties That Bind Us</span>
+          <span className="text-foreground/90">The Art of ISM - Book</span>
           <span className="w-1 h-1 rounded-full bg-primary" />
           <span className="text-foreground/50">Out Now</span>
         </div>
