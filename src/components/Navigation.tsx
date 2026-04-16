@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const primaryLinks = [
-  { to: "/music", label: "Music" },
+  { to: "/new-releases", label: "New Releases" },
+  { to: "/discography", label: "Discography" },
   { to: "/press", label: "Press" },
   { to: "/videos", label: "Videos" },
   { to: "/booking", label: "Booking" },
