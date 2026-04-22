@@ -132,44 +132,6 @@ const ArtOfIsm = () => {
             </div>
           </section>
 
-          {/* Embedded Preview */}
-          <section className="py-16 md:py-24">
-            <div className="container mx-auto px-4">
-              <ScrollReveal>
-                <div className="text-center mb-10">
-                  <h2 className="text-2xl md:text-3xl font-display text-foreground mb-3">
-                    Preview the Experience
-                  </h2>
-                  <p className="text-muted-foreground text-sm max-w-md mx-auto">
-                    Explore the interactive online book right here, or open it in a new tab for the full experience.
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal>
-                <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl shadow-primary/10 mx-auto max-w-5xl">
-                  <div className="aspect-video">
-                    <iframe
-                      src="https://theartofism.com"
-                      title="The Art of ISM — Interactive Book"
-                      className="w-full h-full border-0"
-                      loading="lazy"
-                      allow="autoplay; fullscreen"
-                      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                    />
-                  </div>
-                  {/* Overlay CTA */}
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-6 flex justify-center">
-                    <Button variant="default" size="sm" asChild>
-                      <a href="https://theartofism.com" target="_blank" rel="noopener noreferrer">
-                        Open Full Experience <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-          </section>
         </main>
         <Footer />
       </div>
