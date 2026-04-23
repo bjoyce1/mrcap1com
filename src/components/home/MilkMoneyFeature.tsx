@@ -12,23 +12,23 @@ const MOVIE_URL = "https://themilkmoney.lovable.app";
 
 const MilkMoneyFeature = () => {
   return (
-    <SectionShell
-      index="04"
-      eyebrow="Now in Development"
-      hideHeader
-      className="relative overflow-hidden"
-    >
-      {/* Background poster — 50% opacity, atmospheric */}
-      <div className="absolute inset-0 -z-10">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-50"
-          style={{ backgroundImage: `url(${BG_IMAGE})` }}
-          aria-hidden="true"
-        />
-        {/* Vignette + gradients to keep copy readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background" />
-      </div>
+    <div className="relative overflow-hidden isolate">
+      {/* Full-bleed background poster — 50% opacity */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-50 -z-10"
+        style={{ backgroundImage: `url(${BG_IMAGE})` }}
+        aria-hidden="true"
+      />
+      {/* Vignette + gradients to keep copy readable */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/20 -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background -z-10" />
+
+      <SectionShell
+        index="04"
+        eyebrow="Now in Development"
+        hideHeader
+        className="relative"
+      >
 
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* LEFT — Copy */}
@@ -122,7 +122,8 @@ const MilkMoneyFeature = () => {
           </a>
         </motion.div>
       </div>
-    </SectionShell>
+      </SectionShell>
+    </div>
   );
 };
 
