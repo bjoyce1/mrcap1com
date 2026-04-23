@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
@@ -16,6 +14,8 @@ import ExploreHoustonHipHop from "@/components/home/ExploreHoustonHipHop";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
 import ArtOfIsmFeature from "@/components/home/ArtOfIsmFeature";
+import SectionDivider from "@/components/home/SectionDivider";
+import ScrollProgressBar from "@/components/home/ScrollProgressBar";
 
 const Index = () => {
   const jsonLd = {
