@@ -8,22 +8,22 @@ import SectionShell from "@/components/home/SectionShell";
 
 const ArtOfIsmFeature = () => {
   return (
-    <SectionShell
-      index="04"
-      eyebrow="New Book"
-      className="overflow-hidden"
-    >
-      {/* Background image */}
+    <div className="relative overflow-hidden isolate">
+      {/* Full-bleed background image */}
       <img
         src={artOfIsmBg}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none -z-10"
       />
+      {/* Vignette + gradients to keep copy readable */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/30 -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background -z-10" />
       {/* Accent glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl pointer-events-none -z-10" />
 
-      <div className="grid md:grid-cols-[280px_1fr] lg:grid-cols-[340px_1fr] gap-10 items-center max-w-4xl mx-auto relative z-10">
+      <SectionShell index="04" eyebrow="New Book" className="relative">
+        <div className="grid md:grid-cols-[280px_1fr] lg:grid-cols-[340px_1fr] gap-10 items-center max-w-4xl mx-auto relative z-10">
         <Link to="/art-of-ism" className="block group">
           <img
             src={artOfIsmPoster}
@@ -60,8 +60,9 @@ const ArtOfIsmFeature = () => {
             </Button>
           </div>
         </div>
-      </div>
-    </SectionShell>
+        </div>
+      </SectionShell>
+    </div>
   );
 };
 
