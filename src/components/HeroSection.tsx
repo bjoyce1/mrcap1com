@@ -244,9 +244,16 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-pulse-slow">
-        <div className="w-px h-10 bg-gradient-to-b from-foreground/40 to-transparent" />
+      {/* Scroll-to-explore hint */}
+      <div
+        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-opacity duration-500 ${
+          scrollHintHidden ? "opacity-0 pointer-events-none" : "opacity-60"
+        }`}
+      >
+        <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-foreground/60">
+          Scroll to Explore
+        </span>
+        <ChevronDown className="w-4 h-4 text-primary animate-bounce" />
       </div>
     </section>
   );
