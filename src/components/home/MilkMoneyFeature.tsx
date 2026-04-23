@@ -6,10 +6,7 @@ import SectionShell from "./SectionShell";
 const BG_IMAGE =
   "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster%201111.png";
 const POSTER_IMAGE =
-  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Poster.png".replace(
-    "Poster.png",
-    "Movie%20Poster.png"
-  );
+  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster.png";
 
 const MOVIE_URL = "https://themilkmoney.lovable.app";
 
