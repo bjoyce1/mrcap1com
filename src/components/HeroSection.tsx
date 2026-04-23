@@ -1,4 +1,4 @@
-import { Play } from "lucide-react";
+import { Play, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/hooks/useGSAP";
@@ -8,6 +8,7 @@ const heroImage = "/images/mrcap-hero-bg.jpg";
 
 const HeroSection = () => {
   const [glitching, setGlitching] = useState(false);
+  const [scrollHintHidden, setScrollHintHidden] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
@@ -20,6 +21,34 @@ const HeroSection = () => {
     setGlitching(true);
     setTimeout(() => setGlitching(false), 1200);
   };
+
+  // 3D tilt on title
+  const handleTitleTilt = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    const el = nameRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    gsap.to(el, {
+      rotationY: x * 8,
+      rotationX: -y * 6,
+      transformPerspective: 1000,
+      duration: 0.5,
+      ease: "power2.out",
+      transformOrigin: "center",
+    });
+  };
+  const handleTitleTiltLeave = () => {
+    if (!nameRef.current) return;
+    gsap.to(nameRef.current, { rotationY: 0, rotationX: 0, duration: 0.8, ease: "elastic.out(1, 0.4)" });
+  };
+
+  // Hide scroll hint after small scroll
+  useEffect(() => {
+    const onScroll = () => setScrollHintHidden(window.scrollY > 100);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
