@@ -179,35 +179,36 @@ const Index = () => {
           {/* 01 — Who */}
           <HeroSection />
 
-          {/* 02 — Latest Release Spotlight */}
+          {/* 02 — Proof / credibility */}
           <SectionDivider />
-          <ReleaseSpotlight />
-
-          {/* 03 — Proof / credibility */}
           <ProofStrip />
 
-          {/* 04 — Philosophy */}
+          {/* 03 — Philosophy */}
           <SectionDivider />
           <ArtOfIsmFeature />
 
-          {/* 05 — Legacy catalog */}
+          {/* 04 — Legacy catalog */}
           <SectionDivider />
           <CatalogPreview />
 
-          {/* 06 — Innovation */}
+          {/* 05 — Innovation */}
           <SectionDivider />
           <DigitalArtFeature />
 
-          {/* 07 — Validation */}
+          {/* 06 — Validation */}
           <SectionDivider />
           <LatestPressFeature />
 
-          {/* 08 — Conversion */}
+          {/* 07 — Conversion */}
           <BookingCTABand />
 
-          {/* 09 — Community */}
+          {/* 08 — Community */}
           <SectionDivider />
           <SocialFeedSection />
+
+          {/* 09 — Latest Release Spotlight */}
+          <SectionDivider />
+          <ReleaseSpotlight />
 
           {/* 10 — Deep dives */}
           <SectionDivider />
