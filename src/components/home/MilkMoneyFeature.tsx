@@ -122,7 +122,8 @@ const MilkMoneyFeature = () => {
           </a>
         </motion.div>
       </div>
-    </SectionShell>
+      </SectionShell>
+    </div>
   );
 };
 
