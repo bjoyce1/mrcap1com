@@ -1,18 +1,25 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const BookingCTABand = () => {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-primary/4 to-primary/8" />
       <div className="relative border-y border-primary/15">
-        <div className="max-w-6xl mx-auto px-6 py-14 md:py-20 flex flex-col md:flex-row items-center justify-between gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-6xl mx-auto px-6 py-14 md:py-20 flex flex-col md:flex-row items-center justify-between gap-6"
+        >
           <div className="text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
               <Calendar className="w-5 h-5 text-primary" />
               <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                Now Booking 2025
+                Now Booking 2025 — 08
               </span>
             </div>
             <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-2">
@@ -35,7 +42,7 @@ const BookingCTABand = () => {
               </a>
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
