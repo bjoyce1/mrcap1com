@@ -5,24 +5,19 @@ import artOfIsmTitle from "@/assets/art-of-ism-title.png";
 import artOfIsmPoster from "@/assets/art-of-ism-poster.png";
 import artOfIsmBg from "@/assets/art-of-ism-bg.png";
 import SectionShell from "@/components/home/SectionShell";
+import SectionBackground from "@/components/home/SectionBackground";
 
 const ArtOfIsmFeature = () => {
   return (
-    <div className="relative overflow-hidden isolate">
-      {/* Full-bleed background image */}
-      <img
-        src={artOfIsmBg}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none -z-10"
-      />
-      {/* Vignette + gradients to keep copy readable */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/30 -z-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background -z-10" />
-      {/* Accent glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl pointer-events-none -z-10" />
-
-      <SectionShell index="04" eyebrow="New Book" className="relative">
+    <SectionBackground
+      image={artOfIsmBg}
+      opacity={0.5}
+      gradient="left"
+      overlay={
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl" />
+      }
+    >
+      <SectionShell index="04" eyebrow="New Book">
         <div className="grid md:grid-cols-[280px_1fr] lg:grid-cols-[340px_1fr] gap-10 items-center max-w-4xl mx-auto relative z-10">
         <Link to="/art-of-ism" className="block group">
           <img
@@ -62,7 +57,7 @@ const ArtOfIsmFeature = () => {
         </div>
         </div>
       </SectionShell>
-    </div>
+    </SectionBackground>
   );
 };
 
