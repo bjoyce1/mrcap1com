@@ -57,7 +57,7 @@ const ArtOfIsmFeature = () => {
         </div>
         </div>
       </SectionShell>
-    </div>
+    </SectionBackground>
   );
 };
 
