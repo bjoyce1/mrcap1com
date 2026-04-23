@@ -1,4 +1,4 @@
-import { Play } from "lucide-react";
+import { Play, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/hooks/useGSAP";
@@ -8,6 +8,7 @@ const heroImage = "/images/mrcap-hero-bg.jpg";
 
 const HeroSection = () => {
   const [glitching, setGlitching] = useState(false);
+  const [scrollHintHidden, setScrollHintHidden] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
@@ -20,6 +21,34 @@ const HeroSection = () => {
     setGlitching(true);
     setTimeout(() => setGlitching(false), 1200);
   };
+
+  // 3D tilt on title
+  const handleTitleTilt = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    const el = nameRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    gsap.to(el, {
+      rotationY: x * 8,
+      rotationX: -y * 6,
+      transformPerspective: 1000,
+      duration: 0.5,
+      ease: "power2.out",
+      transformOrigin: "center",
+    });
+  };
+  const handleTitleTiltLeave = () => {
+    if (!nameRef.current) return;
+    gsap.to(nameRef.current, { rotationY: 0, rotationX: 0, duration: 0.8, ease: "elastic.out(1, 0.4)" });
+  };
+
+  // Hide scroll hint after small scroll
+  useEffect(() => {
+    const onScroll = () => setScrollHintHidden(window.scrollY > 100);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -122,17 +151,28 @@ const HeroSection = () => {
         />
       </div>
 
+      {/* Diagonal gold light beam */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="absolute -top-1/2 -left-1/4 w-[150%] h-[200%] rotate-[20deg] bg-[linear-gradient(90deg,transparent_45%,hsl(var(--primary)/0.08)_50%,transparent_55%)] animate-pulse-slow" />
+      </div>
+
       {/* Centered Bottom Content — foreground parallax layer */}
       <div ref={contentRef} className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center pb-20 md:pb-28 will-change-transform">
         <h1
           ref={nameRef}
           onMouseEnter={handleTitleHover}
+          onMouseMove={handleTitleTilt}
+          onMouseLeave={handleTitleTiltLeave}
           className={`font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-extrabold uppercase tracking-tight will-change-transform cursor-pointer transition-none ${
             glitching ? "animate-glitch" : ""
           }`}
           style={{ 
             color: "hsl(43, 91%, 61%)",
             letterSpacing: "-0.02em",
+            transformStyle: "preserve-3d",
           }}
         >
           Mr. CAP
@@ -204,9 +244,16 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-pulse-slow">
-        <div className="w-px h-10 bg-gradient-to-b from-foreground/40 to-transparent" />
+      {/* Scroll-to-explore hint */}
+      <div
+        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-opacity duration-500 ${
+          scrollHintHidden ? "opacity-0 pointer-events-none" : "opacity-60"
+        }`}
+      >
+        <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-foreground/60">
+          Scroll to Explore
+        </span>
+        <ChevronDown className="w-4 h-4 text-primary animate-bounce" />
       </div>
     </section>
   );

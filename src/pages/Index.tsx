@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
@@ -16,6 +14,8 @@ import ExploreHoustonHipHop from "@/components/home/ExploreHoustonHipHop";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
 import ArtOfIsmFeature from "@/components/home/ArtOfIsmFeature";
+import SectionDivider from "@/components/home/SectionDivider";
+import ScrollProgressBar from "@/components/home/ScrollProgressBar";
 
 const Index = () => {
   const jsonLd = {
@@ -165,23 +165,56 @@ const Index = () => {
         <meta property="og:description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <meta property="og:url" content="https://mrcap1.com" />
         <meta property="og:type" content="website" />
+        {/* Preload above-the-fold visuals */}
+        <link rel="preload" as="image" href="/images/mrcap-hero-bg.jpg" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
+
+      <ScrollProgressBar />
 
       <div className="min-h-screen bg-background text-foreground">
         <AnnouncementStrip />
         <Navigation />
         <main>
+          {/* 01 — Who */}
           <HeroSection />
-          <ArtOfIsmFeature />
-          <ProofStrip />
-          <CatalogPreview />
-          <LatestPressFeature />
-          <BookingCTABand />
-          <DigitalArtFeature />
-          <SocialFeedSection />
+
+          {/* 02 — Latest Release Spotlight */}
+          <SectionDivider />
           <ReleaseSpotlight />
+
+          {/* 03 — Proof / credibility */}
+          <ProofStrip />
+
+          {/* 04 — Philosophy */}
+          <SectionDivider />
+          <ArtOfIsmFeature />
+
+          {/* 05 — Legacy catalog */}
+          <SectionDivider />
+          <CatalogPreview />
+
+          {/* 06 — Innovation */}
+          <SectionDivider />
+          <DigitalArtFeature />
+
+          {/* 07 — Validation */}
+          <SectionDivider />
+          <LatestPressFeature />
+
+          {/* 08 — Conversion */}
+          <BookingCTABand />
+
+          {/* 09 — Community */}
+          <SectionDivider />
+          <SocialFeedSection />
+
+          {/* 10 — Deep dives */}
+          <SectionDivider />
           <ExploreHoustonHipHop />
+
+          {/* 11 — Close */}
+          <SectionDivider />
           <div id="fan-capture">
             <FanCaptureBanner
               sourcePage="homepage"

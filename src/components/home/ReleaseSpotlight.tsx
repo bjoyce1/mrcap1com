@@ -2,14 +2,18 @@ import { Play, Pause, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef, useState, useEffect } from "react";
 import { trackMusicPlay } from "@/components/GoogleAnalytics";
-import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
+import { gsap } from "@/hooks/useGSAP";
 import albumTies from "@/assets/album-ties.jpg";
+import SectionShell from "@/components/home/SectionShell";
+import AudioWaveform from "@/components/home/AudioWaveform";
 
 const ReleaseSpotlight = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
+  const coverImgRef = useRef<HTMLImageElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const togglePlay = () => {
@@ -24,30 +28,70 @@ const ReleaseSpotlight = () => {
     }
   };
 
+  // Vinyl rotation when playing
+  useEffect(() => {
+    if (!coverImgRef.current) return;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    if (isPlaying) {
+      const tween = gsap.to(coverImgRef.current, {
+        rotation: "+=360",
+        duration: 24,
+        ease: "none",
+        repeat: -1,
+      });
+      return () => { tween.kill(); };
+    }
+  }, [isPlaying]);
+
+  // Pulsing glow when playing
+  useEffect(() => {
+    if (!glowRef.current) return;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    if (isPlaying) {
+      const tween = gsap.to(glowRef.current, {
+        opacity: 0.7,
+        scale: 1.15,
+        duration: 1.4,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+      return () => {
+        tween.kill();
+        if (glowRef.current) gsap.set(glowRef.current, { opacity: 0.2, scale: 1 });
+      };
+    }
+  }, [isPlaying]);
+
   useEffect(() => {
     if (!sectionRef.current) return;
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
-      // Parallax on cover art
-      gsap.to(coverRef.current, {
-        yPercent: -15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      if (!reduce) {
+        gsap.to(coverRef.current, {
+          yPercent: -10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
 
-      // Info panel fade-in slide
       gsap.fromTo(
         infoRef.current,
-        { y: 60, opacity: 0 },
+        { y: reduce ? 0 : 60, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
+          duration: reduce ? 0.5 : 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -57,14 +101,13 @@ const ReleaseSpotlight = () => {
         }
       );
 
-      // Cover scale-in
       gsap.fromTo(
         coverRef.current,
-        { scale: 0.85, opacity: 0 },
+        { scale: reduce ? 1 : 0.9, opacity: 0 },
         {
           scale: 1,
           opacity: 1,
-          duration: 1.2,
+          duration: reduce ? 0.5 : 1.2,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -79,24 +122,38 @@ const ReleaseSpotlight = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-28 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background pointer-events-none" />
-      <audio ref={audioRef} src="/audio/betn-on-me.mp3" onEnded={() => setIsPlaying(false)} />
+    <div ref={sectionRef}>
+      <SectionShell
+        index="02"
+        eyebrow="Latest Release"
+        title={null}
+        className="overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background pointer-events-none" />
+        <audio ref={audioRef} src="/audio/betn-on-me.mp3" onEnded={() => setIsPlaying(false)} />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-14 items-center">
+        <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-14 items-center relative z-10">
           {/* Cover Art */}
           <div ref={coverRef} className="relative group cursor-pointer will-change-transform" onClick={togglePlay}>
-            <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl ring-1 ring-primary/10">
+            {/* Pulsing glow */}
+            <div
+              ref={glowRef}
+              className="absolute -inset-8 rounded-full bg-primary/20 blur-3xl pointer-events-none"
+              style={{ opacity: 0.2 }}
+              aria-hidden="true"
+            />
+            <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl ring-1 ring-primary/10">
               <img
+                ref={coverImgRef}
                 src={albumTies}
                 alt="The Ties That Bind Us — SPC Group Album"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
+                style={{ transformOrigin: "50% 50%" }}
               />
             </div>
-            <div className="absolute inset-0 rounded-2xl flex items-center justify-center bg-background/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute inset-0 rounded-2xl flex items-center justify-center bg-background/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
               <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-lg">
                 {isPlaying ? (
                   <Pause className="w-8 h-8 text-primary-foreground" fill="currentColor" />
@@ -105,7 +162,6 @@ const ReleaseSpotlight = () => {
                 )}
               </div>
             </div>
-            <div className="absolute -inset-4 bg-primary/5 rounded-3xl blur-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
           {/* Info */}
@@ -128,11 +184,16 @@ const ReleaseSpotlight = () => {
               South Park Coalition · 19 Tracks
             </p>
 
-            <p className="text-muted-foreground text-sm leading-relaxed mb-8 max-w-lg">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-lg">
               A grown-man statement album — honest, reflective, and unflinching.
               Featuring K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped
               version released January 2025.
             </p>
+
+            {/* Audio Waveform */}
+            <div className="mb-6">
+              <AudioWaveform audioEl={audioRef.current} active={isPlaying} bars={32} />
+            </div>
 
             <div className="flex flex-wrap gap-3">
               <Button
@@ -157,8 +218,8 @@ const ReleaseSpotlight = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </SectionShell>
+    </div>
   );
 };
 
