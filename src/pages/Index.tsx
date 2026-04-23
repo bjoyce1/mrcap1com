@@ -14,6 +14,7 @@ import ExploreHoustonHipHop from "@/components/home/ExploreHoustonHipHop";
 import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
 import ArtOfIsmFeature from "@/components/home/ArtOfIsmFeature";
+import MilkMoneyFeature from "@/components/home/MilkMoneyFeature";
 import SectionDivider from "@/components/home/SectionDivider";
 import ScrollProgressBar from "@/components/home/ScrollProgressBar";
 
@@ -187,7 +188,11 @@ const Index = () => {
           <SectionDivider />
           <ArtOfIsmFeature />
 
-          {/* 04 — Legacy catalog */}
+          {/* 04 — Coming Soon Film */}
+          <SectionDivider />
+          <MilkMoneyFeature />
+
+          {/* 05 — Legacy catalog */}
           <SectionDivider />
           <CatalogPreview />
 
