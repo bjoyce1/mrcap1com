@@ -151,17 +151,28 @@ const HeroSection = () => {
         />
       </div>
 
+      {/* Diagonal gold light beam */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="absolute -top-1/2 -left-1/4 w-[150%] h-[200%] rotate-[20deg] bg-[linear-gradient(90deg,transparent_45%,hsl(var(--primary)/0.08)_50%,transparent_55%)] animate-pulse-slow" />
+      </div>
+
       {/* Centered Bottom Content — foreground parallax layer */}
       <div ref={contentRef} className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center pb-20 md:pb-28 will-change-transform">
         <h1
           ref={nameRef}
           onMouseEnter={handleTitleHover}
+          onMouseMove={handleTitleTilt}
+          onMouseLeave={handleTitleTiltLeave}
           className={`font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-extrabold uppercase tracking-tight will-change-transform cursor-pointer transition-none ${
             glitching ? "animate-glitch" : ""
           }`}
           style={{ 
             color: "hsl(43, 91%, 61%)",
             letterSpacing: "-0.02em",
+            transformStyle: "preserve-3d",
           }}
         >
           Mr. CAP
