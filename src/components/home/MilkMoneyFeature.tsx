@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Film } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SectionShell from "./SectionShell";
+import SectionBackground from "./SectionBackground";
 
 const BG_IMAGE =
   "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster%202.png";
@@ -12,23 +13,8 @@ const MOVIE_URL = "https://themilkmoney.lovable.app";
 
 const MilkMoneyFeature = () => {
   return (
-    <div className="relative overflow-hidden isolate">
-      {/* Full-bleed background poster — 50% opacity */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-50 -z-10"
-        style={{ backgroundImage: `url(${BG_IMAGE})` }}
-        aria-hidden="true"
-      />
-      {/* Vignette + gradients to keep copy readable */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/20 -z-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background -z-10" />
-
-      <SectionShell
-        index="04"
-        eyebrow="Now in Development"
-        hideHeader
-        className="relative"
-      >
+    <SectionBackground image={BG_IMAGE} opacity={0.5} gradient="left">
+      <SectionShell index="04" eyebrow="Now in Development" hideHeader>
 
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* LEFT — Copy */}
