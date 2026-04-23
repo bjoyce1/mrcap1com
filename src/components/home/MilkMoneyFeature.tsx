@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import SectionShell from "./SectionShell";
 
 const BG_IMAGE =
-  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster%201111.png";
+  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster%202.png";
 const POSTER_IMAGE =
   "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster.png";
 
@@ -18,16 +18,16 @@ const MilkMoneyFeature = () => {
       hideHeader
       className="relative overflow-hidden"
     >
-      {/* Background poster — subtle, atmospheric */}
+      {/* Background poster — 50% opacity, atmospheric */}
       <div className="absolute inset-0 -z-10">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
+          className="absolute inset-0 bg-cover bg-center opacity-50"
           style={{ backgroundImage: `url(${BG_IMAGE})` }}
           aria-hidden="true"
         />
-        {/* Vignette + gradients to keep it readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+        {/* Vignette + gradients to keep copy readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-transparent to-background" />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
