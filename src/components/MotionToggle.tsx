@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Film, FilmIcon, Pause, Play } from "lucide-react";
+import { FilmIcon, Pause, Play } from "lucide-react";
 import { useMotionPreference } from "@/stores/motionPreferenceStore";
 import { cn } from "@/lib/utils";
 
@@ -66,5 +66,3 @@ const MotionToggle = ({ variant = "fixed", className }: MotionToggleProps) => {
 };
 
 export default MotionToggle;
-// Suppress unused import warning when tree-shaken
-export { Film as _Film };
