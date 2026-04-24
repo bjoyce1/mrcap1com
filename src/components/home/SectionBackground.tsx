@@ -81,12 +81,29 @@ const SectionBackground = ({
   imageAlt = "",
   opacity = 0.5,
   imagePosition = "center",
+  video,
+  videoPoster,
+  videoOpacity,
+  videoPosition,
+  disableVideo = false,
   overlay,
   gradient = "vignette",
   className = "",
   style,
   id,
 }: SectionBackgroundProps) => {
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  const showVideo = !!video && !disableVideo && !prefersReducedMotion;
+  const videoSources = video
+    ? typeof video === "string"
+      ? [{ src: video, type: undefined }]
+      : video
+    : [];
+  const poster = videoPoster ?? image;
+
   return (
     <div
       id={id}
@@ -102,6 +119,27 @@ const SectionBackground = ({
           className="absolute inset-0 w-full h-full object-cover pointer-events-none -z-10"
           style={{ opacity, objectPosition: imagePosition }}
         />
+      )}
+
+      {showVideo && (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster={poster}
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none -z-10"
+          style={{
+            opacity: videoOpacity ?? opacity,
+            objectPosition: videoPosition ?? imagePosition,
+          }}
+        >
+          {videoSources.map((s, i) => (
+            <source key={i} src={s.src} type={s.type} />
+          ))}
+        </video>
       )}
 
       {gradient !== "none" && (
