@@ -1,4 +1,5 @@
 import { ReactNode, CSSProperties, useEffect, useRef, useState } from "react";
+import { useMotionPreference } from "@/stores/motionPreferenceStore";
 
 interface SectionBackgroundProps {
   /** The section content (typically a SectionShell). */
