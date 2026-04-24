@@ -12,6 +12,24 @@ interface SectionBackgroundProps {
   /** `object-position` for the bg image (e.g. "center", "top", "50% 30%"). */
   imagePosition?: string;
   /**
+   * Background video URL(s). Renders a muted, looping, autoplaying video
+   * layered above the `image` (which acts as the poster/fallback).
+   * Pass a single src or an array of `{ src, type }` for multi-format support.
+   */
+  video?: string | Array<{ src: string; type?: string }>;
+  /** Poster image for the video (defaults to `image` if provided). */
+  videoPoster?: string;
+  /** Video opacity (0–1). Defaults to `opacity`. */
+  videoOpacity?: number;
+  /** `object-position` for the video (defaults to `imagePosition`). */
+  videoPosition?: string;
+  /**
+   * If true, the video will not autoplay/loop — useful for `prefers-reduced-motion`
+   * scenarios. Defaults to `false` (motion enabled). The component also
+   * automatically disables playback when the user prefers reduced motion.
+   */
+  disableVideo?: boolean;
+  /**
    * Optional overlay node placed above the image but below the content.
    * Use for custom gradients, glows, particles, video, etc.
    */
