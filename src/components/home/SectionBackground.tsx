@@ -165,11 +165,13 @@ const SectionBackground = ({
   style,
   id,
 }: SectionBackgroundProps) => {
+  const motionEnabled = useMotionPreference((s) => s.motionEnabled);
   const prefersReducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  const videoAllowed = !!video && !disableVideo && !prefersReducedMotion;
+  const videoAllowed =
+    !!video && !disableVideo && !prefersReducedMotion && motionEnabled;
   const videoSources = video
     ? typeof video === "string"
       ? [{ src: video, type: undefined }]

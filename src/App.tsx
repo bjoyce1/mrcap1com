@@ -21,6 +21,7 @@ import ExitIntentPopup from "@/components/ExitIntentPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import StickyPlayer from "@/components/player/StickyPlayer";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import MotionToggle from "@/components/MotionToggle";
 
 
 // ── Lazy-loaded pages ───────────────────────────────────────
@@ -183,6 +184,7 @@ function AppRoutes() {
 
       <StickyPlayer />
       <MobileBottomNav />
+      <MotionToggle />
       
     </>
   );
