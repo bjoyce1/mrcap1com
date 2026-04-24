@@ -149,6 +149,11 @@ const SectionBackground = ({
   videoOpacity,
   videoPosition,
   disableVideo = false,
+  videoLoading = "in-view",
+  videoRootMargin = "200px",
+  videoThreshold = 0.1,
+  playVideo = false,
+  videoPreload,
   overlay,
   gradient = "vignette",
   gradientLayer = "above-media",
@@ -163,7 +168,7 @@ const SectionBackground = ({
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  const showVideo = !!video && !disableVideo && !prefersReducedMotion;
+  const videoAllowed = !!video && !disableVideo && !prefersReducedMotion;
   const videoSources = video
     ? typeof video === "string"
       ? [{ src: video, type: undefined }]
@@ -171,8 +176,42 @@ const SectionBackground = ({
     : [];
   const poster = videoPoster ?? image;
 
+  // Decide whether to actually mount the <video> element.
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(videoLoading === "eager");
+
+  useEffect(() => {
+    if (!videoAllowed) return;
+    if (videoLoading !== "in-view") return;
+    const el = wrapperRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setInView(entry.isIntersecting);
+        }
+      },
+      { rootMargin: videoRootMargin, threshold: videoThreshold },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [videoAllowed, videoLoading, videoRootMargin, videoThreshold]);
+
+  const shouldMountVideo =
+    videoAllowed &&
+    (videoLoading === "eager" ||
+      (videoLoading === "in-view" && inView) ||
+      (videoLoading === "manual" && playVideo));
+
+  const resolvedPreload =
+    videoPreload ?? (videoLoading === "eager" ? "metadata" : "none");
+
   return (
     <div
+      ref={wrapperRef}
       id={id}
       style={style}
       className={`relative overflow-hidden isolate ${className}`}
@@ -188,13 +227,13 @@ const SectionBackground = ({
         />
       )}
 
-      {showVideo && (
+      {shouldMountVideo && (
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
+          preload={resolvedPreload}
           poster={poster}
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none -z-10"
