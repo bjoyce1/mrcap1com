@@ -68,12 +68,26 @@ const GRADIENT_CLASSES: Record<NonNullable<SectionBackgroundProps["gradient"]>, 
  * used by `SectionShell`. This avoids the common bug where backgrounds
  * end up clipped inside `max-w-6xl` content wrappers.
  *
- * Usage:
+ * Usage (image):
  *   <SectionBackground image="/hero.jpg" opacity={0.5} gradient="left">
- *     <SectionShell index="04" eyebrow="...">
- *       ...content...
- *     </SectionShell>
+ *     <SectionShell index="04" eyebrow="...">...</SectionShell>
  *   </SectionBackground>
+ *
+ * Usage (video w/ poster fallback):
+ *   <SectionBackground
+ *     image="/poster.jpg"
+ *     video={[{ src: "/bg.webm", type: "video/webm" }, { src: "/bg.mp4", type: "video/mp4" }]}
+ *     opacity={0.55}
+ *     gradient="vignette"
+ *   >
+ *     <SectionShell index="05" eyebrow="...">...</SectionShell>
+ *   </SectionBackground>
+ *
+ * Notes:
+ * - Video is muted/looped/autoplays inline. It is automatically disabled when
+ *   the user prefers reduced motion (the `image` poster remains visible).
+ * - When both `image` and `video` are provided, the image acts as the poster
+ *   and instant-paint fallback while the video loads.
  */
 const SectionBackground = ({
   children,
