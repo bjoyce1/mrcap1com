@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties } from "react";
+import { ReactNode, CSSProperties, useEffect, useRef, useState } from "react";
 
 interface SectionBackgroundProps {
   /** The section content (typically a SectionShell). */
@@ -29,6 +29,33 @@ interface SectionBackgroundProps {
    * automatically disables playback when the user prefers reduced motion.
    */
   disableVideo?: boolean;
+  /**
+   * Loading strategy for the background video.
+   * - "in-view" (default): the <video> only mounts and starts playing once the
+   *   section scrolls into view (IntersectionObserver). Pauses + unloads when out.
+   * - "eager": mounts immediately on render (legacy behavior).
+   * - "manual": only mounts when `playVideo` is `true` (parent-controlled).
+   */
+  videoLoading?: "in-view" | "eager" | "manual";
+  /**
+   * Root margin for the in-view observer (e.g. "200px" to start a bit before
+   * the section enters the viewport). Default "200px".
+   */
+  videoRootMargin?: string;
+  /**
+   * Threshold (0–1) for the in-view observer. Default 0.1.
+   */
+  videoThreshold?: number;
+  /**
+   * If `videoLoading === "manual"`, set to `true` to mount/play the video.
+   * Ignored for other loading strategies.
+   */
+  playVideo?: boolean;
+  /**
+   * `<video preload>` hint. Defaults to "none" for `in-view`/`manual` (avoid
+   * any network until needed) and "metadata" for `eager`.
+   */
+  videoPreload?: "none" | "metadata" | "auto";
   /**
    * Optional overlay node placed above the image but below the content.
    * Use for custom gradients, glows, particles, video, etc.
