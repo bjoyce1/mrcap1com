@@ -44,6 +44,28 @@ interface SectionBackgroundProps {
    * Default: "vignette".
    */
   gradient?: "left" | "right" | "center" | "vignette" | "none";
+  /**
+   * Where the gradient sits in the layer stack.
+   * - "above-media" (default): gradient renders above image/video — protects text contrast.
+   * - "below-media": gradient renders behind media (legacy behavior).
+   */
+  gradientLayer?: "above-media" | "below-media";
+  /**
+   * Strength multiplier for the gradient overlay (0–1+). Default 1.
+   * Useful when a bright video needs extra darkening for readability.
+   */
+  gradientOpacity?: number;
+  /**
+   * Extra solid scrim layered above media (below content) to guarantee contrast.
+   * A number 0–1 sets a black scrim opacity; a string is used as a custom CSS background.
+   */
+  scrim?: number | string;
+  /**
+   * Where the custom `overlay` node sits in the layer stack.
+   * - "above-media" (default): overlay renders above image/video.
+   * - "below-media": overlay renders behind media (legacy behavior).
+   */
+  overlayLayer?: "above-media" | "below-media";
   /** Extra classes for the outer wrapper. */
   className?: string;
   /** Inline styles for the outer wrapper. */
@@ -102,6 +124,10 @@ const SectionBackground = ({
   disableVideo = false,
   overlay,
   gradient = "vignette",
+  gradientLayer = "above-media",
+  gradientOpacity = 1,
+  scrim,
+  overlayLayer = "above-media",
   className = "",
   style,
   id,
@@ -157,14 +183,37 @@ const SectionBackground = ({
       )}
 
       {gradient !== "none" && (
-        <div className={`absolute inset-0 -z-10 pointer-events-none ${GRADIENT_CLASSES[gradient]}`} />
+        <div
+          className={`absolute inset-0 pointer-events-none ${GRADIENT_CLASSES[gradient]} ${
+            gradientLayer === "below-media" ? "-z-10" : "z-0"
+          }`}
+          style={gradientOpacity !== 1 ? { opacity: gradientOpacity } : undefined}
+        />
+      )}
+
+      {scrim !== undefined && (
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={
+            typeof scrim === "number"
+              ? { backgroundColor: `hsl(var(--background) / ${scrim})` }
+              : { background: scrim }
+          }
+        />
       )}
 
       {overlay && (
-        <div className="absolute inset-0 -z-10 pointer-events-none">{overlay}</div>
+        <div
+          className={`absolute inset-0 pointer-events-none ${
+            overlayLayer === "below-media" ? "-z-10" : "z-0"
+          }`}
+        >
+          {overlay}
+        </div>
       )}
 
-      {children}
+      {/* Content sits above all background layers */}
+      <div className="relative z-10">{children}</div>
     </div>
   );
 };
