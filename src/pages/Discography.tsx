@@ -16,6 +16,7 @@ import albumArtOfIsm from "@/assets/album-art-of-ism.png";
 import albumGrave from "@/assets/album-grave.jpg";
 import albumColdAss from "@/assets/album-cold-ass-pimp.jpg";
 import albumOneOnOne from "@/assets/album-one-on-one.jpg";
+import capHeroPortrait from "@/assets/cap-hero-portrait.png";
 
 type SingleTrack = {
   title: string;
@@ -281,19 +282,30 @@ const Discography = () => {
 
         <main>
           {/* ============ CINEMATIC HERO ============ */}
-          <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden">
-            {/* Background portrait */}
-            <div className="absolute inset-0">
+          <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-background">
+            {/* Yellow backdrop glow behind portrait */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[80vw] max-w-[900px] h-[80vw] max-h-[900px] rounded-full bg-primary blur-3xl opacity-60" />
+            </div>
+
+            {/* Solid yellow disc behind subject (sharper edge) */}
+            <div className="absolute inset-0 flex items-end justify-center pointer-events-none">
+              <div className="w-[70vw] max-w-[720px] h-[70vw] max-h-[720px] rounded-full bg-primary translate-y-[15%] opacity-90" />
+            </div>
+
+            {/* Foreground portrait (cut-out PNG) */}
+            <div className="absolute inset-0 flex items-end justify-center">
               <img
-                src="/images/mrcap-hero-bg.webp"
+                src={capHeroPortrait}
                 alt="Mr. CAP portrait"
-                className="w-full h-full object-cover object-center opacity-50"
+                className="h-[95%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_30px_60px_hsl(0_0%_0%/0.7)]"
                 fetchPriority="high"
               />
-              {/* Vignette + radial fade so portrait glows out of black */}
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background)/0.7)_60%,hsl(var(--background))_100%)]" />
-              <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
             </div>
+
+            {/* Vignette + bottom fade for legibility */}
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_30%,hsl(var(--background)/0.5)_75%,hsl(var(--background))_100%)]" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-background/30 via-transparent to-background" />
 
             {/* Soundwave decoration */}
             <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-32 opacity-70 pointer-events-none">
