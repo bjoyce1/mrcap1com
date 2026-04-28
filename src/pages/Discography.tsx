@@ -1,12 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Play, ExternalLink, ChevronRight, Disc3, Music } from "lucide-react";
-import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import { Play, ExternalLink, ChevronRight, ChevronLeft, X } from "lucide-react";
 import FAQAccordion from "@/components/blocks/FAQAccordion";
-import StartHereCards from "@/components/music/StartHereCards";
 import StoryNotesBlock from "@/components/music/StoryNotesBlock";
 import CitationBlock from "@/components/blocks/CitationBlock";
 import CTAButtonRow from "@/components/blocks/CTAButtonRow";
@@ -18,7 +17,29 @@ import albumGrave from "@/assets/album-grave.jpg";
 import albumColdAss from "@/assets/album-cold-ass-pimp.jpg";
 import albumOneOnOne from "@/assets/album-one-on-one.jpg";
 
-const studioAlbums = [
+type SingleTrack = {
+  title: string;
+  artist: string;
+  label: string;
+  nft?: boolean;
+};
+
+type Album = {
+  title: string;
+  artist: string;
+  year: string;
+  role: string;
+  label: string;
+  format: string;
+  image: string;
+  featured?: boolean;
+  description?: string;
+  spotify?: string;
+  apple?: string;
+  tracks?: { num: number; title: string; duration?: string }[];
+};
+
+const studioAlbums: Album[] = [
   {
     title: "The Ties That Bind Us",
     artist: "South Park Coalition",
@@ -28,7 +49,8 @@ const studioAlbums = [
     format: "Digital, Album, 19 tracks",
     image: albumTies,
     featured: true,
-    description: "SPC group album featuring K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped version released Jan 2025.",
+    description:
+      "SPC group album featuring K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped version released Jan 2025.",
     spotify: "https://open.spotify.com/album/...",
     apple: "https://music.apple.com/us/album/the-ties-that-bind-us/1770685229",
   },
@@ -40,7 +62,8 @@ const studioAlbums = [
     label: "Sony Music / The Orchard",
     format: "Digital, Album, 11 tracks",
     image: albumArtOfIsm,
-    description: "Features production by Zaytoven, Metro Boomin & Mike Will Made-It. Lead single: Words Of Ism (2018)",
+    description:
+      "Features production by Zaytoven, Metro Boomin & Mike Will Made-It. Lead single: Words Of Ism (2018)",
     spotify: "https://open.spotify.com/album/...",
   },
   {
@@ -73,7 +96,7 @@ const studioAlbums = [
   },
 ];
 
-const singlesData = [
+const singlesData: { year: string; tracks: SingleTrack[] }[] = [
   {
     year: "2024",
     tracks: [
@@ -92,34 +115,21 @@ const singlesData = [
   },
   {
     year: "2021",
-    tracks: [
-      { title: "Limitless", artist: "Mr. CAP feat. K-Rino", label: "Independent", nft: true },
-    ],
+    tracks: [{ title: "Limitless", artist: "Mr. CAP feat. K-Rino", label: "Independent", nft: true }],
   },
-  {
-    year: "2019",
-    tracks: [
-      { title: "Limitless", artist: "Mr. CAP", label: "Independent" },
-    ],
-  },
-  {
-    year: "2018",
-    tracks: [
-      { title: "Today Was A Great Day", artist: "Mr. CAP", label: "Independent" },
-    ],
-  },
+  { year: "2019", tracks: [{ title: "Limitless", artist: "Mr. CAP", label: "Independent" }] },
+  { year: "2018", tracks: [{ title: "Today Was A Great Day", artist: "Mr. CAP", label: "Independent" }] },
   {
     year: "2016",
     tracks: [
-      { title: "No More Bloodshed", artist: "K-Rino / Big Deuce / Cl' Che' / Mr. Cap / Tommy-G", label: "Gutterlife Records" },
+      {
+        title: "No More Bloodshed",
+        artist: "K-Rino / Big Deuce / Cl' Che' / Mr. Cap / Tommy-G",
+        label: "Gutterlife Records",
+      },
     ],
   },
-  {
-    year: "2015",
-    tracks: [
-      { title: "Capism", artist: "Mr. CAP", label: "CAP Distributions" },
-    ],
-  },
+  { year: "2015", tracks: [{ title: "Capism", artist: "Mr. CAP", label: "CAP Distributions" }] },
   {
     year: "2014",
     tracks: [
@@ -140,56 +150,102 @@ const singlesData = [
     tracks: [
       { title: "Live My Life (We Hustle All Day, We Hustle All Night)", artist: "Mr. CAP", label: "CAP Distributions" },
       { title: "Cap International", artist: "Mr. Cap feat. Big Prez & Alyssa Harris", label: "Fifth Amendment Entertainment" },
-      { title: "Pyrex (Egg Beater In Hand)", artist: "Mr. Cap feat. Archie Lee, Rapsta Hoffa & Young Ray Ray", label: "Cap Distributions" },
+      {
+        title: "Pyrex (Egg Beater In Hand)",
+        artist: "Mr. Cap feat. Archie Lee, Rapsta Hoffa & Young Ray Ray",
+        label: "Cap Distributions",
+      },
       { title: "Put The Dope Down", artist: "Mr. Cap feat. SAAK & Bosey-B", label: "CAP Distribution" },
     ],
   },
 ];
 
+/* ---------------- Decorative Soundwave (SVG) ---------------- */
+const Soundwave = ({ className = "" }: { className?: string }) => (
+  <svg
+    viewBox="0 0 1200 120"
+    preserveAspectRatio="none"
+    className={className}
+    aria-hidden="true"
+  >
+    <path
+      d="M0,60 Q30,20 60,60 T120,60 T180,60 T240,60 T300,60 T360,60 T420,60 T480,60 T540,60 T600,60 T660,60 T720,60 T780,60 T840,60 T900,60 T960,60 T1020,60 T1080,60 T1140,60 T1200,60"
+      fill="none"
+      stroke="hsl(var(--primary) / 0.35)"
+      strokeWidth="1"
+    />
+    <path
+      d="M0,60 Q40,5 80,60 T160,60 T240,60 T320,60 T400,60 T480,60 T560,60 T640,60 T720,60 T800,60 T880,60 T960,60 T1040,60 T1120,60 T1200,60"
+      fill="none"
+      stroke="hsl(var(--primary) / 0.18)"
+      strokeWidth="1"
+    />
+  </svg>
+);
+
 const Discography = () => {
   const pageTitle = "Mr. CAP Discography | Complete Album & Singles List | Houston Hip-Hop";
-  const metaDescription = "Explore the complete discography of Houston rapper Mr. CAP. Albums include The Ties That Bind Us (2024), The Art of ISM (2019), 2 Tha Grave (2011), O.N.E. on O.N.E. (2005), plus singles, mixtapes, and NFT releases.";
+  const metaDescription =
+    "Explore the complete discography of Houston rapper Mr. CAP. Albums include The Ties That Bind Us (2024), The Art of ISM (2019), 2 Tha Grave (2011), O.N.E. on O.N.E. (2005), plus singles, mixtapes, and NFT releases.";
 
-  const allSingles = singlesData.flatMap(group => group.tracks);
-  
+  const allSingles = singlesData.flatMap((g) => g.tracks);
+  const featuredAlbum = studioAlbums.find((a) => a.featured) ?? studioAlbums[0];
+
+  const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+
+  const scrollRail = (dir: "left" | "right") => {
+    if (!railRef.current) return;
+    const amount = railRef.current.clientWidth * 0.8;
+    railRef.current.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
+  };
+
+  // Lock body scroll while modal open
+  useEffect(() => {
+    document.body.style.overflow = activeAlbum ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeAlbum]);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "MusicPlaylist",
-        "name": "Mr. CAP Complete Discography",
-        "description": metaDescription,
-        "url": "https://mrcap1.com/discography",
-        "numTracks": studioAlbums.length + allSingles.length,
-        "track": [
-          ...studioAlbums.map(album => ({
+        name: "Mr. CAP Complete Discography",
+        description: metaDescription,
+        url: "https://mrcap1.com/discography",
+        numTracks: studioAlbums.length + allSingles.length,
+        track: [
+          ...studioAlbums.map((album) => ({
             "@type": "MusicAlbum",
-            "name": album.title,
-            "datePublished": album.year,
-            "byArtist": { "@type": "Person", "name": "Mr. CAP" }
+            name: album.title,
+            datePublished: album.year,
+            byArtist: { "@type": "Person", name: "Mr. CAP" },
           })),
-          ...allSingles.map(single => ({
+          ...allSingles.map((single) => ({
             "@type": "MusicRecording",
-            "name": single.title,
-            "byArtist": { "@type": "Person", "name": "Mr. CAP" }
-          }))
-        ]
+            name: single.title,
+            byArtist: { "@type": "Person", name: "Mr. CAP" },
+          })),
+        ],
       },
       {
         "@type": "Person",
         "@id": "https://mrcap1.com/#person",
-        "name": "Mr. CAP",
-        "alternateName": ["Cornelius A. Pratt"],
-        "url": "https://mrcap1.com"
+        name: "Mr. CAP",
+        alternateName: ["Cornelius A. Pratt"],
+        url: "https://mrcap1.com",
       },
       {
         "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Discography", "item": "https://mrcap1.com/discography" }
-        ]
-      }
-    ]
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
+          { "@type": "ListItem", position: 2, name: "Discography", item: "https://mrcap1.com/discography" },
+        ],
+      },
+    ],
   };
 
   return (
@@ -197,9 +253,12 @@ const Discography = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={metaDescription} />
-        <meta name="keywords" content="mr cap discography, mr cap albums, mr cap singles, ties that bind us, art of ism, houston rap albums, south park coalition music, mr cap songs, mr cap music list" />
+        <meta
+          name="keywords"
+          content="mr cap discography, mr cap albums, mr cap singles, ties that bind us, art of ism, houston rap albums, south park coalition music, mr cap songs, mr cap music list"
+        />
         <link rel="canonical" href="https://mrcap1.com/discography" />
-        
+
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="music.album" />
@@ -219,171 +278,321 @@ const Discography = () => {
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
-        
-        <main className="pt-24 pb-20">
-          <div className="container mx-auto px-4">
-            {/* Header */}
-            <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-              <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-              <ChevronRight className="w-4 h-4" />
-              <span className="text-foreground">Discography</span>
-            </nav>
 
-            <div className="max-w-4xl mb-12">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
-                Mr. CAP Discography
-              </h1>
-              <p className="text-xl text-muted-foreground">
-                Complete catalog of albums, singles, mixtapes, and NFT releases spanning 20+ years of Houston hip-hop.
-              </p>
+        <main>
+          {/* ============ CINEMATIC HERO ============ */}
+          <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden">
+            {/* Background portrait */}
+            <div className="absolute inset-0">
+              <img
+                src="/images/mrcap-hero-bg.webp"
+                alt="Mr. CAP portrait"
+                className="w-full h-full object-cover object-center opacity-50"
+                fetchPriority="high"
+              />
+              {/* Vignette + radial fade so portrait glows out of black */}
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background)/0.7)_60%,hsl(var(--background))_100%)]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
             </div>
 
-            {/* Studio & Collab Albums */}
-            <section className="mb-16">
-              <div className="flex items-center gap-3 mb-8">
-                <Disc3 className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl md:text-3xl font-display font-bold">Studio & Collab Albums</h2>
+            {/* Soundwave decoration */}
+            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-32 opacity-70 pointer-events-none">
+              <Soundwave className="w-full h-full" />
+            </div>
+
+            {/* Breadcrumb top-left */}
+            <nav className="absolute top-28 left-0 right-0 z-10">
+              <div className="container mx-auto px-6">
+                <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-muted-foreground/80">
+                  <Link to="/" className="hover:text-primary transition-colors">
+                    Home
+                  </Link>
+                  <ChevronRight className="w-3 h-3" />
+                  <span className="text-foreground/90">Listen</span>
+                </div>
               </div>
-              
-              <div style={{ position: 'relative', minHeight: '400px' }}>
-                <ChromaGrid
-                  items={studioAlbums.map((album) => ({
-                    image: album.image,
-                    title: album.title,
-                    subtitle: album.role,
-                    handle: album.artist,
-                    borderColor: album.featured ? "hsl(var(--primary))" : "hsl(var(--border))",
-                    gradient: `linear-gradient(145deg, hsl(var(--primary) / ${album.featured ? '0.12' : '0.06'}), hsl(var(--background)))`,
-                    album,
-                  } as ChromaGridItem))}
-                  columns={4}
-                  radius={250}
-                  damping={0.45}
-                  fadeOut={0.6}
-                  renderCard={(item) => {
-                    const album = item.album as typeof studioAlbums[0];
-                    return (
-                      <div className="flex flex-col h-full">
-                        <div className="relative aspect-square overflow-hidden bg-muted rounded-t-[20px]">
-                          <img src={album.image} alt={`${album.title} album cover`} className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60" />
-                          {album.featured && (
-                            <div className="absolute top-3 left-3 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">LATEST</div>
-                          )}
-                          <div className="absolute bottom-3 left-3"><span className="px-2 py-0.5 rounded bg-background/80 text-xs font-medium">{album.year}</span></div>
-                        </div>
-                        <div className="p-4">
-                          <h3 className="font-medium text-foreground mb-1 line-clamp-1">{album.title}</h3>
-                          <p className="text-xs text-muted-foreground mb-2">{album.artist}</p>
-                          <p className="text-xs text-muted-foreground/70">{album.label}</p>
-                          <p className="text-xs text-primary/70 mt-1">{album.role}</p>
-                          {(album.spotify || album.apple) && (
-                            <div className="flex gap-2 mt-3">
-                              {album.spotify && <Button variant="flux" size="sm" className="flex-1" asChild><a href={album.spotify} target="_blank" rel="noopener noreferrer"><Play className="w-3 h-3" /></a></Button>}
-                              {album.apple && <Button variant="fluxOutline" size="sm" className="flex-1" asChild><a href={album.apple} target="_blank" rel="noopener noreferrer"><ExternalLink className="w-3 h-3" /></a></Button>}
-                            </div>
-                          )}
+            </nav>
+
+            {/* Hero title — bottom-anchored, oversized */}
+            <div className="absolute bottom-0 left-0 right-0 pb-16 md:pb-24 z-10">
+              <div className="container mx-auto px-6 text-center">
+                <p className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary mb-6">
+                  The Official Catalog
+                </p>
+                <h1 className="font-display font-bold leading-[0.85] tracking-tight text-[18vw] md:text-[14vw] lg:text-[10rem] xl:text-[12rem]">
+                  LISTEN
+                </h1>
+                <p className="mt-8 max-w-2xl mx-auto text-base md:text-lg text-muted-foreground">
+                  Twenty plus years of Houston hip-hop — albums, singles, mixtapes, and on-chain releases from Mr. CAP and the South Park Coalition.
+                </p>
+              </div>
+            </div>
+
+            {/* Scroll cue */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-bounce text-muted-foreground/60">
+              <div className="w-px h-10 bg-gradient-to-b from-transparent to-primary/60 mx-auto" />
+            </div>
+          </section>
+
+          {/* ============ ALBUM RAIL (horizontal scroll) ============ */}
+          <section className="relative py-20 md:py-28 border-t border-white/5">
+            <div className="container mx-auto px-6 mb-10 flex items-end justify-between gap-6">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-3">01 — Albums</p>
+                <h2 className="text-3xl md:text-5xl font-display font-bold">Studio &amp; Collab Records</h2>
+              </div>
+              <div className="hidden md:flex gap-2">
+                <button
+                  onClick={() => scrollRail("left")}
+                  className="w-11 h-11 rounded-full bg-white/5 hover:bg-primary/20 flex items-center justify-center transition-colors"
+                  aria-label="Scroll albums left"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => scrollRail("right")}
+                  className="w-11 h-11 rounded-full bg-white/5 hover:bg-primary/20 flex items-center justify-center transition-colors"
+                  aria-label="Scroll albums right"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div
+              ref={railRef}
+              className="flex gap-5 md:gap-7 overflow-x-auto pb-6 px-6 md:px-[max(1.5rem,calc((100vw-1280px)/2))] snap-x snap-mandatory scrollbar-hide"
+              style={{ scrollbarWidth: "none" }}
+            >
+              {studioAlbums.map((album) => (
+                <button
+                  key={album.title}
+                  onClick={() => setActiveAlbum(album)}
+                  className="group relative shrink-0 w-[260px] md:w-[340px] snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-md shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
+                    <img
+                      src={album.image}
+                      alt={`${album.title} cover art`}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-all duration-700 grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105"
+                    />
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-90" />
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black/30">
+                      <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-[0_4px_24px_hsl(0_0%_0%/0.5)]">
+                        <Play className="w-7 h-7 text-primary-foreground translate-x-0.5" />
+                      </div>
+                    </div>
+                    {album.featured && (
+                      <div className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.25em] text-primary bg-black/60 backdrop-blur px-3 py-1.5 rounded-full">
+                        Latest
+                      </div>
+                    )}
+                    {/* Title on cover */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <p className="text-[10px] uppercase tracking-[0.3em] text-primary/90 mb-1">{album.year}</p>
+                      <h3 className="font-display font-bold text-xl md:text-2xl leading-tight">{album.title}</h3>
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{album.artist}</p>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {/* ============ FEATURED ALBUM SPOTLIGHT ============ */}
+          <section className="relative py-20 md:py-32 overflow-hidden border-t border-white/5">
+            {/* Blurred bg of featured cover */}
+            <div className="absolute inset-0">
+              <img
+                src={featuredAlbum.image}
+                alt=""
+                aria-hidden="true"
+                className="w-full h-full object-cover opacity-15 scale-110 blur-3xl"
+              />
+              <div className="absolute inset-0 bg-background/85" />
+            </div>
+
+            <div className="relative container mx-auto px-6">
+              <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div className="relative aspect-square max-w-md mx-auto md:mx-0 w-full">
+                  <div className="absolute -inset-2 bg-primary/20 blur-2xl rounded-full" />
+                  <img
+                    src={featuredAlbum.image}
+                    alt={`${featuredAlbum.title} cover art`}
+                    className="relative w-full h-full object-cover rounded-md shadow-[0_20px_60px_hsl(0_0%_0%/0.6)]"
+                  />
+                </div>
+
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Featured Release</p>
+                  <h2 className="font-display font-bold text-4xl md:text-6xl leading-[0.95] mb-6">
+                    {featuredAlbum.title}
+                  </h2>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
+                    <span>{featuredAlbum.artist}</span>
+                    <span className="opacity-40">•</span>
+                    <span>{featuredAlbum.year}</span>
+                    <span className="opacity-40">•</span>
+                    <span>{featuredAlbum.format}</span>
+                  </div>
+                  {featuredAlbum.description && (
+                    <p className="text-base md:text-lg text-foreground/80 leading-relaxed mb-10 max-w-xl">
+                      {featuredAlbum.description}
+                    </p>
+                  )}
+
+                  <div className="flex flex-wrap gap-3">
+                    {featuredAlbum.spotify && (
+                      <Button variant="flux" size="lg" asChild>
+                        <a href={featuredAlbum.spotify} target="_blank" rel="noopener noreferrer">
+                          <Play className="w-4 h-4 mr-2" /> Play on Spotify
+                        </a>
+                      </Button>
+                    )}
+                    {featuredAlbum.apple && (
+                      <Button variant="fluxOutline" size="lg" asChild>
+                        <a href={featuredAlbum.apple} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="w-4 h-4 mr-2" /> Apple Music
+                        </a>
+                      </Button>
+                    )}
+                    <Button variant="ghost" size="lg" onClick={() => setActiveAlbum(featuredAlbum)}>
+                      View Details
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ============ FULL ALBUM GRID ============ */}
+          <section className="relative py-20 md:py-28 border-t border-white/5">
+            <div className="container mx-auto px-6">
+              <div className="mb-12">
+                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-3">02 — Full Catalog</p>
+                <h2 className="text-3xl md:text-5xl font-display font-bold">Every Album. Every Era.</h2>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+                {studioAlbums.map((album) => (
+                  <button
+                    key={`grid-${album.title}`}
+                    onClick={() => setActiveAlbum(album)}
+                    className="group text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                  >
+                    <div className="relative aspect-square overflow-hidden rounded-md mb-4 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
+                      <img
+                        src={album.image}
+                        alt={`${album.title} cover art`}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="w-14 h-14 rounded-full bg-primary/90 flex items-center justify-center">
+                          <Play className="w-6 h-6 text-primary-foreground translate-x-0.5" />
                         </div>
                       </div>
-                    );
-                  }}
-                />
-              </div>
-            </section>
-
-            {/* Singles & EPs */}
-            <section className="mb-16">
-              <div className="flex items-center gap-3 mb-8">
-                <Music className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl md:text-3xl font-display font-bold">Singles & EPs</h2>
-              </div>
-              
-              <div className="space-y-6">
-                {singlesData.map((yearGroup, yearIndex) => (
-                  <div key={yearIndex}>
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-sm font-semibold text-primary">{yearGroup.year}</span>
-                      <div className="flex-1 h-px bg-border/50" />
                     </div>
-                    <div style={{ position: 'relative', minHeight: '80px' }}>
-                      <ChromaGrid
-                        items={yearGroup.tracks.map((track) => ({
-                          title: track.title,
-                          subtitle: track.artist,
-                          borderColor: track.nft ? "#f59e0b" : "hsl(var(--primary))",
-                          gradient: `linear-gradient(145deg, ${track.nft ? 'rgba(245,158,11,0.08)' : 'hsl(var(--primary) / 0.06)'}, hsl(var(--background)))`,
-                          nft: track.nft,
-                        } as ChromaGridItem))}
-                        columns={3}
-                        radius={200}
-                        damping={0.4}
-                        fadeOut={0.5}
-                        renderCard={(item) => (
-                          <div className="flex items-center gap-3 p-3">
-                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                              <Play className="w-4 h-4 text-primary" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <p className="font-medium text-foreground text-sm line-clamp-1">{item.title}</p>
-                                {item.nft && (
-                                  <a
-                                    href="https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-amber-500 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full hover:bg-amber-400 transition-colors"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                    Buy NFT
-                                  </a>
-                                )}
-                              </div>
-                              <p className="text-xs text-muted-foreground line-clamp-1">{item.subtitle}</p>
-                            </div>
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1">{album.year}</p>
+                    <h3 className="font-display font-semibold text-lg leading-tight group-hover:text-primary transition-colors">
+                      {album.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{album.role}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ============ SINGLES TIMELINE ============ */}
+          <section className="relative py-20 md:py-28 border-t border-white/5 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent">
+            <div className="container mx-auto px-6">
+              <div className="mb-12">
+                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-3">03 — Singles &amp; Features</p>
+                <h2 className="text-3xl md:text-5xl font-display font-bold">A Decade of Drops</h2>
+              </div>
+
+              <div className="max-w-4xl mx-auto">
+                {singlesData.map((yearGroup) => (
+                  <div key={yearGroup.year} className="grid grid-cols-[80px_1fr] md:grid-cols-[140px_1fr] gap-6 md:gap-12 py-8 border-b border-white/5 last:border-b-0">
+                    <div className="text-right">
+                      <span className="font-display text-3xl md:text-5xl font-bold text-primary/80 tabular-nums">
+                        {yearGroup.year}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
+                      {yearGroup.tracks.map((track, i) => (
+                        <div
+                          key={`${yearGroup.year}-${i}`}
+                          className="group flex items-center gap-4 py-2 hover:translate-x-1 transition-transform"
+                        >
+                          <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                            <Play className="w-3 h-3 text-primary" />
                           </div>
-                        )}
-                      />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 className="font-medium text-foreground">{track.title}</h3>
+                              {track.nft && (
+                                <a
+                                  href="https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[9px] uppercase tracking-[0.2em] text-primary border border-primary/40 px-2 py-0.5 rounded-full hover:bg-primary/10 transition-colors"
+                                >
+                                  NFT
+                                </a>
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-0.5">{track.artist}</p>
+                            <p className="text-xs text-muted-foreground/60 mt-0.5">{track.label}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
-            </section>
+            </div>
+          </section>
 
-            {/* Stream CTA */}
-            <section className="bg-gradient-to-r from-primary/10 to-flux-accent/10 border border-border/50 rounded-2xl p-8 text-center">
-              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-                Stream the Full Catalog
+          {/* ============ STREAM EVERYWHERE BAND ============ */}
+          <section className="relative py-24 md:py-32 border-t border-white/5 overflow-hidden">
+            <div className="absolute inset-0 opacity-30 pointer-events-none">
+              <Soundwave className="w-full h-full" />
+            </div>
+            <div className="relative container mx-auto px-6 text-center">
+              <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Stream Everywhere</p>
+              <h2 className="font-display font-bold text-4xl md:text-6xl mb-6 leading-[0.95]">
+                Available on every platform.
               </h2>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                All of Mr. CAP's music is available on every major streaming platform.
+              <p className="max-w-xl mx-auto text-muted-foreground mb-10">
+                The full Mr. CAP catalog, from independent classics to the latest South Park Coalition releases.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                <Button variant="flux" asChild>
+                <Button variant="flux" size="lg" asChild>
                   <a href="https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug" target="_blank" rel="noopener noreferrer">
                     Spotify
                   </a>
                 </Button>
-                <Button variant="fluxOutline" asChild>
+                <Button variant="fluxOutline" size="lg" asChild>
                   <a href="https://music.apple.com/us/artist/mr-cap/1506719540" target="_blank" rel="noopener noreferrer">
                     Apple Music
                   </a>
                 </Button>
-                <Button variant="fluxOutline" asChild>
+                <Button variant="fluxOutline" size="lg" asChild>
                   <a href="https://www.youtube.com/@mrcap1" target="_blank" rel="noopener noreferrer">
                     YouTube
                   </a>
                 </Button>
-                <Button variant="fluxOutline" asChild>
-                  <Link to="/nft">
-                    NFT Collection
-                  </Link>
+                <Button variant="fluxOutline" size="lg" asChild>
+                  <Link to="/nft">NFT Collection</Link>
                 </Button>
               </div>
-            </section>
-          </div>
-
-          {/* Start Here Cards from Music page */}
-          <StartHereCards cards={musicPageData.startHere} />
+            </div>
+          </section>
 
           {/* Story Notes */}
           <StoryNotesBlock body={musicPageData.storyNotes} />
@@ -401,9 +610,93 @@ const Discography = () => {
           {/* Final CTAs */}
           <CTAButtonRow items={musicPageData.finalCTAs} />
         </main>
-        
+
         <Footer />
       </div>
+
+      {/* ============ ALBUM DETAIL MODAL ============ */}
+      {activeAlbum && (
+        <div
+          className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-md overflow-y-auto animate-in fade-in duration-300"
+          onClick={() => setActiveAlbum(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${activeAlbum.title} details`}
+        >
+          <button
+            onClick={() => setActiveAlbum(null)}
+            className="fixed top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-primary/30 flex items-center justify-center transition-colors"
+            aria-label="Close album details"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          <div
+            className="min-h-screen container mx-auto px-6 py-20 md:py-28"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-start max-w-6xl mx-auto">
+              <div className="relative aspect-square">
+                <div className="absolute -inset-3 bg-primary/15 blur-3xl rounded-full" />
+                <img
+                  src={activeAlbum.image}
+                  alt={`${activeAlbum.title} cover art`}
+                  className="relative w-full h-full object-cover rounded-md shadow-[0_20px_60px_hsl(0_0%_0%/0.6)]"
+                />
+              </div>
+
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">{activeAlbum.role}</p>
+                <h2 className="font-display font-bold text-4xl md:text-6xl leading-[0.9] mb-6">
+                  {activeAlbum.title}
+                </h2>
+
+                <dl className="grid grid-cols-2 gap-x-6 gap-y-4 mb-8 text-sm">
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">Artist</dt>
+                    <dd className="text-foreground">{activeAlbum.artist}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">Year</dt>
+                    <dd className="text-foreground">{activeAlbum.year}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">Label</dt>
+                    <dd className="text-foreground">{activeAlbum.label}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/60 mb-1">Format</dt>
+                    <dd className="text-foreground">{activeAlbum.format}</dd>
+                  </div>
+                </dl>
+
+                {activeAlbum.description && (
+                  <p className="text-base md:text-lg text-foreground/80 leading-relaxed mb-10">
+                    {activeAlbum.description}
+                  </p>
+                )}
+
+                <div className="flex flex-wrap gap-3">
+                  {activeAlbum.spotify && (
+                    <Button variant="flux" size="lg" asChild>
+                      <a href={activeAlbum.spotify} target="_blank" rel="noopener noreferrer">
+                        <Play className="w-4 h-4 mr-2" /> Spotify
+                      </a>
+                    </Button>
+                  )}
+                  {activeAlbum.apple && (
+                    <Button variant="fluxOutline" size="lg" asChild>
+                      <a href={activeAlbum.apple} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" /> Apple Music
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
