@@ -216,10 +216,27 @@ const StickyPlayer = () => {
         {/* Progress bar - thin line at top */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-secondary">
           <div
-            className="h-full bg-primary transition-all duration-200"
+            className={cn("h-full transition-all duration-200", isPreview ? "bg-cap-gold" : "bg-primary")}
             style={{ width: `${progress}%` }}
           />
         </div>
+
+        {isPreview && !isMinimized && (
+          <div className="px-4 md:px-6 py-2 flex flex-wrap items-center justify-between gap-2 bg-cap-gold/10 border-b border-cap-gold/20">
+            <p className="text-xs text-foreground">
+              <span className="font-semibold text-cap-gold">30-second preview.</span>{" "}
+              {previewBlocked ? "Buy to keep listening." : "Buy to unlock the full track + download."}
+            </p>
+            <BuyButton
+              itemType="track"
+              itemId={currentTrack.id}
+              title={currentTrack.title}
+              priceCents={(currentTrack as any).price_cents ?? 99}
+              albumId={currentTrack.album_id}
+              size="sm"
+            />
+          </div>
+        )}
 
         {isMinimized ? (
           /* Minimized View */
