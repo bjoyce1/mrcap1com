@@ -23,6 +23,7 @@ export type Database = {
           description: string | null
           id: string
           is_public: boolean
+          price_cents: number
           release_year: number
           slug: string
           title: string
@@ -37,6 +38,7 @@ export type Database = {
           description?: string | null
           id?: string
           is_public?: boolean
+          price_cents?: number
           release_year: number
           slug: string
           title: string
@@ -51,6 +53,7 @@ export type Database = {
           description?: string | null
           id?: string
           is_public?: boolean
+          price_cents?: number
           release_year?: number
           slug?: string
           title?: string
@@ -281,6 +284,45 @@ export type Database = {
         }
         Relationships: []
       }
+      purchases: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          currency: string
+          id: string
+          item_id: string
+          item_type: Database["public"]["Enums"]["purchase_item_type"]
+          paid_at: string | null
+          paypal_order_id: string | null
+          status: Database["public"]["Enums"]["purchase_status"]
+          user_id: string
+        }
+        Insert: {
+          amount_cents: number
+          created_at?: string
+          currency?: string
+          id?: string
+          item_id: string
+          item_type: Database["public"]["Enums"]["purchase_item_type"]
+          paid_at?: string | null
+          paypal_order_id?: string | null
+          status?: Database["public"]["Enums"]["purchase_status"]
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          item_id?: string
+          item_type?: Database["public"]["Enums"]["purchase_item_type"]
+          paid_at?: string | null
+          paypal_order_id?: string | null
+          status?: Database["public"]["Enums"]["purchase_status"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       share_events: {
         Row: {
           content_title: string | null
@@ -387,6 +429,7 @@ export type Database = {
           isrc: string | null
           lyrics: string | null
           play_count: number
+          price_cents: number
           producers: string | null
           release_year: number | null
           requires_nft: boolean
@@ -414,6 +457,7 @@ export type Database = {
           isrc?: string | null
           lyrics?: string | null
           play_count?: number
+          price_cents?: number
           producers?: string | null
           release_year?: number | null
           requires_nft?: boolean
@@ -441,6 +485,7 @@ export type Database = {
           isrc?: string | null
           lyrics?: string | null
           play_count?: number
+          price_cents?: number
           producers?: string | null
           release_year?: number | null
           requires_nft?: boolean
@@ -525,6 +570,8 @@ export type Database = {
       app_role: "admin" | "user"
       booking_status: "pending" | "confirmed" | "declined" | "completed"
       booking_type: "show" | "feature" | "interview" | "speaking" | "other"
+      purchase_item_type: "track" | "album"
+      purchase_status: "created" | "paid" | "failed" | "refunded"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -655,6 +702,8 @@ export const Constants = {
       app_role: ["admin", "user"],
       booking_status: ["pending", "confirmed", "declined", "completed"],
       booking_type: ["show", "feature", "interview", "speaking", "other"],
+      purchase_item_type: ["track", "album"],
+      purchase_status: ["created", "paid", "failed", "refunded"],
     },
   },
 } as const
