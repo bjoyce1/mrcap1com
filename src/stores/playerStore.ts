@@ -19,6 +19,7 @@ export interface Track {
   requires_nft: boolean;
   spotify_url: string | null;
   isrc?: string | null;
+  price_cents?: number;
 }
 
 export interface Album {
@@ -32,6 +33,7 @@ export interface Album {
   credits: string | null;
   track_count: number;
   is_public: boolean;
+  price_cents?: number;
 }
 
 interface PlayerStore {
