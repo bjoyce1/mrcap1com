@@ -217,6 +217,15 @@ const Library = () => {
                       {downloadingId === it.item_id ? "Preparing…" : "Download"}
                     </Button>
                   )}
+                  {it.item_type === "album" && (
+                    <Button
+                      onClick={() => downloadAlbum(it.item_id, it.title!)}
+                      disabled={albumDownloadingId === it.item_id}
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      {albumDownloadingId === it.item_id ? "Packaging…" : "Download Album (ZIP)"}
+                    </Button>
+                  )}
                 </div>
 
                 {it.item_type === "album" && it.trackIds && it.trackIds.length > 0 && (
