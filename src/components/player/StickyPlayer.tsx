@@ -49,10 +49,17 @@ const StickyPlayer = () => {
     toggleQueue,
   } = usePlayerStore();
 
+  // Ownership check + preview gating
+  const ownsTrack = usePurchasesStore((s) => s.ownsTrack);
+  const isOwned = currentTrack ? ownsTrack(currentTrack.id, currentTrack.album_id) : false;
+  const isPreview = !!currentTrack && !isOwned;
+  const [previewBlocked, setPreviewBlocked] = useState(false);
+
   // Sync audio element with store
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !currentTrack) return;
+    setPreviewBlocked(false);
 
     // Clear previous audio when track has no audio_url
     if (!currentTrack.audio_url) {
@@ -61,8 +68,11 @@ const StickyPlayer = () => {
       audio.load();
       return;
     }
-    
-    audio.src = currentTrack.audio_url;
+
+    // Owners get the full track; everyone else gets the preview endpoint.
+    audio.src = isOwned
+      ? currentTrack.audio_url
+      : `${PREVIEW_BASE}?track_id=${encodeURIComponent(currentTrack.id)}`;
     audio.volume = volume;
     if (isPlaying) {
       audio.play().catch(() => {});
@@ -74,8 +84,9 @@ const StickyPlayer = () => {
       album_id: currentTrack.album_id,
       page_path: window.location.pathname,
       source: "player",
+      preview: !isOwned,
     });
-  }, [currentTrack?.id]);
+  }, [currentTrack?.id, isOwned]);
 
   useEffect(() => {
     const audio = audioRef.current;
