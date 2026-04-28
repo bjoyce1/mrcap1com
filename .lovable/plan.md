@@ -1,66 +1,63 @@
-# Paid Music Downloads + 30-Second Previews (PayPal)
+## What's slow
 
-Sell albums for **$9.99** and singles for **$0.99** via PayPal, deliver downloadable audio after purchase, and limit unauthenticated visitors to **30-second previews**.
+After auditing every image on the homepage, three problems are causing slow loads:
 
-## What you'll get
+### 1. Milk Money posters (worst offender — 22 MB total)
+Hosted in the `milk-money` Supabase bucket as raw PNGs:
+- `The Milk Money Movie Poster 2.png` — **19.7 MB** (used as section background)
+- `The Milk Money Movie Poster.png` — **2.5 MB** (foreground poster)
 
-1. **30-second previews for everyone** — anyone hitting Play in CAP STREAM hears a 30s clip, then is prompted to buy.
-2. **Buy buttons** — "Buy Single $0.99" on every track row/page, "Buy Album $9.99" on every album page.
-3. **PayPal checkout** using your existing PayPal credentials (same ones the merch flow uses).
-4. **Library page** at `/library` — signed-in buyers see everything they've purchased, with a Download button (signed, time-limited URL).
-5. **Order confirmation email** with download links (uses existing email infrastructure).
+The 19.7 MB background alone is roughly the size of the entire rest of the page combined. On mobile/3G this stalls the section for 10+ seconds.
 
-## User flow
+### 2. Cover art in `public/images/covers/` (29 MB folder)
+Many covers shipped as 2–3 MB PNG/JPG originals:
+- `nft-art-of-ism.png` 3.0 MB, `put-the-dope-down.png` 2.9 MB, `betn-on-me.png` 2.8 MB, `album-cold-ass-pimp.jpg` 2.8 MB, `dippin-metaverse.png` 2.7 MB, `bout-to-blow.png` 2.7 MB, `h-town-represent.png` 2.4 MB, etc.
 
-```text
-Visitor clicks Play
-   └─> 30s preview plays, pauses with "Buy to keep listening"
-       └─> Click Buy → Sign in → PayPal Checkout → Capture
-           └─> Redirect to /library → Download (signed URL, 60s)
-```
+The homepage's Catalog Preview / Release Spotlight / Art of ISM feature pull from these.
 
-## Technical plan
+### 3. Blog/feature backgrounds in `public/images/` (42 MB folder)
+Same story — `about-bg.png` 3.0 MB, `mrcap-hero-bg.jpg` 1.2 MB, several 2–3 MB blog headers used by Latest Press feature.
 
-### 1. Database (migration)
-- Add `price_cents int` to `albums` (default 999) and `tracks` (default 99). Editable per-row in admin if you want exceptions later.
-- New `purchases` table:
-  - `id, user_id, item_type ('track'|'album'), item_id uuid, paypal_order_id text unique, amount_cents int, currency text default 'USD', status ('created'|'paid'|'failed'), created_at, paid_at`
-  - RLS: users SELECT own rows; service role inserts/updates; admins manage all.
-- No Stripe, no `products` table — PayPal orders are created on-demand from album/track price.
+## The fix
 
-### 2. Storage / preview strategy
-- Flip the existing `audio` bucket from **public → private** (migration).
-- New edge function `audio-preview` (public, no JWT): streams bytes for **0–30s** using HTTP range requests against the private file. Used by StickyPlayer for non-buyers.
-- New edge function `audio-download` (auth required): verifies the caller has a `paid` row in `purchases` for that track (or for the album that contains it), returns a 60-second **signed** Supabase storage URL.
+### Step 1 — Re-encode the two Milk Money posters to WebP
+Download from Supabase, convert with `cwebp -q 80` (and resize the 19.7 MB background to max 2000px wide), re-upload to the same `milk-money` bucket as `.webp`, and update the two URLs in `src/components/home/MilkMoneyFeature.tsx`.
 
-### 3. PayPal edge functions (mirroring `printful-checkout`)
-- `paypal-create-order` — input `{ item_type, item_id }`. Verifies user is signed in, looks up price, calls PayPal `/v2/checkout/orders` (Orders v2 REST API) using `PAYPAL_CLIENT_ID` + `PAYPAL_CLIENT_SECRET` (`PAYPAL_MODE` selects sandbox vs live). Inserts `purchases` row with `status='created'`. Returns PayPal `orderID`.
-- `paypal-capture-order` — input `{ orderID }`. Captures the order via PayPal API, on success updates the `purchases` row to `status='paid'`, sets `paid_at`, enqueues confirmation email.
-- Frontend uses `@paypal/react-paypal-js` SDK buttons (already a clean, secure integration pattern with the two functions above).
+Expected: **22 MB → ~600 KB** (a ~37× reduction).
 
-### 4. Frontend changes
-- **`StickyPlayer.tsx`**: on track load, check ownership via a lightweight `/me/owned-tracks` query (cached in store). If not owned and not free, set `audio.src` to the preview endpoint, show "Buy $0.99" CTA at 25s, hard-pause at 30s with a buy modal.
-- **`playerStore.ts`**: add `isPreview: boolean` and `ownedTrackIds: Set<string>` (hydrated on auth state change).
-- **New `<BuyButton />` component**: renders PayPal buttons in a modal; used on TrackRow, AlbumPage, TrackPage.
-- **New `/library` route**: lists purchases with Download buttons; calls `audio-download` to get a signed URL.
-- **Auth gate**: buying requires sign-in (existing flow). Guest checkout out of scope for v1.
+### Step 2 — Convert the heaviest cover art to WebP
+Batch-convert every file in `public/images/covers/` over 500 KB using `cwebp -q 82`, then update any `.png`/`.jpg` references in components to `.webp`. Keep filenames matching so refactor is mechanical.
 
-### 5. Email
-- New template `purchase-confirmation.tsx` using existing email queue infrastructure. Includes a magic link to `/library` (no raw download URLs in email — keeps them short-lived).
+Expected: **29 MB → ~4 MB** for that folder.
 
-### 6. Currency / tax
-- USD only. No tax automation — flat prices, you handle reporting yourself. Easy to revisit later.
+### Step 3 — Convert the heaviest hero/blog images
+Same treatment for everything in `public/images/` over 1 MB (about-bg, mrcap-hero-bg, blog headers).
 
-## Out of scope (v1)
-- Guest checkout (buyer must sign in so we can attach the purchase).
-- Bundle discounts, coupons, refunds UI (handle refunds in the PayPal dashboard; admin can manually flip `status` to `refunded` later).
-- DRM — downloads are MP3/WAV. Once delivered, files can be copied. Industry standard.
+Expected: **42 MB → ~6 MB**.
 
-## Order of operations after approval
-1. Migration: add `price_cents` columns, create `purchases` table, flip `audio` bucket to private.
-2. Build edge functions: `paypal-create-order`, `paypal-capture-order`, `audio-preview`, `audio-download`.
-3. Add `@paypal/react-paypal-js` and build `<BuyButton />` modal.
-4. Wire StickyPlayer preview logic + ownership hydration.
-5. Build `/library` page.
-6. Add purchase confirmation email template.
-7. Test end-to-end in PayPal sandbox (your `PAYPAL_MODE` controls this), then flip to live.
+### Step 4 — Add `loading="lazy"` + explicit width/height
+Audit homepage components (`MilkMoneyFeature`, `ArtOfIsmFeature`, `CatalogPreview`, `ReleaseSpotlight`, `LatestPressFeature`) — make sure every below-the-fold `<img>` has `loading="lazy"` and `decoding="async"`. The Milk Money poster already has `loading="lazy"` ✓, but the section background `<img>` inside `SectionBackground` should be checked.
+
+### Step 5 — Preload only the LCP image
+In `index.html`, ensure only the true above-the-fold hero image is in `<link rel="preload">`. Remove any preloads pointing to images that are no longer above-the-fold.
+
+## Out of scope
+
+- Not changing layout, design, or any copy.
+- Not touching the PWA precache rules (already excludes >2 MB media per project memory).
+- Not migrating to a CDN image transform service — re-encoding statically is enough and avoids new infra.
+
+## Files to edit
+
+- `src/components/home/MilkMoneyFeature.tsx` — swap the two Supabase URLs to `.webp`
+- `src/components/home/SectionBackground.tsx` — verify lazy/decoding attrs
+- `public/images/covers/*` — replace heavy originals with WebP versions
+- `public/images/*` — replace heavy originals with WebP versions
+- Any component referencing the renamed cover/hero files (mechanical `.png`/`.jpg` → `.webp` swap)
+- `index.html` — clean up preload tags
+
+## Expected result
+
+Total homepage image weight drops from **~95 MB → ~10 MB** (~90% reduction). LCP and overall feel of the page improve dramatically, especially on mobile.
+
+Approve and I'll execute steps 1–5.
