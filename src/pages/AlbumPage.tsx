@@ -13,6 +13,7 @@ import ShareButtons from "@/components/music/ShareButtons";
 import ReleaseLinks from "@/components/music/ReleaseLinks";
 import RelatedReleases from "@/components/music/RelatedReleases";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
+import BuyButton from "@/components/music/BuyButton";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
@@ -141,8 +142,18 @@ const AlbumPage = () => {
           />
 
           {album.description && (
-            <p className="text-sm text-muted-foreground mb-8 max-w-2xl">{album.description}</p>
+            <p className="text-sm text-muted-foreground mb-4 max-w-2xl">{album.description}</p>
           )}
+
+          <div className="mb-8">
+            <BuyButton
+              itemType="album"
+              itemId={album.id}
+              title={album.title}
+              priceCents={(album as any).price_cents ?? 999}
+              size="lg"
+            />
+          </div>
 
           {/* 2. Listen — DSP Links */}
           <DSPLinks
