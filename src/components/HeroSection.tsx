@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/hooks/useGSAP";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
 
-const heroImage = "/images/mrcap-hero-bg.jpg";
+const heroImage = "/images/mrcap-hero-bg.webp";
 
 const HeroSection = () => {
   const [glitching, setGlitching] = useState(false);

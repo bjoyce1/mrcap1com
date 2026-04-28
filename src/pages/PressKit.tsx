@@ -37,7 +37,7 @@ const PRESS_MENTIONS = [
 const PHOTO_ASSETS = [
   { label: "Press Photo — Hero Shot", file: "/images/opk-og-image.jpg" },
   { label: "Press Photo — Studio", file: "/images/cap-wiz-2.jpg" },
-  { label: "Press Photo — About", file: "/images/about-bg.png" },
+  { label: "Press Photo — About", file: "/images/about-bg.webp" },
 ];
 
 const DISCOGRAPHY_HIGHLIGHTS = [
@@ -277,8 +277,8 @@ const PressKit = () => {
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {[
-                  { label: "Mr. CAP Logo", file: "/images/opk-download.png" },
-                  { label: "SPC Austin 2025 Mark", file: "/images/covers/pomp-standard.png" },
+                  { label: "Mr. CAP Logo", file: "/images/opk-download.webp" },
+                  { label: "SPC Austin 2025 Mark", file: "/images/covers/pomp-standard.webp" },
                 ].map((logo) => (
                   <div key={logo.label} className="group">
                     <div className="aspect-square rounded-xl overflow-hidden bg-muted/20 border border-border/20 flex items-center justify-center p-4">

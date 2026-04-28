@@ -438,7 +438,7 @@ const PantiesOnMyPiano = () => {
         byArtist: { "@type": "MusicGroup", name: "Mr. CAP" },
         duration: "PT3M30S",
         url: "https://mrcap1.com/panties-on-my-piano",
-        image: "https://mrcap1.com/images/covers/pomp-standard.png",
+        image: "https://mrcap1.com/images/covers/pomp-standard.webp",
       },
       {
         "@type": "Offer",
@@ -463,7 +463,7 @@ const PantiesOnMyPiano = () => {
         <meta property="og:description" content="Official Web3 release of Panties on My Piano by MR. CAP featuring Ciddi Boy P. Interactive AI studio experience. Limited NFT editions available." />
         <meta property="og:type" content="music.song" />
         <meta property="og:url" content="https://mrcap1.com/panties-on-my-piano" />
-        <meta property="og:image" content="https://mrcap1.com/images/covers/pomp-standard.png" />
+        <meta property="og:image" content="https://mrcap1.com/images/covers/pomp-standard.webp" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Panties on My Piano cover art" />
@@ -471,7 +471,7 @@ const PantiesOnMyPiano = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Panties on My Piano – MR. CAP ft. Ciddi Boy P" />
         <meta name="twitter:description" content="Official Web3 release. Interactive AI studio. Limited NFT editions." />
-        <meta name="twitter:image" content="https://mrcap1.com/images/covers/pomp-standard.png" />
+        <meta name="twitter:image" content="https://mrcap1.com/images/covers/pomp-standard.webp" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
