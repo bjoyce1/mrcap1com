@@ -29,6 +29,7 @@ const Library = () => {
   const [items, setItems] = useState<PurchaseRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [albumDownloadingId, setAlbumDownloadingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth?redirect=/library");
