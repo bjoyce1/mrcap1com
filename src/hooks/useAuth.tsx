@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { usePurchasesStore } from '@/stores/purchasesStore';
 
 interface AuthContextType {
   user: User | null;
@@ -27,13 +28,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Defer role check with setTimeout to prevent deadlock
+        // Defer role check + purchases hydration with setTimeout to prevent deadlock
         if (session?.user) {
           setTimeout(() => {
             checkAdminRole(session.user.id);
+            usePurchasesStore.getState().hydrate(session.user.id);
           }, 0);
         } else {
           setIsAdmin(false);
+          usePurchasesStore.getState().hydrate(null);
         }
       }
     );
@@ -45,6 +48,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       if (session?.user) {
         checkAdminRole(session.user.id);
+        usePurchasesStore.getState().hydrate(session.user.id);
+      } else {
+        usePurchasesStore.getState().hydrate(null);
       }
       setLoading(false);
     });

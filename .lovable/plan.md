@@ -1,105 +1,66 @@
+# Paid Music Downloads + 30-Second Previews (PayPal)
 
+Sell albums for **$9.99** and singles for **$0.99** via PayPal, deliver downloadable audio after purchase, and limit unauthenticated visitors to **30-second previews**.
 
-# Homepage Revamp — Harmonized Rhythm + Next-Level Interactions
+## What you'll get
 
-Goal: turn 10 disconnected sections into one cinematic, breathing flow — unified spacing, consistent section headers, smoother scroll choreography, and richer interactions that feel premium without being heavy.
+1. **30-second previews for everyone** — anyone hitting Play in CAP STREAM hears a 30s clip, then is prompted to buy.
+2. **Buy buttons** — "Buy Single $0.99" on every track row/page, "Buy Album $9.99" on every album page.
+3. **PayPal checkout** using your existing PayPal credentials (same ones the merch flow uses).
+4. **Library page** at `/library` — signed-in buyers see everything they've purchased, with a Download button (signed, time-limited URL).
+5. **Order confirmation email** with download links (uses existing email infrastructure).
 
-## 1. Unified section system
-
-Create `src/components/home/SectionShell.tsx` — single wrapper used by every homepage block to enforce:
-- Consistent vertical rhythm (`py-24 md:py-32`)
-- Optional eyebrow/title/description header with a left-accent gold bar
-- Subtle scroll-triggered fade + lift on the header (Framer Motion, `viewport once`)
-- A shared "section index" badge in the corner (01 / 02 / 03 …) that fades in with the section — gives the page an editorial magazine feel
-
-Refactor every home section to use `<SectionShell>`. Result: identical breathing room, identical typography hierarchy, identical reveal timing.
-
-## 2. Reorder for narrative arc
+## User flow
 
 ```text
-01  Hero                          — who
-02  Latest Release Spotlight      — what's new now (moved up from bottom)
-03  Proof Strip (counters)        — credibility beat
-04  Art of ISM Feature            — the philosophy/book
-05  Catalog Preview               — the legacy
-06  Digital Art / NFT             — the innovation
-07  Latest Press                  — the validation
-08  Booking CTA Band              — the conversion
-09  Follow the Movement (social)  — the community
-10  Explore Houston Hip Hop       — the deep dives
-11  Fan Capture                   — the close
+Visitor clicks Play
+   └─> 30s preview plays, pauses with "Buy to keep listening"
+       └─> Click Buy → Sign in → PayPal Checkout → Capture
+           └─> Redirect to /library → Download (signed URL, 60s)
 ```
 
-Reasoning: Spotlight right after hero converts curious visitors fast. Proof strip then justifies. Then we walk down the legacy → present → future arc, ending in conversion + capture.
+## Technical plan
 
-## 3. Smooth section-to-section transitions
+### 1. Database (migration)
+- Add `price_cents int` to `albums` (default 999) and `tracks` (default 99). Editable per-row in admin if you want exceptions later.
+- New `purchases` table:
+  - `id, user_id, item_type ('track'|'album'), item_id uuid, paypal_order_id text unique, amount_cents int, currency text default 'USD', status ('created'|'paid'|'failed'), created_at, paid_at`
+  - RLS: users SELECT own rows; service role inserts/updates; admins manage all.
+- No Stripe, no `products` table — PayPal orders are created on-demand from album/track price.
 
-Add `src/components/home/SectionDivider.tsx` — a thin animated gold gradient line that draws across the screen on scroll (GSAP `scaleX` from 0→1 on enter). Drop between every section. Replaces the inconsistent border-y / no-border / gradient-bg mishmash.
+### 2. Storage / preview strategy
+- Flip the existing `audio` bucket from **public → private** (migration).
+- New edge function `audio-preview` (public, no JWT): streams bytes for **0–30s** using HTTP range requests against the private file. Used by StickyPlayer for non-buyers.
+- New edge function `audio-download` (auth required): verifies the caller has a `paid` row in `purchases` for that track (or for the album that contains it), returns a 60-second **signed** Supabase storage URL.
 
-Add a global "scroll progress" bar fixed at the very top of the page (1px, primary color, GSAP-driven from `ScrollTrigger`). Subtle but premium.
+### 3. PayPal edge functions (mirroring `printful-checkout`)
+- `paypal-create-order` — input `{ item_type, item_id }`. Verifies user is signed in, looks up price, calls PayPal `/v2/checkout/orders` (Orders v2 REST API) using `PAYPAL_CLIENT_ID` + `PAYPAL_CLIENT_SECRET` (`PAYPAL_MODE` selects sandbox vs live). Inserts `purchases` row with `status='created'`. Returns PayPal `orderID`.
+- `paypal-capture-order` — input `{ orderID }`. Captures the order via PayPal API, on success updates the `purchases` row to `status='paid'`, sets `paid_at`, enqueues confirmation email.
+- Frontend uses `@paypal/react-paypal-js` SDK buttons (already a clean, secure integration pattern with the two functions above).
 
-## 4. Hero upgrades
+### 4. Frontend changes
+- **`StickyPlayer.tsx`**: on track load, check ownership via a lightweight `/me/owned-tracks` query (cached in store). If not owned and not free, set `audio.src` to the preview endpoint, show "Buy $0.99" CTA at 25s, hard-pause at 30s with a buy modal.
+- **`playerStore.ts`**: add `isPreview: boolean` and `ownedTrackIds: Set<string>` (hydrated on auth state change).
+- **New `<BuyButton />` component**: renders PayPal buttons in a modal; used on TrackRow, AlbumPage, TrackPage.
+- **New `/library` route**: lists purchases with Download buttons; calls `audio-download` to get a signed URL.
+- **Auth gate**: buying requires sign-in (existing flow). Guest checkout out of scope for v1.
 
-- Add a soft animated **noise/grain overlay** (already in `index.css` as `.grain-overlay` — keep) plus a slow-drifting **gold light beam** (CSS gradient + `animate-pulse-slow`) crossing diagonally
-- Add a **scroll-down hint** below the CTAs with a bouncing chevron + "Scroll to Explore" label that fades out after 100px scroll
-- Make the "Mr. CAP" title respond to mouse with a subtle 3D tilt (using existing `useMagneticHover`-style logic), not just hover-glitch
+### 5. Email
+- New template `purchase-confirmation.tsx` using existing email queue infrastructure. Includes a magic link to `/library` (no raw download URLs in email — keeps them short-lived).
 
-## 5. Release Spotlight upgrade
+### 6. Currency / tax
+- USD only. No tax automation — flat prices, you handle reporting yourself. Easy to revisit later.
 
-- Add a real-time **audio waveform visualizer** above the play button when audio is playing (uses existing `audioAnalyzerStore` singleton — connects the inline `<audio>` to the shared AnalyserNode and renders 32 vertical gold bars reacting to frequency data)
-- Cover art gets a slow continuous rotation (very subtle, like a vinyl) only when playing
-- Background gets a pulsing radial gold glow synced to playback
+## Out of scope (v1)
+- Guest checkout (buyer must sign in so we can attach the purchase).
+- Bundle discounts, coupons, refunds UI (handle refunds in the PayPal dashboard; admin can manually flip `status` to `refunded` later).
+- DRM — downloads are MP3/WAV. Once delivered, files can be copied. Industry standard.
 
-## 6. Catalog Preview upgrade
-
-- Convert the 4-album grid into a **horizontal scroll-snap row on mobile** + grid on desktop
-- Each card: 3D tilt-on-hover (replaces plain `scale-105`), reflective gloss sweep across cover on hover
-- "From the Vault" title gets a **text-shimmer** sweep on enter (gold gradient mask animating left→right)
-
-## 7. Proof Strip upgrade
-
-- Counter animation already exists — add a **gold underline that draws in** under each completed number
-- Add subtle vertical separator lines between stats (gradient fade top/bottom)
-- On the "1st Houston NFT Rapper" stat, add a tiny pulsing gold dot to draw attention
-
-## 8. Social Feed (Follow the Movement) upgrade
-
-- Replace the static 4-image Instagram grid with a **continuous marquee strip** of recent images (CSS `@keyframes` infinite scroll, pause on hover)
-- Add a live "● LIVE" pulsing indicator on the YouTube card when the video starts playing
-- Social link pills get magnetic hover (reuse `MagneticWrapper`)
-
-## 9. Fix announcement strip
-
-- Update copy + link to point to `/discography` (currently goes to `/listen`)
-- Add a slow horizontal shimmer that travels across the strip every 8s
-
-## 10. Global polish
-
-- Add `prefers-reduced-motion` guards on all GSAP timelines (degrade to fade-only)
-- Preload above-the-fold hero + spotlight cover images via `<link rel="preload">` in Index head
-- Remove the ScrollReveal wrapper inconsistency — standardize on Framer Motion `whileInView` everywhere via `SectionShell`
-
-## Files touched
-
-**New:**
-- `src/components/home/SectionShell.tsx`
-- `src/components/home/SectionDivider.tsx`
-- `src/components/home/ScrollProgressBar.tsx`
-- `src/components/home/AudioWaveform.tsx` (for spotlight)
-
-**Edited:**
-- `src/pages/Index.tsx` (reorder, add divider/progress bar, preload tags)
-- `src/components/HeroSection.tsx` (light beam, scroll hint, 3D title tilt)
-- `src/components/home/AnnouncementStrip.tsx` (link fix + shimmer)
-- `src/components/home/ReleaseSpotlight.tsx` (waveform, vinyl rotate, glow pulse)
-- `src/components/home/CatalogPreview.tsx` (3D tilt, mobile snap, shimmer title)
-- `src/components/home/ProofStrip.tsx` (underline draw, separators)
-- `src/components/home/SocialFeedSection.tsx` (marquee, magnetic pills)
-- `src/components/home/ArtOfIsmFeature.tsx`, `DigitalArtFeature.tsx`, `LatestPressFeature.tsx`, `BookingCTABand.tsx`, `ExploreHoustonHipHop.tsx` (refactor to use SectionShell)
-
-## Out of scope
-
-- Footer/Navigation — untouched
-- Backend — none required
-- Mobile bottom nav — untouched
-
+## Order of operations after approval
+1. Migration: add `price_cents` columns, create `purchases` table, flip `audio` bucket to private.
+2. Build edge functions: `paypal-create-order`, `paypal-capture-order`, `audio-preview`, `audio-download`.
+3. Add `@paypal/react-paypal-js` and build `<BuyButton />` modal.
+4. Wire StickyPlayer preview logic + ownership hydration.
+5. Build `/library` page.
+6. Add purchase confirmation email template.
+7. Test end-to-end in PayPal sandbox (your `PAYPAL_MODE` controls this), then flip to live.

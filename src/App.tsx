@@ -73,6 +73,7 @@ const PressKit = lazy(() => import("./pages/PressKit"));
 const BetOnHer = lazy(() => import("./pages/BetOnHer"));
 const HoustonHipHopHistory = lazy(() => import("./pages/HoustonHipHopHistory"));
 const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
+const Library = lazy(() => import("./pages/Library"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -168,6 +169,7 @@ function AppRoutes() {
             <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
+            <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
             <Route path="/for-media" element={<PageTransition><ForMedia /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>

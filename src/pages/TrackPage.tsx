@@ -19,6 +19,7 @@ import ShareButtons from "@/components/music/ShareButtons";
 import ReleaseLinks from "@/components/music/ReleaseLinks";
 import RelatedReleases from "@/components/music/RelatedReleases";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
+import BuyButton from "@/components/music/BuyButton";
 import type { Album } from "@/stores/playerStore";
 
 function formatDuration(seconds: number): string {
@@ -142,6 +143,17 @@ const TrackPage = () => {
           {!track.audio_url && (
             <p className="text-sm text-muted-foreground italic mb-6">Audio coming soon — this track is being prepared for streaming.</p>
           )}
+
+          <div className="mb-6">
+            <BuyButton
+              itemType="track"
+              itemId={track.id}
+              title={track.title}
+              priceCents={(track as any).price_cents ?? 99}
+              albumId={track.album_id}
+              size="lg"
+            />
+          </div>
 
           {/* 2. Listen Section — DSP + Spotify Embed */}
           <DSPLinks spotifyUrl={track.spotify_url} appleMusicUrl={(track as any).apple_music_url} />

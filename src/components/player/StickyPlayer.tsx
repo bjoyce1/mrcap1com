@@ -1,15 +1,22 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2 } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2, ShoppingCart } from "lucide-react";
 import { reportQualifiedStream } from "@/lib/streamTracking";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/stores/playerStore";
 import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
+import { usePurchasesStore } from "@/stores/purchasesStore";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import QueueDrawer from "./QueueDrawer";
 import { shareMusic } from "@/lib/shareTrack";
+import BuyButton from "@/components/music/BuyButton";
+
+const PREVIEW_SECONDS = 30;
+const PROJECT_ID = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+const PREVIEW_BASE = `https://${PROJECT_ID}.supabase.co/functions/v1/audio-preview`;
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -42,10 +49,17 @@ const StickyPlayer = () => {
     toggleQueue,
   } = usePlayerStore();
 
+  // Ownership check + preview gating
+  const ownsTrack = usePurchasesStore((s) => s.ownsTrack);
+  const isOwned = currentTrack ? ownsTrack(currentTrack.id, currentTrack.album_id) : false;
+  const isPreview = !!currentTrack && !isOwned;
+  const [previewBlocked, setPreviewBlocked] = useState(false);
+
   // Sync audio element with store
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !currentTrack) return;
+    setPreviewBlocked(false);
 
     // Clear previous audio when track has no audio_url
     if (!currentTrack.audio_url) {
@@ -54,8 +68,11 @@ const StickyPlayer = () => {
       audio.load();
       return;
     }
-    
-    audio.src = currentTrack.audio_url;
+
+    // Owners get the full track; everyone else gets the preview endpoint.
+    audio.src = isOwned
+      ? currentTrack.audio_url
+      : `${PREVIEW_BASE}?track_id=${encodeURIComponent(currentTrack.id)}`;
     audio.volume = volume;
     if (isPlaying) {
       audio.play().catch(() => {});
@@ -67,8 +84,9 @@ const StickyPlayer = () => {
       album_id: currentTrack.album_id,
       page_path: window.location.pathname,
       source: "player",
+      preview: !isOwned,
     });
-  }, [currentTrack?.id]);
+  }, [currentTrack?.id, isOwned]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -123,8 +141,19 @@ const StickyPlayer = () => {
   }, [currentTrack?.id, currentTime]);
 
   const handleTimeUpdate = useCallback(() => {
-    if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
-  }, [setCurrentTime]);
+    const audio = audioRef.current;
+    if (!audio) return;
+    // Hard pause at 30s for preview mode
+    if (isPreview && audio.currentTime >= PREVIEW_SECONDS) {
+      audio.pause();
+      audio.currentTime = PREVIEW_SECONDS;
+      setCurrentTime(PREVIEW_SECONDS);
+      setPreviewBlocked(true);
+      usePlayerStore.setState({ isPlaying: false });
+      return;
+    }
+    setCurrentTime(audio.currentTime);
+  }, [setCurrentTime, isPreview]);
 
   const syncedRef = useRef<Record<string, boolean>>({});
 
@@ -133,15 +162,16 @@ const StickyPlayer = () => {
     const realDuration = audioRef.current.duration;
     setDuration(realDuration);
 
-    // If stored duration is 0, persist the real duration
+    // If stored duration is 0, persist the real duration (only when owner is streaming
+    // the full file — preview clips are short and would corrupt stored durations).
     const track = usePlayerStore.getState().currentTrack;
-    if (track && track.duration === 0 && realDuration > 0 && !syncedRef.current[track.id]) {
+    if (!isPreview && track && track.duration === 0 && realDuration > 0 && !syncedRef.current[track.id]) {
       syncedRef.current[track.id] = true;
       supabase.functions.invoke("sync-track-duration", {
         body: { trackId: track.id, duration: realDuration },
       }).catch(() => {});
     }
-  }, [setDuration]);
+  }, [setDuration, isPreview]);
 
   const handleEnded = useCallback(() => {
     if (currentTrack) {
@@ -152,8 +182,10 @@ const StickyPlayer = () => {
 
   const handleSeek = (value: number[]) => {
     if (audioRef.current) {
-      audioRef.current.currentTime = value[0];
-      setCurrentTime(value[0]);
+      // Block scrubbing past the preview cap
+      const target = isPreview ? Math.min(value[0], PREVIEW_SECONDS) : value[0];
+      audioRef.current.currentTime = target;
+      setCurrentTime(target);
     }
   };
 
@@ -162,7 +194,8 @@ const StickyPlayer = () => {
   const hasNext = queueIndex < queue.length - 1;
   const hasPrev = queueIndex > 0;
   const noAudio = !currentTrack.audio_url;
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const progressMax = isPreview ? PREVIEW_SECONDS : (duration || 100);
+  const progress = progressMax > 0 ? (Math.min(currentTime, progressMax) / progressMax) * 100 : 0;
 
   return (
     <>
@@ -183,10 +216,27 @@ const StickyPlayer = () => {
         {/* Progress bar - thin line at top */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-secondary">
           <div
-            className="h-full bg-primary transition-all duration-200"
+            className={cn("h-full transition-all duration-200", isPreview ? "bg-cap-gold" : "bg-primary")}
             style={{ width: `${progress}%` }}
           />
         </div>
+
+        {isPreview && !isMinimized && (
+          <div className="px-4 md:px-6 py-2 flex flex-wrap items-center justify-between gap-2 bg-cap-gold/10 border-b border-cap-gold/20">
+            <p className="text-xs text-foreground">
+              <span className="font-semibold text-cap-gold">30-second preview.</span>{" "}
+              {previewBlocked ? "Buy to keep listening." : "Buy to unlock the full track + download."}
+            </p>
+            <BuyButton
+              itemType="track"
+              itemId={currentTrack.id}
+              title={currentTrack.title}
+              priceCents={(currentTrack as any).price_cents ?? 99}
+              albumId={currentTrack.album_id}
+              size="sm"
+            />
+          </div>
+        )}
 
         {isMinimized ? (
           /* Minimized View */

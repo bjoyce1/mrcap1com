@@ -21,3 +21,11 @@ project_id = "qisamkiggoibjkkdtkxq"
     verify_jwt = false
   [functions.youtube-videos]
     verify_jwt = false
+  [functions.paypal-create-order]
+    verify_jwt = false
+  [functions.paypal-capture-order]
+    verify_jwt = false
+  [functions.audio-preview]
+    verify_jwt = false
+  [functions.audio-download]
+    verify_jwt = false
