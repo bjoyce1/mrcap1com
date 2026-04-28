@@ -35,12 +35,6 @@ const shippingSchema = z.object({
   phone: z.string().max(20).optional(),
 });
 
-declare global {
-  interface Window {
-    paypal?: any;
-  }
-}
-
 const countries = [
   { code: 'US', name: 'United States' },
   { code: 'CA', name: 'Canada' },

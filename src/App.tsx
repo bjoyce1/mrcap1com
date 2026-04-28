@@ -13,6 +13,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-route
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
+import Index from "@/pages/Index";
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -25,7 +26,6 @@ import MotionToggle from "@/components/MotionToggle";
 
 
 // ── Lazy-loaded pages ───────────────────────────────────────
-const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
 // Music page removed — merged into Discography
 const Live = lazy(() => import("./pages/Live"));
