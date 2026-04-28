@@ -112,6 +112,14 @@ const About = () => {
         <meta property="og:description" content="Read the story behind Mr. CAP, from Houston roots and SPC history to current work across music and technology." />
         <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://mrcap1.com/about" />
+        <meta property="og:image" content="https://mrcap1.com/images/about-bg.webp" />
+        <meta property="og:site_name" content="Mr. CAP Legacy" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@mrcap1" />
+        <meta name="twitter:title" content="About Mr. CAP | Houston Legacy, South Park Coalition Roots & Future Vision" />
+        <meta name="twitter:description" content="Read the story behind Mr. CAP, from Houston roots and SPC history to current work across music and technology." />
+        <meta name="twitter:image" content="https://mrcap1.com/images/about-bg.webp" />
         
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

@@ -204,10 +204,16 @@ const Discography = () => {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="music.album" />
         <meta property="og:url" content="https://mrcap1.com/discography" />
-        
+        <meta property="og:image" content="https://mrcap1.com/images/covers/album-ties.webp" />
+        <meta property="og:site_name" content="Mr. CAP Legacy" />
+        <meta property="og:locale" content="en_US" />
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@mrcap1" />
-        
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content="https://mrcap1.com/images/covers/album-ties.webp" />
+
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
