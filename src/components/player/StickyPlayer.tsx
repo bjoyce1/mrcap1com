@@ -1,15 +1,22 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2 } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2, ShoppingCart } from "lucide-react";
 import { reportQualifiedStream } from "@/lib/streamTracking";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { usePlayerStore } from "@/stores/playerStore";
 import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
+import { usePurchasesStore } from "@/stores/purchasesStore";
 import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import QueueDrawer from "./QueueDrawer";
 import { shareMusic } from "@/lib/shareTrack";
+import BuyButton from "@/components/music/BuyButton";
+
+const PREVIEW_SECONDS = 30;
+const PROJECT_ID = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+const PREVIEW_BASE = `https://${PROJECT_ID}.supabase.co/functions/v1/audio-preview`;
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
