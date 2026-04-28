@@ -194,7 +194,8 @@ const StickyPlayer = () => {
   const hasNext = queueIndex < queue.length - 1;
   const hasPrev = queueIndex > 0;
   const noAudio = !currentTrack.audio_url;
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const progressMax = isPreview ? PREVIEW_SECONDS : (duration || 100);
+  const progress = progressMax > 0 ? (Math.min(currentTime, progressMax) / progressMax) * 100 : 0;
 
   return (
     <>
