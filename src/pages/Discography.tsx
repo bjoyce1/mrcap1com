@@ -346,70 +346,48 @@ const Discography = () => {
             </div>
           </section>
 
-          {/* ============ ALBUM RAIL (horizontal scroll) ============ */}
-          <section className="relative py-20 md:py-28 border-t border-white/5">
-            <div className="container mx-auto px-6 mb-10 flex items-end justify-between gap-6">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-3">01 — Albums</p>
-                <h2 className="text-3xl md:text-5xl font-display font-bold">Studio &amp; Collab Records</h2>
-              </div>
-              <div className="hidden md:flex gap-2">
-                <button
-                  onClick={() => scrollRail("left")}
-                  className="w-11 h-11 rounded-full bg-white/5 hover:bg-primary/20 flex items-center justify-center transition-colors"
-                  aria-label="Scroll albums left"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => scrollRail("right")}
-                  className="w-11 h-11 rounded-full bg-white/5 hover:bg-primary/20 flex items-center justify-center transition-colors"
-                  aria-label="Scroll albums right"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
+          {/* ============ ALBUM GRID (editorial / MJ-style) ============ */}
+          <section className="relative py-24 md:py-32 border-t border-white/5">
+            <div className="container mx-auto px-6 mb-16 md:mb-20 text-center">
+              <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">01 — Albums</p>
+              <h2 className="text-3xl md:text-5xl font-display font-bold">Studio &amp; Collab Records</h2>
             </div>
 
-            <div
-              ref={railRef}
-              className="flex gap-5 md:gap-7 overflow-x-auto pb-6 px-6 md:px-[max(1.5rem,calc((100vw-1280px)/2))] snap-x snap-mandatory scrollbar-hide"
-              style={{ scrollbarWidth: "none" }}
-            >
-              {studioAlbums.map((album) => (
-                <button
-                  key={album.title}
-                  onClick={() => setActiveAlbum(album)}
-                  className="group relative shrink-0 w-[260px] md:w-[340px] snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
-                >
-                  <div className="relative aspect-square overflow-hidden rounded-md shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
-                    <img
-                      src={album.image}
-                      alt={`${album.title} cover art`}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-all duration-700 grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105"
-                    />
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-90" />
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black/30">
-                      <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-[0_4px_24px_hsl(0_0%_0%/0.5)]">
-                        <Play className="w-7 h-7 text-primary-foreground translate-x-0.5" />
+            <div className="container mx-auto px-6 max-w-6xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 md:gap-y-24">
+                {studioAlbums.map((album) => (
+                  <button
+                    key={album.title}
+                    onClick={() => setActiveAlbum(album)}
+                    className="group flex flex-col items-center text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                  >
+                    <div className="relative w-full aspect-square overflow-hidden shadow-[0_20px_50px_-10px_hsl(0_0%_0%/0.7)] transition-transform duration-500 group-hover:-translate-y-1">
+                      <img
+                        src={album.image}
+                        alt={`${album.title} cover art`}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center bg-black/40">
+                        <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-[0_4px_24px_hsl(0_0%_0%/0.5)]">
+                          <Play className="w-7 h-7 text-primary-foreground translate-x-0.5" />
+                        </div>
                       </div>
                     </div>
-                    {album.featured && (
-                      <div className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.25em] text-primary bg-black/60 backdrop-blur px-3 py-1.5 rounded-full">
-                        Latest
-                      </div>
-                    )}
-                    {/* Title on cover */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5">
-                      <p className="text-[10px] uppercase tracking-[0.3em] text-primary/90 mb-1">{album.year}</p>
-                      <h3 className="font-display font-bold text-xl md:text-2xl leading-tight">{album.title}</h3>
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-1">{album.artist}</p>
-                    </div>
-                  </div>
-                </button>
-              ))}
+
+                    <h3 className="mt-8 font-editorial text-3xl md:text-4xl leading-tight text-foreground">
+                      {album.title}
+                    </h3>
+
+                    <span className="mt-5 inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.4em] text-muted-foreground group-hover:text-primary transition-colors">
+                      See More
+                      <span aria-hidden="true" className="inline-block w-8 h-px bg-current relative">
+                        <span className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 border-t border-r border-current rotate-45" />
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
           </section>
 
