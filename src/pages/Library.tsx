@@ -117,6 +117,46 @@ const Library = () => {
     }
   };
 
+  const downloadAlbum = async (albumId: string, albumTitle: string) => {
+    setAlbumDownloadingId(albumId);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (!token) {
+        toast({ title: "Sign in required", variant: "destructive" });
+        return;
+      }
+      const url = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/album-download`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ album_id: albumId }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: "Download failed" }));
+        toast({ title: "Download failed", description: err.error || "Try again.", variant: "destructive" });
+        return;
+      }
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = objectUrl;
+      a.download = `${albumTitle}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(objectUrl);
+      trackEvent("album_download", { album_id: albumId });
+    } catch (e) {
+      toast({ title: "Download failed", description: e instanceof Error ? e.message : "Try again.", variant: "destructive" });
+    } finally {
+      setAlbumDownloadingId(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
