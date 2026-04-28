@@ -141,8 +141,19 @@ const StickyPlayer = () => {
   }, [currentTrack?.id, currentTime]);
 
   const handleTimeUpdate = useCallback(() => {
-    if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
-  }, [setCurrentTime]);
+    const audio = audioRef.current;
+    if (!audio) return;
+    // Hard pause at 30s for preview mode
+    if (isPreview && audio.currentTime >= PREVIEW_SECONDS) {
+      audio.pause();
+      audio.currentTime = PREVIEW_SECONDS;
+      setCurrentTime(PREVIEW_SECONDS);
+      setPreviewBlocked(true);
+      usePlayerStore.setState({ isPlaying: false });
+      return;
+    }
+    setCurrentTime(audio.currentTime);
+  }, [setCurrentTime, isPreview]);
 
   const syncedRef = useRef<Record<string, boolean>>({});
 
@@ -151,15 +162,16 @@ const StickyPlayer = () => {
     const realDuration = audioRef.current.duration;
     setDuration(realDuration);
 
-    // If stored duration is 0, persist the real duration
+    // If stored duration is 0, persist the real duration (only when owner is streaming
+    // the full file — preview clips are short and would corrupt stored durations).
     const track = usePlayerStore.getState().currentTrack;
-    if (track && track.duration === 0 && realDuration > 0 && !syncedRef.current[track.id]) {
+    if (!isPreview && track && track.duration === 0 && realDuration > 0 && !syncedRef.current[track.id]) {
       syncedRef.current[track.id] = true;
       supabase.functions.invoke("sync-track-duration", {
         body: { trackId: track.id, duration: realDuration },
       }).catch(() => {});
     }
-  }, [setDuration]);
+  }, [setDuration, isPreview]);
 
   const handleEnded = useCallback(() => {
     if (currentTrack) {
@@ -170,8 +182,10 @@ const StickyPlayer = () => {
 
   const handleSeek = (value: number[]) => {
     if (audioRef.current) {
-      audioRef.current.currentTime = value[0];
-      setCurrentTime(value[0]);
+      // Block scrubbing past the preview cap
+      const target = isPreview ? Math.min(value[0], PREVIEW_SECONDS) : value[0];
+      audioRef.current.currentTime = target;
+      setCurrentTime(target);
     }
   };
 
