@@ -166,6 +166,14 @@ const Index = () => {
         <meta property="og:description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <meta property="og:url" content="https://mrcap1.com" />
         <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://mrcap1.com/images/mrcap-hero-bg.webp" />
+        <meta property="og:site_name" content="Mr. CAP Legacy" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@mrcap1" />
+        <meta name="twitter:title" content="Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist" />
+        <meta name="twitter:description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
+        <meta name="twitter:image" content="https://mrcap1.com/images/mrcap-hero-bg.webp" />
         {/* Preload above-the-fold visuals */}
         <link rel="preload" as="image" href="/images/mrcap-hero-bg.webp" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
