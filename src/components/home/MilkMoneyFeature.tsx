@@ -5,9 +5,9 @@ import SectionShell from "./SectionShell";
 import SectionBackground from "./SectionBackground";
 
 const BG_IMAGE =
-  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster%202.png";
+  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/milk-money-bg.webp";
 const POSTER_IMAGE =
-  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/The%20Milk%20Money%20Movie%20Poster.png";
+  "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/milk-money/milk-money-poster.webp";
 
 const MOVIE_URL = "https://themilkmoney.lovable.app";
 

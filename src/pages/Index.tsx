@@ -167,7 +167,7 @@ const Index = () => {
         <meta property="og:url" content="https://mrcap1.com" />
         <meta property="og:type" content="website" />
         {/* Preload above-the-fold visuals */}
-        <link rel="preload" as="image" href="/images/mrcap-hero-bg.jpg" />
+        <link rel="preload" as="image" href="/images/mrcap-hero-bg.webp" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 

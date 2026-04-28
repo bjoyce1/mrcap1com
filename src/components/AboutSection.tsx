@@ -14,7 +14,7 @@ const AboutSection = () => {
       {/* Background Image with Fade */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img
-          src="/images/about-bg.png"
+          src="/images/about-bg.webp"
           alt=""
           className="absolute right-0 top-0 h-[120%] w-auto object-cover object-left opacity-90"
         />

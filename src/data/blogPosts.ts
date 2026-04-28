@@ -141,7 +141,7 @@ Stay tuned for upcoming releases that showcase the best of both worlds – innov
     slug: "houston-rapper-lands-major-art-music-collaboration-with-artist-ali-sabet",
     title: "Houston Rapper Lands Major Art-Music Collaboration With Artist Ali Sabet",
     excerpt: "Mr. CAP teams up with internationally renowned visual artist Ali Sabet for 'Sunshade + Bet on Her,' a groundbreaking fusion of fine art and hip-hop featuring Billy Cook.",
-    image: "/images/sunshade-sabet-blog.png",
+    image: "/images/sunshade-sabet-blog.webp",
     content: `
 ## A Groundbreaking Fusion
 
@@ -311,7 +311,7 @@ Radio appearances have always been a crucial part of hip-hop promotion. This int
     slug: "somebody-tell-wiz-khalifa-theres-only-one-mr-cap",
     title: "Somebody Tell Wiz Khalifa There's Only One Mr. CAP",
     excerpt: "A playful statement on identity and originality in hip-hop.",
-    image: "/images/wiz-khalifa-blog.jpg",
+    image: "/images/wiz-khalifa-blog.webp",
     content: `
 ## One of a Kind
 
@@ -368,7 +368,7 @@ In conclusion, the sale of Mr. CAP's Hip Hop NFT has set a new standard for arti
   {
     slug: "mr-cap-is-shaking-up-the-nft-world-with-im-bout-to-blow",
     title: "Mr. CAP is Shaking Up the NFT World with \"I'm Bout To Blow\"",
-    image: "/images/bout-to-blow-blog.png",
+    image: "/images/bout-to-blow-blog.webp",
     excerpt: "In 2023 Mr. CAP revisited his 2019 single 'I'm Bout To Blow' and reimagined it as a digital collectible, offering fans a way to invest in his music and own a piece of hip-hop history.",
     content: `
 ## A Classic Reimagined
@@ -399,7 +399,7 @@ For listeners who knew the original version, the NFT drop represents both nostal
     slug: "dippin-thru-the-metaverse-pt-1",
     title: "Dippin Thru the Metaverse pt.1",
     excerpt: "Mr. CAP teams up with producer Ciddy Boi P to explore the fusion of hip-hop and emerging technology in this single that blends classic southern rap with futuristic sound design.",
-    image: "/images/dippin-metaverse.png",
+    image: "/images/dippin-metaverse.webp",
     content: `
 ## Hip-Hop Meets the Future
 
@@ -429,7 +429,7 @@ Readers are invited to listen to the track and reflect on the intersection of mu
     slug: "honoring-the-legacy-of-o-n-e-with-the-release-of-to-tha-grave",
     title: "Honoring the Legacy of O.N.E. with the Release of 'To Tha Grave'",
     excerpt: "This heartfelt post commemorates the remastered release of 'To Tha Grave,' originally recorded with Mr. CAP's cousin O.N.E. (Originality Never Ends).",
-    image: "/images/to-tha-grave-blog.png",
+    image: "/images/to-tha-grave-blog.webp",
     content: `
 ## A Tribute to Family
 
@@ -493,7 +493,7 @@ For listeners who prefer traditional platforms, "PWA" was simultaneously release
     slug: "h-town-represent",
     title: "H-Town Represent",
     excerpt: "Mr. CAP pays homage to Houston with the exclusive NFT anthem 'H-Town Represent' – a rallying cry for anyone proud to call Houston home.",
-    image: "/images/h-town-represent-blog.png",
+    image: "/images/h-town-represent-blog.webp",
     content: `
 ## A Houston Anthem
 
@@ -633,7 +633,7 @@ And if you're just now finding out who he is, you're not late. You're right on t
     date: "2024-12-03",
     author: "Mr. CAP",
     readTime: "10 min",
-    image: "/images/untold-story-mrcap-blog.png",
+    image: "/images/untold-story-mrcap-blog.webp",
     tags: ["Biography", "Houston", "South Park Coalition", "Underground Hip-Hop", "Third Ward"],
   },
   {
@@ -688,7 +688,7 @@ That's what Mr. CAP has been building toward for 30+ years. Blockchain is just t
     date: "2024-11-20",
     author: "Mr. CAP",
     readTime: "8 min",
-    image: "/images/blockchain-nfts-hiphop-blog.png",
+    image: "/images/blockchain-nfts-hiphop-blog.webp",
     tags: ["NFT", "Blockchain", "Web3", "Music Industry", "Innovation", "Ownership"],
   },
   {
@@ -848,7 +848,7 @@ Releasing through Sony Music / The Orchard gave the album the distribution it de
     slug: "why-betn-on-me-is-more-than-a-song",
     title: "Why 'Bet'n On Me' Is More Than a Song",
     excerpt: "The lead single from 'The Ties That Bind Us' isn't just a record — it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.",
-    image: "/images/betn-on-me-blog.jpg",
+    image: "/images/betn-on-me-blog.webp",
     content: `
 ## A Philosophy Shaped by Decades
 
