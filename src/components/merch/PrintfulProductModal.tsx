@@ -29,12 +29,6 @@ const shippingSchema = z.object({
   phone: z.string().max(20).optional(),
 });
 
-declare global {
-  interface Window {
-    paypal?: any;
-  }
-}
-
 export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProductModalProps) => {
   const { addItem } = useCartStore();
   const [selectedVariantId, setSelectedVariantId] = useState<number | null>(null);
