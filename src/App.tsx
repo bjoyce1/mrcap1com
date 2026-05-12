@@ -173,6 +173,7 @@ function AppRoutes() {
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
             <Route path="/for-media" element={<PageTransition><ForMedia /></PageTransition>} />
+            <Route path="/v2/styleguide" element={<PageTransition><StyleguideV2 /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>
