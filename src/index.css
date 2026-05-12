@@ -58,28 +58,6 @@
     --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.35);
     --shadow-gold: 0 0 30px hsl(43 91% 61% / 0.2);
     --shadow-orange: 0 0 100px hsl(27 96% 61% / 0.08);
-
-    /* ============================================================ */
-    /* V2 DESIGN SYSTEM — Mr. CAP Legacy "Cinematic Editorial"       */
-    /* MJ-inspired: monochrome + single accent. Use via .v2 scope    */
-    /* or v2-* tailwind tokens. Doesn't replace v1 tokens above.     */
-    /* ============================================================ */
-    --v2-bg: 0 0% 0%;                      /* true black */
-    --v2-ink: 40 33% 94%;                  /* bone white #F5F1E8 */
-    --v2-ink-muted: 40 12% 65%;
-    --v2-ink-faint: 40 8% 42%;
-    --v2-surface-1: 0 0% 4%;
-    --v2-surface-2: 0 0% 7%;
-    --v2-surface-3: 0 0% 11%;
-    --v2-hairline: 40 20% 94% / 0.08;
-    --v2-accent: 358 78% 52%;              /* MJ Crimson */
-    --v2-accent-hi: 358 86% 60%;
-    --v2-accent-ink: 40 33% 96%;
-
-    --v2-shadow-deep: 0 30px 80px -20px hsl(0 0% 0% / 0.7);
-    --v2-shadow-glow: 0 0 120px hsl(358 78% 52% / 0.3);
-    --v2-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-    --v2-ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
@@ -458,55 +436,4 @@
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-}
-
-/* ============================================================ */
-/* V2 — Cinematic Editorial utilities                            */
-/* ============================================================ */
-@layer utilities {
-  /* Type */
-  .v2-display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: -0.01em; line-height: 1.0; text-transform: none; }
-  .v2-display-italic { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; letter-spacing: -0.01em; line-height: 1.0; }
-  .v2-eyebrow { font-family: 'Inter Variable', 'Inter', sans-serif; font-weight: 500; font-size: 0.7rem; letter-spacing: 0.32em; text-transform: uppercase; color: hsl(var(--v2-ink-muted)); }
-  .v2-body { font-family: 'Inter Variable', 'Inter', sans-serif; font-weight: 400; line-height: 1.6; color: hsl(var(--v2-ink) / 0.85); }
-  .v2-caption { font-family: 'Inter Variable', 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; color: hsl(var(--v2-ink-muted)); }
-
-  /* Surfaces */
-  .v2-surface { background: hsl(var(--v2-bg)); color: hsl(var(--v2-ink)); }
-  .v2-surface-1 { background: hsl(var(--v2-surface-1)); }
-  .v2-surface-2 { background: hsl(var(--v2-surface-2)); }
-  .v2-hairline-b { border-bottom: 1px solid hsl(var(--v2-hairline)); }
-  .v2-hairline-t { border-top: 1px solid hsl(var(--v2-hairline)); }
-
-  /* Edge fade for horizontal rails */
-  .v2-rail-fade {
-    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
-  }
-
-  /* Magnetic / sweep link */
-  .v2-link-sweep { position: relative; display: inline-block; }
-  .v2-link-sweep::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px;
-    background: currentColor; transform: scaleX(0); transform-origin: right center;
-    transition: transform 600ms var(--v2-ease-slow);
-  }
-  .v2-link-sweep:hover::after { transform: scaleX(1); transform-origin: left center; }
-
-  /* Cover hover: grayscale -> color + lift */
-  .v2-cover { filter: grayscale(0.7) contrast(1.05); transition: filter 900ms var(--v2-ease-slow), transform 900ms var(--v2-ease-slow); }
-  .v2-cover-group:hover .v2-cover { filter: grayscale(0) contrast(1); transform: scale(1.03); }
-
-  /* Noise overlay */
-  .v2-noise::before {
-    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  }
-
-  /* Reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .v2-cover { filter: none; transition: none; }
-    .v2-cover-group:hover .v2-cover { transform: none; }
-    .v2-link-sweep::after { transition: none; }
-  }
 }

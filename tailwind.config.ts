@@ -66,28 +66,12 @@ export default {
             500: "hsl(var(--flux-orange-500))",
           },
         },
-        // V2 Cinematic Editorial palette
-        v2: {
-          bg: "hsl(var(--v2-bg))",
-          ink: "hsl(var(--v2-ink))",
-          "ink-muted": "hsl(var(--v2-ink-muted))",
-          "ink-faint": "hsl(var(--v2-ink-faint))",
-          surface1: "hsl(var(--v2-surface-1))",
-          surface2: "hsl(var(--v2-surface-2))",
-          surface3: "hsl(var(--v2-surface-3))",
-          accent: "hsl(var(--v2-accent))",
-          "accent-hi": "hsl(var(--v2-accent-hi))",
-          "accent-ink": "hsl(var(--v2-accent-ink))",
-        },
       },
       fontFamily: {
         display: ["Montserrat", "sans-serif"],
         editorial: ["Montserrat", "sans-serif"],
         sans: ["Inter", "sans-serif"],
         ui: ["Inter", "sans-serif"],
-        // V2
-        v2display: ["Cormorant Garamond", "Georgia", "serif"],
-        v2sans: ["Inter Variable", "Inter", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
