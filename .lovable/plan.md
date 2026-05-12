@@ -1,63 +1,86 @@
-## What's slow
+# Mr. CAP Legacy — Ground-Up Rebuild Plan
 
-After auditing every image on the homepage, three problems are causing slow loads:
+Inspired by michaeljackson.com: full-bleed cinematic imagery, horizontal rails, slow refined motion, premium hover interactions on cover art and CTAs. Built design-system-first so every page that follows snaps into place.
 
-### 1. Milk Money posters (worst offender — 22 MB total)
-Hosted in the `milk-money` Supabase bucket as raw PNGs:
-- `The Milk Money Movie Poster 2.png` — **19.7 MB** (used as section background)
-- `The Milk Money Movie Poster.png` — **2.5 MB** (foreground poster)
+## Direction at a glance
 
-The 19.7 MB background alone is roughly the size of the entire rest of the page combined. On mobile/3G this stalls the section for 10+ seconds.
+- **Palette:** True black `#000` background, bone white `#F5F1E8` text, single accent. Recommend **oxblood red** (already on-brand, reads close to MJ red). Gold retired except as a rare metallic detail (icon, divider).
+- **Typography:** Display serif for headlines (e.g. Fraunces or Cormorant Garamond) + Inter for UI/body. Big, tight leading, generous tracking on small caps eyebrows.
+- **Layout language:** Edge-to-edge media, asymmetric editorial grids, deep vertical rhythm (160–240px section gaps), no card borders — separation by contrast and shadow.
+- **Motion:** Slow (600–1200ms) ease-out reveals on scroll, subtle parallax on hero media, no bouncy springs. Image-ken-burns on hero stills.
+- **Signature interactions:**
+  - Cover art: grayscale → color on hover, 3D tilt, soft glow, "Now Playing" pill slides up.
+  - CTAs: magnetic cursor pull, underline sweep, accent fill on hover.
+  - Cursor: custom blended cursor over media zones (optional toggle).
+  - Rails: drag-to-scroll with momentum, scroll-snap, edge fade masks.
 
-### 2. Cover art in `public/images/covers/` (29 MB folder)
-Many covers shipped as 2–3 MB PNG/JPG originals:
-- `nft-art-of-ism.png` 3.0 MB, `put-the-dope-down.png` 2.9 MB, `betn-on-me.png` 2.8 MB, `album-cold-ass-pimp.jpg` 2.8 MB, `dippin-metaverse.png` 2.7 MB, `bout-to-blow.png` 2.7 MB, `h-town-represent.png` 2.4 MB, etc.
+## Phase 1 — Design System (build first, no page work yet)
 
-The homepage's Catalog Preview / Release Spotlight / Art of ISM feature pull from these.
+Deliverables live alongside current site so nothing breaks:
 
-### 3. Blog/feature backgrounds in `public/images/` (42 MB folder)
-Same story — `about-bg.png` 3.0 MB, `mrcap-hero-bg.jpg` 1.2 MB, several 2–3 MB blog headers used by Latest Press feature.
+1. **Tokens** — rewrite `index.css` + `tailwind.config.ts`
+   - New HSL tokens: `--bg`, `--ink`, `--ink-muted`, `--accent`, `--accent-ink`, `--surface-1/2/3`, `--hairline`.
+   - Type scale: `display-xl/lg/md`, `eyebrow`, `body`, `caption`.
+   - Spacing scale extended (sections 24/32/40 = 96/128/160px).
+   - Easing tokens: `--ease-editorial: cubic-bezier(.2,.8,.2,1)`.
+2. **Primitives** in `src/components/v2/`
+   - `CinematicHero` (full-bleed image/video, parallax, headline overlay, scroll cue)
+   - `Rail` (horizontal scroller, snap, edge fade, drag, arrow controls)
+   - `CoverCard` (grayscale→color, tilt, hover meta)
+   - `EditorialBlock` (asymmetric text+image, eyebrow + display + body)
+   - `MagneticButton` / `LinkSweep`
+   - `SectionHeader` (eyebrow, display, optional view-all)
+   - `Reveal` wrapper (Framer Motion, in-view fade/slide)
+   - `Marquee` (slow infinite for accolades)
+3. **Showcase route** `/v2/styleguide` (not linked) with tokens + every primitive in light/dark states for review and screenshot QA.
 
-## The fix
+Approval gate: you review `/v2/styleguide` before any page rebuild.
 
-### Step 1 — Re-encode the two Milk Money posters to WebP
-Download from Supabase, convert with `cwebp -q 80` (and resize the 19.7 MB background to max 2000px wide), re-upload to the same `milk-money` bucket as `.webp`, and update the two URLs in `src/components/home/MilkMoneyFeature.tsx`.
+## Phase 2 — Information Architecture
 
-Expected: **22 MB → ~600 KB** (a ~37× reduction).
+Proposed simplified top nav (desktop, 5 items max — MJ pattern):
 
-### Step 2 — Convert the heaviest cover art to WebP
-Batch-convert every file in `public/images/covers/` over 500 KB using `cwebp -q 82`, then update any `.png`/`.jpg` references in components to `.webp`. Keep filenames matching so refactor is mechanical.
+```
+MUSIC   ·   FILM/VIDEO   ·   STORE   ·   LEGACY   ·   NEWS
+                   [LOGO centered]                     [☰ more]
+```
 
-Expected: **29 MB → ~4 MB** for that folder.
+Consolidations:
+- `/music`, `/discography`, `/new-releases`, `/cap-stream` → **/music** with sub-rails (Latest, Albums, Singles, NFT-gated).
+- `/videos`, `/visualizers` → **/film**.
+- `/legacy`, `/biography`, `/houston-history`, `/spc` → **/legacy** hub with chapter pages.
+- Keep release/track/blog/landing pages at current URLs (SEO + 51 city pages preserved). Add 301s for any merged routes.
 
-### Step 3 — Convert the heaviest hero/blog images
-Same treatment for everything in `public/images/` over 1 MB (about-bg, mrcap-hero-bg, blog headers).
+## Phase 3 — Page Rebuild Order
 
-Expected: **42 MB → ~6 MB**.
+After styleguide approval, rebuild in this order, one PR per page:
+1. `/` (Index) — cinematic hero, latest release rail, editorial bio block, video reel, news rail, store teaser, newsletter.
+2. `/music` — hero of newest release, era rails, NFT-gated rail.
+3. Dynamic release/track template — uses new `CinematicHero` + `EditorialBlock` + DSP rail.
+4. `/film` and `/legacy` hubs.
+5. `/store`, `/press`, blog, landing pages.
 
-### Step 4 — Add `loading="lazy"` + explicit width/height
-Audit homepage components (`MilkMoneyFeature`, `ArtOfIsmFeature`, `CatalogPreview`, `ReleaseSpotlight`, `LatestPressFeature`) — make sure every below-the-fold `<img>` has `loading="lazy"` and `decoding="async"`. The Milk Money poster already has `loading="lazy"` ✓, but the section background `<img>` inside `SectionBackground` should be checked.
+Each page keeps existing data fetching, schema/JSON-LD, prerender script entries, and analytics events — only the presentation layer changes.
 
-### Step 5 — Preload only the LCP image
-In `index.html`, ensure only the true above-the-fold hero image is in `<link rel="preload">`. Remove any preloads pointing to images that are no longer above-the-fold.
+## Phase 4 — Cleanup
 
-## Out of scope
+- Retire old components (`HeroSection`, mascot remnants already gone, old `PageHero` variants) once all pages migrated.
+- Delete `/v2/styleguide` route or keep behind admin.
+- Update memory: new palette, new animation tokens, IA changes.
 
-- Not changing layout, design, or any copy.
-- Not touching the PWA precache rules (already excludes >2 MB media per project memory).
-- Not migrating to a CDN image transform service — re-encoding statically is enough and avoids new infra.
+## Technical Notes
 
-## Files to edit
+- Stack unchanged: React + Vite + Tailwind + Framer Motion + GSAP (parallax). No SSR.
+- New components live under `src/components/v2/` so old pages keep working during migration.
+- Fonts: self-host via `@fontsource/fraunces` + `@fontsource-variable/inter` to avoid CLS and keep LCP fast.
+- Motion respects `prefers-reduced-motion` (disable parallax, tilt, marquee).
+- Performance budget per page: LCP < 2.0s on 4G, hero image WebP/AVIF preloaded, rails virtualized only if >20 items.
+- Custom cursor and tilt only on `(hover: hover) and (pointer: fine)` — mobile gets tap states + native momentum scroll.
+- All current schemas, GA4 events, OG image edge function, RLS policies, Printful/PayPal flows, and CMS proxy stay intact.
 
-- `src/components/home/MilkMoneyFeature.tsx` — swap the two Supabase URLs to `.webp`
-- `src/components/home/SectionBackground.tsx` — verify lazy/decoding attrs
-- `public/images/covers/*` — replace heavy originals with WebP versions
-- `public/images/*` — replace heavy originals with WebP versions
-- Any component referencing the renamed cover/hero files (mechanical `.png`/`.jpg` → `.webp` swap)
-- `index.html` — clean up preload tags
+## What I need from you before building
 
-## Expected result
-
-Total homepage image weight drops from **~95 MB → ~10 MB** (~90% reduction). LCP and overall feel of the page improve dramatically, especially on mobile.
-
-Approve and I'll execute steps 1–5.
+1. Confirm **oxblood red** as accent (or pick a different single accent).
+2. Confirm display serif preference: **Fraunces** (modern, slightly playful) vs **Cormorant Garamond** (classic, MJ-leaning) vs **Playfair Display** (safe).
+3. Confirm the simplified 5-item nav and the route consolidations above.
+4. Confirm Phase 1 (design system + `/v2/styleguide`) is the right starting point — no page rebuild work begins until you approve the styleguide.
