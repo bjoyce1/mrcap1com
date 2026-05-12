@@ -86,7 +86,7 @@ export default {
         sans: ["Inter", "sans-serif"],
         ui: ["Inter", "sans-serif"],
         // V2
-        v2display: ["Fraunces", "Georgia", "serif"],
+        v2display: ["Cormorant Garamond", "Georgia", "serif"],
         v2sans: ["Inter Variable", "Inter", "sans-serif"],
       },
       borderRadius: {
