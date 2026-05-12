@@ -58,6 +58,28 @@
     --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.35);
     --shadow-gold: 0 0 30px hsl(43 91% 61% / 0.2);
     --shadow-orange: 0 0 100px hsl(27 96% 61% / 0.08);
+
+    /* ============================================================ */
+    /* V2 DESIGN SYSTEM — Mr. CAP Legacy "Cinematic Editorial"       */
+    /* MJ-inspired: monochrome + single accent. Use via .v2 scope    */
+    /* or v2-* tailwind tokens. Doesn't replace v1 tokens above.     */
+    /* ============================================================ */
+    --v2-bg: 0 0% 0%;                      /* true black */
+    --v2-ink: 40 33% 94%;                  /* bone white #F5F1E8 */
+    --v2-ink-muted: 40 12% 65%;
+    --v2-ink-faint: 40 8% 42%;
+    --v2-surface-1: 0 0% 4%;
+    --v2-surface-2: 0 0% 7%;
+    --v2-surface-3: 0 0% 11%;
+    --v2-hairline: 40 20% 94% / 0.08;
+    --v2-accent: 358 70% 38%;              /* oxblood red */
+    --v2-accent-hi: 358 78% 48%;
+    --v2-accent-ink: 40 33% 96%;
+
+    --v2-shadow-deep: 0 30px 80px -20px hsl(0 0% 0% / 0.7);
+    --v2-shadow-glow: 0 0 120px hsl(358 70% 38% / 0.25);
+    --v2-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --v2-ease-slow: cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
