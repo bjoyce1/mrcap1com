@@ -75,6 +75,7 @@ const BetOnHer = lazy(() => import("./pages/BetOnHer"));
 const HoustonHipHopHistory = lazy(() => import("./pages/HoustonHipHopHistory"));
 const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
+const StyleguideV2 = lazy(() => import("./pages/v2/Styleguide"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
