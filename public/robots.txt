@@ -20,4 +20,4 @@ Disallow: /admin
 Disallow: /auth
 
 # Sitemap
-Sitemap: https://mrcap1.com/sitemap.xml
+Sitemap: https://www.mrcap1.com/sitemap.xml
