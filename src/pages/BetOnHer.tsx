@@ -267,7 +267,7 @@ export default function BetOnHer() {
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg shadow-amber-500/50" />
                 </div>
               </div>
-              <div className="flex justify-between mt-2 text-xs text-white/30">
+              <div className="flex justify-between mt-2 text-xs text-white/75">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
@@ -351,7 +351,7 @@ export default function BetOnHer() {
               </p>
             </div>
 
-            <div className="mt-10 pt-8 border-t border-white/5 space-y-3 text-xs text-white/30">
+            <div className="mt-10 pt-8 border-t border-white/5 space-y-3 text-xs text-white/75">
               <p>
                 <span className="text-white/50">Press & Booking:</span>{" "}
                 <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer" className="text-amber-500/60 hover:text-amber-400 transition-colors">
@@ -513,7 +513,7 @@ export default function BetOnHer() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-xs tracking-[0.3em] uppercase text-white/30 mb-8">Listen & Follow</p>
+            <p className="text-xs tracking-[0.3em] uppercase text-white/75 mb-8">Listen & Follow</p>
             <div className="flex items-center justify-center gap-6 flex-wrap">
               {socialLinks.map((link) => (
                 <a
@@ -522,7 +522,7 @@ export default function BetOnHer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-amber-400 hover:border-amber-400/40 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300"
+                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/80 hover:text-amber-400 hover:border-amber-400/40 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300"
                 >
                   {link.icon}
                 </a>
