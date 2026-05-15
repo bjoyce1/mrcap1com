@@ -201,7 +201,7 @@ export default function PremiumMusicSection() {
                   </span>
                 )}
                 {hero.release_year && (
-                  <span className="text-muted-foreground/50">
+                  <span className="text-muted-foreground">
                     {" "}
                     · {hero.release_year}
                   </span>
@@ -566,12 +566,12 @@ export default function PremiumMusicSection() {
                         </button>
 
                         <div className="mt-1.5 flex items-center gap-2">
-                          <span className="text-[10px] text-muted-foreground/50">
+                          <span className="text-[10px] text-muted-foreground">
                             {formatTime(t.duration)}
                           </span>
                           <button
                             onClick={() => openDrawer(t)}
-                            className="text-[10px] text-muted-foreground/50 hover:text-primary transition-colors"
+                            className="text-[10px] text-muted-foreground hover:text-primary transition-colors"
                           >
                             <ListMusic className="w-3 h-3 inline mr-0.5" />
                             Open

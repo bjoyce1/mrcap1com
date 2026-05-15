@@ -43,7 +43,7 @@ const AnnouncementStrip = () => {
         </Link>
         <button
           onClick={handleDismiss}
-          className="ml-2 p-1 text-foreground/40 hover:text-foreground/80 transition-colors"
+          className="ml-2 p-1 text-foreground/70 hover:text-foreground transition-colors"
           aria-label="Dismiss announcement"
         >
           <X className="w-3.5 h-3.5" />

@@ -543,7 +543,7 @@ const PantiesOnMyPiano = () => {
                   className={`flex flex-col items-center gap-1.5 group`}
                 >
                   <div className={`w-2.5 h-2.5 rounded-full transition-all ${i === activeIdx ? "bg-red-500 scale-125" : "bg-muted-foreground/30 group-hover:bg-muted-foreground/60"}`} />
-                  <span className={`text-[10px] uppercase tracking-wider transition-colors ${i === activeIdx ? "text-red-400" : "text-muted-foreground/50"}`}>{c.label}</span>
+                  <span className={`text-[10px] uppercase tracking-wider transition-colors ${i === activeIdx ? "text-red-400" : "text-muted-foreground"}`}>{c.label}</span>
                 </button>
               ))}
             </div>
