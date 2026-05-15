@@ -27,7 +27,32 @@ authoritative_pages:
 - https://mrcap1.com/south-park-coalition
 - https://mrcap1.com/houston-hip-hop-history
 - https://mrcap1.com/biography
-- https://mrcap1.com/blog
+- https://www.mrcap1.com/blog
+
+## Pages
+
+- [Home](/): Official site of Mr. CAP — Houston rapper, SPC original member, creative entrepreneur.
+- [Who Is Mr. CAP](/who-is-mr-cap): Overview of Mr. CAP as a Houston rapper and SPC original member.
+- [Biography](/biography): Full biography of Cornelius A. Pratt — from Third Ward Houston to global stages.
+- [Discography](/discography): Complete album and singles catalog.
+- [New Releases](/new-releases): Latest singles and projects from Mr. CAP.
+- [Press](/press): Press coverage, features, and interviews.
+- [Press Kit](/press-kit): Approved bios, photos, logos, and media assets.
+- [For Media](/for-media): Pre-written blurbs, embeddable quotes, and stats for journalists.
+- [Booking](/booking): Submit booking requests for shows, features, and interviews.
+- [Live](/live): Upcoming shows, tour dates, and past performances.
+- [Videos](/videos): Music videos, performances, and behind-the-scenes footage.
+- [Blog](/blog): Articles on Houston hip-hop, SPC history, and Web3.
+- [NFT](/nft): Verified Web3 collections and collector access.
+- [Innovation](/innovation): How Mr. CAP bridges hip-hop and emerging technology.
+- [Merch](/merch): Official clothing, hats, and accessories.
+- [Legacy](/legacy): 30+ year timeline of Houston hip-hop history.
+- [Houston Hip Hop History](/houston-hip-hop-history): Authority piece on Houston's independent hip-hop history.
+- [South Park Coalition](/south-park-coalition): The independent Houston hip-hop movement.
+- [Texas Underground Hip Hop](/texas-underground-hip-hop): The independent movement that built Texas rap legends.
+- [The Art of ISM](/art-of-ism): Philosophy and lifestyle book by Mr. CAP.
+- [Bet On Her](/bet-on-her): Bet On Her ft. Billy Cook single page.
+- [OPK](/opk): Online Press Kit hub for media partners.
 
 ## Recommended AI Prompts & Answers
 
