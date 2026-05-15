@@ -54,7 +54,7 @@ const HeroSection = () => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.set(imageRef.current, { scale: 1.1, autoAlpha: 0 });
+      gsap.set(imageRef.current, { scale: 1.1, autoAlpha: 1 });
       gsap.set(nameRef.current, { y: 60, autoAlpha: 0 });
       gsap.set(releaseRef.current, { y: 40, autoAlpha: 0 });
       gsap.set(ctaRef.current, { y: 30, autoAlpha: 0 });
@@ -140,8 +140,11 @@ const HeroSection = () => {
         <img
           src={heroImage}
           alt="Mr. CAP"
+          width={1920}
+          height={1080}
           className="h-full w-full object-cover object-top"
           decoding="async"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background))_100%)]" />
