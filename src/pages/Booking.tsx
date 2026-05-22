@@ -52,7 +52,7 @@ const Booking = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Booking Mr. CAP | Shows, Features, Interviews & Speaking Requests"
+        title="Book Mr. CAP | Shows, Features & Speaking"
         description="Submit a qualified booking request for Mr. CAP, including event details, timeline, and contact information."
         canonical="https://mrcap1.com/booking"
         jsonLd={jsonLd}

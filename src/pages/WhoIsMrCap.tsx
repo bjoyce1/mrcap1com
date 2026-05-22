@@ -13,7 +13,7 @@ import nftLimitless from "@/assets/nft-limitless.png";
 import theLifeDocumentary from "@/assets/the-life-documentary.png";
 
 const WhoIsMrCap = () => {
-  const pageTitle = "Who Is Mr. CAP? | Houston Rapper, SPC Legend & Entrepreneur";
+  const pageTitle = "Who Is Mr. CAP? | Houston Rapper & SPC Legend";
   const metaDescription = "Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, entrepreneur, and cultural architect. Learn about his South Park Coalition legacy, music career, business ventures, and how to book him.";
 
   const jsonLd = {
