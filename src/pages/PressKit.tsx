@@ -92,8 +92,8 @@ const PressKit = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Press Kit | Mr. CAP — Bios, Photos, Logos & Media Assets"
-        description="Official press kit for Mr. CAP. Download approved bios, high-resolution photos, logos, and access press references for media coverage, interviews, and event promotion."
+        title="Press Kit | Mr. CAP — Bios, Photos & Logos"
+        description="Official press kit for Mr. CAP. Download approved bios, hi-res photos, logos, and press references for media coverage and events."
         canonical="https://mrcap1.com/press-kit"
         jsonLd={jsonLd}
       />

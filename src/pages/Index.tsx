@@ -159,10 +159,10 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist</title>
+        <title>Mr. CAP | Houston Rapper & SPC Original Member</title>
         <meta name="description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <link rel="canonical" href="https://mrcap1.com" />
-        <meta property="og:title" content="Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist" />
+        <meta property="og:title" content="Mr. CAP | Houston Rapper & SPC Original Member" />
         <meta property="og:description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <meta property="og:url" content="https://mrcap1.com" />
         <meta property="og:type" content="website" />
@@ -171,7 +171,7 @@ const Index = () => {
         <meta property="og:locale" content="en_US" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@mrcap1" />
-        <meta name="twitter:title" content="Mr. CAP | Houston Hip-Hop Artist, SPC Original Member & Creative Technologist" />
+        <meta name="twitter:title" content="Mr. CAP | Houston Rapper & SPC Original Member" />
         <meta name="twitter:description" content="Official site for Mr. CAP: new music, legacy catalog, live booking, press assets, and digital-art updates." />
         <meta name="twitter:image" content="https://mrcap1.com/images/mrcap-hero-bg.webp" />
         {/* Preload above-the-fold visuals */}
