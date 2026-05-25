@@ -10,6 +10,31 @@ const ARTIST_ID = '69pjfQNXA1xjusnI2wfgug';
 const MARKET = 'US';
 const ARTIST_SPOTIFY_URL = `https://open.spotify.com/artist/${ARTIST_ID}`;
 
+interface SpotifyImage {
+  url?: string;
+}
+
+interface SpotifyTrackApi {
+  id: string;
+  name: string;
+  album?: { name?: string; images?: SpotifyImage[] };
+  duration_ms?: number;
+  popularity?: number;
+  preview_url?: string | null;
+  external_urls?: { spotify?: string };
+  explicit?: boolean;
+}
+
+interface SpotifyAlbumApi {
+  id: string;
+  name: string;
+  album_type: string;
+  release_date: string;
+  total_tracks?: number;
+  images?: SpotifyImage[];
+  external_urls?: { spotify?: string };
+}
+
 // Simple in-memory token cache (persists for the life of the function instance)
 let cachedToken: { value: string; expiresAt: number } | null = null;
 
@@ -113,7 +138,7 @@ serve(async (req) => {
     };
 
     // Shape top tracks
-    const topTracks = (topTracksData.tracks ?? []).slice(0, 10).map((t: any) => ({
+    const topTracks = ((topTracksData.tracks ?? []) as SpotifyTrackApi[]).slice(0, 10).map((t: SpotifyTrackApi) => ({
       id: t.id,
       name: t.name,
       album: t.album?.name ?? '',
@@ -127,14 +152,14 @@ serve(async (req) => {
 
     // Shape albums (dedupe by name, newest first)
     const seen = new Set<string>();
-    const albums = (albumsData.items ?? [])
-      .filter((a: any) => {
+    const albums = ((albumsData.items ?? []) as SpotifyAlbumApi[])
+      .filter((a: SpotifyAlbumApi) => {
         const key = a.name.toLowerCase();
         if (seen.has(key)) return false;
         seen.add(key);
         return true;
       })
-      .map((a: any) => ({
+      .map((a: SpotifyAlbumApi) => ({
         id: a.id,
         name: a.name,
         type: a.album_type,
