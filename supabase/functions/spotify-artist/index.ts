@@ -8,6 +8,32 @@ const corsHeaders = {
 // Mr. CAP's Spotify Artist ID (from structured data)
 const ARTIST_ID = '69pjfQNXA1xjusnI2wfgug';
 const MARKET = 'US';
+const ARTIST_SPOTIFY_URL = `https://open.spotify.com/artist/${ARTIST_ID}`;
+
+interface SpotifyImage {
+  url?: string;
+}
+
+interface SpotifyTrackApi {
+  id: string;
+  name: string;
+  album?: { name?: string; images?: SpotifyImage[] };
+  duration_ms?: number;
+  popularity?: number;
+  preview_url?: string | null;
+  external_urls?: { spotify?: string };
+  explicit?: boolean;
+}
+
+interface SpotifyAlbumApi {
+  id: string;
+  name: string;
+  album_type: string;
+  release_date: string;
+  total_tracks?: number;
+  images?: SpotifyImage[];
+  external_urls?: { spotify?: string };
+}
 
 // Simple in-memory token cache (persists for the life of the function instance)
 let cachedToken: { value: string; expiresAt: number } | null = null;
@@ -41,6 +67,25 @@ async function getAccessToken(clientId: string, clientSecret: string): Promise<s
   return cachedToken.value;
 }
 
+function unavailableResponse(reason: string, message: string): Response {
+  return new Response(JSON.stringify({
+    artist: null,
+    topTracks: [],
+    albums: [],
+    unavailable: true,
+    reason,
+    message,
+    spotifyUrl: ARTIST_SPOTIFY_URL,
+  }), {
+    status: 200,
+    headers: {
+      ...corsHeaders,
+      'Content-Type': 'application/json',
+      'Cache-Control': 'public, max-age=300, s-maxage=300',
+    },
+  });
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -52,9 +97,7 @@ serve(async (req) => {
 
     if (!clientId || !clientSecret) {
       console.error('Spotify credentials not configured');
-      return new Response(JSON.stringify({ error: 'Service not configured' }), {
-        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return unavailableResponse('spotify_credentials_missing', 'Spotify is not configured yet.');
     }
 
     const token = await getAccessToken(clientId, clientSecret);
@@ -70,9 +113,13 @@ serve(async (req) => {
     if (!artistRes.ok) {
       const errText = await artistRes.text();
       console.error('Spotify artist API error:', artistRes.status, errText);
-      return new Response(JSON.stringify({ error: 'Failed to load artist data' }), {
-        status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      const premiumRequired = artistRes.status === 403 && errText.toLowerCase().includes('premium subscription required');
+      return unavailableResponse(
+        premiumRequired ? 'spotify_premium_required' : 'spotify_artist_api_error',
+        premiumRequired
+          ? 'Spotify requires Premium on the developer app owner account before this artist data can be loaded.'
+          : 'Spotify artist data is temporarily unavailable.',
+      );
     }
 
     const artistData = await artistRes.json();
@@ -87,11 +134,11 @@ serve(async (req) => {
       popularity: artistData.popularity ?? 0,
       genres: artistData.genres ?? [],
       image: artistData.images?.[0]?.url ?? null,
-      spotifyUrl: artistData.external_urls?.spotify ?? `https://open.spotify.com/artist/${ARTIST_ID}`,
+      spotifyUrl: artistData.external_urls?.spotify ?? ARTIST_SPOTIFY_URL,
     };
 
     // Shape top tracks
-    const topTracks = (topTracksData.tracks ?? []).slice(0, 10).map((t: any) => ({
+    const topTracks = ((topTracksData.tracks ?? []) as SpotifyTrackApi[]).slice(0, 10).map((t: SpotifyTrackApi) => ({
       id: t.id,
       name: t.name,
       album: t.album?.name ?? '',
@@ -105,14 +152,14 @@ serve(async (req) => {
 
     // Shape albums (dedupe by name, newest first)
     const seen = new Set<string>();
-    const albums = (albumsData.items ?? [])
-      .filter((a: any) => {
+    const albums = ((albumsData.items ?? []) as SpotifyAlbumApi[])
+      .filter((a: SpotifyAlbumApi) => {
         const key = a.name.toLowerCase();
         if (seen.has(key)) return false;
         seen.add(key);
         return true;
       })
-      .map((a: any) => ({
+      .map((a: SpotifyAlbumApi) => ({
         id: a.id,
         name: a.name,
         type: a.album_type,
@@ -135,8 +182,6 @@ serve(async (req) => {
 
   } catch (error: unknown) {
     console.error('Error in spotify-artist function:', error);
-    return new Response(JSON.stringify({ error: 'Failed to load Spotify data' }), {
-      status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return unavailableResponse('spotify_function_error', 'Spotify data is temporarily unavailable.');
   }
 });

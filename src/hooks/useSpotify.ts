@@ -34,9 +34,13 @@ export interface SpotifyAlbum {
 }
 
 export interface SpotifyData {
-  artist: SpotifyArtist;
+  artist: SpotifyArtist | null;
   topTracks: SpotifyTrack[];
   albums: SpotifyAlbum[];
+  unavailable?: boolean;
+  reason?: string;
+  message?: string;
+  spotifyUrl?: string;
 }
 
 /**
@@ -49,8 +53,14 @@ export function useSpotify() {
     queryKey: ["spotify-artist"],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("spotify-artist");
-      if (error) throw error;
-      if (!data || data.error) throw new Error(data?.error || "Failed to load Spotify data");
+      if (error) {
+        console.warn("Spotify integration unavailable:", error.message);
+        return { artist: null, topTracks: [], albums: [], unavailable: true, reason: "invoke_error" } as SpotifyData;
+      }
+      if (!data || data.error) {
+        console.warn("Spotify integration unavailable:", data?.error || "No data returned");
+        return { artist: null, topTracks: [], albums: [], unavailable: true, reason: "empty_response" } as SpotifyData;
+      }
       return data as SpotifyData;
     },
     staleTime: 1000 * 60 * 60, // 1 hour
