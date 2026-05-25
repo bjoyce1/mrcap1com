@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import TrackRow from "@/components/player/TrackRow";
 import { useAlbums, useLatestTracks, useAllTracks } from "@/hooks/useStreamingData";
+import SpotifyAlbumGrid from "@/components/home/SpotifyAlbumGrid";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
