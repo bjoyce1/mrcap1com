@@ -17,6 +17,7 @@ import ArtOfIsmFeature from "@/components/home/ArtOfIsmFeature";
 import MilkMoneyFeature from "@/components/home/MilkMoneyFeature";
 import SectionDivider from "@/components/home/SectionDivider";
 import ScrollProgressBar from "@/components/home/ScrollProgressBar";
+import SpotifyLiveSection from "@/components/home/SpotifyLiveSection";
 
 const Index = () => {
   const jsonLd = {
@@ -203,6 +204,10 @@ const Index = () => {
           {/* 05 — Legacy catalog */}
           <SectionDivider />
           <CatalogPreview />
+
+          {/* 05b — Live Spotify */}
+          <SectionDivider />
+          <SpotifyLiveSection />
 
           {/* 05 — Innovation */}
           <SectionDivider />
