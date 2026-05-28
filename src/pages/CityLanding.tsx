@@ -186,7 +186,7 @@ const CityLanding = () => {
                       </a>
                     </Button>
                     <Button variant="fluxOutline" size="sm" asChild>
-                      <a href="https://music.apple.com/us/artist/mr-cap/1506719540" target="_blank" rel="noopener noreferrer">
+                      <a href="https://music.apple.com/us/artist/mr-cap/561550224" target="_blank" rel="noopener noreferrer">
                         Apple Music
                       </a>
                     </Button>

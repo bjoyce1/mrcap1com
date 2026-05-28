@@ -47,7 +47,7 @@ const WhoIsMrCap = () => {
           "https://www.instagram.com/mrcapism/",
           "https://twitter.com/mrcap1",
           "https://www.youtube.com/@mrcap1",
-          "https://music.apple.com/us/artist/mr-cap/1506719540",
+          "https://music.apple.com/us/artist/mr-cap/561550224",
           "https://opensea.io/mrcap",
           "https://www.wikidata.org/wiki/Q139960172"
         ]
