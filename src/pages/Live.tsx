@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ObfuscatedMailto from "@/components/ObfuscatedMailto";
 import { ChevronRight, Calendar, MapPin, Ticket, ExternalLink, Clock, Mic2, Loader2 } from "lucide-react";
 import spcPoster from "@/assets/spc-austin-2025.png";
 import { useSanityEvents, type SanityEvent } from "@/hooks/useSanity";
