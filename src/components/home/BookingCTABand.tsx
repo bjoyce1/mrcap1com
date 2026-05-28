@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ObfuscatedMailto from "@/components/ObfuscatedMailto";
 import { motion } from "framer-motion";
 
 const BookingCTABand = () => {
@@ -37,9 +38,9 @@ const BookingCTABand = () => {
               </Link>
             </Button>
             <Button variant="fluxOutline" size="lg" className="rounded-full" asChild>
-              <a href="mailto:wrecklessent@gmail.com">
+              <ObfuscatedMailto user="wrecklessent" domain="gmail.com" subject="Booking Inquiry">
                 Email Direct
-              </a>
+              </ObfuscatedMailto>
             </Button>
           </div>
         </motion.div>

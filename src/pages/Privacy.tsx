@@ -86,21 +86,17 @@ const Privacy = () => {
                 <h2 className="text-xl font-bold text-foreground mb-3">5. Your Rights</h2>
                 <p className="text-muted-foreground leading-relaxed">
                   You may request access to, correction of, or deletion of any personal data we hold about you.
-                  To exercise these rights, contact us at{" "}
-                  <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">
-                    wrecklessent@gmail.com
-                  </a>.
+                  To exercise these rights, submit a request via our{" "}
+                  <Link to="/booking" className="text-primary hover:underline">
+                    contact form
+                  </Link>.
                 </p>
               </section>
 
               <section>
                 <h2 className="text-xl font-bold text-foreground mb-3">6. Contact</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  For privacy-related questions, contact us at{" "}
-                  <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">
-                    wrecklessent@gmail.com
-                  </a>{" "}
-                  or visit our{" "}
+                  For privacy-related questions, please use our{" "}
                   <Link to="/booking" className="text-primary hover:underline">
                     booking page
                   </Link>{" "}

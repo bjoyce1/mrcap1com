@@ -140,7 +140,7 @@ const PressKit = () => {
                   </style></head><body>
                     <h1>Mr. CAP — Official Press Kit</h1>
                     <p class="meta">Cornelius A. Pratt | Houston Hip-Hop Artist | South Park Coalition<br/>
-                    Contact: wrecklessent@gmail.com | mrcap1.com</p>
+                    Contact: ${["wreck", "lessent", "@", "gmail.com"].join("")} | mrcap1.com</p>
                     
                     <h2>Short Bio</h2>
                     <p>${SHORT_BIO}</p>
@@ -408,12 +408,13 @@ const PressKit = () => {
               <p className="text-muted-foreground text-sm mb-1">
                 For press inquiries, interview requests, and media appearances:
               </p>
-              <a
-                href="mailto:wrecklessent@gmail.com"
+              <ObfuscatedMailto
+                user="wrecklessent"
+                domain="gmail.com"
+                subject="Press Inquiry"
                 className="text-primary font-medium hover:underline"
-              >
-                wrecklessent@gmail.com
-              </a>
+              />
+
               <div className="mt-5 flex justify-center gap-3">
                 <Link to="/booking">
                   <Button variant="default" size="sm" className="rounded-2xl gap-2">

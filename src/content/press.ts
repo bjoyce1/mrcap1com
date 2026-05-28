@@ -52,7 +52,7 @@ Mr. CAP (Cornelius A. Pratt) is a Houston-based rapper, entrepreneur, and cultur
 
 Ciddy Boi P is a Houston rapper and collaborator known for his commanding presence and authentic approach to the craft. His partnership with Mr. CAP on "Big Boy Drip" showcases two artists operating at the peak of their confidence.
 
-For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
+For press inquiries, booking, and media resources, visit mrcap1.com/press or submit a booking request at mrcap1.com/booking.`,
     },
     {
       outlet: "Mr. CAP Legacy",
@@ -86,7 +86,7 @@ Each release on the platform includes a full content ecosystem: credits, lyrics,
 
 "Bet'n On Me" is the lead single from a broader creative push that includes the South Park Coalition group album "The Ties That Bind Us," new visual content, and continued expansion of the Mr. CAP Legacy catalog.
 
-For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
+For press inquiries, booking, and media resources, visit mrcap1.com/press or submit a booking request at mrcap1.com/booking.`,
     },
     {
       outlet: "Mr. CAP Legacy",
@@ -126,7 +126,7 @@ The South Park Coalition has been a cornerstone of Houston hip-hop since the ear
 - Mastered by Mr. CAP
 - Featuring: K-Rino, Point Blank, Klondike Kat, and more
 
-For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
+For press inquiries, booking, and media resources, visit mrcap1.com/press or submit a booking request at mrcap1.com/booking.`,
     },
     {
       outlet: "Mr. CAP Legacy",
@@ -160,7 +160,7 @@ The release is part of Mr. CAP's broader strategy of building mrcap1.com into a 
 
 "Dippin' Thru the Metaverse" isn't just a song about technology. It's about adaptation, independence, and the refusal to be left behind. It's Mr. CAP doing what he's always done: moving first, moving independently, and making it sound effortless.
 
-For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
+For press inquiries, booking, and media resources, visit mrcap1.com/press or submit a booking request at mrcap1.com/booking.`,
     },
     {
       outlet: "Mr. CAP Legacy",
@@ -209,7 +209,7 @@ Mr. CAP continues to release music, expand the Mr. CAP Legacy platform, and expl
 
 "I'm not retiring," he says simply. "I'm expanding."
 
-For press inquiries, booking, and media resources, visit mrcap1.com/press or contact wrecklessent@gmail.com.`,
+For press inquiries, booking, and media resources, visit mrcap1.com/press or submit a booking request at mrcap1.com/booking.`,
     },
     {
       outlet: "Houston Chronicle",

@@ -87,7 +87,7 @@ const Index = () => {
         ],
         "contactPoint": {
           "@type": "ContactPoint",
-          "email": "southparkcoalitionllc@gmail.com",
+          "url": "https://mrcap1.com/booking",
           "contactType": "booking"
         }
       },
@@ -135,7 +135,7 @@ const Index = () => {
             "name": "How can I book Mr. CAP for a show?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Contact southparkcoalitionllc@gmail.com for booking inquiries. Mr. CAP is available for concerts, festivals, speaking engagements, and special events across Texas and beyond."
+              "text": "Submit a booking request through the official form at mrcap1.com/booking. Mr. CAP is available for concerts, festivals, speaking engagements, and special events across Texas and beyond."
             }
           },
           {

@@ -238,9 +238,9 @@ const CityLanding = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <Button variant="flux" size="lg" asChild>
-                  <a href={`mailto:wrecklessent@gmail.com?subject=Booking Inquiry - ${city.name}, ${city.stateAbbr}`}>
+                  <Link to={`/booking?city=${encodeURIComponent(`${city.name}, ${city.stateAbbr}`)}`}>
                     Request Booking
-                  </a>
+                  </Link>
                 </Button>
                 <Button variant="fluxOutline" size="lg" asChild>
                   <Link to="/#contact">

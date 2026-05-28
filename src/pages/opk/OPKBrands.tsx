@@ -57,7 +57,7 @@ const OPKBrands = () => {
               "knowsAbout": ["Hip-Hop Culture", "Brand Partnerships", "Digital Marketing", "NFT", "Blockchain"],
               "memberOf": { "@type": "MusicGroup", "name": "South Park Coalition" }
             },
-            "potentialAction": { "@type": "ContactAction", "target": "mailto:southparkcoalitionllc@gmail.com", "name": "Partner With Mr. CAP" },
+            "potentialAction": { "@type": "ContactAction", "target": "https://mrcap1.com/booking", "name": "Partner With Mr. CAP" },
             "breadcrumb": {
               "@type": "BreadcrumbList",
               "itemListElement": [
