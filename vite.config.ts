@@ -3,8 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
-// Uncomment after: npm install puppeteer serve-handler --save-dev
-// import prerender from "./vite-plugin-prerender";
+import prerender from "./vite-plugin-prerender";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -42,37 +41,39 @@ export default defineConfig(({ mode }) => ({
       },
     }),
     // ── PRE-RENDER for SEO ──────────────────────────────────
-    // Uncomment after installing deps (see vite-plugin-prerender.ts)
-    // prerender({
-    //   routes: [
-    //     "/",
-    //     "/music",
-    //     "/about",
-    //     "/press",
-    //     "/booking",
-    //     "/blog",
-    //     "/nft",
-    //     "/who-is-mr-cap",
-    //     "/south-park-coalition",
-    //     "/houston-hip-hop-history",
-    //     "/biography",
-    //     "/videos",
-    //     "/live",
-    //     "/new-releases",
-    //     "/bet-on-her",
-    //     "/press-kit",
-    //     "/for-media",
-    //     "/links",
-    //     "/mr-cap-discography",
-    //     "/legacy",
-    //     "/innovation",
-    //     "/art-of-ism",
-    //     "/merch",
-    //     "/opk",
-    //     "/self-love",
-    //     "/privacy",
-    //   ],
-    // }),
+    // Build-time only: Puppeteer visits each route and writes
+    // a static HTML file with the rendered head + body. Crawlers
+    // get real per-route HTML; React hydrates on top in browsers.
+    mode === "production" && prerender({
+      routes: [
+        "/",
+        "/music",
+        "/about",
+        "/press",
+        "/booking",
+        "/blog",
+        "/nft",
+        "/who-is-mr-cap",
+        "/south-park-coalition",
+        "/houston-hip-hop-history",
+        "/biography",
+        "/videos",
+        "/live",
+        "/new-releases",
+        "/bet-on-her",
+        "/press-kit",
+        "/for-media",
+        "/links",
+        "/legacy",
+        "/innovation",
+        "/art-of-ism",
+        "/merch",
+        "/opk",
+        "/self-love",
+        "/privacy",
+        "/discography",
+      ],
+    }),
   ].filter(Boolean),
   resolve: {
     alias: {
