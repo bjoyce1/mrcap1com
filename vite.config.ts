@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
-import prerender from "./vite-plugin-prerender";
+// prerender plugin removed — Node-only deps (puppeteer) were breaking the ESM config evaluation
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -40,41 +40,9 @@ export default defineConfig(({ mode }) => ({
         ],
       },
     }),
-    // ── PRE-RENDER for SEO ──────────────────────────────────
-    // Build-time only: Puppeteer visits each route and writes
-    // a static HTML file with the rendered head + body. Crawlers
-    // get real per-route HTML; React hydrates on top in browsers.
-    mode === "production" && prerender({
-      origin: "https://mrcap1.com",
-      renderDelay: 4500,
-      routes: [
-        "/",
-        "/about",
-        "/press",
-        "/booking",
-        "/blog",
-        "/nft",
-        "/who-is-mr-cap",
-        "/south-park-coalition",
-        "/houston-hip-hop-history",
-        "/biography",
-        "/videos",
-        "/live",
-        "/new-releases",
-        "/bet-on-her",
-        "/press-kit",
-        "/for-media",
-        "/links",
-        "/legacy",
-        "/innovation",
-        "/art-of-ism",
-        "/merch",
-        "/opk",
-        "/self-love",
-        "/privacy",
-        "/discography",
-      ],
-    }),
+    // Pre-render plugin removed for build stability. Google's JS rendering
+    // handles per-route Helmet tags; JSON-LD is in the SPA shell.
+
   ].filter(Boolean),
   resolve: {
     alias: {
