@@ -20,7 +20,7 @@
 
 import type { Plugin } from "vite";
 import { resolve } from "path";
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from "fs";
+import { writeFileSync, mkdirSync, existsSync, readFileSync, statSync } from "fs";
 
 // Browser globals referenced inside page.evaluate callbacks. Declared here so
 // this Node-side file type-checks under tsconfig.node.json (no DOM lib).
@@ -73,7 +73,7 @@ export default function prerender(options: PrerenderOptions): Plugin {
             const filePath = resolve(distDir, "." + p);
             if (!filePath.startsWith(distDir)) return null;
             if (existsSync(filePath)) {
-              const stat = require("fs").statSync(filePath);
+              const stat = statSync(filePath);
               if (stat.isFile()) return filePath;
             }
             return null;

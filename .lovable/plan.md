@@ -1,39 +1,28 @@
-Plan to fix the per-route prerender failure:
+## Root cause
 
-1. Fix prerender route isolation
-   - Update `vite-plugin-prerender.ts` so the preview server always serves the original built SPA shell for route fallbacks instead of the progressively rewritten `dist/index.html`.
-   - Collect rendered HTML for every route in memory first, then write all route files after capture. This prevents `/` being written first and then reused as the fallback for `/discography`, `/booking`, etc.
-   - Add an explicit verification step per route: after `page.goto`, assert `window.location.pathname` matches the requested route before capture and log the actual route/title/canonical captured.
+`vite-plugin-prerender.ts` calls `require("fs").statSync(...)` inside the preview server handler. When Vite loads `vite.config.ts`, esbuild bundles it (and the imported plugin) as ESM for Node. Dynamic `require()` is not valid inside that ESM bundle, so esbuild's shim throws `Dynamic require of "fs" is not supported` the moment the plugin module is evaluated — which happens on every build and on `vite preview`. The deployed output is therefore broken (or a stale/empty shell), and every route shows that error.
 
-2. Wait for route-specific Helmet output
-   - Increase the prerender `renderDelay` in `vite.config.ts`.
-   - Add a targeted wait in the plugin for `react-helmet-async` to finish setting the route canonical before `page.content()` is captured.
-   - If a route fails the expected canonical check, fail/log that route instead of silently writing homepage HTML.
+The plugin is already build-only (`apply: "build"`) and is only imported from `vite.config.ts`, so it does not actually ship to the client. The fix is just to stop using `require()` inside an ESM module.
 
-3. Make canonical route-specific in prerendered HTML
-   - During capture, compute the expected canonical as `https://mrcap1.com` plus the current route path.
-   - Remove extra canonical tags from the captured document and keep exactly one canonical with that route’s URL.
-   - Ensure the 5 priority routes output:
-     - `/` → `https://mrcap1.com`
-     - `/discography` → `https://mrcap1.com/discography`
-     - `/who-is-mr-cap` → `https://mrcap1.com/who-is-mr-cap`
-     - `/booking` → `https://mrcap1.com/booking`
-     - `/art-of-ism` → `https://mrcap1.com/art-of-ism`
+## Fix (minimal, keeps prerender working)
 
-4. Remove duplicate/competing metadata sources
-   - Remove the inline `setMeta(...)` script from `index.html`.
-   - Remove the static `id="meta-canonical"`, static route description, and static route-level OG/Twitter tags that compete with Helmet.
-   - Leave non-competing global tags like charset, viewport, robots, verification, favicon, manifest, theme color, and geo tags.
-   - Keep page components / the shared `SEO` component as the single source of truth for title, description, canonical, OG, Twitter, and JSON-LD.
+Edit `vite-plugin-prerender.ts`:
 
-5. Validate the route output
-   - After implementation/build, run the 5-route metadata diff against the generated or deployed output:
+1. Add `statSync` to the existing top-level import:
+   ```ts
+   import { writeFileSync, mkdirSync, existsSync, readFileSync, statSync } from "fs";
+   ```
+2. Replace `const stat = require("fs").statSync(filePath);` with `const stat = statSync(filePath);`.
+3. Audit the file for any other `require(...)` calls and convert them to static ESM imports (none expected besides the one above; `puppeteer` and `http` are already dynamic `await import(...)` which is fine inside ESM).
 
-```bash
-for route in / /discography /who-is-mr-cap /booking /art-of-ism; do
-  echo "=== $route ==="
-  curl -s -A "Googlebot" "https://mrcap1.com$route" | grep -E "<title>|<link rel=\"canonical\"|<meta name=\"description\""
-done
-```
+That single change unblocks `vite.config.ts` evaluation, the build completes, and the deployed site stops throwing.
 
-Success criteria: all 5 routes have different route-appropriate titles/descriptions and exactly one canonical pointing to that route’s non-www URL.
+## Verification before declaring done
+
+1. Run a production build locally / in preview and confirm no "Dynamic require" error.
+2. Load `https://mrcap1.com/` and one deep route (e.g. `/discography`) — both must return real HTML, not the error page.
+3. Re-run the 5-route curl diff (`/`, `/discography`, `/who-is-mr-cap`, `/booking`, `/art-of-ism`) to confirm prerender still produces per-route title / description / canonical.
+
+## Fallback (only if step 1 still fails)
+
+If for any reason the build still errors after the `require` fix, temporarily remove the `prerender({...})` entry from `vite.config.ts` plugins array and ship without prerender to restore the site. We can reinstate it in a follow-up once the build is green. Site uptime takes priority over the per-route prerender feature.
