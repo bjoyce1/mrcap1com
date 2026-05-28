@@ -6,12 +6,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <!-- Default meta — overridden per-route by prerender script + react-helmet-async -->
+    <!-- Sitewide defaults — per-route title/description/canonical/og:*/twitter:*/JSON-LD
+         are owned by react-helmet-async in each page component, then frozen
+         into static HTML by vite-plugin-prerender at build time. -->
     <title>Mr. CAP — Official Site</title>
-    <meta name="description" id="meta-description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more.">
-    <link rel="canonical" id="meta-canonical" href="https://mrcap1.com">
+    <meta name="description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more." />
     <meta name="author" content="Mr. CAP - Cornelius A. Pratt" />
-    <!-- meta keywords removed: ignored by Google and signals outdated SEO -->
 
     <!-- Robots -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -24,220 +24,35 @@
     <!-- Preload hero LCP image -->
     <link rel="preload" as="image" href="/images/mrcap-hero-bg.webp" fetchpriority="high" />
 
-    <!-- Fonts loaded via @fontsource packages in JS bundle -->
-
-    <!-- Open Graph (defaults — overridden by prerender script below) -->
+    <!-- Sitewide Open Graph fallbacks (non-JS social crawlers).
+         Per-route og:title/og:description/og:url replace these via Helmet/prerender. -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Mr. CAP Music" />
+    <meta property="og:site_name" content="Mr. CAP Legacy" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:title" id="og-title" content="Mr. CAP — Official Site" />
-    <meta property="og:description" id="og-description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur." />
-    <meta property="og:url" id="og-url" content="https://mrcap1.com" />
-    <meta property="og:image" id="og-image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp">
+    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Mr. CAP - Houston Hip-Hop Artist" />
 
-    <!-- Twitter Card (defaults — overridden by prerender script below) -->
+    <!-- Sitewide Twitter Card fallbacks -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@mrcap1" />
     <meta name="twitter:creator" content="@mrcap1" />
-    <meta name="twitter:title" id="tw-title" content="Mr. CAP — Official Site" />
-    <meta name="twitter:description" id="tw-description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur." />
-    <meta name="twitter:image" id="tw-image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp">
+    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp" />
 
-    <!-- Prerender: set route-specific meta before React hydrates -->
-    <script>
-    (function(){
-      var routes={
-        "/":{
-          t:"Mr. CAP | Houston Rapper & SPC Original Member",
-          d:"Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more."
-        },
-        "/discography":{
-          t:"Mr. CAP Music | Full Catalog, Albums & Streaming Links",
-          d:"Explore Mr. CAP's full music catalog — albums, singles, and streaming links. From The Ties That Bind Us to The Art of ISM and beyond."
-        },
-        "/press":{
-          t:"Press Kit | Mr. CAP Bios, Photos, Logos & Media Resources",
-          d:"Download approved bios, press photos, logos, and media resources for coverage, interviews, and event promotion."
-        },
-        "/booking":{
-          t:"Book Mr. CAP | Shows, Features & Speaking",
-          d:"Submit a qualified booking request for Mr. CAP, including event details, timeline, and contact information."
-        },
-        "/about":{
-          t:"About Mr. CAP | Biography, Timeline & Houston Legacy",
-          d:"Learn about Mr. CAP — Houston-born rapper, South Park Coalition original member, and creative technologist bridging hip-hop, business, and blockchain."
-        },
-        "/nft":{
-          t:"Mr. CAP NFT | Web3 Collections, Verified Contracts & Collector Access",
-          d:"Explore verified NFT collections by Mr. CAP — on-chain music, digital art, and exclusive collector utility on Ethereum."
-        },
-        "/press-kit":{
-          t:"Press Kit | Mr. CAP — Bios, Photos & Logos",
-          d:"Official press kit for Mr. CAP. Download approved bios, hi-res photos, logos, and press references for media coverage and events."
-        },
-        "/blog":{
-          t:"Mr. CAP Blog | Houston Hip-Hop Culture, Music & Web3 Insights",
-          d:"Read articles on Houston hip-hop culture, South Park Coalition history, NFT strategy, and independent music from Mr. CAP."
-        },
-        "/live":{
-          t:"Mr. CAP Live | Upcoming Shows, Tour Dates & Past Performances",
-          d:"See upcoming live performances and past show highlights from Houston rapper Mr. CAP. Book him for your next event."
-        },
-        "/biography":{
-          t:"Mr. CAP Biography | From Third Ward Houston to Global Stages",
-          d:"The full biography of Mr. CAP — Cornelius A. Pratt — from Jack Yates High School and Third Ward Houston to South Park Coalition and beyond."
-        },
-        "/videos":{
-          t:"Mr. CAP Videos | Music Videos, Performances & Behind the Scenes",
-          d:"Watch official music videos, live performances, and behind-the-scenes footage from Houston rapper Mr. CAP."
-        },
-        "/who-is-mr-cap":{
-          t:"Who Is Mr. CAP? | Houston Rapper & SPC Legend",
-          d:"Discover Mr. CAP — Houston-born rapper, South Park Coalition original member, author, and blockchain innovator bridging hip-hop and technology."
-        },
-        "/bet-on-her":{
-          t:"Bet On Her ft. Billy Cook | Mr. CAP",
-          d:"Listen to Bet On Her by Mr. CAP ft. Billy Cook, produced by C.U.S.H. A high-stakes anthem blending Houston hip-hop with luxury casino energy.",
-          i:"https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(cover%20art).png"
-        },
-        "/music/my-world":{
-          t:"My World ft. Billy Cook | Mr. CAP",
-          d:"Stream My World by Mr. CAP ft. Billy Cook. A 2026 single from Houston's South Park Coalition legacy.",
-          i:"https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/my-world/My%20World%20(cover%20art).png"
-        },
-        "/houston-hip-hop-history":{
-          t:"Houston Hip Hop History: South Park Coalition & Mr. CAP Legacy",
-          d:"An inside look at Houston's independent hip-hop history, the South Park Coalition blueprint, and Mr. CAP's role in shaping the culture."
-        },
-        "/south-park-coalition":{
-          t:"South Park Coalition: Houston's Independent Hip Hop Movement",
-          d:"The South Park Coalition created a blueprint for artist ownership, longevity, and cultural impact in Houston hip hop. Explore SPC origins, legacy, and Mr. CAP's role."
-        },
-        "/for-media":{
-          t:"Media Resources | Mr. CAP — Quotes, Stats & Press Blurbs",
-          d:"Pre-written blurbs, embeddable quotes, key stats, and direct links for journalists, bloggers, and media covering Mr. CAP and Houston hip-hop."
-        },
-        "/new-releases":{
-          t:"New Releases | Mr. CAP — Latest Singles & Projects",
-          d:"Hear the newest music from Mr. CAP. Singles, features, and projects dropping now from Houston's South Park Coalition."
-        },
-        "/discography":{
-          t:"Mr. CAP Discography | Complete Album & Singles Catalog",
-          d:"Every album, single, and collaboration from Mr. CAP — from O.N.E. on O.N.E. (2005) to The Ties That Bind Us (2024). Full Houston hip-hop catalog."
-        },
-        "/legacy":{
-          t:"Mr. CAP Legacy | 30+ Years of Houston Hip-Hop",
-          d:"Three decades of Houston hip-hop history. Mr. CAP's journey from South Park to global stages — milestones, collaborations, and cultural impact."
-        },
-        "/innovation":{
-          t:"Mr. CAP Innovation | Hip-Hop Meets Blockchain & Technology",
-          d:"How Mr. CAP bridges Houston hip-hop and emerging technology — NFTs, blockchain, digital distribution, and the future of independent music."
-        },
-        "/merch":{
-          t:"Mr. CAP Merch | Official Clothing, Hats & Accessories",
-          d:"Shop official Mr. CAP merchandise. Premium quality clothing, headwear, and accessories from Houston's South Park Coalition."
-        },
-        "/opk":{
-          t:"Mr. CAP Online Press Kit | Bios, Photos, Stats & Media Assets",
-          d:"Everything press and media need for Mr. CAP coverage — approved bios, high-res photos, stats, streaming links, and booking contacts."
-        },
-        "/art-of-ism":{
-          t:"The Art of ISM | Mr. CAP Philosophy & Lifestyle Book",
-          d:"Explore The Art of ISM by Mr. CAP — a philosophy and lifestyle book based on the album of the same name, published by CAPISM Publishing."
-        },
-        "/texas-underground-hip-hop":{
-          t:"Texas Underground Hip Hop | The Independent Movement That Built Legends",
-          d:"Texas underground hip-hop shaped a generation of independent artists. Explore the culture, the players, and Mr. CAP's role in the movement."
-        },
-        "/houston-rapper-mr-cap":{
-          t:"Houston Rapper Mr. CAP | South Park Coalition Original Member",
-          d:"Meet Mr. CAP — Houston-born rapper, SPC original member, and creative entrepreneur. 30+ years of independent hip-hop, from Third Ward to the world."
-        },
-        "/privacy":{
-          t:"Privacy Policy | Mr. CAP Official Site",
-          d:"Privacy policy for mrcap1.com — the official website of Houston rapper Mr. CAP."
-        },
-        "/music/big-boy-drip":{
-          t:"Big Boy Drip ft. Ciddy Boi P | Mr. CAP",
-          d:"Stream Big Boy Drip by Mr. CAP & Ciddy Boi P. A 2019 Houston hip-hop single with that big boy energy.",
-          i:"https://mrcap1.com/images/covers/big-boy-drip.webp"
-        },
-        "/links":{
-          t:"Mr. CAP Links | All Platforms, Socials & Streaming",
-          d:"Find Mr. CAP everywhere — Spotify, Apple Music, YouTube, Instagram, TikTok, and more. One page, all links."
-        }
-      };
-      var blogImages={
-        "the-hustle-doesnt-age-it-evolves-mr-cap-on-legacy-energy-and-building-a-digital-empire":"https://cdn.marblism.com/bp1eHJJRZxI.webp",
-        "why-music-nfts-will-change-the-way-you-collect-houston-hip-hop":"https://cdn.marblism.com/7p18rlR80ja.webp",
-        "mr-cap-returns-to-his-musical-roots":"/images/musical-roots-blog.jpg",
-        "houston-rapper-lands-major-art-music-collaboration-with-artist-ali-sabet":"/images/sunshade-sabet-blog.webp",
-        "mr-cap-stands-tall-with-new-single-soarn":"/images/soarn-blog.webp",
-        "southern-sounds-mrcap-release":"/images/southern-sounds-blog.jpg",
-        "today-was-a-great-day":"/images/today-great-day-blog.jpg",
-        "somebody-tell-wiz-khalifa-theres-only-one-mr-cap":"/images/wiz-khalifa-blog.webp",
-        "breaking-boundaries-mr-cap-pioneers-hip-hop-nfts-in-houston":"/images/limitless-blog.webp",
-        "mr-cap-is-shaking-up-the-nft-world-with-im-bout-to-blow":"/images/bout-to-blow-blog.webp",
-        "dippin-thru-the-metaverse-pt-1":"/images/dippin-metaverse.webp",
-        "honoring-the-legacy-of-o-n-e-with-the-release-of-to-tha-grave":"/images/to-tha-grave-blog.webp",
-        "discover-pwa-power-weed-alcohol-the-hottest-collaboration-from-mr-cap-and-devyn-kelly":"/images/pwa-blog.webp",
-        "h-town-represent":"/images/h-town-represent-blog.webp",
-        "the-untold-story-of-mr-cap":"/images/untold-story-mrcap-blog.webp",
-        "blockchain-nfts-and-hip-hop-mr-cap":"/images/blockchain-nfts-hiphop-blog.webp",
-        "why-betn-on-me-is-more-than-a-song":"/images/betn-on-me-blog.webp",
-        "10-things-south-park-coalition":"/images/spc-10-things-blog.jpg"
-      };
-      var p=location.pathname.replace(/\/$/,"") || "/";
-      var r=routes[p];
-      var setMeta=function(id,attr,val){var el=document.getElementById(id);if(el)el.setAttribute(attr,val);};
-      if(r){
-        document.title=r.t;
-        var u="https://mrcap1.com"+(p==="/"?"":p);
-        setMeta("meta-description","content",r.d);
-        setMeta("meta-canonical","href",u);
-        setMeta("og-title","content",r.t);
-        setMeta("og-description","content",r.d);
-        setMeta("og-url","content",u);
-        setMeta("tw-title","content",r.t);
-        setMeta("tw-description","content",r.d);
-        if(r.i){setMeta("og-image","content",r.i);setMeta("tw-image","content",r.i);}
-      }
-      var blogMatch=p.match(/^\/blog\/(.+)$/);
-      if(blogMatch){
-        var slug=blogMatch[1];
-        var img=blogImages[slug];
-        if(img){
-          var absImg=img.startsWith("http")?img:"https://mrcap1.com"+img;
-          setMeta("og-image","content",absImg);
-          setMeta("tw-image","content",absImg);
-        }
-      }
-    })();
-    </script>
-    
     <!-- Favicon & PWA -->
-    <link rel="icon" type="image/png" href="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/uploads/1770684666573-capfavicon.png">
-    <link rel="apple-touch-icon" href="/icons/icon-192.png">
-    <link rel="manifest" href="/manifest.json">
-    
+    <link rel="icon" type="image/png" href="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/uploads/1770684666573-capfavicon.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="manifest" href="/manifest.json" />
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#0B0C15" />
     <meta name="msapplication-TileColor" content="#0B0C15" />
-    
+
     <!-- Geo Tags for Local SEO -->
     <meta name="geo.region" content="US-TX" />
     <meta name="geo.placename" content="Houston" />
-    
-    <!-- JSON-LD injected per-page by react-helmet-async (see each page component) -->
-    
-  
-  
-  
-  <!-- Meta tags pre-set by inline script above, then fully managed by react-helmet-async after hydration -->
-</head>
+  </head>
 
   <body class="antialiased">
     <div id="root">

@@ -45,9 +45,10 @@ export default defineConfig(({ mode }) => ({
     // a static HTML file with the rendered head + body. Crawlers
     // get real per-route HTML; React hydrates on top in browsers.
     mode === "production" && prerender({
+      origin: "https://mrcap1.com",
+      renderDelay: 4500,
       routes: [
         "/",
-        "/music",
         "/about",
         "/press",
         "/booking",
