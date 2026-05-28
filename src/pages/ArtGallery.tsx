@@ -241,6 +241,7 @@ const ArtGallery = () => {
           "https://instagram.com/mrcapism",
           "https://twitter.com/mrcap1",
           "https://www.youtube.com/@mrcap1",
+          "https://www.wikidata.org/wiki/Q139960172",
         ],
       },
     ],

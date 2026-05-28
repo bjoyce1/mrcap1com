@@ -62,6 +62,7 @@ const Press = () => {
           "https://www.instagram.com/mrcapism/",
           "https://x.com/mrcap1",
           "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
+          "https://www.wikidata.org/wiki/Q139960172",
         ],
       },
     },

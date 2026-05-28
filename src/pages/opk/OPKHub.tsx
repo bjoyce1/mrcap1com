@@ -93,7 +93,8 @@ const OPKHub = () => {
                 "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
                 "https://www.instagram.com/mrcapism",
                 "https://www.youtube.com/@mrcap1",
-                "https://twitter.com/mrcap1"
+                "https://twitter.com/mrcap1",
+                "https://www.wikidata.org/wiki/Q139960172"
               ]
             },
             "breadcrumb": {

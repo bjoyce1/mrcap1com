@@ -42,7 +42,8 @@ const About = () => {
           "https://twitter.com/mrcap1",
           "https://instagram.com/mrcapism",
           "https://www.tiktok.com/@mrcapism",
-          "https://opensea.io/mrcap"
+          "https://opensea.io/mrcap",
+          "https://www.wikidata.org/wiki/Q139960172"
         ],
         "jobTitle": "Rapper, Writer, Technologist",
         "memberOf": {
