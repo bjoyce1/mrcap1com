@@ -75,7 +75,8 @@ const BlogPost = () => {
       "url": "https://mrcap1.com/who-is-mr-cap",
       "sameAs": [
         "https://instagram.com/mrcapism",
-        "https://twitter.com/mrcap1"
+        "https://twitter.com/mrcap1",
+        "https://www.wikidata.org/wiki/Q139960172"
       ]
     },
     "publisher": {

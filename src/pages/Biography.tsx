@@ -66,6 +66,7 @@ const Biography = () => {
       "https://open.spotify.com/artist/5dRQz7FPkfRCCaImjIJSoj",
       "https://www.instagram.com/mikisuavecap/",
       "https://twitter.com/mikisuavecap",
+      "https://www.wikidata.org/wiki/Q139960172",
     ],
     birthPlace: { "@type": "Place", name: "Houston, Texas" },
     alumniOf: { "@type": "EducationalOrganization", name: "Jack Yates Senior High School" },

@@ -51,7 +51,8 @@ const Index = () => {
           "https://www.facebook.com/mrcap11",
           "https://www.youtube.com/@mrcap1",
           "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-          "https://www.tiktok.com/@mrcapism"
+          "https://www.tiktok.com/@mrcapism",
+          "https://www.wikidata.org/wiki/Q139960172"
         ],
         "knowsAbout": ["Hip-Hop Music", "Blockchain Technology", "NFTs", "South Park Coalition", "Music Production", "Digital Distribution"],
         "memberOf": {
@@ -83,7 +84,8 @@ const Index = () => {
           "https://www.facebook.com/mrcap11",
           "https://www.youtube.com/@mrcap1",
           "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-          "https://www.tiktok.com/@mrcapism"
+          "https://www.tiktok.com/@mrcapism",
+          "https://www.wikidata.org/wiki/Q139960172"
         ],
         "contactPoint": {
           "@type": "ContactPoint",
