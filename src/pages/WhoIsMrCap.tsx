@@ -42,7 +42,7 @@ const WhoIsMrCap = () => {
           "name": "CAP Distributions"
         },
         "sameAs": [
-          "https://www.mrcap1.com",
+          "https://mrcap1.com",
           "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
           "https://www.instagram.com/mrcapism/",
           "https://twitter.com/mrcap1",
@@ -91,7 +91,7 @@ const WhoIsMrCap = () => {
             "name": "How can I book Mr. CAP for a show?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "You can book Mr. CAP for concerts, festivals, features, or speaking engagements through the official booking page at mrcap1.com/booking or by contacting southparkcoalitionllc@gmail.com."
+              "text": "You can book Mr. CAP for concerts, festivals, features, or speaking engagements through the official booking form at mrcap1.com/booking."
             }
           }
         ]

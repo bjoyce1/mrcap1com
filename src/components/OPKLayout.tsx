@@ -12,7 +12,8 @@ interface OPKLayoutProps {
   subtitle: string;
   tagline: string;
   ctaLabel?: string;
-  ctaEmail?: string;
+  /** Internal link target for the primary/secondary CTAs. Defaults to /booking (the inquiry form). */
+  ctaUrl?: string;
   breadcrumb: string;
 }
 
@@ -22,7 +23,7 @@ const OPKLayout = ({
   subtitle,
   tagline,
   ctaLabel = "Get in Touch",
-  ctaEmail = "southparkcoalitionllc@gmail.com",
+  ctaUrl = "/booking",
   breadcrumb,
 }: OPKLayoutProps) => {
   const heroRef = useRef<HTMLElement>(null);
@@ -144,10 +145,10 @@ const OPKLayout = ({
               {/* Primary CTA */}
               <div className="gsap-hero-item">
                 <Button variant="flux" size="lg" asChild>
-                  <a href={`mailto:${ctaEmail}?subject=${encodeURIComponent(ctaLabel)}`}>
+                  <Link to={ctaUrl}>
                     <Mail className="mr-2 h-5 w-5" />
                     {ctaLabel}
-                  </a>
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -170,10 +171,10 @@ const OPKLayout = ({
             </p>
             <div className="gsap-footer-item">
               <Button variant="flux" size="lg" asChild>
-                <a href={`mailto:${ctaEmail}`}>
+                <Link to={ctaUrl}>
                   <Mail className="mr-2 h-5 w-5" />
                   Contact Now
-                </a>
+                </Link>
               </Button>
             </div>
           </div>

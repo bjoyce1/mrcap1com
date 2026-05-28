@@ -58,7 +58,7 @@ const OPKMusic = () => {
                 "@type": "Event",
                 "name": "Book Mr. CAP Live Performance",
                 "performer": { "@type": "Person", "name": "Mr. CAP" },
-                "organizer": { "@type": "Organization", "name": "South Park Coalition LLC", "email": "southparkcoalitionllc@gmail.com" }
+                "organizer": { "@type": "Organization", "name": "South Park Coalition LLC", "url": "https://mrcap1.com/booking" }
               }
             },
             "breadcrumb": {

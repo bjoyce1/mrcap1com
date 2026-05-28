@@ -62,7 +62,7 @@ const HoustonRapper = () => {
             "name": "How can I book Mr. CAP for a show?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "You can book Mr. CAP for shows, features, interviews, or speaking engagements through the official booking page at mrcap1.com/live or by emailing wrecklessent@gmail.com. He performs at clubs, festivals, and private events across Texas and beyond."
+              "text": "You can book Mr. CAP for shows, features, interviews, or speaking engagements through the official booking page at mrcap1.com/booking. He performs at clubs, festivals, and private events across Texas and beyond."
             }
           }
         ]
@@ -334,9 +334,8 @@ const HoustonRapper = () => {
                     <h3 className="text-lg font-bold mb-2">How can I book Mr. CAP for a show?</h3>
                     <p className="text-muted-foreground">
                       You can book Mr. CAP for shows, features, interviews, or speaking engagements through 
-                      the official <Link to="/live" className="text-primary hover:underline">booking page</Link> or 
-                      by emailing wrecklessent@gmail.com. He performs at clubs, festivals, and private events 
-                      across Texas and beyond.
+                      the official <Link to="/booking" className="text-primary hover:underline">booking form</Link>. 
+                      He performs at clubs, festivals, and private events across Texas and beyond.
                     </p>
                   </div>
                   <div className="bg-card/50 border border-border/50 rounded-xl p-6">

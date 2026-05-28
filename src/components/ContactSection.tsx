@@ -1,6 +1,7 @@
 import { Mail, Phone, Globe, User, Briefcase } from "lucide-react";
 import BookingForm from "@/components/BookingForm";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import ObfuscatedMailto from "@/components/ObfuscatedMailto";
 import ScrollReveal from "@/components/ScrollReveal";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
@@ -82,9 +83,9 @@ const ContactSection = () => {
                               <p className="font-medium text-foreground">Reginald Gilliand</p>
                               <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
                             </div>
-                            <a href="mailto:pointblank@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                              <Mail className="w-4 h-4" /> pointblank@southparkcoalitionllc.com
-                            </a>
+                            <ObfuscatedMailto user="pointblank" domain="southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                              <Mail className="w-4 h-4" /> <span>pointblank<span aria-hidden="true">&#64;</span>southparkcoalitionllc.com</span>
+                            </ObfuscatedMailto>
                             <a href="tel:7135503001" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                               <Phone className="w-4 h-4" /> 713-550-3001
                             </a>
@@ -108,14 +109,14 @@ const ContactSection = () => {
                             <p className="font-medium text-foreground">Cornelius A. Pratt (Mr. CAP)</p>
                             <p className="text-xs text-muted-foreground">Executive Producer / Co-CEO</p>
                           </div>
-                          <a href="mailto:mrcap@southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                            <Mail className="w-4 h-4" /> mrcap@southparkcoalitionllc.com
-                          </a>
+                          <ObfuscatedMailto user="mrcap" domain="southparkcoalitionllc.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                            <Mail className="w-4 h-4" /> <span>mrcap<span aria-hidden="true">&#64;</span>southparkcoalitionllc.com</span>
+                          </ObfuscatedMailto>
                           <a href="tel:8327744473" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                             <Phone className="w-4 h-4" /> 832-774-4473
                           </a>
-                          <a href="https://www.mrcap1.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                            <Globe className="w-4 h-4" /> www.mrcap1.com
+                          <a href="https://mrcap1.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                            <Globe className="w-4 h-4" /> mrcap1.com
                           </a>
                         </div>
                       </div>

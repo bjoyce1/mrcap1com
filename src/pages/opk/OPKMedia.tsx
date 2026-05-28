@@ -47,7 +47,7 @@ const OPKMedia = () => {
               "knowsAbout": ["Independent Artistry", "Hip-Hop Culture", "Music and Blockchain", "Creative Industries"],
               "hasCredential": { "@type": "EducationalOccupationalCredential", "name": "Documentary Contributor" }
             },
-            "potentialAction": { "@type": "ContactAction", "target": "mailto:southparkcoalitionllc@gmail.com", "name": "Media & Speaking Inquiries" },
+            "potentialAction": { "@type": "ContactAction", "target": "https://mrcap1.com/booking", "name": "Media & Speaking Inquiries" },
             "breadcrumb": {
               "@type": "BreadcrumbList",
               "itemListElement": [

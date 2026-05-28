@@ -302,10 +302,10 @@ const Innovation = () => {
                   </div>
 
                   <Button variant="fluxOutline" asChild>
-                    <a href="mailto:wrecklessent@gmail.com?subject=CAP Distributions Inquiry">
+                    <Link to="/booking?topic=cap-distributions">
                       <ArrowRight className="w-4 h-4" />
                       Inquire About Services
-                    </a>
+                    </Link>
                   </Button>
                 </div>
 
@@ -456,9 +456,9 @@ const Innovation = () => {
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button variant="flux" size="lg" asChild>
-                  <a href="mailto:wrecklessent@gmail.com?subject=Tech Partnership Inquiry">
+                  <Link to="/booking?topic=tech-partnership">
                     Get In Touch
-                  </a>
+                  </Link>
                 </Button>
                 <Button variant="fluxOutline" size="lg" asChild>
                   <Link to="/nft">
