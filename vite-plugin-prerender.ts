@@ -22,6 +22,13 @@ import type { Plugin } from "vite";
 import { resolve } from "path";
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from "fs";
 
+// Browser globals referenced inside page.evaluate callbacks. Declared here so
+// this Node-side file type-checks under tsconfig.node.json (no DOM lib).
+declare const window: any;
+declare const document: any;
+type HTMLLinkElement = any;
+type HTMLMetaElement = any;
+
 interface PrerenderOptions {
   routes: string[];
   /** ms to wait for the page to settle before capturing (default 4000). */
