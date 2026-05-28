@@ -4,6 +4,7 @@ import SEO from "@/components/SEO";
 import PageHero from "@/components/blocks/PageHero";
 import CitationBlock from "@/components/blocks/CitationBlock";
 import OfficialLinksBlock from "@/components/blocks/OfficialLinksBlock";
+import ObfuscatedMailto from "@/components/ObfuscatedMailto";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
