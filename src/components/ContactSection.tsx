@@ -114,8 +114,8 @@ const ContactSection = () => {
                           <a href="tel:8327744473" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
                             <Phone className="w-4 h-4" /> 832-774-4473
                           </a>
-                          <a href="https://www.mrcap1.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                            <Globe className="w-4 h-4" /> www.mrcap1.com
+                          <a href="https://mrcap1.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                            <Globe className="w-4 h-4" /> mrcap1.com
                           </a>
                         </div>
                       </div>
