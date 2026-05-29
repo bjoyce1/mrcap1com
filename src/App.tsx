@@ -17,6 +17,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 const Index = lazy(() => import("@/pages/IndexV3"));
 const IndexLegacy = lazy(() => import("@/pages/Index"));
 const MusicV3 = lazy(() => import("@/pages/MusicV3"));
+const BookingV3 = lazy(() => import("@/pages/BookingV3"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -134,7 +135,8 @@ function AppRoutes() {
             <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
             <Route path="/discography" element={<PageTransition><Discography /></PageTransition>} />
             <Route path="/mr-cap-discography" element={<Navigate to="/discography" replace />} />
-            <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
+            <Route path="/booking" element={<PageTransition><BookingV3 /></PageTransition>} />
+            <Route path="/booking-legacy" element={<PageTransition><Booking /></PageTransition>} />
             <Route path="/links" element={<PageTransition><Links /></PageTransition>} />
             <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
             <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
