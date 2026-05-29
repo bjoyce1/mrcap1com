@@ -77,7 +77,7 @@ serve(async (req) => {
     return json({ url: signed.signedUrl });
   } catch (e) {
     console.error("audio-download error:", e);
-    return json({ error: e instanceof Error ? e.message : "Unknown error" }, 500);
+    return json({ error: "An internal error occurred" }, 500);
   }
 });
 
