@@ -21,6 +21,8 @@ const BookingV3 = lazy(() => import("@/pages/BookingV3"));
 const PressV3 = lazy(() => import("@/pages/PressV3"));
 const LegacyV3 = lazy(() => import("@/pages/LegacyV3"));
 const VisualV3 = lazy(() => import("@/pages/VisualV3"));
+const BlogV3 = lazy(() => import("@/pages/BlogV3"));
+const BlogPostV3 = lazy(() => import("@/pages/BlogPostV3"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -124,8 +126,10 @@ function AppRoutes() {
             <Route path="/press" element={<PageTransition><PressV3 /></PageTransition>} />
             <Route path="/press-legacy" element={<PageTransition><Press /></PageTransition>} />
             <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
-            <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
-            <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+            <Route path="/blog" element={<PageTransition><BlogV3 /></PageTransition>} />
+            <Route path="/blog-legacy" element={<PageTransition><Blog /></PageTransition>} />
+            <Route path="/blog/:slug" element={<PageTransition><BlogPostV3 /></PageTransition>} />
+            <Route path="/blog-legacy/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
             <Route path="/cities" element={<PageTransition><Cities /></PageTransition>} />
             <Route path="/city/:citySlug" element={<PageTransition><CityLanding /></PageTransition>} />
             <Route path="/nft" element={<PageTransition><VisualV3 /></PageTransition>} />
