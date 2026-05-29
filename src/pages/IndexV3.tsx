@@ -30,13 +30,6 @@ const PROOF = [
 
 const CATALOG = [
   {
-    title: "The Ties That Bind Us",
-    year: "2024",
-    label: "South Park Coalition",
-    cover: "/images/covers/album-ties.webp",
-    to: "/discography",
-  },
-  {
     title: "The Art of ISM",
     year: "2019",
     label: "Sony Music / The Orchard",
@@ -50,6 +43,13 @@ const CATALOG = [
     cover: "/images/covers/album-grave.webp",
     to: "/discography",
   },
+  {
+    title: "Tha Cold Ass Pimp",
+    year: "2006",
+    label: "O.N.E. 4 Da Money Ent.",
+    cover: "/images/covers/album-cold-ass-pimp.webp",
+    to: "/discography",
+  },
 ];
 
 const PRESS = [
@@ -60,13 +60,13 @@ const PRESS = [
 ];
 
 const MARQUEE_TITLES = [
-  "The Ties That Bind Us",
-  "Art of ISM",
+  "The Art of ISM",
   "2 Tha Grave",
-  "O.N.E. on O.N.E.",
+  "Tha Cold Ass Pimp",
   "Bet On Her",
   "Panties on My Piano",
-  "Bet'n On Me",
+  "Limitless",
+  "Capism",
 ];
 
 // ── JSON-LD (preserved verbatim from current Index) ─────────
@@ -163,20 +163,13 @@ const jsonLd = {
       album: [
         {
           "@type": "MusicAlbum",
-          name: "The Ties That Bind Us",
-          datePublished: "2024-10-18",
-          byArtist: { "@type": "MusicGroup", name: "South Park Coalition" },
-          numTracks: 19,
-          track: { "@type": "MusicRecording", name: "Bet'n On Me" },
-        },
-        {
-          "@type": "MusicAlbum",
           name: "The Art of ISM",
           datePublished: "2019",
           recordLabel: "Sony Music / The Orchard",
           numTracks: 11,
         },
         { "@type": "MusicAlbum", name: "2 Tha Grave", datePublished: "2011" },
+        { "@type": "MusicAlbum", name: "Tha Cold Ass Pimp", datePublished: "2006" },
         { "@type": "MusicAlbum", name: "O.N.E. on O.N.E.", datePublished: "2005" },
       ],
     },
@@ -209,10 +202,10 @@ const jsonLd = {
         },
         {
           "@type": "Question",
-          name: "What is Mr. CAP's latest album?",
+          name: "What is Mr. CAP's latest single?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Mr. CAP's latest project is 'The Ties That Bind Us' (2024), a South Park Coalition group album featuring 19 tracks with the lead single 'Bet'n On Me'.",
+            text: "Mr. CAP's upcoming solo single is 'Bet On Her' (2026), arriving with the weight of three decades of Houston hip-hop behind it.",
           },
         },
       ],
@@ -389,7 +382,7 @@ const IndexV3 = () => {
               <div className="md:col-span-6 order-1 md:order-2 feature-cover">
                 <MediaFrame
                   ratio="1/1"
-                  src="/images/covers/album-ties.webp"
+                  src="/images/covers/nft-art-of-ism.webp"
                   alt="Bet On Her cover art"
                 />
               </div>
@@ -431,7 +424,7 @@ const IndexV3 = () => {
         <Stage py="md">
           <Reveal>
             <Eyebrow className="mb-4">The catalog</Eyebrow>
-            <Display size="lg" italic as="h2">Three decades, four albums, one voice.</Display>
+            <Display size="lg" italic as="h2">Three decades. A solo body of work.</Display>
           </Reveal>
         </Stage>
 
