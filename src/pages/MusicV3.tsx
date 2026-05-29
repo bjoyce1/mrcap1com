@@ -37,35 +37,15 @@ type Release = {
 
 const RELEASES: Release[] = [
   {
-    title: "Bet On Her",
-    artist: "Mr. CAP",
-    year: "2026",
-    label: "CAP Records",
-    role: "Single — current release",
-    cover: "/images/covers/bet-on-her.webp",
-    to: "/bet-on-her",
-    featured: true,
-    note: "The new single. A meditation on devotion, faith and the women who shape a legacy.",
-  },
-  {
-    title: "The Ties That Bind Us",
-    artist: "South Park Coalition",
-    year: "2024",
-    label: "South Park Coalition LLC",
-    role: "SPC group album",
-    cover: "/images/covers/album-ties.webp",
-    to: "/discography",
-    note: "19 tracks. K-Rino, Point Blank, Klondike Kat & more.",
-  },
-  {
     title: "The Art Of ISM",
     artist: "Mr. CAP",
     year: "2019",
     label: "Sony Music / The Orchard",
-    role: "3rd studio album",
+    role: "3rd studio album — flagship",
     cover: "/images/covers/nft-art-of-ism.webp",
     to: "/art-of-ism",
-    note: "Production by Zaytoven, Metro Boomin & Mike Will Made-It.",
+    featured: true,
+    note: "The defining solo statement. Production by Zaytoven, Metro Boomin & Mike Will Made-It.",
   },
   {
     title: "2 Tha Grave",
@@ -91,14 +71,13 @@ const RELEASES: Release[] = [
     year: "2005",
     label: "O.N.E. 4 Da Money Ent.",
     role: "Collab album",
-    cover: "/images/covers/album-one-on-one.webp",
+    cover: "/images/covers/album-one-on-one.jpg",
     to: "/discography",
   },
 ];
 
 const SINGLES = [
   { year: "2024", title: "Social Media is a Ho Stroll", artist: "Mr. CAP feat. Ai'Eshsa" },
-  { year: "2024", title: "Bet'n On Me", artist: "South Park Coalition" },
   { year: "2023", title: "Dippin Thru the Metaverse", artist: "Mr. CAP" },
   { year: "2023", title: "Southern Sounds (Ultra ISM)", artist: "Mr. CAP feat. Venita Vyne" },
   { year: "2023", title: "H-Town Represent", artist: "Mr. CAP feat. Ciddy Boi P" },
@@ -111,10 +90,8 @@ const MARQUEE = [
   "Studio Albums",
   "Singles",
   "Mixtapes",
-  "Collabs",
   "NFT Drops",
-  "Slowed & Chopped",
-  "South Park Coalition",
+  "Solo Catalog",
 ];
 
 const jsonLd = {
@@ -190,16 +167,16 @@ const MusicV3 = () => {
         <title>Music — Mr. CAP | Complete Catalog & Latest Releases</title>
         <meta
           name="description"
-          content="The complete Mr. CAP catalog. Studio albums, singles, NFT drops, and South Park Coalition releases — from 2005 to today."
+          content="The complete Mr. CAP solo catalog. Studio albums, singles, mixtapes and NFT drops — from 2005 to today."
         />
         <link rel="canonical" href="https://mrcap1.com/music" />
         <meta property="og:title" content="Music — Mr. CAP" />
         <meta
           property="og:description"
-          content="The complete Mr. CAP catalog. Studio albums, singles, NFT drops, SPC releases."
+          content="The complete Mr. CAP solo catalog. Studio albums, singles, mixtapes and NFT drops."
         />
         <meta property="og:url" content="https://mrcap1.com/music" />
-        <meta property="og:image" content="https://mrcap1.com/images/covers/bet-on-her.webp" />
+        <meta property="og:image" content="https://mrcap1.com/images/covers/nft-art-of-ism.webp" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
@@ -274,7 +251,7 @@ const MusicV3 = () => {
               </Display>
             </div>
             <Body className="max-w-md opacity-70">
-              Six bodies of work — solo records, collaborations, and South Park Coalition.
+              Solo records and collaborations — the foundation of the Mr. CAP catalog.
             </Body>
           </div>
 
