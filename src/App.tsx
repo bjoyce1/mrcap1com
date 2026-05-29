@@ -16,6 +16,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 
 const Index = lazy(() => import("@/pages/IndexV3"));
 const IndexLegacy = lazy(() => import("@/pages/Index"));
+const MusicV3 = lazy(() => import("@/pages/MusicV3"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
