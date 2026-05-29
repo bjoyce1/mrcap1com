@@ -12,3 +12,5 @@ export { CTA } from "./CTA";
 export { MarqueeRow } from "./MarqueeRow";
 export { MediaFrame } from "./MediaFrame";
 export { DSRoot } from "./DSRoot";
+export { NavV3 } from "./NavV3";
+export { FooterV3 } from "./FooterV3";
