@@ -14,7 +14,8 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
 
-const Index = lazy(() => import("@/pages/Index"));
+const Index = lazy(() => import("@/pages/IndexV3"));
+const IndexLegacy = lazy(() => import("@/pages/Index"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -110,6 +111,7 @@ function AppRoutes() {
         <Suspense fallback={<PageLoader />}>
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+            <Route path="/v1" element={<PageTransition><IndexLegacy /></PageTransition>} />
             <Route path="/about" element={<PageTransition><About /></PageTransition>} />
             <Route path="/music" element={<Navigate to="/discography" replace />} />
             <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
