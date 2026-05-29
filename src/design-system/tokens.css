@@ -1,0 +1,103 @@
+/* ============================================================
+   Mr. CAP V3 Design System — Cinematic Immersive
+   Namespaced under --ds-* so it coexists with legacy tokens.
+   Only consumed by components under src/design-system/* and
+   pages built against the V3 system.
+   ============================================================ */
+
+:root {
+  /* Surfaces — true black film stock */
+  --ds-bg: 0 0% 2%;             /* #050505 */
+  --ds-surface: 0 0% 4.5%;       /* #0B0B0B */
+  --ds-elevated: 0 0% 6.7%;      /* #111111 */
+  --ds-scrim: 0 0% 0%;
+
+  /* Foreground — warm bone (filmic, not clinical white) */
+  --ds-bone: 40 25% 94%;         /* #F4F1EA */
+  --ds-bone-dim: 40 12% 72%;     /* muted body */
+  --ds-bone-faint: 40 8% 48%;    /* captions, meta */
+
+  /* Accents */
+  --ds-oxblood: 0 59% 30%;       /* #7A1F1F — primary CTA + key moments */
+  --ds-oxblood-glow: 0 70% 40%;  /* hover/glow */
+  --ds-gold: 42 53% 54%;         /* #C9A24C — legacy/award only */
+
+  /* Motion */
+  --ds-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ds-dur-fast: 240ms;
+  --ds-dur: 600ms;
+  --ds-dur-slow: 1200ms;
+
+  /* Layout */
+  --ds-gutter: clamp(1.25rem, 4vw, 4rem);
+  --ds-max: 1600px;
+
+  /* Type scale (fluid clamps) */
+  --ds-fs-eyebrow: clamp(0.7rem, 0.72vw + 0.55rem, 0.85rem);
+  --ds-fs-body: clamp(1rem, 0.4vw + 0.9rem, 1.125rem);
+  --ds-fs-lead: clamp(1.25rem, 1vw + 1rem, 1.75rem);
+  --ds-fs-h3: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+  --ds-fs-h2: clamp(2.25rem, 4vw + 1rem, 4.5rem);
+  --ds-fs-display: clamp(3.5rem, 9vw + 1rem, 9rem);
+  --ds-fs-monument: clamp(4rem, 12vw, 13.75rem);
+}
+
+/* ── Base reset for V3 surfaces ──────────────────────────── */
+.ds-root {
+  background-color: hsl(var(--ds-bg));
+  color: hsl(var(--ds-bone));
+  font-family: 'Inter', sans-serif;
+  font-size: var(--ds-fs-body);
+  line-height: 1.55;
+  letter-spacing: 0.005em;
+}
+
+/* ── Typography utility classes (escape hatch for ad-hoc use) ── */
+.ds-font-display {
+  font-family: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+}
+
+.ds-font-body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.ds-font-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: var(--ds-fs-eyebrow);
+}
+
+/* ── Marquee keyframes ───────────────────────────────────── */
+@keyframes ds-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes ds-reveal-up {
+  from { opacity: 0; transform: translateY(80px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ds-clip-reveal {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* ── Respect reduced motion ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ds-root *,
+  .ds-root *::before,
+  .ds-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
