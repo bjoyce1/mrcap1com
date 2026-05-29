@@ -20,6 +20,7 @@ const MusicV3 = lazy(() => import("@/pages/MusicV3"));
 const BookingV3 = lazy(() => import("@/pages/BookingV3"));
 const PressV3 = lazy(() => import("@/pages/PressV3"));
 const LegacyV3 = lazy(() => import("@/pages/LegacyV3"));
+const VisualV3 = lazy(() => import("@/pages/VisualV3"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -127,7 +128,8 @@ function AppRoutes() {
             <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
             <Route path="/cities" element={<PageTransition><Cities /></PageTransition>} />
             <Route path="/city/:citySlug" element={<PageTransition><CityLanding /></PageTransition>} />
-            <Route path="/nft" element={<PageTransition><NFTGallery /></PageTransition>} />
+            <Route path="/nft" element={<PageTransition><VisualV3 /></PageTransition>} />
+            <Route path="/nft-legacy" element={<PageTransition><NFTGallery /></PageTransition>} />
             <Route path="/art" element={<PageTransition><ArtGallery /></PageTransition>} />
             <Route path="/innovation" element={<PageTransition><Innovation /></PageTransition>} />
             <Route path="/houston-rapper-mr-cap" element={<PageTransition><HoustonRapper /></PageTransition>} />
