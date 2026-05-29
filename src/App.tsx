@@ -19,6 +19,7 @@ const IndexLegacy = lazy(() => import("@/pages/Index"));
 const MusicV3 = lazy(() => import("@/pages/MusicV3"));
 const BookingV3 = lazy(() => import("@/pages/BookingV3"));
 const PressV3 = lazy(() => import("@/pages/PressV3"));
+const LegacyV3 = lazy(() => import("@/pages/LegacyV3"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
