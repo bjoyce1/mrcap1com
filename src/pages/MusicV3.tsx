@@ -22,7 +22,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ── Catalog data (condensed from Discography) ────────────────
+// ── Catalog data ─────────────────────────────────────────────
 type Release = {
   title: string;
   artist: string;
@@ -31,8 +31,6 @@ type Release = {
   role: string;
   cover: string;
   to?: string;
-  spotify?: string;
-  apple?: string;
   featured?: boolean;
   note?: string;
 };
@@ -57,7 +55,7 @@ const RELEASES: Release[] = [
     role: "SPC group album",
     cover: "/images/covers/album-ties.webp",
     to: "/discography",
-    note: "19 tracks. K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped version Jan 2025.",
+    note: "19 tracks. K-Rino, Point Blank, Klondike Kat & more.",
   },
   {
     title: "The Art Of ISM",
@@ -119,7 +117,6 @@ const MARQUEE = [
   "South Park Coalition",
 ];
 
-// ── JSON-LD ──────────────────────────────────────────────────
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -159,7 +156,6 @@ const jsonLd = {
   ],
 };
 
-// ────────────────────────────────────────────────────────────
 const MusicV3 = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const featuredRef = useRef<HTMLDivElement>(null);
@@ -174,18 +170,6 @@ const MusicV3 = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (heroRef.current) {
-        gsap.to(heroRef.current.querySelector("[data-hero-bg]"), {
-          yPercent: 20,
-          ease: "none",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      }
       if (featuredRef.current) {
         gsap.from(featuredRef.current.querySelectorAll("[data-fade]"), {
           y: 40,
@@ -193,10 +177,7 @@ const MusicV3 = () => {
           duration: 1,
           ease: "power3.out",
           stagger: 0.12,
-          scrollTrigger: {
-            trigger: featuredRef.current,
-            start: "top 70%",
-          },
+          scrollTrigger: { trigger: featuredRef.current, start: "top 70%" },
         });
       }
     });
@@ -225,42 +206,28 @@ const MusicV3 = () => {
       <NavV3 />
 
       {/* ───── Hero ───── */}
-      <Scene
-        ref={heroRef}
-        full
-        background={
-          <div
-            data-hero-bg
-            className="absolute inset-0 will-change-transform"
-            style={{
-              backgroundImage: `url(${featured.cover})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              filter: "brightness(0.35) saturate(0.85)",
-            }}
-          />
-        }
-        overlay
-      >
-        <Stage tone="transparent" className="text-center">
-          <Eyebrow>The Catalog</Eyebrow>
-          <Display as="h1" className="mt-6">
-            Three decades.
-            <br />
-            One body of work.
-          </Display>
-          <Lead className="mx-auto mt-8 max-w-2xl">
-            Every album, every single, every collaboration — a chronicle of Houston hip-hop
-            from a founding voice of the South Park Coalition.
-          </Lead>
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <CTA to="#featured">Latest release</CTA>
-            <CTA to="#catalog" variant="ghost">
-              Full catalog
-            </CTA>
-          </div>
-        </Stage>
-      </Scene>
+      <div ref={heroRef}>
+        <Scene bgImage={featured.cover} scrim={0.75} align="center" justify="center">
+          <Stage className="text-center">
+            <Eyebrow>The Catalog</Eyebrow>
+            <Display as="h1" className="mt-6">
+              Three decades.
+              <br />
+              One body of work.
+            </Display>
+            <Lead className="mx-auto mt-8 max-w-2xl">
+              Every album, every single, every collaboration — a chronicle of Houston hip-hop
+              from a founding voice of the South Park Coalition.
+            </Lead>
+            <div className="mt-12 flex flex-wrap justify-center gap-4">
+              <CTA to="#featured">Latest release</CTA>
+              <CTA to="#catalog" variant="ghost">
+                Full catalog
+              </CTA>
+            </div>
+          </Stage>
+        </Scene>
+      </div>
 
       <MarqueeRow items={MARQUEE} />
 
@@ -269,17 +236,16 @@ const MusicV3 = () => {
         <Stage>
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
             <div data-fade>
-              <MediaFrame ratio="square" className="shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
-                <img
-                  src={featured.cover}
-                  alt={`${featured.title} cover art`}
-                  className="h-full w-full object-cover"
-                />
-              </MediaFrame>
+              <MediaFrame
+                ratio="1/1"
+                src={featured.cover}
+                alt={`${featured.title} cover art`}
+                className="shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
+              />
             </div>
             <div data-fade>
               <Eyebrow>{featured.role}</Eyebrow>
-              <Display as="h2" size="md" className="mt-6">
+              <Display as="h2" className="mt-6 text-5xl md:text-6xl">
                 {featured.title}
               </Display>
               <Caption className="mt-4">
@@ -303,13 +269,12 @@ const MusicV3 = () => {
           <div className="mb-16 flex flex-wrap items-end justify-between gap-6">
             <div>
               <Eyebrow>Studio Albums & Collabs</Eyebrow>
-              <Display as="h2" size="md" className="mt-4">
+              <Display as="h2" className="mt-4 text-4xl md:text-5xl">
                 The catalog
               </Display>
             </div>
             <Body className="max-w-md opacity-70">
-              Six bodies of work spanning solo records, collaborations, and the South Park
-              Coalition collective.
+              Six bodies of work — solo records, collaborations, and South Park Coalition.
             </Body>
           </div>
 
@@ -323,18 +288,19 @@ const MusicV3 = () => {
                 transition={{ duration: 0.7, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
                 <Link to={r.to ?? "/discography"} className="group block">
-                  <MediaFrame ratio="square" className="overflow-hidden">
-                    <img
-                      src={r.cover}
-                      alt={`${r.title} cover art`}
-                      className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-                    />
-                  </MediaFrame>
+                  <MediaFrame
+                    ratio="1/1"
+                    src={r.cover}
+                    alt={`${r.title} cover art`}
+                    className="overflow-hidden"
+                  />
                   <div className="mt-5 flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-xl tracking-tight">{r.title}</h3>
+                    <h3 className="ds-font-display text-xl tracking-tight">{r.title}</h3>
                     <span className="font-mono text-xs opacity-50">{r.year}</span>
                   </div>
-                  <Caption className="mt-2">{r.role} · {r.label}</Caption>
+                  <Caption className="mt-2">
+                    {r.role} · {r.label}
+                  </Caption>
                 </Link>
               </motion.div>
             ))}
@@ -344,11 +310,11 @@ const MusicV3 = () => {
 
       {/* ───── Singles timeline ───── */}
       <section>
-        <Stage tone="contrast">
+        <Stage className="bg-[hsl(var(--ds-elevated))]">
           <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
             <div>
               <Eyebrow>Singles & Features</Eyebrow>
-              <Display as="h2" size="md" className="mt-4">
+              <Display as="h2" className="mt-4 text-4xl md:text-5xl">
                 The timeline
               </Display>
             </div>
@@ -358,7 +324,7 @@ const MusicV3 = () => {
                 className={`rounded-full px-4 py-2 font-mono text-xs uppercase tracking-widest transition ${
                   activeYear === "all"
                     ? "bg-[hsl(var(--ds-bone))] text-[hsl(var(--ds-bg))]"
-                    : "border border-current/20 opacity-60 hover:opacity-100"
+                    : "border border-[hsl(var(--ds-bone)/0.2)] opacity-60 hover:opacity-100"
                 }`}
               >
                 All
@@ -370,7 +336,7 @@ const MusicV3 = () => {
                   className={`rounded-full px-4 py-2 font-mono text-xs uppercase tracking-widest transition ${
                     activeYear === y
                       ? "bg-[hsl(var(--ds-bone))] text-[hsl(var(--ds-bg))]"
-                      : "border border-current/20 opacity-60 hover:opacity-100"
+                      : "border border-[hsl(var(--ds-bone)/0.2)] opacity-60 hover:opacity-100"
                   }`}
                 >
                   {y}
@@ -379,7 +345,7 @@ const MusicV3 = () => {
             </div>
           </div>
 
-          <ul className="divide-y divide-current/10">
+          <ul className="divide-y divide-[hsl(var(--ds-bone)/0.1)]">
             {filteredSingles.map((s, i) => (
               <motion.li
                 key={`${s.year}-${s.title}`}
@@ -393,7 +359,9 @@ const MusicV3 = () => {
                   {s.year}
                 </span>
                 <div>
-                  <div className="font-display text-xl tracking-tight sm:text-2xl">{s.title}</div>
+                  <div className="ds-font-display text-xl tracking-tight sm:text-2xl">
+                    {s.title}
+                  </div>
                   <Caption className="mt-1">{s.artist}</Caption>
                 </div>
                 <span className="hidden font-mono text-xs uppercase tracking-widest opacity-40 sm:block">
@@ -406,20 +374,17 @@ const MusicV3 = () => {
       </section>
 
       {/* ───── Closing CTA ───── */}
-      <Scene
-        background={
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 30% 50%, hsl(var(--ds-oxblood) / 0.4), transparent 60%)",
-            }}
-          />
-        }
-      >
-        <Stage tone="transparent" className="text-center">
+      <Scene align="center" justify="center" minH="80vh">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 30% 50%, hsl(var(--ds-oxblood) / 0.4), transparent 60%)",
+          }}
+        />
+        <Stage className="relative text-center">
           <Eyebrow>Listen everywhere</Eyebrow>
-          <Display as="h2" size="md" className="mt-6">
+          <Display as="h2" className="mt-6 text-5xl md:text-6xl">
             Stream the catalog.
           </Display>
           <Lead className="mx-auto mt-8 max-w-xl">
@@ -428,9 +393,8 @@ const MusicV3 = () => {
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <CTA to="/discography">Open CAP STREAM</CTA>
             <CTA
-              to="https://open.spotify.com/artist/0gPMSqRJ4VfTRKHaaG8gdR"
+              href="https://open.spotify.com/artist/0gPMSqRJ4VfTRKHaaG8gdR"
               variant="ghost"
-              external
             >
               Spotify
             </CTA>
