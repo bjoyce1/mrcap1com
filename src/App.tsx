@@ -19,6 +19,7 @@ const IndexLegacy = lazy(() => import("@/pages/Index"));
 const MusicV3 = lazy(() => import("@/pages/MusicV3"));
 const BookingV3 = lazy(() => import("@/pages/BookingV3"));
 const PressV3 = lazy(() => import("@/pages/PressV3"));
+const LegacyV3 = lazy(() => import("@/pages/LegacyV3"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -144,7 +145,8 @@ function AppRoutes() {
             <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
             <Route path="/admin/library" element={<PageTransition><AdminLibrary /></PageTransition>} />
             <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />
-            <Route path="/legacy" element={<PageTransition><Legacy /></PageTransition>} />
+            <Route path="/legacy" element={<PageTransition><LegacyV3 /></PageTransition>} />
+            <Route path="/legacy-old" element={<PageTransition><Legacy /></PageTransition>} />
             <Route path="/biography" element={<PageTransition><Biography /></PageTransition>} />
             <Route path="/press-kit" element={<PageTransition><PressKit /></PageTransition>} />
             <Route path="/new-releases" element={<PageTransition><NewReleases /></PageTransition>} />
