@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { CTA } from "./CTA";
 
 const LINKS = [
-  { to: "/discography", label: "Music" },
+  { to: "/music", label: "Music" },
   { to: "/legacy", label: "Legacy" },
   { to: "/nft", label: "Visual" },
   { to: "/press", label: "Press" },
