@@ -74,7 +74,7 @@ serve(async (req) => {
     return json({ ok: true });
   } catch (e) {
     console.error("paypal-capture-order error:", e);
-    return json({ error: e instanceof Error ? e.message : "Unknown error" }, 500);
+    return json({ error: "An internal error occurred" }, 500);
   }
 });
 

@@ -19,9 +19,23 @@ serve(async (req) => {
     if (!SANITY_API_TOKEN) throw new Error("SANITY_API_TOKEN is not configured");
 
     const { query, params } = await req.json();
-    if (!query) {
+    if (!query || typeof query !== "string") {
       return new Response(JSON.stringify({ error: "Missing 'query' field" }), {
         status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (query.length > 4000) {
+      return new Response(JSON.stringify({ error: "Query too long" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    // Block access to draft documents — public proxy must only serve published content.
+    const lower = query.toLowerCase();
+    if (lower.includes("drafts.") || lower.includes("drafts.**")) {
+      return new Response(JSON.stringify({ error: "Forbidden query" }), {
+        status: 403,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }

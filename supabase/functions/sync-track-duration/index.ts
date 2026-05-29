@@ -13,9 +13,19 @@ Deno.serve(async (req) => {
   try {
     const { trackId, duration } = await req.json();
 
-    if (!trackId || typeof duration !== "number" || duration <= 0) {
+    // Validate inputs — trackId must look like a UUID; duration must be sane (1s..2h).
+    const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (
+      !trackId ||
+      typeof trackId !== "string" ||
+      !uuidRe.test(trackId) ||
+      typeof duration !== "number" ||
+      !Number.isFinite(duration) ||
+      duration <= 0 ||
+      duration > 7200
+    ) {
       return new Response(
-        JSON.stringify({ error: "trackId and a positive duration are required" }),
+        JSON.stringify({ error: "Invalid trackId or duration" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
