@@ -14,15 +14,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
 
-const Index = lazy(() => import("@/pages/IndexV3"));
-const IndexLegacy = lazy(() => import("@/pages/Index"));
-const MusicV3 = lazy(() => import("@/pages/MusicV3"));
-const BookingV3 = lazy(() => import("@/pages/BookingV3"));
-const PressV3 = lazy(() => import("@/pages/PressV3"));
-const LegacyV3 = lazy(() => import("@/pages/LegacyV3"));
-const VisualV3 = lazy(() => import("@/pages/VisualV3"));
-const BlogV3 = lazy(() => import("@/pages/BlogV3"));
-const BlogPostV3 = lazy(() => import("@/pages/BlogPostV3"));
+const Index = lazy(() => import("@/pages/Index"));
 
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -83,7 +75,6 @@ const BetOnHer = lazy(() => import("./pages/BetOnHer"));
 const HoustonHipHopHistory = lazy(() => import("./pages/HoustonHipHopHistory"));
 const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
-const Styleguide = lazy(() => import("./pages/Styleguide"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -118,22 +109,16 @@ function AppRoutes() {
         <Suspense fallback={<PageLoader />}>
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-            <Route path="/v1" element={<PageTransition><IndexLegacy /></PageTransition>} />
             <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-            <Route path="/music" element={<PageTransition><MusicV3 /></PageTransition>} />
-            <Route path="/music-legacy" element={<Navigate to="/discography" replace />} />
+            <Route path="/music" element={<Navigate to="/discography" replace />} />
             <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
-            <Route path="/press" element={<PageTransition><PressV3 /></PageTransition>} />
-            <Route path="/press-legacy" element={<PageTransition><Press /></PageTransition>} />
+            <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
             <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
-            <Route path="/blog" element={<PageTransition><BlogV3 /></PageTransition>} />
-            <Route path="/blog-legacy" element={<PageTransition><Blog /></PageTransition>} />
-            <Route path="/blog/:slug" element={<PageTransition><BlogPostV3 /></PageTransition>} />
-            <Route path="/blog-legacy/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+            <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
+            <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
             <Route path="/cities" element={<PageTransition><Cities /></PageTransition>} />
             <Route path="/city/:citySlug" element={<PageTransition><CityLanding /></PageTransition>} />
-            <Route path="/nft" element={<PageTransition><VisualV3 /></PageTransition>} />
-            <Route path="/nft-legacy" element={<PageTransition><NFTGallery /></PageTransition>} />
+            <Route path="/nft" element={<PageTransition><NFTGallery /></PageTransition>} />
             <Route path="/art" element={<PageTransition><ArtGallery /></PageTransition>} />
             <Route path="/innovation" element={<PageTransition><Innovation /></PageTransition>} />
             <Route path="/houston-rapper-mr-cap" element={<PageTransition><HoustonRapper /></PageTransition>} />
@@ -144,15 +129,13 @@ function AppRoutes() {
             <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
             <Route path="/discography" element={<PageTransition><Discography /></PageTransition>} />
             <Route path="/mr-cap-discography" element={<Navigate to="/discography" replace />} />
-            <Route path="/booking" element={<PageTransition><BookingV3 /></PageTransition>} />
-            <Route path="/booking-legacy" element={<PageTransition><Booking /></PageTransition>} />
+            <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
             <Route path="/links" element={<PageTransition><Links /></PageTransition>} />
             <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
             <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
             <Route path="/admin/library" element={<PageTransition><AdminLibrary /></PageTransition>} />
             <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />
-            <Route path="/legacy" element={<PageTransition><LegacyV3 /></PageTransition>} />
-            <Route path="/legacy-old" element={<PageTransition><Legacy /></PageTransition>} />
+            <Route path="/legacy" element={<PageTransition><Legacy /></PageTransition>} />
             <Route path="/biography" element={<PageTransition><Biography /></PageTransition>} />
             <Route path="/press-kit" element={<PageTransition><PressKit /></PageTransition>} />
             <Route path="/new-releases" element={<PageTransition><NewReleases /></PageTransition>} />
@@ -189,7 +172,6 @@ function AppRoutes() {
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
             <Route path="/for-media" element={<PageTransition><ForMedia /></PageTransition>} />
-            <Route path="/styleguide" element={<PageTransition><Styleguide /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>
