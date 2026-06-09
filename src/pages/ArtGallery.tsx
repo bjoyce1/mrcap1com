@@ -5,33 +5,33 @@ import { ArrowLeft, Palette, ExternalLink, Heart, Sparkles, Crown, Calendar, X }
 import Navigation from "@/components/Navigation";
 import { gsap } from "@/hooks/useGSAP";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import mrCapCoin from "@/assets/mr-cap-coin.png";
+import mrCapCoin from "@/assets/mr-cap-coin.webp";
 import { Button } from "@/components/ui/button";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 // 2025 Collection Artwork Imports
-import selfAi1Img from "@/assets/self-love/self-ai-1.png";
-import selfAi2Img from "@/assets/self-love/self-ai-2.png";
-import selfAi3Img from "@/assets/self-love/self-ai-3.png";
-import selfAi4Img from "@/assets/self-love/self-ai-4.png";
+import selfAi1Img from "@/assets/self-love/self-ai-1.webp";
+import selfAi2Img from "@/assets/self-love/self-ai-2.webp";
+import selfAi3Img from "@/assets/self-love/self-ai-3.webp";
+import selfAi4Img from "@/assets/self-love/self-ai-4.webp";
 
 // 2026 Collection Artwork Imports
-import deshiImg from "@/assets/self-love/deshi.png";
-import fintiImg from "@/assets/self-love/finti.png";
-import jaspinImg from "@/assets/self-love/jaspin.png";
-import keliaImg from "@/assets/self-love/kelia.png";
-import koliaImg from "@/assets/self-love/kolia.png";
-import lolaImg from "@/assets/self-love/lola.png";
-import minnieImg from "@/assets/self-love/minnie.png";
-import nonahImg from "@/assets/self-love/nonah.png";
-import pradaImg from "@/assets/self-love/prada.png";
-import sakitaImg from "@/assets/self-love/sakita.png";
-import skylaImg from "@/assets/self-love/skyla.png";
-import trytidaImg from "@/assets/self-love/trytida.png";
-import tyaImg from "@/assets/self-love/tya.png";
-import velataImg from "@/assets/self-love/velata.png";
-import wydayaImg from "@/assets/self-love/wydaya.png";
-import yannaImg from "@/assets/self-love/yanna.png";
+import deshiImg from "@/assets/self-love/deshi.webp";
+import fintiImg from "@/assets/self-love/finti.webp";
+import jaspinImg from "@/assets/self-love/jaspin.webp";
+import keliaImg from "@/assets/self-love/kelia.webp";
+import koliaImg from "@/assets/self-love/kolia.webp";
+import lolaImg from "@/assets/self-love/lola.webp";
+import minnieImg from "@/assets/self-love/minnie.webp";
+import nonahImg from "@/assets/self-love/nonah.webp";
+import pradaImg from "@/assets/self-love/prada.webp";
+import sakitaImg from "@/assets/self-love/sakita.webp";
+import skylaImg from "@/assets/self-love/skyla.webp";
+import trytidaImg from "@/assets/self-love/trytida.webp";
+import tyaImg from "@/assets/self-love/tya.webp";
+import velataImg from "@/assets/self-love/velata.webp";
+import wydayaImg from "@/assets/self-love/wydaya.webp";
+import yannaImg from "@/assets/self-love/yanna.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 

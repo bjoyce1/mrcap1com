@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import Navigation from "@/components/Navigation";
-import mrCapLogo from "@/assets/mr-cap-logo.png";
+import mrCapLogo from "@/assets/mr-cap-logo.webp";
 
 const links = [
   {
@@ -64,7 +64,7 @@ const Links = () => {
     "@type": "Person",
     "name": "Mr. CAP",
     "url": "https://mrcap1.com/links",
-    "image": "https://mrcap1.com/images/mr-cap-logo.png",
+    "image": "https://mrcap1.com/images/mr-cap-logo.webp",
     "sameAs": socialLinks.map(s => s.url)
   };
 

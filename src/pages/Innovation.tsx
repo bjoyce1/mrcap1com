@@ -21,7 +21,7 @@ import {
   Volume2,
   VolumeX
 } from "lucide-react";
-import dippinMetaverse from "@/assets/dippin-metaverse.png";
+import dippinMetaverse from "@/assets/dippin-metaverse.webp";
 
 const Innovation = () => {
   const audioRef = useRef<HTMLAudioElement>(null);

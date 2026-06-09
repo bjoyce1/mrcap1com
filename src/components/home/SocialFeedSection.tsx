@@ -3,10 +3,10 @@ import { Instagram, Youtube, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
 import { useState } from "react";
-import albumArtOfIsm from "@/assets/album-art-of-ism.png";
-import albumGrave from "@/assets/album-grave.jpg";
-import albumTies from "@/assets/album-ties.jpg";
-import limitlessCover from "@/assets/limitless-cover.png";
+import albumArtOfIsm from "@/assets/album-art-of-ism.webp";
+import albumGrave from "@/assets/album-grave.webp";
+import albumTies from "@/assets/album-ties.webp";
+import limitlessCover from "@/assets/limitless-cover.webp";
 import SectionShell from "@/components/home/SectionShell";
 
 const fadeUp = {

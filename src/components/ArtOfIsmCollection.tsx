@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Play, Pause, ExternalLink } from "lucide-react";
-import albumArtOfIsm from "@/assets/nft-art-of-ism.png";
+import albumArtOfIsm from "@/assets/nft-art-of-ism.webp";
 
 type RawNft = {
   identifier?: string;

@@ -4,10 +4,10 @@ import SEO from "@/components/SEO";
 import { ArrowRight, BookOpen, Star, Sparkles, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
-import artOfIsmTitle from "@/assets/art-of-ism-title.png";
-import artOfIsmPoster from "@/assets/art-of-ism-poster.png";
-import artOfIsmQr from "@/assets/art-of-ism-qr.png";
-import artOfIsmBg from "@/assets/art-of-ism-bg.png";
+import artOfIsmTitle from "@/assets/art-of-ism-title.webp";
+import artOfIsmPoster from "@/assets/art-of-ism-poster.webp";
+import artOfIsmQr from "@/assets/art-of-ism-qr.webp";
+import artOfIsmBg from "@/assets/art-of-ism-bg.webp";
 
 const highlights = [
   { icon: BookOpen, label: "11 Immersive Chapters" },

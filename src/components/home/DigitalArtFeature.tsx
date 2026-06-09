@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import nftArtOfIsm from "@/assets/nft-art-of-ism.png";
-import nftLimitless from "@/assets/nft-limitless.png";
-import limitlessCover from "@/assets/limitless-cover.png";
+import nftArtOfIsm from "@/assets/nft-art-of-ism.webp";
+import nftLimitless from "@/assets/nft-limitless.webp";
+import limitlessCover from "@/assets/limitless-cover.webp";
 import SectionShell from "@/components/home/SectionShell";
 
 const LIMITLESS_NFT_URL = "https://opensea.io/item/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/111525374491507330879718694062290749651333153209192724132274812129449556836353";

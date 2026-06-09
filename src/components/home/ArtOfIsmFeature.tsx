@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import artOfIsmTitle from "@/assets/art-of-ism-title.png";
-import artOfIsmPoster from "@/assets/art-of-ism-poster.png";
-import artOfIsmBg from "@/assets/art-of-ism-bg.png";
+import artOfIsmTitle from "@/assets/art-of-ism-title.webp";
+import artOfIsmPoster from "@/assets/art-of-ism-poster.webp";
+import artOfIsmBg from "@/assets/art-of-ism-bg.webp";
 import SectionShell from "@/components/home/SectionShell";
 import SectionBackground from "@/components/home/SectionBackground";
 

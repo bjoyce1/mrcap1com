@@ -1,7 +1,7 @@
 import { forwardRef, useState, useRef } from "react";
 import { ExternalLink, Play, Pause, Film, Music, ShoppingBag } from "lucide-react";
-import limitlessCover from "@/assets/limitless-cover.png";
-import limitlessBg from "@/assets/limitless-bg.jpg";
+import limitlessCover from "@/assets/limitless-cover.webp";
+import limitlessBg from "@/assets/limitless-bg.webp";
 
 const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
   const [showVideo, setShowVideo] = useState(false);

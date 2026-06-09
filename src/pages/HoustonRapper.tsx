@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, Mic2, Play, ExternalLink, ChevronRight, Award, Users, Calendar } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
-import heroBg from "@/assets/hero-bg.jpg";
-import betnOnMe from "@/assets/betn-on-me.png";
+import heroBg from "@/assets/hero-bg.webp";
+import betnOnMe from "@/assets/betn-on-me.webp";
 
 const HoustonRapper = () => {
   const pageTitle = "Mr. CAP – Houston Rapper | South Park Coalition Legend & Independent Artist";

@@ -2,7 +2,7 @@ import { Mic2, MapPin, Users, CheckCircle, Calendar, Clock, Ticket, ExternalLink
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
-import spcPoster from "@/assets/spc-austin-2025.png";
+import spcPoster from "@/assets/spc-austin-2025.webp";
 
 const LiveSection = () => {
   const highlights = [

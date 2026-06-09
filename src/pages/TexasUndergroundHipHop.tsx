@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, MapPin, ChevronRight, Calendar, Mic2, Play } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 
 const TexasUndergroundHipHop = () => {
   const pageTitle = "Texas Underground Hip-Hop | Mr. CAP – Houston Rap Pioneer";

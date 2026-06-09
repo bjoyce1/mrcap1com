@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useRef, useState, useEffect } from "react";
 import { trackMusicPlay } from "@/components/GoogleAnalytics";
 import { gsap } from "@/hooks/useGSAP";
-import albumTies from "@/assets/album-ties.jpg";
+import albumTies from "@/assets/album-ties.webp";
 import SectionShell from "@/components/home/SectionShell";
 import AudioWaveform from "@/components/home/AudioWaveform";
 

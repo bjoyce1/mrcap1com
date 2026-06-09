@@ -18,7 +18,7 @@ import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { shareMusic } from "@/lib/shareTrack";
-import artOfIsmBg from "@/assets/art-of-ism-bg.jpg";
+import artOfIsmBg from "@/assets/art-of-ism-bg.webp";
 
 function formatTotalDuration(tracks: { duration: number }[]): string {
   const total = tracks.reduce((s, t) => s + t.duration, 0);

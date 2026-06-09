@@ -5,12 +5,12 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, Play, ExternalLink, ChevronRight, Calendar, Disc3, Building2, Zap, Globe, Film, Users, Award } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
-import heroBg from "@/assets/hero-bg.jpg";
-import albumTies from "@/assets/album-ties.jpg";
-import albumArtOfIsm from "@/assets/album-art-of-ism.png";
-import albumGrave from "@/assets/album-grave.jpg";
-import nftLimitless from "@/assets/nft-limitless.png";
-import theLifeDocumentary from "@/assets/the-life-documentary.png";
+import heroBg from "@/assets/hero-bg.webp";
+import albumTies from "@/assets/album-ties.webp";
+import albumArtOfIsm from "@/assets/album-art-of-ism.webp";
+import albumGrave from "@/assets/album-grave.webp";
+import nftLimitless from "@/assets/nft-limitless.webp";
+import theLifeDocumentary from "@/assets/the-life-documentary.webp";
 
 const WhoIsMrCap = () => {
   const pageTitle = "Who Is Mr. CAP? | Houston Rapper & SPC Legend";

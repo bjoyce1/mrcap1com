@@ -14,9 +14,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { usePlayerStore } from "@/stores/playerStore";
 import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
 
-import coverStandard from "@/assets/pomp-standard.png";
-import coverStudio from "@/assets/pomp-studio.png";
-import coverDeluxe from "@/assets/pomp-deluxe.png";
+import coverStandard from "@/assets/pomp-standard.webp";
+import coverStudio from "@/assets/pomp-studio.webp";
+import coverDeluxe from "@/assets/pomp-deluxe.webp";
 
 /* ─── Constants ─── */
 const COVERS = [

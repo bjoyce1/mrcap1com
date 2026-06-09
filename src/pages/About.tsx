@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CitationBlock from "@/components/CitationBlock";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Download, Music, Mic2, Trophy, Users, Calendar, Sparkles, GraduationCap, MapPin } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 
 const timeline = [
   { year: "1990s", title: "South Park Coalition Origins", desc: "Joined the legendary South Park Coalition as an original member alongside K-Rino, Dope-E, and Klondike Kat" },

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { getCityBySlug, getCitiesByState, allCities, type CityData } from "@/data/cities";
 import { MapPin, Calendar, Music, Mic2, ChevronRight, Play, ExternalLink } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 
 const CityLanding = () => {
   const { citySlug } = useParams<{ citySlug: string }>();

@@ -11,12 +11,12 @@ import CitationBlock from "@/components/blocks/CitationBlock";
 import CTAButtonRow from "@/components/blocks/CTAButtonRow";
 import { musicPageData } from "@/content/music";
 
-import albumTies from "@/assets/album-ties.jpg";
-import albumArtOfIsm from "@/assets/album-art-of-ism.png";
-import albumGrave from "@/assets/album-grave.jpg";
-import albumColdAss from "@/assets/album-cold-ass-pimp.jpg";
-import albumOneOnOne from "@/assets/album-one-on-one.jpg";
-import capHeroPortrait from "@/assets/cap-hero-portrait.png";
+import albumTies from "@/assets/album-ties.webp";
+import albumArtOfIsm from "@/assets/album-art-of-ism.webp";
+import albumGrave from "@/assets/album-grave.webp";
+import albumColdAss from "@/assets/album-cold-ass-pimp.webp";
+import albumOneOnOne from "@/assets/album-one-on-one.webp";
+import capHeroPortrait from "@/assets/cap-hero-portrait.webp";
 
 type SingleTrack = {
   title: string;

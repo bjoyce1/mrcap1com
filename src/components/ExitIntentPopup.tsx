@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { X, Mail, Loader2, Check } from 'lucide-react';
 import { z } from 'zod';
-import mrCapCoin from '@/assets/mr-cap-coin.png';
+import mrCapCoin from '@/assets/mr-cap-coin.webp';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

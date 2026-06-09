@@ -1,8 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
-import mascotImage from "@/assets/mr-cap-mascot.png";
-import albumCover from "@/assets/album-art-of-ism.png";
+import mascotImage from "@/assets/mr-cap-mascot.webp";
+import albumCover from "@/assets/album-art-of-ism.webp";
 import { usePlayerStore } from "@/stores/playerStore";
 
 const TIPS = [

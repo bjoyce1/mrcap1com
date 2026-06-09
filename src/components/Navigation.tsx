@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import mrCapCoin from "@/assets/mr-cap-coin.png";
+import mrCapCoin from "@/assets/mr-cap-coin.webp";
 import {
   DropdownMenu,
   DropdownMenuContent,

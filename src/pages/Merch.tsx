@@ -5,7 +5,7 @@ import { MerchQualitySection } from "@/components/merch/MerchQualitySection";
 import { MerchNewsletterSection } from "@/components/merch/MerchNewsletterSection";
 import { MerchFooter } from "@/components/merch/MerchFooter";
 import Navigation from "@/components/Navigation";
-import trapUniversityLogo from "@/assets/trap-university-logo.png";
+import trapUniversityLogo from "@/assets/trap-university-logo.webp";
 
 const Merch = () => {
   const scrollToProducts = () => {

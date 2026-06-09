@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight, Sparkles, Music, Award, Globe, Users, Mic2, BookOpen, Briefcase, Film } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 
 const timelineEras = [
   {

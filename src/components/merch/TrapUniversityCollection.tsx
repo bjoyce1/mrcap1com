@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { ImagePlus } from "lucide-react";
 
 // Import product images
-import whiteHoodie from "@/assets/trap-university/white-hoodie.jpg";
-import leatherJacket from "@/assets/trap-university/leather-jacket.jpg";
-import slides from "@/assets/trap-university/slides.jpg";
-import croppedHoodie from "@/assets/trap-university/cropped-hoodie.jpg";
-import backpack from "@/assets/trap-university/backpack.jpg";
+import whiteHoodie from "@/assets/trap-university/white-hoodie.webp";
+import leatherJacket from "@/assets/trap-university/leather-jacket.webp";
+import slides from "@/assets/trap-university/slides.webp";
+import croppedHoodie from "@/assets/trap-university/cropped-hoodie.webp";
+import backpack from "@/assets/trap-university/backpack.webp";
 interface PlaceholderItem {
   id: number;
   title: string;

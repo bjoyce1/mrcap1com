@@ -1,6 +1,6 @@
 import { Instagram, Twitter, Facebook, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
-import mrCapCoin from "@/assets/mr-cap-coin.png";
+import mrCapCoin from "@/assets/mr-cap-coin.webp";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">

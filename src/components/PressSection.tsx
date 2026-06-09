@@ -2,8 +2,8 @@ import { useRef, useEffect } from "react";
 import { Film, Quote, Download, Award, Music2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
-import dearFrankSoundtrack from "@/assets/dear-frank-soundtrack.png";
-import theLifeDocumentary from "@/assets/the-life-documentary.png";
+import dearFrankSoundtrack from "@/assets/dear-frank-soundtrack.webp";
+import theLifeDocumentary from "@/assets/the-life-documentary.webp";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const PressSection = () => {

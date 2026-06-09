@@ -42,7 +42,7 @@ import {
   Music,
 } from "lucide-react";
 import { useAlbums, useAllTracks, useAlbumTracks } from "@/hooks/useStreamingData";
-import albumArtOfIsm from "@/assets/album-art-of-ism.png";
+import albumArtOfIsm from "@/assets/album-art-of-ism.webp";
 import { usePlayerStore, type Track } from "@/stores/playerStore";
 import { shareMusic } from "@/lib/shareTrack";
 
