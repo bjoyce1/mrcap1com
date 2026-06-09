@@ -11,23 +11,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const primaryLinks = [
-  { to: "/new-releases", label: "New Releases" },
-  { to: "/discography", label: "Discography" },
-  { to: "/press", label: "Press" },
-  { to: "/videos", label: "Videos" },
-  { to: "/booking", label: "Booking" },
+  { to: "/music", label: "Music" },
+  { to: "/live", label: "Shows" },
+  { to: "/merch", label: "Store" },
   { to: "/who-is-mr-cap", label: "About" },
-  { to: "/blog", label: "Blog" },
-  { to: "/biography", label: "Bio" },
+  { to: "/booking", label: "Booking" },
 ];
 
 const moreLinks = [
-  { to: "/live", label: "Live" },
+  { to: "/press", label: "Press" },
+  { to: "/blog", label: "Blog" },
+  { to: "/videos", label: "Videos" },
+  { to: "/new-releases", label: "New Releases" },
+  { to: "/mr-cap-discography", label: "Discography" },
+  { to: "/biography", label: "Biography" },
   { to: "/nft", label: "NFT" },
-  { to: "/opk", label: "OPK" },
-  { to: "/merch", label: "Merch" },
-  { to: "/innovation", label: "Tech" },
-  { to: "/legacy", label: "Legacy" },
+  { to: "/opk", label: "Press Kit" },
 ];
 
 const Navigation = () => {

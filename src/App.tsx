@@ -109,8 +109,16 @@ function AppRoutes() {
         <Suspense fallback={<PageLoader />}>
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-            <Route path="/music" element={<Navigate to="/discography" replace />} />
+            {/* Page consolidation redirects */}
+            <Route path="/about" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/houston-rapper-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/innovation" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/legacy" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/press-kit" element={<Navigate to="/opk" replace />} />
+            <Route path="/for-media" element={<Navigate to="/opk" replace />} />
+            <Route path="/discography" element={<Navigate to="/mr-cap-discography" replace />} />
+            <Route path="/music" element={<Navigate to="/mr-cap-discography" replace />} />
+            <Route path="/listen" element={<Navigate to="/mr-cap-discography" replace />} />
             <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
             <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
             <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
@@ -120,24 +128,19 @@ function AppRoutes() {
             <Route path="/city/:citySlug" element={<PageTransition><CityLanding /></PageTransition>} />
             <Route path="/nft" element={<PageTransition><NFTGallery /></PageTransition>} />
             <Route path="/art" element={<PageTransition><ArtGallery /></PageTransition>} />
-            <Route path="/innovation" element={<PageTransition><Innovation /></PageTransition>} />
-            <Route path="/houston-rapper-mr-cap" element={<PageTransition><HoustonRapper /></PageTransition>} />
             <Route path="/south-park-coalition-houston" element={<Navigate to="/south-park-coalition" replace />} />
             <Route path="/south-park-coalition" element={<PageTransition><SouthParkCoalition /></PageTransition>} />
             <Route path="/texas-underground-hip-hop" element={<PageTransition><TexasUndergroundHipHop /></PageTransition>} />
             <Route path="/houston-hip-hop-history" element={<PageTransition><HoustonHipHopHistory /></PageTransition>} />
             <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
-            <Route path="/discography" element={<PageTransition><Discography /></PageTransition>} />
-            <Route path="/mr-cap-discography" element={<Navigate to="/discography" replace />} />
+            <Route path="/mr-cap-discography" element={<PageTransition><Discography /></PageTransition>} />
             <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
             <Route path="/links" element={<PageTransition><Links /></PageTransition>} />
             <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
             <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
             <Route path="/admin/library" element={<PageTransition><AdminLibrary /></PageTransition>} />
             <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />
-            <Route path="/legacy" element={<PageTransition><Legacy /></PageTransition>} />
             <Route path="/biography" element={<PageTransition><Biography /></PageTransition>} />
-            <Route path="/press-kit" element={<PageTransition><PressKit /></PageTransition>} />
             <Route path="/new-releases" element={<PageTransition><NewReleases /></PageTransition>} />
             <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
             <Route path="/epk" element={<Navigate to="/press" replace />} />
@@ -165,13 +168,11 @@ function AppRoutes() {
             <Route path="/self-love/2026" element={<PageTransition><div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2026 — Coming Soon</p></div></PageTransition>} />
             {/* Merch & Streaming */}
             <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
-            <Route path="/listen" element={<Navigate to="/discography" replace />} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
-            <Route path="/for-media" element={<PageTransition><ForMedia /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>

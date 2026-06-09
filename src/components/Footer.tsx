@@ -18,14 +18,23 @@ const Footer = () => {
   ];
 
   const siteLinks = [
-    { label: "Discography", href: "/discography", isRoute: true },
+    { label: "Music", href: "/music", isRoute: true },
+    { label: "New Releases", href: "/new-releases", isRoute: true },
+    { label: "Discography", href: "/mr-cap-discography", isRoute: true },
+    { label: "Videos", href: "/videos", isRoute: true },
+    { label: "Live Shows", href: "/live", isRoute: true },
+    { label: "Merch", href: "/merch", isRoute: true },
+    { label: "Press", href: "/press", isRoute: true },
+    { label: "Press Kit", href: "/opk", isRoute: true },
+    { label: "Blog", href: "/blog", isRoute: true },
+    { label: "About", href: "/who-is-mr-cap", isRoute: true },
     { label: "Biography", href: "/biography", isRoute: true },
     { label: "NFT Gallery", href: "/nft", isRoute: true },
-    { label: "About", href: "/who-is-mr-cap", isRoute: true },
-    { label: "Press", href: "/press", isRoute: true },
-    { label: "Blog", href: "/blog", isRoute: true },
-    { label: "Houston Hip-Hop History", href: "/houston-hip-hop-history", isRoute: true },
     { label: "South Park Coalition", href: "/south-park-coalition", isRoute: true },
+    { label: "Houston Hip-Hop History", href: "/houston-hip-hop-history", isRoute: true },
+    { label: "The Art of ISM", href: "/art-of-ism", isRoute: true },
+    { label: "Booking", href: "/booking", isRoute: true },
+    { label: "Privacy Policy", href: "/privacy", isRoute: true },
     { label: "Contact", href: "/#contact", isRoute: false },
   ];
 
