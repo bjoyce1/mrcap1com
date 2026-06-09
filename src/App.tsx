@@ -27,8 +27,6 @@ import MotionToggle from "@/components/MotionToggle";
 
 
 // ── Lazy-loaded pages ───────────────────────────────────────
-const About = lazy(() => import("./pages/About"));
-// Music page removed — merged into Discography
 const Live = lazy(() => import("./pages/Live"));
 const Press = lazy(() => import("./pages/Press"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -37,15 +35,12 @@ const Cities = lazy(() => import("./pages/Cities"));
 const CityLanding = lazy(() => import("./pages/CityLanding"));
 const NFTGallery = lazy(() => import("./pages/NFTGallery"));
 const ArtGallery = lazy(() => import("./pages/ArtGallery"));
-const Innovation = lazy(() => import("./pages/Innovation"));
-const HoustonRapper = lazy(() => import("./pages/HoustonRapper"));
 const SouthParkCoalition = lazy(() => import("./pages/SouthParkCoalition"));
 const TexasUndergroundHipHop = lazy(() => import("./pages/TexasUndergroundHipHop"));
 const WhoIsMrCap = lazy(() => import("./pages/WhoIsMrCap"));
 const Discography = lazy(() => import("./pages/Discography"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
-const ForMedia = lazy(() => import("./pages/ForMedia"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Links = lazy(() => import("./pages/Links"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -63,14 +58,12 @@ const AlbumPage = lazy(() => import("./pages/AlbumPage"));
 const TrackPage = lazy(() => import("./pages/TrackPage"));
 const AdminLibrary = lazy(() => import("./pages/AdminLibrary"));
 const AdminRoadmap = lazy(() => import("./pages/AdminRoadmap"));
-const Legacy = lazy(() => import("./pages/Legacy"));
 const NewReleases = lazy(() => import("./pages/NewReleases"));
 const PantiesOnMyPiano = lazy(() => import("./pages/PantiesOnMyPiano"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Videos = lazy(() => import("./pages/Videos"));
 const PressPost = lazy(() => import("./pages/PressPost"));
 const Biography = lazy(() => import("./pages/Biography"));
-const PressKit = lazy(() => import("./pages/PressKit"));
 const BetOnHer = lazy(() => import("./pages/BetOnHer"));
 const HoustonHipHopHistory = lazy(() => import("./pages/HoustonHipHopHistory"));
 const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
