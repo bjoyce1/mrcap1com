@@ -10,6 +10,7 @@ import FAQAccordion from "@/components/blocks/FAQAccordion";
 import BookingOptionsGrid from "@/components/booking/BookingOptionsGrid";
 import WhyBookStrip from "@/components/booking/WhyBookStrip";
 import InquiryForm from "@/components/booking/InquiryForm";
+import CredentialsBand from "@/components/booking/CredentialsBand";
 import { bookingPageData as data } from "@/content/booking";
 
 const Booking = () => {
@@ -68,6 +69,8 @@ const Booking = () => {
           ctas={data.hero.ctas}
         />
 
+        <CredentialsBand />
+
         <SectionIntro body={data.intro} />
 
         <BookingOptionsGrid items={data.options} />
@@ -87,6 +90,15 @@ const Booking = () => {
             </span>
             <div className="bg-card/40 border border-border/30 rounded-2xl p-6 md:p-8">
               <InquiryForm />
+            </div>
+            <div className="mt-6 text-center space-y-1">
+              <p className="text-sm text-muted-foreground">{data.trust.responseTime}</p>
+              <p className="text-sm text-muted-foreground">
+                Prefer email? Reach the team directly at{" "}
+                <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">
+                  wrecklessent@gmail.com
+                </a>
+              </p>
             </div>
           </div>
         </section>
