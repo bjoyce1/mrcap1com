@@ -34,9 +34,9 @@ const categories = [
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Music", href: "/discography" },
+  { name: "Music", href: "/mr-cap-discography" },
   { name: "NFTs", href: "/nft-gallery" },
-  { name: "About", href: "/about" },
+  { name: "About", href: "/who-is-mr-cap" },
 ];
 
 export const MerchHero = () => {

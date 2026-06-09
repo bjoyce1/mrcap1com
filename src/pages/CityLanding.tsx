@@ -123,7 +123,7 @@ const CityLanding = () => {
                   </a>
                 </Button>
                 <Button variant="fluxOutline" size="lg" asChild>
-                  <Link to="/discography">
+                  <Link to="/mr-cap-discography">
                     <Music className="mr-2 h-5 w-5" />
                     Stream Music
                   </Link>
@@ -216,7 +216,7 @@ const CityLanding = () => {
                     <a href="#booking">Request Date & Rate</a>
                   </Button>
                   <Button variant="fluxGhost" asChild>
-                    <Link to="/about">Read the Full Bio</Link>
+                    <Link to="/who-is-mr-cap">Read the Full Bio</Link>
                   </Button>
                   <Button variant="fluxGhost" asChild>
                     <Link to="/blog">Explore Articles</Link>

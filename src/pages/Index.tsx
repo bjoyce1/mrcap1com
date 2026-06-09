@@ -4,17 +4,8 @@ import HeroSection from "@/components/HeroSection";
 import AnnouncementStrip from "@/components/home/AnnouncementStrip";
 import ReleaseSpotlight from "@/components/home/ReleaseSpotlight";
 import ProofStrip from "@/components/home/ProofStrip";
-import CatalogPreview from "@/components/home/CatalogPreview";
 import BookingCTABand from "@/components/home/BookingCTABand";
-import DigitalArtFeature from "@/components/home/DigitalArtFeature";
-import LatestPressFeature from "@/components/home/LatestPressFeature";
-import SocialFeedSection from "@/components/home/SocialFeedSection";
-import FanCaptureBanner from "@/components/FanCaptureBanner";
-import ExploreHoustonHipHop from "@/components/home/ExploreHoustonHipHop";
-import CitationBlock from "@/components/CitationBlock";
 import Footer from "@/components/Footer";
-import ArtOfIsmFeature from "@/components/home/ArtOfIsmFeature";
-import MilkMoneyFeature from "@/components/home/MilkMoneyFeature";
 import SectionDivider from "@/components/home/SectionDivider";
 import ScrollProgressBar from "@/components/home/ScrollProgressBar";
 import SpotifyLiveSection from "@/components/home/SpotifyLiveSection";
@@ -188,64 +179,16 @@ const Index = () => {
         <AnnouncementStrip />
         <Navigation />
         <main>
-          {/* 01 — Who */}
           <HeroSection />
-
-          {/* 02 — Proof / credibility */}
           <SectionDivider />
           <ProofStrip />
-
-          {/* 03 — Philosophy */}
-          <SectionDivider />
-          <ArtOfIsmFeature />
-
-          {/* 04 — Film: The Milk Money */}
-          <SectionDivider />
-          <MilkMoneyFeature />
-
-          {/* 05 — Legacy catalog */}
-          <SectionDivider />
-          <CatalogPreview />
-
-          {/* 05b — Live Spotify */}
-          <SectionDivider />
-          <SpotifyLiveSection />
-
-          {/* 05 — Innovation */}
-          <SectionDivider />
-          <DigitalArtFeature />
-
-          {/* 06 — Validation */}
-          <SectionDivider />
-          <LatestPressFeature />
-
-          {/* 07 — Conversion */}
-          <BookingCTABand />
-
-          {/* 08 — Community */}
-          <SectionDivider />
-          <SocialFeedSection />
-
-          {/* 09 — Latest Release Spotlight */}
           <SectionDivider />
           <ReleaseSpotlight />
-
-          {/* 10 — Deep dives */}
           <SectionDivider />
-          <ExploreHoustonHipHop />
-
-          {/* 11 — Close */}
+          <SpotifyLiveSection />
           <SectionDivider />
-          <div id="fan-capture">
-            <FanCaptureBanner
-              sourcePage="homepage"
-              headline="Join Mr. CAP Legacy"
-              subheadline="Be the first to hear new music, see new visuals, and get show alerts."
-              className="mx-6 md:mx-auto max-w-4xl mb-16"
-            />
-          </div>
+          <BookingCTABand />
         </main>
-        <CitationBlock />
         <Footer />
       </div>
     </>

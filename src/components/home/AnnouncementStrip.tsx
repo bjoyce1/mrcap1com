@@ -36,7 +36,7 @@ const AnnouncementStrip = () => {
           "The Ties That Bind Us" — SPC Group Album Out Now
         </span>
         <Link
-          to="/discography"
+          to="/mr-cap-discography"
           className="inline-flex items-center gap-1 text-primary hover:text-primary/80 font-semibold transition-colors"
         >
           Listen <ArrowRight className="w-3 h-3" />

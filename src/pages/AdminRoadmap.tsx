@@ -94,7 +94,7 @@ const initialRoadmap: RoadmapItem[] = [
     title: "Legacy / Timeline Page",
     description: "Definitive, authoritative career timeline surpassing Wikipedia in depth.",
     status: "complete",
-    link: "/legacy",
+    link: "/who-is-mr-cap",
     items: [
       "Early years & Houston roots",
       "South Park Coalition era",

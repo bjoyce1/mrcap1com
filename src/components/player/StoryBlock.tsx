@@ -41,7 +41,7 @@ const StoryBlock = ({ description, releaseYear, className = "" }: StoryBlockProp
       {description && (
         <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">{description}</p>
       )}
-      <Link to="/legacy" className="inline-block mt-3 text-xs text-primary hover:underline">
+      <Link to="/who-is-mr-cap" className="inline-block mt-3 text-xs text-primary hover:underline">
         Explore Mr. CAP's full timeline →
       </Link>
     </div>

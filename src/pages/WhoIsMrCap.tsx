@@ -163,7 +163,7 @@ const WhoIsMrCap = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="flux" size="lg" asChild>
-                  <Link to="/discography">
+                  <Link to="/mr-cap-discography">
                     <Music className="mr-2 h-5 w-5" />
                     Listen to Music
                   </Link>
@@ -329,7 +329,7 @@ const WhoIsMrCap = () => {
                 
                 <div className="text-center mt-10">
                   <Button variant="flux" asChild>
-                    <Link to="/discography">
+                    <Link to="/mr-cap-discography">
                       <Disc3 className="mr-2 h-4 w-4" />
                       View Full Discography
                     </Link>
@@ -443,7 +443,7 @@ const WhoIsMrCap = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button variant="flux" size="lg" asChild>
-                    <Link to="/discography">
+                    <Link to="/mr-cap-discography">
                       <Play className="mr-2 h-5 w-5" />
                       Listen to Music
                     </Link>

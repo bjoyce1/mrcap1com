@@ -28,7 +28,7 @@ export default function ReleaseLinks({ trackSlug, albumSlug, className = "" }: P
         <Link to="/booking" className="inline-flex items-center gap-1.5 text-sm border border-border/30 rounded-full px-4 py-2 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
           <Mic2 className="w-3.5 h-3.5" /> Booking
         </Link>
-        <Link to="/about" className="inline-flex items-center gap-1.5 text-sm border border-border/30 rounded-full px-4 py-2 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
+        <Link to="/who-is-mr-cap" className="inline-flex items-center gap-1.5 text-sm border border-border/30 rounded-full px-4 py-2 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors">
           <Mail className="w-3.5 h-3.5" /> About
         </Link>
       </div>
