@@ -1,28 +1,26 @@
-## Root cause
+## Goal
+Make sure mrcap1.com serves the same build you see in the Lovable builder.
 
-`vite-plugin-prerender.ts` calls `require("fs").statSync(...)` inside the preview server handler. When Vite loads `vite.config.ts`, esbuild bundles it (and the imported plugin) as ESM for Node. Dynamic `require()` is not valid inside that ESM bundle, so esbuild's shim throws `Dynamic require of "fs" is not supported` the moment the plugin module is evaluated — which happens on every build and on `vite preview`. The deployed output is therefore broken (or a stale/empty shell), and every route shows that error.
+## What I observed
+I navigated my own browser to both `https://7f352d5d-...lovableproject.com/` (preview) and `https://mrcap1.com` (published). The two screenshots were pixel-identical: same yellow hero, same "MR. CAP" headline, same MUSIC / SHOWS / STORE / ABOUT / BOOKING / MORE / CONTACT nav, same Stream / Watch / Book CTAs.
 
-The plugin is already build-only (`apply: "build"`) and is only imported from `vite.config.ts`, so it does not actually ship to the client. The fix is just to stop using `require()` inside an ESM module.
+So from my browser, the published site is **already** in sync. The most likely reason yours looks different is a stale **PWA service worker** caching the old build on your device (this project has PWA precaching per `mem://features/pwa-capabilities`).
 
-## Fix (minimal, keeps prerender working)
+## Steps
 
-Edit `vite-plugin-prerender.ts`:
+1. **Republish** the project so the latest commit (including all recent route + booking + security edits) is on production.
+2. **Verify** the live HTML — fetch `https://mrcap1.com/` and confirm the asset hashes in `<script src="/assets/index-*.js">` match the preview build.
+3. **If they match (most likely)** — the problem is your browser cache:
+   - Hard-refresh mrcap1.com (Cmd/Ctrl + Shift + R)
+   - Or open mrcap1.com in an incognito window
+   - Or DevTools → Application → Service Workers → **Unregister** → reload
+4. **If they don't match** — escalate: the publish didn't take. I'll re-run publish and inspect logs.
 
-1. Add `statSync` to the existing top-level import:
-   ```ts
-   import { writeFileSync, mkdirSync, existsSync, readFileSync, statSync } from "fs";
-   ```
-2. Replace `const stat = require("fs").statSync(filePath);` with `const stat = statSync(filePath);`.
-3. Audit the file for any other `require(...)` calls and convert them to static ESM imports (none expected besides the one above; `puppeteer` and `http` are already dynamic `await import(...)` which is fine inside ESM).
+## Optional follow-up (only if stale-SW reports keep coming)
+Add a "kill switch" so visitors auto-update:
+- In the service-worker registration, call `registration.update()` on every load and trigger `skipWaiting` + `clients.claim` when a new SW is detected, with a one-time reload prompt.
+- This is a small change in the PWA registration code (already in the project) — I'll only do it if step 3 doesn't resolve it for end users.
 
-That single change unblocks `vite.config.ts` evaluation, the build completes, and the deployed site stops throwing.
-
-## Verification before declaring done
-
-1. Run a production build locally / in preview and confirm no "Dynamic require" error.
-2. Load `https://mrcap1.com/` and one deep route (e.g. `/discography`) — both must return real HTML, not the error page.
-3. Re-run the 5-route curl diff (`/`, `/discography`, `/who-is-mr-cap`, `/booking`, `/art-of-ism`) to confirm prerender still produces per-route title / description / canonical.
-
-## Fallback (only if step 1 still fails)
-
-If for any reason the build still errors after the `require` fix, temporarily remove the `prerender({...})` entry from `vite.config.ts` plugins array and ship without prerender to restore the site. We can reinstate it in a follow-up once the build is green. Site uptime takes priority over the per-route prerender feature.
+## What I will NOT change
+- Homepage layout, nav, hero — they're identical on preview and prod, so there's no design bug to fix.
+- Routes — `/music` restoration and security fixes from earlier are already in the codebase awaiting publish.
