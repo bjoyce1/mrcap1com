@@ -227,6 +227,63 @@ export type Database = {
         }
         Relationships: []
       }
+      merch_orders: {
+        Row: {
+          created_at: string
+          currency: string
+          customer_name: string
+          email: string
+          error_detail: string | null
+          id: string
+          items: Json
+          paypal_capture_id: string | null
+          paypal_order_id: string
+          printful_order_id: string | null
+          printful_status: string | null
+          shipping_address: Json
+          shipping_cents: number
+          status: string
+          subtotal_cents: number
+          total_cents: number
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          customer_name: string
+          email: string
+          error_detail?: string | null
+          id?: string
+          items: Json
+          paypal_capture_id?: string | null
+          paypal_order_id: string
+          printful_order_id?: string | null
+          printful_status?: string | null
+          shipping_address: Json
+          shipping_cents: number
+          status?: string
+          subtotal_cents: number
+          total_cents: number
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          customer_name?: string
+          email?: string
+          error_detail?: string | null
+          id?: string
+          items?: Json
+          paypal_capture_id?: string | null
+          paypal_order_id?: string
+          printful_order_id?: string | null
+          printful_status?: string | null
+          shipping_address?: Json
+          shipping_cents?: number
+          status?: string
+          subtotal_cents?: number
+          total_cents?: number
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           email: string
