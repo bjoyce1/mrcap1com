@@ -91,7 +91,7 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: 'printful-cart',
+      name: 'printful-cart-v2',
       partialize: (state) => ({ items: state.items }),
     }
   )

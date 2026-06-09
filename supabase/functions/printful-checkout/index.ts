@@ -34,14 +34,23 @@ interface Recipient {
 }
 
 function validateItems(items: unknown): ValidatedItem[] | string {
-  if (!Array.isArray(items) || items.length === 0 || items.length > MAX_ITEMS) return 'Invalid items';
+  if (!Array.isArray(items) || items.length === 0 || items.length > MAX_ITEMS) {
+    return `Invalid items: expected non-empty array (got ${Array.isArray(items) ? `length=${items.length}` : typeof items})`;
+  }
   const out: ValidatedItem[] = [];
-  for (const item of items) {
-    if (!item || typeof item !== 'object') return 'Invalid item format';
-    const { sync_variant_id, quantity } = item as Record<string, unknown>;
-    if (typeof sync_variant_id !== 'number' || !Number.isInteger(sync_variant_id) || sync_variant_id <= 0) return 'Invalid variant ID';
-    if (typeof quantity !== 'number' || !Number.isInteger(quantity) || quantity < 1 || quantity > MAX_QUANTITY) return 'Invalid quantity';
-    out.push({ sync_variant_id, quantity });
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    if (!item || typeof item !== 'object') return `Invalid item[${i}]: not an object`;
+    const raw = item as Record<string, unknown>;
+    const variantNum = Number(raw.sync_variant_id);
+    const qtyNum = Number(raw.quantity);
+    if (!Number.isInteger(variantNum) || variantNum <= 0) {
+      return `Invalid item[${i}].sync_variant_id: ${JSON.stringify(raw.sync_variant_id)} (type=${typeof raw.sync_variant_id})`;
+    }
+    if (!Number.isInteger(qtyNum) || qtyNum < 1 || qtyNum > MAX_QUANTITY) {
+      return `Invalid item[${i}].quantity: ${JSON.stringify(raw.quantity)} (type=${typeof raw.quantity})`;
+    }
+    out.push({ sync_variant_id: variantNum, quantity: qtyNum });
   }
   return out;
 }
@@ -55,12 +64,19 @@ function validateShipping(shipping: unknown): Recipient | string {
   const zip = validateString(s.zip, 20);
   const country_code = validateString(s.country_code, 3);
   const email = validateString(s.email, 255);
-  if (!name || !address1 || !city || !zip || !country_code || !email) return 'Incomplete shipping information';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Invalid email address';
+  const missing: string[] = [];
+  if (!name) missing.push('name');
+  if (!address1) missing.push('address1');
+  if (!city) missing.push('city');
+  if (!zip) missing.push('zip');
+  if (!country_code) missing.push('country_code');
+  if (!email) missing.push('email');
+  if (missing.length) return `Incomplete shipping information: missing ${missing.join(', ')}`;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email!)) return 'Invalid email address';
   return {
-    name, address1, city, zip, country_code, email,
+    name: name!, address1: address1!, city: city!, zip: zip!, country_code: country_code!.toUpperCase(), email: email!,
     address2: validateString(s.address2, MAX_FIELD_LENGTH) || '',
-    state_code: validateString(s.state_code, 10) || '',
+    state_code: (validateString(s.state_code, 10) || '').toUpperCase(),
     phone: validateString(s.phone, 20) || '',
   };
 }
@@ -161,32 +177,37 @@ serve(async (req) => {
     try { body = await req.json(); } catch { return json({ error: 'Invalid request body' }, 400); }
 
     const { items: rawItems, shipping: rawShipping, paypal_order_id } = body as Record<string, unknown>;
-
-    const items = validateItems(rawItems);
-    if (typeof items === 'string') return json({ error: items }, 400);
-
-    const recipient = validateShipping(rawShipping);
-    if (typeof recipient === 'string') return json({ error: recipient }, 400);
-
     const action = new URL(req.url).searchParams.get('action');
+    const paypalOrderId = action === 'quote' ? null : validateString(paypal_order_id, 64);
 
-    // ── QUOTE: server-priced subtotal + shipping, called before payment ──
+    // ── QUOTE: server-priced subtotal + shipping, called BEFORE payment.
+    //    Validation here legitimately returns 400 — nothing has been charged yet.
     if (action === 'quote') {
+      const items = validateItems(rawItems);
+      if (typeof items === 'string') { console.error('Quote items invalid:', items); return json({ error: items }, 400); }
+      const recipient = validateShipping(rawShipping);
+      if (typeof recipient === 'string') { console.error('Quote shipping invalid:', recipient); return json({ error: recipient }, 400); }
       const quote = await computeQuote(apiKey, items, recipient);
       console.log('Quote:', quote);
       return json({ success: true, quote });
     }
 
-    // ── FULFILL: verify payment, record order, create Printful order ──
-    const paypalOrderId = validateString(paypal_order_id, 64);
-    if (!paypalOrderId) return json({ error: 'Missing payment reference' }, 400);
+    // ── FULFILL: payment was already captured. From this point on we must
+    //    NEVER return a hard 400/500 — the customer has been charged. Any
+    //    failure gets recorded in merch_orders and reported as paid+fallback.
+    console.log('Fulfill request received. paypal_order_id=', paypalOrderId, 'item_count=', Array.isArray(rawItems) ? rawItems.length : 'n/a');
+
+    if (!paypalOrderId) {
+      console.error('Fulfill: missing paypal_order_id');
+      return json({ error: 'Missing payment reference' }, 400);
+    }
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
 
-    // Idempotency: if this PayPal order was already fulfilled, return the existing record
+    // Idempotency: if this PayPal order was already fulfilled, short-circuit
     const { data: existing } = await supabase
       .from('merch_orders')
       .select('id, printful_order_id, status')
@@ -197,34 +218,103 @@ serve(async (req) => {
       return json({ success: true, order: { id: existing.printful_order_id }, duplicate: true });
     }
 
-    // Recompute the authoritative total and verify the payment covers it
-    const quote = await computeQuote(apiKey, items, recipient);
-    const payment = await verifyPayPalCapture(paypalOrderId);
-
-    if (payment.currency !== 'USD' || payment.paidCents + 1 < quote.total_cents) {
-      console.error('Payment mismatch:', { paid: payment.paidCents, required: quote.total_cents, currency: payment.currency });
-      return json({ error: 'Payment amount does not match order total' }, 402);
+    // Verify the payment FIRST so we know the customer was really charged
+    let payment: Awaited<ReturnType<typeof verifyPayPalCapture>>;
+    try {
+      payment = await verifyPayPalCapture(paypalOrderId);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Payment verification failed';
+      console.error('PayPal verification failed:', message);
+      // Payment wasn't captured — safe to return an error code
+      return json({ error: message }, 402);
     }
 
-    // Record the paid order BEFORE attempting fulfillment
+    // ───────────────────────────────────────────────────────────────────
+    // Payment is confirmed. From here on we ALWAYS record an order row
+    // and ALWAYS return 200 { paid: true } so the customer never loses
+    // visibility on a paid transaction.
+    // ───────────────────────────────────────────────────────────────────
+
+    // Best-effort validation; failures are recorded, not rejected
+    const itemsResult = validateItems(rawItems);
+    const recipientResult = validateShipping(rawShipping);
+    const validationError =
+      typeof itemsResult === 'string' ? itemsResult :
+      typeof recipientResult === 'string' ? recipientResult : null;
+
+    if (validationError) {
+      console.error('Post-payment validation failed:', validationError, 'rawShipping=', JSON.stringify(rawShipping)?.slice(0, 500), 'rawItems=', JSON.stringify(rawItems)?.slice(0, 500));
+    }
+
+    const items = typeof itemsResult === 'string' ? [] : itemsResult;
+    const recipient = typeof recipientResult === 'string' ? null : recipientResult;
+
+    // Record the paid order immediately — even if validation failed
+    const baseRow: Record<string, unknown> = {
+      paypal_order_id: paypalOrderId,
+      paypal_capture_id: payment.captureId,
+      total_cents: payment.paidCents,
+      currency: payment.currency,
+      items: rawItems ?? [],
+      status: validationError ? 'fulfillment_failed' : 'paid',
+      customer_name: recipient?.name ?? (typeof (rawShipping as any)?.name === 'string' ? (rawShipping as any).name : 'Unknown'),
+      email: recipient?.email ?? (typeof (rawShipping as any)?.email === 'string' ? (rawShipping as any).email : 'unknown@unknown'),
+      shipping_address: recipient ?? rawShipping ?? {},
+    };
+    if (validationError) (baseRow as any).error_detail = validationError.slice(0, 500);
+
     const { data: orderRow, error: insertError } = await supabase
       .from('merch_orders')
-      .insert({
-        customer_name: recipient.name,
-        email: recipient.email,
-        items: items,
-        shipping_address: recipient,
-        subtotal_cents: quote.subtotal_cents,
-        shipping_cents: quote.shipping_cents,
-        total_cents: quote.total_cents,
-        currency: quote.currency,
-        paypal_order_id: paypalOrderId,
-        paypal_capture_id: payment.captureId,
-        status: 'paid',
-      })
+      .insert(baseRow)
       .select('id')
       .single();
     if (insertError) console.error('Order record insert failed:', insertError);
+
+    // If validation failed, stop here — we've at least preserved the paid order
+    if (validationError || !recipient) {
+      return json({
+        success: false,
+        paid: true,
+        error: 'Payment received but order details were invalid. We have your payment on file and will contact you to complete fulfillment.',
+        detail: validationError,
+      });
+    }
+
+    // Compute authoritative total and verify the payment covers it
+    let quote: Awaited<ReturnType<typeof computeQuote>>;
+    try {
+      quote = await computeQuote(apiKey, items, recipient);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Quote computation failed';
+      console.error('Post-payment quote failed:', message);
+      if (orderRow) {
+        await supabase.from('merch_orders')
+          .update({ status: 'fulfillment_failed', error_detail: `Quote: ${message}`.slice(0, 500) })
+          .eq('id', orderRow.id);
+      }
+      return json({ success: false, paid: true, error: 'Payment received but we could not calculate fulfillment. We will contact you shortly.' });
+    }
+
+    if (payment.currency !== 'USD' || payment.paidCents + 1 < quote.total_cents) {
+      console.error('Payment mismatch:', { paid: payment.paidCents, required: quote.total_cents, currency: payment.currency });
+      if (orderRow) {
+        await supabase.from('merch_orders')
+          .update({ status: 'fulfillment_failed', error_detail: `Payment ${payment.paidCents}¢ < required ${quote.total_cents}¢` })
+          .eq('id', orderRow.id);
+      }
+      return json({ success: false, paid: true, error: 'Payment amount does not match order total. We will contact you shortly.' });
+    }
+
+    // Update the row with the authoritative totals
+    if (orderRow) {
+      await supabase.from('merch_orders')
+        .update({
+          subtotal_cents: quote.subtotal_cents,
+          shipping_cents: quote.shipping_cents,
+          total_cents: quote.total_cents,
+        })
+        .eq('id', orderRow.id);
+    }
 
     // Create the Printful order. Auto-confirm only if explicitly enabled.
     const autoConfirm = Deno.env.get('PRINTFUL_AUTO_CONFIRM') === 'true';
@@ -250,8 +340,7 @@ serve(async (req) => {
           .update({ status: 'fulfillment_failed', error_detail: `Printful ${orderResponse.status}: ${errorText.slice(0, 500)}` })
           .eq('id', orderRow.id);
       }
-      // Payment WAS captured; tell the client so the customer gets the right message
-      return json({ error: 'Payment received but fulfillment could not be created. We have your order on file and will process it manually.', paid: true }, 500);
+      return json({ success: false, paid: true, error: 'Payment received but fulfillment could not be created. We have your order on file and will process it manually.' });
     }
 
     const orderData = await orderResponse.json();
@@ -269,11 +358,12 @@ serve(async (req) => {
 
     return json({
       success: true,
+      paid: true,
       order: orderData.result,
       totals: quote,
     });
   } catch (error) {
-    console.error('Error in printful-checkout function:', error);
+    console.error('Unexpected error in printful-checkout function:', error);
     const message = error instanceof Error ? error.message : 'Order processing failed';
     return json({ error: message }, 500);
   }

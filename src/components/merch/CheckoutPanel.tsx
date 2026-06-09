@@ -166,10 +166,16 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
           const { data: orderData, error: orderError } = await supabase.functions.invoke('printful-checkout', {
             body: {
               items: items.map(item => ({
-                sync_variant_id: item.variantId,
-                quantity: item.quantity,
+                sync_variant_id: Number(item.variantId),
+                quantity: Number(item.quantity),
               })),
-              shipping: validatedShipping,
+              shipping: {
+                ...validatedShipping,
+                country_code: validatedShipping.country_code.toUpperCase(),
+                state_code: validatedShipping.state_code?.trim().toUpperCase() || undefined,
+                address2: validatedShipping.address2?.trim() || undefined,
+                phone: validatedShipping.phone?.trim() || undefined,
+              },
               paypal_order_id: data.orderID,
             },
           });
@@ -223,10 +229,16 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
       const { data, error } = await supabase.functions.invoke('printful-checkout?action=quote', {
         body: {
           items: items.map(item => ({
-            sync_variant_id: item.variantId,
-            quantity: item.quantity,
+            sync_variant_id: Number(item.variantId),
+            quantity: Number(item.quantity),
           })),
-          shipping: result.data,
+          shipping: {
+            ...result.data,
+            country_code: result.data.country_code.toUpperCase(),
+            state_code: result.data.state_code?.trim().toUpperCase() || undefined,
+            address2: result.data.address2?.trim() || undefined,
+            phone: result.data.phone?.trim() || undefined,
+          },
         },
       });
       if (error || !data?.success || !data?.quote) {
