@@ -210,7 +210,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
     }).render(paypalButtonsRef.current);
   }, [step, paypalLoaded, items, quote, shippingInfo, clearCart]);
 
-  const handleContinueToPayment = () => {
+  const handleContinueToPayment = async () => {
     const result = shippingSchema.safeParse(shippingInfo);
     if (!result.success) {
       const firstError = result.error.errors[0];
