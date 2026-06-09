@@ -50,8 +50,6 @@ const Merch = () => {
           </div>
         </section>
 
-        <BrandStrip />
-
         <main id="products">
           <section id="trap-university" className="pt-16">
             <div className="container mx-auto px-4 mb-10">
@@ -71,6 +69,7 @@ const Merch = () => {
           </section>
 
           <MerchQualitySection />
+          <BrandStrip />
           <MerchNewsletterSection />
         </main>
 
