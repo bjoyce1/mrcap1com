@@ -68,6 +68,7 @@ const BetOnHer = lazy(() => import("./pages/BetOnHer"));
 const HoustonHipHopHistory = lazy(() => import("./pages/HoustonHipHopHistory"));
 const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
+const Listen = lazy(() => import("./pages/Listen"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -110,8 +111,8 @@ function AppRoutes() {
             <Route path="/press-kit" element={<Navigate to="/opk" replace />} />
             <Route path="/for-media" element={<Navigate to="/opk" replace />} />
             <Route path="/discography" element={<Navigate to="/mr-cap-discography" replace />} />
-            <Route path="/music" element={<Navigate to="/mr-cap-discography" replace />} />
-            <Route path="/listen" element={<Navigate to="/mr-cap-discography" replace />} />
+            <Route path="/music" element={<PageTransition><Listen /></PageTransition>} />
+            <Route path="/listen" element={<Navigate to="/music" replace />} />
             <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
             <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
             <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
