@@ -55,6 +55,12 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
   const [paypalLoaded, setPaypalLoaded] = useState(false);
   const paypalButtonsRef = useRef<HTMLDivElement>(null);
   const [orderId, setOrderId] = useState<string | null>(null);
+  const [quote, setQuote] = useState<{
+    subtotal_cents: number;
+    shipping_cents: number;
+    total_cents: number;
+    shipping_name?: string;
+  } | null>(null);
   
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
@@ -107,12 +113,12 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
 
   // Render PayPal buttons when SDK is loaded
   useEffect(() => {
-    if (step !== 'payment' || !paypalLoaded || !window.paypal || !paypalButtonsRef.current || items.length === 0) return;
+    if (step !== 'payment' || !paypalLoaded || !window.paypal || !paypalButtonsRef.current || items.length === 0 || !quote) return;
 
     // Clear any existing buttons
     paypalButtonsRef.current.innerHTML = '';
 
-    const totalAmount = subtotal.toFixed(2);
+    const totalAmount = (quote.total_cents / 100).toFixed(2);
     const itemDescriptions = items.map(i => `${i.name} x${i.quantity}`).join(', ');
 
     window.paypal.Buttons({
@@ -155,7 +161,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
             throw new Error('Payment capture failed');
           }
 
-          // Now create the Printful order
+          // Now create the Printful order (server verifies the payment first)
           const validatedShipping = shippingSchema.parse(shippingInfo);
           const { data: orderData, error: orderError } = await supabase.functions.invoke('printful-checkout', {
             body: {
@@ -164,10 +170,20 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
                 quantity: item.quantity,
               })),
               shipping: validatedShipping,
+              paypal_order_id: data.orderID,
             },
           });
 
           if (orderError || !orderData?.success) {
+            if (orderData?.paid) {
+              // Payment captured, fulfillment hiccup: order is recorded server-side
+              toast.success('Payment received', {
+                description: 'Your order is on file and will be processed shortly. A confirmation will be sent to your email.',
+              });
+              clearCart();
+              setStep('confirm');
+              return;
+            }
             throw new Error(orderError?.message || orderData?.error || 'Failed to create order');
           }
 
@@ -192,7 +208,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
         toast.info('Payment cancelled');
       },
     }).render(paypalButtonsRef.current);
-  }, [step, paypalLoaded, items, subtotal, shippingInfo, clearCart]);
+  }, [step, paypalLoaded, items, quote, shippingInfo, clearCart]);
 
   const handleContinueToPayment = () => {
     const result = shippingSchema.safeParse(shippingInfo);
@@ -201,7 +217,31 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
       toast.error(firstError.message);
       return;
     }
-    setStep('payment');
+    // Get the authoritative quote (server-side prices + real shipping cost) before payment
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('printful-checkout?action=quote', {
+        body: {
+          items: items.map(item => ({
+            sync_variant_id: item.variantId,
+            quantity: item.quantity,
+          })),
+          shipping: result.data,
+        },
+      });
+      if (error || !data?.success || !data?.quote) {
+        throw new Error(error?.message || data?.error || 'Could not calculate shipping for this address');
+      }
+      setQuote(data.quote);
+      setStep('payment');
+    } catch (err) {
+      console.error('Quote error:', err);
+      toast.error('Could not calculate shipping', {
+        description: err instanceof Error ? err.message : 'Please check your address and try again.',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleShippingChange = (field: string, value: string) => {
@@ -210,6 +250,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
 
   const handleBack = () => {
     if (step === 'payment') {
+      setQuote(null);
       setStep('shipping');
     } else {
       onBack();
@@ -380,15 +421,15 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
             <div className="bg-muted/20 rounded-xl p-4 space-y-3">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Items ({items.reduce((sum, i) => sum + i.quantity, 0)})</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>${quote ? (quote.subtotal_cents / 100).toFixed(2) : subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Shipping</span>
-                <span className="text-muted-foreground">Calculated by carrier</span>
+                <span className="text-muted-foreground">Shipping{quote?.shipping_name ? ` (${quote.shipping_name})` : ''}</span>
+                <span>{quote ? `$${(quote.shipping_cents / 100).toFixed(2)}` : '—'}</span>
               </div>
               <div className="pt-3 flex justify-between">
                 <span className="font-medium">Total</span>
-                <span className="font-bold text-lg">${subtotal.toFixed(2)}</span>
+                <span className="font-bold text-lg">${quote ? (quote.total_cents / 100).toFixed(2) : subtotal.toFixed(2)}</span>
               </div>
             </div>
 
