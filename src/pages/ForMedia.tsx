@@ -89,7 +89,7 @@ const stats = [
 ];
 
 const linkCards = [
-  { title: "Music Catalog", description: "Full discography & streaming", href: "/discography", icon: Music },
+  { title: "Music Catalog", description: "Full discography & streaming", href: "/mr-cap-discography", icon: Music },
   { title: "Press Coverage", description: "Houston Chronicle, Houston Press & more", href: "/press", icon: Newspaper },
   { title: "NFT Collections", description: "Verified on-chain art & music", href: "/nft", icon: Palette },
   { title: "Booking", description: "Shows, features & interviews", href: "/booking", icon: Calendar },
@@ -131,7 +131,7 @@ const ForMedia = () => {
           title="Media Resources: Quotes, Stats & Ready-to-Use Blurbs"
           description="Everything you need to reference, cite, or feature Mr. CAP in your coverage. Copy any blurb, quote, or stat directly — no permission needed."
           ctas={[
-            { label: "Download Press Kit", href: "/press-kit", variant: "primary" },
+            { label: "Download Press Kit", href: "/opk", variant: "primary" },
             { label: "View Press Coverage", href: "/press", variant: "secondary" },
           ]}
         />
@@ -198,7 +198,7 @@ const ForMedia = () => {
             <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">Need More?</h2>
             <p className="text-muted-foreground mb-6">For high-resolution photos, logos, official bios, and a downloadable one-sheet, visit the full Press Kit.</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild><Link to="/press-kit">Download Press Kit</Link></Button>
+              <Button asChild><Link to="/opk">Download Press Kit</Link></Button>
               <Button asChild variant="outline"><Link to="/booking">Book Mr. CAP</Link></Button>
             </div>
           </div>
@@ -210,8 +210,8 @@ const ForMedia = () => {
           links={[
             { label: "Homepage", href: "/" },
             { label: "Press", href: "/press" },
-            { label: "Music", href: "/discography" },
-            { label: "Press Kit", href: "/press-kit" },
+            { label: "Music", href: "/mr-cap-discography" },
+            { label: "Press Kit", href: "/opk" },
           ]}
         />
       </main>

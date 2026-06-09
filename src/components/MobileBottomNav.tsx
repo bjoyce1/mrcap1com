@@ -7,18 +7,18 @@ import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
 const primaryTabs = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/discography", label: "Music", icon: Music },
+  { to: "/mr-cap-discography", label: "Music", icon: Music },
   { to: "/live", label: "Live", icon: Radio },
   { to: "/merch", label: "Merch", icon: ShoppingBag },
 ];
 
 const moreLinks = [
   { to: "/who-is-mr-cap", label: "Who Is Mr. CAP?" },
-  { to: "/legacy", label: "Legacy" },
+  { to: "/who-is-mr-cap", label: "Legacy" },
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },
   { to: "/nft", label: "NFT Gallery" },
-  { to: "/innovation", label: "Tech" },
+  { to: "/who-is-mr-cap", label: "Tech" },
   { to: "/opk", label: "Online Press Kit" },
   { to: "https://bookspc.com/artists/mr-cap", label: "Booking" },
   { to: "/links", label: "Links" },

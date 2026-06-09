@@ -6,15 +6,15 @@ import albumCover from "@/assets/album-art-of-ism.png";
 import { usePlayerStore } from "@/stores/playerStore";
 
 const TIPS = [
-  { text: "Check out the latest drops 🎵", href: "/discography" },
+  { text: "Check out the latest drops 🎵", href: "/mr-cap-discography" },
   { text: "Scroll down to explore more!", href: null },
   { text: "Hit up the merch store 🔥", href: "/merch" },
   { text: "Book a show — let's connect!", href: "https://bookspc.com/artists/mr-cap" },
-  { text: "Stream the new album now 🎧", href: "/discography" },
+  { text: "Stream the new album now 🎧", href: "/mr-cap-discography" },
   { text: "Peep the NFT collection 🖼️", href: "/nft-gallery" },
   { text: "Read what the press says 📰", href: "/press" },
-  { text: "Get to know the real CAP 💯", href: "/about" },
-  { text: "Watch the latest visuals 🎬", href: "/discography" },
+  { text: "Get to know the real CAP 💯", href: "/who-is-mr-cap" },
+  { text: "Watch the latest visuals 🎬", href: "/mr-cap-discography" },
   { text: "See where CAP's performing 🎤", href: "/live" },
 ];
 

@@ -182,7 +182,7 @@ const Library = () => {
             <p className="text-lg font-medium">Nothing here yet</p>
             <p className="text-muted-foreground mt-1">Purchased music will appear here.</p>
             <Button asChild className="mt-6">
-              <Link to="/discography">Browse Discography</Link>
+              <Link to="/mr-cap-discography">Browse Discography</Link>
             </Button>
           </div>
         ) : (

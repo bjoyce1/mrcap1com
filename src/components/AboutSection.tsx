@@ -89,7 +89,7 @@ const AboutSection = () => {
                   Read Full Biography →
                 </Link>
                 <Link
-                  to="/discography"
+                  to="/mr-cap-discography"
                   className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
                 >
                   View Full Discography →

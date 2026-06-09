@@ -135,7 +135,7 @@ const HoustonRapper = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button variant="flux" size="lg" asChild>
-                  <Link to="/discography">
+                  <Link to="/mr-cap-discography">
                     <Music className="mr-2 h-5 w-5" />
                     Stream Music
                   </Link>
@@ -178,7 +178,7 @@ const HoustonRapper = () => {
                 </div>
                 <div className="mt-8">
                   <Button variant="fluxOutline" asChild>
-                    <Link to="/about">
+                    <Link to="/who-is-mr-cap">
                       Read Full Biography
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
@@ -294,7 +294,7 @@ const HoustonRapper = () => {
                         <li>• O.N.E. on O.N.E. (2005)</li>
                       </ul>
                       <Button variant="fluxGhost" size="sm" className="mt-4" asChild>
-                        <Link to="/discography">
+                        <Link to="/mr-cap-discography">
                           View Full Discography
                           <ChevronRight className="ml-2 h-4 w-4" />
                         </Link>

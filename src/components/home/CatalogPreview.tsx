@@ -96,7 +96,7 @@ const CatalogPreview = () => {
               style={{ opacity: 0, transformStyle: "preserve-3d" }}
               className="will-change-transform"
             >
-              <Link to="/discography" className="group block">
+              <Link to="/mr-cap-discography" className="group block">
                 <div className="relative aspect-square rounded-xl overflow-hidden mb-3 ring-1 ring-border/10">
                   <img
                     src={album.image}
@@ -128,7 +128,7 @@ const CatalogPreview = () => {
           {albums.map((album) => (
             <Link
               key={album.title}
-              to="/discography"
+              to="/mr-cap-discography"
               className="group block shrink-0 w-[60vw] max-w-[240px] snap-center"
             >
               <div className="relative aspect-square rounded-xl overflow-hidden mb-3 ring-1 ring-border/10">
@@ -153,7 +153,7 @@ const CatalogPreview = () => {
 
         <div className="mt-10 flex justify-center md:justify-end">
           <Button variant="fluxOutline" size="sm" className="rounded-full" asChild>
-            <Link to="/discography">
+            <Link to="/mr-cap-discography">
               Full Discography <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>

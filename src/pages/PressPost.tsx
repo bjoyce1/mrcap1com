@@ -134,9 +134,9 @@ const PressPost = () => {
 
           {/* Cross-links */}
           <div className="mt-12 border-t border-border/20 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <Link to="/discography" className="text-sm text-muted-foreground hover:text-primary transition-colors">← Discography</Link>
+            <Link to="/mr-cap-discography" className="text-sm text-muted-foreground hover:text-primary transition-colors">← Discography</Link>
             <Link to="/videos" className="text-sm text-muted-foreground hover:text-primary transition-colors">Videos</Link>
-            <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About Mr. CAP</Link>
+            <Link to="/who-is-mr-cap" className="text-sm text-muted-foreground hover:text-primary transition-colors">About Mr. CAP</Link>
             <Link to="/booking" className="text-sm text-muted-foreground hover:text-primary transition-colors">Book / Inquire →</Link>
           </div>
 

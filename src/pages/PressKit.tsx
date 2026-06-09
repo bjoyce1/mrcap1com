@@ -334,7 +334,7 @@ const PressKit = () => {
                 ))}
               </div>
               <div className="mt-5">
-                <Link to="/discography">
+                <Link to="/mr-cap-discography">
                   <Button variant="fluxOutline" size="sm" className="rounded-2xl gap-2">
                     <Music className="w-3.5 h-3.5" />
                     View Full Catalog
@@ -437,7 +437,7 @@ const PressKit = () => {
           links={[
             { label: "Press", href: "/press" },
             { label: "Booking", href: "/booking" },
-            { label: "Discography", href: "/discography" },
+            { label: "Discography", href: "/mr-cap-discography" },
             { label: "Home", href: "/" },
           ]}
         />

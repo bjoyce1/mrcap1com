@@ -76,7 +76,7 @@ const AlbumPage = () => {
         <Navigation />
         <div className="pt-32 text-center">
           <p className="text-muted-foreground text-lg">Album not found</p>
-          <Link to="/discography" className="text-primary hover:underline mt-2 inline-block">← Back to Discography</Link>
+          <Link to="/mr-cap-discography" className="text-primary hover:underline mt-2 inline-block">← Back to Discography</Link>
         </div>
       </div>
     );
@@ -123,7 +123,7 @@ const AlbumPage = () => {
 
       <section className="relative z-10 pt-28 pb-16 px-6">
         <div className="max-w-5xl mx-auto">
-          <Link to="/discography" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6">
+          <Link to="/mr-cap-discography" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="w-4 h-4" /> Back to Discography
           </Link>
 
