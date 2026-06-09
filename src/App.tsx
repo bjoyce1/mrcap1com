@@ -110,13 +110,13 @@ function AppRoutes() {
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
             {/* Page consolidation redirects */}
-            <Route path="/who-is-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
-            <Route path="/who-is-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
-            <Route path="/who-is-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
-            <Route path="/who-is-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
-            <Route path="/opk" element={<Navigate to="/opk" replace />} />
-            <Route path="/opk" element={<Navigate to="/opk" replace />} />
-            <Route path="/mr-cap-discography" element={<Navigate to="/mr-cap-discography" replace />} />
+            <Route path="/about" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/houston-rapper-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/innovation" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/legacy" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/press-kit" element={<Navigate to="/opk" replace />} />
+            <Route path="/for-media" element={<Navigate to="/opk" replace />} />
+            <Route path="/discography" element={<Navigate to="/mr-cap-discography" replace />} />
             <Route path="/music" element={<Navigate to="/mr-cap-discography" replace />} />
             <Route path="/listen" element={<Navigate to="/mr-cap-discography" replace />} />
             <Route path="/live" element={<PageTransition><Live /></PageTransition>} />
