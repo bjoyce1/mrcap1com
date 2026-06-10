@@ -1,4 +1,4 @@
-import '@fontsource/alfa-slab-one';
+import '@fontsource/alfa-slab-one/400.css';
 import '@fontsource/archivo/400.css';
 import '@fontsource/archivo/500.css';
 import '@fontsource/archivo/700.css';
