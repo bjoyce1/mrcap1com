@@ -11,15 +11,16 @@ const SectionHeader = ({ title, eyebrow, align = "left" }: SectionHeaderProps) =
     initial={{ opacity: 0, y: 16 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-60px" }}
-    transition={{ duration: 0.4 }}
+    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     className={`mb-8 ${align === "center" ? "text-center" : ""}`}
   >
     {eyebrow && (
-      <span className="text-xs font-medium tracking-widest uppercase text-primary mb-2 block">
+      <span className="catalog-stamp mb-3 block">
         {eyebrow}
       </span>
     )}
-    <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{title}</h2>
+    <h2 className="text-3xl md:text-4xl font-display text-foreground">{title}</h2>
+    <div className={`archive-rule mt-4 ${align === "center" ? "mx-auto w-24" : "w-24"}`} />
   </motion.div>
 );
 

@@ -31,12 +31,11 @@ const SectionDivider = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-2">
-      <div
-        ref={ref}
-        className="h-[1px] w-full origin-center bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-        style={{ transform: "scaleX(0)" }}
-        aria-hidden="true"
-      />
+      <div ref={ref} className="relative flex items-center justify-center" style={{ transform: "scaleX(0)" }} aria-hidden="true">
+        <div className="h-px flex-1 bg-[hsl(var(--accent-gold)/0.25)]" />
+        <span className="mx-3 inline-block w-1.5 h-1.5 rotate-45 bg-[hsl(var(--accent-gold)/0.6)]" />
+        <div className="h-px flex-1 bg-[hsl(var(--accent-gold)/0.25)]" />
+      </div>
     </div>
   );
 };
