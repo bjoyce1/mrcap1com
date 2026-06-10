@@ -47,6 +47,9 @@ interface PlayerStore {
   volume: number;
   isPlayerVisible: boolean;
   isMinimized: boolean;
+  isShuffled: boolean;
+  repeatMode: 'off' | 'all' | 'one';
+  originalQueue: Track[];
 
   // Actions
   playTrack: (track: Track, queue?: Track[], queueIndex?: number) => void;
@@ -55,6 +58,8 @@ interface PlayerStore {
   resume: () => void;
   nextTrack: () => void;
   prevTrack: () => void;
+  toggleShuffle: () => void;
+  cycleRepeat: () => void;
   setCurrentTime: (time: number) => void;
   setDuration: (duration: number) => void;
   setVolume: (volume: number) => void;
@@ -75,6 +80,9 @@ export const usePlayerStore = create<PlayerStore>()((set, get) => ({
   isPlayerVisible: false,
   isMinimized: false,
   isQueueOpen: false,
+  isShuffled: false,
+  repeatMode: 'off',
+  originalQueue: [],
 
   playTrack: (track, queue, queueIndex) => {
     const newQueue = queue || [track];
@@ -87,6 +95,8 @@ export const usePlayerStore = create<PlayerStore>()((set, get) => ({
       currentTime: 0,
       isPlayerVisible: true,
       isMinimized: false,
+      isShuffled: false,
+      originalQueue: [],
     });
   },
 
@@ -98,7 +108,7 @@ export const usePlayerStore = create<PlayerStore>()((set, get) => ({
   resume: () => set({ isPlaying: true }),
 
   nextTrack: () => {
-    const { queue, queueIndex } = get();
+    const { queue, queueIndex, repeatMode } = get();
     if (queueIndex < queue.length - 1) {
       const nextIndex = queueIndex + 1;
       set({
@@ -107,7 +117,50 @@ export const usePlayerStore = create<PlayerStore>()((set, get) => ({
         isPlaying: true,
         currentTime: 0,
       });
+    } else if (repeatMode === 'all' && queue.length > 0) {
+      set({
+        currentTrack: queue[0],
+        queueIndex: 0,
+        isPlaying: true,
+        currentTime: 0,
+      });
     }
+  },
+
+  toggleShuffle: () => {
+    const { isShuffled, queue, queueIndex, originalQueue, currentTrack } = get();
+    if (!currentTrack || queue.length <= 1) {
+      set({ isShuffled: !isShuffled });
+      return;
+    }
+    if (!isShuffled) {
+      const rest = queue.filter((_, i) => i !== queueIndex);
+      for (let i = rest.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [rest[i], rest[j]] = [rest[j], rest[i]];
+      }
+      set({
+        originalQueue: queue,
+        queue: [currentTrack, ...rest],
+        queueIndex: 0,
+        isShuffled: true,
+      });
+    } else {
+      const orig = originalQueue.length > 0 ? originalQueue : queue;
+      const idx = Math.max(0, orig.findIndex((t) => t.id === currentTrack.id));
+      set({
+        queue: orig,
+        queueIndex: idx,
+        isShuffled: false,
+        originalQueue: [],
+      });
+    }
+  },
+
+  cycleRepeat: () => {
+    set((state) => ({
+      repeatMode: state.repeatMode === 'off' ? 'all' : state.repeatMode === 'all' ? 'one' : 'off',
+    }));
   },
 
   prevTrack: () => {

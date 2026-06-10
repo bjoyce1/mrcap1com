@@ -76,7 +76,8 @@ export function useAllTracks() {
         .from("tracks")
         .select("*")
         .eq("is_public", true)
-        .order("release_year", { ascending: false });
+        .order("release_year", { ascending: false })
+        .order("created_at", { ascending: false });
       if (error) throw error;
       return data as Track[];
     },
@@ -92,6 +93,25 @@ export function useLatestTracks(limit = 10) {
         .select("*")
         .eq("is_public", true)
         .order("release_year", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(limit);
+      if (error) throw error;
+      return data as Track[];
+    },
+  });
+}
+
+/** Top tracks by the site's own direct-stream play counts. */
+export function useMostPlayedTracks(limit = 5) {
+  return useQuery({
+    queryKey: ["most-played-tracks", limit],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("tracks")
+        .select("*")
+        .eq("is_public", true)
+        .gt("play_count", 0)
+        .order("play_count", { ascending: false })
         .limit(limit);
       if (error) throw error;
       return data as Track[];
