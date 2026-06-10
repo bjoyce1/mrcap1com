@@ -164,11 +164,25 @@ const ListeningRoomHero = ({ trackCount, albumCount, allPlayable, latestPlayable
 
   return (
     <section className="relative w-full min-h-[78vh] flex items-end overflow-hidden bg-background">
+      {/* Background video — YouTube embed scaled to fill, no controls/sound */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <iframe
+          src="https://www.youtube.com/embed/nojd0u9jBr0?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&playlist=nojd0u9jBr0"
+          title="Background visual"
+          allow="autoplay; encrypted-media"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300vw] h-[300vh] sm:w-[300%] sm:h-[300%] border-0"
+        />
+        {/* Dual black gradient overlays for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background" />
+        <div className="absolute inset-0 bg-background/40" />
+      </div>
+
       {/* The candy ridge canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden="true" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" />
 
       {/* Soft floor gradient so content stays readable */}
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none" />
+
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20 pt-36">
         <div className="flex items-center gap-2 mb-5">
