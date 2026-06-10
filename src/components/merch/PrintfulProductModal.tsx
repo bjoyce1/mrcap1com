@@ -188,14 +188,43 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
 
   if (!product) return null;
 
-  const images = Array.from(
-    new Set(
-      (variants.length > 0
-        ? variants.map(v => v.files?.find(f => f.type === 'preview')?.preview_url || v.product?.image)
-        : [getProductImage(product)]
-      ).filter(Boolean) as string[]
-    )
-  );
+  const imageEntries = (() => {
+    const seen = new Set<string>();
+    const entries: { url: string; label: string }[] = [];
+
+    const extractLabel = (name: string): string => {
+      const parenMatch = name.match(/\(([^)]+)\)$/);
+      if (parenMatch) {
+        return parenMatch[1].split('/')[0].trim();
+      }
+      if (name.includes('/')) {
+        return name.split('/')[0].trim();
+      }
+      if (name.length <= 12) return name;
+      const firstWord = name.split(' ')[0];
+      if (firstWord.length >= 3 && firstWord.length <= 12) return firstWord;
+      return 'View';
+    };
+
+    for (const v of variants) {
+      const url = v.files?.find(f => f.type === 'preview')?.preview_url || v.product?.image;
+      if (!url || seen.has(url)) continue;
+      seen.add(url);
+
+      let label = extractLabel(v.name);
+      if (label.length > 14) label = label.slice(0, 14) + '…';
+      if (!label) label = 'View';
+
+      entries.push({ url, label });
+    }
+
+    if (entries.length === 0) {
+      const main = getProductImage(product);
+      if (main) entries.push({ url: main, label: '' });
+    }
+
+    return entries;
+  })();
 
   const handleQuantityChange = (delta: number) => {
     setQuantity(prev => Math.max(1, Math.min(10, prev + delta)));
@@ -327,22 +356,29 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
                   <div className="space-y-4">
                     <div className="aspect-square rounded-xl overflow-hidden bg-muted/20">
                       <img
-                        src={images[selectedImage] || getProductImage(product)}
+                        src={imageEntries[selectedImage]?.url || getProductImage(product)}
                         alt={product.sync_product.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    {images.length > 1 && (
-                      <div className="flex gap-2 overflow-x-auto pb-2">
-                        {images.map((img, idx) => (
+                    {imageEntries.length > 1 && (
+                      <div className="flex gap-3 overflow-x-auto pb-2">
+                        {imageEntries.map((entry, idx) => (
                           <button
                             key={idx}
                             onClick={() => setSelectedImage(idx)}
-                            className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
-                              selectedImage === idx ? 'border-primary' : 'border-transparent'
-                            }`}
+                            className={`flex-shrink-0 flex flex-col items-center gap-1`}
                           >
-                            <img src={img as string} alt="" className="w-full h-full object-cover" />
+                            <div
+                              className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
+                                selectedImage === idx ? 'border-primary' : 'border-transparent'
+                              }`}
+                            >
+                              <img src={entry.url} alt={entry.label} className="w-full h-full object-cover" />
+                            </div>
+                            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium leading-none">
+                              {entry.label}
+                            </span>
                           </button>
                         ))}
                       </div>
