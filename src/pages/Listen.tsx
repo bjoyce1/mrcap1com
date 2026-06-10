@@ -131,9 +131,11 @@ const Listen = () => {
       <div className="max-w-6xl mx-auto px-6 pb-32 space-y-14">
         {/* Start Here - Curated Picks */}
         <div>
+          <span className="catalog-stamp mb-3 block">Start Here</span>
           <h2 className="text-xl font-display text-foreground mb-2 flex items-center gap-2">
-            <Play className="w-5 h-5 text-primary" /> Start Here
+            <Play className="w-5 h-5 text-primary" /> Curated Picks
           </h2>
+          <div className="archive-rule mt-4 mb-4 w-24" />
           <p className="text-sm text-muted-foreground mb-4">New to CAP? These 5 tracks tell the story.</p>
           <div className="bg-card/50 rounded-xl border border-primary/20 overflow-hidden divide-y divide-border/10">
             {tracksLoading ? (
@@ -148,9 +150,11 @@ const Listen = () => {
 
         {/* Latest Releases */}
         <div ref={latestRef}>
+          <span className="catalog-stamp mb-3 block">Latest Drops</span>
           <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
             <Music className="w-5 h-5 text-primary" /> Latest Releases
           </h2>
+          <div className="archive-rule mt-4 mb-4 w-24" />
           <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
             {tracksLoading ? (
               <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
@@ -164,9 +168,11 @@ const Listen = () => {
 
         {/* Albums */}
         <div ref={albumsRef}>
+          <span className="catalog-stamp mb-3 block">Full Lengths</span>
           <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
             <Disc3 className="w-5 h-5 text-primary" /> Albums
           </h2>
+          <div className="archive-rule mt-4 mb-4 w-24" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {albumsLoading
               ? Array.from({ length: 5 }).map((_, i) => (
@@ -188,7 +194,7 @@ const Listen = () => {
                        <div className="flex items-center justify-between">
                          <div className="min-w-0">
                            <p className="text-sm font-medium text-foreground truncate">{album.title}</p>
-                           <p className="text-xs text-muted-foreground">{album.release_year} · {album.artist}</p>
+                           <p className="text-xs text-muted-foreground font-mono">{album.release_year} · {album.artist}</p>
                          </div>
                          <ShareButtons title={album.title} artist={album.artist} slug={album.slug} type="album" compact />
                        </div>
@@ -206,7 +212,9 @@ const Listen = () => {
         {/* Singles */}
         {singles.length > 0 && (
           <div ref={singlesRef}>
+            <span className="catalog-stamp mb-3 block">Standalone Tracks</span>
             <h2 className="text-xl font-display text-foreground mb-4">Singles & Features</h2>
+            <div className="archive-rule mt-4 mb-4 w-24" />
             <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
               {singles.map((track, i) => (
                 <TrackRow key={track.id} track={track} index={i} queue={singles} />

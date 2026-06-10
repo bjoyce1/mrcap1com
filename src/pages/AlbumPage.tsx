@@ -174,20 +174,25 @@ const AlbumPage = () => {
           />
 
           {/* 4. Tracklist */}
-          <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden">
-            <div className="flex items-center gap-3 px-3 py-2 border-b border-border/20 text-xs text-muted-foreground uppercase tracking-widest">
-              <div className="w-8 text-center">#</div>
-              <div className="w-10" />
-              <div className="flex-1">Title</div>
-              <Clock className="w-3.5 h-3.5" />
+          <div>
+            <span className="catalog-stamp mb-3 block">Tracklist</span>
+            <h3 className="text-xl font-display text-foreground mb-4">{album.track_count} Tracks</h3>
+            <div className="archive-rule mt-4 mb-4 w-24" />
+            <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden">
+              <div className="flex items-center gap-3 px-3 py-2 border-b border-border/20 text-xs text-muted-foreground uppercase tracking-widest">
+                <div className="w-8 text-center font-mono">#</div>
+                <div className="w-10" />
+                <div className="flex-1">Title</div>
+                <Clock className="w-3.5 h-3.5" />
+              </div>
+              {tracksLoading ? (
+                <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
+              ) : (
+                tracks?.map((track, i) => (
+                  <TrackRow key={track.id} track={track} index={i} queue={tracks} showAlbumArt={false} expandedTrackId={expandedTrackId} onToggleExpand={handleToggleExpand} />
+                ))
+              )}
             </div>
-            {tracksLoading ? (
-              <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
-            ) : (
-              tracks?.map((track, i) => (
-                <TrackRow key={track.id} track={track} index={i} queue={tracks} showAlbumArt={false} expandedTrackId={expandedTrackId} onToggleExpand={handleToggleExpand} />
-              ))
-            )}
           </div>
 
           {/* 5. Story Block */}
@@ -195,7 +200,9 @@ const AlbumPage = () => {
 
           {/* 6. Share */}
           <div className="mt-8 border-t border-border/20 pt-6">
+            <span className="catalog-stamp mb-3 block">Share</span>
             <h3 className="text-foreground font-medium text-sm mb-3">Share This Album</h3>
+            <div className="archive-rule mt-4 mb-4 w-24" />
             <ShareButtons title={album.title} artist={album.artist} slug={album.slug} type="album" />
           </div>
 
@@ -203,7 +210,7 @@ const AlbumPage = () => {
           <ReleaseLinks albumSlug={album.slug} className="mt-6" />
 
           {/* 8. Related Releases */}
-          <RelatedReleases currentAlbumId={album.id} className="mt-8" />
+          <RelatedReleases currentAlbumId={album.id} className="mt-8" eyebrow="Related" title="More From The Catalog" />
 
           {/* 9. Fan Capture */}
           <FanCaptureBanner sourcePage={`/albums/${album.slug}`} className="mt-12" />

@@ -30,7 +30,7 @@ const CatalogReleaseList = ({ releases }: { releases: CatalogItem[] }) => (
             <div className="flex-1 min-w-0">
               <div className="flex items-baseline gap-3 flex-wrap">
                 <h3 className="font-display font-bold text-foreground">{r.title}</h3>
-                <span className="text-xs text-primary font-medium">{r.year}</span>
+                <span className="text-xs text-primary font-medium font-mono">{r.year}</span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-muted/60 text-muted-foreground">{r.tag}</span>
               </div>
               <p className="text-sm text-muted-foreground mt-1.5">{r.summary}</p>

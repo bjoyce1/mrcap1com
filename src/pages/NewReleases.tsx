@@ -228,7 +228,7 @@ export default function NewReleases() {
                       {latest.title}
                     </h2>
                     <p className="text-muted-foreground text-sm">
-                      {latest.artist} · {latest.type} · {latest.releaseYear ?? ""}
+                      {latest.artist} · {latest.type} · <span className="font-mono">{latest.releaseYear ?? ""}</span>
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
                       The newest official release from Mr.&nbsp;CAP — available now on Mr. CAP Legacy. Stream, explore the story behind the music, and discover the full content ecosystem.
@@ -255,7 +255,9 @@ export default function NewReleases() {
           {recent.length > 0 && (
             <section className="py-16 md:py-24 border-t border-border/10">
               <div className="max-w-6xl mx-auto px-6">
+                <span className="catalog-stamp mb-3 block">Recent</span>
                 <h2 className="text-2xl md:text-3xl font-display mb-10 tracking-tight">Recent Releases</h2>
+                <div className="archive-rule mt-4 mb-10 w-24" />
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {recent.map((r, i) => (
                     <motion.div
@@ -283,7 +285,7 @@ export default function NewReleases() {
                             {r.releaseYear && (
                               <>
                                 <span className="text-border">·</span>
-                                <Calendar className="w-3 h-3" /> {r.releaseYear}
+                                <Calendar className="w-3 h-3" /> <span className="font-mono">{r.releaseYear}</span>
                               </>
                             )}
                           </p>
@@ -314,9 +316,13 @@ export default function NewReleases() {
             <section className="py-16 md:py-24 border-t border-border/10">
               <div className="max-w-6xl mx-auto px-6">
                 <div className="flex items-center justify-between mb-10">
-                  <h2 className="text-2xl md:text-3xl font-display tracking-tight flex items-center gap-3">
-                    <Newspaper className="w-6 h-6 text-primary" /> Release News
-                  </h2>
+                  <div>
+                    <span className="catalog-stamp mb-3 block">Press</span>
+                    <h2 className="text-2xl md:text-3xl font-display tracking-tight flex items-center gap-3">
+                      <Newspaper className="w-6 h-6 text-primary" /> Release News
+                    </h2>
+                    <div className="archive-rule mt-4 w-24" />
+                  </div>
                   <Button asChild variant="ghost" size="sm">
                     <Link to="/press">All Press <ArrowRight className="w-4 h-4 ml-1" /></Link>
                   </Button>
@@ -331,7 +337,7 @@ export default function NewReleases() {
                       transition={{ delay: i * 0.1 }}
                       className="rounded-xl border border-border/10 bg-card/20 backdrop-blur-sm p-6 hover:border-primary/20 transition-colors"
                     >
-                      <p className="text-xs text-primary tracking-wide uppercase mb-2">{post.outlet} · {post.date}</p>
+                      <p className="text-xs text-primary tracking-wide uppercase mb-2">{post.outlet} · <span className="font-mono">{post.date}</span></p>
                       <h3 className="font-display text-base leading-snug mb-2">{post.title}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{post.summary}</p>
                       {post.url && (
@@ -350,9 +356,13 @@ export default function NewReleases() {
           <section className="py-16 md:py-24 border-t border-border/10">
             <div className="max-w-6xl mx-auto px-6">
               <div className="flex items-center justify-between mb-10">
-                <h2 className="text-2xl md:text-3xl font-display tracking-tight flex items-center gap-3">
-                  <Film className="w-6 h-6 text-primary" /> Release Visuals
-                </h2>
+                <div>
+                  <span className="catalog-stamp mb-3 block">Visuals</span>
+                  <h2 className="text-2xl md:text-3xl font-display tracking-tight flex items-center gap-3">
+                    <Film className="w-6 h-6 text-primary" /> Release Visuals
+                  </h2>
+                  <div className="archive-rule mt-4 w-24" />
+                </div>
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/videos">All Videos <ArrowRight className="w-4 h-4 ml-1" /></Link>
                 </Button>
@@ -372,7 +382,7 @@ export default function NewReleases() {
                     </div>
                     <div className="p-5 space-y-1">
                       <h3 className="font-display text-sm">{v.title}</h3>
-                      <p className="text-xs text-muted-foreground">{v.year}</p>
+                      <p className="text-xs text-muted-foreground font-mono">{v.year}</p>
                       {v.relatedRelease && (
                         <Link to={v.relatedRelease} className="text-xs text-primary hover:underline inline-flex items-center gap-1 mt-1">
                           View Release <ArrowRight className="w-3 h-3" />
@@ -387,18 +397,23 @@ export default function NewReleases() {
 
           {/* ── 6. FAN CAPTURE ── */}
           <section id="fan-capture" className="py-16 md:py-24 border-t border-border/10">
-            <FanCaptureBanner
-              sourcePage="new-releases"
-              headline="Get New Releases First"
-              subheadline="Join Mr. CAP Legacy — stay updated on new music, videos, and shows from Mr. CAP."
-              className="mx-6 md:mx-auto max-w-4xl"
-            />
+            <div className="max-w-4xl mx-auto px-6">
+              <span className="catalog-stamp mb-3 block">Stay Updated</span>
+              <div className="archive-rule mt-4 mb-8 w-24" />
+              <FanCaptureBanner
+                sourcePage="new-releases"
+                headline="Get New Releases First"
+                subheadline="Join Mr. CAP Legacy — stay updated on new music, videos, and shows from Mr. CAP."
+              />
+            </div>
           </section>
 
           {/* ── 7. CATALOG CTA ── */}
           <section className="py-16 md:py-24 border-t border-border/10">
             <div className="max-w-3xl mx-auto px-6 text-center">
+              <span className="catalog-stamp mb-3 block">Catalog</span>
               <h2 className="text-2xl md:text-3xl font-display mb-4">Explore the Full Catalog</h2>
+              <div className="archive-rule mt-4 mx-auto w-24 mb-8" />
               <p className="text-muted-foreground mb-8">
                 Dive deeper into 30+ years of Mr.&nbsp;CAP's music — from early underground classics to modern releases.
               </p>

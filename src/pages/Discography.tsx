@@ -349,8 +349,9 @@ const Discography = () => {
           {/* ============ ALBUM GRID (editorial / MJ-style) ============ */}
           <section className="relative py-24 md:py-32 border-t border-white/5">
             <div className="container mx-auto px-6 mb-16 md:mb-20 text-center">
-              <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">01 — Albums</p>
+              <span className="catalog-stamp mb-3 block">01 — Albums</span>
               <h2 className="text-3xl md:text-5xl font-display font-bold">Studio &amp; Collab Records</h2>
+              <div className="archive-rule mt-4 mx-auto w-24" />
             </div>
 
             <div className="container mx-auto px-6 max-w-6xl">
@@ -416,10 +417,11 @@ const Discography = () => {
                 </div>
 
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Featured Release</p>
+                  <span className="catalog-stamp mb-3 block">Featured Release</span>
                   <h2 className="font-display font-bold text-4xl md:text-6xl leading-[0.95] mb-6">
                     {featuredAlbum.title}
                   </h2>
+                  <div className="archive-rule mt-4 mb-6 w-24" />
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
                     <span>{featuredAlbum.artist}</span>
                     <span className="opacity-40">•</span>
@@ -461,8 +463,9 @@ const Discography = () => {
           <section className="relative py-20 md:py-28 border-t border-white/5">
             <div className="container mx-auto px-6">
               <div className="mb-12">
-                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-3">02 — Full Catalog</p>
+                <span className="catalog-stamp mb-3 block">02 — Full Catalog</span>
                 <h2 className="text-3xl md:text-5xl font-display font-bold">Every Album. Every Era.</h2>
+                <div className="archive-rule mt-4 w-24" />
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
@@ -486,7 +489,7 @@ const Discography = () => {
                         </div>
                       </div>
                     </div>
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1">{album.year}</p>
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1 font-mono">{album.year}</p>
                     <h3 className="font-display font-semibold text-lg leading-tight group-hover:text-primary transition-colors">
                       {album.title}
                     </h3>
@@ -501,15 +504,16 @@ const Discography = () => {
           <section className="relative py-20 md:py-28 border-t border-white/5 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent">
             <div className="container mx-auto px-6">
               <div className="mb-12">
-                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-3">03 — Singles &amp; Features</p>
+                <span className="catalog-stamp mb-3 block">03 — Singles &amp; Features</span>
                 <h2 className="text-3xl md:text-5xl font-display font-bold">A Decade of Drops</h2>
+                <div className="archive-rule mt-4 w-24" />
               </div>
 
               <div className="max-w-4xl mx-auto">
                 {singlesData.map((yearGroup) => (
                   <div key={yearGroup.year} className="grid grid-cols-[80px_1fr] md:grid-cols-[140px_1fr] gap-6 md:gap-12 py-8 border-b border-white/5 last:border-b-0">
-                    <div className="text-right">
-                      <span className="font-display text-3xl md:text-5xl font-bold text-primary/80 tabular-nums">
+                  <div className="text-right">
+                      <span className="font-display text-3xl md:text-5xl font-bold text-primary/80 tabular-nums font-mono">
                         {yearGroup.year}
                       </span>
                     </div>
@@ -554,10 +558,11 @@ const Discography = () => {
               <Soundwave className="w-full h-full" />
             </div>
             <div className="relative container mx-auto px-6 text-center">
-              <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Stream Everywhere</p>
+              <span className="catalog-stamp mb-3 block">Stream Everywhere</span>
               <h2 className="font-display font-bold text-4xl md:text-6xl mb-6 leading-[0.95]">
                 Available on every platform.
               </h2>
+              <div className="archive-rule mt-4 mx-auto w-24 mb-6" />
               <p className="max-w-xl mx-auto text-muted-foreground mb-10">
                 The full Mr. CAP catalog, from independent classics to the latest South Park Coalition releases.
               </p>
