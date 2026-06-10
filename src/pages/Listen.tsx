@@ -10,6 +10,7 @@ import { useAlbums, useLatestTracks, useAllTracks, useMostPlayedTracks } from "@
 import SpotifyAlbumGrid from "@/components/home/SpotifyAlbumGrid";
 import ListeningRoomHero from "@/components/music/ListeningRoomHero";
 import EraFilter, { getEras, filterByEra } from "@/components/music/EraFilter";
+import LatestReleasesShelf from "@/components/music/LatestReleasesShelf";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
