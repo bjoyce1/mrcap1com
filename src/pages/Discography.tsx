@@ -512,8 +512,8 @@ const Discography = () => {
               <div className="max-w-4xl mx-auto">
                 {singlesData.map((yearGroup) => (
                   <div key={yearGroup.year} className="grid grid-cols-[80px_1fr] md:grid-cols-[140px_1fr] gap-6 md:gap-12 py-8 border-b border-white/5 last:border-b-0">
-                    <div className="text-right">
-                      <span className="font-display text-3xl md:text-5xl font-bold text-primary/80 tabular-nums">
+                  <div className="text-right">
+                      <span className="font-display text-3xl md:text-5xl font-bold text-primary/80 tabular-nums font-mono">
                         {yearGroup.year}
                       </span>
                     </div>
