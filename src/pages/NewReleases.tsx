@@ -316,9 +316,13 @@ export default function NewReleases() {
             <section className="py-16 md:py-24 border-t border-border/10">
               <div className="max-w-6xl mx-auto px-6">
                 <div className="flex items-center justify-between mb-10">
-                  <h2 className="text-2xl md:text-3xl font-display tracking-tight flex items-center gap-3">
-                    <Newspaper className="w-6 h-6 text-primary" /> Release News
-                  </h2>
+                  <div>
+                    <span className="catalog-stamp mb-3 block">Press</span>
+                    <h2 className="text-2xl md:text-3xl font-display tracking-tight flex items-center gap-3">
+                      <Newspaper className="w-6 h-6 text-primary" /> Release News
+                    </h2>
+                    <div className="archive-rule mt-4 w-24" />
+                  </div>
                   <Button asChild variant="ghost" size="sm">
                     <Link to="/press">All Press <ArrowRight className="w-4 h-4 ml-1" /></Link>
                   </Button>
