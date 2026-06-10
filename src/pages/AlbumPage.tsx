@@ -176,7 +176,7 @@ const AlbumPage = () => {
           {/* 4. Tracklist */}
           <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden">
             <div className="flex items-center gap-3 px-3 py-2 border-b border-border/20 text-xs text-muted-foreground uppercase tracking-widest">
-              <div className="w-8 text-center">#</div>
+              <div className="w-8 text-center font-mono">#</div>
               <div className="w-10" />
               <div className="flex-1">Title</div>
               <Clock className="w-3.5 h-3.5" />

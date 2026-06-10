@@ -61,7 +61,7 @@ export default function ReleaseFactsGrid({
         {facts.map((f, i) => (
           <div key={i} className="bg-card/30 border border-border/10 rounded-lg p-3">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">{f.label}</p>
-            <p className="text-sm text-foreground font-medium truncate">{f.value}</p>
+            <p className="text-sm text-foreground font-medium truncate font-mono">{f.value}</p>
           </div>
         ))}
       </div>
