@@ -183,9 +183,14 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
 
   if (!product) return null;
 
-  const images = variants.length > 0 
-    ? variants.map(v => v.files?.find(f => f.type === 'preview')?.preview_url || v.product?.image).filter(Boolean)
-    : [getProductImage(product)];
+  const images = Array.from(
+    new Set(
+      (variants.length > 0
+        ? variants.map(v => v.files?.find(f => f.type === 'preview')?.preview_url || v.product?.image)
+        : [getProductImage(product)]
+      ).filter(Boolean) as string[]
+    )
+  );
 
   const handleQuantityChange = (delta: number) => {
     setQuantity(prev => Math.max(1, Math.min(10, prev + delta)));
