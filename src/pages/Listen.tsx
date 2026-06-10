@@ -105,15 +105,7 @@ const Listen = () => {
             <Music className="w-5 h-5 text-primary" /> Latest Releases
           </h2>
           <div className="archive-rule mt-4 mb-4 w-24" />
-          <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
-            {tracksLoading ? (
-              <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
-            ) : (
-              latestTracks?.map((track, i) => (
-                <TrackRow key={track.id} track={track} index={i} queue={latestTracks} />
-              ))
-            )}
-          </div>
+          <LatestReleasesShelf tracks={latestTracks || []} loading={tracksLoading} />
         </div>
 
         {/* Albums */}
