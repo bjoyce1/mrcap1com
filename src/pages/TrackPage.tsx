@@ -196,14 +196,16 @@ const TrackPage = () => {
 
           {/* 6. Share + Cross-links */}
           <div className="mt-8 border-t border-border/20 pt-6">
+            <span className="catalog-stamp mb-3 block">Share</span>
             <h3 className="text-foreground font-medium text-sm mb-3">Share This Release</h3>
+            <div className="archive-rule mt-4 mb-4 w-24" />
             <ShareButtons title={track.title} artist={track.artist} slug={track.slug} type="track" />
           </div>
 
           <ReleaseLinks trackSlug={track.slug} className="mt-6" />
 
           {/* 7. Related Releases */}
-          <RelatedReleases currentTrackId={track.id} currentAlbumId={track.album_id || undefined} className="mt-8" />
+          <RelatedReleases currentTrackId={track.id} currentAlbumId={track.album_id || undefined} className="mt-8" eyebrow="Related" title="More From The Catalog" />
 
           {/* 8. Fan Capture */}
           <FanCaptureBanner sourcePage={`/music/${track.slug}`} className="mt-12" />
