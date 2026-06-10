@@ -504,8 +504,9 @@ const Discography = () => {
           <section className="relative py-20 md:py-28 border-t border-white/5 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent">
             <div className="container mx-auto px-6">
               <div className="mb-12">
-                <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-3">03 — Singles &amp; Features</p>
+                <span className="catalog-stamp mb-3 block">03 — Singles &amp; Features</span>
                 <h2 className="text-3xl md:text-5xl font-display font-bold">A Decade of Drops</h2>
+                <div className="archive-rule mt-4 w-24" />
               </div>
 
               <div className="max-w-4xl mx-auto">
