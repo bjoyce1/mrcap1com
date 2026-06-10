@@ -558,10 +558,11 @@ const Discography = () => {
               <Soundwave className="w-full h-full" />
             </div>
             <div className="relative container mx-auto px-6 text-center">
-              <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Stream Everywhere</p>
+              <span className="catalog-stamp mb-3 block">Stream Everywhere</span>
               <h2 className="font-display font-bold text-4xl md:text-6xl mb-6 leading-[0.95]">
                 Available on every platform.
               </h2>
+              <div className="archive-rule mt-4 mx-auto w-24 mb-6" />
               <p className="max-w-xl mx-auto text-muted-foreground mb-10">
                 The full Mr. CAP catalog, from independent classics to the latest South Park Coalition releases.
               </p>
