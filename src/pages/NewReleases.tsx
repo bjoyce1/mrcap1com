@@ -411,7 +411,9 @@ export default function NewReleases() {
           {/* ── 7. CATALOG CTA ── */}
           <section className="py-16 md:py-24 border-t border-border/10">
             <div className="max-w-3xl mx-auto px-6 text-center">
+              <span className="catalog-stamp mb-3 block">Catalog</span>
               <h2 className="text-2xl md:text-3xl font-display mb-4">Explore the Full Catalog</h2>
+              <div className="archive-rule mt-4 mx-auto w-24 mb-8" />
               <p className="text-muted-foreground mb-8">
                 Dive deeper into 30+ years of Mr.&nbsp;CAP's music — from early underground classics to modern releases.
               </p>
