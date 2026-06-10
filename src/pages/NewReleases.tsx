@@ -397,12 +397,15 @@ export default function NewReleases() {
 
           {/* ── 6. FAN CAPTURE ── */}
           <section id="fan-capture" className="py-16 md:py-24 border-t border-border/10">
-            <FanCaptureBanner
-              sourcePage="new-releases"
-              headline="Get New Releases First"
-              subheadline="Join Mr. CAP Legacy — stay updated on new music, videos, and shows from Mr. CAP."
-              className="mx-6 md:mx-auto max-w-4xl"
-            />
+            <div className="max-w-4xl mx-auto px-6">
+              <span className="catalog-stamp mb-3 block">Stay Updated</span>
+              <div className="archive-rule mt-4 mb-8 w-24" />
+              <FanCaptureBanner
+                sourcePage="new-releases"
+                headline="Get New Releases First"
+                subheadline="Join Mr. CAP Legacy — stay updated on new music, videos, and shows from Mr. CAP."
+              />
+            </div>
           </section>
 
           {/* ── 7. CATALOG CTA ── */}
