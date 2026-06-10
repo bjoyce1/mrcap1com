@@ -150,9 +150,11 @@ const Listen = () => {
 
         {/* Latest Releases */}
         <div ref={latestRef}>
+          <span className="catalog-stamp mb-3 block">Latest Drops</span>
           <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
             <Music className="w-5 h-5 text-primary" /> Latest Releases
           </h2>
+          <div className="archive-rule mt-4 mb-4 w-24" />
           <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
             {tracksLoading ? (
               <div className="p-8 text-center text-muted-foreground">Loading tracks...</div>
