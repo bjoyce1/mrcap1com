@@ -216,7 +216,7 @@ const StickyPlayer = () => {
         {/* Progress bar - thin line at top */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-secondary">
           <div
-            className={cn("h-full transition-all duration-200", isPreview ? "bg-cap-gold" : "bg-primary")}
+            className={cn("h-full transition-all duration-200", isPreview ? "bg-cap-gold" : "bg-candy")}
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -294,7 +294,7 @@ const StickyPlayer = () => {
                   <button
                     onClick={togglePlay}
                     disabled={noAudio}
-                    className="p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors disabled:opacity-30"
+                    className="p-2 candy-sheen text-foreground rounded-full transition-colors disabled:opacity-30"
                   >
                     {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>

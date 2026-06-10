@@ -9,22 +9,22 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "candy-sheen text-foreground hover:text-foreground",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-[hsl(var(--accent-gold)/0.4)] bg-transparent text-foreground hover:border-[hsl(var(--accent-gold)/0.8)] hover:bg-[hsl(var(--accent-gold)/0.05)]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "text-foreground hover:bg-[hsl(var(--accent-gold)/0.06)] hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // Custom variants used across the project
-        hero: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/40 hover:shadow-primary/60 hover:scale-105",
-        heroOutline: "border border-muted-foreground/40 bg-transparent text-foreground hover:border-foreground hover:bg-foreground/5",
-        gold: "bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg shadow-accent/30 hover:shadow-accent/50",
+        hero: "candy-sheen text-foreground shadow-[var(--shadow-candy)] hover:shadow-[var(--shadow-candy)]",
+        heroOutline: "border border-[hsl(var(--accent-gold)/0.4)] bg-transparent text-foreground hover:border-[hsl(var(--accent-gold)/0.8)] hover:bg-[hsl(var(--accent-gold)/0.05)]",
+        gold: "bg-[hsl(var(--accent-gold))] text-background hover:bg-[hsl(var(--accent-gold)/0.9)] shadow-[var(--shadow-gold)]",
         glowRed: "bg-primary/20 text-primary border border-primary/50 hover:bg-primary/30 hover:border-primary",
-        flux: "bg-primary text-primary-foreground hover:bg-primary/90 font-medium tracking-wide",
-        fluxOutline: "border border-white/20 bg-white/[0.02] text-foreground hover:bg-white/[0.05] hover:border-white/30 font-medium",
+        flux: "candy-sheen text-foreground font-medium tracking-wide",
+        fluxOutline: "border border-[hsl(var(--accent-gold)/0.4)] bg-transparent text-foreground hover:bg-[hsl(var(--accent-gold)/0.05)] hover:border-[hsl(var(--accent-gold)/0.8)] font-medium",
         fluxGhost: "text-muted-foreground hover:text-foreground hover:bg-white/[0.02] font-medium",
       },
       size: {

@@ -6,7 +6,7 @@ const CredentialsBand = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
         {bookingPageData.credentials.map((c) => (
           <div key={c.label} className="text-center">
-            <div className="text-3xl md:text-4xl font-display font-bold text-primary mb-1">
+            <div className="font-mono text-3xl md:text-4xl font-bold text-gold mb-1">
               {c.stat}
             </div>
             <div className="text-xs uppercase tracking-widest text-muted-foreground">

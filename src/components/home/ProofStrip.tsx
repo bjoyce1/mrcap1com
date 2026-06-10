@@ -114,7 +114,7 @@ const ProofStrip = () => {
               <div className="relative inline-block">
                 <p
                   ref={(el) => { valueRefs.current[i] = el; }}
-                  className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-1 relative inline-block"
+                  className="font-mono text-3xl md:text-4xl lg:text-5xl font-bold text-gold mb-1 relative inline-block"
                 >
                   {stat.isText ? stat.textValue : `0${stat.suffix}`}
                 </p>
@@ -129,11 +129,11 @@ const ProofStrip = () => {
                 <span
                   ref={(el) => { underlineRefs.current[i] = el; }}
                   aria-hidden="true"
-                  className="block h-[2px] bg-gradient-to-r from-primary/0 via-primary to-primary/0 origin-center mt-1"
+                  className="block h-px bg-[hsl(var(--accent-gold)/0.5)] origin-center mt-1"
                   style={{ transform: "scaleX(0)" }}
                 />
               </div>
-              <p className="text-xs md:text-sm text-muted-foreground uppercase tracking-widest font-medium mt-2">
+              <p className="text-xs md:text-sm text-foreground uppercase tracking-widest font-medium mt-2">
                 {stat.label}
               </p>
             </div>

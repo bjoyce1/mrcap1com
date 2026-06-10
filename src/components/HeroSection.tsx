@@ -169,12 +169,13 @@ const HeroSection = () => {
           onMouseEnter={handleTitleHover}
           onMouseMove={handleTitleTilt}
           onMouseLeave={handleTitleTiltLeave}
-          className={`font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-extrabold uppercase tracking-tight will-change-transform cursor-pointer transition-none ${
+          className={`font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] will-change-transform cursor-pointer transition-none ${
             glitching ? "animate-glitch" : ""
           }`}
           style={{ 
-            color: "hsl(43, 91%, 61%)",
-            letterSpacing: "-0.02em",
+            color: "hsl(38, 33%, 89%)",
+            letterSpacing: "0",
+            lineHeight: "1.05",
             transformStyle: "preserve-3d",
           }}
         >

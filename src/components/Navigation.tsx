@@ -65,9 +65,12 @@ const Navigation = () => {
             alt="Mr. CAP" 
             className="w-9 h-9 rounded-full object-cover transition-transform duration-500 group-hover:rotate-[360deg]"
           />
-          <span className="font-display text-base tracking-wider text-foreground">
-            MR. CAP
-          </span>
+          <div className="flex flex-col leading-none">
+            <span className="font-display text-base tracking-wider text-foreground">
+              MR. CAP
+            </span>
+            <span className="catalog-stamp mt-1 hidden sm:block">EST. HOUSTON TX</span>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
@@ -138,7 +141,7 @@ const Navigation = () => {
 
       {/* Scroll Progress Bar */}
       <div
-        className="absolute bottom-0 left-0 h-[2px] bg-primary transition-none will-change-transform"
+        className="absolute bottom-0 left-0 h-[2px] bg-candy transition-none will-change-transform"
         style={{ width: `${scrollProgress}%` }}
       />
 

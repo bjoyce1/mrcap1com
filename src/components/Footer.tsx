@@ -39,10 +39,10 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative border-t border-white/5 bg-background overflow-hidden">
-      {/* Top gradient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[80px] bg-primary/5 blur-[60px] rounded-full" />
+    <footer className="relative bg-background overflow-hidden">
+      {/* Top gold archive rule */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-[hsl(var(--accent-gold)/0.25)]" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[80px] bg-[hsl(var(--candy-magenta)/0.06)] blur-[60px] rounded-full" />
       
       {/* Main Footer */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
@@ -106,10 +106,10 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="relative z-10 border-t border-white/5">
+      <div className="relative z-10 archive-rule">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[11px] text-muted-foreground/60">
-            © {new Date().getFullYear()} South Park Coalition LLC
+          <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground/70">
+            © {new Date().getFullYear()} SOUTH PARK COALITION LLC
           </p>
         </div>
       </div>
