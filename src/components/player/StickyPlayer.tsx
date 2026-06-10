@@ -303,7 +303,7 @@ const StickyPlayer = () => {
                   </button>
                 </div>
                 <div className="flex items-center gap-2 w-full max-w-md">
-                  <span className="text-[10px] text-muted-foreground w-8 text-right tabular-nums">{formatTime(currentTime)}</span>
+                  <span className="text-[10px] text-muted-foreground w-8 text-right tabular-nums font-mono">{formatTime(currentTime)}</span>
                   <Slider
                     value={[currentTime]}
                     max={duration || 100}
@@ -311,7 +311,7 @@ const StickyPlayer = () => {
                     onValueChange={handleSeek}
                     className="flex-1"
                   />
-                  <span className="text-[10px] text-muted-foreground w-8 tabular-nums">{formatTime(duration)}</span>
+                  <span className="text-[10px] text-muted-foreground w-8 tabular-nums font-mono">{formatTime(duration)}</span>
                 </div>
               </div>
 
