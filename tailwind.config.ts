@@ -68,10 +68,11 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Montserrat", "sans-serif"],
-        editorial: ["Montserrat", "sans-serif"],
-        sans: ["Inter", "sans-serif"],
-        ui: ["Inter", "sans-serif"],
+        display: ["Alfa Slab One", "serif"],
+        editorial: ["Alfa Slab One", "serif"],
+        sans: ["Archivo", "sans-serif"],
+        ui: ["Archivo", "sans-serif"],
+        mono: ["Space Mono", "monospace"],
       },
       borderRadius: {
         lg: "var(--radius)",
