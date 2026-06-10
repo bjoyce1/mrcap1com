@@ -131,9 +131,11 @@ const Listen = () => {
       <div className="max-w-6xl mx-auto px-6 pb-32 space-y-14">
         {/* Start Here - Curated Picks */}
         <div>
+          <span className="catalog-stamp mb-3 block">Start Here</span>
           <h2 className="text-xl font-display text-foreground mb-2 flex items-center gap-2">
-            <Play className="w-5 h-5 text-primary" /> Start Here
+            <Play className="w-5 h-5 text-primary" /> Curated Picks
           </h2>
+          <div className="archive-rule mt-4 mb-4 w-24" />
           <p className="text-sm text-muted-foreground mb-4">New to CAP? These 5 tracks tell the story.</p>
           <div className="bg-card/50 rounded-xl border border-primary/20 overflow-hidden divide-y divide-border/10">
             {tracksLoading ? (
