@@ -255,7 +255,9 @@ export default function NewReleases() {
           {recent.length > 0 && (
             <section className="py-16 md:py-24 border-t border-border/10">
               <div className="max-w-6xl mx-auto px-6">
+                <span className="catalog-stamp mb-3 block">Recent</span>
                 <h2 className="text-2xl md:text-3xl font-display mb-10 tracking-tight">Recent Releases</h2>
+                <div className="archive-rule mt-4 mb-10 w-24" />
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {recent.map((r, i) => (
                     <motion.div
