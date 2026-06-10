@@ -337,7 +337,7 @@ export default function NewReleases() {
                       transition={{ delay: i * 0.1 }}
                       className="rounded-xl border border-border/10 bg-card/20 backdrop-blur-sm p-6 hover:border-primary/20 transition-colors"
                     >
-                      <p className="text-xs text-primary tracking-wide uppercase mb-2">{post.outlet} · {post.date}</p>
+                      <p className="text-xs text-primary tracking-wide uppercase mb-2">{post.outlet} · <span className="font-mono">{post.date}</span></p>
                       <h3 className="font-display text-base leading-snug mb-2">{post.title}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-3 mb-4">{post.summary}</p>
                       {post.url && (
