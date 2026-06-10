@@ -168,9 +168,11 @@ const Listen = () => {
 
         {/* Albums */}
         <div ref={albumsRef}>
+          <span className="catalog-stamp mb-3 block">Full Lengths</span>
           <h2 className="text-xl font-display text-foreground mb-4 flex items-center gap-2">
             <Disc3 className="w-5 h-5 text-primary" /> Albums
           </h2>
+          <div className="archive-rule mt-4 mb-4 w-24" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {albumsLoading
               ? Array.from({ length: 5 }).map((_, i) => (
@@ -192,7 +194,7 @@ const Listen = () => {
                        <div className="flex items-center justify-between">
                          <div className="min-w-0">
                            <p className="text-sm font-medium text-foreground truncate">{album.title}</p>
-                           <p className="text-xs text-muted-foreground">{album.release_year} · {album.artist}</p>
+                           <p className="text-xs text-muted-foreground font-mono">{album.release_year} · {album.artist}</p>
                          </div>
                          <ShareButtons title={album.title} artist={album.artist} slug={album.slug} type="album" compact />
                        </div>
