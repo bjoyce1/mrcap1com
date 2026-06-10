@@ -417,10 +417,11 @@ const Discography = () => {
                 </div>
 
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">Featured Release</p>
+                  <span className="catalog-stamp mb-3 block">Featured Release</span>
                   <h2 className="font-display font-bold text-4xl md:text-6xl leading-[0.95] mb-6">
                     {featuredAlbum.title}
                   </h2>
+                  <div className="archive-rule mt-4 mb-6 w-24" />
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
                     <span>{featuredAlbum.artist}</span>
                     <span className="opacity-40">•</span>
