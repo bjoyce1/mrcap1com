@@ -212,7 +212,9 @@ const Listen = () => {
         {/* Singles */}
         {singles.length > 0 && (
           <div ref={singlesRef}>
+            <span className="catalog-stamp mb-3 block">Standalone Tracks</span>
             <h2 className="text-xl font-display text-foreground mb-4">Singles & Features</h2>
+            <div className="archive-rule mt-4 mb-4 w-24" />
             <div className="bg-card/50 rounded-xl border border-border/30 overflow-hidden divide-y divide-border/10">
               {singles.map((track, i) => (
                 <TrackRow key={track.id} track={track} index={i} queue={singles} />
