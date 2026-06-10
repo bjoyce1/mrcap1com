@@ -90,6 +90,11 @@ export const PrintfulProductModal = ({ product, isOpen, onClose }: PrintfulProdu
     document.body.appendChild(script);
   }, [step, paypalClientId, paypalLoaded]);
 
+  // Reset selected image when product changes
+  useEffect(() => {
+    setSelectedImage(0);
+  }, [product?.sync_product.id]);
+
   // Render PayPal buttons when SDK is loaded
   useEffect(() => {
     if (step !== 'payment' || !paypalLoaded || !window.paypal || !paypalButtonsRef.current || !product) return;
