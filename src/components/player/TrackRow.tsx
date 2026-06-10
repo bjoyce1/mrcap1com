@@ -87,7 +87,7 @@ const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration 
           ) : (
             <>
               <span className={cn(
-                "transition-all duration-300 text-sm tabular-nums",
+                "transition-all duration-300 text-sm tabular-nums font-mono",
                 "group-hover:opacity-0 group-hover:scale-75",
                 isActive ? "text-primary" : "text-muted-foreground"
               )}>
@@ -157,7 +157,7 @@ const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration 
 
         {/* Duration */}
         {showDuration && (
-          <span className="text-xs text-muted-foreground tabular-nums w-10 text-right">
+          <span className="text-xs text-muted-foreground tabular-nums font-mono w-10 text-right">
             {formatDuration(track.duration)}
           </span>
         )}
@@ -191,7 +191,7 @@ const TrackRowInner = ({ track, index, queue, showAlbumArt = true, showDuration 
 
           {/* Audio Waveform */}
           <div className="flex-1 flex flex-col gap-1.5">
-            <div className="flex justify-between text-[11px] text-muted-foreground font-medium tabular-nums">
+            <div className="flex justify-between text-[11px] text-muted-foreground font-medium tabular-nums font-mono">
               <span className={isActive ? "text-primary" : ""}>
                 {isActive ? formatDuration(Math.floor(currentTime)) : "0:00"}
               </span>
