@@ -228,7 +228,7 @@ export default function NewReleases() {
                       {latest.title}
                     </h2>
                     <p className="text-muted-foreground text-sm">
-                      {latest.artist} · {latest.type} · {latest.releaseYear ?? ""}
+                      {latest.artist} · {latest.type} · <span className="font-mono">{latest.releaseYear ?? ""}</span>
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
                       The newest official release from Mr.&nbsp;CAP — available now on Mr. CAP Legacy. Stream, explore the story behind the music, and discover the full content ecosystem.
@@ -285,7 +285,7 @@ export default function NewReleases() {
                             {r.releaseYear && (
                               <>
                                 <span className="text-border">·</span>
-                                <Calendar className="w-3 h-3" /> {r.releaseYear}
+                                <Calendar className="w-3 h-3" /> <span className="font-mono">{r.releaseYear}</span>
                               </>
                             )}
                           </p>
@@ -382,7 +382,7 @@ export default function NewReleases() {
                     </div>
                     <div className="p-5 space-y-1">
                       <h3 className="font-display text-sm">{v.title}</h3>
-                      <p className="text-xs text-muted-foreground">{v.year}</p>
+                      <p className="text-xs text-muted-foreground font-mono">{v.year}</p>
                       {v.relatedRelease && (
                         <Link to={v.relatedRelease} className="text-xs text-primary hover:underline inline-flex items-center gap-1 mt-1">
                           View Release <ArrowRight className="w-3 h-3" />
