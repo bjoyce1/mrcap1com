@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2, ShoppingCart } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, X, ChevronUp, ChevronDown, ListMusic, Share2, ShoppingCart, Shuffle, Repeat, Repeat1 } from "lucide-react";
 import { reportQualifiedStream } from "@/lib/streamTracking";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
@@ -40,6 +40,10 @@ const StickyPlayer = () => {
     togglePlay,
     nextTrack,
     prevTrack,
+    isShuffled,
+    repeatMode,
+    toggleShuffle,
+    cycleRepeat,
     setCurrentTime,
     setDuration,
     setVolume,
@@ -126,6 +130,54 @@ const StickyPlayer = () => {
     }
   }, [isPlaying, startLoop, stopLoop]);
 
+  // ── Media Session API: lock screen + headphone/car controls ──
+  useEffect(() => {
+    if (!('mediaSession' in navigator) || !currentTrack) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: currentTrack.title,
+      artist: currentTrack.featured_artists
+        ? `${currentTrack.artist} ft. ${currentTrack.featured_artists}`
+        : currentTrack.artist,
+      artwork: currentTrack.cover_art_url
+        ? [
+            { src: currentTrack.cover_art_url, sizes: '96x96' },
+            { src: currentTrack.cover_art_url, sizes: '256x256' },
+            { src: currentTrack.cover_art_url, sizes: '512x512' },
+          ]
+        : [],
+    });
+  }, [currentTrack?.id]);
+
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return;
+    navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return;
+    const ms = navigator.mediaSession;
+    ms.setActionHandler('play', () => usePlayerStore.getState().resume());
+    ms.setActionHandler('pause', () => usePlayerStore.getState().pause());
+    ms.setActionHandler('previoustrack', () => usePlayerStore.getState().prevTrack());
+    ms.setActionHandler('nexttrack', () => usePlayerStore.getState().nextTrack());
+    try {
+      ms.setActionHandler('seekto', (details) => {
+        const audio = audioRef.current;
+        if (!audio || details.seekTime == null) return;
+        const target = isPreview ? Math.min(details.seekTime, PREVIEW_SECONDS) : details.seekTime;
+        audio.currentTime = target;
+        usePlayerStore.getState().setCurrentTime(target);
+      });
+    } catch {
+      // seekto unsupported in some browsers
+    }
+    return () => {
+      (['play', 'pause', 'previoustrack', 'nexttrack', 'seekto'] as MediaSessionAction[]).forEach((action) => {
+        try { ms.setActionHandler(action, null); } catch { /* ignore */ }
+      });
+    };
+  }, [isPreview]);
+
   // Qualified stream: fire once per track when 30s reached
   useEffect(() => {
     if (!currentTrack) return;
@@ -177,7 +229,20 @@ const StickyPlayer = () => {
     if (currentTrack) {
       trackEvent("track_complete", { track_id: currentTrack.id });
     }
-    nextTrack();
+    const { repeatMode: mode, queue: q, queueIndex: qi } = usePlayerStore.getState();
+    if (mode === 'one') {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+      return;
+    }
+    if (qi < q.length - 1 || mode === 'all') {
+      nextTrack();
+    } else {
+      usePlayerStore.setState({ isPlaying: false });
+    }
   }, [currentTrack, nextTrack]);
 
   const handleSeek = (value: number[]) => {
@@ -191,7 +256,7 @@ const StickyPlayer = () => {
 
   if (!isPlayerVisible || !currentTrack) return null;
 
-  const hasNext = queueIndex < queue.length - 1;
+  const hasNext = queueIndex < queue.length - 1 || (repeatMode === 'all' && queue.length > 1);
   const hasPrev = queueIndex > 0;
   const noAudio = !currentTrack.audio_url;
   const progressMax = isPreview ? PREVIEW_SECONDS : (duration || 100);
@@ -288,6 +353,13 @@ const StickyPlayer = () => {
               {/* Controls + Scrubber */}
               <div className="hidden md:flex flex-col items-center flex-1 gap-1">
                 <div className="flex items-center gap-3">
+                  <button
+                    onClick={toggleShuffle}
+                    className={cn("p-1.5 transition-colors", isShuffled ? "text-primary" : "text-muted-foreground hover:text-foreground")}
+                    title={isShuffled ? "Shuffle on" : "Shuffle off"}
+                  >
+                    <Shuffle className="w-4 h-4" />
+                  </button>
                   <button onClick={prevTrack} disabled={!hasPrev} className="p-1.5 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30">
                     <SkipBack className="w-4 h-4" />
                   </button>
@@ -300,6 +372,13 @@ const StickyPlayer = () => {
                   </button>
                   <button onClick={nextTrack} disabled={!hasNext} className="p-1.5 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30">
                     <SkipForward className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={cycleRepeat}
+                    className={cn("p-1.5 transition-colors", repeatMode !== 'off' ? "text-primary" : "text-muted-foreground hover:text-foreground")}
+                    title={repeatMode === 'one' ? "Repeat one" : repeatMode === 'all' ? "Repeat all" : "Repeat off"}
+                  >
+                    {repeatMode === 'one' ? <Repeat1 className="w-4 h-4" /> : <Repeat className="w-4 h-4" />}
                   </button>
                 </div>
                 <div className="flex items-center gap-2 w-full max-w-md">
