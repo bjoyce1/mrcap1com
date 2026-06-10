@@ -349,8 +349,9 @@ const Discography = () => {
           {/* ============ ALBUM GRID (editorial / MJ-style) ============ */}
           <section className="relative py-24 md:py-32 border-t border-white/5">
             <div className="container mx-auto px-6 mb-16 md:mb-20 text-center">
-              <p className="text-[10px] uppercase tracking-[0.4em] text-primary mb-4">01 — Albums</p>
+              <span className="catalog-stamp mb-3 block">01 — Albums</span>
               <h2 className="text-3xl md:text-5xl font-display font-bold">Studio &amp; Collab Records</h2>
+              <div className="archive-rule mt-4 mx-auto w-24" />
             </div>
 
             <div className="container mx-auto px-6 max-w-6xl">
