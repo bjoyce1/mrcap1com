@@ -489,7 +489,7 @@ const Discography = () => {
                         </div>
                       </div>
                     </div>
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1">{album.year}</p>
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-primary mb-1 font-mono">{album.year}</p>
                     <h3 className="font-display font-semibold text-lg leading-tight group-hover:text-primary transition-colors">
                       {album.title}
                     </h3>
