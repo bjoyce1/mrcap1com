@@ -62,6 +62,81 @@ export type Database = {
         }
         Relationships: []
       }
+      analytics_events: {
+        Row: {
+          campaign: string | null
+          content: string | null
+          device: Json
+          event_id: string
+          event_type: string
+          geo: Json
+          id: number
+          medium: string | null
+          metrics: Json
+          path: string | null
+          props: Json
+          received_at: string
+          referrer: string | null
+          session_id: string | null
+          site_id: string
+          source: string | null
+          term: string | null
+          title: string | null
+          ts: string
+          url: string | null
+          user_agent_hash: string | null
+          visitor_id: string | null
+        }
+        Insert: {
+          campaign?: string | null
+          content?: string | null
+          device?: Json
+          event_id: string
+          event_type: string
+          geo?: Json
+          id?: number
+          medium?: string | null
+          metrics?: Json
+          path?: string | null
+          props?: Json
+          received_at?: string
+          referrer?: string | null
+          session_id?: string | null
+          site_id?: string
+          source?: string | null
+          term?: string | null
+          title?: string | null
+          ts?: string
+          url?: string | null
+          user_agent_hash?: string | null
+          visitor_id?: string | null
+        }
+        Update: {
+          campaign?: string | null
+          content?: string | null
+          device?: Json
+          event_id?: string
+          event_type?: string
+          geo?: Json
+          id?: number
+          medium?: string | null
+          metrics?: Json
+          path?: string | null
+          props?: Json
+          received_at?: string
+          referrer?: string | null
+          session_id?: string | null
+          site_id?: string
+          source?: string | null
+          term?: string | null
+          title?: string | null
+          ts?: string
+          url?: string | null
+          user_agent_hash?: string | null
+          visitor_id?: string | null
+        }
+        Relationships: []
+      }
       booking_requests: {
         Row: {
           admin_notes: string | null
