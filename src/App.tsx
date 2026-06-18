@@ -44,6 +44,7 @@ const Admin = lazy(() => import("./pages/Admin"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Links = lazy(() => import("./pages/Links"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const AnalyticsRedirect = lazy(() => import("./pages/AnalyticsRedirect"));
 const OPKHub = lazy(() => import("./pages/opk/OPKHub"));
 const OPKMusic = lazy(() => import("./pages/opk/OPKMusic"));
 const OPKPress = lazy(() => import("./pages/opk/OPKPress"));
@@ -102,6 +103,7 @@ function AppRoutes() {
       <AnimatePresence mode="wait">
         <Suspense fallback={<PageLoader />}>
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
+            <Route path="/analytics" element={<AnalyticsRedirect />} />
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
             {/* Page consolidation redirects */}
             <Route path="/about" element={<Navigate to="/who-is-mr-cap" replace />} />
