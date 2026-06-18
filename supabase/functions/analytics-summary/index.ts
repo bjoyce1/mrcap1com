@@ -454,15 +454,62 @@ Deno.serve(async (req: Request) => {
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
-    const { data, error } = await supabase
-      .from("analytics_events")
-      .select("*")
-      .gte("ts", since)
-      .order("ts", { ascending: true })
-      .limit(50000);
-    if (error) throw error;
+    const sinceDay = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    const [eventsRes, streamsRes, tracksRes] = await Promise.all([
+      supabase.from("analytics_events").select("*").gte("ts", since).order("ts", { ascending: true }).limit(50000),
+      supabase.from("stream_logs").select("track_id,session_id,seconds_listened,streamed_date,created_at").gte("streamed_date", sinceDay).limit(50000),
+      supabase.from("tracks").select("id,title,slug,artist,play_count,cover_art_url").limit(500),
+    ]);
+    if (eventsRes.error) throw eventsRes.error;
 
-    const summary = aggregate((data as Event[]) || [], days);
+    const summary: any = aggregate((eventsRes.data as Event[]) || [], days);
+
+    // ---- Music aggregation ----
+    const streams = (streamsRes.data as any[]) || [];
+    const tracksById = new Map<string, any>();
+    for (const t of (tracksRes.data as any[]) || []) tracksById.set(t.id, t);
+    const byTrack = new Map<string, any>();
+    for (const s of streams) {
+      const tr = tracksById.get(s.track_id);
+      if (!byTrack.has(s.track_id)) {
+        byTrack.set(s.track_id, {
+          track_id: s.track_id,
+          title: tr?.title || "Unknown track",
+          slug: tr?.slug || null,
+          artist: tr?.artist || "Mr. CAP",
+          cover_art_url: tr?.cover_art_url || null,
+          streams: 0, listeners: new Set<string>(), seconds: 0,
+        });
+      }
+      const row = byTrack.get(s.track_id)!;
+      row.streams += 1;
+      if (s.session_id) row.listeners.add(s.session_id);
+      row.seconds += Number(s.seconds_listened || 0);
+    }
+    const topTracks = Array.from(byTrack.values()).map((r: any) => ({
+      track_id: r.track_id, title: r.title, slug: r.slug, artist: r.artist,
+      cover_art_url: r.cover_art_url, streams: r.streams, listeners: r.listeners.size,
+      avg_seconds: r.streams ? Math.round(r.seconds / r.streams) : 0,
+    })).sort((a, b) => b.streams - a.streams).slice(0, 20);
+
+    const streamsByDay = new Map<string, number>();
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      streamsByDay.set(d.toISOString().slice(0, 10), 0);
+    }
+    for (const s of streams) {
+      const k = String(s.streamed_date);
+      if (streamsByDay.has(k)) streamsByDay.set(k, (streamsByDay.get(k) || 0) + 1);
+    }
+    summary.music = {
+      total_streams: streams.length,
+      unique_listeners: new Set(streams.map((s: any) => s.session_id).filter(Boolean)).size,
+      total_seconds: streams.reduce((a: number, s: any) => a + Number(s.seconds_listened || 0), 0),
+      top_tracks: topTracks,
+      trend: Array.from(streamsByDay.entries()).map(([date, streams]) => ({ date, streams })),
+      catalog_size: (tracksRes.data || []).length,
+    };
+
     return new Response(JSON.stringify(summary), {
       status: 200,
       headers: { ...corsHeaders, "content-type": "application/json" },
