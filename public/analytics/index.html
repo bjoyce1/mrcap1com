@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mr. CAP Analytics Dashboard</title>
+  <link rel="stylesheet" href="/analytics/styles.css" />
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Dashboard navigation">
+      <div class="brand">
+        <div class="brand-mark">MC</div>
+        <div>
+          <strong>Mr. CAP</strong>
+          <span>InsightFlow</span>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" type="button"><span>⌂</span>Overview</button>
+        <button class="nav-item" type="button"><span>↯</span>Real-Time</button>
+        <button class="nav-item" type="button"><span>◎</span>Audience</button>
+        <button class="nav-item" type="button"><span>◌</span>Acquisition</button>
+        <button class="nav-item" type="button"><span>▣</span>Behavior</button>
+        <button class="nav-item" type="button"><span>⚑</span>Conversions</button>
+        <button class="nav-item" type="button"><span>♬</span>Music</button>
+        <button class="nav-item" type="button"><span>◈</span>Campaigns</button>
+        <button class="nav-item" type="button"><span>✦</span>Events</button>
+        <button class="nav-item" type="button"><span>□</span>Reports</button>
+        <button class="nav-item" type="button"><span>⌕</span>Explore</button>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="nav-list lower">
+        <button class="nav-item" type="button"><span>!</span>Alerts</button>
+        <button class="nav-item" type="button"><span>✎</span>Annotations</button>
+        <button class="nav-item" type="button"><span>盾</span>Data Quality</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-item" type="button"><span>⚙</span>Settings</button>
+        <button class="nav-item" type="button"><span>?</span>Help</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="title-group">
+          <p class="eyebrow">Website traffic command center</p>
+          <h1>Analytics Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <label class="select-label">
+            <span>Date Range</span>
+            <select id="days-select" aria-label="Date range">
+              <option value="7">Last 7 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="60">Last 60 days</option>
+              <option value="90">Last 90 days</option>
+            </select>
+          </label>
+          <button class="ghost-btn" id="refresh-btn" type="button">Refresh</button>
+          <label class="search-box" aria-label="Search dashboard">
+            <span>⌕</span>
+            <input id="search-input" type="search" placeholder="Search reports, metrics, pages..." />
+          </label>
+          <button class="icon-btn" id="token-btn" type="button" title="Set dashboard token">⚿</button>
+          <button class="icon-btn" type="button" title="Notifications">●</button>
+          <div class="avatar" title="Mr. CAP analytics">MC</div>
+        </div>
+      </header>
+
+      <section class="status-strip" id="status-strip">
+        <div>
+          <strong id="status-title">Loading analytics…</strong>
+          <span id="status-copy">Connecting to the summary API.</span>
+        </div>
+        <code id="status-endpoint">analytics-summary</code>
+      </section>
+
+      <section class="kpi-grid" id="kpi-grid" aria-label="Top analytics KPIs"></section>
+
+      <section class="dashboard-grid">
+        <article class="card card-xl trend-card">
+          <div class="card-header">
+            <div>
+              <h2>Traffic Over Time</h2>
+              <p>Users, sessions, and pageviews by day</p>
+            </div>
+            <div class="legend inline">
+              <span><i class="dot blue"></i>Users</span>
+              <span><i class="dot purple"></i>Sessions</span>
+              <span><i class="dot orange"></i>Pageviews</span>
+            </div>
+          </div>
+          <canvas id="traffic-chart" height="310"></canvas>
+        </article>
+
+        <article class="card traffic-source-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Traffic Sources</h2>
+              <p>Channel mix</p>
+            </div>
+          </div>
+          <div class="donut-layout">
+            <canvas id="sources-chart" width="240" height="240"></canvas>
+            <div class="source-list" id="source-list"></div>
+          </div>
+        </article>
+
+        <article class="card top-landing-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Top Landing Pages</h2>
+              <p>First page in each session</p>
+            </div>
+            <a href="#landing-pages">View all →</a>
+          </div>
+          <div class="table-wrap">
+            <table id="landing-table">
+              <thead>
+                <tr><th>Landing Page</th><th>Sessions</th><th>Bounce</th><th>Conv.</th><th>Revenue</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card source-medium-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Source / Medium Performance</h2>
+              <p>Where high-quality visits come from</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table id="source-medium-table">
+              <thead>
+                <tr><th>Source / Medium</th><th>Sessions</th><th>Users</th><th>Bounce</th><th>Conv.</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card device-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Device Breakdown</h2>
+              <p>Desktop, mobile, and tablet mix</p>
+            </div>
+          </div>
+          <div class="bar-layout">
+            <canvas id="device-chart" width="360" height="260"></canvas>
+            <div class="metric-list" id="device-list"></div>
+          </div>
+        </article>
+
+        <article class="card geo-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Geo Performance</h2>
+              <p>Country-level traffic where available</p>
+            </div>
+            <div class="mini-tabs"><button class="active">Countries</button><button>Cities</button></div>
+          </div>
+          <div class="table-wrap">
+            <table id="geo-table">
+              <thead><tr><th>Country</th><th>Users</th><th>Sessions</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card campaign-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Campaign Performance</h2>
+              <p>UTM campaign tracking</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table id="campaign-table">
+              <thead><tr><th>Campaign</th><th>Sessions</th><th>Conversions</th><th>CPA</th><th>ROAS</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card funnel-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Conversion Funnel</h2>
+              <p>From arrival to booking/lead</p>
+            </div>
+          </div>
+          <div id="funnel" class="funnel"></div>
+        </article>
+
+        <article class="card audience-card">
+          <div class="card-header compact">
+            <div>
+              <h2>New vs Returning Users</h2>
+              <p>Audience loyalty</p>
+            </div>
+          </div>
+          <div class="donut-layout small-donut">
+            <canvas id="audience-chart" width="220" height="220"></canvas>
+            <div class="metric-list" id="audience-list"></div>
+          </div>
+        </article>
+
+        <article class="card top-pages-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Top Pages</h2>
+              <p>Most viewed content</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table id="pages-table">
+              <thead><tr><th>Page</th><th>Pageviews</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card avg-duration-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Avg. Session Duration</h2>
+              <p>Engagement depth</p>
+            </div>
+          </div>
+          <div class="big-time" id="avg-session-duration">00:00:00</div>
+          <canvas id="duration-chart" height="170"></canvas>
+        </article>
+
+        <article class="card alerts-card">
+          <div class="card-header compact">
+            <div>
+              <h2>Tracking Health / Alerts</h2>
+              <p>Data quality checks</p>
+            </div>
+          </div>
+          <div id="alerts-list" class="alerts-list"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/analytics/app.js" defer></script>
+</body>
+</html>
