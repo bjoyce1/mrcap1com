@@ -471,7 +471,7 @@
   async function load() {
     try {
       setStatus('', 'Loading analytics…', 'Connecting to the summary API.');
-      var url = '/api/summary?days=' + encodeURIComponent(state.days);
+      var url = 'https://qisamkiggoibjkkdtkxq.supabase.co/functions/v1/analytics-summary?days=' + encodeURIComponent(state.days);
       var res = await fetch(url, { headers: { 'x-dashboard-token': state.token } });
       if (res.status === 401) {
         setStatus('error', 'Dashboard token required.', 'Click the key icon and enter DASHBOARD_TOKEN from your server environment.');
