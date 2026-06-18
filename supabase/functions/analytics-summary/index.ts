@@ -301,6 +301,64 @@ function aggregate(events: Event[], days = 30) {
   const prev7 = trendRows.slice(-14, -7).reduce((s, x) => s + x.pageviews, 0);
   const anomalyCount = prev7 && last7 < prev7 * 0.5 ? 1 : 0;
 
+  // ---- Real-Time (last 30 minutes) ----
+  const thirtyMinAgo = now.getTime() - 30 * 60 * 1000;
+  const recent = eventsWithTime.filter((e: any) => e._time.getTime() >= thirtyMinAgo);
+  const rtMinutes: any[] = [];
+  for (let i = 29; i >= 0; i--) {
+    const bucketEnd = now.getTime() - i * 60 * 1000;
+    const bucketStart = bucketEnd - 60 * 1000;
+    const slice = recent.filter((e: any) => e._time.getTime() >= bucketStart && e._time.getTime() < bucketEnd);
+    rtMinutes.push({
+      minute: new Date(bucketEnd).toISOString(),
+      pageviews: slice.filter((e: any) => e.event_type === "pageview").length,
+      events: slice.length,
+    });
+  }
+  const activeVisitors = new Set(
+    recent.filter((e: any) => now.getTime() - e._time.getTime() <= 5 * 60 * 1000)
+      .map((e: any) => e.visitor_id).filter(Boolean)
+  ).size;
+  const livePagesMap = new Map<string, number>();
+  for (const e of recent.filter((x: any) => x.event_type === "pageview")) {
+    const p = normalizePath(e.path || "/");
+    livePagesMap.set(p, (livePagesMap.get(p) || 0) + 1);
+  }
+  const livePages = Array.from(livePagesMap.entries())
+    .map(([path, views]) => ({ path, views }))
+    .sort((a, b) => b.views - a.views).slice(0, 10);
+  const liveFeed = recent.slice(-20).reverse().map((e: any) => ({
+    ts: e._time.toISOString(), event_type: e.event_type, path: normalizePath(e.path || "/"),
+    country: e.geo?.country || null, source: e.source || null,
+  }));
+
+  // ---- Events breakdown ----
+  const eventsByTypeMap = new Map<string, number>();
+  for (const e of current) eventsByTypeMap.set(e.event_type, (eventsByTypeMap.get(e.event_type) || 0) + 1);
+  const eventsByType = Array.from(eventsByTypeMap.entries())
+    .map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+  const recentEvents = current.slice(-50).reverse().map((e: any) => ({
+    ts: e._time.toISOString(), event_type: e.event_type, path: normalizePath(e.path || "/"),
+    visitor_id: e.visitor_id ? String(e.visitor_id).slice(0, 8) : null,
+    country: e.geo?.country || null,
+  }));
+
+  // ---- Languages / Browsers / OS ----
+  const langMap = new Map<string, number>();
+  const browserMap = new Map<string, number>();
+  const osMap = new Map<string, number>();
+  for (const s of sessions) {
+    const ev = s.source_event || s.first_pageview || {};
+    langMap.set(ev.geo?.language || "Unknown", (langMap.get(ev.geo?.language || "Unknown") || 0) + 1);
+    const browser = (ev.device as any)?.browser || "Unknown";
+    browserMap.set(browser, (browserMap.get(browser) || 0) + 1);
+    const os = (ev.device as any)?.os || "Unknown";
+    osMap.set(os, (osMap.get(os) || 0) + 1);
+  }
+  const finalizeSimple = (m: Map<string, number>, limit = 8) =>
+    Array.from(m.entries()).map(([name, sessions]) => ({ name, sessions }))
+      .sort((a, b) => b.sessions - a.sessions).slice(0, limit);
+
   return {
     generated_at: new Date().toISOString(),
     days: rangeDays,
@@ -334,8 +392,26 @@ function aggregate(events: Event[], days = 30) {
       campaign: x.name, cpa: null, roas: x.revenue ? x.revenue / Math.max(1, x.conversions || 1) : null, ...x,
     })),
     pages,
-    audience: { new_users: newUsers, returning_users: returningUsers, total_users: core.users },
+    audience: {
+      new_users: newUsers, returning_users: returningUsers, total_users: core.users,
+      languages: finalizeSimple(langMap, 8),
+      browsers: finalizeSimple(browserMap, 8),
+      operating_systems: finalizeSimple(osMap, 8),
+    },
     funnel: buildFunnel(current),
+    realtime: {
+      active_visitors: activeVisitors,
+      pageviews_30m: recent.filter((e: any) => e.event_type === "pageview").length,
+      events_30m: recent.length,
+      by_minute: rtMinutes,
+      top_pages: livePages,
+      feed: liveFeed,
+    },
+    events_data: {
+      total: current.length,
+      by_type: eventsByType,
+      recent: recentEvents,
+    },
     technical: {
       tag_status: last24h > 0 ? "Healthy" : "No events in last 24h",
       conversion_tracking: core.conversions > 0 ? "Healthy" : "No conversion events yet",
@@ -344,6 +420,8 @@ function aggregate(events: Event[], days = 30) {
       site_speed_status: p75Load == null ? "No performance data yet" : (p75Load < 2500 ? "Good" : (p75Load < 4000 ? "Needs review" : "Slow")),
       traffic_anomalies: anomalyCount,
       last_event_at: lastEventTs ? new Date(lastEventTs).toISOString() : null,
+      events_24h: last24h,
+      total_events_period: current.length,
     },
   };
 }
