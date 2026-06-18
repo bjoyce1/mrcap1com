@@ -11,9 +11,10 @@
     return scripts[scripts.length - 1];
   })();
 
+  var DEFAULT_ENDPOINT = 'https://qisamkiggoibjkkdtkxq.supabase.co/functions/v1/analytics-collect';
   var cfg = {
     siteId: (script && script.dataset.siteId) || location.hostname,
-    endpoint: (script && script.dataset.endpoint) || (script ? new URL(script.src).origin + '/api/collect' : '/api/collect'),
+    endpoint: (script && script.dataset.endpoint) || DEFAULT_ENDPOINT,
     requireConsent: script && script.dataset.requireConsent === 'true',
     respectDnt: !(script && script.dataset.respectDnt === 'false'),
     sampleRate: Math.max(0, Math.min(1, parseFloat((script && script.dataset.sampleRate) || '1') || 1)),
