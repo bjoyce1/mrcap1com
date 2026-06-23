@@ -70,6 +70,7 @@ const HoustonHipHopHistory = lazy(() => import("./pages/HoustonHipHopHistory"));
 const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
 const Listen = lazy(() => import("./pages/Listen"));
+const TikTok = lazy(() => import("./pages/TikTok"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
