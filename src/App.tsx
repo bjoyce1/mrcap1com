@@ -170,6 +170,7 @@ function AppRoutes() {
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
+            <Route path="/tiktok" element={<PageTransition><TikTok /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>
