@@ -93,7 +93,8 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`;
   const instagramUrl = "https://www.instagram.com/mrcapism/";
-  const tiktokUrl = "https://www.tiktok.com/@mrcapism";
+  const isMobile = typeof navigator !== "undefined" && /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+  const tiktokUrl = isMobile ? "snssdk1233://user/profile/mrcapism" : "https://www.tiktok.com/upload";
 
   const btnBase = compact
     ? "inline-flex items-center justify-center w-8 h-8 rounded-full border border-border/30 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"

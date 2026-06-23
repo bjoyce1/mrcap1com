@@ -31,3 +31,5 @@ project_id = "qisamkiggoibjkkdtkxq"
     verify_jwt = false
   [functions.spotify-artist]
     verify_jwt = false
+  [functions.tiktok-videos]
+    verify_jwt = false

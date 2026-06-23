@@ -49,6 +49,13 @@ const links = [
     internal: true,
     icon: Disc3,
   },
+  {
+    title: "🎬 TikTok Feed",
+    description: "Live videos from @mrcapism",
+    url: "/tiktok",
+    internal: true,
+    icon: Sparkles,
+  },
 ];
 
 const socialLinks = [
