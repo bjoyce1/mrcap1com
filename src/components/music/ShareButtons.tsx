@@ -171,6 +171,15 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
         <TikTokIcon className={iconSize} />
         TikTok
       </button>
+      <button
+        type="button"
+        className={btnBase}
+        onClick={handleGenerateTikTokCaption}
+        title="Generate a TikTok caption with a tracked link"
+      >
+        <Wand2 className={iconSize} />
+        TikTok Caption
+      </button>
     </div>
   );
 }
