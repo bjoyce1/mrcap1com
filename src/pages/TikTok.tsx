@@ -1,13 +1,15 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ExternalLink, Play, Heart, MessageCircle, Eye, Share2, Music2, Copy, Check } from "lucide-react";
+import { ExternalLink, Play, Heart, MessageCircle, Eye, Share2, Music2, Copy, Check, Wand2, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useTikTokFeed, type TikTokVideo } from "@/hooks/useTikTokFeed";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import { generateTikTokCaption } from "@/lib/tiktokCaption";
 
 const TikTokIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
