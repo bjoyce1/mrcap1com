@@ -265,6 +265,50 @@ export default function TikTok() {
           )}
         </section>
 
+        {/* Caption generator */}
+        <section className="container mx-auto px-4 mb-16">
+          <div className="bg-card/40 rounded-3xl p-8 md:p-10 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
+            <div className="grid md:grid-cols-5 gap-6 items-start">
+              <div className="md:col-span-2">
+                <span className="text-xs font-medium tracking-widest uppercase text-primary mb-2 block">
+                  One-Tap Caption
+                </span>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3">Caption Generator</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Auto-builds a TikTok caption with hashtags and a UTM-tracked hub link, so every
+                  share shows up in analytics. Tap shuffle for a new angle.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Button size="sm" className="rounded-full gap-2" onClick={copyCaption}>
+                    {captionCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                    {captionCopied ? "Copied" : "Copy caption"}
+                  </Button>
+                  <Button variant="outline" size="sm" className="rounded-full gap-2" onClick={regenerateCaption}>
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    Shuffle
+                  </Button>
+                  <Button variant="outline" size="sm" className="rounded-full gap-2" onClick={openTikTokWithCaption}>
+                    <Wand2 className="w-3.5 h-3.5" />
+                    Copy & open TikTok
+                  </Button>
+                </div>
+              </div>
+              <div className="md:col-span-3">
+                <Textarea
+                  value={caption}
+                  onChange={(e) => setCaption(e.target.value)}
+                  rows={7}
+                  className="bg-background/60 text-sm leading-relaxed font-mono resize-none"
+                  aria-label="Generated TikTok caption"
+                />
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-2">
+                  Edit freely — link UTM stays attributed to tiktok / caption_generator.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Remix / share strip */}
         <section className="container mx-auto px-4 mb-16">
           <div className="bg-card/40 rounded-3xl p-8 md:p-10 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
