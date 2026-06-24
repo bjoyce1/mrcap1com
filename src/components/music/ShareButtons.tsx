@@ -1,9 +1,10 @@
-import { Share2, Check, Link2 } from "lucide-react";
+import { Share2, Check, Link2, Wand2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { shareMusic } from "@/lib/shareTrack";
 import { trackEvent, trackSocialShare } from "@/components/GoogleAnalytics";
 import { supabase } from "@/integrations/supabase/client";
+import { generateTikTokCaption } from "@/lib/tiktokCaption";
 
 interface Props {
   title: string;
@@ -87,6 +88,21 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
 
     trackPlatformClick(platform);
     window.open(destination, "_blank", "noopener,noreferrer");
+  };
+
+  const handleGenerateTikTokCaption = async () => {
+    const { caption } = generateTikTokCaption({ title, artist, type, slug });
+    try {
+      await navigator.clipboard.writeText(caption);
+      toast.success("TikTok caption copied", {
+        description: "Suggested caption + tracked link — paste it straight into TikTok.",
+      });
+      markCopied();
+    } catch {
+      toast.message("Caption ready", { description: caption });
+    }
+    trackPlatformClick("tiktok_caption");
+    trackEvent("tiktok_caption_generate", { content_type: type, slug, title });
   };
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
