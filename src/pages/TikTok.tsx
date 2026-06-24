@@ -84,6 +84,34 @@ export default function TikTok() {
     trackEvent("tiktok_video_click", { video_id: video.id, source: "hub_grid" });
   };
 
+  const [caption, setCaption] = useState(() => generateTikTokCaption({ type: "hub" }).caption);
+  const [captionCopied, setCaptionCopied] = useState(false);
+
+  const regenerateCaption = () => {
+    setCaption(generateTikTokCaption({ type: "hub" }).caption);
+    trackEvent("tiktok_caption_generate", { source: "hub" });
+  };
+
+  const copyCaption = async () => {
+    try {
+      await navigator.clipboard.writeText(caption);
+      setCaptionCopied(true);
+      toast.success("Caption copied", { description: "Paste it into TikTok — link is UTM-tracked." });
+      trackEvent("tiktok_caption_copy", { source: "hub" });
+      window.setTimeout(() => setCaptionCopied(false), 2000);
+    } catch {
+      toast.error("Could not copy — long-press the box to copy manually.");
+    }
+  };
+
+  const openTikTokWithCaption = async () => {
+    await copyCaption();
+    const isMobile = typeof navigator !== "undefined" && /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+    const dest = isMobile ? "snssdk1233://" : "https://www.tiktok.com/upload";
+    trackEvent("tiktok_caption_open_app", { source: "hub", mobile: isMobile });
+    window.open(dest, "_blank", "noopener,noreferrer");
+  };
+
   // JSON-LD for top 6 videos
   const videoSchema = videos.slice(0, 6).map((v) => ({
     "@type": "VideoObject",
