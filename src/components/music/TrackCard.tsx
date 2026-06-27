@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import { Play, Pause } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePlayerStore, type Track } from "@/stores/playerStore";
@@ -24,7 +25,7 @@ export default function TrackCard({ track, queue, index, badge }: TrackCardProps
   const playingThis = isActive && isPlaying;
   const cover = track.cover_art_url || "/placeholder.svg";
 
-  const handlePlay = (e: React.MouseEvent) => {
+  const handlePlay = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (isActive) togglePlay();
