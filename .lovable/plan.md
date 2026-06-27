@@ -1,55 +1,38 @@
-# The Catalog — Scroll-Pinned Album Section
+# Unify /music around the Catalog interaction model
 
-A horizontal, scroll-scrubbed album catalog on `/music` with peek-out vinyl records on hover. Pulls live from the backend `albums` table and replaces the current Spotify-driven discography grid.
+Goal: every section on `/music` behaves like **The Catalog** — desktop pins the section and horizontally scrubs cards as you scroll, mobile falls back to snap-scroll. Keep the current Candy Archive styling (catalog-stamp eyebrow, font-display titles, gold archive-rule, Space Mono meta) — only the layout/interaction changes.
 
-## What you'll see
+## Sections to convert
 
-- New section eyebrow: **THE CATALOG**, headline "Twenty-plus years *on wax*".
-- Desktop: section pins while the row of album cards scrolls horizontally as you scroll the page (GSAP ScrollTrigger). Each card shows the album cover (sleeve) and on hover the sleeve tilts left while a vinyl record peeks out to the right — center label of the record is the album's own cover art.
-- Mobile / reduced-motion: native horizontal scroll with snap, no pinning.
-- Behind each sleeve sits a giant outlined year (e.g. **2024**) as a poster element.
-- Each card is a link to that album's existing page (`/album/[slug]`).
-- Data is pulled from the `albums` table (public, ordered newest → oldest), so future releases appear automatically with no code change.
+1. **Most Played** (House Charts) — currently a vertical stacked list of `TrackRow`s.
+2. **Latest Releases** (`LatestReleasesShelf`) — already horizontal but not pinned/scrubbed; will be upgraded to the same GSAP pin+scrub behavior.
+3. **Albums** (Full Lengths) — currently a 5-col grid; becomes a horizontal pinned rail of album cards (with vinyl peek, same as Catalog).
+4. **Singles & Features** — currently a vertical list with EraFilter; becomes a horizontal pinned rail of single cards. EraFilter stays above the rail and re-filters the cards in place.
+5. **The Catalog** — already correct; left as-is and used as the visual reference.
 
-## Where it goes
+## What stays the same
 
-Replaces the `SpotifyAlbumGrid` block at the bottom of `/music` (the current "discography" surface). Everything above it on the page — Listening Room hero, Latest Releases shelf, Most Played, etc. — stays untouched.
+- All copy, headers, eyebrows, archive-rule dividers, fonts.
+- Data sources (`useAlbums`, `useLatestTracks`, `useAllTracks`, `useMostPlayedTracks`).
+- Playback wiring — clicking a track card still calls `playTrack(track, queue)`; clicking an album card still routes to `/album/[slug]`.
+- EraFilter behavior and the existing empty-state message.
+- The sticky player, SEO, ListeningRoomHero, and Footer.
 
-## Technical details
+## How it will be built
 
-**Dependencies**
-- `bun add gsap` (ScrollTrigger ships with GSAP).
-- Fonts: add `@fontsource/anton` and `@fontsource/instrument-serif` via bun, imported in `src/main.tsx`. Tailwind `fontFamily` gets `display: ['Anton', …]` and `serif-italic: ['"Instrument Serif"', …]`. (No `<link>` tags in `index.html` — per project rules.)
+- New shared component `src/components/music/HorizontalShelf.tsx` that encapsulates the Catalog's `gsap.matchMedia` + ScrollTrigger pin/scrub logic (desktop ≥901px, reduced-motion respected) and renders a mobile snap-scroll fallback. It accepts `eyebrow`, `title`, optional icon, and children cards.
+- New `TrackCard` component (in `src/components/music/TrackCard.tsx`) styled like the Catalog `Card`: square cover art, vinyl peek on hover for tracks with audio, title in font-display, Space Mono meta (year · duration · album). Click = play; secondary share affordance retained for albums.
+- Refactor `src/pages/Listen.tsx` to wrap Most Played, Latest Releases, Albums, and Singles in `<HorizontalShelf>` using the new cards. Replace `LatestReleasesShelf` usage with the unified shelf (component file kept but no longer imported on this page).
+- Keep the existing `Catalog.tsx` unchanged so it remains the canonical reference; `HorizontalShelf` is extracted from its logic so all sections share identical feel.
 
-**New files**
-- `src/components/music/Catalog.tsx` — section component. Uses `useAlbums()` (already exists in `src/hooks/useStreamingData.ts`). Maps each album to a card: `year = release_year`, `title = title`, `meta = album_type` (or a short derived label), `img = cover_url`, `href = /album/${slug}`. Sets up `gsap.matchMedia` for `(min-width: 901px) and (prefers-reduced-motion: no-preference)` to pin the section and translate the inner track on X. Mobile fallback uses `overflow-x-auto` + scroll-snap.
-- `src/components/music/Vinyl.tsx` — pure-CSS vinyl disc. Cover passed via `--label` CSS variable.
-- Tokens/utilities (`.vinyl`, `.disco-card`, `.eyebrow`, `.text-outline`, `.hairline-b`, `.no-scrollbar`) added to `src/index.css` scoped under a `.catalog-section` wrapper so they don't leak into the rest of the site. Existing Candy Archive color tokens (`--bone`, `--gold`, `--ink`) are reused — no new global colors introduced.
+## Edge cases
 
-**Edits**
-- `src/pages/Listen.tsx`: swap the `<SpotifyAlbumGrid />` block (lines 172–175) for `<Catalog />`.
-- `tailwind.config.ts`: register the two new font families.
-- `src/main.tsx`: import the two `@fontsource` packages.
+- Sections with very few items (e.g. 3 Most Played) won't pin — the shelf detects when `scrollWidth <= viewport` and skips the ScrollTrigger so the section behaves like a normal block.
+- Mobile (<901px) and `prefers-reduced-motion` users get native horizontal snap-scroll, matching today's Catalog mobile behavior.
+- Singles era filter: when the active era changes, `HorizontalShelf` calls `ScrollTrigger.refresh()` so the pinned distance recalculates.
 
-**Behavior & accessibility**
-- Each card is a real `<Link>` (keyboard-focusable, screen-reader friendly).
-- `prefers-reduced-motion: reduce` → no pin, no hover animation, plain horizontal scroll.
-- Hover effect uses `@media (hover: hover)` so it won't trigger on touch.
-- ScrollTrigger uses `invalidateOnRefresh` so resizes recompute the scroll distance.
+## Files
 
-**Out of scope (ask if you want them next)**
-- Filtering by era inside the catalog (era filter already exists for singles above).
-- Replacing covers with custom artwork — current covers come from `albums.cover_url`.
-- Playback on click (currently opens the album page).
-
-## Files touched
-
-```text
-src/components/music/Catalog.tsx        (new)
-src/components/music/Vinyl.tsx          (new)
-src/pages/Listen.tsx                    (swap SpotifyAlbumGrid → Catalog)
-src/index.css                           (scoped catalog styles)
-tailwind.config.ts                      (font families)
-src/main.tsx                            (font imports)
-package.json                            (gsap, @fontsource/anton, @fontsource/instrument-serif)
-```
+- Add: `src/components/music/HorizontalShelf.tsx`, `src/components/music/TrackCard.tsx`
+- Edit: `src/pages/Listen.tsx`
+- Untouched: `Catalog.tsx`, `Vinyl.tsx`, `ListeningRoomHero.tsx`, `EraFilter.tsx`, `LatestReleasesShelf.tsx` (kept for other callers), `index.css` styling tokens
