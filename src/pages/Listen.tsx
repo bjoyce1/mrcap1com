@@ -164,6 +164,44 @@ const Listen = () => {
             )}
           </HorizontalShelf>
         )}
+
+        {/* Catalog Archive — every studio & collab record */}
+        <HorizontalShelf
+          eyebrow="02 — Full Catalog"
+          title={<><Archive className="w-5 h-5 text-primary" /> Every Album. Every Era.</>}
+          description="Twenty plus years on wax — studio LPs, collab records, and mixtapes."
+          refreshKey={archiveAlbums.length}
+        >
+          {archiveAlbums.map((album) => (
+            <ArchiveAlbumCard
+              key={`archive-${album.title}`}
+              album={album}
+              onClick={() => {
+                const slug = album.title
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]+/g, "-")
+                  .replace(/(^-|-$)/g, "");
+                window.location.href = `/album/${slug}`;
+              }}
+            />
+          ))}
+        </HorizontalShelf>
+
+        {/* Singles Timeline — a decade of drops */}
+        <HorizontalShelf
+          eyebrow="03 — Singles & Features"
+          title={<><CalendarDays className="w-5 h-5 text-primary" /> A Decade of Drops</>}
+          description="Loosies, guest spots, and on-chain releases — year by year."
+          refreshKey={archiveSingles.length}
+        >
+          {archiveSingles.map((yearGroup) => (
+            <ArchiveSinglesYearCard
+              key={`year-${yearGroup.year}`}
+              year={yearGroup.year}
+              tracks={yearGroup.tracks}
+            />
+          ))}
+        </HorizontalShelf>
       </div>
 
       {/* The Catalog — scroll-pinned discography (reference section) */}
