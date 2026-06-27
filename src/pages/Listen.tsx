@@ -169,12 +169,11 @@ const Listen = () => {
           </div>
         )}
 
-        {/* The Catalog — scroll-pinned discography */}
       </div>
-      <Catalog />
-      <div className="hidden">
 
-      </div>
+      {/* The Catalog — scroll-pinned discography */}
+      <Catalog />
+
 
       <Footer />
     </div>
