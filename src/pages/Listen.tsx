@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import TrackRow from "@/components/player/TrackRow";
 import { useAlbums, useLatestTracks, useAllTracks, useMostPlayedTracks } from "@/hooks/useStreamingData";
-import SpotifyAlbumGrid from "@/components/home/SpotifyAlbumGrid";
+import Catalog from "@/components/music/Catalog";
 import ListeningRoomHero from "@/components/music/ListeningRoomHero";
 import EraFilter, { getEras, filterByEra } from "@/components/music/EraFilter";
 import LatestReleasesShelf from "@/components/music/LatestReleasesShelf";
@@ -169,10 +169,11 @@ const Listen = () => {
           </div>
         )}
 
-        {/* Live Spotify Catalog (auto-updating) */}
-        <div className="mt-4">
-          <SpotifyAlbumGrid />
-        </div>
+        {/* The Catalog — scroll-pinned discography */}
+      </div>
+      <Catalog />
+      <div className="hidden">
+
       </div>
 
       <Footer />
