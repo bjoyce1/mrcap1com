@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Disc3, Music, TrendingUp } from "lucide-react";
+import { Disc3, Music, TrendingUp, Archive, CalendarDays } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -10,6 +10,9 @@ import ListeningRoomHero from "@/components/music/ListeningRoomHero";
 import EraFilter, { getEras, filterByEra } from "@/components/music/EraFilter";
 import HorizontalShelf from "@/components/music/HorizontalShelf";
 import TrackCard from "@/components/music/TrackCard";
+import ArchiveAlbumCard from "@/components/music/ArchiveAlbumCard";
+import ArchiveSinglesYearCard from "@/components/music/ArchiveSinglesYearCard";
+import { archiveAlbums, archiveSingles } from "@/content/discography";
 import { Vinyl } from "@/components/music/Vinyl";
 import { trackEvent } from "@/components/GoogleAnalytics";
 
@@ -161,6 +164,44 @@ const Listen = () => {
             )}
           </HorizontalShelf>
         )}
+
+        {/* Catalog Archive — every studio & collab record */}
+        <HorizontalShelf
+          eyebrow="02 — Full Catalog"
+          title={<><Archive className="w-5 h-5 text-primary" /> Every Album. Every Era.</>}
+          description="Twenty plus years on wax — studio LPs, collab records, and mixtapes."
+          refreshKey={archiveAlbums.length}
+        >
+          {archiveAlbums.map((album) => (
+            <ArchiveAlbumCard
+              key={`archive-${album.title}`}
+              album={album}
+              onClick={() => {
+                const slug = album.title
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]+/g, "-")
+                  .replace(/(^-|-$)/g, "");
+                window.location.href = `/album/${slug}`;
+              }}
+            />
+          ))}
+        </HorizontalShelf>
+
+        {/* Singles Timeline — a decade of drops */}
+        <HorizontalShelf
+          eyebrow="03 — Singles & Features"
+          title={<><CalendarDays className="w-5 h-5 text-primary" /> A Decade of Drops</>}
+          description="Loosies, guest spots, and on-chain releases — year by year."
+          refreshKey={archiveSingles.length}
+        >
+          {archiveSingles.map((yearGroup) => (
+            <ArchiveSinglesYearCard
+              key={`year-${yearGroup.year}`}
+              year={yearGroup.year}
+              tracks={yearGroup.tracks}
+            />
+          ))}
+        </HorizontalShelf>
       </div>
 
       {/* The Catalog — scroll-pinned discography (reference section) */}
