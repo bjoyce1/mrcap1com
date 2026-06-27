@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Disc3, Music, TrendingUp } from "lucide-react";
+import { Disc3, Music, TrendingUp, Archive, CalendarDays } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -10,6 +10,9 @@ import ListeningRoomHero from "@/components/music/ListeningRoomHero";
 import EraFilter, { getEras, filterByEra } from "@/components/music/EraFilter";
 import HorizontalShelf from "@/components/music/HorizontalShelf";
 import TrackCard from "@/components/music/TrackCard";
+import ArchiveAlbumCard from "@/components/music/ArchiveAlbumCard";
+import ArchiveSinglesYearCard from "@/components/music/ArchiveSinglesYearCard";
+import { archiveAlbums, archiveSingles } from "@/content/discography";
 import { Vinyl } from "@/components/music/Vinyl";
 import { trackEvent } from "@/components/GoogleAnalytics";
 
