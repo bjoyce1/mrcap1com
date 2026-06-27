@@ -1,0 +1,2 @@
+DROP POLICY IF EXISTS "Admins can manage albums" ON public.albums;
+CREATE POLICY "Admins can manage albums" ON public.albums FOR ALL TO authenticated USING (has_role(auth.uid(), 'admin'::app_role)) WITH CHECK (has_role(auth.uid(), 'admin'::app_role));
