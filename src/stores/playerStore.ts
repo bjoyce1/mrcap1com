@@ -18,6 +18,7 @@ export interface Track {
   play_count: number;
   requires_nft: boolean;
   spotify_url: string | null;
+  apple_music_url?: string | null;
   isrc?: string | null;
   price_cents?: number;
 }
