@@ -24,6 +24,7 @@ const Listen = () => {
   const { data: allTracks } = useAllTracks();
   const { data: mostPlayed } = useMostPlayedTracks(5);
   const [activeEra, setActiveEra] = useState<string | null>(null);
+  const [modalAlbum, setModalAlbum] = useState<Album | null>(null);
 
   useEffect(() => {
     trackEvent("player_loaded", { page_path: "/music", source: "music" });
