@@ -211,6 +211,12 @@ const Listen = () => {
       {/* The Catalog — scroll-pinned discography (reference section) */}
       <Catalog />
 
+      <AlbumDetailModal
+        album={modalAlbum}
+        open={!!modalAlbum}
+        onOpenChange={(o) => !o && setModalAlbum(null)}
+      />
+
       <Footer />
     </div>
   );
