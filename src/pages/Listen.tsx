@@ -117,10 +117,11 @@ const Listen = () => {
             : (albums || []).map((album) => {
                 const cover = album.cover_art_url || "/placeholder.svg";
                 return (
-                  <Link
+                  <button
+                    type="button"
                     key={album.id}
-                    to={`/album/${album.slug}`}
-                    className="disco-card group block w-[260px] md:w-[320px] shrink-0 snap-start"
+                    onClick={() => setModalAlbum(album)}
+                    className="disco-card group block w-[260px] md:w-[320px] shrink-0 snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
                   >
                     <div className="relative">
                       {album.release_year && (
@@ -138,11 +139,11 @@ const Listen = () => {
                         </div>
                       </div>
                     </div>
-                    <h3 className="font-display mt-5 text-lg md:text-xl text-foreground">{album.title}</h3>
+                    <h3 className="font-display mt-5 text-lg md:text-xl text-foreground group-hover:text-primary transition-colors">{album.title}</h3>
                     <p className="mt-2 font-mono text-[0.65rem] tracking-[0.2em] text-muted-foreground uppercase">
                       {album.release_year} · {album.track_count || 0} Tracks · {album.artist}
                     </p>
-                  </Link>
+                  </button>
                 );
               })}
         </HorizontalShelf>
