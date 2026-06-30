@@ -12,9 +12,11 @@ import HorizontalShelf from "@/components/music/HorizontalShelf";
 import TrackCard from "@/components/music/TrackCard";
 import ArchiveAlbumCard from "@/components/music/ArchiveAlbumCard";
 import ArchiveSinglesYearCard from "@/components/music/ArchiveSinglesYearCard";
+import AlbumDetailModal from "@/components/music/AlbumDetailModal";
 import { archiveAlbums, archiveSingles } from "@/content/discography";
 import { Vinyl } from "@/components/music/Vinyl";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import type { Album } from "@/stores/playerStore";
 
 const Listen = () => {
   const { data: albums, isLoading: albumsLoading } = useAlbums();
