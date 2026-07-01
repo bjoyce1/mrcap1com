@@ -33,3 +33,5 @@ project_id = "qisamkiggoibjkkdtkxq"
     verify_jwt = false
   [functions.tiktok-videos]
     verify_jwt = false
+  [functions.api-v1]
+    verify_jwt = false

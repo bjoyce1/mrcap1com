@@ -137,6 +137,139 @@ export type Database = {
         }
         Relationships: []
       }
+      api_key_usage: {
+        Row: {
+          duration_ms: number | null
+          endpoint: string
+          id: number
+          ip: string | null
+          key_id: string | null
+          method: string
+          status: number
+          ts: string
+          user_agent: string | null
+        }
+        Insert: {
+          duration_ms?: number | null
+          endpoint: string
+          id?: number
+          ip?: string | null
+          key_id?: string | null
+          method: string
+          status: number
+          ts?: string
+          user_agent?: string | null
+        }
+        Update: {
+          duration_ms?: number | null
+          endpoint?: string
+          id?: number
+          ip?: string | null
+          key_id?: string | null
+          method?: string
+          status?: number
+          ts?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "api_key_usage_key_id_fkey"
+            columns: ["key_id"]
+            isOneToOne: false
+            referencedRelation: "api_keys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      api_keys: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          expires_at: string | null
+          id: string
+          key_hash: string
+          key_prefix: string
+          last_used_at: string | null
+          name: string
+          owner_site: string | null
+          rate_limit_per_min: number
+          revoked_at: string | null
+          scopes: string[]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          key_hash: string
+          key_prefix: string
+          last_used_at?: string | null
+          name: string
+          owner_site?: string | null
+          rate_limit_per_min?: number
+          revoked_at?: string | null
+          scopes?: string[]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          key_hash?: string
+          key_prefix?: string
+          last_used_at?: string | null
+          name?: string
+          owner_site?: string | null
+          rate_limit_per_min?: number
+          revoked_at?: string | null
+          scopes?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      api_webhooks: {
+        Row: {
+          active: boolean
+          created_at: string
+          events: string[]
+          id: string
+          key_id: string | null
+          secret: string
+          target_url: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          events?: string[]
+          id?: string
+          key_id?: string | null
+          secret: string
+          target_url: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          events?: string[]
+          id?: string
+          key_id?: string | null
+          secret?: string
+          target_url?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "api_webhooks_key_id_fkey"
+            columns: ["key_id"]
+            isOneToOne: false
+            referencedRelation: "api_keys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       booking_requests: {
         Row: {
           admin_notes: string | null

@@ -71,6 +71,8 @@ const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
 const Listen = lazy(() => import("./pages/Listen"));
 const TikTok = lazy(() => import("./pages/TikTok"));
+const AdminApi = lazy(() => import("./pages/AdminApi"));
+const ApiDocs = lazy(() => import("./pages/ApiDocs"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -171,6 +173,8 @@ function AppRoutes() {
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
             <Route path="/tiktok" element={<PageTransition><TikTok /></PageTransition>} />
+            <Route path="/admin/api" element={<PageTransition><AdminApi /></PageTransition>} />
+            <Route path="/api/docs" element={<PageTransition><ApiDocs /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>
