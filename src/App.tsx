@@ -71,6 +71,8 @@ const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
 const Listen = lazy(() => import("./pages/Listen"));
 const TikTok = lazy(() => import("./pages/TikTok"));
+const AdminApi = lazy(() => import("./pages/AdminApi"));
+const ApiDocs = lazy(() => import("./pages/ApiDocs"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
