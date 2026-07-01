@@ -173,6 +173,8 @@ function AppRoutes() {
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
             <Route path="/tiktok" element={<PageTransition><TikTok /></PageTransition>} />
+            <Route path="/admin/api" element={<PageTransition><AdminApi /></PageTransition>} />
+            <Route path="/api/docs" element={<PageTransition><ApiDocs /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>
