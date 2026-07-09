@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, Play, ExternalLink, ChevronRight, Calendar, Disc3, Building2, Zap, Globe, Film, Users, Award } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
+import ScrollReveal from "@/components/ScrollReveal";
+import { ChapterHeader, PullQuoteBand } from "@/components/about/BioBlocks";
 import heroBg from "@/assets/hero-bg.webp";
 import albumTies from "@/assets/album-ties.webp";
 import albumArtOfIsm from "@/assets/album-art-of-ism.webp";
@@ -188,9 +190,9 @@ const WhoIsMrCap = () => {
           <section className="py-20 border-t border-border/50">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-8">
+                <ChapterHeader number="01" eyebrow="Chapter One · The Origin">
                   Houston Roots & Early Influence
-                </h2>
+                </ChapterHeader>
                 <div className="prose prose-lg prose-invert max-w-none space-y-6">
                   <p className="text-muted-foreground text-lg leading-relaxed">
                     Raised in Houston's historic <strong>South Park area</strong>, Mr. CAP was immersed in music from childhood. 
@@ -211,9 +213,9 @@ const WhoIsMrCap = () => {
           <section className="py-20 bg-card/30 border-y border-border/50">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-8">
+                <ChapterHeader number="02" eyebrow="Chapter Two · The Coalition">
                   South Park Coalition Legacy
-                </h2>
+                </ChapterHeader>
                 <div className="prose prose-lg prose-invert max-w-none space-y-6">
                   <p className="text-muted-foreground text-lg leading-relaxed">
                     Mr. CAP is a respected member of the <strong>South Park Coalition</strong>, one of Houston's most influential 
@@ -225,22 +227,23 @@ const WhoIsMrCap = () => {
                   </p>
                 </div>
                 
+                <ScrollReveal width="100%">
                 <div className="grid md:grid-cols-3 gap-6 mt-10">
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center">
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center card-lift">
                     <Building2 className="w-10 h-10 text-primary mx-auto mb-4" />
                     <h3 className="font-bold mb-2">Independence Over Major Labels</h3>
                     <p className="text-sm text-muted-foreground">
                       Owning your masters and controlling your destiny
                     </p>
                   </div>
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center">
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center card-lift">
                     <Award className="w-10 h-10 text-primary mx-auto mb-4" />
                     <h3 className="font-bold mb-2">Longevity Over Hype</h3>
                     <p className="text-sm text-muted-foreground">
                       Building a sustainable career, not chasing trends
                     </p>
                   </div>
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center">
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center card-lift">
                     <Users className="w-10 h-10 text-primary mx-auto mb-4" />
                     <h3 className="font-bold mb-2">Community Over Industry Politics</h3>
                     <p className="text-sm text-muted-foreground">
@@ -248,6 +251,7 @@ const WhoIsMrCap = () => {
                     </p>
                   </div>
                 </div>
+                </ScrollReveal>
                 
                 <p className="text-muted-foreground text-lg leading-relaxed mt-10">
                   This legacy continues to influence underground hip-hop culture nationally. The SPC model proved that 
@@ -270,9 +274,9 @@ const WhoIsMrCap = () => {
           <section className="py-20">
             <div className="container mx-auto px-4">
               <div className="max-w-5xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-8">
+                <ChapterHeader number="03" eyebrow="Chapter Three · The Catalog">
                   Music Career & Key Releases
-                </h2>
+                </ChapterHeader>
                 <div className="prose prose-lg prose-invert max-w-none space-y-6 mb-12">
                   <p className="text-muted-foreground text-lg leading-relaxed">
                     Mr. CAP released his debut album <em>2 Tha Grave</em> on April 5, 2011, featuring collaborations with 
@@ -283,8 +287,9 @@ const WhoIsMrCap = () => {
                   </p>
                 </div>
                 
+                <ScrollReveal width="100%">
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="bg-card/50 border border-border/50 rounded-xl overflow-hidden group">
+                  <div className="bg-card/50 border border-border/50 rounded-xl overflow-hidden group card-lift">
                     <div className="relative">
                       <img src={albumTies} alt="The Ties That Bind Us" className="w-full aspect-square object-cover" />
                       <div className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
@@ -326,6 +331,7 @@ const WhoIsMrCap = () => {
                     </div>
                   </div>
                 </div>
+                </ScrollReveal>
                 
                 <div className="text-center mt-10">
                   <Button variant="flux" asChild>
@@ -343,9 +349,9 @@ const WhoIsMrCap = () => {
           <section className="py-20 bg-card/30 border-y border-border/50">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-8">
+                <ChapterHeader number="04" eyebrow="Chapter Four · The Innovation">
                   Beyond Music — Business & Innovation
-                </h2>
+                </ChapterHeader>
                 <div className="prose prose-lg prose-invert max-w-none space-y-6">
                   <p className="text-muted-foreground text-lg leading-relaxed">
                     Mr. CAP is also the founder of <strong>CAP Distributions</strong>, a digital distribution company 
@@ -356,22 +362,23 @@ const WhoIsMrCap = () => {
                   </p>
                 </div>
                 
+                <ScrollReveal width="100%">
                 <div className="grid md:grid-cols-3 gap-6 mt-10">
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 card-lift">
                     <Globe className="w-8 h-8 text-primary mb-4" />
                     <h3 className="font-bold mb-2">Digital Distribution & Artist Services</h3>
                     <p className="text-sm text-muted-foreground">
                       Helping artists reach global platforms while retaining ownership
                     </p>
                   </div>
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 card-lift">
                     <Zap className="w-8 h-8 text-primary mb-4" />
                     <h3 className="font-bold mb-2">NFT & Blockchain Music Projects</h3>
                     <p className="text-sm text-muted-foreground">
                       First Houston rapper to sell a Hip-Hop NFT (February 2021)
                     </p>
                   </div>
-                  <div className="bg-card/50 border border-border/50 rounded-xl p-6">
+                  <div className="bg-card/50 border border-border/50 rounded-xl p-6 card-lift">
                     <Film className="w-8 h-8 text-primary mb-4" />
                     <h3 className="font-bold mb-2">Media & Creative Consulting</h3>
                     <p className="text-sm text-muted-foreground">
@@ -379,6 +386,7 @@ const WhoIsMrCap = () => {
                     </p>
                   </div>
                 </div>
+                </ScrollReveal>
                 
                 <p className="text-muted-foreground text-lg leading-relaxed mt-10">
                   This intersection of music, tech, and ownership defines the modern phase of his career—proving that 
@@ -394,9 +402,9 @@ const WhoIsMrCap = () => {
               <div className="max-w-4xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   <div>
-                    <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+                    <ChapterHeader number="05" eyebrow="Chapter Five · The Impact">
                       Documentary & Cultural Impact
-                    </h2>
+                    </ChapterHeader>
                     <div className="prose prose-lg prose-invert max-w-none space-y-6">
                       <p className="text-muted-foreground text-lg leading-relaxed">
                         Mr. CAP was featured in the documentary <em>The Life: Sex Trafficking and Modern-Day Slavery</em>, 
@@ -423,6 +431,13 @@ const WhoIsMrCap = () => {
               </div>
             </div>
           </section>
+
+          {/* Cinematic pull quote */}
+          <PullQuoteBand
+            quote="From South Park streets to streaming platforms worldwide, from cassette tapes to NFTs — betting on yourself is always the right move."
+            attribution="Mr. CAP · Est. Houston TX"
+            image={heroBg}
+          />
 
           {/* Why Mr. CAP Matters */}
           <section className="py-20 bg-gradient-to-b from-card/30 to-background border-t border-border/50">

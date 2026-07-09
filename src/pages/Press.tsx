@@ -3,7 +3,7 @@ import { Copy, Check } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import PageHero from "@/components/blocks/PageHero";
+import PressroomHero from "@/components/press/PressroomHero";
 import SectionIntro from "@/components/blocks/SectionIntro";
 import InfoStrip from "@/components/blocks/InfoStrip";
 import CitationBlock from "@/components/blocks/CitationBlock";
@@ -105,11 +105,7 @@ const Press = () => {
       <Navigation />
 
       <main>
-        <PageHero
-          kicker={data.hero.kicker}
-          title={data.hero.title}
-          description={data.hero.description}
-        />
+        <PressroomHero />
 
         <SectionIntro body={data.intro} />
 

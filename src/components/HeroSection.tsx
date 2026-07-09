@@ -1,21 +1,27 @@
 import { Play, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { gsap } from "@/hooks/useGSAP";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
 
+const CoinHero3D = lazy(() => import("@/components/home/CoinHero3D"));
+
 const heroImage = "/images/mrcap-hero-bg.webp";
+
+const TITLE = "MR. CAP";
 
 const HeroSection = () => {
   const [glitching, setGlitching] = useState(false);
   const [scrollHintHidden, setScrollHintHidden] = useState(false);
+  const [show3D, setShow3D] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
+  const taglineRef = useRef<HTMLParagraphElement>(null);
   const releaseRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const gradientRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const beamRef = useRef<HTMLDivElement>(null);
 
   const handleTitleHover = () => {
     setGlitching(true);
@@ -30,8 +36,8 @@ const HeroSection = () => {
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     gsap.to(el, {
-      rotationY: x * 8,
-      rotationX: -y * 6,
+      rotationY: x * 10,
+      rotationX: -y * 8,
       transformPerspective: 1000,
       duration: 0.5,
       ease: "power2.out",
@@ -50,40 +56,75 @@ const HeroSection = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Mount the 3D layer after first paint so LCP stays fast
+  useEffect(() => {
+    const idle = (cb: () => void) =>
+      "requestIdleCallback" in window
+        ? (window as any).requestIdleCallback(cb, { timeout: 2500 })
+        : setTimeout(cb, 800);
+    idle(() => setShow3D(true));
+  }, []);
+
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const ctx = gsap.context(() => {
-      gsap.set(imageRef.current, { scale: 1.1, autoAlpha: 1 });
-      gsap.set(nameRef.current, { y: 60, autoAlpha: 0 });
-      gsap.set(releaseRef.current, { y: 40, autoAlpha: 0 });
-      gsap.set(ctaRef.current, { y: 30, autoAlpha: 0 });
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      const tl = gsap.timeline({ delay: 0.2 });
+    const ctx = gsap.context(() => {
+      const chars = nameRef.current?.querySelectorAll(".hero-char");
+
+      if (reduced) {
+        gsap.set([imageRef.current, taglineRef.current, releaseRef.current, ctaRef.current], {
+          autoAlpha: 1,
+        });
+        if (chars) gsap.set(chars, { autoAlpha: 1, y: 0, rotationX: 0 });
+        return;
+      }
+
+      gsap.set(imageRef.current, { scale: 1.15, autoAlpha: 0 });
+      if (chars) gsap.set(chars, { y: 120, rotationX: -90, autoAlpha: 0 });
+      gsap.set(taglineRef.current, { y: 24, autoAlpha: 0 });
+      gsap.set(releaseRef.current, { y: 24, autoAlpha: 0 });
+      gsap.set(ctaRef.current, { y: 24, autoAlpha: 0 });
+
+      const tl = gsap.timeline({ delay: 0.15 });
 
       tl.to(imageRef.current, {
         scale: 1,
         autoAlpha: 1,
-        duration: 1.4,
+        duration: 1.6,
         ease: "power3.out",
-      })
-        .to(
-          nameRef.current,
-          { y: 0, autoAlpha: 1, duration: 1, ease: "power4.out" },
-          "-=0.8"
-        )
-        .to(
-          releaseRef.current,
-          { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" },
-          "-=0.6"
-        )
-        .to(
-          ctaRef.current,
-          { y: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" },
-          "-=0.5"
-        );
+      });
 
-      // Background parallax — moves faster (deeper layer)
+      if (chars) {
+        tl.to(
+          chars,
+          {
+            y: 0,
+            rotationX: 0,
+            autoAlpha: 1,
+            duration: 1.1,
+            stagger: 0.06,
+            ease: "power4.out",
+          },
+          "-=1.0"
+        );
+      }
+
+      tl.to(taglineRef.current, { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out" }, "-=0.6")
+        .to(releaseRef.current, { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out" }, "-=0.5")
+        .to(ctaRef.current, { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out" }, "-=0.45");
+
+      // Light beam sweep across the hero once on load
+      if (beamRef.current) {
+        gsap.fromTo(
+          beamRef.current,
+          { xPercent: -120 },
+          { xPercent: 120, duration: 2.4, ease: "power2.inOut", delay: 0.6 }
+        );
+      }
+
+      // Background parallax — deep layer moves faster
       gsap.to(imageRef.current, {
         yPercent: 30,
         ease: "none",
@@ -95,9 +136,10 @@ const HeroSection = () => {
         },
       });
 
-      // Content parallax — moves slower (foreground layer, creates depth)
+      // Foreground content drifts slower and fades as you leave
       gsap.to(contentRef.current, {
-        yPercent: -15,
+        yPercent: -18,
+        autoAlpha: 0.15,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -106,24 +148,6 @@ const HeroSection = () => {
           scrub: 0.5,
         },
       });
-
-      gsap.to(gradientRef.current, {
-        "--gradient-position": "100%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.5,
-        },
-        onUpdate: function() {
-          const progress = this.progress();
-          const opacity = 0.3 + progress * 0.35;
-          if (gradientRef.current) {
-            gradientRef.current.style.opacity = opacity.toString();
-          }
-        },
-      } as any);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -144,45 +168,67 @@ const HeroSection = () => {
           height={1080}
           className="h-full w-full object-cover object-top"
           decoding="async"
-          fetchPriority="high"
+          {...({ fetchpriority: "high" } as any)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background))_100%)]" />
-        <div
-          ref={gradientRef}
-          className="absolute inset-0 bg-gradient-to-b from-primary/15 via-primary/5 to-transparent opacity-30 will-change-opacity"
-        />
       </div>
 
-      {/* Diagonal gold light beam */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-      >
-        <div className="absolute -top-1/2 -left-1/4 w-[150%] h-[200%] rotate-[20deg] bg-[linear-gradient(90deg,transparent_45%,hsl(var(--primary)/0.08)_50%,transparent_55%)] animate-pulse-slow" />
+      {/* Three.js layer — gold coin + particles, pure atmosphere */}
+      {show3D && (
+        <Suspense fallback={null}>
+          <CoinHero3D />
+        </Suspense>
+      )}
+
+      {/* Cinematic light beam sweep */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden z-[6]">
+        <div
+          ref={beamRef}
+          className="absolute inset-y-0 w-full bg-[linear-gradient(105deg,transparent_42%,hsl(var(--accent-gold)/0.12)_50%,transparent_58%)]"
+        />
+        <div className="absolute -top-1/2 -left-1/4 w-[150%] h-[200%] rotate-[20deg] bg-[linear-gradient(90deg,transparent_45%,hsl(var(--primary)/0.07)_50%,transparent_55%)] animate-pulse-slow" />
       </div>
 
       {/* Centered Bottom Content — foreground parallax layer */}
-      <div ref={contentRef} className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center pb-20 md:pb-28 will-change-transform">
+      <div
+        ref={contentRef}
+        className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center pb-20 md:pb-24 will-change-transform"
+      >
         <h1
           ref={nameRef}
           onMouseEnter={handleTitleHover}
           onMouseMove={handleTitleTilt}
           onMouseLeave={handleTitleTiltLeave}
-          className={`font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] will-change-transform cursor-pointer transition-none ${
+          aria-label="Mr. CAP"
+          className={`font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] will-change-transform cursor-pointer select-none ${
             glitching ? "animate-glitch" : ""
           }`}
-          style={{ 
+          style={{
             color: "hsl(38, 33%, 89%)",
             letterSpacing: "0",
             lineHeight: "1.05",
             transformStyle: "preserve-3d",
+            perspective: "800px",
+            textShadow: "0 0 80px hsl(333 64% 51% / 0.25)",
           }}
         >
-          Mr. CAP
+          {TITLE.split("").map((ch, i) => (
+            <span
+              key={i}
+              aria-hidden="true"
+              className="hero-char inline-block will-change-transform"
+              style={{ transformOrigin: "bottom center", whiteSpace: "pre" }}
+            >
+              {ch}
+            </span>
+          ))}
         </h1>
 
-        <p className="mt-3 text-sm md:text-base font-medium tracking-[0.15em] uppercase text-foreground/60 will-change-transform">
+        <p
+          ref={taglineRef}
+          className="mt-3 px-6 text-center text-sm md:text-base font-medium tracking-[0.15em] uppercase text-foreground/60 will-change-transform"
+        >
           Houston Hip-Hop Artist · South Park Coalition
         </p>
         <div
@@ -190,8 +236,8 @@ const HeroSection = () => {
           className="mt-4 flex items-center gap-3 text-xs md:text-sm font-medium tracking-[0.2em] uppercase will-change-transform"
         >
           <span className="text-foreground/90">The Art of ISM - Book</span>
-          <span className="w-1 h-1 rounded-full bg-primary" />
-          <span className="text-foreground/50">Out Now</span>
+          <span className="w-1 h-1 rounded-full bg-primary animate-pulse" />
+          <span className="text-gold">Out Now</span>
         </div>
 
         <div ref={ctaRef} className="mt-10 flex flex-col items-center gap-4 will-change-transform">
@@ -215,9 +261,7 @@ const HeroSection = () => {
                 className="rounded-full border-foreground/20 text-foreground/80 hover:border-primary/40 hover:text-foreground font-medium uppercase tracking-wider px-8 py-6 text-sm transition-all duration-500"
                 asChild
               >
-                <a href="/videos">
-                  Watch Videos
-                </a>
+                <a href="/videos">Watch Videos</a>
               </Button>
             </MagneticWrapper>
             <MagneticWrapper strength={0.15}>
@@ -227,9 +271,7 @@ const HeroSection = () => {
                 className="rounded-full border-foreground/20 text-foreground/80 hover:border-primary/40 hover:text-foreground font-medium uppercase tracking-wider px-8 py-6 text-sm transition-all duration-500"
                 asChild
               >
-                <a href="/booking">
-                  Book Mr. CAP
-                </a>
+                <a href="/booking">Book Mr. CAP</a>
               </Button>
             </MagneticWrapper>
           </div>
@@ -240,9 +282,7 @@ const HeroSection = () => {
               className="rounded-full text-foreground/50 hover:text-primary font-medium uppercase tracking-wider text-xs transition-all duration-500"
               asChild
             >
-              <a href="#fan-capture">
-                Join the Legacy List →
-              </a>
+              <a href="#fan-capture">Join the Legacy List →</a>
             </Button>
           </MagneticWrapper>
         </div>
@@ -250,7 +290,7 @@ const HeroSection = () => {
 
       {/* Scroll-to-explore hint */}
       <div
-        className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-opacity duration-500 ${
+        className={`absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 transition-opacity duration-500 ${
           scrollHintHidden ? "opacity-0 pointer-events-none" : "opacity-60"
         }`}
       >

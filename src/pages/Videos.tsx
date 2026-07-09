@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
-import PageHero from "@/components/blocks/PageHero";
+import ScreeningRoomHero from "@/components/videos/ScreeningRoomHero";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Play, Loader2, Clock, Eye, Youtube } from "lucide-react";
@@ -77,11 +77,7 @@ const Videos = () => {
       <Navigation />
 
       <main>
-        <PageHero
-          kicker="Visual"
-          title="Videos"
-          description="Official music videos, promos, interviews, and behind-the-scenes clips."
-        />
+        <ScreeningRoomHero />
 
         {/* Video Player Modal */}
         {selectedVideo && (

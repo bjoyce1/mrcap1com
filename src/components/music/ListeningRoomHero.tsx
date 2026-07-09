@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Play, Pause, SkipForward, Headphones, Shuffle } from "lucide-react";
 import { usePlayerStore, type Track } from "@/stores/playerStore";
 import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
+
+const Vinyl3D = lazy(() => import("@/components/music/Vinyl3D"));
 
 /**
  * The Listening Room — the /music hero.
@@ -31,6 +33,16 @@ const ListeningRoomHero = ({ trackCount, albumCount, allPlayable, latestPlayable
   const rafRef = useRef<number | null>(null);
 
   const { currentTrack, isPlaying, playTrack, togglePlay, nextTrack, queue } = usePlayerStore();
+  const [show3D, setShow3D] = useState(false);
+
+  // Mount the 3D vinyl after first paint so the hero stays fast
+  useEffect(() => {
+    const idle = (cb: () => void) =>
+      "requestIdleCallback" in window
+        ? (window as any).requestIdleCallback(cb, { timeout: 2500 })
+        : setTimeout(cb, 800);
+    idle(() => setShow3D(true));
+  }, []);
 
   // ── Canvas render loop ──
   useEffect(() => {
@@ -182,6 +194,13 @@ const ListeningRoomHero = ({ trackCount, albumCount, allPlayable, latestPlayable
 
       {/* Soft floor gradient so content stays readable */}
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none" />
+
+      {/* 3D vinyl — spins with the music, label mirrors the current track */}
+      {show3D && (
+        <Suspense fallback={null}>
+          <Vinyl3D />
+        </Suspense>
+      )}
 
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20 pt-36">
