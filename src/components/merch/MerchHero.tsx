@@ -9,25 +9,30 @@ import { Link } from "react-router-dom";
 import { CartDrawer } from "./CartDrawer";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
+import whiteHoodie from "@/assets/trap-university/white-hoodie.webp";
+import leatherJacket from "@/assets/trap-university/leather-jacket.webp";
+import backpack from "@/assets/trap-university/backpack.webp";
+import croppedHoodie from "@/assets/trap-university/cropped-hoodie.webp";
+
 const categories = [
   {
     title: "Apparel",
-    image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&h=400&fit=crop",
+    image: whiteHoodie,
     href: "#products",
   },
   {
-    title: "Headwear",
-    image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop",
+    title: "Outerwear",
+    image: leatherJacket,
     href: "#products",
   },
   {
     title: "Accessories",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
+    image: backpack,
     href: "#products",
   },
   {
     title: "Limited",
-    image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400&h=400&fit=crop",
+    image: croppedHoodie,
     href: "#products",
   },
 ];
@@ -40,12 +45,13 @@ const navigation = [
 ];
 
 export const MerchHero = () => {
+  const brandColors = ["#D2347A", "#D9A441", "#6E30C9", "#EDE6DA"];
   const chromaItems: ChromaGridItem[] = categories.map((cat, i) => ({
     image: cat.image,
     title: cat.title,
     url: cat.href,
-    borderColor: ["#EF4444", "#F59E0B", "#3B82F6", "#8B5CF6"][i],
-    gradient: `linear-gradient(${145 + i * 30}deg, ${["#EF4444", "#F59E0B", "#3B82F6", "#8B5CF6"][i]}, #000)`,
+    borderColor: brandColors[i],
+    gradient: `linear-gradient(${145 + i * 30}deg, ${brandColors[i]}, #110B18)`,
   }));
 
   return (
@@ -108,12 +114,33 @@ export const MerchHero = () => {
           {/* Hero Content */}
           <div className="py-16 lg:py-24">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-3xl">
-              <p className="text-sm font-medium text-muted-foreground mb-4">Official Merchandise</p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
-                <span className="text-muted-foreground">Curate your style</span><br />
-                <span className="text-foreground">with exclusive drops.</span>
+              <p className="catalog-stamp mb-4">Official Merchandise · Wreckless Entertainment</p>
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl tracking-tight leading-[1.05] mb-6">
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
+                  className="block text-foreground"
+                >
+                  Wear the ISM.
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.3 }}
+                  className="block text-gradient-gold"
+                >
+                  Rep the Legacy.
+                </motion.span>
               </h1>
-              <p className="text-muted-foreground max-w-xl text-lg">Premium quality apparel and accessories. Limited edition releases from Mr. CAP's creative universe.</p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
+                className="text-muted-foreground max-w-xl text-lg"
+              >
+                Premium apparel and accessories. Limited drops from Mr. CAP's creative universe — Houston made, worldwide worn.
+              </motion.p>
             </motion.div>
           </div>
         </div>

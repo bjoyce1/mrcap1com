@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import PageHero from "@/components/blocks/PageHero";
+import BookingCinematicHero from "@/components/booking/BookingCinematicHero";
 import SectionIntro from "@/components/blocks/SectionIntro";
 import InfoStrip from "@/components/blocks/InfoStrip";
 import CitationBlock from "@/components/blocks/CitationBlock";
@@ -62,12 +62,7 @@ const Booking = () => {
       <Navigation />
 
       <main>
-        <PageHero
-          kicker={data.hero.kicker}
-          title={data.hero.title}
-          description={data.hero.description}
-          ctas={data.hero.ctas}
-        />
+        <BookingCinematicHero />
 
         <CredentialsBand />
 
