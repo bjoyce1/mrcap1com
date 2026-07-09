@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Play, ExternalLink, ChevronRight, ChevronLeft, X } from "lucide-react";
+import { gsap } from "@/hooks/useGSAP";
 import FAQAccordion from "@/components/blocks/FAQAccordion";
 import StoryNotesBlock from "@/components/music/StoryNotesBlock";
 import CitationBlock from "@/components/blocks/CitationBlock";
@@ -194,6 +195,64 @@ const Discography = () => {
 
   const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
   const railRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Cinematic hero entrance + parallax, album grid reveals
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.1 });
+      tl.fromTo(
+        ".disco-hero-disc",
+        { scale: 0.55, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 1.3, ease: "power3.out" }
+      )
+        .fromTo(
+          ".disco-hero-portrait",
+          { y: 90, autoAlpha: 0, scale: 1.04 },
+          { y: 0, autoAlpha: 1, scale: 1, duration: 1.2, ease: "power3.out" },
+          "-=0.9"
+        )
+        .fromTo(
+          ".disco-hero-title",
+          { y: 70, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 1, ease: "power4.out" },
+          "-=0.7"
+        );
+
+      // Portrait drifts as you scroll away
+      gsap.to(".disco-hero-portrait", {
+        yPercent: 14,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
+
+      // Album cards rise in as they enter view
+      gsap.utils.toArray<HTMLElement>(".disco-grid-item").forEach((el, i) => {
+        gsap.fromTo(
+          el,
+          { y: 60, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.9,
+            delay: (i % 3) * 0.08,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          }
+        );
+      });
+    }, heroRef.current?.closest("main") ?? undefined);
+
+    return () => ctx.revert();
+  }, []);
 
   const scrollRail = (dir: "left" | "right") => {
     if (!railRef.current) return;
@@ -282,7 +341,7 @@ const Discography = () => {
 
         <main>
           {/* ============ CINEMATIC HERO ============ */}
-          <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-background">
+          <section ref={heroRef} className="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-background">
             {/* Yellow backdrop glow behind portrait */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="w-[80vw] max-w-[900px] h-[80vw] max-h-[900px] rounded-full bg-primary blur-3xl opacity-60" />
@@ -290,16 +349,16 @@ const Discography = () => {
 
             {/* Solid yellow disc behind subject (sharper edge) */}
             <div className="absolute inset-0 flex items-end justify-center pointer-events-none">
-              <div className="w-[70vw] max-w-[720px] h-[70vw] max-h-[720px] rounded-full bg-primary translate-y-[15%] opacity-90" />
+              <div className="disco-hero-disc w-[70vw] max-w-[720px] h-[70vw] max-h-[720px] rounded-full bg-primary translate-y-[15%] opacity-90" />
             </div>
 
             {/* Foreground portrait (cut-out PNG) */}
-            <div className="absolute inset-0 flex items-end justify-center">
+            <div className="disco-hero-portrait absolute inset-0 flex items-end justify-center will-change-transform">
               <img
                 src={capHeroPortrait}
                 alt="Mr. CAP portrait"
                 className="h-[95%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_30px_60px_hsl(0_0%_0%/0.7)]"
-                fetchPriority="high"
+                {...({ fetchpriority: "high" } as any)}
               />
             </div>
 
@@ -326,7 +385,7 @@ const Discography = () => {
             </nav>
 
             {/* Hero title — bottom-anchored, oversized */}
-            <div className="absolute bottom-0 left-0 right-0 pb-16 md:pb-24 z-10">
+            <div className="disco-hero-title absolute bottom-0 left-0 right-0 pb-16 md:pb-24 z-10 will-change-transform">
               <div className="container mx-auto px-6 text-center">
                 <p className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-primary mb-6">
                   The Official Catalog
@@ -360,7 +419,7 @@ const Discography = () => {
                   <button
                     key={album.title}
                     onClick={() => setActiveAlbum(album)}
-                    className="group flex flex-col items-center text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                    className="disco-grid-item group flex flex-col items-center text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
                   >
                     <div className="relative w-full aspect-square overflow-hidden shadow-[0_20px_50px_-10px_hsl(0_0%_0%/0.7)] transition-transform duration-500 group-hover:-translate-y-1">
                       <img

@@ -2,8 +2,10 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import PageHero from "@/components/blocks/PageHero";
 import SectionIntro from "@/components/blocks/SectionIntro";
+import { ChapterHeader, PullQuoteBand } from "@/components/about/BioBlocks";
+import hTownRepresent from "@/assets/h-town-represent.webp";
+import spcAustin from "@/assets/spc-austin-2025.webp";
 import CitationBlock from "@/components/blocks/CitationBlock";
 import CTAButtonRow from "@/components/blocks/CTAButtonRow";
 import QuoteBlock from "@/components/blocks/QuoteBlock";
@@ -150,15 +152,59 @@ const SouthParkCoalition = () => {
         <Navigation />
 
         <main>
-          <PageHero
-            kicker="Houston Hip Hop Legacy"
-            title="South Park Coalition: Houston's Independent Hip Hop Movement"
-            description="Long before streaming platforms and independent distribution became the norm, the South Park Coalition created a blueprint for artist ownership, longevity, and cultural impact in Houston hip hop."
-            ctas={[
-              { label: "Explore Mr. CAP Music", href: "/mr-cap-discography", variant: "primary" },
-              { label: "View Press Coverage", href: "/press", variant: "secondary" },
-            ]}
-          />
+          {/* Archive hero — H-Town backdrop with ghost SPC letters */}
+          <section className="relative min-h-[72vh] flex items-end overflow-hidden grain-overlay">
+            <div className="absolute inset-0">
+              <img
+                src={hTownRepresent}
+                alt=""
+                aria-hidden="true"
+                className="h-full w-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/40" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,hsl(var(--background))_100%)]" />
+            </div>
+
+            {/* Ghost SPC letters */}
+            <span
+              aria-hidden="true"
+              className="absolute top-24 left-1/2 -translate-x-1/2 font-display text-[32vw] lg:text-[22rem] leading-none text-transparent select-none pointer-events-none"
+              style={{ WebkitTextStroke: "2px hsl(38 33% 89% / 0.08)" }}
+            >
+              SPC
+            </span>
+
+            <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-16 md:pb-20 pt-44">
+              <motion.p
+                className="catalog-stamp mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                Houston Hip Hop Legacy · Est. South Park
+              </motion.p>
+              <motion.h1
+                className="font-display text-4xl md:text-6xl leading-[1.05] text-foreground max-w-3xl"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.25 }}
+              >
+                South Park Coalition:
+                <br />
+                <span className="text-gradient-gold">The Independent Blueprint.</span>
+              </motion.h1>
+              <motion.p
+                className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.45 }}
+              >
+                Long before streaming platforms and independent distribution became the norm,
+                the South Park Coalition created a blueprint for artist ownership, longevity,
+                and cultural impact in Houston hip hop.
+              </motion.p>
+            </div>
+          </section>
 
           <SectionIntro
             body="The South Park Coalition is one of the most influential independent hip hop collectives to come out of Houston, Texas. Built on independence, consistency, and community, the coalition created a model that allowed artists to thrive without relying on major labels. This page documents the origins of the South Park Coalition, its impact on Houston's music culture, and the role artists like Mr. CAP continue to play in carrying that legacy forward."
@@ -175,9 +221,12 @@ const SouthParkCoalition = () => {
               className={`py-16 ${idx % 2 === 1 ? "bg-card/30 border-y border-border/30" : ""}`}
             >
               <div className="container mx-auto px-4 max-w-3xl">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
+                <ChapterHeader
+                  number={String(idx + 1).padStart(2, "0")}
+                  eyebrow={["The Origins", "The Blueprint", "The Culture", "The Torch", "The Legacy"][idx] ?? "The Story"}
+                >
                   {section.title}
-                </h2>
+                </ChapterHeader>
                 {section.paragraphs.map((p, i) => (
                   <p key={i} className="text-muted-foreground text-lg leading-relaxed mb-4 last:mb-0">
                     {p}
@@ -225,6 +274,13 @@ const SouthParkCoalition = () => {
               />
             </div>
           </section>
+
+          {/* Cinematic pull quote */}
+          <PullQuoteBand
+            quote="The South Park Coalition didn't just create music — it created a system. This is where the blueprint begins."
+            attribution="South Park Coalition · Houston TX"
+            image={spcAustin}
+          />
 
           {/* FAQ */}
           <FAQAccordion
