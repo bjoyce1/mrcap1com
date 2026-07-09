@@ -9,6 +9,9 @@ import Footer from "@/components/Footer";
 import SectionDivider from "@/components/home/SectionDivider";
 import ScrollProgressBar from "@/components/home/ScrollProgressBar";
 import SpotifyLiveSection from "@/components/home/SpotifyLiveSection";
+import MarqueeStrip from "@/components/home/MarqueeStrip";
+import LegacyStats from "@/components/home/LegacyStats";
+import LegacyTimeline from "@/components/home/LegacyTimeline";
 
 const Index = () => {
   const jsonLd = {
@@ -180,6 +183,10 @@ const Index = () => {
         <Navigation />
         <main>
           <HeroSection />
+          <MarqueeStrip />
+          <LegacyStats />
+          <SectionDivider />
+          <LegacyTimeline />
           <SectionDivider />
           <ProofStrip />
           <SectionDivider />
