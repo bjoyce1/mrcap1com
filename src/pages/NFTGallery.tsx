@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
+
+const NFTGalleryHero3D = lazy(() => import("@/components/nft/NFTGalleryHero3D"));
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import PageHero from "@/components/blocks/PageHero";
@@ -13,6 +15,15 @@ import { nftPageData as data } from "@/content/nft";
 
 const NFTGallery = () => {
   const [holderVerified, setHolderVerified] = useState(false);
+  const [show3D, setShow3D] = useState(false);
+
+  useEffect(() => {
+    const idle = (cb: () => void) =>
+      "requestIdleCallback" in window
+        ? (window as any).requestIdleCallback(cb, { timeout: 2500 })
+        : setTimeout(cb, 800);
+    idle(() => setShow3D(true));
+  }, []);
 
   const jsonLd = [
     {
@@ -57,12 +68,20 @@ const NFTGallery = () => {
       <Navigation />
 
       <main>
-        <PageHero
-          kicker={data.hero.kicker}
-          title={data.hero.title}
-          description={data.hero.description}
-          ctas={data.hero.ctas}
-        />
+        <div className="relative">
+          <PageHero
+            kicker={data.hero.kicker}
+            title={data.hero.title}
+            description={data.hero.description}
+            ctas={data.hero.ctas}
+          />
+          {/* Floating gallery of gold-framed pieces */}
+          {show3D && (
+            <Suspense fallback={null}>
+              <NFTGalleryHero3D />
+            </Suspense>
+          )}
+        </div>
 
         <SectionIntro body={data.intro} />
 
