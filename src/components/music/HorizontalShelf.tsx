@@ -91,17 +91,17 @@ export default function HorizontalShelf({
         {toolbar}
       </div>
 
-      {/* Desktop horizontal scrub */}
-      <div className="hidden min-[901px]:block overflow-hidden">
-        <div ref={trackRef} className="flex gap-8 px-10 py-10 will-change-transform">
+      {isDesktop ? (
+        <div className="overflow-hidden">
+          <div ref={trackRef} className="flex gap-8 px-10 py-10 will-change-transform">
+            {children}
+          </div>
+        </div>
+      ) : (
+        <div className="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 py-6">
           {children}
         </div>
-      </div>
-
-      {/* Mobile native scroll */}
-      <div className="min-[901px]:hidden flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 py-6">
-        {children}
-      </div>
+      )}
     </section>
   );
 }
