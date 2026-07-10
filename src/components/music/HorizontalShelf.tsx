@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 interface HorizontalShelfProps {
@@ -29,6 +29,17 @@ export default function HorizontalShelf({
 }: HorizontalShelfProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(min-width: 901px)").matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 901px)");
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    setIsDesktop(mql.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
   useEffect(() => {
     const mm = gsap.matchMedia();
@@ -80,17 +91,17 @@ export default function HorizontalShelf({
         {toolbar}
       </div>
 
-      {/* Desktop horizontal scrub */}
-      <div className="hidden min-[901px]:block overflow-hidden">
-        <div ref={trackRef} className="flex gap-8 px-10 py-10 will-change-transform">
+      {isDesktop ? (
+        <div className="overflow-hidden">
+          <div ref={trackRef} className="flex gap-8 px-10 py-10 will-change-transform">
+            {children}
+          </div>
+        </div>
+      ) : (
+        <div className="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 py-6">
           {children}
         </div>
-      </div>
-
-      {/* Mobile native scroll */}
-      <div className="min-[901px]:hidden flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 py-6">
-        {children}
-      </div>
+      )}
     </section>
   );
 }
