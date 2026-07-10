@@ -114,6 +114,11 @@ export default function Catalog() {
           ))}
         </div>
       )}
+    </section>
+  );
+}
+
+
 
 function Card({ c }: { c: CardItem }) {
   return (
