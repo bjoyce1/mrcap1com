@@ -7,8 +7,11 @@ interface PageTransitionProps {
 
 /**
  * Cinematic route transition — content rises in while a candy-gradient
- * curtain wipes off the screen; on exit the curtain sweeps back over.
- * Falls back to a simple fade when reduced motion is preferred.
+ * curtain wipes up off the screen on entry; exits with a fast fade.
+ *
+ * IMPORTANT: this must return exactly ONE element. AnimatePresence tracks
+ * a single child per route; sibling fragments here cause React
+ * insertBefore/NotFoundError crashes during navigation.
  */
 const PageTransition = ({ children }: PageTransitionProps) => {
   const reduced = useReducedMotion();
@@ -27,31 +30,26 @@ const PageTransition = ({ children }: PageTransitionProps) => {
   }
 
   return (
-    <>
-      <motion.div
-        initial={{ opacity: 0, y: 16, scale: 0.995 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: -16, scale: 0.995 }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {children}
-      </motion.div>
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -14 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
 
-      {/* Curtain wipe — covers on exit, reveals on enter */}
+      {/* Curtain reveal — plays on mount only, then sits inert at scaleY 0 */}
       <motion.div
         aria-hidden="true"
-        className="fixed inset-0 z-[90] pointer-events-none origin-top"
+        className="fixed inset-0 z-[90] pointer-events-none"
         style={{
           background:
             "linear-gradient(120deg, hsl(264 61% 20%) 0%, hsl(265 37% 9%) 45%, hsl(333 64% 22%) 100%)",
+          transformOrigin: "top",
         }}
         initial={{ scaleY: 1 }}
-        animate={{ scaleY: 0, transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1] } }}
-        exit={{
-          scaleY: 1,
-          transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] },
-          transformOrigin: "bottom",
-        }}
+        animate={{ scaleY: 0 }}
+        transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
       />
       {/* Gold hairline chasing the curtain edge */}
       <motion.div
@@ -63,14 +61,10 @@ const PageTransition = ({ children }: PageTransitionProps) => {
           boxShadow: "0 0 18px hsl(39 67% 55% / 0.5)",
         }}
         initial={{ y: 0, opacity: 1 }}
-        animate={{
-          y: "100vh",
-          opacity: 0,
-          transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1] },
-        }}
-        exit={{ opacity: 0 }}
+        animate={{ y: "100vh", opacity: 0 }}
+        transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
       />
-    </>
+    </motion.div>
   );
 };
 
