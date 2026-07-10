@@ -226,7 +226,7 @@ serve(async (req) => {
       const message = err instanceof Error ? err.message : 'Payment verification failed';
       console.error('PayPal verification failed:', message);
       // Payment wasn't captured — safe to return an error code
-      return json({ error: message }, 402);
+      return json({ error: 'Payment verification failed' }, 402);
     }
 
     // ───────────────────────────────────────────────────────────────────
@@ -364,7 +364,6 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Unexpected error in printful-checkout function:', error);
-    const message = error instanceof Error ? error.message : 'Order processing failed';
-    return json({ error: message }, 500);
+    return json({ error: 'Internal server error' }, 500);
   }
 });

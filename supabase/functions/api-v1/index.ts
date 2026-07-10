@@ -288,6 +288,6 @@ Deno.serve(async (req) => {
     const msg = e instanceof Error ? e.message : String(e);
     console.error("api-v1 error", msg);
     await logUsage(key.id, path, req.method, 500, req.headers.get("x-forwarded-for"), req.headers.get("user-agent"), Date.now() - start);
-    return json({ error: msg }, 500, cors);
+    return json({ error: "Internal server error" }, 500, cors);
   }
 });

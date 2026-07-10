@@ -107,7 +107,7 @@ serve(async (req) => {
     return json({ orderID: order.id });
   } catch (e) {
     console.error("paypal-create-order error:", e);
-    return json({ error: e instanceof Error ? e.message : "Unknown error" }, 500);
+    return json({ error: "Internal server error" }, 500);
   }
 });
 
