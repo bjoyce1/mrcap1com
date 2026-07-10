@@ -1,93 +1,41 @@
+# Fix: `insertBefore` crash on `/music`
 
-# Mr. CAP Unified API System
+## Root cause
 
-Stand up a single API on this project's Lovable Cloud backend that:
-1. Exposes your data (music, merch, press, NFTs, blog, events) to external apps/partners.
-2. Powers your other sites (theartofism.com, themilkmoney.com, dabsheets.com, 713mixhouse.com, themaasaproject.com, absoulutelycaptivating.com) from one source of truth.
-3. Gives you internal admin/automation endpoints for scripts, dashboards, and cross-posting.
+`src/components/music/Catalog.tsx` combines two things that don't mix:
 
-Auth: **API keys** you issue and revoke from an admin panel. Each key has a name, owner site, scopes (read/write per resource), rate limit, and an expiry.
+- The same `cards` array is rendered twice — a desktop rail and a mobile rail — via `hidden`/`block` utility classes. Both are always in the DOM.
+- On desktop, GSAP `ScrollTrigger` with `pin: true` wraps the section in a pin-spacer and re-parents the track element. When React later commits an update (or the route unmounts), the DOM parent GSAP produced no longer matches the parent React expects, and `insertBefore` throws `NotFoundError`.
 
----
+`HorizontalShelf.tsx` had the same shape and was partially fixed last turn (conditional desktop/mobile render), but the GSAP cleanup timing there is also fragile in the same way.
 
-## What gets built
+## Changes
 
-### 1. Database (new tables)
+### 1. `src/components/music/Catalog.tsx`
 
-- `api_keys` — id, name, hashed_key, key_prefix (for display), owner_site, scopes[], rate_limit_per_min, expires_at, revoked_at, last_used_at, created_by
-- `api_key_usage` — key_id, endpoint, method, status, ip, ts (for analytics + rate limiting)
-- `api_webhooks` — key_id, target_url, events[], secret, active (for outbound webhooks on new release / new order / etc.)
+- Track viewport with `useState` + `matchMedia` (same pattern already added to `HorizontalShelf`) and render **only one** of the desktop rail or mobile rail at a time. This removes the duplicate child trees that confuse reconciliation.
+- Move the GSAP setup from `useEffect` to `useLayoutEffect` and wrap it in `gsap.context(() => { ... }, sectionRef)` so cleanup runs synchronously before React's next commit and kills every ScrollTrigger scoped to that section.
+- Gate the effect on `isDesktop` so the pin only initializes when the desktop rail is actually mounted, and tears down cleanly when switching to mobile.
+- Call `ScrollTrigger.refresh()` once after layout settles (`requestAnimationFrame`) instead of `setTimeout`, and cancel it in the cleanup.
 
-RLS: admin-only. Keys stored hashed (SHA-256); raw key shown **once** at creation.
+### 2. `src/components/music/HorizontalShelf.tsx`
 
-### 2. Edge function: `api-v1` (single router)
+- Same hardening: switch the GSAP setup to `useLayoutEffect` + `gsap.context(..., sectionRef)`, and gate on the existing `isDesktop` state so pin creation and teardown are symmetric with mount/unmount.
+- Keep the already-added `isDesktop` conditional render (one branch at a time).
 
-One deployed function that routes by path. Handles auth, scope check, rate limit, logging, CORS for all six domains.
+### 3. No changes elsewhere
 
-**Public read endpoints** (require key with `read:*` scope):
-```
-GET  /api/v1/music/albums           list + filter
-GET  /api/v1/music/albums/:slug     album + tracks
-GET  /api/v1/music/tracks           list, filter by era/year
-GET  /api/v1/music/tracks/:slug     track detail + streaming links
-GET  /api/v1/press                  press entries
-GET  /api/v1/blog                   posts (paginated)
-GET  /api/v1/blog/:slug             single post
-GET  /api/v1/merch/products         Printful catalog (cached)
-GET  /api/v1/nfts                   OpenSea-backed listing
-GET  /api/v1/events                 upcoming shows
-GET  /api/v1/tiktok                 latest videos (proxied)
-```
+Verified only `Catalog` and `HorizontalShelf` use `pin: true` on this route; other GSAP usages are parallax/scrub without pinning and are not implicated.
 
-**Admin / automation endpoints** (require `admin:*` scope):
-```
-POST /api/v1/fans                   add newsletter/fan signup
-POST /api/v1/orders/lookup          order status by email
-POST /api/v1/analytics/event        cross-site event ingest
-POST /api/v1/webhooks/test          fire a test webhook
-```
+## Verification
 
-Every response: JSON, versioned envelope `{ data, meta, error }`, CORS allowlist covering all six sites + `*` for public GET routes with a valid key.
+- Reload `/music` and confirm the page renders (no blank screen, no console `NotFoundError`).
+- Scroll through the Most Played / Latest / Albums / Singles / Archive shelves and through the "The Catalog" section — horizontal scrub should still work on desktop, native swipe on mobile.
+- Navigate away from `/music` and back — no unmount errors.
+- Resize the window across the 900 px breakpoint — the correct rail mounts and GSAP pin is created/destroyed without warnings.
 
-### 3. Admin UI at `/admin/api`
+## Technical notes
 
-Behind existing admin role. Lets you:
-- Create a key (choose name, site, scopes, rate limit, expiry) → shows raw key **once**.
-- List keys with prefix, last used, request count (7d), status.
-- Revoke / rotate.
-- View recent requests + errors per key.
-- Configure webhooks per key.
-
-### 4. Consumer helper
-
-A tiny `mrcap-api` JS client (single file, no build) you can drop into any of the other Lovable sites:
-```js
-const api = createMrCapClient({ key: "mck_live_…" });
-const albums = await api.music.albums();
-```
-Handles base URL, auth header, retries, typed responses.
-
-### 5. Docs page at `/api/docs`
-
-Public page listing every endpoint, params, example curl, example response, and a "Get an API key" CTA that links to the admin panel.
-
----
-
-## Rollout order
-
-1. Migration: `api_keys`, `api_key_usage`, `api_webhooks` + RLS + grants.
-2. `api-v1` edge function with auth middleware, rate limiter, and the `music/*` + `press` + `blog` routes.
-3. Admin UI at `/admin/api` (create/list/revoke keys, usage view).
-4. Add remaining routes (`merch`, `nfts`, `events`, `tiktok`, admin/automation).
-5. Webhooks + `mrcap-api` JS helper + `/api/docs` page.
-6. You issue keys to each of your other six sites and swap their fetches to the client.
-
-## Technical details
-
-- Key format: `mck_live_<32 random chars>`; stored as SHA-256 hash + 8-char prefix.
-- Auth header: `Authorization: Bearer <key>` or `x-api-key: <key>`.
-- Rate limit: per-key sliding window in `api_key_usage` (default 60/min, configurable per key).
-- Scopes: `read:music`, `read:press`, `read:blog`, `read:merch`, `read:nfts`, `read:events`, `admin:fans`, `admin:orders`, `admin:analytics`, `admin:webhooks`, plus `read:*` / `admin:*` wildcards.
-- Logging: every request logged to `api_key_usage`; feeds admin usage view and existing analytics dashboard.
-- CORS allowlist: your six domains hardcoded + `*.lovable.app` for previews.
-- No breaking changes to existing edge functions (`printful-*`, `paypal-*`, `tiktok-videos`, etc.) — the API layer calls them or the DB directly.
+- `gsap.context(fn, scope)` is the officially recommended cleanup pattern for React: it records every animation and ScrollTrigger created inside `fn` and reverts them atomically on `ctx.revert()`, which is exactly what's needed when React is about to unmount or replace a pinned subtree.
+- `useLayoutEffect` (not `useEffect`) ensures the revert runs before the browser paints the next frame, so React never attempts an `insertBefore` against a DOM tree GSAP still owns.
+- Conditional rendering (rather than `hidden`/`block` toggling) is what removes the duplicate-children hazard — with a single subtree in play, GSAP and React operate on the same nodes.

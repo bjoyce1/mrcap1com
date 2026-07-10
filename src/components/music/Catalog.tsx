@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import { useAlbums } from "@/hooks/useStreamingData";
@@ -19,6 +19,17 @@ export default function Catalog() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const { data: albums, isLoading } = useAlbums();
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(min-width: 901px)").matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 901px)");
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    setIsDesktop(mql.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
   const cards: CardItem[] = (albums ?? []).map((a: Album) => ({
     year: a.release_year ? String(a.release_year) : "—",
@@ -28,15 +39,18 @@ export default function Catalog() {
     href: `/album/${a.slug}`,
   }));
 
-  useEffect(() => {
-    if (!cards.length) return;
-    const mm = gsap.matchMedia();
-    mm.add("(min-width: 901px) and (prefers-reduced-motion: no-preference)", () => {
-      const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
+  useLayoutEffect(() => {
+    if (!isDesktop || !cards.length) return;
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    const ctx = gsap.context(() => {
       const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + 80);
-      const tween = gsap.to(track, {
+      if (distance() <= 0) return;
+      gsap.to(track, {
         x: () => -distance(),
         ease: "none",
         scrollTrigger: {
@@ -49,13 +63,14 @@ export default function Catalog() {
           invalidateOnRefresh: true,
         },
       });
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
-    });
-    return () => mm.revert();
-  }, [cards.length]);
+      raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+    }, sectionRef);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ctx.revert();
+    };
+  }, [isDesktop, cards.length]);
 
   if (isLoading || !cards.length) {
     return (
@@ -82,26 +97,28 @@ export default function Catalog() {
         </p>
       </div>
 
-      {/* Desktop horizontal scrub */}
-      <div className="hidden min-[901px]:block overflow-hidden">
-        <div ref={trackRef} className="flex gap-10 px-10 py-20 will-change-transform">
+      {isDesktop ? (
+        <div className="overflow-hidden">
+          <div ref={trackRef} className="flex gap-10 px-10 py-20 will-change-transform">
+            {cards.map((c) => (
+              <Card key={c.href} c={c} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 py-12">
           {cards.map((c) => (
-            <Card key={c.href} c={c} />
+            <div key={c.href} className="snap-start shrink-0 w-[78vw] max-w-[340px]">
+              <Card c={c} />
+            </div>
           ))}
         </div>
-      </div>
-
-      {/* Mobile native scroll */}
-      <div className="min-[901px]:hidden flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 py-12">
-        {cards.map((c) => (
-          <div key={c.href} className="snap-start shrink-0 w-[78vw] max-w-[340px]">
-            <Card c={c} />
-          </div>
-        ))}
-      </div>
+      )}
     </section>
   );
 }
+
+
 
 function Card({ c }: { c: CardItem }) {
   return (

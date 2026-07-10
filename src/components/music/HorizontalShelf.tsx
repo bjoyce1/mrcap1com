@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 interface HorizontalShelfProps {
@@ -41,16 +41,18 @@ export default function HorizontalShelf({
     return () => mql.removeEventListener("change", onChange);
   }, []);
 
-  useEffect(() => {
-    const mm = gsap.matchMedia();
-    mm.add("(min-width: 901px) and (prefers-reduced-motion: no-preference)", () => {
-      const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
+  useLayoutEffect(() => {
+    if (!isDesktop) return;
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    const ctx = gsap.context(() => {
       const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + 80);
-      // Skip pinning when the rail already fits on screen
       if (distance() <= 0) return;
-      const tween = gsap.to(track, {
+      gsap.to(track, {
         x: () => -distance(),
         ease: "none",
         scrollTrigger: {
@@ -63,18 +65,14 @@ export default function HorizontalShelf({
           invalidateOnRefresh: true,
         },
       });
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
-    });
-    // Recompute after layout settles
-    const t = window.setTimeout(() => ScrollTrigger.refresh(), 60);
+      raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+    }, sectionRef);
+
     return () => {
-      window.clearTimeout(t);
-      mm.revert();
+      cancelAnimationFrame(raf);
+      ctx.revert();
     };
-  }, [refreshKey]);
+  }, [isDesktop, refreshKey]);
 
   return (
     <section ref={sectionRef} className="catalog-section relative overflow-hidden">
