@@ -97,26 +97,23 @@ export default function Catalog() {
         </p>
       </div>
 
-      {/* Desktop horizontal scrub */}
-      <div className="hidden min-[901px]:block overflow-hidden">
-        <div ref={trackRef} className="flex gap-10 px-10 py-20 will-change-transform">
+      {isDesktop ? (
+        <div className="overflow-hidden">
+          <div ref={trackRef} className="flex gap-10 px-10 py-20 will-change-transform">
+            {cards.map((c) => (
+              <Card key={c.href} c={c} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 py-12">
           {cards.map((c) => (
-            <Card key={c.href} c={c} />
+            <div key={c.href} className="snap-start shrink-0 w-[78vw] max-w-[340px]">
+              <Card c={c} />
+            </div>
           ))}
         </div>
-      </div>
-
-      {/* Mobile native scroll */}
-      <div className="min-[901px]:hidden flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory px-6 py-12">
-        {cards.map((c) => (
-          <div key={c.href} className="snap-start shrink-0 w-[78vw] max-w-[340px]">
-            <Card c={c} />
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
+      )}
 
 function Card({ c }: { c: CardItem }) {
   return (
