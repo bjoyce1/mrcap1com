@@ -11,9 +11,32 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // Require authenticated user (prevents anonymous tampering with track metadata)
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const authClient = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_ANON_KEY")!,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+    const token = authHeader.replace("Bearer ", "");
+    const { data: claimsData, error: claimsError } = await authClient.auth.getClaims(token);
+    if (claimsError || !claimsData?.claims) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const { trackId, duration } = await req.json();
 
-    if (!trackId || typeof duration !== "number" || duration <= 0) {
+    if (!trackId || typeof trackId !== "string" || typeof duration !== "number" || duration <= 0 || duration > 36000) {
       return new Response(
         JSON.stringify({ error: "trackId and a positive duration are required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
