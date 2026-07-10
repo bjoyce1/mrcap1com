@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 interface HorizontalShelfProps {
