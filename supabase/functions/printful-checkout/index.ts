@@ -364,7 +364,6 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Unexpected error in printful-checkout function:', error);
-    const message = error instanceof Error ? error.message : 'Order processing failed';
-    return json({ error: message }, 500);
+    return json({ error: 'Internal server error' }, 500);
   }
 });
