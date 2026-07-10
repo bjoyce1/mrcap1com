@@ -1,15 +1,16 @@
 import { supabase } from "@/integrations/supabase/client";
 
 /**
- * Execute a GROQ query against Sanity via our edge function proxy.
- * Returns the `result` array/object from Sanity's response.
+ * Execute a pre-defined GROQ query template against Sanity via our edge
+ * function proxy. The edge function only accepts a fixed set of template
+ * names and declared parameters — arbitrary GROQ is not allowed.
  */
 export async function sanityQuery<T = unknown>(
-  query: string,
+  template: string,
   params?: Record<string, unknown>
 ): Promise<T> {
   const { data, error } = await supabase.functions.invoke("sanity-query", {
-    body: { query, params },
+    body: { template, params },
   });
 
   if (error) throw new Error(`Sanity fetch failed: ${error.message}`);
