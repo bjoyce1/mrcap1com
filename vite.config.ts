@@ -2,8 +2,10 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
-import { VitePWA } from "vite-plugin-pwa";
-// prerender plugin removed — Node-only deps (puppeteer) were breaking the ESM config evaluation
+// vite-plugin-pwa removed — its auto-registered service worker was
+// caching old HTML/JS and causing the Lovable preview (and returning
+// visitors) to see stale builds. public/sw.js is now a kill-switch
+// worker that unregisters itself and clears the old Workbox caches.
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -14,32 +16,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    VitePWA({
-      registerType: "autoUpdate",
-      manifest: false, // we use our own public/manifest.json
-      workbox: {
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-        globPatterns: ["**/*.{js,css,html,ico,png,jpg,jpeg,webp,svg,woff2}"],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/i,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "google-fonts",
-              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/storage\.googleapis\.com\/.*/i,
-            handler: "StaleWhileRevalidate",
-            options: {
-              cacheName: "gcs-assets",
-              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 },
-            },
-          },
-        ],
-      },
-    }),
     // Pre-render plugin removed for build stability. Google's JS rendering
     // handles per-route Helmet tags; JSON-LD is in the SPA shell.
 
