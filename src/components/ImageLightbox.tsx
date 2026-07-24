@@ -25,6 +25,13 @@ interface ImageLightboxProps {
   images?: LightboxImage[];
   index?: number;
   onIndexChange?: (nextIndex: number) => void;
+  /**
+   * Called when the dialog is closing so the caller can restore focus
+   * to the trigger corresponding to the currently viewed image
+   * (Radix would otherwise restore focus to the originally-clicked
+   * trigger, which may not match after Prev/Next navigation).
+   */
+  onRequestRestoreFocus?: (index: number) => void;
 }
 
 export const ImageLightbox = ({
