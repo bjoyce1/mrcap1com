@@ -207,6 +207,53 @@ const WhoIsMrCap = () => {
     []
   );
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+
+  // Highlight the currently viewed Timeline entry via IntersectionObserver.
+  useEffect(() => {
+    const items = Array.from(
+      document.querySelectorAll<HTMLLIElement>('li[id^="t-"]')
+    );
+    if (items.length === 0) return;
+
+    const visibility = new Map<string, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibility.set(entry.target.id, entry.intersectionRatio);
+        });
+        let bestId: string | null = null;
+        let bestRatio = 0;
+        visibility.forEach((ratio, id) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
+          }
+        });
+        if (bestId && bestRatio > 0) {
+          setActiveSlug(bestId.replace(/^t-/, ""));
+        }
+      },
+      {
+        // Focus on the vertical center of the viewport.
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      }
+    );
+    items.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // Sync active slug to hash changes immediately (before scroll settles).
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith("#t-")) setActiveSlug(hash.slice(3));
+    };
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
 
   // Deep-link support: scroll to a timeline entry when the URL hash targets one.
   useEffect(() => {
