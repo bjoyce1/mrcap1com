@@ -1,9 +1,6 @@
-// Kill-switch worker — replaces the previous vite-plugin-pwa service worker.
-// Cache Storage is origin-scoped; only delete this app's own caches so that
-// unrelated workers (e.g. Firebase Messaging, OneSignal) are left intact.
+// Kill-switch worker mirrored at /service-worker.js for any historic
+// registration that used this path. Behaviour identical to /sw.js.
 
-// Legacy cache-name prefixes ever shipped by this app's PWA builds.
-// Extend cautiously — everything matched here will be deleted.
 const APP_CACHE_PREFIXES = [
   "workbox-",
   "precache-v",
@@ -16,7 +13,6 @@ const APP_CACHE_PREFIXES = [
 
 function isThisAppsCache(name) {
   const scope = self.registration.scope;
-  // Workbox scopes caches with `-<scope>` suffix; also match by known prefix.
   const scopedSuffixMatch = typeof scope === "string" && name.endsWith(scope);
   const prefixMatch = APP_CACHE_PREFIXES.some((p) => name.startsWith(p) || name.includes(`-${p}`));
   return scopedSuffixMatch || prefixMatch;
