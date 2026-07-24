@@ -25,6 +25,13 @@ interface ImageLightboxProps {
   images?: LightboxImage[];
   index?: number;
   onIndexChange?: (nextIndex: number) => void;
+  /**
+   * Called when the dialog is closing so the caller can restore focus
+   * to the trigger corresponding to the currently viewed image
+   * (Radix would otherwise restore focus to the originally-clicked
+   * trigger, which may not match after Prev/Next navigation).
+   */
+  onRequestRestoreFocus?: (index: number) => void;
 }
 
 export const ImageLightbox = ({
@@ -34,6 +41,7 @@ export const ImageLightbox = ({
   images,
   index = 0,
   onIndexChange,
+  onRequestRestoreFocus,
 }: ImageLightboxProps) => {
   const gallery = images && images.length > 0;
   const active: LightboxImage | null = gallery
@@ -74,6 +82,21 @@ export const ImageLightbox = ({
       <DialogContent
         className="max-w-[95vw] max-h-[95vh] w-auto h-auto p-0 overflow-hidden border border-[hsl(var(--foreground)/0.12)] bg-[hsl(var(--background)/0.96)] shadow-[0_30px_80px_hsl(0_0%_0%/0.7)]"
         aria-describedby="lightbox-description"
+        onOpenAutoFocus={(e) => {
+          // Radix will focus the first focusable child (the close button)
+          // and trap Tab within the dialog automatically — we keep that
+          // default but ensure it doesn't scroll the trigger out of view.
+          const target = e.currentTarget as HTMLElement | null;
+          target?.focus({ preventScroll: true });
+          e.preventDefault();
+        }}
+        onCloseAutoFocus={(e) => {
+          if (onRequestRestoreFocus) {
+            e.preventDefault();
+            // Defer so the dialog fully unmounts before we move focus.
+            requestAnimationFrame(() => onRequestRestoreFocus(index));
+          }
+        }}
       >
         <DialogTitle className="sr-only">{active.alt} — enlarged view</DialogTitle>
         <DialogDescription id="lightbox-description" className="sr-only">
