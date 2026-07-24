@@ -1170,6 +1170,13 @@ const WhoIsMrCap = () => {
           images={timelineImages}
           index={lightboxIndex ?? 0}
           onIndexChange={(next) => setLightboxIndex(next)}
+          onRequestRestoreFocus={(idx) => {
+            const btn = document.querySelector<HTMLButtonElement>(
+              `[data-lightbox-idx="${idx}"]`
+            );
+            btn?.focus({ preventScroll: false });
+            btn?.scrollIntoView({ block: "center", behavior: "smooth" });
+          }}
         />
       </div>
     </>
