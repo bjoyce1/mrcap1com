@@ -12,6 +12,17 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      // Lovable-hosted assets (`.asset.json` -> `/__l5e/assets-v1/...`) are
+      // served by Lovable's CDN in preview/production. In local dev the Vite
+      // SPA fallback would return `index.html` for these paths, so we proxy
+      // them to the published origin where the CDN objects live.
+      "/__l5e": {
+        target: "https://mrcap1.com",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
   },
   plugins: [
     react(),
