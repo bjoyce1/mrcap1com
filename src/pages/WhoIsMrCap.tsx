@@ -831,7 +831,13 @@ const WhoIsMrCap = () => {
                       </div>
 
                       {/* node */}
-                      <span className="absolute left-4 md:left-1/2 top-14 -translate-x-1/2 h-3 w-3 rounded-full bg-[hsl(var(--accent-gold))] shadow-[0_0_0_4px_hsl(var(--background)),0_0_20px_hsl(var(--accent-gold)/0.6)]" />
+                      <span
+                        className={`absolute left-4 md:left-1/2 top-14 -translate-x-1/2 rounded-full bg-[hsl(var(--accent-gold))] transition-all duration-500 ${
+                          isActive
+                            ? "h-4 w-4 shadow-[0_0_0_5px_hsl(var(--background)),0_0_28px_hsl(var(--accent-gold)/0.95)]"
+                            : "h-3 w-3 shadow-[0_0_0_4px_hsl(var(--background)),0_0_20px_hsl(var(--accent-gold)/0.6)]"
+                        }`}
+                      />
                     </li>
                   );
                 })}
