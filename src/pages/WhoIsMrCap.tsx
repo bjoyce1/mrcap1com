@@ -44,6 +44,9 @@ import spcStudio from "/images/spc-mr-cap-studio.jpg";
 import spcVinyl from "/images/spc-vinyl-legacy.webp";
 import artOfIsmHero from "@/assets/art-of-ism-hero.webp";
 import originChildhood from "@/assets/cap-origin-childhood.png.asset.json";
+import originChildhood400 from "@/assets/cap-origin-childhood-400.webp.asset.json";
+import originChildhood800 from "@/assets/cap-origin-childhood-800.webp.asset.json";
+import originChildhood1200 from "@/assets/cap-origin-childhood-1200.webp.asset.json";
 
 /* ---------------- small building blocks (page-scoped) ---------------- */
 
