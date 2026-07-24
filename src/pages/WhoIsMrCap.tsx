@@ -164,6 +164,7 @@ const universe = [
 const WhoIsMrCap = () => {
   const [pressKitOpen, setPressKitOpen] = useState(false);
   const [docOpen, setDocOpen] = useState(false);
+  const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
   const pageTitle = "Who Is Mr. CAP? — Houston Original, SPC Legend, Independent Architect";
   const metaDescription =
     "Mr. CAP (Cornelius A. Pratt) — Houston-born rapper, South Park Coalition member, entrepreneur and blockchain pioneer. Three decades of music, ownership, and independent evolution.";
