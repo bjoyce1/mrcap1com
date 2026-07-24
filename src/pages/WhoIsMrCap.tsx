@@ -5,7 +5,8 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Music, Play, ExternalLink, Calendar, Disc3, ChevronRight, ArrowUpRight } from "lucide-react";
+import { Music, Play, ExternalLink, Calendar, Disc3, ChevronRight, ArrowUpRight, Link2, Check } from "lucide-react";
+import { toast } from "sonner";
 import CitationBlock from "@/components/CitationBlock";
 import PressKitModal from "@/components/PressKitModal";
 import BiographyShareRow from "@/components/BiographyShareRow";
