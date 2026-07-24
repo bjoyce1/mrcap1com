@@ -848,6 +848,7 @@ const WhoIsMrCap = () => {
 
         <CitationBlock />
         <Footer />
+        <PressKitModal open={pressKitOpen} onOpenChange={setPressKitOpen} />
       </div>
     </>
   );
