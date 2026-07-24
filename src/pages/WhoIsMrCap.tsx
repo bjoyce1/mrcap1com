@@ -667,10 +667,7 @@ const WhoIsMrCap = () => {
                         <Link to="/nft"><Disc3 className="mr-2 h-4 w-4" /> NFT Gallery</Link>
                       </Button>
                       <Button variant="fluxOutline" asChild className="rounded-none">
-                        <Link to="/the-art-of-ism">The Art of ISM <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
-                      </Button>
-                      <Button variant="fluxOutline" asChild className="rounded-none">
-                        <Link to="/innovation">Innovation <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
+                        <Link to="/art-of-ism">The Art of ISM <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
                       </Button>
                     </div>
                   </Reveal>
@@ -683,7 +680,7 @@ const WhoIsMrCap = () => {
                       <ChromeCoin src={coin} />
                       <div className="mt-6 flex justify-between font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
                         <span>Capicoin · CCHX</span>
-                        <span>On-chain since 2021</span>
+                        <span>First Houston Hip-Hop NFT · 2021</span>
                       </div>
                     </div>
                   </Reveal>
