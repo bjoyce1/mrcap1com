@@ -1003,6 +1003,11 @@ const WhoIsMrCap = () => {
             </div>
           </DialogContent>
         </Dialog>
+        <ImageLightbox
+          open={!!lightbox}
+          onOpenChange={(open) => !open && setLightbox(null)}
+          image={lightbox}
+        />
       </div>
     </>
   );
