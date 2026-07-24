@@ -644,16 +644,29 @@ const WhoIsMrCap = () => {
                           y={30}
                           className={`pl-12 md:pl-0 ${left ? "md:order-2 md:pl-16" : "md:pr-16 md:flex md:justify-end"}`}
                         >
-                          {m.art ? (
-                            <div className="relative w-48 md:w-64 aspect-square">
+                        {m.art ? (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setLightbox({
+                                  src: m.art,
+                                  alt: `${m.title} — ${m.tag}`,
+                                  caption: `${m.year} · ${m.title}`,
+                                  credit: "Mr. CAP Archive",
+                                })
+                              }
+                              className="group relative w-48 md:w-64 aspect-square text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+                              aria-label={`Open enlarged view of ${m.title}`}
+                            >
                               <div className="absolute inset-0 bg-[hsl(var(--accent-gold))]/10 blur-2xl" />
                               <img
                                 src={m.art}
                                 alt={m.title}
                                 loading="lazy"
-                                className="relative h-full w-full object-cover shadow-[0_30px_60px_hsl(0_0%_0%/0.6)] border border-[hsl(var(--foreground)/0.1)] transition-transform duration-700 hover:-translate-y-1 hover:rotate-[-1deg]"
+                                className="relative h-full w-full object-cover shadow-[0_30px_60px_hsl(0_0%_0%/0.6)] border border-[hsl(var(--foreground)/0.1)] transition-transform duration-700 group-hover:-translate-y-1 group-hover:rotate-[-1deg]"
                               />
-                            </div>
+                              <span className="sr-only">Open enlarged view</span>
+                            </button>
                           ) : (
                             <div className="w-48 md:w-64 aspect-square border border-dashed border-[hsl(var(--accent-gold))]/40 flex items-center justify-center font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
                               Genesis
