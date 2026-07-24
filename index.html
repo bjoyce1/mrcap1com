@@ -55,6 +55,52 @@
 
     <!-- Mr. CAP Analytics tracker -->
     <script defer src="/analytics/tracker.js" data-site-id="mrcap1.com"></script>
+
+    <!-- Belt-and-suspenders: unregister any legacy service worker + purge its caches.
+         Runs on production hostnames only; skipped in Lovable preview/editor iframes
+         so it doesn't interfere with the editor's own environment. -->
+    <script>
+      (function () {
+        try {
+          var h = location.hostname;
+          var isPreview =
+            h.indexOf("id-preview--") === 0 ||
+            h.indexOf("preview--") === 0 ||
+            h === "lovableproject.com" ||
+            /\.lovableproject(-dev)?\.com$/.test(h) ||
+            /\.beta\.lovable\.dev$/.test(h) ||
+            h === "localhost" ||
+            h === "127.0.0.1";
+          if (isPreview) return;
+          if (window.top !== window.self) return;
+
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              regs.forEach(function (reg) {
+                var url = (reg.active && reg.active.scriptURL) || (reg.installing && reg.installing.scriptURL) || (reg.waiting && reg.waiting.scriptURL) || "";
+                if (/\/(sw|service-worker)\.js(\?|$)/.test(url)) {
+                  reg.unregister();
+                }
+              });
+            }).catch(function () {});
+          }
+
+          if ("caches" in window) {
+            var prefixes = ["workbox-", "precache-v", "runtime-", "googleAnalytics-", "mrcap-", "app-shell-", "vite-pwa-"];
+            caches.keys().then(function (names) {
+              names.forEach(function (name) {
+                for (var i = 0; i < prefixes.length; i++) {
+                  if (name.indexOf(prefixes[i]) === 0 || name.indexOf("-" + prefixes[i]) !== -1) {
+                    caches.delete(name);
+                    break;
+                  }
+                }
+              });
+            }).catch(function () {});
+          }
+        } catch (_) {}
+      })();
+    </script>
   </head>
 
   <body class="antialiased">

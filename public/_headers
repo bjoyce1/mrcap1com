@@ -1,0 +1,15 @@
+# Force revalidation of service-worker scripts and the app shell so returning
+# visitors pick up the kill-switch worker and current index.html immediately.
+# Hosts that don't honor _headers will simply ignore this file (safe no-op).
+
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/service-worker.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/manifest.json
+  Cache-Control: no-cache
+
+/index.html
+  Cache-Control: no-cache
