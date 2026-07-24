@@ -822,7 +822,7 @@ const WhoIsMrCap = () => {
                     <Link to="/music"><Play className="mr-2 h-4 w-4" /> Listen to Music</Link>
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild className="rounded-none">
-                    <Link to="/press"><ExternalLink className="mr-2 h-4 w-4" /> Press Kit</Link>
+                    <Link to="/opk"><ExternalLink className="mr-2 h-4 w-4" /> Press Kit</Link>
                   </Button>
                 </div>
               </Reveal>
