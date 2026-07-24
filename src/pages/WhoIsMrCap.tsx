@@ -264,8 +264,9 @@ const WhoIsMrCap = () => {
         <Navigation />
 
         <main className="whois-page">
+          <ChapterNav chapters={CHAPTERS} />
           {/* ============ 1. CINEMATIC HERO ============ */}
-          <section ref={heroRef} className="relative min-h-[100svh] overflow-hidden">
+          <section id="ch-hero" ref={heroRef} className="relative min-h-[100svh] overflow-hidden scroll-mt-24">
             {/* Backdrop */}
             <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10">
               <div
