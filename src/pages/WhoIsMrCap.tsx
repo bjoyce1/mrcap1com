@@ -936,6 +936,33 @@ const WhoIsMrCap = () => {
         <CitationBlock />
         <Footer />
         <PressKitModal open={pressKitOpen} onOpenChange={setPressKitOpen} />
+        <Dialog open={docOpen} onOpenChange={setDocOpen}>
+          <DialogContent className="max-w-4xl p-0 bg-background border-[hsl(var(--foreground)/0.1)]">
+            <DialogTitle className="sr-only">
+              The Life: Sex Trafficking and Modern-Day Slavery — Trailer
+            </DialogTitle>
+            <DialogDescription className="sr-only">
+              Documentary trailer video. Captions are enabled by default. Press Escape to close.
+            </DialogDescription>
+            {docOpen && TRAILER_YOUTUBE_ID && (
+              <div className="relative w-full aspect-video bg-black">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${TRAILER_YOUTUBE_ID}?autoplay=1&cc_load_policy=1&cc_lang_pref=en&hl=en&rel=0&modestbranding=1`}
+                  title="The Life: Sex Trafficking and Modern-Day Slavery — Trailer (captions enabled)"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full border-0"
+                />
+              </div>
+            )}
+            <div className="px-6 py-4 border-t border-[hsl(var(--foreground)/0.08)]">
+              <p className="font-mono text-[10px] tracking-[0.28em] uppercase text-muted-foreground">
+                Captions available via the player's CC button · 2024 Lone Star Emmy Nominee
+              </p>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </>
   );
