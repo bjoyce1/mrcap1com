@@ -750,12 +750,8 @@ const WhoIsMrCap = () => {
                               type="button"
                               onClick={() => {
                                 const src = typeof m.art === "string" ? m.art : m.art.src;
-                                setLightbox({
-                                  src,
-                                  alt: m.alt || `${m.title} — ${m.tag}`,
-                                  caption: m.caption || `${m.year} · ${m.title}`,
-                                  credit: "Mr. CAP Archive",
-                                });
+                                const idx = timelineImages.findIndex((img) => img.src === src);
+                                setLightboxIndex(idx >= 0 ? idx : 0);
                               }}
                               className="group relative w-48 md:w-64 aspect-square text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                               aria-label={`Open enlarged view of ${m.alt || m.title}`}
