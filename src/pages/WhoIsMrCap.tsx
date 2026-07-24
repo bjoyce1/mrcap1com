@@ -317,7 +317,7 @@ const WhoIsMrCap = () => {
                         </Link>
                       </Button>
                       <Link
-                        to="/press"
+                        to="/opk"
                         className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.28em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors"
                       >
                         View / Download Press Kit
