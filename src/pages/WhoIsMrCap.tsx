@@ -1105,9 +1105,11 @@ const WhoIsMrCap = () => {
           </DialogContent>
         </Dialog>
         <ImageLightbox
-          open={!!lightbox}
-          onOpenChange={(open) => !open && setLightbox(null)}
-          image={lightbox}
+          open={lightboxIndex !== null}
+          onOpenChange={(open) => !open && setLightboxIndex(null)}
+          images={timelineImages}
+          index={lightboxIndex ?? 0}
+          onIndexChange={(next) => setLightboxIndex(next)}
         />
       </div>
     </>
