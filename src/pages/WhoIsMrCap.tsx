@@ -5,7 +5,8 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Music, Play, ExternalLink, Calendar, Disc3, ChevronRight, ArrowUpRight } from "lucide-react";
+import { Music, Play, ExternalLink, Calendar, Disc3, ChevronRight, ArrowUpRight, Link2, Check } from "lucide-react";
+import { toast } from "sonner";
 import CitationBlock from "@/components/CitationBlock";
 import PressKitModal from "@/components/PressKitModal";
 import BiographyShareRow from "@/components/BiographyShareRow";
@@ -141,6 +142,7 @@ const pillars = [
 
 const timeline = [
   {
+    slug: "origin",
     year: "Origin",
     tag: "ORIGIN",
     title: "Houston, Texas",
@@ -154,14 +156,14 @@ const timeline = [
     alt: "Childhood portrait of Cornelius A. Pratt (Mr. CAP) as a young boy in a blue velvet suit and bow tie, smiling.",
     caption: "Origin portrait — Cornelius A. Pratt, Houston, Texas",
   },
-  { year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins, alt: "Mr. CAP with the South Park Coalition in Houston" },
-  { year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne, alt: "O.N.E. on O.N.E. album artwork" },
-  { year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp, alt: "Tha Cold Ass Pimp album artwork" },
-  { year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP — collaborations across SPC and the Screwed Up Click movement.", art: albumGrave, alt: "2 Tha Grave album artwork" },
-  { year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record — released via Sony Music / The Orchard.", art: albumArtOfIsm, alt: "The Art of ISM album artwork" },
-  { year: "2021", tag: "FIRST", title: "First Houston rapper to sell a Hip-Hop NFT", body: "Ownership on-chain. Independence, upgraded.", art: nftLimitless, alt: "Limitless NFT artwork" },
-  { year: "2024", tag: "COLLECTIVE", title: "The Ties That Bind Us", body: "SPC group album — featuring “Bet'n On Me.”", art: albumTies, alt: "The Ties That Bind Us album artwork" },
-  { year: "NOW", tag: "ERA", title: "Legacy in Motion", body: "Capicoin (CCHX), Art of ISM ecosystem, and the ongoing catalog.", art: coin, alt: "Capicoin (CCHX) medallion" },
+  { slug: "spc-1990s", year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins, alt: "Mr. CAP with the South Park Coalition in Houston" },
+  { slug: "one-on-one-2005", year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne, alt: "O.N.E. on O.N.E. album artwork" },
+  { slug: "cold-ass-pimp-2006", year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp, alt: "Tha Cold Ass Pimp album artwork" },
+  { slug: "2-tha-grave-2011", year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP — collaborations across SPC and the Screwed Up Click movement.", art: albumGrave, alt: "2 Tha Grave album artwork" },
+  { slug: "art-of-ism-2019", year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record — released via Sony Music / The Orchard.", art: albumArtOfIsm, alt: "The Art of ISM album artwork" },
+  { slug: "first-nft-2021", year: "2021", tag: "FIRST", title: "First Houston rapper to sell a Hip-Hop NFT", body: "Ownership on-chain. Independence, upgraded.", art: nftLimitless, alt: "Limitless NFT artwork" },
+  { slug: "ties-that-bind-2024", year: "2024", tag: "COLLECTIVE", title: "The Ties That Bind Us", body: "SPC group album — featuring “Bet'n On Me.”", art: albumTies, alt: "The Ties That Bind Us album artwork" },
+  { slug: "legacy-now", year: "NOW", tag: "ERA", title: "Legacy in Motion", body: "Capicoin (CCHX), Art of ISM ecosystem, and the ongoing catalog.", art: coin, alt: "Capicoin (CCHX) medallion" },
 ];
 
 const universe = [
@@ -181,6 +183,42 @@ const WhoIsMrCap = () => {
   const [pressKitOpen, setPressKitOpen] = useState(false);
   const [docOpen, setDocOpen] = useState(false);
   const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
+  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+
+  // Deep-link support: scroll to a timeline entry when the URL hash targets one.
+  useEffect(() => {
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (!hash || !hash.startsWith("#t-")) return;
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        requestAnimationFrame(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+    };
+    const t = window.setTimeout(scrollToHash, 350);
+    window.addEventListener("hashchange", scrollToHash);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("hashchange", scrollToHash);
+    };
+  }, []);
+
+  const copyEntryLink = async (slug: string, title: string) => {
+    const url = `${window.location.origin}/who-is-mr-cap#t-${slug}`;
+    try {
+      if (window.history?.replaceState) {
+        window.history.replaceState(null, "", `#t-${slug}`);
+      }
+      await navigator.clipboard.writeText(url);
+      setCopiedSlug(slug);
+      window.setTimeout(() => setCopiedSlug((s) => (s === slug ? null : s)), 1800);
+      toast.success("Link copied", { description: `${title} — ${url}` });
+    } catch {
+      toast.error("Couldn't copy — long-press the link to copy manually.");
+    }
+  };
   const pageTitle = "Who Is Mr. CAP? — Houston Original, SPC Legend, Independent Architect";
   const metaDescription =
     "Mr. CAP (Cornelius A. Pratt) — Houston-born rapper, South Park Coalition member, entrepreneur and blockchain pioneer. Three decades of music, ownership, and independent evolution.";
@@ -638,7 +676,11 @@ const WhoIsMrCap = () => {
                 {timeline.map((m, i) => {
                   const left = i % 2 === 0;
                   return (
-                    <li key={m.year + m.title} className="relative py-10 md:py-14">
+                    <li
+                      key={m.slug}
+                      id={`t-${m.slug}`}
+                      className="relative py-10 md:py-14 scroll-mt-32 target:[&>div]:ring-1"
+                    >
                       <div className={`grid md:grid-cols-2 gap-10 items-center`}>
                         {/* text */}
                         <Reveal
@@ -646,7 +688,28 @@ const WhoIsMrCap = () => {
                           y={30}
                           className={`min-w-0 pl-12 md:pl-0 ${left ? "md:pr-16 md:text-right" : "md:order-2 md:pl-16"}`}
                         >
-                          <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
+                          <div className={`flex items-center gap-3 ${left ? "md:justify-end" : ""}`}>
+                            <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
+                            <button
+                              type="button"
+                              onClick={() => copyEntryLink(m.slug, m.title)}
+                              aria-label={`Copy shareable link to ${m.title}`}
+                              title="Copy link to this entry"
+                              className="inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[0.3em] uppercase text-muted-foreground hover:text-[hsl(var(--accent-gold))] focus:outline-none focus-visible:text-[hsl(var(--accent-gold))] focus-visible:ring-1 focus-visible:ring-[hsl(var(--accent-gold))] px-2 py-1 border border-[hsl(var(--foreground)/0.1)] hover:border-[hsl(var(--accent-gold)/0.6)] transition-colors"
+                            >
+                              {copiedSlug === m.slug ? (
+                                <>
+                                  <Check className="w-3 h-3" aria-hidden />
+                                  Copied
+                                </>
+                              ) : (
+                                <>
+                                  <Link2 className="w-3 h-3" aria-hidden />
+                                  Copy Link
+                                </>
+                              )}
+                            </button>
+                          </div>
                           <div className="mt-2 font-display text-4xl md:text-5xl">{m.year}</div>
                           <h3 className="mt-3 font-display text-xl md:text-2xl text-foreground [text-wrap:balance]">{m.title}</h3>
                           <p className={`mt-2 text-sm md:text-base text-muted-foreground max-w-md ${left ? "md:ml-auto" : ""}`}>
