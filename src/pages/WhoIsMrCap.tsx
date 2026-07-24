@@ -35,10 +35,21 @@ const Stamp = ({ children }: { children: React.ReactNode }) => (
 
 const Rule = () => <div className="h-px w-full bg-gradient-to-r from-transparent via-[hsl(var(--accent-gold))]/40 to-transparent" />;
 
-const Reveal = ({ children, delay = 0, y = 24 }: { children: React.ReactNode; delay?: number; y?: number }) => {
+const Reveal = ({
+  children,
+  delay = 0,
+  y = 24,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  y?: number;
+  className?: string;
+}) => {
   const reduce = useReducedMotion();
   return (
     <motion.div
+      className={className}
       initial={reduce ? false : { opacity: 0, y }}
       whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
