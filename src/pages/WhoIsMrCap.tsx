@@ -10,6 +10,18 @@ import CitationBlock from "@/components/CitationBlock";
 import PressKitModal from "@/components/PressKitModal";
 import BiographyShareRow from "@/components/BiographyShareRow";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import ChapterNav, { type Chapter } from "@/components/ChapterNav";
+
+const CHAPTERS: Chapter[] = [
+  { id: "ch-hero", num: "00", label: "Prologue" },
+  { id: "ch-code", num: "01", label: "The Code" },
+  { id: "ch-origin", num: "02", label: "Origin" },
+  { id: "ch-spc", num: "03", label: "SPC Legacy" },
+  { id: "ch-timeline", num: "04", label: "Timeline" },
+  { id: "ch-evolution", num: "05", label: "Evolution" },
+  { id: "ch-receipts", num: "06", label: "Receipts" },
+  { id: "ch-universe", num: "07", label: "Universe" },
+];
 
 // Swap in the trailer's YouTube ID when available to enable the embedded, captioned player.
 // While null, the poster acts as a lazy link to the official PBS page (no iframe network cost).
