@@ -765,7 +765,7 @@ const WhoIsMrCap = () => {
                           className={`min-w-0 pl-12 md:pl-0 ${left ? "md:pr-16 md:text-right" : "md:order-2 md:pl-16"}`}
                         >
                           <div className={`flex items-center gap-3 ${left ? "md:justify-end" : ""}`}>
-                            <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
+                            <div className={`font-mono text-[10px] tracking-[0.35em] uppercase transition-colors ${isActive ? "text-[hsl(var(--accent-gold))] [text-shadow:0_0_12px_hsl(var(--accent-gold)/0.6)]" : "text-[hsl(var(--accent-gold))]"}`}>{m.tag}{isActive && <span className="ml-2 text-[hsl(var(--foreground)/0.5)]">// viewing</span>}</div>
                             <button
                               type="button"
                               onClick={() => copyEntryLink(m.slug, m.title)}
