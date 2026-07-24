@@ -745,11 +745,17 @@ const WhoIsMrCap = () => {
 
                 {timeline.map((m, i) => {
                   const left = i % 2 === 0;
+                  const isActive = activeSlug === m.slug;
                   return (
                     <li
                       key={m.slug}
                       id={`t-${m.slug}`}
-                      className="relative py-10 md:py-14 scroll-mt-32 target:[&>div]:ring-1"
+                      aria-current={isActive ? "true" : undefined}
+                      className={`relative py-10 md:py-14 scroll-mt-32 transition-all duration-500 ${
+                        isActive
+                          ? "md:pl-4 md:pr-4 before:absolute before:left-0 before:top-6 before:bottom-6 before:w-[2px] before:bg-[hsl(var(--accent-gold))] before:shadow-[0_0_12px_hsl(var(--accent-gold)/0.6)]"
+                          : "opacity-90"
+                      }`}
                     >
                       <div className={`grid md:grid-cols-2 gap-10 items-center`}>
                         {/* text */}
