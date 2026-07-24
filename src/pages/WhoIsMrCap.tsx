@@ -42,6 +42,7 @@ import spcSkyline from "/images/spc-houston-skyline.webp";
 import spcStudio from "/images/spc-mr-cap-studio.jpg";
 import spcVinyl from "/images/spc-vinyl-legacy.webp";
 import artOfIsmHero from "@/assets/art-of-ism-hero.webp";
+import originChildhood from "@/assets/cap-origin-childhood.png.asset.json";
 
 /* ---------------- small building blocks (page-scoped) ---------------- */
 
@@ -135,7 +136,7 @@ const pillars = [
 ];
 
 const timeline = [
-  { year: "Origin", tag: "ORIGIN", title: "Houston, Texas", body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.", art: null },
+  { year: "Origin", tag: "ORIGIN", title: "Houston, Texas", body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.", art: originChildhood.url },
   { year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins },
   { year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne },
   { year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp },
