@@ -41,6 +41,7 @@ export const ImageLightbox = ({
   images,
   index = 0,
   onIndexChange,
+  onRequestRestoreFocus,
 }: ImageLightboxProps) => {
   const gallery = images && images.length > 0;
   const active: LightboxImage | null = gallery
