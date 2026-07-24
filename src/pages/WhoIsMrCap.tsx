@@ -822,7 +822,8 @@ const WhoIsMrCap = () => {
                               />
                               <span className="sr-only">Open enlarged view</span>
                             </button>
-                          ) : (
+                            );
+                          })() : (
                             <div className="w-48 md:w-64 aspect-square border border-dashed border-[hsl(var(--accent-gold))]/40 flex items-center justify-center font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
                               Genesis
                             </div>
