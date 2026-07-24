@@ -183,6 +183,42 @@ const WhoIsMrCap = () => {
   const [pressKitOpen, setPressKitOpen] = useState(false);
   const [docOpen, setDocOpen] = useState(false);
   const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
+  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+
+  // Deep-link support: scroll to a timeline entry when the URL hash targets one.
+  useEffect(() => {
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (!hash || !hash.startsWith("#t-")) return;
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        requestAnimationFrame(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+    };
+    const t = window.setTimeout(scrollToHash, 350);
+    window.addEventListener("hashchange", scrollToHash);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("hashchange", scrollToHash);
+    };
+  }, []);
+
+  const copyEntryLink = async (slug: string, title: string) => {
+    const url = `${window.location.origin}/who-is-mr-cap#t-${slug}`;
+    try {
+      if (window.history?.replaceState) {
+        window.history.replaceState(null, "", `#t-${slug}`);
+      }
+      await navigator.clipboard.writeText(url);
+      setCopiedSlug(slug);
+      window.setTimeout(() => setCopiedSlug((s) => (s === slug ? null : s)), 1800);
+      toast.success("Link copied", { description: `${title} — ${url}` });
+    } catch {
+      toast.error("Couldn't copy — long-press the link to copy manually.");
+    }
+  };
   const pageTitle = "Who Is Mr. CAP? — Houston Original, SPC Legend, Independent Architect";
   const metaDescription =
     "Mr. CAP (Cornelius A. Pratt) — Houston-born rapper, South Park Coalition member, entrepreneur and blockchain pioneer. Three decades of music, ownership, and independent evolution.";
