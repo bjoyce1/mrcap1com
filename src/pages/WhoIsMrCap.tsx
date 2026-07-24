@@ -790,7 +790,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 9. FINAL CONVERSION ============ */}
-          <section className="relative py-40 overflow-hidden">
+          <section className="relative pt-40 pb-48 md:pb-56 overflow-hidden">
             <div className="absolute inset-0 -z-10">
               <img src={portrait} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" />
               <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/85 to-background" />
