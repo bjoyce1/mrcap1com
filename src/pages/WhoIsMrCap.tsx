@@ -182,7 +182,29 @@ const universe = [
 const WhoIsMrCap = () => {
   const [pressKitOpen, setPressKitOpen] = useState(false);
   const [docOpen, setDocOpen] = useState(false);
-  const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const timelineImages: LightboxImage[] = useMemo(
+    () =>
+      timeline
+        .filter((m) => !!m.art)
+        .map((m) => {
+          const src = typeof m.art === "string" ? m.art! : (m.art as any).src;
+          const srcSet =
+            typeof m.art === "string" ? undefined : (m.art as any).srcSet;
+          const sizes =
+            typeof m.art === "string" ? undefined : (m.art as any).sizes;
+          return {
+            src,
+            srcSet,
+            sizes,
+            alt: m.alt || `${m.title} — ${m.tag}`,
+            caption: (m as any).caption || `${m.year} · ${m.title}`,
+            credit: "Mr. CAP Archive",
+          };
+        }),
+    []
+  );
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
 
   // Deep-link support: scroll to a timeline entry when the URL hash targets one.
