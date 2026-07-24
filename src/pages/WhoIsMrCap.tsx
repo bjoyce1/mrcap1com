@@ -207,6 +207,53 @@ const WhoIsMrCap = () => {
     []
   );
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+
+  // Highlight the currently viewed Timeline entry via IntersectionObserver.
+  useEffect(() => {
+    const items = Array.from(
+      document.querySelectorAll<HTMLLIElement>('li[id^="t-"]')
+    );
+    if (items.length === 0) return;
+
+    const visibility = new Map<string, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibility.set(entry.target.id, entry.intersectionRatio);
+        });
+        let bestId: string | null = null;
+        let bestRatio = 0;
+        visibility.forEach((ratio, id) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
+          }
+        });
+        if (bestId && bestRatio > 0) {
+          setActiveSlug(bestId.replace(/^t-/, ""));
+        }
+      },
+      {
+        // Focus on the vertical center of the viewport.
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      }
+    );
+    items.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // Sync active slug to hash changes immediately (before scroll settles).
+  useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith("#t-")) setActiveSlug(hash.slice(3));
+    };
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
 
   // Deep-link support: scroll to a timeline entry when the URL hash targets one.
   useEffect(() => {
@@ -698,11 +745,17 @@ const WhoIsMrCap = () => {
 
                 {timeline.map((m, i) => {
                   const left = i % 2 === 0;
+                  const isActive = activeSlug === m.slug;
                   return (
                     <li
                       key={m.slug}
                       id={`t-${m.slug}`}
-                      className="relative py-10 md:py-14 scroll-mt-32 target:[&>div]:ring-1"
+                      aria-current={isActive ? "true" : undefined}
+                      className={`relative py-10 md:py-14 scroll-mt-32 transition-all duration-500 ${
+                        isActive
+                          ? "md:pl-4 md:pr-4 before:absolute before:left-0 before:top-6 before:bottom-6 before:w-[2px] before:bg-[hsl(var(--accent-gold))] before:shadow-[0_0_12px_hsl(var(--accent-gold)/0.6)]"
+                          : "opacity-90"
+                      }`}
                     >
                       <div className={`grid md:grid-cols-2 gap-10 items-center`}>
                         {/* text */}
@@ -712,7 +765,7 @@ const WhoIsMrCap = () => {
                           className={`min-w-0 pl-12 md:pl-0 ${left ? "md:pr-16 md:text-right" : "md:order-2 md:pl-16"}`}
                         >
                           <div className={`flex items-center gap-3 ${left ? "md:justify-end" : ""}`}>
-                            <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
+                            <div className={`font-mono text-[10px] tracking-[0.35em] uppercase transition-colors ${isActive ? "text-[hsl(var(--accent-gold))] [text-shadow:0_0_12px_hsl(var(--accent-gold)/0.6)]" : "text-[hsl(var(--accent-gold))]"}`}>{m.tag}{isActive && <span className="ml-2 text-[hsl(var(--foreground)/0.5)]">// viewing</span>}</div>
                             <button
                               type="button"
                               onClick={() => copyEntryLink(m.slug, m.title)}
@@ -778,7 +831,13 @@ const WhoIsMrCap = () => {
                       </div>
 
                       {/* node */}
-                      <span className="absolute left-4 md:left-1/2 top-14 -translate-x-1/2 h-3 w-3 rounded-full bg-[hsl(var(--accent-gold))] shadow-[0_0_0_4px_hsl(var(--background)),0_0_20px_hsl(var(--accent-gold)/0.6)]" />
+                      <span
+                        className={`absolute left-4 md:left-1/2 top-14 -translate-x-1/2 rounded-full bg-[hsl(var(--accent-gold))] transition-all duration-500 ${
+                          isActive
+                            ? "h-4 w-4 shadow-[0_0_0_5px_hsl(var(--background)),0_0_28px_hsl(var(--accent-gold)/0.95)]"
+                            : "h-3 w-3 shadow-[0_0_0_4px_hsl(var(--background)),0_0_20px_hsl(var(--accent-gold)/0.6)]"
+                        }`}
+                      />
                     </li>
                   );
                 })}
