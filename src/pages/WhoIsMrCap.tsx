@@ -799,14 +799,14 @@ const WhoIsMrCap = () => {
                           y={30}
                           className={`pl-12 md:pl-0 ${left ? "md:order-2 md:pl-16" : "md:pr-16 md:flex md:justify-end"}`}
                         >
-                        {m.art ? (
+                        {m.art ? (() => {
+                            const src = typeof m.art === "string" ? m.art : m.art.src;
+                            const idx = timelineImages.findIndex((img) => img.src === src);
+                            return (
                             <button
                               type="button"
-                              onClick={() => {
-                                const src = typeof m.art === "string" ? m.art : m.art.src;
-                                const idx = timelineImages.findIndex((img) => img.src === src);
-                                setLightboxIndex(idx >= 0 ? idx : 0);
-                              }}
+                              data-lightbox-idx={idx}
+                              onClick={() => setLightboxIndex(idx >= 0 ? idx : 0)}
                               className="group relative w-48 md:w-64 aspect-square text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                               aria-label={`Open enlarged view of ${m.alt || m.title}`}
                             >
