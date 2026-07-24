@@ -10,6 +10,18 @@ import CitationBlock from "@/components/CitationBlock";
 import PressKitModal from "@/components/PressKitModal";
 import BiographyShareRow from "@/components/BiographyShareRow";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import ChapterNav, { type Chapter } from "@/components/ChapterNav";
+
+const CHAPTERS: Chapter[] = [
+  { id: "ch-hero", num: "00", label: "Prologue" },
+  { id: "ch-code", num: "01", label: "The Code" },
+  { id: "ch-origin", num: "02", label: "Origin" },
+  { id: "ch-spc", num: "03", label: "SPC Legacy" },
+  { id: "ch-timeline", num: "04", label: "Timeline" },
+  { id: "ch-evolution", num: "05", label: "Evolution" },
+  { id: "ch-receipts", num: "06", label: "Receipts" },
+  { id: "ch-universe", num: "07", label: "Universe" },
+];
 
 // Swap in the trailer's YouTube ID when available to enable the embedded, captioned player.
 // While null, the poster acts as a lazy link to the official PBS page (no iframe network cost).
@@ -252,8 +264,9 @@ const WhoIsMrCap = () => {
         <Navigation />
 
         <main className="whois-page">
+          <ChapterNav chapters={CHAPTERS} />
           {/* ============ 1. CINEMATIC HERO ============ */}
-          <section ref={heroRef} className="relative min-h-[100svh] overflow-hidden">
+          <section id="ch-hero" ref={heroRef} className="relative min-h-[100svh] overflow-hidden scroll-mt-24">
             {/* Backdrop */}
             <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10">
               <div
@@ -403,7 +416,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 2. THE MAN / THE CODE ============ */}
-          <section className="relative py-32 md:py-40">
+          <section id="ch-code" className="relative py-32 md:py-40 scroll-mt-24">
             <div className="container mx-auto px-6">
               <Reveal>
                 <Stamp>Chapter 01 · The Man / The Code</Stamp>
@@ -459,7 +472,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 3. ORIGIN — SOUTH PARK, HOUSTON ============ */}
-          <section className="relative py-32 md:py-40 overflow-hidden">
+          <section id="ch-origin" className="relative py-32 md:py-40 overflow-hidden scroll-mt-24">
             {/* Layered archival backdrop */}
             <div className="absolute inset-0 -z-10">
               <img src={spcSkyline} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-[0.18]" loading="lazy" />
@@ -523,7 +536,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 4. SPC LEGACY — THE BLUEPRINT ============ */}
-          <section className="relative py-32 md:py-40">
+          <section id="ch-spc" className="relative py-32 md:py-40 scroll-mt-24">
             <div className="container mx-auto px-6">
               <div className="grid lg:grid-cols-12 gap-10">
                 <div className="lg:col-span-5">
@@ -582,7 +595,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 5. CAREER TIMELINE ============ */}
-          <section className="relative py-32 md:py-40 bg-gradient-to-b from-transparent via-[hsl(var(--card)/0.35)] to-transparent">
+          <section id="ch-timeline" className="relative py-32 md:py-40 bg-gradient-to-b from-transparent via-[hsl(var(--card)/0.35)] to-transparent scroll-mt-24">
             <div className="container mx-auto px-6">
               <div className="flex flex-wrap items-end justify-between gap-6 mb-16">
                 <div>
@@ -656,7 +669,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 6. FROM CASSETTES TO CODE ============ */}
-          <section className="relative py-32 md:py-40 overflow-hidden">
+          <section id="ch-evolution" className="relative py-32 md:py-40 overflow-hidden scroll-mt-24">
             <div className="container mx-auto px-6">
               <div className="grid lg:grid-cols-12 gap-12 items-center">
                 <div className="lg:col-span-6 order-2 lg:order-1">
@@ -707,7 +720,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 7. RECEIPTS ============ */}
-          <section className="relative py-24 md:py-32 border-y border-[hsl(var(--foreground)/0.1)] bg-[hsl(var(--card)/0.4)]">
+          <section id="ch-receipts" className="relative py-24 md:py-32 border-y border-[hsl(var(--foreground)/0.1)] bg-[hsl(var(--card)/0.4)] scroll-mt-24">
             <div className="container mx-auto px-6">
               <Reveal><Stamp>Chapter 06 · Receipts</Stamp></Reveal>
               <Reveal delay={0.1}>
@@ -839,7 +852,7 @@ const WhoIsMrCap = () => {
 
 
           {/* ============ 8. MR. CAP UNIVERSE ============ */}
-          <section className="relative py-32 md:py-40">
+          <section id="ch-universe" className="relative py-32 md:py-40 scroll-mt-24">
             <div className="container mx-auto px-6">
               <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
                 <div>
