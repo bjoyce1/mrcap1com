@@ -663,22 +663,26 @@ const WhoIsMrCap = () => {
                         {m.art ? (
                             <button
                               type="button"
-                              onClick={() =>
+                              onClick={() => {
+                                const src = typeof m.art === "string" ? m.art : m.art.src;
                                 setLightbox({
-                                  src: m.art,
+                                  src,
                                   alt: m.alt || `${m.title} — ${m.tag}`,
                                   caption: m.caption || `${m.year} · ${m.title}`,
                                   credit: "Mr. CAP Archive",
-                                })
-                              }
+                                });
+                              }}
                               className="group relative w-48 md:w-64 aspect-square text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                               aria-label={`Open enlarged view of ${m.alt || m.title}`}
                             >
                               <div className="absolute inset-0 bg-[hsl(var(--accent-gold))]/10 blur-2xl" />
                               <img
-                                src={m.art}
+                                src={typeof m.art === "string" ? m.art : m.art.src}
+                                srcSet={typeof m.art === "string" ? undefined : m.art.srcSet}
+                                sizes={typeof m.art === "string" ? undefined : m.art.sizes}
                                 alt={m.alt || m.title}
                                 loading="lazy"
+                                decoding="async"
                                 className="relative h-full w-full object-cover shadow-[0_30px_60px_hsl(0_0%_0%/0.6)] border border-[hsl(var(--foreground)/0.1)] transition-transform duration-700 group-hover:-translate-y-1 group-hover:rotate-[-1deg]"
                               />
                               <span className="sr-only">Open enlarged view</span>
