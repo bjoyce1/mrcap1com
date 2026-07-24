@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -182,7 +182,29 @@ const universe = [
 const WhoIsMrCap = () => {
   const [pressKitOpen, setPressKitOpen] = useState(false);
   const [docOpen, setDocOpen] = useState(false);
-  const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const timelineImages: LightboxImage[] = useMemo(
+    () =>
+      timeline
+        .filter((m) => !!m.art)
+        .map((m) => {
+          const src = typeof m.art === "string" ? m.art! : (m.art as any).src;
+          const srcSet =
+            typeof m.art === "string" ? undefined : (m.art as any).srcSet;
+          const sizes =
+            typeof m.art === "string" ? undefined : (m.art as any).sizes;
+          return {
+            src,
+            srcSet,
+            sizes,
+            alt: m.alt || `${m.title} — ${m.tag}`,
+            caption: (m as any).caption || `${m.year} · ${m.title}`,
+            credit: "Mr. CAP Archive",
+          };
+        }),
+    []
+  );
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
 
   // Deep-link support: scroll to a timeline entry when the URL hash targets one.
@@ -728,12 +750,8 @@ const WhoIsMrCap = () => {
                               type="button"
                               onClick={() => {
                                 const src = typeof m.art === "string" ? m.art : m.art.src;
-                                setLightbox({
-                                  src,
-                                  alt: m.alt || `${m.title} — ${m.tag}`,
-                                  caption: m.caption || `${m.year} · ${m.title}`,
-                                  credit: "Mr. CAP Archive",
-                                });
+                                const idx = timelineImages.findIndex((img) => img.src === src);
+                                setLightboxIndex(idx >= 0 ? idx : 0);
                               }}
                               className="group relative w-48 md:w-64 aspect-square text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                               aria-label={`Open enlarged view of ${m.alt || m.title}`}
@@ -1087,9 +1105,11 @@ const WhoIsMrCap = () => {
           </DialogContent>
         </Dialog>
         <ImageLightbox
-          open={!!lightbox}
-          onOpenChange={(open) => !open && setLightbox(null)}
-          image={lightbox}
+          open={lightboxIndex !== null}
+          onOpenChange={(open) => !open && setLightboxIndex(null)}
+          images={timelineImages}
+          index={lightboxIndex ?? 0}
+          onIndexChange={(next) => setLightboxIndex(next)}
         />
       </div>
     </>
