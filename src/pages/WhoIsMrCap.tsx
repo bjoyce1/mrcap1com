@@ -8,6 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Music, Play, ExternalLink, Calendar, Disc3, ChevronRight, ArrowUpRight } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
 import PressKitModal from "@/components/PressKitModal";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+// Swap in the trailer's YouTube ID when available to enable the embedded, captioned player.
+// While null, the poster acts as a lazy link to the official PBS page (no iframe network cost).
+const TRAILER_YOUTUBE_ID: string | null = null;
 
 import portrait from "@/assets/cap-hero-portrait.webp";
 import coin from "@/assets/mr-cap-coin.webp";
@@ -143,6 +148,7 @@ const universe = [
 
 const WhoIsMrCap = () => {
   const [pressKitOpen, setPressKitOpen] = useState(false);
+  const [docOpen, setDocOpen] = useState(false);
   const pageTitle = "Who Is Mr. CAP? — Houston Original, SPC Legend, Independent Architect";
   const metaDescription =
     "Mr. CAP (Cornelius A. Pratt) — Houston-born rapper, South Park Coalition member, entrepreneur and blockchain pioneer. Three decades of music, ownership, and independent evolution.";
