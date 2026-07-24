@@ -676,7 +676,11 @@ const WhoIsMrCap = () => {
                 {timeline.map((m, i) => {
                   const left = i % 2 === 0;
                   return (
-                    <li key={m.year + m.title} className="relative py-10 md:py-14">
+                    <li
+                      key={m.slug}
+                      id={`t-${m.slug}`}
+                      className="relative py-10 md:py-14 scroll-mt-32 target:[&>div]:ring-1"
+                    >
                       <div className={`grid md:grid-cols-2 gap-10 items-center`}>
                         {/* text */}
                         <Reveal
@@ -684,7 +688,28 @@ const WhoIsMrCap = () => {
                           y={30}
                           className={`min-w-0 pl-12 md:pl-0 ${left ? "md:pr-16 md:text-right" : "md:order-2 md:pl-16"}`}
                         >
-                          <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
+                          <div className={`flex items-center gap-3 ${left ? "md:justify-end" : ""}`}>
+                            <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
+                            <button
+                              type="button"
+                              onClick={() => copyEntryLink(m.slug, m.title)}
+                              aria-label={`Copy shareable link to ${m.title}`}
+                              title="Copy link to this entry"
+                              className="inline-flex items-center gap-1.5 font-mono text-[9px] tracking-[0.3em] uppercase text-muted-foreground hover:text-[hsl(var(--accent-gold))] focus:outline-none focus-visible:text-[hsl(var(--accent-gold))] focus-visible:ring-1 focus-visible:ring-[hsl(var(--accent-gold))] px-2 py-1 border border-[hsl(var(--foreground)/0.1)] hover:border-[hsl(var(--accent-gold)/0.6)] transition-colors"
+                            >
+                              {copiedSlug === m.slug ? (
+                                <>
+                                  <Check className="w-3 h-3" aria-hidden />
+                                  Copied
+                                </>
+                              ) : (
+                                <>
+                                  <Link2 className="w-3 h-3" aria-hidden />
+                                  Copy Link
+                                </>
+                              )}
+                            </button>
+                          </div>
                           <div className="mt-2 font-display text-4xl md:text-5xl">{m.year}</div>
                           <h3 className="mt-3 font-display text-xl md:text-2xl text-foreground [text-wrap:balance]">{m.title}</h3>
                           <p className={`mt-2 text-sm md:text-base text-muted-foreground max-w-md ${left ? "md:ml-auto" : ""}`}>
