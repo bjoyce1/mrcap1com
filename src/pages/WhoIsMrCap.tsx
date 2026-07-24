@@ -137,15 +137,23 @@ const pillars = [
 ];
 
 const timeline = [
-  { year: "Origin", tag: "ORIGIN", title: "Houston, Texas", body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.", art: originChildhood.url },
-  { year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins },
-  { year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne },
-  { year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp },
-  { year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP — collaborations across SPC and the Screwed Up Click movement.", art: albumGrave },
-  { year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record — released via Sony Music / The Orchard.", art: albumArtOfIsm },
-  { year: "2021", tag: "FIRST", title: "First Houston rapper to sell a Hip-Hop NFT", body: "Ownership on-chain. Independence, upgraded.", art: nftLimitless },
-  { year: "2024", tag: "COLLECTIVE", title: "The Ties That Bind Us", body: "SPC group album — featuring “Bet'n On Me.”", art: albumTies },
-  { year: "NOW", tag: "ERA", title: "Legacy in Motion", body: "Capicoin (CCHX), Art of ISM ecosystem, and the ongoing catalog.", art: coin },
+  {
+    year: "Origin",
+    tag: "ORIGIN",
+    title: "Houston, Texas",
+    body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.",
+    art: originChildhood.url,
+    alt: "Childhood portrait of Cornelius A. Pratt (Mr. CAP) as a young boy in a blue velvet suit and bow tie, smiling.",
+    caption: "Origin portrait — Cornelius A. Pratt, Houston, Texas",
+  },
+  { year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins, alt: "Mr. CAP with the South Park Coalition in Houston" },
+  { year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne, alt: "O.N.E. on O.N.E. album artwork" },
+  { year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp, alt: "Tha Cold Ass Pimp album artwork" },
+  { year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP — collaborations across SPC and the Screwed Up Click movement.", art: albumGrave, alt: "2 Tha Grave album artwork" },
+  { year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record — released via Sony Music / The Orchard.", art: albumArtOfIsm, alt: "The Art of ISM album artwork" },
+  { year: "2021", tag: "FIRST", title: "First Houston rapper to sell a Hip-Hop NFT", body: "Ownership on-chain. Independence, upgraded.", art: nftLimitless, alt: "Limitless NFT artwork" },
+  { year: "2024", tag: "COLLECTIVE", title: "The Ties That Bind Us", body: "SPC group album — featuring “Bet'n On Me.”", art: albumTies, alt: "The Ties That Bind Us album artwork" },
+  { year: "NOW", tag: "ERA", title: "Legacy in Motion", body: "Capicoin (CCHX), Art of ISM ecosystem, and the ongoing catalog.", art: coin, alt: "Capicoin (CCHX) medallion" },
 ];
 
 const universe = [
