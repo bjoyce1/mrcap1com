@@ -35,10 +35,21 @@ const Stamp = ({ children }: { children: React.ReactNode }) => (
 
 const Rule = () => <div className="h-px w-full bg-gradient-to-r from-transparent via-[hsl(var(--accent-gold))]/40 to-transparent" />;
 
-const Reveal = ({ children, delay = 0, y = 24 }: { children: React.ReactNode; delay?: number; y?: number }) => {
+const Reveal = ({
+  children,
+  delay = 0,
+  y = 24,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  y?: number;
+  className?: string;
+}) => {
   const reduce = useReducedMotion();
   return (
     <motion.div
+      className={className}
       initial={reduce ? false : { opacity: 0, y }}
       whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -389,26 +400,22 @@ const WhoIsMrCap = () => {
               </Reveal>
 
               <div className="mt-10 grid lg:grid-cols-12 gap-x-12 gap-y-16">
-                <Reveal delay={0.05}>
-                  <div className="lg:col-span-6">
-                    <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9]">
-                      Two names.
-                      <br />
-                      <span className="text-[hsl(var(--accent-gold))]">One code.</span>
-                    </h2>
-                  </div>
+                <Reveal delay={0.05} className="lg:col-span-6 min-w-0">
+                  <h2 className="font-display text-[clamp(2.25rem,5.5vw,5rem)] leading-[0.95] [text-wrap:balance] break-words">
+                    Two names.
+                    <br />
+                    <span className="text-[hsl(var(--accent-gold))]">One code.</span>
+                  </h2>
                 </Reveal>
 
-                <Reveal delay={0.15}>
-                  <div className="lg:col-span-6 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
-                    <p>
-                      <span className="text-foreground font-medium">Cornelius A. Pratt</span> is the son of two musicians, raised in Houston's Third Ward and South Park, and shaped by a city that has always demanded proof.{" "}
-                      <span className="text-foreground font-medium">Mr. CAP</span> is what happens when that proof gets pressed to record, sold direct, and refuses to expire.
-                    </p>
-                    <p>
-                      One name signs the paperwork. The other signs the work. They operate under the same principle: own it, ship it, outlast the rest.
-                    </p>
-                  </div>
+                <Reveal delay={0.15} className="lg:col-span-6 min-w-0 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
+                  <p>
+                    <span className="text-foreground font-medium">Cornelius A. Pratt</span> is the son of two musicians, raised in Houston's Third Ward and South Park, and shaped by a city that has always demanded proof.{" "}
+                    <span className="text-foreground font-medium">Mr. CAP</span> is what happens when that proof gets pressed to record, sold direct, and refuses to expire.
+                  </p>
+                  <p>
+                    One name signs the paperwork. The other signs the work. They operate under the same principle: own it, ship it, outlast the rest.
+                  </p>
                 </Reveal>
               </div>
 
@@ -455,24 +462,20 @@ const WhoIsMrCap = () => {
               </Reveal>
 
               <div className="mt-12 grid lg:grid-cols-12 gap-10 items-start">
-                <Reveal delay={0.05}>
-                  <div className="lg:col-span-5">
-                    <h2 className="font-display text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[0.92]">
-                      Raised in the <span className="text-[hsl(var(--accent-gold))]">South Park</span>.
-                      <br /> Shaped by the block.
-                    </h2>
-                  </div>
+                <Reveal delay={0.05} className="lg:col-span-5 min-w-0">
+                  <h2 className="font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] [text-wrap:balance] break-words">
+                    Raised in the <span className="text-[hsl(var(--accent-gold))]">South Park</span>.
+                    <br /> Shaped by the block.
+                  </h2>
                 </Reveal>
 
-                <Reveal delay={0.15}>
-                  <div className="lg:col-span-7 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
-                    <p>
-                      The son of two musicians, he was performing before most kids picked up an instrument — eight years old at his first show, later graduating from Jack Yates Senior High and moving through the city's earliest independent circuits with The Raise Up Posse.
-                    </p>
-                    <p>
-                      South Park taught the curriculum: <span className="text-foreground">realism, discipline, authenticity, survival.</span> The block wrote the syllabus. Everything after — the coalitions, the labels, the tokens — is the same lesson, translated forward.
-                    </p>
-                  </div>
+                <Reveal delay={0.15} className="lg:col-span-7 min-w-0 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
+                  <p>
+                    The son of two musicians, he was performing before most kids picked up an instrument — eight years old at his first show, later graduating from Jack Yates Senior High and moving through the city's earliest independent circuits with The Raise Up Posse.
+                  </p>
+                  <p>
+                    South Park taught the curriculum: <span className="text-foreground">realism, discipline, authenticity, survival.</span> The block wrote the syllabus. Everything after — the coalitions, the labels, the tokens — is the same lesson, translated forward.
+                  </p>
                 </Reveal>
               </div>
 
@@ -596,36 +599,40 @@ const WhoIsMrCap = () => {
                     <li key={m.year + m.title} className="relative py-10 md:py-14">
                       <div className={`grid md:grid-cols-2 gap-10 items-center`}>
                         {/* text */}
-                        <Reveal delay={0.05} y={30}>
-                          <div className={`pl-12 md:pl-0 ${left ? "md:pr-16 md:text-right" : "md:order-2 md:pl-16"}`}>
-                            <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
-                            <div className="mt-2 font-display text-4xl md:text-5xl">{m.year}</div>
-                            <h3 className="mt-3 font-display text-xl md:text-2xl text-foreground">{m.title}</h3>
-                            <p className="mt-2 text-sm md:text-base text-muted-foreground max-w-md md:ml-auto">
-                              {m.body}
-                            </p>
-                          </div>
+                        <Reveal
+                          delay={0.05}
+                          y={30}
+                          className={`min-w-0 pl-12 md:pl-0 ${left ? "md:pr-16 md:text-right" : "md:order-2 md:pl-16"}`}
+                        >
+                          <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-[hsl(var(--accent-gold))]">{m.tag}</div>
+                          <div className="mt-2 font-display text-4xl md:text-5xl">{m.year}</div>
+                          <h3 className="mt-3 font-display text-xl md:text-2xl text-foreground [text-wrap:balance]">{m.title}</h3>
+                          <p className={`mt-2 text-sm md:text-base text-muted-foreground max-w-md ${left ? "md:ml-auto" : ""}`}>
+                            {m.body}
+                          </p>
                         </Reveal>
 
                         {/* art */}
-                        <Reveal delay={0.15} y={30}>
-                          <div className={`pl-12 md:pl-0 ${left ? "md:order-2 md:pl-16" : "md:pr-16"}`}>
-                            {m.art ? (
-                              <div className="relative w-48 md:w-64 aspect-square">
-                                <div className="absolute inset-0 bg-[hsl(var(--accent-gold))]/10 blur-2xl" />
-                                <img
-                                  src={m.art}
-                                  alt={m.title}
-                                  loading="lazy"
-                                  className="relative h-full w-full object-cover shadow-[0_30px_60px_hsl(0_0%_0%/0.6)] border border-[hsl(var(--foreground)/0.1)] transition-transform duration-700 hover:-translate-y-1 hover:rotate-[-1deg]"
-                                />
-                              </div>
-                            ) : (
-                              <div className="w-48 md:w-64 aspect-square border border-dashed border-[hsl(var(--accent-gold))]/40 flex items-center justify-center font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-                                Genesis
-                              </div>
-                            )}
-                          </div>
+                        <Reveal
+                          delay={0.15}
+                          y={30}
+                          className={`pl-12 md:pl-0 ${left ? "md:order-2 md:pl-16" : "md:pr-16 md:flex md:justify-end"}`}
+                        >
+                          {m.art ? (
+                            <div className="relative w-48 md:w-64 aspect-square">
+                              <div className="absolute inset-0 bg-[hsl(var(--accent-gold))]/10 blur-2xl" />
+                              <img
+                                src={m.art}
+                                alt={m.title}
+                                loading="lazy"
+                                className="relative h-full w-full object-cover shadow-[0_30px_60px_hsl(0_0%_0%/0.6)] border border-[hsl(var(--foreground)/0.1)] transition-transform duration-700 hover:-translate-y-1 hover:rotate-[-1deg]"
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-48 md:w-64 aspect-square border border-dashed border-[hsl(var(--accent-gold))]/40 flex items-center justify-center font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+                              Genesis
+                            </div>
+                          )}
                         </Reveal>
                       </div>
 
@@ -717,26 +724,24 @@ const WhoIsMrCap = () => {
 
               {/* Documentary block */}
               <div className="mt-16 grid lg:grid-cols-12 gap-10 items-center">
-                <Reveal>
-                  <figure className="lg:col-span-5 relative">
+                <Reveal className="lg:col-span-5 min-w-0">
+                  <figure className="relative">
                     <img src={theLifeDoc} alt="The Life: Sex Trafficking and Modern-Day Slavery" loading="lazy" className="w-full aspect-video object-cover border border-[hsl(var(--foreground)/0.1)]" />
                     <figcaption className="mt-3 font-mono text-[10px] tracking-[0.28em] uppercase text-muted-foreground">
                       Documentary · Featured Contributor
                     </figcaption>
                   </figure>
                 </Reveal>
-                <Reveal delay={0.1}>
-                  <div className="lg:col-span-7">
-                    <h3 className="font-display text-2xl md:text-3xl leading-tight">
-                      The Life: Sex Trafficking and Modern-Day Slavery
-                    </h3>
-                    <p className="mt-4 text-muted-foreground leading-relaxed">
-                      A social-issue documentary in which Mr. CAP contributes firsthand perspective — using his platform for community engagement and cultural commentary that reaches well outside the record.
-                    </p>
-                    <Link to="/press" className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors">
-                      Press & Media Coverage <ArrowUpRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
+                <Reveal delay={0.1} className="lg:col-span-7 min-w-0">
+                  <h3 className="font-display text-2xl md:text-3xl leading-tight [text-wrap:balance]">
+                    The Life: Sex Trafficking and Modern-Day Slavery
+                  </h3>
+                  <p className="mt-4 text-muted-foreground leading-relaxed">
+                    A social-issue documentary in which Mr. CAP contributes firsthand perspective — using his platform for community engagement and cultural commentary that reaches well outside the record.
+                  </p>
+                  <Link to="/press" className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors">
+                    Press & Media Coverage <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
                 </Reveal>
               </div>
             </div>
