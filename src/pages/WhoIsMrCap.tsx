@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Music, Play, ExternalLink, Calendar, Disc3, ChevronRight, ArrowUpRight } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
+import PressKitModal from "@/components/PressKitModal";
 
 import portrait from "@/assets/cap-hero-portrait.webp";
 import coin from "@/assets/mr-cap-coin.webp";
@@ -141,6 +142,7 @@ const universe = [
 /* ---------------- Page ---------------- */
 
 const WhoIsMrCap = () => {
+  const [pressKitOpen, setPressKitOpen] = useState(false);
   const pageTitle = "Who Is Mr. CAP? — Houston Original, SPC Legend, Independent Architect";
   const metaDescription =
     "Mr. CAP (Cornelius A. Pratt) — Houston-born rapper, South Park Coalition member, entrepreneur and blockchain pioneer. Three decades of music, ownership, and independent evolution.";
@@ -327,13 +329,14 @@ const WhoIsMrCap = () => {
                           Book Mr. CAP
                         </Link>
                       </Button>
-                      <Link
-                        to="/opk"
+                      <button
+                        type="button"
+                        onClick={() => setPressKitOpen(true)}
                         className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.28em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors"
                       >
                         View / Download Press Kit
                         <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </Link>
+                      </button>
                     </div>
                   </Reveal>
 
@@ -826,8 +829,8 @@ const WhoIsMrCap = () => {
                   <Button variant="fluxOutline" size="lg" asChild className="rounded-none">
                     <Link to="/music"><Play className="mr-2 h-4 w-4" /> Listen to Music</Link>
                   </Button>
-                  <Button variant="fluxOutline" size="lg" asChild className="rounded-none">
-                    <Link to="/opk"><ExternalLink className="mr-2 h-4 w-4" /> Press Kit</Link>
+                  <Button variant="fluxOutline" size="lg" className="rounded-none" onClick={() => setPressKitOpen(true)}>
+                    <ExternalLink className="mr-2 h-4 w-4" /> Press Kit
                   </Button>
                 </div>
               </Reveal>
@@ -845,6 +848,7 @@ const WhoIsMrCap = () => {
 
         <CitationBlock />
         <Footer />
+        <PressKitModal open={pressKitOpen} onOpenChange={setPressKitOpen} />
       </div>
     </>
   );
