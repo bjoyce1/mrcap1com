@@ -118,8 +118,8 @@ const timeline = [
 
 const universe = [
   { to: "/music", label: "Music Catalog", sub: "Every album. Every era.", img: albumArtOfIsm },
-  { to: "/south-park-coalition-houston", label: "South Park Coalition", sub: "The blueprint.", img: spcAustin },
-  { to: "/the-art-of-ism", label: "The Art of ISM", sub: "Album · book · philosophy.", img: artOfIsmHero },
+  { to: "/south-park-coalition", label: "South Park Coalition", sub: "The blueprint.", img: spcAustin },
+  { to: "/art-of-ism", label: "The Art of ISM", sub: "Album · book · philosophy.", img: artOfIsmHero },
   { to: "/nft", label: "NFT Gallery", sub: "On-chain ownership.", img: nftLimitless },
   { to: "/press", label: "Press & OPK", sub: "Media assets and coverage.", img: spcStudio },
   { to: "/videos", label: "Videos", sub: "Music & visual archive.", img: spcVinyl },
