@@ -735,9 +735,69 @@ const WhoIsMrCap = () => {
               <div className="mt-16 grid lg:grid-cols-12 gap-10 items-center">
                 <Reveal className="lg:col-span-5 min-w-0">
                   <figure className="relative">
-                    <img src={theLifeDoc} alt="The Life: Sex Trafficking and Modern-Day Slavery" loading="lazy" className="w-full aspect-video object-cover border border-[hsl(var(--foreground)/0.1)]" />
+                    {TRAILER_YOUTUBE_ID ? (
+                      <button
+                        type="button"
+                        onClick={() => setDocOpen(true)}
+                        aria-label="Play trailer: The Life — Sex Trafficking and Modern-Day Slavery (opens video with captions)"
+                        aria-haspopup="dialog"
+                        className="group relative block w-full overflow-hidden border border-[hsl(var(--foreground)/0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        <img
+                          src={theLifeDoc}
+                          alt="The Life: Sex Trafficking and Modern-Day Slavery — documentary key art"
+                          loading="lazy"
+                          decoding="async"
+                          width={1280}
+                          height={720}
+                          className="w-full aspect-video object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        />
+                        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-0 flex items-center justify-center"
+                        >
+                          <span className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-[hsl(var(--accent-gold))] text-background shadow-[0_4px_24px_hsl(0_0%_0%/0.5)] transition-transform duration-300 group-hover:scale-110">
+                            <Play className="w-7 h-7 md:w-8 md:h-8 ml-1" fill="currentColor" />
+                          </span>
+                        </span>
+                        <span className="absolute left-3 bottom-3 font-mono text-[10px] tracking-[0.28em] uppercase text-white/90">
+                          Play trailer · Captions on
+                        </span>
+                      </button>
+                    ) : (
+                      <a
+                        href="https://www.pbs.org/show/the-life/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Watch The Life — Sex Trafficking and Modern-Day Slavery on PBS (opens in a new tab)"
+                        className="group relative block w-full overflow-hidden border border-[hsl(var(--foreground)/0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--accent-gold))] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        <img
+                          src={theLifeDoc}
+                          alt="The Life: Sex Trafficking and Modern-Day Slavery — documentary key art"
+                          loading="lazy"
+                          decoding="async"
+                          width={1280}
+                          height={720}
+                          className="w-full aspect-video object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        />
+                        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-0 flex items-center justify-center"
+                        >
+                          <span className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-[hsl(var(--accent-gold))] text-background shadow-[0_4px_24px_hsl(0_0%_0%/0.5)] transition-transform duration-300 group-hover:scale-110">
+                            <Play className="w-7 h-7 md:w-8 md:h-8 ml-1" fill="currentColor" />
+                          </span>
+                        </span>
+                        <span className="absolute left-3 bottom-3 font-mono text-[10px] tracking-[0.28em] uppercase text-white/90">
+                          Watch on PBS · Captions available
+                        </span>
+                      </a>
+                    )}
                     <figcaption className="mt-3 font-mono text-[10px] tracking-[0.28em] uppercase text-muted-foreground">
-                      Documentary · Featured Contributor
+                      Documentary · Featured Contributor · 2024 Lone Star Emmy Nominee
                     </figcaption>
                   </figure>
                 </Reveal>
@@ -748,13 +808,34 @@ const WhoIsMrCap = () => {
                   <p className="mt-4 text-muted-foreground leading-relaxed">
                     A social-issue documentary in which Mr. CAP contributes firsthand perspective — using his platform for community engagement and cultural commentary that reaches well outside the record.
                   </p>
-                  <Link to="/press" className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors">
-                    Press & Media Coverage <ArrowUpRight className="w-3.5 h-3.5" />
-                  </Link>
+                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+                    {TRAILER_YOUTUBE_ID ? (
+                      <button
+                        type="button"
+                        onClick={() => setDocOpen(true)}
+                        className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors"
+                      >
+                        <Play className="w-3.5 h-3.5" fill="currentColor" /> Play Trailer
+                      </button>
+                    ) : (
+                      <a
+                        href="https://www.pbs.org/show/the-life/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors"
+                      >
+                        Watch on PBS <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    <Link to="/press" className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-muted-foreground hover:text-foreground transition-colors">
+                      Press & Media Coverage <ArrowUpRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </Reveal>
               </div>
             </div>
           </section>
+
 
           {/* ============ 8. MR. CAP UNIVERSE ============ */}
           <section className="relative py-32 md:py-40">
