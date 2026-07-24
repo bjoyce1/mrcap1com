@@ -529,7 +529,7 @@ const WhoIsMrCap = () => {
                   </Reveal>
                   <Reveal delay={0.3}>
                     <Link
-                      to="/south-park-coalition-houston"
+                      to="/south-park-coalition"
                       className="mt-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors"
                     >
                       Enter the SPC archive
