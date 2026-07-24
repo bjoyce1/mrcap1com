@@ -153,8 +153,9 @@ const timeline = [
       sizes: "(max-width: 768px) 192px, 256px",
       fallback: originChildhood.url,
     },
-    alt: "Childhood portrait of Cornelius A. Pratt (Mr. CAP) as a young boy in a blue velvet suit and bow tie, smiling.",
-    caption: "Origin portrait — Cornelius A. Pratt, Houston, Texas",
+    alt: "Childhood studio portrait of Cornelius A. Pratt (Mr. CAP) as a young boy in Houston, Texas, wearing a blue velvet suit with matching bow tie and smiling for the camera. Family archive photograph, circa mid-1970s.",
+    caption: "Origin portrait · Cornelius A. Pratt · Houston, Texas · circa mid-1970s",
+    credit: "Courtesy of the Pratt family archive",
   },
   { slug: "spc-1990s", year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins, alt: "Mr. CAP with the South Park Coalition in Houston" },
   { slug: "one-on-one-2005", year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne, alt: "O.N.E. on O.N.E. album artwork" },
@@ -200,7 +201,7 @@ const WhoIsMrCap = () => {
             sizes,
             alt: m.alt || `${m.title} — ${m.tag}`,
             caption: (m as any).caption || `${m.year} · ${m.title}`,
-            credit: "Mr. CAP Archive",
+            credit: (m as any).credit || "Mr. CAP Archive",
           };
         }),
     []
