@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Music, Play, ExternalLink, Calendar, Disc3, ChevronRight, ArrowUpRight } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
 import PressKitModal from "@/components/PressKitModal";
+import BiographyShareRow from "@/components/BiographyShareRow";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 // Swap in the trailer's YouTube ID when available to enable the embedded, captioned player.
@@ -919,6 +920,16 @@ const WhoIsMrCap = () => {
                   <Button variant="fluxOutline" size="lg" className="rounded-none" onClick={() => setPressKitOpen(true)}>
                     <ExternalLink className="mr-2 h-4 w-4" /> Press Kit
                   </Button>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.35}>
+                <div className="mt-10 flex justify-center">
+                  <BiographyShareRow
+                    url="https://mrcap1.com/who-is-mr-cap"
+                    title="Who Is Mr. CAP — The Legacy"
+                    description="Houston-born rapper, South Park Coalition original, and cultural architect. Read the full biography."
+                  />
                 </div>
               </Reveal>
 
