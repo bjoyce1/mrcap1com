@@ -11,6 +11,7 @@ import PressKitModal from "@/components/PressKitModal";
 import BiographyShareRow from "@/components/BiographyShareRow";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import ChapterNav, { type Chapter } from "@/components/ChapterNav";
+import ImageLightbox, { type LightboxImage } from "@/components/ImageLightbox";
 
 const CHAPTERS: Chapter[] = [
   { id: "ch-hero", num: "00", label: "Prologue" },
