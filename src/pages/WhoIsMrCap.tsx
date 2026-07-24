@@ -201,7 +201,7 @@ const WhoIsMrCap = () => {
             sizes,
             alt: m.alt || `${m.title} — ${m.tag}`,
             caption: (m as any).caption || `${m.year} · ${m.title}`,
-            credit: "Mr. CAP Archive",
+            credit: (m as any).credit || "Mr. CAP Archive",
           };
         }),
     []
