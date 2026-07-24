@@ -270,10 +270,10 @@ const WhoIsMrCap = () => {
                   </Reveal>
 
                   <Reveal delay={0.1}>
-                    <h1 className="mt-8 font-display leading-[0.82] tracking-tight">
-                      <span className="block text-[hsl(var(--foreground)/0.55)] text-[clamp(2.2rem,5vw,4rem)]">Who is</span>
+                    <h1 className="mt-8 font-display tracking-tight">
+                      <span className="block leading-[1.1] pb-2 text-[hsl(var(--foreground)/0.55)] text-[clamp(2.2rem,5vw,4rem)]">Who is</span>
                       <span
-                        className="block text-[clamp(4rem,13vw,11rem)] bg-clip-text text-transparent"
+                        className="block leading-[0.95] text-[clamp(4rem,13vw,11rem)] bg-clip-text text-transparent"
                         style={{
                           backgroundImage:
                             "linear-gradient(180deg, hsl(var(--foreground)) 0%, hsl(var(--foreground)/0.9) 40%, hsl(var(--accent-gold)) 100%)",
