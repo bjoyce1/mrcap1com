@@ -654,10 +654,10 @@ const WhoIsMrCap = () => {
                   <Reveal delay={0.2}>
                     <div className="mt-8 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
                       <p>
-                        <span className="text-foreground">CAP Distributions</span> puts independent artists on global platforms without giving up ownership. <span className="text-foreground">Capicoin (CCHX)</span> and the Mr. CAP on-chain catalog push that idea further — programmable royalties, verifiable scarcity, direct-to-fan by default.
+                        <span className="text-foreground">CAP Distributions</span> puts independent artists on global platforms without giving up ownership. In February 2021, Mr. CAP became the <span className="text-foreground">first Houston rapper to sell a Hip-Hop NFT</span> — extending the ownership principle into on-chain culture alongside blockchain projects like <span className="text-foreground">Capicoin (CCHX)</span>.
                       </p>
                       <p>
-                        <span className="text-foreground">The Art of ISM</span> is where the philosophy lives out loud — an album, a book, and a worldview built around individual sovereignty.
+                        <span className="text-foreground">The Art of ISM</span> is where the philosophy lives out loud — album, book, and a worldview built around individual sovereignty.
                       </p>
                     </div>
                   </Reveal>
