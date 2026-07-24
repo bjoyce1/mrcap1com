@@ -105,10 +105,10 @@ const pillars = [
 ];
 
 const timeline = [
-  { year: "1973", tag: "ORIGIN", title: "Born in Houston, TX", body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.", art: null },
+  { year: "Origin", tag: "ORIGIN", title: "Houston, Texas", body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.", art: null },
   { year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins },
-  { year: "2004", tag: "CATALOG", title: "Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp },
-  { year: "2009", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Refining the voice: narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne },
+  { year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne },
+  { year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp },
   { year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP — collaborations across SPC and the Screwed Up Click movement.", art: albumGrave },
   { year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record — released via Sony Music / The Orchard.", art: albumArtOfIsm },
   { year: "2021", tag: "FIRST", title: "First Houston rapper to sell a Hip-Hop NFT", body: "Ownership on-chain. Independence, upgraded.", art: nftLimitless },
