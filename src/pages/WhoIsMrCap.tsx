@@ -400,26 +400,22 @@ const WhoIsMrCap = () => {
               </Reveal>
 
               <div className="mt-10 grid lg:grid-cols-12 gap-x-12 gap-y-16">
-                <Reveal delay={0.05}>
-                  <div className="lg:col-span-6">
-                    <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9]">
-                      Two names.
-                      <br />
-                      <span className="text-[hsl(var(--accent-gold))]">One code.</span>
-                    </h2>
-                  </div>
+                <Reveal delay={0.05} className="lg:col-span-6 min-w-0">
+                  <h2 className="font-display text-[clamp(2.25rem,5.5vw,5rem)] leading-[0.95] [text-wrap:balance] break-words">
+                    Two names.
+                    <br />
+                    <span className="text-[hsl(var(--accent-gold))]">One code.</span>
+                  </h2>
                 </Reveal>
 
-                <Reveal delay={0.15}>
-                  <div className="lg:col-span-6 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
-                    <p>
-                      <span className="text-foreground font-medium">Cornelius A. Pratt</span> is the son of two musicians, raised in Houston's Third Ward and South Park, and shaped by a city that has always demanded proof.{" "}
-                      <span className="text-foreground font-medium">Mr. CAP</span> is what happens when that proof gets pressed to record, sold direct, and refuses to expire.
-                    </p>
-                    <p>
-                      One name signs the paperwork. The other signs the work. They operate under the same principle: own it, ship it, outlast the rest.
-                    </p>
-                  </div>
+                <Reveal delay={0.15} className="lg:col-span-6 min-w-0 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
+                  <p>
+                    <span className="text-foreground font-medium">Cornelius A. Pratt</span> is the son of two musicians, raised in Houston's Third Ward and South Park, and shaped by a city that has always demanded proof.{" "}
+                    <span className="text-foreground font-medium">Mr. CAP</span> is what happens when that proof gets pressed to record, sold direct, and refuses to expire.
+                  </p>
+                  <p>
+                    One name signs the paperwork. The other signs the work. They operate under the same principle: own it, ship it, outlast the rest.
+                  </p>
                 </Reveal>
               </div>
 
