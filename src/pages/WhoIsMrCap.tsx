@@ -266,7 +266,7 @@ const WhoIsMrCap = () => {
                 {/* Left: Typography */}
                 <motion.div style={{ y: titleY }} className="lg:col-span-7 relative z-10">
                   <Reveal>
-                    <Stamp>File No. 001 · Houston, TX · Est. 1973</Stamp>
+                    <Stamp>File No. 001 · Houston, TX · Origin File</Stamp>
                   </Reveal>
 
                   <Reveal delay={0.1}>
