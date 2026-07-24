@@ -145,7 +145,12 @@ const timeline = [
     tag: "ORIGIN",
     title: "Houston, Texas",
     body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.",
-    art: originChildhood.url,
+    art: {
+      src: originChildhood1200.url,
+      srcSet: `${originChildhood400.url} 400w, ${originChildhood800.url} 800w, ${originChildhood1200.url} 1200w`,
+      sizes: "(max-width: 768px) 192px, 256px",
+      fallback: originChildhood.url,
+    },
     alt: "Childhood portrait of Cornelius A. Pratt (Mr. CAP) as a young boy in a blue velvet suit and bow tie, smiling.",
     caption: "Origin portrait — Cornelius A. Pratt, Houston, Texas",
   },
