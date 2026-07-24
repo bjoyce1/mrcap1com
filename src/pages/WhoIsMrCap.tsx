@@ -105,10 +105,10 @@ const pillars = [
 ];
 
 const timeline = [
-  { year: "1973", tag: "ORIGIN", title: "Born in Houston, TX", body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.", art: null },
+  { year: "Origin", tag: "ORIGIN", title: "Houston, Texas", body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.", art: null },
   { year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins },
-  { year: "2004", tag: "CATALOG", title: "Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp },
-  { year: "2009", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Refining the voice: narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne },
+  { year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne },
+  { year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp },
   { year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP — collaborations across SPC and the Screwed Up Click movement.", art: albumGrave },
   { year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record — released via Sony Music / The Orchard.", art: albumArtOfIsm },
   { year: "2021", tag: "FIRST", title: "First Houston rapper to sell a Hip-Hop NFT", body: "Ownership on-chain. Independence, upgraded.", art: nftLimitless },
@@ -118,10 +118,10 @@ const timeline = [
 
 const universe = [
   { to: "/music", label: "Music Catalog", sub: "Every album. Every era.", img: albumArtOfIsm },
-  { to: "/south-park-coalition-houston", label: "South Park Coalition", sub: "The blueprint.", img: spcAustin },
-  { to: "/the-art-of-ism", label: "The Art of ISM", sub: "Album · book · philosophy.", img: artOfIsmHero },
+  { to: "/south-park-coalition", label: "South Park Coalition", sub: "The blueprint.", img: spcAustin },
+  { to: "/art-of-ism", label: "The Art of ISM", sub: "Album · book · philosophy.", img: artOfIsmHero },
   { to: "/nft", label: "NFT Gallery", sub: "On-chain ownership.", img: nftLimitless },
-  { to: "/press", label: "Press & OPK", sub: "Media assets and coverage.", img: spcStudio },
+  { to: "/opk", label: "Press Kit / OPK", sub: "Media assets and downloads.", img: spcStudio },
   { to: "/videos", label: "Videos", sub: "Music & visual archive.", img: spcVinyl },
   { to: "/merch", label: "Store", sub: "Wearable archive.", img: spcSkyline },
   { to: "/booking", label: "Booking", sub: "Shows · features · talks.", img: portrait },
@@ -266,7 +266,7 @@ const WhoIsMrCap = () => {
                 {/* Left: Typography */}
                 <motion.div style={{ y: titleY }} className="lg:col-span-7 relative z-10">
                   <Reveal>
-                    <Stamp>File No. 001 · Houston, TX · Est. 1973</Stamp>
+                    <Stamp>File No. 001 · Houston, TX · Origin File</Stamp>
                   </Reveal>
 
                   <Reveal delay={0.1}>
@@ -317,7 +317,7 @@ const WhoIsMrCap = () => {
                         </Link>
                       </Button>
                       <Link
-                        to="/press"
+                        to="/opk"
                         className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.28em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors"
                       >
                         View / Download Press Kit
@@ -529,7 +529,7 @@ const WhoIsMrCap = () => {
                   </Reveal>
                   <Reveal delay={0.3}>
                     <Link
-                      to="/south-park-coalition-houston"
+                      to="/south-park-coalition"
                       className="mt-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase text-[hsl(var(--accent-gold))] hover:text-foreground transition-colors"
                     >
                       Enter the SPC archive
@@ -654,10 +654,10 @@ const WhoIsMrCap = () => {
                   <Reveal delay={0.2}>
                     <div className="mt-8 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
                       <p>
-                        <span className="text-foreground">CAP Distributions</span> puts independent artists on global platforms without giving up ownership. <span className="text-foreground">Capicoin (CCHX)</span> and the Mr. CAP on-chain catalog push that idea further — programmable royalties, verifiable scarcity, direct-to-fan by default.
+                        <span className="text-foreground">CAP Distributions</span> puts independent artists on global platforms without giving up ownership. In February 2021, Mr. CAP became the <span className="text-foreground">first Houston rapper to sell a Hip-Hop NFT</span> — extending the ownership principle into on-chain culture alongside blockchain projects like <span className="text-foreground">Capicoin (CCHX)</span>.
                       </p>
                       <p>
-                        <span className="text-foreground">The Art of ISM</span> is where the philosophy lives out loud — an album, a book, and a worldview built around individual sovereignty.
+                        <span className="text-foreground">The Art of ISM</span> is where the philosophy lives out loud — album, book, and a worldview built around individual sovereignty.
                       </p>
                     </div>
                   </Reveal>
@@ -667,10 +667,7 @@ const WhoIsMrCap = () => {
                         <Link to="/nft"><Disc3 className="mr-2 h-4 w-4" /> NFT Gallery</Link>
                       </Button>
                       <Button variant="fluxOutline" asChild className="rounded-none">
-                        <Link to="/the-art-of-ism">The Art of ISM <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
-                      </Button>
-                      <Button variant="fluxOutline" asChild className="rounded-none">
-                        <Link to="/innovation">Innovation <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
+                        <Link to="/art-of-ism">The Art of ISM <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
                       </Button>
                     </div>
                   </Reveal>
@@ -683,7 +680,7 @@ const WhoIsMrCap = () => {
                       <ChromeCoin src={coin} />
                       <div className="mt-6 flex justify-between font-mono text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
                         <span>Capicoin · CCHX</span>
-                        <span>On-chain since 2021</span>
+                        <span>First Houston Hip-Hop NFT · 2021</span>
                       </div>
                     </div>
                   </Reveal>
@@ -793,7 +790,7 @@ const WhoIsMrCap = () => {
           </section>
 
           {/* ============ 9. FINAL CONVERSION ============ */}
-          <section className="relative py-40 overflow-hidden">
+          <section className="relative pt-40 pb-48 md:pb-56 overflow-hidden">
             <div className="absolute inset-0 -z-10">
               <img src={portrait} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" />
               <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/85 to-background" />
@@ -825,7 +822,7 @@ const WhoIsMrCap = () => {
                     <Link to="/music"><Play className="mr-2 h-4 w-4" /> Listen to Music</Link>
                   </Button>
                   <Button variant="fluxOutline" size="lg" asChild className="rounded-none">
-                    <Link to="/press"><ExternalLink className="mr-2 h-4 w-4" /> Press Kit</Link>
+                    <Link to="/opk"><ExternalLink className="mr-2 h-4 w-4" /> Press Kit</Link>
                   </Button>
                 </div>
               </Reveal>
