@@ -73,6 +73,7 @@ const Listen = lazy(() => import("./pages/Listen"));
 const TikTok = lazy(() => import("./pages/TikTok"));
 const AdminApi = lazy(() => import("./pages/AdminApi"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
+const Vinyl = lazy(() => import("./pages/Vinyl"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -149,6 +150,8 @@ function AppRoutes() {
             <Route path="/panties-on-my-piano" element={<PageTransition><PantiesOnMyPiano /></PageTransition>} />
             <Route path="/bet-on-her" element={<PageTransition><BetOnHer /></PageTransition>} />
             <Route path="/art-of-ism" element={<PageTransition><ArtOfIsm /></PageTransition>} />
+            <Route path="/vinyl" element={<PageTransition><Vinyl /></PageTransition>} />
+            <Route path="/art-of-ism-vinyl" element={<Navigate to="/vinyl" replace />} />
             <Route path="/opk" element={<PageTransition><OPKHub /></PageTransition>} />
             <Route path="/opk/music" element={<PageTransition><OPKMusic /></PageTransition>} />
             <Route path="/opk/press" element={<PageTransition><OPKPress /></PageTransition>} />

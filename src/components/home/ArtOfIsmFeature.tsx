@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, Disc3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import artOfIsmTitle from "@/assets/art-of-ism-title.webp";
 import artOfIsmPoster from "@/assets/art-of-ism-poster.webp";
@@ -49,8 +49,8 @@ const ArtOfIsmFeature = () => {
               </a>
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <Link to="/art-of-ism">
-                Learn More
+              <Link to="/vinyl">
+                <Disc3 className="w-4 h-4 mr-2" /> Order the Vinyl
               </Link>
             </Button>
           </div>

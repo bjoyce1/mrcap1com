@@ -1,7 +1,8 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import { ArrowRight, BookOpen, Star, Sparkles, Quote } from "lucide-react";
+import { ArrowRight, BookOpen, Star, Sparkles, Quote, Disc3 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/ScrollReveal";
 import artOfIsmTitle from "@/assets/art-of-ism-title.webp";
@@ -112,6 +113,11 @@ const ArtOfIsm = () => {
                         <a href="https://theartofism.com" target="_blank" rel="noopener noreferrer">
                           Enter the Book <ArrowRight className="w-4 h-4 ml-2" />
                         </a>
+                      </Button>
+                      <Button variant="outline" size="lg" asChild>
+                        <Link to="/vinyl">
+                          <Disc3 className="w-4 h-4 mr-2" /> Order the Vinyl
+                        </Link>
                       </Button>
                     </div>
 
