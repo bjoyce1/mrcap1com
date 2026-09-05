@@ -141,9 +141,9 @@ const Vinyl = () => {
               <ScrollReveal>
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                   {/* Vinyl + sleeve */}
-                  <div className="relative flex justify-center group">
+                  <div className="relative flex justify-center group overflow-hidden py-8">
                     <div className="relative w-full max-w-sm">
-                      <div className="absolute top-1/2 -translate-y-1/2 left-[35%] w-full aspect-square rounded-full bg-[radial-gradient(circle,#111_28%,#000_30%,#1a1a1a_70%)] shadow-[0_20px_60px_hsl(0_0%_0%/0.6)] transition-transform duration-700 group-hover:translate-x-10">
+                      <div className="absolute top-1/2 -translate-y-1/2 left-[14%] w-[92%] aspect-square rounded-full bg-[radial-gradient(circle,#111_28%,#000_30%,#1a1a1a_70%)] shadow-[0_20px_60px_hsl(0_0%_0%/0.6)] transition-transform duration-700 group-hover:translate-x-6">
                         <div className="absolute inset-[42%] rounded-full bg-primary/80" />
                       </div>
                       <img
