@@ -183,7 +183,7 @@ const Vinyl = () => {
                         </a>
                       </Button>
                       <Button size="lg" variant="outline" asChild>
-                        <Link to="/albums/the-art-of-ism">Stream the Album</Link>
+                        <Link to="/music">Stream the Album</Link>
                       </Button>
                     </div>
 
