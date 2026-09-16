@@ -19,7 +19,6 @@ const Index = lazy(() => import("@/pages/Index"));
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import PageTransition from "@/components/PageTransition";
-import ExitIntentPopup from "@/components/ExitIntentPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import StickyPlayer from "@/components/player/StickyPlayer";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -101,7 +100,6 @@ function AppRoutes() {
   return (
     <>
       <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
-      <ExitIntentPopup />
       <ScrollToTop />
       
       <AnimatePresence mode="wait">
