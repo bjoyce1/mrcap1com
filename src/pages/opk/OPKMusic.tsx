@@ -171,9 +171,9 @@ const OPKMusic = () => {
             <h2 className="gsap-item text-2xl font-display font-bold mb-6">Download Materials</h2>
             <div className="gsap-item flex flex-wrap gap-4 justify-center">
               <Button variant="flux" size="lg" asChild>
-                <a href="/booking-opk.pdf" download>
+                <a href="/opk">
                   <Download className="mr-2 h-5 w-5" />
-                  Download Booking OPK (PDF)
+                  Get the Booking Press Kit
                 </a>
               </Button>
             </div>

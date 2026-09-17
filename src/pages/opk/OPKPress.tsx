@@ -144,15 +144,15 @@ const OPKPress = () => {
             <h2 className="gsap-item text-2xl font-display font-bold mb-6">Download Press Materials</h2>
             <div className="gsap-item flex flex-wrap gap-4 justify-center">
               <Button variant="flux" size="lg" asChild>
-                <a href="/press-kit.pdf" download>
+                <a href="/opk">
                   <FileText className="mr-2 h-5 w-5" />
-                  Download Press Kit (PDF)
+                  Get the Press Kit
                 </a>
               </Button>
               <Button variant="fluxOutline" size="lg" asChild>
-                <a href="/press-photos.zip" download>
+                <a href="/opk/media">
                   <Image className="mr-2 h-5 w-5" />
-                  Download High-Res Photos
+                  View High-Res Photos
                 </a>
               </Button>
             </div>
