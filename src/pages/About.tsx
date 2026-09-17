@@ -209,10 +209,10 @@ const About = () => {
                   </div>
                   
                   <Button variant="flux" className="w-full" asChild>
-                    <a href="/press-kit.pdf" download>
+                    <Link to="/opk">
                       <Download className="mr-2 h-4 w-4" />
-                      Download Press Kit
-                    </a>
+                      Get the Press Kit
+                    </Link>
                   </Button>
                 </div>
               </div>
