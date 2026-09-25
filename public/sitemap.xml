@@ -126,12 +126,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mrcap1.com/south-park-coalition</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://mrcap1.com/music/my-world</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -425,4 +419,22 @@
   <url><loc>https://mrcap1.com/press/dippin-thru-the-metaverse-release</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://mrcap1.com/press/30-years-independent-mr-cap-story</loc><lastmod>2026-04-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://mrcap1.com/press/big-boy-drip-release</loc><lastmod>2026-04-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Added 2026-09-25: live pages previously absent from the sitemap -->
+  <url><loc>https://mrcap1.com/music</loc><lastmod>2026-09-25</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://mrcap1.com/music/panties-on-my-piano</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/put-the-dope-down</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/social-media-is-a-ho-stroll</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/unsolved-mysteries</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/today-was-a-great-day</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/h-town-represent</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/southern-sounds-ultra-ism</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/bout-to-blow</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/music/limitless</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/albums/the-art-of-ism</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/albums/2-tha-grave</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/albums/tha-cold-ass-pimp</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/albums/one-on-one</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://mrcap1.com/blog/10-things-south-park-coalition</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/blog/the-hustle-doesnt-age-it-evolves-mr-cap-on-legacy-energy-and-building-a-digital-empire</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mrcap1.com/blog/why-music-nfts-will-change-the-way-you-collect-houston-hip-hop</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
