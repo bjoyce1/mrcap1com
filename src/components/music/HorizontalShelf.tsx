@@ -46,6 +46,7 @@ export default function HorizontalShelf({
   children,
 }: HorizontalShelfProps) {
   const rootRef = useRef<HTMLElement>(null);
+  const itemsRef = useRef<HTMLDivElement>(null);
   const feature = variant === "feature";
 
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function HorizontalShelf({
           duration: 0.7,
           stagger: 0.06,
           ease: "power3.out",
-          scrollTrigger: { trigger: "[data-shelf-items]", start: "top 88%" },
+          scrollTrigger: { trigger: itemsRef.current ?? root, start: "top 88%" },
         }
       );
 
@@ -149,11 +150,12 @@ export default function HorizontalShelf({
         {toolbar && <div className="mt-7">{toolbar}</div>}
 
         {layout === "block" ? (
-          <div data-shelf-items className="mt-9">
+          <div ref={itemsRef} data-shelf-items className="mt-9">
             {children}
           </div>
         ) : (
           <div
+            ref={itemsRef}
             data-shelf-items
             className={
               "mt-9 flex overflow-x-auto no-scrollbar snap-x snap-mandatory " +
