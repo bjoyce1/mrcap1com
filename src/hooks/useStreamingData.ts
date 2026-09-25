@@ -76,7 +76,7 @@ export function useAllTracks() {
         .from("tracks")
         .select("*")
         .eq("is_public", true)
-        .order("release_year", { ascending: false })
+        .order("release_year", { ascending: false, nullsFirst: false })
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data as Track[];
@@ -92,7 +92,7 @@ export function useLatestTracks(limit = 10) {
         .from("tracks")
         .select("*")
         .eq("is_public", true)
-        .order("release_year", { ascending: false })
+        .order("release_year", { ascending: false, nullsFirst: false })
         .order("created_at", { ascending: false })
         .limit(limit);
       if (error) throw error;
