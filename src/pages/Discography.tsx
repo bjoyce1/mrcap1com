@@ -275,7 +275,7 @@ const Discography = () => {
         "@type": "MusicPlaylist",
         name: "Mr. CAP Complete Discography",
         description: metaDescription,
-        url: "https://mrcap1.com/discography",
+        url: "https://mrcap1.com/mr-cap-discography",
         numTracks: studioAlbums.length + allSingles.length,
         track: [
           ...studioAlbums.map((album) => ({
@@ -302,7 +302,7 @@ const Discography = () => {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-          { "@type": "ListItem", position: 2, name: "Discography", item: "https://mrcap1.com/discography" },
+          { "@type": "ListItem", position: 2, name: "Discography", item: "https://mrcap1.com/mr-cap-discography" },
         ],
       },
     ],
@@ -317,12 +317,12 @@ const Discography = () => {
           name="keywords"
           content="mr cap discography, mr cap albums, mr cap singles, ties that bind us, art of ism, houston rap albums, south park coalition music, mr cap songs, mr cap music list"
         />
-        <link rel="canonical" href="https://mrcap1.com/discography" />
+        <link rel="canonical" href="https://mrcap1.com/mr-cap-discography" />
 
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="music.album" />
-        <meta property="og:url" content="https://mrcap1.com/discography" />
+        <meta property="og:url" content="https://mrcap1.com/mr-cap-discography" />
         <meta property="og:image" content="https://mrcap1.com/images/covers/album-ties.webp" />
         <meta property="og:site_name" content="Mr. CAP Legacy" />
         <meta property="og:locale" content="en_US" />
@@ -656,7 +656,7 @@ const Discography = () => {
 
           {/* Citation */}
           <CitationBlock
-            canonicalUrl="https://mrcap1.com/discography"
+            canonicalUrl="https://mrcap1.com/mr-cap-discography"
             description={musicPageData.citation.description}
             links={musicPageData.citation.links}
           />

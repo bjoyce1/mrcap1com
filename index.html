@@ -10,7 +10,9 @@
          are owned by react-helmet-async in each page component, then frozen
          into static HTML by vite-plugin-prerender at build time. -->
     <title>Mr. CAP — Official Site</title>
-    <meta name="description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more." />
+    <!-- data-rh marks this as Helmet-managed so react-helmet-async REPLACES it per route
+         instead of appending a second <meta name="description">. Keep the attribute. -->
+    <meta data-rh="true" name="description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more." />
     <meta name="author" content="Mr. CAP - Cornelius A. Pratt" />
 
     <!-- Robots -->
