@@ -2,7 +2,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 
 type ShelfVariant = "rail" | "feature";
-type ShelfLayout = "rail" | "block";
+type ShelfLayout = "rail" | "block" | "grid";
 
 interface HorizontalShelfProps {
   eyebrow: string;
@@ -15,7 +15,7 @@ interface HorizontalShelfProps {
   refreshKey?: string | number;
   /** "feature" = larger type + more room. Used for the Albums shelf. */
   variant?: ShelfVariant;
-  /** "block" renders children in the content column instead of a scroll rail. */
+  /** "rail" = horizontal snap rail, "grid" = wrapping grid, "block" = raw content column. */
   layout?: ShelfLayout;
   children: ReactNode;
 }
@@ -151,6 +151,14 @@ export default function HorizontalShelf({
 
         {layout === "block" ? (
           <div ref={itemsRef} data-shelf-items className="mt-9">
+            {children}
+          </div>
+        ) : layout === "grid" ? (
+          <div
+            ref={itemsRef}
+            data-shelf-items
+            className="mt-9 grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12"
+          >
             {children}
           </div>
         ) : (

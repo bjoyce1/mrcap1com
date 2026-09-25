@@ -97,6 +97,7 @@ const Listen = () => {
         {/* Albums — the feature shelf, where the disc-pull hover gets room */}
         <HorizontalShelf
           variant="feature"
+          layout="grid"
           eyebrow="Full Lengths"
           title="Albums"
           icon={<Disc3 className="w-5 h-5 text-primary" />}
@@ -105,7 +106,7 @@ const Listen = () => {
         >
           {albumsLoading
             ? Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="w-[300px] md:w-[380px] aspect-square bg-secondary rounded-xl animate-pulse shrink-0" />
+                <div key={i} className="w-full aspect-square bg-secondary rounded-xl animate-pulse" />
               ))
             : (albums || []).map((album) => {
                 const cover = album.cover_art_url || "/placeholder.svg";
@@ -114,7 +115,7 @@ const Listen = () => {
                     type="button"
                     key={album.id}
                     onClick={() => setModalAlbum(album)}
-                    className="disco-card group block w-[300px] md:w-[380px] shrink-0 snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                    className="disco-card group block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
                   >
                     <div className="relative">
                       {album.release_year && (

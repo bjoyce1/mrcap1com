@@ -1,0 +1,1 @@
+Use HorizontalShelf's `grid` layout for the five Albums cards while retaining `rail` for scrolling track shelves and `block` for charts; this keeps every album visible without changing shared rail behavior.
