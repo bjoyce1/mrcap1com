@@ -612,3 +612,16 @@
     transform: translate(calc(-50% + 27%), -50%) rotate(16deg);
   }
 }
+
+/* --- CHART ROWS (Most Played) --- */
+.catalog-section .chart-rank {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(242, 236, 223, 0.5);
+  transition: color 0.45s ease, -webkit-text-stroke-color 0.45s ease;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .catalog-section .chart-row:hover .chart-rank {
+    color: hsl(var(--accent-gold));
+    -webkit-text-stroke-color: transparent;
+  }
+}

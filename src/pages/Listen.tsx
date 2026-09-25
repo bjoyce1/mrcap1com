@@ -8,6 +8,7 @@ import ListeningRoomHero from "@/components/music/ListeningRoomHero";
 import EraFilter, { getEras, filterByEra } from "@/components/music/EraFilter";
 import HorizontalShelf from "@/components/music/HorizontalShelf";
 import TrackCard from "@/components/music/TrackCard";
+import MostPlayedChart from "@/components/music/MostPlayedChart";
 import AlbumDetailModal from "@/components/music/AlbumDetailModal";
 import { Vinyl } from "@/components/music/Vinyl";
 import { trackEvent } from "@/components/GoogleAnalytics";
@@ -57,24 +58,18 @@ const Listen = () => {
         latestPlayable={latestPlayable}
       />
 
-      <div className="pb-20">
-        {/* Most Played */}
+      <div className="pb-24">
+        {/* Most Played — chart data, so it reads as a chart, not a fourth rail */}
         {mostPlayed && mostPlayed.length > 0 && (
           <HorizontalShelf
+            layout="block"
             eyebrow="House Charts"
-            title={<><TrendingUp className="w-5 h-5 text-primary" /> Most Played</>}
+            title="Most Played"
+            icon={<TrendingUp className="w-5 h-5 text-primary" />}
             description="What listeners are streaming right here on the site."
             refreshKey={mostPlayed.length}
           >
-            {mostPlayed.map((track, i) => (
-              <TrackCard
-                key={track.id}
-                track={track}
-                queue={mostPlayed}
-                index={i}
-                badge={`#${i + 1}`}
-              />
-            ))}
+            <MostPlayedChart tracks={mostPlayed} />
           </HorizontalShelf>
         )}
 
@@ -82,7 +77,8 @@ const Listen = () => {
         {latestTracks && latestTracks.length > 0 && (
           <HorizontalShelf
             eyebrow="Latest Drops"
-            title={<><Music className="w-5 h-5 text-primary" /> Latest Releases</>}
+            title="Latest Releases"
+            icon={<Music className="w-5 h-5 text-primary" />}
             description="The newest cuts, freshly pressed."
             refreshKey={latestTracks.length}
           >
@@ -98,16 +94,18 @@ const Listen = () => {
           </HorizontalShelf>
         )}
 
-        {/* Albums */}
+        {/* Albums — the feature shelf, where the disc-pull hover gets room */}
         <HorizontalShelf
+          variant="feature"
           eyebrow="Full Lengths"
-          title={<><Disc3 className="w-5 h-5 text-primary" /> Albums</>}
-          description="Full-length records, scroll the wall."
+          title="Albums"
+          icon={<Disc3 className="w-5 h-5 text-primary" />}
+          description="Full-length records. Hover a sleeve to pull the disc."
           refreshKey={albums?.length || 0}
         >
           {albumsLoading
             ? Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="w-[260px] md:w-[320px] aspect-square bg-secondary rounded-xl animate-pulse shrink-0" />
+                <div key={i} className="w-[300px] md:w-[380px] aspect-square bg-secondary rounded-xl animate-pulse shrink-0" />
               ))
             : (albums || []).map((album) => {
                 const cover = album.cover_art_url || "/placeholder.svg";
@@ -116,11 +114,12 @@ const Listen = () => {
                     type="button"
                     key={album.id}
                     onClick={() => setModalAlbum(album)}
-                    className="disco-card group block w-[260px] md:w-[320px] shrink-0 snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
+                    className="disco-card group block w-[300px] md:w-[380px] shrink-0 snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
                   >
                     <div className="relative">
                       {album.release_year && (
                         <div
+                          data-parallax-year
                           aria-hidden="true"
                           className="absolute -top-6 left-1/2 -translate-x-1/2 z-0 font-display text-outline pointer-events-none select-none text-[6rem] md:text-[8rem] leading-none"
                         >
@@ -134,7 +133,7 @@ const Listen = () => {
                         </div>
                       </div>
                     </div>
-                    <h3 className="font-display mt-5 text-lg md:text-xl text-foreground group-hover:text-primary transition-colors">{album.title}</h3>
+                    <h3 className="font-display mt-6 text-xl md:text-2xl text-foreground group-hover:text-primary transition-colors">{album.title}</h3>
                     <p className="mt-2 font-mono text-[0.65rem] tracking-[0.2em] text-muted-foreground uppercase">
                       {album.release_year} · {album.track_count || 0} Tracks · {album.artist}
                     </p>
@@ -143,7 +142,7 @@ const Listen = () => {
               })}
         </HorizontalShelf>
 
-        {/* Singles */}
+        {/* Singles & Features */}
         {singles.length > 0 && (
           <HorizontalShelf
             eyebrow="Standalone Tracks"
@@ -163,7 +162,6 @@ const Listen = () => {
             )}
           </HorizontalShelf>
         )}
-
       </div>
 
       <AlbumDetailModal

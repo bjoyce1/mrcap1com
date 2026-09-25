@@ -37,6 +37,7 @@ export default function TrackCard({ track, queue, index, badge }: TrackCardProps
       <div className="relative">
         {track.release_year && (
           <div
+            data-parallax-year
             aria-hidden="true"
             className="absolute -top-6 left-1/2 -translate-x-1/2 z-0 font-display text-outline pointer-events-none select-none text-[6rem] md:text-[8rem] leading-none"
           >
