@@ -114,6 +114,12 @@ const Record = ({ labelUrl, spinning }: { labelUrl: string; spinning: boolean })
           />
           <meshStandardMaterial attach="material-2" color="#d9a441" metalness={0.6} roughness={0.4} />
         </mesh>
+        {labelTex && (
+          <mesh position={[0, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[0.62, 64]} />
+            <meshBasicMaterial map={labelTex} toneMapped={false} />
+          </mesh>
+        )}
         {/* Spindle hole */}
         <mesh position={[0, 0.03, 0]}>
           <cylinderGeometry args={[0.035, 0.035, 0.02, 24]} />
