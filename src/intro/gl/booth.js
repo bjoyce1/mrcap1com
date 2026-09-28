@@ -170,7 +170,14 @@ export function createBooth({ envMap, assets }) {
   weight.rotation.x = Math.PI / 2;
   weight.position.z = -0.3;
   const hinge = new THREE.Mesh(new THREE.SphereGeometry(0.06, 20, 20), chrome);
-  pivot.add(arm, head, cart, weight, hinge);
+  // cantilever + diamond tip — the needle-ride macro shot lands right on these
+  const cantilever = new THREE.Mesh(new THREE.CylinderGeometry(0.0035, 0.005, 0.05, 10), chrome);
+  cantilever.rotation.x = Math.PI / 2 - 0.5;
+  cantilever.position.set(0.01, -0.07, ARM_LEN + 0.115);
+  const stylus = new THREE.Mesh(new THREE.ConeGeometry(0.004, 0.012, 10), new THREE.MeshStandardMaterial({ color: '#ffffff', metalness: 0.2, roughness: 0.05, emissive: '#fff2d6', emissiveIntensity: 0.6 }));
+  stylus.rotation.x = Math.PI;
+  stylus.position.set(0.01, -0.082, ARM_LEN + 0.135);
+  pivot.add(arm, head, cart, weight, hinge, cantilever, stylus);
 
   // ── key-light beam + dust
   const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 2.6, 7.2, 48, 1, true), beamMaterial('#ffcf7a', 0.16));
@@ -208,10 +215,21 @@ export function createBooth({ envMap, assets }) {
 
   // ── camera rail (rebuilt on resize for portrait screens)
   const rail = new CameraRail([]);
-  const C = RECORD_CENTER.toArray();
-  const DOWN = [0, 0, -1];
+  // Where the stylus meets the wax when the arm is down at the outer groove.
+  const TIP = new THREE.Vector3(0.01, -0.082, ARM_LEN + 0.135)
+    .applyEuler(new THREE.Euler(0, -PLAY_ANGLE, 0, 'YXZ'))
+    .add(ARM_PIVOT);
+  const tipR = Math.hypot(TIP.x - RECORD_CENTER.x, TIP.z - RECORD_CENTER.z);
+  const tipA = Math.atan2(TIP.z - RECORD_CENTER.z, TIP.x - RECORD_CENTER.x);
+  // a point riding the same groove; +da is downstream (the direction the wax moves under the needle)
+  const onGroove = (da, dy, dr = 0) => [
+    RECORD_CENTER.x + Math.cos(tipA + da) * (tipR + dr),
+    RECORD_CENTER.y + dy,
+    RECORD_CENTER.z + Math.sin(tipA + da) * (tipR + dr),
+  ];
   function buildRail(aspect) {
     const portraitMode = aspect < 0.9;
+    const wide = portraitMode ? 12 : 0;
     rail.set([
       portraitMode
         ? { u: 0, p: [1.3, 4.4, 13.5], t: [-0.15, 2.9, 0], fov: 50 } // turntable sits low, under the headline
@@ -220,9 +238,11 @@ export function createBooth({ envMap, assets }) {
         ? { u: 1.3, p: [1.2, 3.8, 7.2], t: [-0.3, 0.1, 0], fov: 50 }
         : { u: 1.3, p: [2.1, 2.95, 4.9], t: [-0.55, 0.35, 0], fov: 40 },
       { u: 2.6, p: [0.55, 3.7, 2.4], t: [-0.35, 0.39, 0], fov: portraitMode ? 52 : 42 },
-      { u: 4.2, p: [-0.28, 2.3, 0.5], t: C, up: DOWN, fov: 44 },
-      { u: 5.6, p: [-0.35, 0.78, 0.02], t: C, up: DOWN, fov: 46 },
-      { u: 6.0, p: [-0.35, 0.48, 0.004], t: C, up: DOWN, fov: 52 },
+      // ── ride the needle: down the arm to the stylus, skim the wax, drop into the groove
+      { u: 3.6, p: TIP.clone().add(new THREE.Vector3(0.4, 0.5, 0.45)).toArray(), t: TIP.toArray(), fov: 40 + wide },
+      { u: 4.5, p: onGroove(0.35, 0.08, 0.05), t: TIP.toArray(), fov: 34 + wide },
+      { u: 5.3, p: onGroove(0.8, 0.03), t: onGroove(-0.3, 0), fov: 50 + wide },
+      { u: 6.0, p: onGroove(0.55, 0.004), t: onGroove(-0.8, -0.004), fov: 62 + wide },
     ]);
   }
   buildRail(innerWidth / innerHeight);
