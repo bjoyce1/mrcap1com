@@ -540,3 +540,12 @@ html.modal-open .cap-intro .chapters, html.modal-open .cap-intro .player { opaci
 html.intro-active, html.intro-active body { background: hsl(265 37% 7%); overscroll-behavior: none; }
 /* the site sets scroll-smooth on <html>; Lenis must own scrolling while the intro runs */
 html.intro-active { scroll-behavior: auto !important; }
+
+/* phones: the finale is just the statement, ENTER SITE, the Legacy List and socials */
+@media (max-width: 760px) {
+  .cap-intro .station--outro { padding: 86px 16px 110px; }
+  .cap-intro .outro { gap: 16px; }
+  .cap-intro .mega--outro { font-size: clamp(34px, 11vw, 48px); }
+  .cap-intro .outro__links, .cap-intro .journal { display: none; }
+  .cap-intro .legacy label { font-size: 13px; }
+}

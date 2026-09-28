@@ -17,7 +17,8 @@ export function createNav(root, { goto, fill }) {
 
   return {
     update(u, total) {
-      root.classList.toggle('is-visible', u > 7.2);
+      // out of the way for the tunnel and for the ENTER SITE finale
+      root.classList.toggle('is-visible', u > 7.2 && u < 38.1);
       let active = -1;
       CHAPTERS.forEach((c, i) => {
         const p = range(u, c.start, c.end);
