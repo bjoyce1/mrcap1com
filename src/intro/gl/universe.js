@@ -406,7 +406,7 @@ export async function createUniverse({ envMap, tex, assets }) {
       const z = w.def.z;
       const [tx, ty] = w.target;
       key(uAppear, [0, 0.3, z + dFill + 38], [0, 0, z - 20]);
-      key(uFill, [0, 0.2, z + dFill * 1.12], [tx * 0.12, ty * 0.12, z]);
+      key(uFill, [0, 0.2, z + dFill * 1.2], [0, 0, z]); // hold the whole word, centred
       key(lerp(uFill, uPass, 0.72), [tx * 0.9, ty * 0.9, z + dFill * 0.28], [tx, ty, z - 20]);
       key(uPass, [tx, ty, z - w.depth * 0.5], [tx, ty, z - 30]);
       key(uDone, [tx * 0.5, ty * 0.5 + 0.2, z - 12], [0, 0, z - 40]);
