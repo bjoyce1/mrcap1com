@@ -28,7 +28,7 @@ export function createNav(root, { goto, fill }) {
       const key = String(active);
       if (key !== last) {
         last = key;
-        btns.forEach((b, i) => b.classList.toggle('is-active', i === active));
+        btns.forEach((b, i) => { b.classList.toggle('is-active', i === active); if (i === active) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
       }
       fill.style.transform = `scaleX(${Math.min(1, u / total)})`;
     },

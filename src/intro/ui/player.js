@@ -6,7 +6,7 @@ import { HERO_TRACK } from '../data/catalog.js';
 export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TRACK] }) {
   root.innerHTML = `
     <div class="dock" data-state="idle">
-      <button class="dock__art" data-p="toggle-panel" aria-label="Show queue and details">
+      <button class="dock__art" data-p="toggle-panel" aria-label="Show queue and details" aria-expanded="false" aria-controls="intro-dock-panel">
         <img data-p="cover" src="${HERO_TRACK.cover}" alt="" width="48" height="48" />
         <span class="dock__viz" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       </button>
@@ -23,7 +23,7 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
         <button data-p="next" aria-label="Next track">${icon('next', 16)}</button>
       </div>
     </div>
-    <div class="dock__panel" data-p="panel" hidden>
+    <div class="dock__panel" data-p="panel" id="intro-dock-panel" hidden>
       <header>
         <p class="eyebrow"><span class="eyebrow__line"></span>Now spinning</p>
         <div class="dock__vol">${icon('volume', 16)}<input type="range" min="0" max="1" step="0.01" value="${audio.volume}" data-p="volume" aria-label="Volume" /></div>
@@ -45,8 +45,11 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
   });
   $('prev').addEventListener('click', () => audio.prev());
   $('next').addEventListener('click', () => audio.next());
-  $('toggle-panel').addEventListener('click', () => { panel.hidden = !panel.hidden; root.classList.toggle('is-open', !panel.hidden); });
-  $('volume').addEventListener('input', (e) => audio.setVolume(Number(e.target.value)));
+  $('toggle-panel').addEventListener('click', (e) => { panel.hidden = !panel.hidden; root.classList.toggle('is-open', !panel.hidden); e.currentTarget.setAttribute('aria-expanded', String(!panel.hidden)); });
+  const vol = $('volume');
+  const volText = () => vol.setAttribute('aria-valuetext', `${Math.round(Number(vol.value) * 100)}%`);
+  volText();
+  vol.addEventListener('input', (e) => { audio.setVolume(Number(e.target.value)); volText(); });
   const seek = $('seek');
   const seekTo = (e) => {
     const r = seek.getBoundingClientRect();
@@ -57,8 +60,10 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
   seek.addEventListener('keydown', (e) => {
     const el = audio.el;
     if (!el.duration) return;
-    if (e.key === 'ArrowRight') audio.seek((el.currentTime + 5) / el.duration);
-    if (e.key === 'ArrowLeft') audio.seek((el.currentTime - 5) / el.duration);
+    const step = { ArrowRight: 5, ArrowUp: 5, ArrowLeft: -5, ArrowDown: -5 }[e.key];
+    if (step) { e.preventDefault(); audio.seek((el.currentTime + step) / el.duration); }
+    if (e.key === 'Home') { e.preventDefault(); audio.seek(0); }
+    if (e.key === 'End') { e.preventDefault(); audio.seek(1); }
   });
   $('queue').addEventListener('click', (e) => {
     const li = e.target.closest('[data-q]');
@@ -80,7 +85,7 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
     const q = audio.state.queue;
     const start = audio.state.index;
     $('queue').innerHTML = q.slice(start + 1, start + 8).map((x, i) => `
-      <li data-q="${start + 1 + i}"><img src="${x.cover}" alt="" width="32" height="32" loading="lazy"/><span><b>${esc(x.title)}</b><small>${esc(x.artist)}</small></span></li>`).join('') || '<li class="muted">End of the queue — open the Crate for more.</li>';
+      <li><button data-q="${start + 1 + i}"><img src="${x.cover}" alt="" width="32" height="32" loading="lazy"/><span><b>${esc(x.title)}</b><small>${esc(x.artist)}</small></span></button></li>`).join('') || '<li class="muted">End of the queue — open the Crate for more.</li>';
   }
 
   function renderTime() {
@@ -88,6 +93,7 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
     const d = el.duration || 0;
     $('fill').style.transform = `scaleX(${d ? el.currentTime / d : 0})`;
     seek.setAttribute('aria-valuenow', d ? Math.round((el.currentTime / d) * 100) : 0);
+    seek.setAttribute('aria-valuetext', `${fmt(el.currentTime)} of ${fmt(d)}`);
     $('cur').textContent = fmt(el.currentTime);
     $('dur').textContent = fmt(d);
     const cap = $('cap');

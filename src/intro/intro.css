@@ -576,3 +576,6 @@ html.modal-open.modal-crate .cap-intro .player { opacity: 1; pointer-events: aut
   .cap-intro .card, .cap-intro .wall__info, .cap-intro .dock, .cap-intro .chapters { background: rgba(16, 9, 22, 0.9); }
 }
 html[data-quality="low"] .cap-intro * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.cap-intro .dock__queue li > button { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; padding: 5px; border-radius: 10px; }
+.cap-intro .dock__queue li > button:hover { background: rgba(237,228,211,.05); }
+.cap-intro .dock__queue li { padding: 0; }

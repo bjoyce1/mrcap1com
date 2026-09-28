@@ -102,31 +102,47 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
         <p class="eyebrow"><span class="eyebrow__line"></span>The Crate</p>
         <h2>${TRACKS.length} tracks. ${ALBUMS.length} albums. <em>Three decades.</em></h2>
         <div class="crate__tools">
-          <div class="tabs" role="tablist">
-            <button role="tab" aria-selected="true" data-tab="albums">Albums</button>
-            <button role="tab" aria-selected="false" data-tab="singles">Singles & features</button>
-            <button role="tab" aria-selected="false" data-tab="all">All tracks</button>
+          <div class="tabs" role="tablist" aria-label="Browse the catalog">
+            <button role="tab" id="crate-tab-albums" aria-controls="crate-pane-albums" aria-selected="true" tabindex="0" data-tab="albums">Albums</button>
+            <button role="tab" id="crate-tab-singles" aria-controls="crate-pane-singles" aria-selected="false" tabindex="-1" data-tab="singles">Singles & features</button>
+            <button role="tab" id="crate-tab-all" aria-controls="crate-pane-all" aria-selected="false" tabindex="-1" data-tab="all">All tracks</button>
           </div>
           <label class="search">${icon('search', 16)}<input type="search" placeholder="Search the catalog" data-crate-search aria-label="Search the catalog"/></label>
         </div>
+        <p class="sr-only" role="status" data-crate-count></p>
         ${STREAM.previewSeconds ? `<p class="fine">Tracks stream as ${STREAM.previewSeconds}-second previews. Own any record for $0.99 on mrcap1.com.</p>` : ''}
       </header>
       <div class="crate__body">
-        <div data-pane="albums">${ALBUMS.map(albumBlock).join('')}</div>
-        <div data-pane="singles" hidden><ol class="crate__list">${SINGLES.map((t) => row(t)).join('')}</ol></div>
-        <div data-pane="all" hidden><ol class="crate__list">${[...TRACKS].sort((a, b) => (b.year || 0) - (a.year || 0)).map((t) => row(t)).join('')}</ol></div>
+        <div data-pane="albums" role="tabpanel" id="crate-pane-albums" aria-labelledby="crate-tab-albums">${ALBUMS.map(albumBlock).join('')}</div>
+        <div data-pane="singles" role="tabpanel" id="crate-pane-singles" aria-labelledby="crate-tab-singles" hidden><ol class="crate__list">${SINGLES.map((t) => row(t)).join('')}</ol></div>
+        <div data-pane="all" role="tabpanel" id="crate-pane-all" aria-labelledby="crate-tab-all" hidden><ol class="crate__list">${[...TRACKS].sort((a, b) => (b.year || 0) - (a.year || 0)).map((t) => row(t)).join('')}</ol></div>
       </div>`, 'modal--crate');
 
     const body = el.querySelector('.crate__body');
-    el.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => {
-      el.querySelectorAll('[data-tab]').forEach((x) => x.setAttribute('aria-selected', x === b));
+    const tabs = [...el.querySelectorAll('[data-tab]')];
+    const select = (b, focus = false) => {
+      tabs.forEach((x) => { x.setAttribute('aria-selected', String(x === b)); x.tabIndex = x === b ? 0 : -1; });
       el.querySelectorAll('[data-pane]').forEach((p) => (p.hidden = p.dataset.pane !== b.dataset.tab));
       body.scrollTop = 0;
-    }));
+      if (focus) b.focus();
+    };
+    tabs.forEach((b) => b.addEventListener('click', () => select(b)));
+    // roving tabindex: arrows / Home / End move between tabs
+    el.querySelector('[role="tablist"]').addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (next == null) return;
+      e.preventDefault();
+      select(tabs[(next + tabs.length) % tabs.length], true);
+    });
+    const count = el.querySelector('[data-crate-count]');
     el.querySelector('[data-crate-search]').addEventListener('input', (e) => {
       const q = e.target.value.trim().toLowerCase();
-      if (q) el.querySelector('[data-tab="all"]').click();
-      el.querySelectorAll('[data-pane="all"] .crow').forEach((r) => (r.hidden = q && !r.dataset.search.includes(q)));
+      if (q) select(tabs[2]);
+      let shown = 0;
+      el.querySelectorAll('[data-pane="all"] .crow').forEach((r) => { r.hidden = !!q && !r.dataset.search.includes(q); if (!r.hidden) shown++; });
+      count.textContent = q ? `${shown} track${shown === 1 ? '' : 's'} match “${q}”` : '';
     });
     el.addEventListener('click', (e) => {
       const p = e.target.closest('[data-crate-play]');
@@ -154,6 +170,7 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
         <p class="muted">Every inquiry receives a response within 48 hours. Prefer email? <a href="mailto:${CONTACT.email}">${CONTACT.email}</a></p>
       </header>
       <form class="form" data-booking novalidate>
+        <p class="fine">Fields marked * are required.</p>
         <div class="form__grid">
           <label>Name *<input name="name" required autocomplete="name"/></label>
           <label>Email *<input name="email" type="email" required autocomplete="email"/></label>
@@ -166,7 +183,7 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
         </div>
         <div class="row">
           <button class="btn btn--candy" type="submit">Submit inquiry <span class="arrow" aria-hidden="true">→</span></button>
-          <p class="fine" data-status></p>
+          <p class="fine" data-status role="status" id="booking-status"></p>
         </div>
         <p class="fine">Performance deposits: CashApp ${CONTACT.cashapp} · Zelle ${CONTACT.zelle}</p>
       </form>`, 'modal--form');
@@ -176,7 +193,14 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
       const f = e.target;
       const d = Object.fromEntries(new FormData(f));
       const status = f.querySelector('[data-status]');
-      if (!d.name || !d.email || !f.email.checkValidity()) { status.textContent = 'Please add your name and a valid email.'; return; }
+      const bad = [!d.name && f.elements.namedItem('name'), (!d.email || !f.email.checkValidity()) && f.email].filter(Boolean);
+      f.querySelectorAll('[aria-invalid]').forEach((i) => i.removeAttribute('aria-invalid'));
+      if (bad.length) {
+        bad.forEach((i) => { i.setAttribute('aria-invalid', 'true'); i.setAttribute('aria-describedby', 'booking-status'); });
+        status.textContent = !d.name ? 'Please add your name.' + (bad.length > 1 ? ' And a valid email address.' : '') : 'Please add a valid email address.';
+        bad[0].focus();
+        return;
+      }
       const message = [d.budget && `Budget: ${d.budget}`, d.message].filter(Boolean).join('\n\n') || null;
       {
         status.textContent = 'Sending…';
@@ -184,7 +208,7 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
           name: d.name, email: d.email, venue: d.venue || null, city: d.city || null,
           event_date: d.event_date || null, booking_type: d.booking_type, message,
         });
-        if (ok) { f.innerHTML = `<div class="done"><h3>Inquiry received.</h3><p class="muted">The team will reach out to ${esc(d.email)} within 48 hours.</p></div>`; return; }
+        if (ok) { f.innerHTML = `<div class="done" tabindex="-1"><h3>Inquiry received.</h3><p class="muted">The team will reach out to ${esc(d.email)} within 48 hours.</p></div>`; f.querySelector(".done").focus(); return; }
         status.textContent = 'Couldn’t send — opening your email instead.';
       }
       const label = BOOKING_TYPES.find((b) => b.value === d.booking_type)?.label;
