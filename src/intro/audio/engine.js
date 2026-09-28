@@ -8,11 +8,16 @@ export function createAudio() {
   el.crossOrigin = 'anonymous';
   el.preload = 'metadata';
 
-  let ctx = null, analyser = null, gain = null, data = null, crackleGain = null;
+  let ctx = null, analyser = null, gain = null, data = null, crackleGain = null, sfx = null, noise = null;
+  let kAvg = 0, lastKick = 0, lastSample = 0;
   const listeners = new Set();
+  let dead = false;
+  const timers = new Set();
+  const later = (fn, ms) => { const id = setTimeout(() => { timers.delete(id); if (!dead) fn(); }, ms); timers.add(id); };
   const peaks = { bass: 0.35, mid: 0.3, high: 0.2 };
 
-  const levels = { bass: 0, mid: 0, high: 0, energy: 0, bins: null, playing: false, progress: 0 };
+  // kick: 0–1 punch that decays after each detected kick drum; beat: running count of kicks
+  const levels = { bass: 0, mid: 0, high: 0, energy: 0, kick: 0, beat: 0, bins: null, playing: false, progress: 0 };
   const state = { queue: [], index: -1, track: null, preview: false, cap: 0, ended: false };
 
   const emit = (type, extra) => listeners.forEach((fn) => fn(type, state, extra));
@@ -30,6 +35,14 @@ export function createAudio() {
     gain.connect(ctx.destination);
     data = new Uint8Array(analyser.frequencyBinCount);
     levels.bins = data;
+    // sound design bus (whoosh/boom) — rides the master volume
+    sfx = ctx.createGain();
+    sfx.gain.value = 0.9;
+    sfx.connect(ctx.destination);
+    const nb = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+    const nch = nb.getChannelData(0);
+    for (let i = 0; i < nch.length; i++) nch[i] = Math.random() * 2 - 1;
+    noise = nb;
     buildCrackle();
   }
 
@@ -49,7 +62,7 @@ export function createAudio() {
     bp.type = 'bandpass'; bp.frequency.value = 2600; bp.Q.value = 0.6;
     crackleGain = ctx.createGain();
     crackleGain.gain.value = 0;
-    node.connect(bp); bp.connect(crackleGain); crackleGain.connect(ctx.destination);
+    node.connect(bp); bp.connect(crackleGain); crackleGain.connect(gain);
     node.start();
   }
 
@@ -59,6 +72,7 @@ export function createAudio() {
   }
 
   async function load(index) {
+    if (dead) return;
     const t = state.queue[index];
     if (!t) return;
     state.index = index;
@@ -66,6 +80,8 @@ export function createAudio() {
     state.ended = false;
     state.preview = STREAM.previewSeconds > 0 && !t.free && !t.audio.startsWith('/');
     state.cap = state.preview ? STREAM.previewSeconds : 0;
+    el.playbackRate = 1;
+    el.preservesPitch = true;
     el.src = sourceFor(t);
     if (gain) gain.gain.cancelScheduledValues(0), gain.gain.setValueAtTime(volume, ctx.currentTime);
     emit('track');
@@ -120,12 +136,70 @@ export function createAudio() {
       else el.volume = 0;
     },
 
+    // turntable power-off: pitch and speed sag together, then silence
+    recordStop(seconds = 0.85) {
+      if (el.paused || !ctx) { this.fadeOut(seconds); return; }
+      el.preservesPitch = false;
+      el.mozPreservesPitch = false;
+      el.webkitPreservesPitch = false;
+      const t0 = performance.now();
+      const tick = (n) => {
+        if (dead) return;
+        const k = Math.min(1, (n - t0) / (seconds * 1000));
+        try { el.playbackRate = Math.max(0.07, 1 - k * k); } catch { /* rate out of range */ }
+        if (k < 1) requestAnimationFrame(tick); else el.pause();
+      };
+      requestAnimationFrame(tick);
+      gain.gain.setTargetAtTime(0, ctx.currentTime + seconds * 0.6, seconds * 0.15);
+      crackleGain?.gain.setTargetAtTime(0, ctx.currentTime, 0.05);
+    },
+
+    // sound design for the word fly-throughs (only after the visitor chose sound)
+    whoosh(d = 0.8) {
+      if (!ctx || !noise) return;
+      const t = ctx.currentTime, s = ctx.createBufferSource();
+      s.buffer = noise;
+      const bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass'; bp.Q.value = 1.4;
+      bp.frequency.setValueAtTime(260, t);
+      bp.frequency.exponentialRampToValueAtTime(5200, t + d);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(1e-4, t);
+      g.gain.exponentialRampToValueAtTime(0.28 * volume, t + d * 0.85);
+      g.gain.exponentialRampToValueAtTime(1e-4, t + d + 0.12);
+      s.connect(bp).connect(g).connect(sfx);
+      s.start(t);
+      s.stop(t + d + 0.2);
+    },
+    boom() {
+      if (!ctx) return;
+      const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.setValueAtTime(68, t);
+      o.frequency.exponentialRampToValueAtTime(32, t + 0.7);
+      g.gain.setValueAtTime(0.8 * volume, t);
+      g.gain.exponentialRampToValueAtTime(1e-4, t + 0.8);
+      o.connect(g).connect(sfx);
+      o.start(t);
+      o.stop(t + 0.85);
+      // sidechain duck: the music dips under the hit
+      if (!el.paused) {
+        gain.gain.setTargetAtTime(volume * 0.45, t, 0.015);
+        gain.gain.setTargetAtTime(volume, t + 0.25, 0.12);
+      }
+    },
+
     destroy() {
+      dead = true;
+      timers.forEach(clearTimeout);
+      timers.clear();
       listeners.clear();
       el.pause();
       el.removeAttribute('src');
       el.load();
-      if ('mediaSession' in navigator) navigator.mediaSession.metadata = null;
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = null;
+        for (const a of ['play', 'pause', 'nexttrack', 'previoustrack']) { try { navigator.mediaSession.setActionHandler(a, null); } catch { /* unsupported */ } }
+      }
       ctx?.close().catch(() => {});
       ctx = null;
     },
@@ -143,6 +217,11 @@ export function createAudio() {
           const v = Math.pow(raw[k] / peaks[k], k === 'bass' ? 2.2 : 1.6);
           levels[k] += (v - levels[k]) * (v > levels[k] ? 0.5 : 0.12);
         }
+        // kick onsets: spectral flux in the lowest bins against a running average
+        const kb = band(1, 2);
+        const flux = Math.max(0, kb - kAvg);
+        kAvg += (kb - kAvg) * 0.1;
+        if (flux > 0.07 + kAvg * 0.15 && time - lastKick > 0.23) { lastKick = time; levels.kick = 1; levels.beat++; }
       } else {
         // idle breathing so the world never feels dead
         const idle = 0.05 + Math.sin(time * 1.3) * 0.03;
@@ -151,6 +230,8 @@ export function createAudio() {
         levels.high += (idle * 0.5 - levels.high) * 0.05;
       }
       levels.energy = levels.bass * 0.5 + levels.mid * 0.35 + levels.high * 0.15;
+      levels.kick *= Math.exp(-Math.max(0, time - lastSample) * 7);
+      lastSample = time;
       levels.bins = levels.playing ? data : null;
       return levels;
     },
@@ -165,7 +246,7 @@ export function createAudio() {
       state.ended = true;
       el.pause();
       emit('preview-end');
-      setTimeout(() => { if (state.ended && state.queue.length > 1) api.next(); }, 1600);
+      later(() => { if (state.ended && state.queue.length > 1) api.next(); }, 1600);
     }
   });
   el.addEventListener('ended', () => { emit('ended'); if (state.queue.length > 1) api.next(); });
@@ -180,7 +261,7 @@ export function createAudio() {
   });
   el.addEventListener('pause', () => emit('pause'));
   el.addEventListener('loadedmetadata', () => emit('meta'));
-  el.addEventListener('error', () => { emit('error'); setTimeout(() => state.queue.length > 1 && api.next(), 1200); });
+  el.addEventListener('error', () => { if (dead) return; emit('error'); later(() => state.queue.length > 1 && api.next(), 1200); });
 
   function updateMediaSession(t) {
     if (!('mediaSession' in navigator)) return;

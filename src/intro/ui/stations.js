@@ -9,7 +9,7 @@ import { icon } from './icons.js';
 
 export const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const fmt = (s) => (s ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '—');
-const ext = (href, label, cls = 'btn btn--ghost btn--sm') => `<a class="${cls}" href="${esc(href)}" target="_blank" rel="noopener">${label} <span class="arrow">↗</span></a>`;
+const ext = (href, label, cls = 'btn btn--ghost btn--sm') => `<a class="${cls}" href="${esc(href)}" target="_blank" rel="noopener">${label} <span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>`;
 const eyebrow = (t) => `<p class="eyebrow"><span class="eyebrow__line"></span>${t}</p>`;
 const byline = (t) => (t.ft ? `${esc(t.artist)} ft. ${esc(t.ft)}` : esc(t.artist));
 
@@ -76,8 +76,9 @@ function build() {
   add('timeline', 'station--left', `
     <article class="card card--timeline">
       ${eyebrow('The Journey · 1987 — Now')}
-      <div class="tl">
-        <div class="tl__year" aria-live="polite"><span data-tl="year">1987</span></div>
+      <h2 class="sr-only">Three decades, on record</h2>
+      <div class="tl" aria-live="polite" aria-atomic="true">
+        <div class="tl__year"><span data-tl="year">1987</span></div>
         <div class="tl__body"><p class="tl__tag" data-tl="tag"></p><h3 data-tl="title"></h3><p data-tl="text"></p></div>
       </div>
       <ol class="tl__rail">${TIMELINE.map((t, i) => `<li data-tl-dot="${i}"><span></span><em>${t.year}</em></li>`).join('')}</ol>
@@ -107,7 +108,7 @@ function build() {
       <p class="fine">${esc(her.credits)}</p>
       <div class="row">
         <button class="btn btn--candy btn--sm" data-action="play-track" data-slug="bet-on-her">${icon('play')} Play</button>
-        <a class="btn btn--ghost btn--sm" href="${STREAM.buyUrl('bet-on-her')}" target="_blank" rel="noopener">Own it · $0.99 <span class="arrow">↗</span></a>
+        <a class="btn btn--ghost btn--sm" href="${STREAM.buyUrl('bet-on-her')}" target="_blank" rel="noopener">Own it · $0.99 <span class="arrow" aria-hidden="true">↗</span></a>
       </div>
       <ul class="tracks tracks--compact">${LATEST.slice(1).map((t) => trackRow(t)).join('')}</ul>
     </article>`);
@@ -148,7 +149,7 @@ function build() {
         <div><dt>Contract</dt><dd><code>${NFT.contract.slice(0, 8)}…${NFT.contract.slice(-6)}</code></dd></div>
       </dl>
       <div class="row">${ext(NFT.opensea, 'OpenSea', 'btn btn--candy btn--sm')}${ext(NFT.etherscan, 'Etherscan')}</div>
-      <p class="fine hint-3d">Tap the coin.</p>
+      <p class="fine hint-3d" aria-hidden="true">Tap the coin.</p>
     </article>`);
 
   add('book', 'station--left', `
@@ -167,7 +168,7 @@ function build() {
       <ul class="kpis kpis--4">${STATS.map((s) => `<li><b data-count="${s.n}" data-suffix="${s.suffix}">0</b><span>${s.label}</span></li>`).join('')}</ul>
       <a class="doc" href="${DOCUMENTARY.href}" target="_blank" rel="noopener">
         <img src="${DOCUMENTARY.img}" alt="" loading="lazy" width="72" height="72" />
-        <span><small>${DOCUMENTARY.note}</small><b>${DOCUMENTARY.title}</b></span><span class="arrow">↗</span>
+        <span><small>${DOCUMENTARY.note}</small><b>${DOCUMENTARY.title}</b></span><span class="arrow" aria-hidden="true">↗</span>
       </a>
       <ul class="press">${PRESS.map((p) => `<li><a href="${p.href}" target="_blank" rel="noopener"><small>${p.outlet} · ${p.date}</small><span>${esc(p.title)}</span></a></li>`).join('')}</ul>
     </article>`);
@@ -191,7 +192,7 @@ function build() {
       <p>Concerts, festivals, features and speaking — booked straight with the artist's team. Every inquiry gets a response within 48 hours.</p>
       <ul class="types">${BOOKING_TYPES.filter((b) => b.text).map((b) => `<li><b>${b.label}</b><span>${b.text}</span></li>`).join('')}</ul>
       <div class="row">
-        <button class="btn btn--candy btn--sm" data-action="open-booking">Start a booking <span class="arrow">→</span></button>
+        <button class="btn btn--candy btn--sm" data-action="open-booking">Start a booking <span class="arrow" aria-hidden="true">→</span></button>
         <a class="btn btn--ghost btn--sm" href="mailto:${CONTACT.email}?subject=Booking%20inquiry%20—%20Mr.%20CAP">Email the team</a>
       </div>
       <ul class="shows">${SHOWS.map((s) => `<li><time>${s.date}</time><b>${s.venue}</b><span>${s.city}</span></li>`).join('')}</ul>
@@ -202,7 +203,7 @@ function build() {
       <header>${eyebrow('The Wearable Archive')}<h2>Trap University <em>×</em> SPC <em>×</em> Sabet</h2>
       ${ext(STORE_URL, 'Shop the full store', 'btn btn--candy btn--sm')}</header>
       <div class="merch__rail"><ul class="merch__track">${MERCH.map((m) => `
-        <li><a href="${STORE_URL}" target="_blank" rel="noopener"><img src="${m.img}" alt="${esc(m.name)}" loading="lazy" width="220" height="220" /><b>${esc(m.name)}</b><span>$${m.price.toFixed(2)}</span></a></li>`).join('')}
+        <li><a href="${STORE_URL}" target="_blank" rel="noopener"><img src="${m.img}" alt="" loading="lazy" width="220" height="220" /><b>${esc(m.name)}</b><span>$${m.price.toFixed(2)}</span></a></li>`).join('')}
       </ul></div>
     </div>`);
 
@@ -305,7 +306,11 @@ export function createStations(root, { onWall } = {}) {
           s.el.style.opacity = a;
           s.el.style.visibility = a > 0.001 ? 'visible' : 'hidden';
           s.el.style.setProperty('--a', a);
-          s.el.classList.toggle('is-live', a > 0.55);
+          const live = a > 0.55;
+          s.el.classList.toggle('is-live', live);
+          // fading stations can't take focus; rescue focus that was inside one
+          s.el.inert = !live;
+          if (!live && s.el.contains(document.activeElement)) root.closest('.cap-intro')?.querySelector('.brand')?.focus({ preventScroll: true });
         }
         if (a > 0) {
           const p = Math.round(range(u, s.a, s.b) * 1000) / 1000;

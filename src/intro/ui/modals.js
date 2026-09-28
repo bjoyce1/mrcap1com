@@ -8,11 +8,15 @@ import { STREAM } from '../config.js';
 export function createModals(root, { audio, lenis, toast, insert: dbInsert, signal }) {
   let open = null, lastFocus = null;
 
+  // everything else in the intro goes inert while a dialog is open (the player stays usable over the Crate)
+  const background = (keepPlayer) => [...root.parentElement.children].filter((n) => n !== root && !n.matches('.toast') && !(keepPlayer && n.matches('.player')));
+  let inerted = [];
+
   function show(name, html, cls = '') {
     close(true);
     lastFocus = document.activeElement;
     root.innerHTML = `
-      <div class="modal ${cls}" role="dialog" aria-modal="true" aria-label="${name}" data-modal="${name}">
+      <div class="modal ${cls}" role="dialog" aria-modal="true" aria-label="${esc(name)}" data-modal="${esc(name)}">
         <div class="modal__scrim" data-close></div>
         <div class="modal__sheet">
           <button class="modal__close" data-close aria-label="Close">${icon('close', 20)}</button>
@@ -20,10 +24,15 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
         </div>
       </div>`;
     open = root.firstElementChild;
-    requestAnimationFrame(() => open.classList.add('is-open'));
+    requestAnimationFrame(() => open?.classList.add('is-open'));
     lenis?.stop();
+    const crateOpen = cls.includes('modal--crate');
     document.documentElement.classList.add('modal-open');
-    open.querySelector('input, button:not(.modal__close), a')?.focus({ preventScroll: true });
+    document.documentElement.classList.toggle('modal-crate', crateOpen);
+    inerted = background(crateOpen);
+    inerted.forEach((n) => (n.inert = true));
+    (open.querySelector('input, select, textarea, [role="tab"][aria-selected="true"], button:not(.modal__close)') || open.querySelector('.modal__close'))
+      .focus({ preventScroll: true });
     return open;
   }
 
@@ -36,7 +45,9 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
     el.classList.remove('is-open');
     setTimeout(() => el.remove(), instant ? 0 : 320);
     lenis?.start();
-    document.documentElement.classList.remove('modal-open');
+    inerted.forEach((n) => (n.inert = false));
+    inerted = [];
+    document.documentElement.classList.remove('modal-open', 'modal-crate');
     lastFocus?.focus?.({ preventScroll: true });
   }
 
@@ -154,7 +165,7 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
           <label class="span-2">Details<textarea name="message" rows="4" placeholder="Event, set length, audience, anything we should know"></textarea></label>
         </div>
         <div class="row">
-          <button class="btn btn--candy" type="submit">Submit inquiry <span class="arrow">→</span></button>
+          <button class="btn btn--candy" type="submit">Submit inquiry <span class="arrow" aria-hidden="true">→</span></button>
           <p class="fine" data-status></p>
         </div>
         <p class="fine">Performance deposits: CashApp ${CONTACT.cashapp} · Zelle ${CONTACT.zelle}</p>

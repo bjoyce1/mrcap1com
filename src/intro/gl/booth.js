@@ -125,7 +125,7 @@ export function createBooth({ envMap, assets }) {
   spinner.add(dots);
 
   // the record
-  const label = recordLabel(assets.logoImg);
+  const label = assets.label;
   const vinyl = vinylMaterial(label, { labelR: 0.34, lightAngle: 0.9 });
   const disc = new THREE.Mesh(new THREE.CircleGeometry(1, 160), vinyl);
   disc.rotation.x = -Math.PI / 2;
@@ -242,8 +242,9 @@ export function createBooth({ envMap, assets }) {
       angle = lerp(PLAY_ANGLE, END_ANGLE, audio.progress);
       raise = 0;
     }
-    state.armAngle += (angle - state.armAngle) * Math.min(1, dt * 6);
-    state.armLift += (raise - state.armLift) * Math.min(1, dt * 8);
+    const ease = Math.max(dt, 1 / 60); // keeps following the scroll even while motion is paused
+    state.armAngle += (angle - state.armAngle) * Math.min(1, ease * 6);
+    state.armLift += (raise - state.armLift) * Math.min(1, ease * 8);
     pivot.rotation.y = -state.armAngle;
     pivot.rotation.x = -state.armLift;
     state.needleDown = playing || drop >= 1;

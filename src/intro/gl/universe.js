@@ -348,7 +348,7 @@ export async function createUniverse({ envMap, tex, assets }) {
     stage.add(m);
     return m;
   });
-  const finaleMat = vinylMaterial(recordLabel(assets.logoImg), { labelR: 0.34, lightAngle: 1.1 });
+  const finaleMat = vinylMaterial(assets.label, { labelR: 0.34, lightAngle: 1.1 });
   const finale = new THREE.Mesh(new THREE.CircleGeometry(1, 200), finaleMat);
   finale.scale.setScalar(17);
   finale.position.set(0, 3, -845);
@@ -419,7 +419,7 @@ export async function createUniverse({ envMap, tex, assets }) {
   const tmp = new THREE.Vector3(), fwd = new THREE.Vector3(), right = new THREE.Vector3();
   let lastCamZ = 0, speed = 0;
 
-  function update(u, time, dt, audio, camera) {
+  function update(u, time, dt, audio, camera, still = false) {
     // zone palette
     let i = 0;
     while (i < PALETTE.length - 1 && u > PALETTE[i + 1].u) i++;
@@ -433,7 +433,7 @@ export async function createUniverse({ envMap, tex, assets }) {
     skyMat.uniforms.uEnergy.value = audio.energy;
     sky.position.copy(camera.position);
 
-    speed += (Math.abs(camera.position.z - lastCamZ) / Math.max(dt, 1e-3) - speed) * 0.08;
+    if (dt > 0) speed += (Math.abs(camera.position.z - lastCamZ) / dt - speed) * 0.08; else speed *= 0.9;
     lastCamZ = camera.position.z;
     starMat.uniforms.uTime.value = time;
     starMat.uniforms.uHigh.value = audio.high;
@@ -567,7 +567,7 @@ export async function createUniverse({ envMap, tex, assets }) {
       screenFrame.material.opacity = 0.35 + audio.bass * 0.5 + screen.userData.hover * 0.3;
       hoverUniformBasic(screen, dt);
     }
-    if (videoArmed && (u < 28 || u > 34)) { if (!video.paused) video.pause(); } else if (videoArmed && video.paused && lOn) video.play().catch(() => {});
+    if (videoArmed && (still || u < 28 || u > 34)) { if (!video.paused) video.pause(); } else if (videoArmed && video.paused && lOn) video.play().catch(() => {});
 
     // stage
     const stOn = u > 32.5;
@@ -595,7 +595,7 @@ export async function createUniverse({ envMap, tex, assets }) {
       finaleGlow.material.opacity = 0.6 + audio.energy * 0.6;
     }
 
-    return { frontAlbum: front };
+    return { frontAlbum: front, speed: clamp(speed / 60) };
   }
 
   function dispose() { video.pause(); video.removeAttribute('src'); video.load(); }

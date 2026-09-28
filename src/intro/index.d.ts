@@ -10,6 +10,8 @@ export interface IntroOptions {
   onEnter?: () => void;
   /** Visitor followed a same-site link from inside the intro (e.g. "/merch"). */
   onNavigate?: (path: string) => void;
+  /** Aborting before boot finishes cancels loading and cleans up silently. */
+  signal?: AbortSignal;
   /** Insert a row via the site's Supabase client; resolve true on success. */
   insert?: (table: string, row: Record<string, unknown>) => Promise<boolean>;
 }

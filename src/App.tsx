@@ -196,9 +196,12 @@ function AppRoutes() {
         </Suspense>
       )}
 
+      {/* StickyPlayer stays mounted during the intro (hidden + paused) so its <audio> and stream counts survive */}
+      <div hidden={introActive}>
+        <StickyPlayer />
+      </div>
       {!introActive && (
         <>
-          <StickyPlayer />
           <MobileBottomNav />
           <MotionToggle />
         </>

@@ -29,7 +29,7 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
         <div class="dock__vol">${icon('volume', 16)}<input type="range" min="0" max="1" step="0.01" value="${audio.volume}" data-p="volume" aria-label="Volume" /></div>
       </header>
       <p class="dock__time"><span data-p="cur">0:00</span> / <span data-p="dur">0:00</span> <em data-p="preview" hidden>${STREAM.previewSeconds}s preview</em></p>
-      <a class="btn btn--candy btn--sm dock__own" data-p="own" target="_blank" rel="noopener" hidden>Own it · $0.99 <span class="arrow">↗</span></a>
+      <a class="btn btn--candy btn--sm dock__own" data-p="own" target="_blank" rel="noopener" hidden>Own it · $0.99 <span class="arrow" aria-hidden="true">↗</span></a>
       <p class="eyebrow eyebrow--small">Up next</p>
       <ol class="dock__queue" data-p="queue"></ol>
     </div>`;
