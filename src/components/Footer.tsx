@@ -34,6 +34,7 @@ const Footer = () => {
     { label: "Houston Hip-Hop History", href: "/houston-hip-hop-history", isRoute: true },
     { label: "The Art of ISM", href: "/art-of-ism", isRoute: true },
     { label: "Booking", href: "/booking", isRoute: true },
+    { label: "Replay the Intro", href: "/intro", isRoute: true },
     { label: "Privacy Policy", href: "/privacy", isRoute: true },
     { label: "Contact", href: "/#contact", isRoute: false },
   ];

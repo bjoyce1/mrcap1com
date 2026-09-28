@@ -23,6 +23,11 @@ import ScrollToTop from "@/components/ScrollToTop";
 import StickyPlayer from "@/components/player/StickyPlayer";
 import MobileBottomNav from "@/components/MobileBottomNav";
 import MotionToggle from "@/components/MotionToggle";
+import IntroGate from "@/components/intro/IntroGate";
+import { useIntroStore } from "@/stores/introStore";
+
+// The "Step inside the ISM" intro — replayable at /intro
+const IntroReplay = lazy(() => import("@/components/intro/IntroReplay"));
 
 
 // ── Lazy-loaded pages ───────────────────────────────────────
@@ -96,6 +101,7 @@ const ExternalRedirect = ({ url }: { url: string }) => {
 function AppRoutes() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location } | null;
+  const introActive = useIntroStore((s) => s.active);
 
   return (
     <>
@@ -106,7 +112,8 @@ function AppRoutes() {
         <Suspense fallback={<PageLoader />}>
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/analytics" element={<AnalyticsRedirect />} />
-            <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+            <Route path="/" element={<PageTransition><IntroGate><Index /></IntroGate></PageTransition>} />
+            <Route path="/intro" element={<IntroReplay />} />
             {/* Page consolidation redirects */}
             <Route path="/about" element={<Navigate to="/who-is-mr-cap" replace />} />
             <Route path="/houston-rapper-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
@@ -189,9 +196,13 @@ function AppRoutes() {
         </Suspense>
       )}
 
-      <StickyPlayer />
-      <MobileBottomNav />
-      <MotionToggle />
+      {!introActive && (
+        <>
+          <StickyPlayer />
+          <MobileBottomNav />
+          <MotionToggle />
+        </>
+      )}
       
     </>
   );
