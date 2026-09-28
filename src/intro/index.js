@@ -170,7 +170,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     setProgress(0.25);
     const label = recordLabel(logoImg);
     booth = createBooth({ envMap: engine.envs.room, assets: { portrait: bootTex('/intro/img/brand/cap-portrait.webp'), label } });
-    universe = await createUniverse({ envMap: engine.envs.brand, tex: lazyTex, assets: { fontAnton, label } });
+    universe = await createUniverse({ envMap: engine.envs.brand, tex: lazyTex, assets: { fontAnton, label }, renderer: engine.renderer });
     checkAborted();
     await new Promise((res) => {
       if (bootMgr.itemsTotal === 0 || bootMgr.itemsLoaded >= bootMgr.itemsTotal) return res();
@@ -481,7 +481,9 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     if (!inBooth && !reduced) {
       universe.rail.sample(Math.min(u + 0.2, TOTAL), ahead);
       const swing = tmp.copy(ahead.t).sub(sample.t).dot(right);
-      bank += (clamp(-swing * 0.02, -0.2, 0.2) * calm - bank) * Math.min(1, realDt * 3);
+      let wordNear = 0;
+      for (const w of WORDS) wordNear = Math.max(wordNear, 1 - clamp(Math.abs(u - w.u[1]) / 1.4));
+      bank += (clamp(-swing * 0.012, -0.06, 0.06) * calm * (1 - wordNear) - bank) * Math.min(1, realDt * 3);
     } else bank *= 0.9;
     if (Math.abs(bank) > 1e-4) camera.rotateZ(bank);
     // dolly-zoom as we thread each word + a tick on every kick
@@ -508,7 +510,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     if (exiting) exitK = Math.min(1, exitK + realDt / 0.85);
     film.uTime.value = time;
     film.uFlash.value = Math.max(reduced ? fl * 0.25 : fl, exitK * exitK * 0.9);
-    film.uSpeed.value = reduced ? 0 : inBooth ? range(u, 4.6, 6) * 0.6 : speed;
+    film.uSpeed.value = reduced ? 0 : inBooth ? range(u, 4.6, 6) * 0.6 : clamp((speed - 0.35) / 0.65);
     film.uPunch.value = reduced ? 0 : levels.kick;
 
     const active = entered && !modals.isOpen;

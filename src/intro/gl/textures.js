@@ -82,8 +82,8 @@ export function recordLabel(logoImg) {
   x.fillText('The Art of ISM', C, C + 110);
   x.font = '26px "Space Mono", monospace';
   x.fillStyle = 'rgba(237,228,211,.75)';
-  x.fillText('SIDE A', C - 250, C + 12);
-  x.fillText('33⅓ RPM', C + 250, C + 12);
+  x.fillText('SIDE A', C - 300, C - 78);
+  x.fillText('33⅓ RPM', C + 300, C - 78);
   x.fillStyle = MAGENTA;
   x.fillText('● OWN THE WORK ●', C, C + 196);
 
@@ -121,7 +121,8 @@ export function radial(inner = 'rgba(0,0,0,0.85)', outer = 'rgba(0,0,0,0)', size
 
 // Big crisp label sprite (years on the timeline rail, captions).
 export function textSprite(text, { font = '"Anton", sans-serif', size = 180, color = CREAM, sub = '', subColor = GOLD } = {}) {
-  const [c, x] = canvas(1024, 512);
+  const [c, x] = canvas(512, 256);
+  x.scale(0.5, 0.5);
   x.textAlign = 'center'; x.textBaseline = 'middle';
   x.font = `${size}px ${font}`;
   x.fillStyle = color;

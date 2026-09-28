@@ -67,7 +67,7 @@ export function createBooth({ envMap, assets }) {
         // rim only on the true silhouette — ignore faint alpha noise in the cut-out
         float edge = smoothstep(0.55, 0.95, c.a) * (1.0 - smoothstep(0.08, 0.6, n));
         vec3 rimCol = mix(vec3(0.82,0.18,0.48), vec3(1.0,0.78,0.36), smoothstep(0.25, 0.75, vUv.x));
-        vec3 col = c.rgb * vec3(0.62, 0.56, 0.62) + rimCol * edge * 2.2;
+        vec3 col = c.rgb * vec3(0.66, 0.6, 0.64) + rimCol * edge * 1.1;
         float fade = smoothstep(0.02, 0.42, vUv.y);
         gl_FragColor = vec4(col, c.a * fade * uOpacity);
         #include <colorspace_fragment>
@@ -255,6 +255,7 @@ export function createBooth({ envMap, assets }) {
     vinyl.uniforms.uRot.value = spin;
     vinyl.uniforms.uTime.value = time;
     const dive = range(u, ...MOMENTS.dive);
+    spindle.visible = dive < 0.25; // its chrome tip becomes a white hot spot once we're over the label
     vinyl.uniforms.uGlow.value = dive * dive * 1.35 + audio.bass * 0.25;
     vinyl.uniforms.uBass.value = audio.bass;
     if (state.needleDown && state.armLift < 0.01) {

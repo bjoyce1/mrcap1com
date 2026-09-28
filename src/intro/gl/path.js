@@ -16,6 +16,7 @@ export class CameraRail {
       p: new THREE.Vector3(...k.p),
       t: new THREE.Vector3(...k.t),
       fov: k.fov ?? null,
+      hold: k.hold ?? 0,
       up: new THREE.Vector3(...(k.up || [0, 1, 0])).normalize(),
     }));
   }
@@ -31,7 +32,10 @@ export class CameraRail {
     let i = 0;
     while (i < k.length - 2 && u > k[i + 1].u) i++;
     const k0 = k[Math.max(0, i - 1)], k1 = k[i], k2 = k[i + 1], k3 = k[Math.min(k.length - 1, i + 2)];
-    const s = (u - k1.u) / (k2.u - k1.u);
+    // hold-and-whip: ease in/out around "hold" keys so the camera lingers on a card, then rips to the next
+    const s0 = (u - k1.u) / (k2.u - k1.u), h = Math.max(k1.hold, k2.hold);
+    const e = s0 < 0.5 ? 4 * s0 * s0 * s0 : 1 - Math.pow(-2 * s0 + 2, 3) / 2;
+    const s = s0 + (e - s0) * h;
     catmull(k0.p, k1.p, k2.p, k3.p, s, out.p);
     catmull(k0.t, k1.t, k2.t, k3.t, s, out.t);
     out.up.copy(k1.up).lerp(k2.up, s * s * (3 - 2 * s)).normalize();
