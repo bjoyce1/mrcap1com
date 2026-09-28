@@ -73,10 +73,15 @@ function claimPage() {
     history.scrollRestoration = 'manual';
   }
 }
+const PAGE_CLASSES = ['intro-active', 'modal-open', 'modal-crate', 'lenis', 'lenis-smooth', 'lenis-stopped', 'lenis-scrolling'];
 function releasePage() {
   if (--live > 0) return;
   live = 0;
-  document.documentElement.classList.remove('intro-active', 'modal-open', 'lenis', 'lenis-smooth', 'lenis-stopped', 'lenis-scrolling');
+  const strip = () => { if (live === 0) document.documentElement.classList.remove(...PAGE_CLASSES); };
+  strip();
+  // Lenis can fire one pending class update just after destroy() — sweep again once it has
+  setTimeout(strip, 150);
+  setTimeout(strip, 900);
   history.scrollRestoration = prevRestore;
 }
 
