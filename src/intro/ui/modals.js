@@ -209,7 +209,7 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
           event_date: d.event_date || null, booking_type: d.booking_type, message,
         });
         if (ok) { f.innerHTML = `<div class="done" tabindex="-1"><h3>Inquiry received.</h3><p class="muted">The team will reach out to ${esc(d.email)} within 48 hours.</p></div>`; f.querySelector(".done").focus(); return; }
-        status.textContent = 'Couldn’t send — opening your email instead.';
+        status.textContent = 'Couldn’t send. Opening your email instead.';
       }
       const label = BOOKING_TYPES.find((b) => b.value === d.booking_type)?.label;
       const body = `Name: ${d.name}\nEmail: ${d.email}\nVenue: ${d.venue}\nCity: ${d.city}\nDate: ${d.event_date}\nType: ${label}\nBudget: ${d.budget}\n\n${d.message}`;

@@ -6,29 +6,29 @@ export const ALBUMS = [
   {
     slug: 'the-art-of-ism', title: 'The Art of ISM', artist: 'Mr. CAP', year: 2019, count: 11,
     cover: '/intro/img/covers/art-of-ism.webp', price: 999, tone: '#d9a441',
-    desc: 'The statement album — released through Sony Music / The Orchard. A philosophy pressed to wax, with production by Patrick "Ciddi Boy" Rodriguez.',
+    desc: 'The statement album, released through Sony Music / The Orchard. A philosophy pressed to wax, with production by Patrick "Ciddi Boy" Rodriguez.',
     spotify: null, apple: 'https://music.apple.com/us/album/the-art-of-ism/1480463642',
   },
   {
     slug: 'the-ties-that-bind-us', title: 'The Ties That Bind Us', artist: 'South Park Coalition', year: 2024, count: 19,
     cover: '/intro/img/covers/ties.webp', price: 999, tone: '#c8323a',
-    desc: 'The South Park Coalition group album — Mr. CAP, K-Rino, Point Blank and Klondike Kat. 19 tracks, over an hour of grown-man Houston hip-hop.',
+    desc: 'The South Park Coalition group album: Mr. CAP, K-Rino, Point Blank and Klondike Kat. 19 tracks, over an hour of grown-man Houston hip-hop.',
     spotify: null, apple: 'https://music.apple.com/us/album/the-ties-that-bind-us/1796200885',
   },
   {
     slug: '2-tha-grave', title: '2 Tha Grave', artist: 'Mr. CAP', year: 2011, count: 10,
     cover: '/intro/img/covers/grave.webp', price: 999, tone: '#8e7cc3',
-    desc: 'Loyalty to the streets and the sound. Raw lyricism, storytelling and Southern grit — Houston underground, uncompromised.',
+    desc: 'Loyalty to the streets and the sound. Raw lyricism, storytelling and Southern grit. Houston underground, uncompromised.',
   },
   {
     slug: 'tha-cold-ass-pimp', title: 'Tha Cold Ass Pimp', artist: 'Mr. CAP', year: 2006, count: 10,
     cover: '/intro/img/covers/cold-ass-pimp.webp', price: 999, tone: '#d12e7b',
-    desc: 'An early solo statement — street realism as literature.',
+    desc: 'An early solo statement: street realism as literature.',
   },
   {
     slug: 'one-on-one', title: 'O.N.E. on O.N.E.', artist: 'O.N.E x Mr. CAP', year: 2005, count: 12,
     cover: '/intro/img/covers/one-on-one.jpg', price: 999, tone: '#5b8bd9',
-    desc: 'The debut collaboration album. The grind years — independent releases that built a catalog one record at a time.',
+    desc: 'The debut collaboration album. The grind years: independent releases that built a catalog one record at a time.',
     streamOnly: true,
   },
 ];
@@ -55,7 +55,7 @@ export const TRACKS = [
     id: '5426cb2f-6ec2-42bd-82ac-9afd27ae58d3', title: 'Put The Dope Down', slug: 'put-the-dope-down', ft: 'S.A.A.K. & Bosey-B', d: 192,
     audio: 'singles/Put-The-Dope-Down.mp3', cover: '/intro/img/covers/put-the-dope-down.jpg', e: true, year: 2025, plays: 5,
     apple: 'https://music.apple.com/us/album/put-the-dope-down-feat-saak-bosey-b-single/1684608469',
-    story: 'Recorded during the C.U.S.H. era and re-released in 2025 — a raw street anthem with heavy bass, sharp wordplay and storytelling from the trenches.',
+    story: 'Recorded during the C.U.S.H. era and re-released in 2025. A raw street anthem with heavy bass, sharp wordplay and storytelling from the trenches.',
   }),
   T({ id: '18deec88-3ae2-4a17-9e1f-32a0ea860da5', title: 'Panties on My Piano', slug: 'panties-on-my-piano', ft: 'Ciddi Boy P', d: 210, audio: 'singles/panties-on-my-piano.mp3', cover: '/intro/img/covers/panties-on-my-piano.webp', e: true, year: 2025, plays: 14, credits: 'Produced by Mr. CAP' }),
   T({ id: 'e11f682c-7b9d-49f7-bec8-856fa047d3c1', title: 'Big Navi (L.A. Remix)', slug: 'big-navi-la-remix', ft: 'Big Prez', d: 338, audio: 'tracks/Big%20Navi%20remix.mp3', cover: '/intro/img/covers/big-navi-remix.webp', e: true, year: 2025, plays: 6, apple: 'https://music.apple.com/us/album/big-navi-feat-big-prez-l-a-remix-single/827108067' }),
@@ -69,7 +69,7 @@ export const TRACKS = [
   T({
     id: 'a5aa4ec8-0ee5-42ca-a493-65cc8abe88e3', title: 'Dippin Thru the Metaverse', slug: 'dippin-thru-the-metaverse', ft: 'Ciddy Boi P', d: 210,
     audio: 'singles/dippin-thru-metaverse.mp3', cover: '/intro/img/covers/dippin-metaverse.webp', year: 2023,
-    story: 'Houston street culture meets emerging digital worlds — classic Southern swagger with the language of blockchain, NFTs and the new creative frontier.',
+    story: 'Houston street culture meets emerging digital worlds: classic Southern swagger with the language of blockchain, NFTs and the new creative frontier.',
     credits: 'Written & produced by Mr. CAP · Executive produced by CAP Distributions',
   }),
   T({ id: 'f42be915-7cae-4886-ac75-036ddaf0dbe0', title: 'Bout to Blow', slug: 'bout-to-blow', d: 205, cover: '/intro/img/covers/bout-to-blow.webp', year: 2022, spotify: SP + '1fJ6DPwYRmKLn0fHb0M1dv', apple: 'https://music.apple.com/us/album/im-bout-to-blow-single/1484204759' }),

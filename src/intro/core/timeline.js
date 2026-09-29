@@ -32,7 +32,7 @@ export const CHAPTERS = [
 // HTML stations: [in, out]. `hold` keeps a station visible to the end.
 export const STATIONS = {
   hero: [0, 0.9],
-  caption: [1.25, 4.9],
+  caption: [1.1, 2.35], // then silence: the needle ride carries itself into the drop
   stepInside: [6.1, 7.7],
   who: [10.35, 12.05],
   blueprint: [12.2, 13.65],

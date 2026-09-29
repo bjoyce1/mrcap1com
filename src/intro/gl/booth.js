@@ -232,7 +232,7 @@ export function createBooth({ envMap, assets }) {
     const wide = portraitMode ? 12 : 0;
     rail.set([
       portraitMode
-        ? { u: 0, p: [1.3, 4.4, 13.5], t: [-0.15, 2.9, 0], fov: 50 } // turntable sits low, under the headline
+        ? { u: 0, p: [1.3, 4.75, 13.5], t: [-0.15, 3.25, 0], fov: 50 } // turntable + portrait sit low, under the headline
         : { u: 0, p: [3.9, 2.6, 9.4], t: [-2.35, 0.05, 0], fov: 40 },
       portraitMode
         ? { u: 1.3, p: [1.2, 3.8, 7.2], t: [-0.3, 0.1, 0], fov: 50 }

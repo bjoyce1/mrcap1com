@@ -85,7 +85,7 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
     const q = audio.state.queue;
     const start = audio.state.index;
     $('queue').innerHTML = q.slice(start + 1, start + 8).map((x, i) => `
-      <li><button data-q="${start + 1 + i}"><img src="${x.cover}" alt="" width="32" height="32" loading="lazy"/><span><b>${esc(x.title)}</b><small>${esc(x.artist)}</small></span></button></li>`).join('') || '<li class="muted">End of the queue — open the Crate for more.</li>';
+      <li><button data-q="${start + 1 + i}"><img src="${x.cover}" alt="" width="32" height="32" loading="lazy"/><span><b>${esc(x.title)}</b><small>${esc(x.artist)}</small></span></button></li>`).join('') || '<li class="muted">End of the queue. Open the Crate for more.</li>';
   }
 
   function renderTime() {
@@ -114,7 +114,7 @@ export function createPlayer(root, audio, { toast, defaultQueue = () => [HERO_TR
       toast(`That's the ${STREAM.previewSeconds}-second preview of “${t.title}”. <a href="${STREAM.buyUrl(t.slug)}" target="_blank" rel="noopener">Own the full record ↗</a>`);
     }
     if (type === 'blocked') toast('Tap play to start the music.');
-    if (type === 'error') toast('That record skipped — moving to the next one.');
+    if (type === 'error') toast('That record skipped. Moving to the next one.');
   });
 
   return {

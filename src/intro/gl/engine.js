@@ -21,16 +21,18 @@ const FilmShader = {
   uniforms: {
     tDiffuse: { value: null }, uTime: { value: 0 }, uSpeed: { value: 0 }, uPunch: { value: 0 },
     uFlash: { value: 0 }, uAspect: { value: 1 }, uTaps: { value: 8 }, uGrain: { value: 0.05 },
+    uScrew: { value: 0 }, uWobble: { value: 1 }, // chopped & screwed: syrup grade + tape wobble while held
   },
   vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
   fragmentShader: /* glsl */ `
-    uniform sampler2D tDiffuse; uniform float uTime, uSpeed, uPunch, uFlash, uAspect, uTaps, uGrain; varying vec2 vUv;
+    uniform sampler2D tDiffuse; uniform float uTime, uSpeed, uPunch, uFlash, uAspect, uTaps, uGrain, uScrew, uWobble; varying vec2 vUv;
     float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
     void main(){
-      vec2 c = vUv - 0.5;
+      float sw = uScrew * uWobble;
+      vec2 c = vUv - 0.5 + vec2(sin(vUv.y * 9.0 + uTime * 1.7), cos(vUv.x * 7.0 + uTime * 1.3)) * 0.0024 * sw;
       float r = length(c * vec2(uAspect, 1.0));
       float s = uSpeed * 0.045 + uFlash * 0.16;                 // zoom-streak length
-      float ca = 0.0011 + uPunch * 0.006 + uSpeed * 0.004;      // chromatic spread
+      float ca = 0.0011 + uPunch * 0.006 + uSpeed * 0.004 + sw * 0.0035;      // chromatic spread
       int N = s > 0.002 ? int(uTaps) : 1;
       vec3 col = vec3(0.0);
       for (int i = 0; i < 8; i++) {
@@ -41,9 +43,14 @@ const FilmShader = {
         col.b += texture2D(tDiffuse, 0.5 + c * z * (1.0 - ca)).b;
       }
       col /= float(N);
+      if (uScrew > 0.001) {
+        vec3 echo = texture2D(tDiffuse, 0.5 + c * (1.0 - 0.022 * sw) + vec2(0.005, -0.002) * sw).rgb; // syrup double image
+        col = mix(col, max(col, echo * 0.92), 0.6 * uScrew);
+        col = mix(col, col * vec3(0.9, 0.7, 1.16) + vec3(0.018, 0.0, 0.036), 0.8 * uScrew);          // the purple lean
+      }
       float l = dot(col, vec3(0.2126, 0.7152, 0.0722));
       col *= mix(vec3(0.95, 0.88, 1.05), vec3(1.04, 0.99, 0.91), smoothstep(0.15, 0.8, l)); // aubergine lows, gold highs
-      col *= 1.0 - smoothstep(0.45, 1.05, r) * 0.55;                                        // vignette
+      col *= 1.0 - smoothstep(0.45, 1.05, r) * (0.55 + 0.25 * uScrew);                                        // vignette
       col = mix(col, vec3(1.0, 0.95, 0.86), uFlash * uFlash);                               // the scene-cut flash
       col += (hash(vUv * 1733.0 + fract(uTime * 7.31) * 91.0) - 0.5) * uGrain * (1.0 - l);  // grain
       gl_FragColor = vec4(col, 1.0);

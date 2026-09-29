@@ -89,7 +89,7 @@ export function createAudio() {
     try { await el.play(); } catch (e) { emit('blocked', e); }
   }
 
-  let volume = 0.9;
+  let volume = 0.9, stopping = false;
 
   const api = {
     el, levels, state,
@@ -138,6 +138,7 @@ export function createAudio() {
 
     // turntable power-off: pitch and speed sag together, then silence
     recordStop(seconds = 0.85) {
+      stopping = true;
       if (el.paused || !ctx) { this.fadeOut(seconds); return; }
       el.preservesPitch = false;
       el.mozPreservesPitch = false;
@@ -152,6 +153,23 @@ export function createAudio() {
       requestAnimationFrame(tick);
       gain.gain.setTargetAtTime(0, ctx.currentTime + seconds * 0.6, seconds * 0.15);
       crackleGain?.gain.setTargetAtTime(0, ctx.currentTime, 0.05);
+    },
+
+    // chopped & screwed: while held the record sags to a syrup tempo, pitch and all (0..1, eased by the caller)
+    screw(amount) {
+      if (stopping || el.paused) return;
+      const pitchFree = amount > 0;
+      if (el.preservesPitch === pitchFree) { el.preservesPitch = !pitchFree; el.mozPreservesPitch = !pitchFree; el.webkitPreservesPitch = !pitchFree; }
+      const want = pitchFree ? 1 - 0.3 * amount : 1;
+      if (Math.abs(el.playbackRate - want) > 0.003 || (want === 1 && el.playbackRate !== 1)) {
+        try { el.playbackRate = want; } catch { /* rate out of range */ }
+      }
+    },
+    // ...and letting go chops it: the last half-beat plays again
+    chop(seconds = 0.42) {
+      if (stopping || el.paused || !el.duration) return false;
+      el.currentTime = Math.max(0, el.currentTime - seconds);
+      return true;
     },
 
     // sound design for the word fly-throughs (only after the visitor chose sound)

@@ -181,7 +181,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     [5.4, 1.2, -160, -0.4], [7.8, -2.0, -172, -0.45], [4.9, -1.4, -184, -0.3],
     [-9, 3.8, -198, 0.5], [6.2, 1.0, -206, -0.32], [8.6, -1.6, -222, -0.4],
   ];
-  const captionMat = (text) => textSprite(text.toUpperCase(), { font: '"Space Mono", monospace', size: 58, color: '#ede4d3' });
+  const captionMat = (text) => textSprite(text.toUpperCase(), { font: '"Archivo", sans-serif', weight: 600, size: 52, color: '#ede4d3' });
   const galleryMats = [];
   GALLERY.forEach((g, i) => {
     const [x, y, z, ry] = galleryLayout[i];
@@ -251,8 +251,9 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     return m;
   });
   const hero = new THREE.Mesh(new THREE.PlaneGeometry(6.4, 6.4), photoMaterial(tex('/intro/img/covers/bet-on-her.webp'), { rim: GOLD }));
-  hero.position.set(6.4, 0.4, -380);
-  hero.rotation.y = -0.32;
+  // left of the path: the SOUND cards trail on the right
+  hero.position.set(-6.4, 0.4, -380);
+  hero.rotation.y = 0.32;
   hero.userData = { baseY: 0.4, seed: 1, track: SINGLES.find((s) => s.slug === 'bet-on-her'), hover: 0 };
   clickables.push(hero);
   scene.add(hero);
@@ -415,8 +416,8 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     key(16.0, [0.6, 0.2, -248], [3.6, -1.2, -276]);
     // SOUND — through the O, inside the EQ halo
     passThrough(s, fill(s));
-    key(19.3, [-0.4, 0.2, -346], [1.5, 0, -376], fov, 0.75);
-    key(20.8, [-0.6, 0.3, -362], [3.0, 0.2, -392], fov, 0.75);
+    key(19.3, [0.4, 0.2, -346], [-1.5, 0, -376], fov, 0.75);
+    key(20.8, [0.6, 0.3, -362], [-3.0, 0.2, -392], fov, 0.75);
     key(22.3, [0, 0.5, -386], [0, 0, -420], fov, 0.75);
     const wallZ = portrait ? -409.5 : -414.5; // pull back on narrow screens so sleeve + record fit
     key(23.1, [0, 0.3, wallZ + 7.5], [0, -0.7, CAROUSEL_Z]);
@@ -679,7 +680,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
 
 // Album wall: scroll is split into one segment per album; each album holds dead-centre
 // for the first 75% of its segment, then the wheel turns to the next.
-export const WALL_U = [23.2, 24.7];
+export const WALL_U = [23.1, 24.3]; // the last sleeve gets a real hold before the wall fades
 export function carouselWheel(u) {
   const n = ALBUMS.length;
   const s = range(u, WALL_U[0], WALL_U[1]) * n;

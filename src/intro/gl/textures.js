@@ -24,7 +24,7 @@ function tex(c, { srgb = true, aniso = 8 } = {}) {
 // Text laid out around a circle (for the record label rim).
 function ringText(ctx, text, cx, cy, r, size, font, color, startAngle = -Math.PI / 2) {
   ctx.save();
-  ctx.font = `${size}px ${font}`;
+  ctx.font = `600 ${size}px ${font}`;
   ctx.fillStyle = color;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -69,7 +69,7 @@ export function recordLabel(logoImg) {
   ring(C - 118, 1.5, 'rgba(217,164,65,.45)');
   ring(150, 3, GOLD);
 
-  ringText(x, 'SOUTH PARK COALITION  ·  HOUSTON, TEXAS  ·  EST. 1987  ·  WRECKLESS ENTERTAINMENT  ·  CAP DISTRIBUTIONS  ·', C, C, C - 70, 34, '"Space Mono", monospace', GOLD_HI, -Math.PI / 2);
+  ringText(x, 'SOUTH PARK COALITION  ·  HOUSTON, TEXAS  ·  EST. 1987  ·  WRECKLESS ENTERTAINMENT  ·  CAP DISTRIBUTIONS  ·', C, C, C - 70, 34, '"Archivo", sans-serif', GOLD_HI, -Math.PI / 2);
 
   if (logoImg) { x.globalAlpha = 0.95; x.drawImage(logoImg, C - 120, 175, 240, 243); x.globalAlpha = 1; }
 
@@ -78,9 +78,9 @@ export function recordLabel(logoImg) {
   x.font = '120px "Alfa Slab One", serif';
   x.fillText('MR. CAP', C, C + 10);
   x.fillStyle = GOLD;
-  x.font = 'italic 64px "Instrument Serif", serif';
+  x.font = 'italic 700 58px "Archivo", sans-serif';
   x.fillText('The Art of ISM', C, C + 110);
-  x.font = '26px "Space Mono", monospace';
+  x.font = '600 26px "Archivo", sans-serif';
   x.fillStyle = 'rgba(237,228,211,.75)';
   x.fillText('SIDE A', C - 300, C - 78);
   x.fillText('33⅓ RPM', C + 300, C - 78);
@@ -102,9 +102,9 @@ export function plaque() {
   x.fillStyle = g;
   x.font = '118px "Alfa Slab One", serif';
   x.fillText('SOUTH PARK', 512, 210);
-  x.font = '30px "Space Mono", monospace';
+  x.font = '600 30px "Archivo", sans-serif';
   x.fillStyle = 'rgba(243,213,138,.8)';
-  x.fillText('FILE No. 001  ·  HOUSTON, TEXAS  ·  EST. 1987', 512, 320);
+  x.fillText('HOUSTON, TEXAS  ·  EST. 1987', 512, 320);
   x.strokeStyle = 'rgba(217,164,65,.5)'; x.lineWidth = 2;
   x.beginPath(); x.moveTo(250, 372); x.lineTo(774, 372); x.stroke();
   return tex(c);
@@ -120,15 +120,15 @@ export function radial(inner = 'rgba(0,0,0,0.85)', outer = 'rgba(0,0,0,0)', size
 }
 
 // Big crisp label sprite (years on the timeline rail, captions).
-export function textSprite(text, { font = '"Anton", sans-serif', size = 180, color = CREAM, sub = '', subColor = GOLD } = {}) {
+export function textSprite(text, { font = '"Anton", sans-serif', weight = 400, size = 180, color = CREAM, sub = '', subColor = GOLD } = {}) {
   const [c, x] = canvas(512, 256);
   x.scale(0.5, 0.5);
   x.textAlign = 'center'; x.textBaseline = 'middle';
-  x.font = `${size}px ${font}`;
+  x.font = `${weight} ${size}px ${font}`;
   x.fillStyle = color;
   x.fillText(text, 512, sub ? 220 : 256);
   if (sub) {
-    x.font = '38px "Space Mono", monospace';
+    x.font = '600 38px "Archivo", sans-serif';
     x.fillStyle = subColor;
     x.fillText(sub.toUpperCase(), 512, 360);
   }

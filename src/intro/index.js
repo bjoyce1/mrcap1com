@@ -8,12 +8,15 @@
 // and is torn down by destroy() — or by aborting `signal` while it is still booting.
 // ═══════════════════════════════════════════════════════════════════════════════
 import '@fontsource/archivo/600.css';
+import '@fontsource/archivo/800.css';
+import '@fontsource/archivo/500-italic.css';
+import '@fontsource/archivo/700-italic.css';
 import './intro.css';
 
 import * as THREE from 'three';
 import Lenis from 'lenis';
 import { createEngine } from './gl/engine.js';
-import { createBooth, RECORD_CENTER } from './gl/booth.js';
+import { createBooth } from './gl/booth.js';
 import { createUniverse, uForAlbum } from './gl/universe.js';
 import { railSample } from './gl/path.js';
 import { loadImage, recordLabel } from './gl/textures.js';
@@ -35,14 +38,14 @@ const SKELETON = /* html */ `
       <div class="loader__gate" data-el="gate" hidden>
         <button class="btn btn--candy" data-enter="sound"><span class="i-sound" aria-hidden="true"></span>Enter with sound</button>
         <button class="btn btn--ghost" data-enter="silent">Enter in silence</button>
-        <p class="loader__hint">Headphones up. Scroll to drop the needle.</p>
+        <p class="loader__hint">Headphones up.</p>
       </div>
       <button class="loader__skip" data-action="enter-site">Skip the intro <span aria-hidden="true">→</span></button>
     </div>
   </div>
   <canvas id="gl" aria-hidden="true"></canvas>
   <header class="topbar">
-    <a class="brand" href="#top" data-goto="0" aria-label="Mr. CAP — back to the top of the intro">
+    <a class="brand" href="#top" data-goto="0" aria-label="Mr. CAP, back to the top of the intro">
       <img src="/intro/img/brand/cap-coin.webp" alt="" width="36" height="36" />
       <span><b>MR. CAP</b><small>EST. HOUSTON TX</small></span>
     </a>
@@ -57,6 +60,10 @@ const SKELETON = /* html */ `
   <nav class="chapters" data-el="chapters" aria-label="Chapters"></nav>
   <div class="progress-rail" aria-hidden="true"><span data-el="progress-fill"></span></div>
   <aside class="player" data-el="player" aria-label="Intro music player"></aside>
+  <button class="screw" data-el="screw" type="button" aria-pressed="false" aria-keyshortcuts="S">
+    <span class="screw__disc" aria-hidden="true"><i></i></span>
+    <span class="screw__label"><b>Chop &amp; screw</b><small>Hold it</small></span>
+  </button>
   <div data-el="modals" data-lenis-prevent></div>
   <div class="toast" data-el="toast" role="status" aria-live="polite"></div>
   <div class="exit-veil" data-el="veil" aria-hidden="true"></div>
@@ -160,9 +167,8 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     audio = createAudio();
     await Promise.all([
       document.fonts.load('120px "Alfa Slab One"'),
-      document.fonts.load('italic 64px "Instrument Serif"'),
-      document.fonts.load('700 30px "Space Mono"'),
-      document.fonts.load('30px "Space Mono"'),
+      document.fonts.load('600 30px "Archivo"'),
+      document.fonts.load('italic 700 58px "Archivo"'),
       document.fonts.load('180px "Anton"'),
     ]).catch(() => {});
     checkAborted();
@@ -255,7 +261,9 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     const seen = new Set();
     return [...LATEST, ...SINGLES, ...HOUSE_CHARTS, ...TRACKS].filter((t) => t.audio && !seen.has(t.id) && seen.add(t.id));
   };
-  const stations = createStations(el('stations'));
+  // Dev-only `?sc-verify`: speak the scroll-craft harness contract (shoot.mjs). Stripped from production builds.
+  const VERIFY = import.meta.env.DEV && new URLSearchParams(location.search).has('sc-verify');
+  const stations = createStations(el('stations'), { verify: VERIFY });
   const player = createPlayer(el('player'), audio, { toast, defaultQueue: () => [HERO_TRACK, ...catalogQueue()] });
   const modals = createModals(el('modals'), { audio, lenis, toast, insert, signal });
   const nav = createNav(el('chapters'), { goto, fill: el('progress-fill') });
@@ -265,18 +273,13 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
   };
   measureMerch();
 
-  const cue = document.createElement('div');
-  cue.className = 'cue';
-  cue.setAttribute('aria-hidden', 'true');
-  cue.innerHTML = '<span class="cue__mouse"></span>Scroll to drop the needle<span class="cue__arrow">↓</span>';
-  cue.style.opacity = 0;
-  host.appendChild(cue);
 
   // ── leaving the intro: a turntable power-off, a flare, then the site ──────────
   let exiting = false, exitK = 0;
   exit = (path = '/') => {
     if (exiting) return;
     exiting = true;
+    screwHeld = false;
     modals.close(true);
     audio.recordStop(reduced ? 0.2 : 0.85);
     el('veil').classList.add('is-on');
@@ -337,7 +340,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     const status = f.querySelector('[data-form-status]');
     if (!f.email.checkValidity()) {
       f.email.setAttribute('aria-invalid', 'true');
-      status.textContent = 'That email doesn’t look right — check it and try again.';
+      status.textContent = 'That email doesn’t look right. Check it and try again.';
       f.email.focus();
       return;
     }
@@ -347,6 +350,43 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     if (ok) { status.textContent = 'You’re on the Legacy List. New music hits your inbox first.'; f.reset(); }
     else location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent('Add me to the Legacy List')}&body=${encodeURIComponent(email)}`;
   }, { signal });
+
+  // ── signature: hold to chop & screw ─────────────────────────────────────────
+  // Houston slowed it down first. Holding sags the record to a syrup tempo and slows the world's
+  // clock with it; letting go chops the last half-beat back in.
+  const screwEl = el('screw');
+  let screwHeld = false, screwAmt = 0, chopK = 0, screwShown = false, screwHinted = false;
+  screwEl.inert = true;
+  const holdScrew = (on) => {
+    if (on === screwHeld || (on && (exiting || !screwShown))) return;
+    screwHeld = on;
+    screwEl.setAttribute('aria-pressed', String(on));
+    host.classList.toggle('is-screwed', on);
+    if (on && (!audio.state.track || audio.el.paused)) {
+      soundOn = true; autoDropped = true;
+      if (audio.state.track) audio.toggle(); else audio.play([HERO_TRACK, ...catalogQueue()]);
+    }
+    if (!on && screwAmt > 0.35 && audio.chop()) { chopK = 1; navigator.vibrate?.(12); }
+  };
+  screwEl.addEventListener('pointerdown', (e) => {
+    if (e.button > 0) return;
+    e.preventDefault();
+    try { screwEl.setPointerCapture(e.pointerId); } catch { /* capture unavailable */ }
+    holdScrew(true);
+  }, { signal });
+  for (const t of ['pointerup', 'pointercancel', 'pointerleave', 'lostpointercapture']) screwEl.addEventListener(t, () => holdScrew(false), { signal });
+  screwEl.addEventListener('contextmenu', (e) => e.preventDefault(), { signal });
+  const holdKey = (e) => e.key === ' ' || e.key === 'Enter';
+  screwEl.addEventListener('keydown', (e) => { if (holdKey(e)) { e.preventDefault(); if (!e.repeat) holdScrew(true); } }, { signal });
+  screwEl.addEventListener('keyup', (e) => { if (holdKey(e)) { e.preventDefault(); holdScrew(false); } }, { signal });
+  addEventListener('keydown', (e) => {
+    if (e.repeat || e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 's' || modals.isOpen) return;
+    if (e.target.closest?.('input, textarea, select, [contenteditable]')) return;
+    holdScrew(true);
+  }, { signal });
+  addEventListener('keyup', (e) => { if (e.key.toLowerCase() === 's') holdScrew(false); }, { signal });
+  addEventListener('blur', () => holdScrew(false), { signal });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) holdScrew(false); }, { signal });
 
   // ── 3D interaction (universe only) ──────────────────────────────────────────
   const ray = new THREE.Raycaster();
@@ -409,7 +449,35 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     if (w) goto(w.u[0] + 0.05, { immediate: true });
     else if (STATIONS[h]) goto(STATIONS[h][0] + 0.4, { immediate: true });
   }
-  if (import.meta.env.DEV && new URLSearchParams(location.search).has('skip')) queueMicrotask(enter);
+  if (import.meta.env.DEV && (VERIFY || new URLSearchParams(location.search).has('skip'))) queueMicrotask(enter);
+  let verifyState = null;
+  if (VERIFY) {
+    // flow markers so the harness samples each stretch of the flight; the canvas is the world, so it is never hidden
+    const marks = [[0, 1.1], [STATIONS.caption[1], SCENE_SWITCH], [SCENE_SWITCH, WORDS[0].u[0]], ...WORDS.map((w) => [w.u[0], w.u[3]]),
+      ...Object.entries(STATIONS).filter(([k]) => k !== 'hero').map(([, [a, b]]) => [a, Math.min(b, TOTAL)])];
+    const layMarks = () => {
+      track.querySelectorAll('[data-sc-act]').forEach((n) => n.remove());
+      for (const [a, b] of marks) {
+        const m = document.createElement('div');
+        m.dataset.scAct = 'flow';
+        m.style.cssText = `position:absolute;left:0;width:1px;top:${a * vh}px;height:${(b - a) * vh}px`;
+        track.appendChild(m);
+      }
+    };
+    layMarks();
+    addEventListener('resize', layMarks, { signal });
+    const glEl = host.querySelector('#gl');
+    glEl.setAttribute('data-sc-world', '');
+    // settle(): the harness waits until every "clip" has arrived at its target
+    window.ScrollCraft = { instances: [{ clips: [{ ready: true, el: { seeking: false }, get cur() { return currentU * 0.2; }, get target() { return clamp(lenis.targetScroll / vh, 0, TOTAL) * 0.2; } }] }] };
+    verifyState = () => {
+      const p = camera.position;
+      glEl.setAttribute('data-sc-verify-state', `${p.x.toFixed(1)},${p.y.toFixed(1)},${p.z.toFixed(1)}|${camera.fov.toFixed(1)}|${film.uFlash.value.toFixed(2)}|${screwAmt.toFixed(2)}`);
+      // the close is an authored hold: the record is landed and ENTER SITE waits
+      glEl.setAttribute('data-sc-verify-hold', String(currentU > STATIONS.outro[0] + 1.2));
+    };
+    document.documentElement.classList.add('sc-ready');
+  }
 
   // ── resize ──────────────────────────────────────────────────────────────────
   addEventListener('resize', () => {
@@ -430,21 +498,25 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
   const sample = railSample(), ahead = railSample();
   const film = engine.film.uniforms;
   const canvas = host.querySelector('#gl');
-  const cueWorld = RECORD_CENTER.clone().add(new THREE.Vector3(0.1, 1.55, 0));
-  const proj = new THREE.Vector3(), right = new THREE.Vector3(), upv = new THREE.Vector3(), tmp = new THREE.Vector3();
+  const right = new THREE.Vector3(), upv = new THREE.Vector3(), tmp = new THREE.Vector3();
   let lastT = performance.now(), lastFov = 0, crackle = -1, clock = 0, bank = 0, lastU = 0;
 
   function step(now) {
     const realDt = Math.min(0.05, (now - lastT) / 1000);
     lastT = now;
     // the world's clock stops when motion is paused; scroll still moves the camera
-    const dt = still ? 0 : realDt;
+    // chopped & screwed: the hold sags in like a tape slowing, and lets go quicker
+    screwAmt += ((screwHeld ? 1 : 0) - screwAmt) * Math.min(1, realDt * (screwHeld ? 2.4 : 6));
+    if (!screwHeld && screwAmt < 0.01) screwAmt = 0;
+    chopK *= Math.exp(-realDt * 9);
+    const dt = still ? 0 : realDt * (1 - 0.62 * screwAmt);
     clock += dt;
     const time = clock;
     lenis.raf(now);
     currentU = clamp(lenis.animatedScroll / vh, 0, TOTAL);
     const u = currentU;
     const levels = audio.sample(now / 1000);
+    audio.screw(screwAmt);
 
     if (soundOn && !autoDropped && u >= MOMENTS.needleDrop[1] - 0.05 && u < SCENE_SWITCH) {
       autoDropped = true;
@@ -497,7 +569,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
       for (const w of WORDS) kick += Math.sin(Math.PI * range(u, w.u[1], w.u[2] + 0.15)) * 10;
       kick += levels.kick * 0.8;
     }
-    const fov = sample.fov + kick;
+    const fov = sample.fov + kick + (reduced ? 0 : screwAmt * 4);
     if (Math.abs(fov - lastFov) > 0.01) { camera.fov = lastFov = fov; camera.updateProjectionMatrix(); }
 
     // ── worlds
@@ -516,19 +588,26 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     film.uTime.value = time;
     film.uFlash.value = Math.max(reduced ? fl * 0.25 : fl, exitK * exitK * 0.9);
     film.uSpeed.value = reduced ? 0 : inBooth ? range(u, 4.6, 6) * 0.6 : clamp((speed - 0.35) / 0.65);
-    film.uPunch.value = reduced ? 0 : levels.kick;
+    film.uPunch.value = reduced ? 0 : Math.max(levels.kick, chopK);
+    film.uScrew.value = screwAmt;
+    film.uWobble.value = reduced ? 0 : 1;
 
     const active = entered && !modals.isOpen;
     if (active || exiting) engine.render(inBooth ? booth.scene : universe.scene, realDt, active && !still);
 
     // ── overlays
-    if (inBooth && u < 1) {
-      proj.copy(cueWorld).project(camera);
-      const x = (proj.x * 0.5 + 0.5) * canvas.clientWidth, y = (-proj.y * 0.5 + 0.5) * canvas.clientHeight;
-      cue.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`;
-      cue.style.opacity = entered ? String(1 - smooth(range(u, 0.15, 0.7))) : '0';
-    } else if (cue.style.opacity !== '0') cue.style.opacity = '0';
-
+    // the close stands still: the control steps aside once ENTER SITE has landed
+    const showScrew = entered && !exiting && (levels.playing || u >= SCENE_SWITCH) && u < STATIONS.outro[0] + 0.3;
+    if (showScrew !== screwShown) {
+      screwShown = showScrew;
+      screwEl.classList.toggle('is-on', showScrew);
+      screwEl.inert = !showScrew;
+      if (!showScrew) holdScrew(false);
+    }
+    if (showScrew && !screwHinted && levels.playing && u >= SCENE_SWITCH) {
+      screwHinted = true;
+      toast(canHover ? 'Hold <b>Chop &amp; screw</b> (or the S key) to slow the whole record down.' : 'Hold <b>Chop &amp; screw</b> to slow the whole record down.', 4200);
+    }
     if (!inBooth && canHover && (pointerMoved || Math.abs(u - lastPickU) > 0.002)) {
       pointerMoved = false;
       lastPickU = u;
@@ -550,6 +629,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     stations.update(u, { frontAlbum });
     nav.update(u, TOTAL);
     player.tick(levels);
+    verifyState?.();
   }
   function frame(now) {
     if (destroyed) return;
@@ -593,7 +673,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
       host.classList.remove('cap-intro', 'is-still');
       host.style.cursor = '';
       release();
-      if (import.meta.env.DEV) delete window.__intro;
+      if (import.meta.env.DEV) { delete window.__intro; delete window.ScrollCraft; document.documentElement.classList.remove('sc-ready'); }
     },
   };
 }

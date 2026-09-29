@@ -19,10 +19,10 @@ export const CONTACT = {
 };
 
 export const ROLES = [
-  ['01', 'Artist', 'Three decades of narrative-driven Southern hip-hop — from cassette-era South Park to global streaming.'],
+  ['01', 'Artist', 'Three decades of narrative-driven Southern hip-hop, from cassette-era South Park to global streaming.'],
   ['02', 'South Park Coalition', 'Long-time member of the DIY collective that wrote the independent playbook for Houston.'],
-  ['03', 'Entrepreneur', 'Founder of CAP Distributions, Mortuary Media LLC and a creative agency — infrastructure other artists rent.'],
-  ['04', 'Cultural Architect', 'Documentary contributor, blockchain pioneer, Capicoin builder — engineering the systems the next era will use.'],
+  ['03', 'Entrepreneur', 'Founder of CAP Distributions, Mortuary Media LLC and a creative agency: infrastructure other artists rent.'],
+  ['04', 'Cultural Architect', 'Documentary contributor, blockchain pioneer, Capicoin builder, engineering the systems the next era will use.'],
 ];
 
 export const BLUEPRINT = [
@@ -33,14 +33,14 @@ export const BLUEPRINT = [
 
 // Timeline nodes — also drive the golden path in the 3D "Origin" zone
 export const TIMELINE = [
-  { year: '1987', tag: 'Foundation', title: 'The Foundation', text: 'South Park, Houston. Son of two musicians, on stage at eight years old — where the ISM was born.' },
+  { year: '1987', tag: 'Foundation', title: 'The Foundation', text: 'South Park, Houston. Son of two musicians, on stage at eight years old. Where the ISM was born.' },
   { year: '1990s', tag: 'Coalition', title: 'South Park Coalition', text: 'Joins the collective that codified independence for Houston hip-hop, alongside K-Rino, Klondike Kat and Point Blank.' },
   { year: '2005', tag: 'Catalog', title: 'O.N.E. on O.N.E.', text: 'The grind years. Independent releases that built a catalog and a reputation, one record at a time.' },
-  { year: '2006', tag: 'Catalog', title: 'Tha Cold Ass Pimp', text: 'An early solo statement — street realism as literature.' },
+  { year: '2006', tag: 'Catalog', title: 'Tha Cold Ass Pimp', text: 'An early solo statement: street realism as literature.' },
   { year: '2011', tag: 'Debut LP', title: '2 Tha Grave', text: 'Loyalty to the streets and the sound. Collaborations across SPC and the Screwed Up Click movement.' },
-  { year: '2019', tag: 'Opus', title: 'The Art of ISM', text: 'The statement album — distributed by Sony Music / The Orchard. A philosophy pressed to wax.' },
+  { year: '2019', tag: 'Opus', title: 'The Art of ISM', text: 'The statement album, distributed by Sony Music / The Orchard. A philosophy pressed to wax.' },
   { year: '2021', tag: 'First', title: 'First of a Kind', text: 'February 2021: the first Houston rapper to sell a hip-hop NFT. Ownership, on-chain.' },
-  { year: '2024', tag: 'Collective', title: 'The Ties That Bind Us', text: 'A grown-man statement with the whole SPC — 19 tracks of honest, unflinching Houston hip-hop.' },
+  { year: '2024', tag: 'Collective', title: 'The Ties That Bind Us', text: 'A grown-man statement with the whole SPC: 19 tracks of honest, unflinching Houston hip-hop.' },
   { year: 'NOW', tag: 'Era', title: 'Legacy in Motion', text: 'The Art of ISM book, new music, Capicoin (CCHX). The story is still being written.' },
 ];
 
@@ -61,7 +61,7 @@ export const GALLERY = [
 ];
 
 export const NFT = {
-  collection: 'The Art of ISM — NFT Album',
+  collection: 'The Art of ISM (NFT album)',
   chain: 'Ethereum',
   standard: 'ERC-1155',
   contract: '0x495f947276749ce646f68ac8c248420045cb7b5e',
@@ -73,7 +73,7 @@ export const NFT = {
 export const BOOK = {
   title: 'The Art of ISM',
   kicker: 'A Code of Thought, Movement, and Mastery',
-  text: "A philosophy built from experience. Refined through movement. Tested under pressure. This isn't just something you read — it's something you live.",
+  text: "A philosophy built from experience. Refined through movement. Tested under pressure. This isn't just something you read. It's something you live.",
   features: ['11 immersive chapters', 'Exclusive ISM codes', 'The quote vault', 'Interactive experience'],
   href: 'https://theartofism.com/',
   vinyl: '/vinyl',
@@ -82,7 +82,7 @@ export const BOOK = {
 export const DOCUMENTARY = {
   title: 'The Life: Sex Trafficking and Modern-Day Slavery',
   note: 'PBS documentary · Featured contributor · 2024 Lone Star Emmy nominee',
-  text: 'Mr. CAP contributes firsthand perspective — using the platform for community engagement and cultural commentary that reaches well outside the record.',
+  text: 'Mr. CAP contributes firsthand perspective, using the platform for community engagement and cultural commentary that reaches well outside the record.',
   href: 'https://www.pbs.org/show/the-life/',
   img: '/intro/img/story/the-life-documentary.webp',
 };
@@ -99,15 +99,15 @@ export const VIDEOS = [
   { id: 'VxHenx3r9F4', title: 'Space Aged ISM ft. Desiree McKinney', kind: 'Music Video', len: '3:37', year: 2020 },
   { id: 'eId0L7j4B6c', title: 'Nothing Without It ft. Andre Killian, Jhiame Sinatra & Da Homie', kind: 'Music Video', len: '5:12', year: 2020 },
   { id: 'aLpEsr5KF8I', title: 'Enough Is Enough ft. Jhiame Sinatra', kind: 'Music Video · RIP George Floyd', len: '3:53', year: 2020 },
-  { id: 'Zd1uuyF3-u8', title: 'Top Living — Da Homie ft. King Prez & Mr. CAP', kind: 'Feature', len: '3:17', year: 2020 },
-  { id: 'p1TMvshzCkc', title: 'B Where U R — Original G-Man of Hip Hop', kind: 'Feature', len: '3:59', year: 2020 },
+  { id: 'Zd1uuyF3-u8', title: 'Top Living: Da Homie ft. King Prez & Mr. CAP', kind: 'Feature', len: '3:17', year: 2020 },
+  { id: 'p1TMvshzCkc', title: 'B Where U R: Original G-Man of Hip Hop', kind: 'Feature', len: '3:59', year: 2020 },
   { id: 'JFsq-WE5tIo', title: 'Money Mission & Go', kind: 'Promo', len: '2:17', year: 2020 },
   { id: '1s9lTNn2l5Q', title: 'PWA (Power Weed & Alcohol)', kind: 'Drop', len: '1:01', year: 2023 },
   { id: '2s-6lwNxwEA', title: 'Point Blank B-Day Bash', kind: 'Live · K-Rino & Klondike Kat', len: '1:31', year: 2019 },
 ];
 
 export const SHOWS = [
-  { date: 'Dec 13, 2025', venue: 'Flamingo Cantina', city: 'Austin, TX', note: "SPC Live — The Bet'n On Me Tour" },
+  { date: 'Dec 13, 2025', venue: 'Flamingo Cantina', city: 'Austin, TX', note: "SPC Live: The Bet'n On Me Tour" },
   { date: 'Oct 2024', venue: 'House of Blues', city: 'Houston, TX' },
   { date: 'Aug 2024', venue: 'Warehouse Live', city: 'Houston, TX' },
   { date: 'Jun 2024', venue: 'Trees', city: 'Dallas, TX' },
@@ -115,10 +115,10 @@ export const SHOWS = [
 ];
 
 export const BOOKING_TYPES = [
-  { value: 'show', label: 'Live Performance', text: 'Full headline set or featured appearance — clubs, festivals, private events. Classic SPC era to current releases.' },
+  { value: 'show', label: 'Live Performance', text: 'Full headline set or featured appearance: clubs, festivals, private events. Classic SPC era to current releases.' },
   { value: 'feature', label: 'Verse / Feature', text: 'Custom verses delivered on schedule with professional recording quality. One revision pass included.' },
   { value: 'interview', label: 'Interview / Podcast', text: 'Houston hip-hop history, the SPC, music-business independence. Remote or in person.' },
-  { value: 'speaking', label: 'Speaking Engagement', text: 'Ownership, independence and longevity — for schools, conferences and community programs. Includes Q&A.' },
+  { value: 'speaking', label: 'Speaking Engagement', text: 'Ownership, independence and longevity, for schools, conferences and community programs. Includes Q&A.' },
   { value: 'other', label: 'Other', text: '' },
 ];
 
