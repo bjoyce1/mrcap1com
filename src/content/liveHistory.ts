@@ -56,6 +56,12 @@ export const liveHistory: LiveHistoryEvent[] = [
     flyer: "/images/live/spc-30th-anniversary-houston-2017.jpg", source: "https://www.ogpointblank.com/events",
   },
   {
+    title: "K-Rino & Point Blank — Warehouse Live", date: "2015-09-10", dateLabel: "September 10, 2015",
+    city: "Houston", state: "TX", venue: "Warehouse Live",
+    context: "Mr. CAP named as host on the album-release concert flyer.",
+    flyer: "/images/live/k-rino-point-blank-houston-2015.jpg", source: "https://www.ogpointblank.com/events",
+  },
+  {
     title: "South Park Coalition — 35th Anniversary", dateLabel: "Date unconfirmed",
     city: "Houston", state: "TX", venue: "18307 Egret Bay Blvd",
     context: "Mr. CAP named in the flyer lineup; the flyer gives September 10 but no year.",
@@ -78,5 +84,11 @@ export const liveHistory: LiveHistoryEvent[] = [
     city: "Houston", state: "TX", venue: "The Wash Cafe",
     context: "Mr. CAP named as a special guest on the after-party flyer.",
     flyer: "/images/live/spc-30th-after-party-houston.jpg", source: "https://www.ogpointblank.com/events",
+  },
+  {
+    title: "Point Blank & K-Rino — Frank's Birthday Bash", dateLabel: "Date unconfirmed",
+    city: "Corpus Christi", state: "TX", venue: "Aria Sky Terrace & Lounge",
+    context: "Mr. CAP named as host on the concert flyer; December 17, year unverified.",
+    flyer: "/images/live/point-blank-k-rino-corpus-christi.jpg", source: "https://www.ogpointblank.com/events",
   },
 ];
