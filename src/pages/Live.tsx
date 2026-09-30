@@ -5,30 +5,9 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import ObfuscatedMailto from "@/components/ObfuscatedMailto";
 import { ChevronRight, Calendar, MapPin, Ticket, ExternalLink, Clock, Mic2, Loader2 } from "lucide-react";
-import spcPoster from "@/assets/spc-austin-2025.webp";
-import { useSanityEvents, type SanityEvent } from "@/hooks/useSanity";
-
-/* ── Static fallback data ── */
-const staticUpcomingShows = [{
-  title: "South Park Coalition Live in Concert",
-  subtitle: "The Bet'n On Me Tour",
-  date: "December 13, 2025",
-  time: "Doors 7:00 PM",
-  venue: "Flamingo Cantina",
-  city: "Austin",
-  state: "TX",
-  address: "515 E 6th St, Austin, TX 78701",
-  ticketUrl: "https://spcatx2025.lovable.app/",
-  poster: spcPoster,
-  featured: true,
-}];
-
-const staticPastShows = [
-  { date: "Oct 2024", isoDate: "2024-10-15", venue: "House of Blues", city: "Houston", state: "TX" },
-  { date: "Aug 2024", isoDate: "2024-08-20", venue: "Warehouse Live", city: "Houston", state: "TX" },
-  { date: "Jun 2024", isoDate: "2024-06-14", venue: "Trees", city: "Dallas", state: "TX" },
-  { date: "Mar 2024", isoDate: "2024-03-22", venue: "Paper Tiger", city: "San Antonio", state: "TX" },
-];
+import { useSanityEvents, useSanityPastEvents, type SanityEvent } from "@/hooks/useSanity";
+import { liveHistory, type LiveHistoryEvent } from "@/content/liveHistory";
+import LiveHistoryTimeline from "@/components/live/LiveHistoryTimeline";
 
 /* ── Helpers ── */
 function sanityEventToUpcoming(e: SanityEvent) {
@@ -41,74 +20,89 @@ function sanityEventToUpcoming(e: SanityEvent) {
     city: e.city || "",
     state: e.state || "",
     address: "",
-    ticketUrl: e.ticketUrl || "#",
-    poster: e.flyer || spcPoster,
+    ticketUrl: e.ticketUrl,
+    poster: e.flyer,
     featured: true,
   };
 }
 
 const Live = () => {
   const { data: sanityEvents, isLoading } = useSanityEvents();
+  const { data: sanityPastEvents } = useSanityPastEvents();
 
-  // If Sanity returns events, use them; otherwise fall back to static
-  const hasSanityEvents = sanityEvents && sanityEvents.length > 0;
-  const upcomingShows = hasSanityEvents
-    ? sanityEvents.map(sanityEventToUpcoming)
-    : staticUpcomingShows;
-  const pastShows = staticPastShows; // past shows remain static for now
+  // The Sanity query targets upcoming entries; guard against stale results, too.
+  const futureEvents = (sanityEvents ?? []).filter((event) => {
+    const timestamp = Date.parse(event.date);
+    return Number.isFinite(timestamp) && timestamp > Date.now();
+  });
+  const upcomingShows = futureEvents.map(sanityEventToUpcoming);
 
-  const pastEventSchemas = pastShows.map((show) => ({
+  // Only add past Sanity entries when their event record explicitly credits
+  // Mr. CAP as an artist or guest; a "Design By" footer is not a performance.
+  const additionalHistory: LiveHistoryEvent[] = (sanityPastEvents ?? [])
+    .filter((event) => event.flyer && /\bmr\.?\s*cap\b/i.test(`${event.title} ${event.description ?? ""}`))
+    .filter((event) => !/design(?:ed)?\s+by\s*:?.*\bmr\.?\s*cap\b/i.test(`${event.title} ${event.description ?? ""}`))
+    .filter((event) => Number.isFinite(Date.parse(event.date)) && Date.parse(event.date) < Date.now())
+    .filter((event) => !liveHistory.some((item) => item.date === event.date.slice(0, 10) && item.title.toLowerCase() === event.title.toLowerCase()))
+    .map((event) => ({
+      title: event.title,
+      date: event.date.slice(0, 10),
+      dateLabel: new Date(event.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }),
+      city: event.city ?? "",
+      state: event.state ?? "",
+      venue: event.venue,
+      context: event.description ?? "Mr. CAP live appearance.",
+      flyer: event.flyer ?? "",
+      source: "https://mrcap1.com/live",
+    }));
+  const historyEvents = [...liveHistory, ...additionalHistory];
+
+  const pastEventSchemas = historyEvents.filter((show) => show.date).map((show) => ({
     "@type": "MusicEvent",
-    name: `Mr. CAP Live – ${show.venue}`,
-    startDate: show.isoDate,
+    name: show.title,
+    startDate: show.date,
     eventStatus: "https://schema.org/EventCompleted",
-    performer: [
-      { "@type": "Person", name: "Mr. CAP" },
-      { "@type": "MusicGroup", name: "South Park Coalition" },
-    ],
+    performer: { "@type": "Person", name: "Mr. CAP" },
+    image: `https://mrcap1.com${show.flyer}`,
+    url: show.source,
     location: {
       "@type": "Place",
-      name: show.venue,
+      ...(show.venue ? { name: show.venue } : {}),
       address: {
         "@type": "PostalAddress",
-        addressLocality: show.city,
-        addressRegion: show.state,
+        ...(show.city ? { addressLocality: show.city } : {}),
+        ...(show.state ? { addressRegion: show.state } : {}),
         addressCountry: "US",
       },
     },
-    organizer: { "@type": "Person", name: "Mr. CAP" },
   }));
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
+      ...futureEvents.map((event) => ({
         "@type": "MusicEvent",
-        name: upcomingShows[0]?.title || "Mr. CAP Live",
-        startDate: hasSanityEvents && sanityEvents[0] ? sanityEvents[0].date : "2025-12-13T19:00:00-06:00",
+        name: event.title,
+        startDate: event.date,
         eventStatus: "https://schema.org/EventScheduled",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        location: {
-          "@type": "MusicVenue",
-          name: upcomingShows[0]?.venue || "TBA",
+        ...(event.venue || event.city || event.state ? { location: {
+          "@type": "Place",
+          ...(event.venue ? { name: event.venue } : {}),
           address: {
             "@type": "PostalAddress",
-            addressLocality: upcomingShows[0]?.city || "",
-            addressRegion: upcomingShows[0]?.state || "",
+            ...(event.city ? { addressLocality: event.city } : {}),
+            ...(event.state ? { addressRegion: event.state } : {}),
             addressCountry: "US",
           },
-        },
-        performer: [
-          { "@type": "Person", name: "Mr. CAP" },
-          { "@type": "MusicGroup", name: "South Park Coalition" },
-        ],
-        offers: {
+        } } : {}),
+        performer: { "@type": "Person", name: "Mr. CAP" },
+        ...(event.ticketUrl ? { offers: {
           "@type": "Offer",
-          url: upcomingShows[0]?.ticketUrl || "#",
+          url: event.ticketUrl,
           availability: "https://schema.org/InStock",
-        },
-        organizer: { "@type": "Person", name: "Mr. CAP" },
-      },
+        } } : {}),
+      })),
       ...pastEventSchemas,
       {
         "@type": "BreadcrumbList",
@@ -199,7 +193,7 @@ const Live = () => {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4">
+                    {show.ticketUrl && <div className="flex flex-wrap gap-4">
                       <Button variant="flux" size="lg" asChild>
                         <a href={show.ticketUrl} target="_blank" rel="noopener noreferrer">
                           <Ticket className="mr-2 h-5 w-5" />
@@ -212,33 +206,18 @@ const Live = () => {
                           Event Details
                         </a>
                       </Button>
-                    </div>
+                    </div>}
                   </div>
 
-                  <div className="relative">
-                    <img src={show.poster} alt={`${show.title} poster`} className="w-full max-w-md mx-auto rounded-xl shadow-2xl shadow-primary/20" />
-                  </div>
+                   {show.poster && <div className="relative">
+                     <img src={show.poster} alt={`${show.title} poster`} className="w-full max-w-md mx-auto rounded-xl shadow-2xl shadow-primary/20" />
+                   </div>}
                 </div>
               </div>
             </section>
           ))}
 
-          {/* Past Shows */}
-          <section className="py-20 border-t border-border/50">
-            <div className="container mx-auto px-4">
-              <h2 className="text-2xl font-display font-bold mb-8">Recent Performances</h2>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {pastShows.map((show, index) => (
-                  <div key={index} className="bg-card/30 border border-border/50 rounded-xl p-6 hover:border-border transition-colors">
-                    <span className="text-xs text-muted-foreground">{show.date}</span>
-                    <h3 className="font-bold mt-1">{show.venue}</h3>
-                    <p className="text-sm text-muted-foreground">{show.city}, {show.state}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
+           <LiveHistoryTimeline events={historyEvents} />
 
           {/* Booking CTA */}
           <section className="py-20 bg-card/20 border-y border-border/50">
