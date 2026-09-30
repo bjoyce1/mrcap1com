@@ -96,12 +96,24 @@ export default {
           "0%, 100%": { opacity: "0.6" },
           "50%": { opacity: "1" },
         },
+        // a glint crossing the gold Emmy seal (SVG user units)
+        "seal-sheen": {
+          "0%, 55%": { transform: "translateX(0px)" },
+          "100%": { transform: "translateX(330px)" },
+        },
+        // slow float for the gold dust in the About hero
+        "dust-drift": {
+          "0%, 100%": { transform: "translate3d(0, 0, 0)" },
+          "50%": { transform: "translate3d(0, -14px, 0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 3s linear infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "seal-sheen": "seal-sheen 6s ease-in-out infinite",
+        "dust-drift": "dust-drift 7s ease-in-out infinite",
       },
     },
   },

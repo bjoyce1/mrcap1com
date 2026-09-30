@@ -73,14 +73,15 @@ const ChapterNav = ({ chapters }: ChapterNavProps) => {
         />
       </div>
 
-      {/* Desktop rail */}
+      {/* Desktop rail. Under 1700px there is no free gutter, so it collapses to ticks pinned to the edge;
+          the label of any chapter appears on hover / focus and never sits over the page copy. */}
       <nav
         aria-label="Chapter navigation"
-        className={`hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 z-40 transition-all duration-500 ${
+        className={`hidden lg:block fixed right-2 min-[1700px]:right-6 top-1/2 -translate-y-1/2 z-40 transition-all duration-500 ${
           visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none"
         }`}
       >
-        <ol className="flex flex-col gap-4">
+        <ol className="flex flex-col items-end">
           {chapters.map((c) => {
             const isActive = activeId === c.id;
             return (
@@ -88,15 +89,15 @@ const ChapterNav = ({ chapters }: ChapterNavProps) => {
                 <button
                   type="button"
                   onClick={() => scrollTo(c.id)}
-                  className="group flex items-center gap-3"
+                  className="group relative flex items-center justify-end gap-2 py-2 pl-5 focus:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(var(--accent-gold))]"
                   aria-current={isActive ? "true" : undefined}
                   aria-label={`Jump to ${c.label}`}
                 >
                   <span
-                    className={`font-mono text-[10px] tracking-[0.3em] uppercase text-right transition-all duration-300 ${
+                    className={`pointer-events-none absolute right-full top-1/2 mr-2 -translate-y-1/2 whitespace-nowrap bg-background/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.3em] backdrop-blur transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${
                       isActive
-                        ? "opacity-100 text-[hsl(var(--accent-gold))]"
-                        : "opacity-0 group-hover:opacity-80 text-[hsl(var(--foreground)/0.7)]"
+                        ? "text-[hsl(var(--accent-gold))] opacity-0 min-[1700px]:opacity-100"
+                        : "text-[hsl(var(--foreground)/0.75)] opacity-0"
                     }`}
                   >
                     {c.label}
@@ -104,12 +105,12 @@ const ChapterNav = ({ chapters }: ChapterNavProps) => {
                   <span
                     className={`relative block h-px transition-all duration-300 ${
                       isActive
-                        ? "w-10 bg-[hsl(var(--accent-gold))]"
-                        : "w-5 bg-[hsl(var(--foreground)/0.35)] group-hover:w-8 group-hover:bg-[hsl(var(--foreground)/0.7)]"
+                        ? "w-8 bg-[hsl(var(--accent-gold))]"
+                        : "w-4 bg-[hsl(var(--foreground)/0.35)] group-hover:w-6 group-hover:bg-[hsl(var(--foreground)/0.7)]"
                     }`}
                   />
                   <span
-                    className={`font-mono text-[10px] tracking-[0.2em] tabular-nums transition-colors ${
+                    className={`hidden w-5 text-right font-mono text-[10px] tabular-nums tracking-[0.2em] transition-colors min-[1700px]:inline ${
                       isActive ? "text-[hsl(var(--accent-gold))]" : "text-[hsl(var(--foreground)/0.5)]"
                     }`}
                   >

@@ -81,7 +81,7 @@ export const BOOK = {
 
 export const DOCUMENTARY = {
   title: 'The Life: Sex Trafficking and Modern-Day Slavery',
-  note: 'PBS documentary · Featured contributor · 2024 Lone Star Emmy nominee',
+  note: 'PBS documentary · Featured contributor · 2024 Lone Star Emmy Award winner',
   text: 'Mr. CAP contributes firsthand perspective, using the platform for community engagement and cultural commentary that reaches well outside the record.',
   href: 'https://www.pbs.org/show/the-life/',
   img: '/intro/img/story/the-life-documentary.webp',

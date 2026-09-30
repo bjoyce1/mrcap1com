@@ -33,7 +33,7 @@ const ventures = [
 const milestones = [
   { icon: MapPin, label: "Houston, TX", detail: "Third Ward Raised" },
   { icon: Music, label: "South Park Coalition", detail: "Long-Time Member" },
-  { icon: Award, label: "Lone Star Emmy", detail: "2024 Nomination" },
+  { icon: Award, label: "Lone Star Emmy", detail: "2024 Winner" },
   { icon: Globe, label: "Blockchain Pioneer", detail: "Creator Economy" },
 ];
 
@@ -174,7 +174,7 @@ const Biography = () => {
             <h2 className="text-2xl font-display font-bold text-foreground mb-4">Film & Documentary</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                Mr. CAP has also appeared in the documentary <em className="text-foreground/80">The Life: Sex Trafficking and Modern-Day Slavery</em>, where he contributed a personal perspective from his past experiences. The film received recognition including a nomination for the 2024 Lone Star Emmy Award.
+                Mr. CAP has also appeared in the documentary <em className="text-foreground/80">The Life: Sex Trafficking and Modern-Day Slavery</em>, where he contributed a personal perspective from his past experiences. The film won the 2024 Lone Star Emmy Award for Public Affairs Programming.
               </p>
             </div>
           </motion.section>
