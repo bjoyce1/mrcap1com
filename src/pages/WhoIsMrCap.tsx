@@ -614,8 +614,9 @@ const WhoIsMrCap = () => {
               <div className="mt-12 grid lg:grid-cols-12 gap-10 items-start">
                 <Reveal delay={0.05} className="lg:col-span-5 min-w-0">
                   <h2 className="font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] [text-wrap:balance] break-words">
-                    Raised in the <span className="text-[hsl(var(--accent-gold))]">South Park</span>.
-                    <br /> Shaped by the block.
+                    Raised in&nbsp;
+                    <span className="text-[hsl(var(--accent-gold))]">South Park.</span>
+                    <br />Shaped by International Experience.
                   </h2>
                 </Reveal>
 
