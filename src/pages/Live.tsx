@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import ObfuscatedMailto from "@/components/ObfuscatedMailto";
 import { ChevronRight, Calendar, MapPin, Ticket, ExternalLink, Clock, Mic2, Loader2 } from "lucide-react";
-import { useSanityEvents, type SanityEvent } from "@/hooks/useSanity";
-import { liveHistory } from "@/content/liveHistory";
+import { useSanityEvents, useSanityPastEvents, type SanityEvent } from "@/hooks/useSanity";
+import { liveHistory, type LiveHistoryEvent } from "@/content/liveHistory";
 import LiveHistoryTimeline from "@/components/live/LiveHistoryTimeline";
 
 /* ── Helpers ── */
@@ -28,6 +28,7 @@ function sanityEventToUpcoming(e: SanityEvent) {
 
 const Live = () => {
   const { data: sanityEvents, isLoading } = useSanityEvents();
+  const { data: sanityPastEvents } = useSanityPastEvents();
 
   // The Sanity query targets upcoming entries; guard against stale results, too.
   const futureEvents = (sanityEvents ?? []).filter((event) => {
@@ -36,7 +37,26 @@ const Live = () => {
   });
   const upcomingShows = futureEvents.map(sanityEventToUpcoming);
 
-  const pastEventSchemas = liveHistory.filter((show) => show.date).map((show) => ({
+  // Curated archive flyers are local. For Sanity additions, require a visible
+  // Mr. CAP credit in the event fields and a flyer before treating it as history.
+  const curatedPast: LiveHistoryEvent[] = (sanityPastEvents ?? [])
+    .filter((event) => event.flyer && /\bmr\.?\s*cap\b/i.test(`${event.title} ${event.description ?? ""}`))
+    .filter((event) => Number.isFinite(Date.parse(event.date)) && Date.parse(event.date) < Date.now())
+    .filter((event) => !liveHistory.some((archived) => archived.date === event.date.slice(0, 10) && archived.title.toLowerCase() === event.title.toLowerCase()))
+    .map((event) => ({
+      title: event.title,
+      date: event.date.slice(0, 10),
+      dateLabel: new Date(event.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }),
+      city: event.city ?? "",
+      state: event.state ?? "",
+      venue: event.venue,
+      context: event.description ?? "Mr. CAP live performance.",
+      flyer: event.flyer ?? "",
+      source: "https://mrcap1.com/live",
+    }));
+  const historyEvents = [...liveHistory, ...curatedPast];
+
+  const pastEventSchemas = historyEvents.filter((show) => show.date).map((show) => ({
     "@type": "MusicEvent",
     name: show.title,
     startDate: show.date,
@@ -49,8 +69,8 @@ const Live = () => {
       ...(show.venue ? { name: show.venue } : {}),
       address: {
         "@type": "PostalAddress",
-        addressLocality: show.city,
-        addressRegion: show.state,
+        ...(show.city ? { addressLocality: show.city } : {}),
+        ...(show.state ? { addressRegion: show.state } : {}),
         addressCountry: "US",
       },
     },
@@ -196,7 +216,7 @@ const Live = () => {
             </section>
           ))}
 
-           <LiveHistoryTimeline />
+           <LiveHistoryTimeline events={historyEvents} />
 
           {/* Booking CTA */}
           <section className="py-20 bg-card/20 border-y border-border/50">

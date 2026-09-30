@@ -41,6 +41,11 @@ export function useSanityEvents() {
   return useSanityQuery<SanityEvent[]>(["events"], "events-upcoming");
 }
 
+/** Fetch published past events for the live history. */
+export function useSanityPastEvents() {
+  return useSanityQuery<SanityEvent[]>(["events-past"], "events-past");
+}
+
 /** Fetch music releases */
 export function useSanityReleases() {
   return useSanityQuery<SanityRelease[]>(["releases"], "releases");
