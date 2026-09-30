@@ -3,17 +3,10 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Play } from "lucide-react";
 import theLifeDoc from "@/assets/the-life-documentary.webp";
-import EmmySeal from "./EmmySeal";
+import EmmyBadge from "./EmmyBadge";
 import { Reveal, Scramble, SplitText } from "./motion";
 import { useMotionOk } from "./motionUtils";
 import { Stamp } from "./parts";
-
-/**
- * Official Emmy / NATAS logo file, if the Lone Star Chapter supplied one with the winner's usage
- * guidelines (SVG or transparent PNG in /public, e.g. "/images/emmy-lone-star.svg").
- * While this is null the seal shows its own "EMMY" wordmark.
- */
-const EMMY_LOGO_SRC: string | null = null;
 
 const PBS_URL = "https://www.pbs.org/show/the-life/";
 
@@ -39,7 +32,6 @@ const ReceiptsEmmy = ({ trailerId, onPlayTrailer }: Props) => {
   const artY = useTransform(scrollYProgress, [0, 1], ok ? ["-4%", "4%"] : ["0%", "0%"]);
   const plateY = useTransform(scrollYProgress, [0, 1], ok ? [30, -30] : [0, 0]);
   const sealY = useTransform(scrollYProgress, [0, 1], ok ? [-34, 34] : [0, 0]);
-  const sealSpin = useTransform(scrollYProgress, [0, 1], ok ? [-80, 200] : [0, 0]);
   const glowY = useTransform(scrollYProgress, [0, 1], ok ? [60, -60] : [0, 0]);
 
   const artInner = (
@@ -133,14 +125,14 @@ const ReceiptsEmmy = ({ trailerId, onPlayTrailer }: Props) => {
                 </a>
               )}
 
-              {/* the seal hangs off the corner, in front of everything and on its own layer */}
-              <div className="pointer-events-none absolute -bottom-3 -right-1 z-10 w-[116px] sm:-bottom-4 sm:right-0 sm:w-[148px]">
+              {/* the badge hangs off the corner, in front of everything and on its own layer */}
+              <div className="pointer-events-none absolute -bottom-3 -right-1 z-10 w-[112px] sm:-bottom-4 sm:right-0 sm:w-[140px]">
                 <motion.div style={{ y: sealY }}>
-                  <EmmySeal spin={sealSpin} logoSrc={EMMY_LOGO_SRC} />
+                  <EmmyBadge />
                 </motion.div>
               </div>
 
-              <figcaption className="mt-6 max-w-[21rem] pr-[7.5rem] font-mono text-[10px] uppercase leading-relaxed tracking-[0.24em] text-muted-foreground sm:pr-0 sm:tracking-[0.28em]">
+              <figcaption className="mt-6 max-w-[21rem] pr-[7.25rem] font-mono text-[10px] uppercase leading-relaxed tracking-[0.24em] text-muted-foreground sm:pr-0 sm:tracking-[0.28em]">
                 Documentary · Featured Contributor · 2024 Lone Star Emmy® Award Winner
               </figcaption>
             </figure>
