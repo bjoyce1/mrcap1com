@@ -63,7 +63,9 @@ const OriginCollage = () => {
         <div className="mt-12 grid items-start gap-10 lg:grid-cols-12">
           <div className="min-w-0 lg:col-span-5">
             <SplitText as="h2" className="font-display text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] [text-wrap:balance] break-words">
-              Raised in the <Gold>South Park</Gold>.<br /> Shaped by the block.
+              Raised <span className="whitespace-nowrap">in <Gold>South Park.</Gold></span>
+              <br />
+              Shaped by International Experience.
             </SplitText>
           </div>
 
