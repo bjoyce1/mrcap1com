@@ -33,13 +33,6 @@ const TEMPLATES: Record<string, { query: string; paramKeys: readonly string[] }>
     }`,
     paramKeys: [],
   },
-  "events-past": {
-    query: `*[_type == "event" && date < now() && !(_id in path("drafts.**"))] | order(date desc) {
-      _id, title, date, venue, city, state, description,
-      "flyer": flyer.asset->url
-    }`,
-    paramKeys: [],
-  },
   "releases": {
     query: `*[_type == "release" && !(_id in path("drafts.**"))] | order(releaseDate desc) {
       _id, title, slug, releaseDate, type, description,
