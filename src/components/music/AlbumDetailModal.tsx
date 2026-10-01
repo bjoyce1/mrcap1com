@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore, type Album } from "@/stores/playerStore";
+import { PlayAlbum } from "./AlbumCrate";
+import { coverImg, fmtDuration } from "./catalog";
 
 interface Props {
   album: Album | null;
@@ -16,19 +18,11 @@ interface Props {
   onOpenChange: (open: boolean) => void;
 }
 
-function fmt(seconds: number): string {
-  if (!seconds) return "—";
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${m}:${s.toString().padStart(2, "0")}`;
-}
-
 export default function AlbumDetailModal({ album, open, onOpenChange }: Props) {
   const { data: tracks, isLoading } = useAlbumTracks(album?.id);
   const { currentTrack, isPlaying, playTrack, togglePlay } = usePlayerStore();
 
   if (!album) return null;
-  const cover = album.cover_art_url || "/placeholder.svg";
   const playable = (tracks || []).filter((t) => t.audio_url);
 
   // Album-level streaming links: derived from the first track that has one.
@@ -37,12 +31,13 @@ export default function AlbumDetailModal({ album, open, onOpenChange }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
+      {/* catalog-section brings the page's Anton titles into the dialog */}
+      <DialogContent className="catalog-section max-w-3xl max-h-[90vh] overflow-y-auto p-0">
         <div className="grid md:grid-cols-[260px_1fr] gap-0">
-          {/* Cover */}
-          <div className="relative aspect-square md:aspect-auto md:h-full bg-secondary">
+          {/* Cover: always square, so the artwork is never cropped */}
+          <div className="relative aspect-square bg-secondary md:sticky md:top-0 md:self-start">
             <img
-              src={cover}
+              {...coverImg(album.cover_art_url, "(min-width: 768px) 260px, 100vw")}
               alt={`${album.title} cover art`}
               className="w-full h-full object-cover"
             />
@@ -71,7 +66,8 @@ export default function AlbumDetailModal({ album, open, onOpenChange }: Props) {
             <div className="archive-rule mt-5 mb-4 w-24" />
 
             {/* Streaming links */}
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="flex flex-wrap items-center gap-2 mb-5">
+              <PlayAlbum album={album} />
               {albumSpotify && (
                 <a
                   href={albumSpotify}
@@ -132,7 +128,7 @@ export default function AlbumDetailModal({ album, open, onOpenChange }: Props) {
                             if (isActive) togglePlay();
                             else playTrack(track, playable, Math.max(0, queueIndex));
                           }}
-                          className="flex items-center justify-center w-8 h-8 rounded-full bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground transition disabled:opacity-30 disabled:cursor-not-allowed"
+                          className="flex shrink-0 items-center justify-center w-10 h-10 rounded-full bg-secondary text-foreground hover:bg-primary hover:text-primary-foreground transition disabled:opacity-30 disabled:cursor-not-allowed"
                           aria-label={playingThis ? `Pause ${track.title}` : `Play ${track.title}`}
                         >
                           {playingThis ? (
@@ -169,14 +165,14 @@ export default function AlbumDetailModal({ album, open, onOpenChange }: Props) {
                               href={track.spotify_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-[#1DB954]/70 hover:text-[#1DB954] transition opacity-0 group-hover:opacity-100"
+                              className="text-[#1DB954]/70 hover:text-[#1DB954] transition opacity-0 group-hover:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100"
                               aria-label="Open on Spotify"
                             >
                               <ExternalLink className="w-3.5 h-3.5" />
                             </a>
                           )}
                           <span className="font-mono text-[0.7rem] text-muted-foreground tabular-nums">
-                            {fmt(track.duration)}
+                            {fmtDuration(track.duration)}
                           </span>
                         </div>
                       </li>

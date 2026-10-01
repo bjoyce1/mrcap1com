@@ -586,9 +586,19 @@
   box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
 }
 
+/* a record that's playing keeps turning (Out Now booth, album crate) */
+@keyframes vinyl-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.catalog-section .vinyl.is-spinning { animation: vinyl-spin 1.8s linear infinite; }
+
 /* --- CARD --- */
-.catalog-section .disco-card { position: relative; cursor: pointer; }
-.catalog-section .disco-card:hover { z-index: 6; }
+/* --pull: how far the record rises out of the top of its sleeve on hover / focus.
+   Rising (instead of sliding sideways) keeps it clear of the screen edge and of any row that scrolls. */
+.catalog-section .disco-card { position: relative; cursor: pointer; --pull: -30%; }
+.catalog-section .disco-card:hover,
+.catalog-section .disco-card:focus-within { z-index: 6; }
 .catalog-section .disco-card .art-wrap { position: relative; }
 .catalog-section .disco-card .art {
   position: relative;
@@ -604,12 +614,14 @@
   width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .catalog-section .disco-card:hover .art {
-    transform: rotate(-5deg) translateX(-24px);
-    filter: brightness(1.12);
+  .catalog-section .disco-card:hover .art,
+  .catalog-section .disco-card:focus-within .art {
+    transform: rotate(-2deg) translateY(4px);
+    filter: brightness(1.08);
   }
-  .catalog-section .disco-card:hover .vinyl {
-    transform: translate(calc(-50% + 27%), -50%) rotate(16deg);
+  .catalog-section .disco-card:hover .vinyl,
+  .catalog-section .disco-card:focus-within .vinyl {
+    transform: translate(-50%, calc(-50% + var(--pull))) rotate(28deg);
   }
 }
 
@@ -625,3 +637,21 @@
     -webkit-text-stroke-color: transparent;
   }
 }
+/* when the chart arrives each rank lights in turn; number one keeps the gold */
+@keyframes rank-flash {
+  0%, 100% { color: transparent; -webkit-text-stroke-color: rgba(242, 236, 223, 0.5); }
+  35%, 55% { color: hsl(var(--accent-gold)); -webkit-text-stroke-color: transparent; }
+}
+@keyframes rank-fill {
+  to { color: hsl(var(--accent-gold)); -webkit-text-stroke-color: transparent; }
+}
+.catalog-section .chart-rank.is-lit { animation: rank-flash 1.2s ease both; }
+.catalog-section .chart-row:first-child .chart-rank.is-lit { animation: rank-fill 0.6s ease forwards; }
+.catalog-section .chart-rank.is-first { color: hsl(var(--accent-gold)); -webkit-text-stroke-color: transparent; }
+
+/* the Listening Room's sky drifts very slowly (only while the hero is on screen and motion is on) */
+@keyframes hero-drift {
+  from { transform: scale(1.1) translate3d(-1.5%, 0, 0); }
+  to { transform: scale(1.03) translate3d(1.5%, -1%, 0); }
+}
+.hero-drift { animation: hero-drift 40s ease-in-out infinite alternate; }

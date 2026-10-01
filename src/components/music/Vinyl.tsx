@@ -1,7 +1,15 @@
 import type { CSSProperties } from "react";
+import { coverThumb } from "./catalog";
 
-export function Vinyl({ cover }: { cover: string }) {
-  return <div className="vinyl" style={{ ["--label" as never]: `url(${cover})` } as CSSProperties} aria-hidden="true" />;
+/** The record that lives behind a sleeve. The label is the cover art (its smallest copy). */
+export function Vinyl({ cover, className = "", style }: { cover: string | null | undefined; className?: string; style?: CSSProperties }) {
+  return (
+    <div
+      className={`vinyl ${className}`}
+      style={{ ["--label" as never]: `url("${coverThumb(cover)}")`, ...style } as CSSProperties}
+      aria-hidden="true"
+    />
+  );
 }
 
 export default Vinyl;

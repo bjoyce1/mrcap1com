@@ -12,15 +12,27 @@ const useGrooveTexture = () => {
     const c = document.createElement("canvas");
     c.width = c.height = size;
     const ctx = c.getContext("2d")!;
-    ctx.fillStyle = "#151515";
+    ctx.fillStyle = "#161616";
     ctx.fillRect(0, 0, size, size);
     const cx = size / 2;
     for (let r = size * 0.18; r < size * 0.5; r += 3) {
       ctx.beginPath();
       ctx.arc(cx, cx, r, 0, Math.PI * 2);
-      ctx.strokeStyle = Math.random() > 0.85 ? "#2e2e2e" : "#1d1d1d";
+      ctx.strokeStyle = Math.random() > 0.8 ? "#454545" : "#262626";
       ctx.lineWidth = 1.4;
       ctx.stroke();
+    }
+    // two soft wedges of light across the grooves, like the sheen on a real record
+    for (const [from, to] of [[-0.35, 0.15], [Math.PI - 0.35, Math.PI + 0.15]]) {
+      const g = ctx.createRadialGradient(cx, cx, size * 0.18, cx, cx, size * 0.5);
+      g.addColorStop(0, "rgba(255,255,255,0.10)");
+      g.addColorStop(1, "rgba(255,255,255,0.02)");
+      ctx.beginPath();
+      ctx.moveTo(cx, cx);
+      ctx.arc(cx, cx, size * 0.5, from, to);
+      ctx.closePath();
+      ctx.fillStyle = g;
+      ctx.fill();
     }
     const tex = new THREE.CanvasTexture(c);
     tex.anisotropy = 8;
@@ -90,15 +102,15 @@ const Record = ({ labelUrl, spinning }: { labelUrl: string; spinning: boolean })
             attach="material-1"
             map={groove}
             color="#e8e8e8"
-            metalness={0.75}
-            roughness={0.32}
+            metalness={0.3}
+            roughness={0.42}
           />
           <meshStandardMaterial
             attach="material-2"
             map={groove}
             color="#e8e8e8"
-            metalness={0.75}
-            roughness={0.32}
+            metalness={0.3}
+            roughness={0.42}
           />
         </mesh>
         {/* The label — current track art */}
@@ -135,16 +147,15 @@ const Record = ({ labelUrl, spinning }: { labelUrl: string; spinning: boolean })
  * Spins up to speed while a track plays; drifts lazily when idle.
  * The label always shows the current track's cover art.
  */
-const Vinyl3D = () => {
+const Vinyl3D = ({ active = true }: { active?: boolean }) => {
   const { currentTrack, isPlaying } = usePlayerStore();
-  const reduced =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // the hero passes active=false when it's off screen or motion is switched off: no render loop, no spin
+  const reduced = !active;
 
   const labelUrl = currentTrack?.cover_art_url || defaultLabel;
 
   return (
-    <div className="absolute inset-y-0 right-0 w-1/2 pointer-events-none hidden lg:block" aria-hidden="true">
+    <div className="absolute bottom-0 right-0 top-20 w-1/2 pointer-events-none hidden lg:block" aria-hidden="true">
       <Canvas
         camera={{ position: [0, 0.6, 5.2], fov: 40 }}
         dpr={[1, 1.5]}
@@ -152,7 +163,7 @@ const Vinyl3D = () => {
         frameloop={reduced ? "demand" : "always"}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={0.7} />
           <pointLight position={[3, 4, 3]} intensity={30} color="#ffd98a" />
           <pointLight position={[-4, -1, 2]} intensity={18} color="#d2347a" />
           <Record labelUrl={labelUrl} spinning={isPlaying && !reduced} />

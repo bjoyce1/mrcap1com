@@ -3,27 +3,23 @@ import { Play, Pause } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePlayerStore, type Track } from "@/stores/playerStore";
 import { Vinyl } from "./Vinyl";
+import { coverImg, credit, fmtDuration } from "./catalog";
 
 interface TrackCardProps {
   track: Track;
   queue: Track[];
   index: number;
-  /** Optional small label shown above the title (e.g. "NEW", chart rank) */
+  /** Optional small label beside the explicit tag (e.g. "NEW") */
   badge?: string;
+  className?: string;
 }
 
-function fmt(seconds: number): string {
-  if (!seconds) return "—";
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${m}:${s.toString().padStart(2, "0")}`;
-}
-
-export default function TrackCard({ track, queue, index, badge }: TrackCardProps) {
+/** A sleeve with its record behind it. Hover (or focus) lifts the record out of the top of the sleeve. */
+export default function TrackCard({ track, queue, index, badge, className = "" }: TrackCardProps) {
   const { currentTrack, isPlaying, playTrack, togglePlay } = usePlayerStore();
   const isActive = currentTrack?.id === track.id;
   const playingThis = isActive && isPlaying;
-  const cover = track.cover_art_url || "/placeholder.svg";
+  const duration = fmtDuration(track.duration);
 
   const handlePlay = (e: MouseEvent) => {
     e.preventDefault();
@@ -33,61 +29,47 @@ export default function TrackCard({ track, queue, index, badge }: TrackCardProps
   };
 
   return (
-    <div className="disco-card group block w-[260px] md:w-[320px] shrink-0 snap-start">
-      <div className="relative">
-        {track.release_year && (
-          <div
-            data-parallax-year
-            aria-hidden="true"
-            className="absolute -top-6 left-1/2 -translate-x-1/2 z-0 font-display text-outline pointer-events-none select-none text-[6rem] md:text-[8rem] leading-none"
+    <div className={`disco-card group block w-[260px] shrink-0 snap-start md:w-[300px] ${playingThis ? "is-playing" : ""} ${className}`}>
+      <div className="art-wrap relative aspect-square">
+        <Vinyl cover={track.cover_art_url} />
+        <button
+          type="button"
+          onClick={handlePlay}
+          className="art block h-full w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          aria-label={playingThis ? `Pause ${track.title}` : `Play ${track.title}`}
+        >
+          <img {...coverImg(track.cover_art_url, "(min-width: 768px) 300px, 260px")} alt={`${track.title} cover art`} loading="lazy" decoding="async" />
+          <span
+            className={
+              "absolute inset-0 flex items-center justify-center transition-opacity duration-300 [@media(hover:none)]:opacity-100 " +
+              (playingThis ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100")
+            }
           >
-            {track.release_year}
-          </div>
-        )}
-
-        <div className="art-wrap relative aspect-square">
-          <Vinyl cover={cover} />
-          <button
-            type="button"
-            onClick={handlePlay}
-            className="art block w-full h-full text-left"
-            aria-label={playingThis ? `Pause ${track.title}` : `Play ${track.title}`}
-          >
-            <img src={cover} alt={`${track.title} cover art`} loading="lazy" />
-            <span
-              className={
-                "absolute inset-0 flex items-center justify-center transition-opacity " +
-                (playingThis ? "opacity-100" : "opacity-0 group-hover:opacity-100")
-              }
-            >
-              <span className="candy-sheen flex items-center justify-center w-14 h-14 rounded-full text-primary-foreground shadow-lg">
-                {playingThis ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
-              </span>
+            <span className="candy-sheen flex h-14 w-14 items-center justify-center rounded-full text-primary-foreground shadow-[0_10px_30px_hsl(0_0%_0%/0.45)]">
+              {playingThis ? <Pause className="h-6 w-6" /> : <Play className="ml-0.5 h-6 w-6" />}
             </span>
-          </button>
-        </div>
+          </span>
+        </button>
       </div>
 
-      <div className="mt-5 flex items-center gap-2">
+      <h3 className="font-display mt-5 flex items-start gap-2 text-lg leading-tight text-foreground md:text-xl">
+        <Link to={`/track/${track.slug}`} className="transition-colors hover:text-primary">
+          {track.title}
+        </Link>
         {badge && (
-          <span className="px-2 py-0.5 rounded font-mono text-[0.6rem] uppercase tracking-[0.15em] bg-primary/15 text-primary border border-primary/30">
+          <span className="mt-0.5 shrink-0 rounded border border-primary/30 bg-primary/15 px-1.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-primary">
             {badge}
           </span>
         )}
         {track.explicit && (
-          <span className="text-[10px] bg-muted text-muted-foreground px-1 py-0.5 rounded">E</span>
+          <span className="mt-0.5 shrink-0 rounded bg-muted px-1 py-0.5 font-mono text-[10px] text-muted-foreground" title="Explicit">
+            E
+          </span>
         )}
-      </div>
-
-      <h3 className="font-display mt-2 text-lg md:text-xl text-foreground leading-tight">
-        <Link to={`/track/${track.slug}`} className="hover:text-primary transition-colors">
-          {track.title}
-        </Link>
       </h3>
-      <p className="mt-2 font-mono text-[0.65rem] tracking-[0.2em] text-muted-foreground uppercase">
-        {(track.featured_artists ? `${track.artist} ft. ${track.featured_artists}` : track.artist)}
-        {" · "}
-        {fmt(track.duration)}
+      <p className="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">
+        {credit(track)}
+        {duration && ` · ${duration}`}
       </p>
     </div>
   );

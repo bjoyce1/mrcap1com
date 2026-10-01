@@ -1,36 +1,50 @@
-import { Disc3, Music, TrendingUp } from "lucide-react";
-import { useEffect, useState, useMemo } from "react";
+import { TrendingUp } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import { useAlbums, useLatestTracks, useAllTracks, useMostPlayedTracks } from "@/hooks/useStreamingData";
+import { useAlbums, useAllTracks, useMostPlayedTracks } from "@/hooks/useStreamingData";
 import ListeningRoomHero from "@/components/music/ListeningRoomHero";
-import EraFilter, { getEras, filterByEra } from "@/components/music/EraFilter";
-import HorizontalShelf from "@/components/music/HorizontalShelf";
-import TrackCard from "@/components/music/TrackCard";
+import OutNowStage from "@/components/music/OutNowStage";
 import MostPlayedChart from "@/components/music/MostPlayedChart";
+import AlbumCrate from "@/components/music/AlbumCrate";
+import EraWall from "@/components/music/EraWall";
 import AlbumDetailModal from "@/components/music/AlbumDetailModal";
-import { Vinyl } from "@/components/music/Vinyl";
+import { ShelfHeader } from "@/components/music/ShelfParts";
+import { WRAP } from "@/components/music/catalog";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import type { Album } from "@/stores/playerStore";
 
+/** How many of the newest releases get the Out Now booth. */
+const OUT_NOW = 4;
+
+/**
+ * /music — the listening room, then the newest releases in their booth, the
+ * house chart, the album crate, and every single on the era wall.
+ */
 const Listen = () => {
-  const { data: albums, isLoading: albumsLoading } = useAlbums();
-  const { data: latestTracks } = useLatestTracks(8);
+  const { data: albums } = useAlbums();
   const { data: allTracks } = useAllTracks();
   const { data: mostPlayed } = useMostPlayedTracks(5);
-  const [activeEra, setActiveEra] = useState<string | null>(null);
   const [modalAlbum, setModalAlbum] = useState<Album | null>(null);
 
   useEffect(() => {
     trackEvent("player_loaded", { page_path: "/music", source: "music" });
   }, []);
 
-  const singles = useMemo(() => allTracks?.filter((t) => !t.album_id) || [], [allTracks]);
-  const eras = useMemo(() => getEras(singles), [singles]);
-  const filteredSingles = useMemo(() => filterByEra(singles, activeEra), [singles, activeEra]);
+  // allTracks arrives newest first (release year, then upload date)
+  const latest = useMemo(() => (allTracks || []).slice(0, 8), [allTracks]);
+  const outNow = useMemo(() => latest.slice(0, OUT_NOW), [latest]);
+  // the era wall is the archive: the releases already in the booth aren't repeated there
+  const singles = useMemo(() => {
+    const inBooth = new Set(outNow.map((t) => t.id));
+    return (allTracks || []).filter((t) => !t.album_id && !inBooth.has(t.id));
+  }, [allTracks, outNow]);
   const allPlayable = useMemo(() => (allTracks || []).filter((t) => t.audio_url), [allTracks]);
-  const latestPlayable = useMemo(() => (latestTracks || []).filter((t) => t.audio_url), [latestTracks]);
+  const latestPlayable = useMemo(() => latest.filter((t) => t.audio_url), [latest]);
+
+  // the scroll stages measure the page, so they mount together once the catalog is in
+  const ready = !!allTracks && !!albums;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -39,6 +53,14 @@ const Listen = () => {
     description: "Stream Mr. CAP's music directly. Houston hip hop, Southern rap, and underground classics.",
     url: "https://mrcap1.com/music",
     numTracks: allTracks?.length || 0,
+    track: (allTracks || []).map((t) => ({
+      "@type": "MusicRecording",
+      name: t.title,
+      url: `https://mrcap1.com/track/${t.slug}`,
+      byArtist: { "@type": "MusicGroup", name: t.artist },
+      ...(t.duration ? { duration: `PT${Math.floor(t.duration / 60)}M${Math.floor(t.duration % 60)}S` } : {}),
+      ...(t.release_year ? { datePublished: String(t.release_year) } : {}),
+    })),
   };
 
   return (
@@ -51,125 +73,49 @@ const Listen = () => {
       />
       <Navigation />
 
-      <ListeningRoomHero
-        trackCount={allTracks?.length || 0}
-        albumCount={albums?.length || 0}
-        allPlayable={allPlayable}
-        latestPlayable={latestPlayable}
-      />
+      <main id="main">
+        <ListeningRoomHero
+          trackCount={allTracks?.length || 0}
+          albumCount={albums?.length || 0}
+          allPlayable={allPlayable}
+          latestPlayable={latestPlayable}
+        />
 
-      <div className="pb-24">
-        {/* Most Played — chart data, so it reads as a chart, not a fourth rail */}
-        {mostPlayed && mostPlayed.length > 0 && (
-          <HorizontalShelf
-            layout="block"
-            eyebrow="House Charts"
-            title="Most Played"
-            icon={<TrendingUp className="w-5 h-5 text-primary" />}
-            description="What listeners are streaming right here on the site."
-            refreshKey={mostPlayed.length}
-          >
-            <MostPlayedChart tracks={mostPlayed} />
-          </HorizontalShelf>
-        )}
+        {ready ? (
+          <>
+            <OutNowStage releases={outNow} />
 
-        {/* Latest Releases */}
-        {latestTracks && latestTracks.length > 0 && (
-          <HorizontalShelf
-            eyebrow="Latest Drops"
-            title="Latest Releases"
-            icon={<Music className="w-5 h-5 text-primary" />}
-            description="The newest cuts, freshly pressed."
-            refreshKey={latestTracks.length}
-          >
-            {latestTracks.map((track, i) => (
-              <TrackCard
-                key={track.id}
-                track={track}
-                queue={latestTracks}
-                index={i}
-                badge={i === 0 ? "NEW" : undefined}
-              />
-            ))}
-          </HorizontalShelf>
-        )}
-
-        {/* Albums — the feature shelf, where the disc-pull hover gets room */}
-        <HorizontalShelf
-          variant="feature"
-          layout="grid"
-          eyebrow="Full Lengths"
-          title="Albums"
-          icon={<Disc3 className="w-5 h-5 text-primary" />}
-          description="Full-length records. Hover a sleeve to pull the disc."
-          refreshKey={albums?.length || 0}
-        >
-          {albumsLoading
-            ? Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="w-full aspect-square bg-secondary rounded-xl animate-pulse" />
-              ))
-            : (albums || []).map((album) => {
-                const cover = album.cover_art_url || "/placeholder.svg";
-                return (
-                  <button
-                    type="button"
-                    key={album.id}
-                    onClick={() => setModalAlbum(album)}
-                    className="disco-card group block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
-                  >
-                    <div className="relative">
-                      {album.release_year && (
-                        <div
-                          data-parallax-year
-                          aria-hidden="true"
-                          className="absolute -top-6 left-1/2 -translate-x-1/2 z-0 font-display text-outline pointer-events-none select-none text-[6rem] md:text-[8rem] leading-none"
-                        >
-                          {album.release_year}
-                        </div>
-                      )}
-                      <div className="art-wrap relative aspect-square">
-                        <Vinyl cover={cover} />
-                        <div className="art">
-                          <img src={cover} alt={`${album.title} cover art`} loading="lazy" />
-                        </div>
-                      </div>
-                    </div>
-                    <h3 className="font-display mt-6 text-xl md:text-2xl text-foreground group-hover:text-primary transition-colors">{album.title}</h3>
-                    <p className="mt-2 font-mono text-[0.65rem] tracking-[0.2em] text-muted-foreground uppercase">
-                      {album.release_year} · {album.track_count || 0} Tracks · {album.artist}
-                    </p>
-                  </button>
-                );
-              })}
-        </HorizontalShelf>
-
-        {/* Singles & Features */}
-        {singles.length > 0 && (
-          <HorizontalShelf
-            eyebrow="Standalone Tracks"
-            title="Singles & Features"
-            description="Loosies, guest spots, one-off chapters."
-            toolbar={<EraFilter eras={eras} active={activeEra} onChange={setActiveEra} />}
-            refreshKey={`${activeEra ?? "all"}-${filteredSingles.length}`}
-          >
-            {filteredSingles.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground font-mono text-sm w-[260px]">
-                No tracks from this era yet.
-              </div>
-            ) : (
-              filteredSingles.map((track, i) => (
-                <TrackCard key={track.id} track={track} queue={filteredSingles} index={i} />
-              ))
+            {mostPlayed && mostPlayed.length > 0 && (
+              <section aria-labelledby="chart-title" className="catalog-section relative overflow-x-clip py-20 md:py-28">
+                <div className={WRAP}>
+                  <ShelfHeader
+                    id="chart-title"
+                    title="Most Played"
+                    icon={<TrendingUp className="h-6 w-6 shrink-0 text-primary md:h-8 md:w-8" />}
+                    description="What listeners are streaming right here on the site."
+                  />
+                  <div className="mt-10">
+                    <MostPlayedChart tracks={mostPlayed} />
+                  </div>
+                </div>
+              </section>
             )}
-          </HorizontalShelf>
-        )}
-      </div>
 
-      <AlbumDetailModal
-        album={modalAlbum}
-        open={!!modalAlbum}
-        onOpenChange={(o) => !o && setModalAlbum(null)}
-      />
+            <AlbumCrate albums={albums} onOpen={setModalAlbum} />
+
+            <EraWall singles={singles} />
+          </>
+        ) : (
+          <div className={`${WRAP} grid min-h-[70svh] grid-cols-2 content-start gap-6 py-24 md:grid-cols-4`} aria-busy="true" aria-label="Loading the catalog">
+            {Array.from({ length: 4 }, (_, i) => (
+              <div key={i} className="aspect-square animate-pulse bg-secondary" />
+            ))}
+          </div>
+        )}
+        <div className="h-24" />
+      </main>
+
+      <AlbumDetailModal album={modalAlbum} open={!!modalAlbum} onOpenChange={(o) => !o && setModalAlbum(null)} />
 
       <Footer />
     </div>
