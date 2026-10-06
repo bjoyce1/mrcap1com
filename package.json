@@ -10,7 +10,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "seo:snapshot": "node scripts/seo-catalog.mjs"
+    "seo:snapshot": "node scripts/seo-catalog.mjs",
+    "seo:preview": "node scripts/seo-preview.mjs",
+    "seo:verify": "node scripts/seo-verify.mjs"
   },
   "dependencies": {
     "@fontsource/alfa-slab-one": "^5.2.8",

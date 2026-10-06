@@ -52,6 +52,14 @@ export function seoPages(env: Record<string, string>): Plugin {
           fs.mkdirSync(path.dirname(file), { recursive: true });
           fs.writeFileSync(file, html);
         }
+        // what every page should serve, for scripts/seo-verify.mjs to check after a publish
+        const expected = pages.map((p) => ({
+          path: p.path,
+          title: p.entry.title,
+          canonical: p.path === "/" ? null : (p.entry.canonical ?? `https://mrcap1.com${p.entry.path}`),
+          noIndex: !!p.entry.noIndex,
+        }));
+        fs.writeFileSync(path.join(outDir, "seo-pages.json"), JSON.stringify({ builtAt: new Date().toISOString(), pages: expected }));
         const source = live?.tracks ? "live catalog" : "catalog snapshot";
         config.logger.info(`\n[seo] wrote ${pages.length} route pages (${source}: ${catalog.tracks?.length ?? 0} tracks, ${catalog.albums?.length ?? 0} albums)`);
       } catch (err) {
