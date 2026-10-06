@@ -3,7 +3,7 @@ export const nftPageData = {
     kicker: "Web3 & Collectors",
     title: "NFT & Collector Access",
     description:
-      "Explore the digital side of the Mr. CAP ecosystem — verified collections, collector utility, and exclusive unlocks tied to ownership.",
+      "Explore the digital side of the Mr. CAP ecosystem, verified collections, collector utility, and exclusive unlocks tied to ownership.",
     ctas: [
       { label: "Connect Wallet", href: "#wallet-connect", variant: "primary" as const },
       { label: "View on OpenSea", href: "https://opensea.io/mrcap1/created", variant: "secondary" as const },
@@ -13,7 +13,7 @@ export const nftPageData = {
   intro:
     "This page is built for collectors and curious newcomers alike. Browse the public collection, verify the on-chain details, and unlock private content if you hold an official Mr. CAP NFT.",
   contract: {
-    collection: "The Art of ISM – NFT Album",
+    collection: "The Art of ISM: NFT Album",
     chain: "Ethereum",
     standard: "ERC-1155",
     contractAddress: "0x495f947276749ce646f68ac8c248420045cb7b5e",
@@ -29,11 +29,11 @@ export const nftPageData = {
   faq: [
     {
       question: "What is The Art of ISM NFT album by Mr. CAP?",
-      answer: "The Art of ISM is Mr. CAP's pioneering NFT album — a verified on-chain collection on Ethereum (ERC-1155) that bridges Houston hip-hop with digital ownership and collector utility.",
+      answer: "The Art of ISM is Mr. CAP's pioneering NFT album, a verified on-chain collection on Ethereum (ERC-1155) that bridges Houston hip-hop with digital ownership and collector utility.",
     },
     {
       question: "How do NFTs help independent hip-hop artists maintain ownership?",
-      answer: "NFTs allow artists like Mr. CAP to sell music and art directly to collectors without intermediaries, preserving full creative and financial control — the same independence model the South Park Coalition pioneered decades ago.",
+      answer: "NFTs allow artists like Mr. CAP to sell music and art directly to collectors without intermediaries, preserving full creative and financial control, the same independence model the South Park Coalition pioneered decades ago.",
     },
     {
       question: "How does Mr. CAP use NFTs in music and digital art?",

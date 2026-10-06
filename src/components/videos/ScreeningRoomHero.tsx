@@ -68,7 +68,7 @@ const ScreeningRoomHero = () => {
         </h1>
 
         <p className="screen-reveal mt-5 text-lg text-muted-foreground max-w-xl mx-auto">
-          Official music videos, promos, interviews, and behind-the-scenes —
+          Official music videos, promos, interviews, and behind-the-scenes,
           the visual side of the ISM.
         </p>
 

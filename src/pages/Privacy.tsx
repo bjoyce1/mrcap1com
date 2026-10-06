@@ -1,26 +1,13 @@
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const Privacy = () => {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: "Privacy Policy",
-    url: "https://mrcap1.com/privacy",
-    isPartOf: { "@type": "WebSite", url: "https://mrcap1.com" },
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy | Mr. CAP</title>
-        <meta name="description" content="Privacy policy for mrcap1.com covering analytics, cookies, form data handling, and your rights." />
-        <link rel="canonical" href="https://mrcap1.com/privacy" />
-        <meta name="robots" content="noindex, follow" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/privacy")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />

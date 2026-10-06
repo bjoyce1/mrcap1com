@@ -70,7 +70,7 @@ const BuyButton = ({
         onClick={() => navigate("/library")}
       >
         <Download className="w-4 h-4 mr-2" />
-        Owned — Library
+        Owned: Library
       </Button>
     );
   }
@@ -93,7 +93,7 @@ const BuyButton = ({
           <DialogHeader>
             <DialogTitle>Buy "{title}"</DialogTitle>
             <DialogDescription>
-              ${price} USD — instant download after payment.
+              ${price} USD, instant download after payment.
             </DialogDescription>
           </DialogHeader>
 

@@ -95,9 +95,9 @@ const TimelineStage = ({ entries, lightboxIndex, onOpen }: Props) => {
       await navigator.clipboard.writeText(url);
       setCopiedSlug(slug);
       window.setTimeout(() => setCopiedSlug((s) => (s === slug ? null : s)), 1800);
-      toast.success("Link copied", { description: `${title} — ${url}` });
+      toast.success("Link copied", { description: `${title}, ${url}` });
     } catch {
-      toast.error("Couldn't copy — long-press the link to copy manually.");
+      toast.error("Couldn't copy, long-press the link to copy manually.");
     }
   };
 

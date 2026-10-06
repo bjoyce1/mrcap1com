@@ -13,20 +13,20 @@ export interface LiveHistoryEvent {
 
 export const liveHistory: LiveHistoryEvent[] = [
   {
-    title: "Point Blank — The Celebration!", date: "2023-11-11", dateLabel: "November 11, 2023",
+    title: "Point Blank: The Celebration!", date: "2023-11-11", dateLabel: "November 11, 2023",
     city: "Houston", state: "TX", venue: "Cooking With Flavour",
     context: "Mr. CAP listed as a special invited guest alongside K-Rino and Klondike Kat.",
     flyer: "/images/live/point-blank-celebration-houston-2023.jpg",
     source: "https://www.ogpointblank.com/event-details/pointblank-the-celebration",
   },
   {
-    title: "SPC Concert Series — Westminster", date: "2020-04-24", dateLabel: "April 24, 2020",
+    title: "SPC Concert Series: Westminster", date: "2020-04-24", dateLabel: "April 24, 2020",
     city: "Westminster", state: "CO", venue: "Sportswatch Bar and Grill",
     context: "Flyer lineup: K-Rino, Point Blank, Mr. CAP, Klondike Kat and The Terrorists.",
     flyer: "/images/live/spc-concert-westminster-2020.jpg", source: "https://www.ogpointblank.com/events",
   },
   {
-    title: "Wizard & the Blanksta — San Antonio", date: "2020-03-08", dateLabel: "March 8, 2020",
+    title: "Wizard & the Blanksta: San Antonio", date: "2020-03-08", dateLabel: "March 8, 2020",
     city: "San Antonio", state: "TX", venue: "Tequilas Sports Bar",
     context: "Mr. CAP pictured and named on the concert-series flyer with K-Rino and Point Blank.",
     flyer: "/images/live/spc-wizard-blanksta-san-antonio-2020.jpg", source: "https://www.ogpointblank.com/events",
@@ -44,25 +44,25 @@ export const liveHistory: LiveHistoryEvent[] = [
     flyer: "/images/live/point-blank-birthday-houston-2018.png", source: "https://www.ogpointblank.com/events",
   },
   {
-    title: "Do or Die — Still Poppin' Tour", date: "2018-01-12", dateLabel: "January 12, 2018",
+    title: "Do or Die: Still Poppin' Tour", date: "2018-01-12", dateLabel: "January 12, 2018",
     city: "Austin", state: "TX", venue: "Elysium",
     context: "Mr. CAP billed to perform live with K-Rino, Point Blank, Sniper and Statik-G.",
     flyer: "/images/live/spc-do-or-die-austin-2018.png", source: "https://www.ogpointblank.com/events",
   },
   {
-    title: "South Park Coalition — 30 Year Anniversary", date: "2017-07-29", dateLabel: "July 29, 2017",
+    title: "South Park Coalition: 30 Year Anniversary", date: "2017-07-29", dateLabel: "July 29, 2017",
     city: "Houston", state: "TX", venue: "Warehouse Live",
     context: "Mr. CAP named among the featured artists on the anniversary concert flyer.",
     flyer: "/images/live/spc-30th-anniversary-houston-2017.jpg", source: "https://www.ogpointblank.com/events",
   },
   {
-    title: "K-Rino & Point Blank — Warehouse Live", date: "2015-09-10", dateLabel: "September 10, 2015",
+    title: "K-Rino & Point Blank: Warehouse Live", date: "2015-09-10", dateLabel: "September 10, 2015",
     city: "Houston", state: "TX", venue: "Warehouse Live",
     context: "Mr. CAP named as host on the album-release concert flyer.",
     flyer: "/images/live/k-rino-point-blank-houston-2015.jpg", source: "https://www.ogpointblank.com/events",
   },
   {
-    title: "South Park Coalition — 35th Anniversary", dateLabel: "Date unconfirmed",
+    title: "South Park Coalition: 35th Anniversary", dateLabel: "Date unconfirmed",
     city: "Houston", state: "TX", venue: "18307 Egret Bay Blvd",
     context: "Mr. CAP named in the flyer lineup; the flyer gives September 10 but no year.",
     flyer: "/images/live/spc-35th-anniversary-houston.jpg", source: "https://www.ogpointblank.com/events",
@@ -86,7 +86,7 @@ export const liveHistory: LiveHistoryEvent[] = [
     flyer: "/images/live/spc-30th-after-party-houston.jpg", source: "https://www.ogpointblank.com/events",
   },
   {
-    title: "Point Blank & K-Rino — Frank's Birthday Bash", dateLabel: "Date unconfirmed",
+    title: "Point Blank & K-Rino: Frank's Birthday Bash", dateLabel: "Date unconfirmed",
     city: "Corpus Christi", state: "TX", venue: "Aria Sky Terrace & Lounge",
     context: "Mr. CAP named as host on the concert flyer; December 17, year unverified.",
     flyer: "/images/live/point-blank-k-rino-corpus-christi.jpg", source: "https://www.ogpointblank.com/events",

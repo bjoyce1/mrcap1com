@@ -178,7 +178,7 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
           <label>City / State<input name="city" autocomplete="address-level2"/></label>
           <label>Date<input name="event_date" type="date"/></label>
           <label>Request type<select name="booking_type">${BOOKING_TYPES.map((b) => `<option value="${b.value}" ${b.value === type ? 'selected' : ''}>${b.label}</option>`).join('')}</select></label>
-          <label>Budget range<input name="budget" placeholder="e.g. $2,500 – $5,000"/></label>
+          <label>Budget range<input name="budget" placeholder="e.g. $2,500 to $5,000"/></label>
           <label class="span-2">Details<textarea name="message" rows="4" placeholder="Event, set length, audience, anything we should know"></textarea></label>
         </div>
         <div class="row">
@@ -213,7 +213,7 @@ export function createModals(root, { audio, lenis, toast, insert: dbInsert, sign
       }
       const label = BOOKING_TYPES.find((b) => b.value === d.booking_type)?.label;
       const body = `Name: ${d.name}\nEmail: ${d.email}\nVenue: ${d.venue}\nCity: ${d.city}\nDate: ${d.event_date}\nType: ${label}\nBudget: ${d.budget}\n\n${d.message}`;
-      location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Booking inquiry — ${label} — ${d.name}`)}&body=${encodeURIComponent(body)}`;
+      location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Booking inquiry, ${label}, ${d.name}`)}&body=${encodeURIComponent(body)}`;
     });
   }
 

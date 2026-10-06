@@ -86,7 +86,7 @@ const singles = [{
   tracks: [
     { title: "I Ain't F*n With You Devils", artist: "Mr. Cap feat. Herb Of The Dynamite Squad", label: "CAP Distributions" },
     { title: "Big Navi L.A. Remix", artist: "Mr. Cap feat. Big Prez", label: "CAP Distributions" },
-    { title: "Unsolved Mysteries – The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
+    { title: "Unsolved Mysteries: The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
   ]
 }, {
   year: "2013",
@@ -150,7 +150,7 @@ const MusicSection = () => {
             </h2>
             <p className="text-muted-foreground mt-5 max-w-2xl font-light text-balance">
               From underground classics to digital-age releases, Mr. CAP's catalog reflects
-              a journey — not just a career.
+              a journey, not just a career.
             </p>
           </div>
         </ScrollReveal>
@@ -180,7 +180,7 @@ const MusicSection = () => {
                   <h3 className="font-editorial text-4xl md:text-5xl tracking-tight mb-2">Bet'n On Me</h3>
                   <p className="text-sm text-primary mb-4">Lead Single: "Bet'n On Me"</p>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed font-light text-balance">
-                    A grown-man statement album — honest, reflective, and unflinching.
+                    A grown-man statement album, honest, reflective, and unflinching.
                     CAP explores loyalty, pain, spirituality, survival, and growth over
                     cinematic production and Southern knock.
                   </p>

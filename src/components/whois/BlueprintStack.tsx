@@ -99,7 +99,7 @@ const BlueprintStack = () => {
             <div className="min-w-0 flex-1">
               <Reveal delay={0.1}>
                 <p className="text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)]">
-                  The South Park Coalition wasn't a label deal or a scene. It was a working model — masters retained, product moved direct, artists carried on tour by artists. Mr. CAP has spent a career inside that model and building on top of it.
+                  The South Park Coalition wasn't a label deal or a scene. It was a working model, masters retained, product moved direct, artists carried on tour by artists. Mr. CAP has spent a career inside that model and building on top of it.
                 </p>
               </Reveal>
               <Reveal delay={0.2}>

@@ -21,6 +21,7 @@ import RelatedReleases from "@/components/music/RelatedReleases";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
 import BuyButton from "@/components/music/BuyButton";
 import type { Album } from "@/stores/playerStore";
+import { trackSeo } from "@/seo/builders";
 
 function formatDuration(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -92,28 +93,9 @@ const TrackPage = () => {
     );
   }
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "MusicRecording",
-    name: track.title,
-    byArtist: { "@type": "MusicGroup", name: track.artist },
-    duration: `PT${Math.floor(track.duration / 60)}M${track.duration % 60}S`,
-    url: `https://mrcap1.com/music/${track.slug}`,
-    image: track.cover_art_url,
-    ...(album && {
-      inAlbum: { "@type": "MusicAlbum", name: album.title, url: `https://mrcap1.com/albums/${album.slug}` },
-    }),
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title={`${track.title} | Mr. CAP`}
-        description={`Official release page for "${track.title}" by ${track.artist}${track.featured_artists ? ` ft. ${track.featured_artists}` : ""}. Listen, read credits, view lyrics, and get the latest updates from Mr. CAP Legacy.`}
-        canonical={`https://mrcap1.com/music/${track.slug}`}
-        ogImage={track.cover_art_url ? (track.cover_art_url.startsWith("http") ? track.cover_art_url : `https://mrcap1com.lovable.app${track.cover_art_url}`) : undefined}
-        jsonLd={jsonLd}
-      />
+      <SEO entry={trackSeo(track, album)} />
       <Navigation />
 
       <section className="relative pt-28 pb-16 px-6">
@@ -141,7 +123,7 @@ const TrackPage = () => {
           />
 
           {!track.audio_url && (
-            <p className="text-sm text-muted-foreground italic mb-6">Audio coming soon — this track is being prepared for streaming.</p>
+            <p className="text-sm text-muted-foreground italic mb-6">Audio coming soon, this track is being prepared for streaming.</p>
           )}
 
           <div className="mb-6">

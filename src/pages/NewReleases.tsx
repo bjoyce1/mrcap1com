@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { Play, ArrowRight, Newspaper, Film, Disc3, Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { pressPageData } from "@/content/press";
+import { routeSeo } from "@/seo/routes";
 
 /* ───── data fetching ───── */
 
@@ -113,23 +114,9 @@ export default function NewReleases() {
     .filter((e) => e.relatedRelease && e.url?.startsWith("/press/"))
     .slice(0, 3);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "New Releases | Mr. CAP",
-    url: "https://mrcap1.com/new-releases",
-    description: "Explore the latest official releases from Mr. CAP on Mr. CAP Legacy.",
-    isPartOf: { "@type": "WebSite", name: "Mr. CAP", url: "https://mrcap1.com" },
-  };
-
   return (
     <>
-      <SEO
-        title="New Releases | Mr. CAP"
-        description="Explore the latest official releases from Mr. CAP on Mr. CAP Legacy, including music, stories, visuals, and release updates."
-        canonical="https://mrcap1.com/new-releases"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/new-releases")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -231,7 +218,7 @@ export default function NewReleases() {
                       {latest.artist} · {latest.type} · <span className="font-mono">{latest.releaseYear ?? ""}</span>
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
-                      The newest official release from Mr.&nbsp;CAP — available now on Mr. CAP Legacy. Stream, explore the story behind the music, and discover the full content ecosystem.
+                      The newest official release from Mr.&nbsp;CAP, available now on Mr. CAP Legacy. Stream, explore the story behind the music, and discover the full content ecosystem.
                     </p>
                     <div className="flex flex-wrap gap-3 pt-2">
                       <Button asChild>
@@ -403,7 +390,7 @@ export default function NewReleases() {
               <FanCaptureBanner
                 sourcePage="new-releases"
                 headline="Get New Releases First"
-                subheadline="Join Mr. CAP Legacy — stay updated on new music, videos, and shows from Mr. CAP."
+                subheadline="Join Mr. CAP Legacy, stay updated on new music, videos, and shows from Mr. CAP."
               />
             </div>
           </section>
@@ -415,7 +402,7 @@ export default function NewReleases() {
               <h2 className="text-2xl md:text-3xl font-display mb-4">Explore the Full Catalog</h2>
               <div className="archive-rule mt-4 mx-auto w-24 mb-8" />
               <p className="text-muted-foreground mb-8">
-                Dive deeper into 30+ years of Mr.&nbsp;CAP's music — from early underground classics to modern releases.
+                Dive deeper into 30+ years of Mr.&nbsp;CAP's music, from early underground classics to modern releases.
               </p>
               <Button asChild size="lg">
                 <Link to="/mr-cap-discography">

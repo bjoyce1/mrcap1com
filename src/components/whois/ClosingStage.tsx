@@ -91,7 +91,7 @@ const ClosingStage = ({ onOpenPressKit }: { onOpenPressKit: () => void }) => {
           <div className="mt-10 flex justify-center">
             <BiographyShareRow
               url="https://mrcap1.com/who-is-mr-cap"
-              title="Who Is Mr. CAP — The Legacy"
+              title="Who Is Mr. CAP: The Legacy"
               description="Houston-born rapper, South Park Coalition original, and cultural architect. Read the full biography."
             />
           </div>

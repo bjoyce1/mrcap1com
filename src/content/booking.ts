@@ -10,10 +10,10 @@ export const bookingPageData = {
     ],
   },
   intro:
-    "Mr. CAP is a Houston-born rapper, original South Park Coalition member, author, and entrepreneur with more than 30 years on stage and on record. Promoters, programmers, and media get a professional who shows up prepared, delivers, and makes the event easy.",
+    "Mr. CAP is a Houston-born rapper, Original Member of the South Park Coalition, author, and entrepreneur with more than 30 years on stage and on record. Promoters, programmers, and media get a professional who shows up prepared, delivers, and makes the event easy.",
   credentials: [
     { stat: "30+", label: "Years Performing" },
-    { stat: "SPC", label: "Coalition Co-Founder" },
+    { stat: "SPC", label: "Original Member" },
     { stat: "Sony", label: "The Orchard Distribution" },
     { stat: "PBS", label: "Documentary Credit" },
   ],
@@ -40,7 +40,7 @@ export const bookingPageData = {
     },
   ],
   whyBook:
-    "Original South Park Coalition member alongside K-Rino. Distributed through Sony Music and The Orchard. Featured in the Houston Press and connected to a PBS Lone Star Emmy documentary credit. Three decades of shows without missing a beat. When you book Mr. CAP, you book a professional with a track record, not a gamble.",
+    "Original Member of the South Park Coalition alongside K-Rino. Distributed through Sony Music and The Orchard. Featured in the Houston Press and connected to a PBS Lone Star Emmy documentary credit. Three decades of shows without missing a beat. When you book Mr. CAP, you book a professional with a track record, not a gamble.",
   trust: {
     responseTime: "Every inquiry receives a response within 48 hours.",
     directContact: "Prefer email? Reach the team directly at wrecklessent@gmail.com.",

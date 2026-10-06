@@ -41,7 +41,7 @@ const MilkMoneyFeature = () => {
             A short film inspired by the album{" "}
             <span className="text-foreground font-medium">The Art of ISM</span>.
             In a city where fake robberies are sold as entertainment for the rich,
-            a real crew attempts to hijack the illusion — only to discover the
+            a real crew attempts to hijack the illusion, only to discover the
             smartest hustler in the room has already rewritten the rules.
           </p>
 
@@ -94,7 +94,7 @@ const MilkMoneyFeature = () => {
           >
             <img
               src={POSTER_IMAGE}
-              alt="The Milk Money — official movie poster"
+              alt="The Milk Money, official movie poster"
               className="w-full h-auto block"
               loading="lazy"
             />

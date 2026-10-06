@@ -146,7 +146,7 @@ const ReleaseSpotlight = () => {
               <img
                 ref={coverImgRef}
                 src={albumTies}
-                alt="The Ties That Bind Us — SPC Group Album"
+                alt="The Ties That Bind Us: SPC Group Album"
                 className="w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -185,7 +185,7 @@ const ReleaseSpotlight = () => {
             </p>
 
             <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-lg">
-              A grown-man statement album — honest, reflective, and unflinching.
+              A grown-man statement album, honest, reflective, and unflinching.
               Featuring K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped
               version released January 2025.
             </p>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { z } from 'zod';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,8 @@ import { toast } from 'sonner';
 import { Mail, Lock, User, ArrowLeft, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const loginSchema = z.object({
   email: z.string().trim().email('Please enter a valid email address'),
@@ -101,10 +102,7 @@ const Auth = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Admin Login | Mr. CAP</title>
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      <SEO entry={routeSeo("/auth")} />
 
       <Navigation />
       <div className="min-h-screen bg-background flex items-center justify-center px-4 py-12 pt-24">

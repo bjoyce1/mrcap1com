@@ -31,7 +31,7 @@ const LinkedInIcon = ({ className }: { className: string }) => (
 
 export default function BiographyShareRow({ url, title, description, className = "" }: Props) {
   const [copied, setCopied] = useState(false);
-  const shareText = `${title} — ${description}`;
+  const shareText = `${title}, ${description}`;
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
@@ -59,7 +59,7 @@ export default function BiographyShareRow({ url, title, description, className =
       toast.success("Link copied", { description: url });
       markCopied();
     } catch {
-      toast.error("Couldn't copy — long-press the link to copy manually.");
+      toast.error("Couldn't copy, long-press the link to copy manually.");
     }
     logShare("copy_link");
   };

@@ -20,14 +20,14 @@ const BookingCTABand = () => {
             <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
               <Calendar className="w-5 h-5 text-primary" />
               <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                Now Booking 2025 — 08
+                Now Booking 2025-08
               </span>
             </div>
             <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-2">
               Book Mr. CAP for Your Event
             </h2>
             <p className="text-muted-foreground text-sm max-w-md">
-              Live shows, festivals, speaking panels, media interviews — available across Texas and beyond.
+              Live shows, festivals, speaking panels, media interviews, available across Texas and beyond.
             </p>
           </div>
 

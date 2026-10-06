@@ -71,10 +71,10 @@ const OriginCollage = () => {
 
           <Reveal delay={0.15} className="min-w-0 space-y-6 text-lg leading-relaxed text-[hsl(var(--foreground)/0.78)] lg:col-span-7">
             <p>
-              He was performing before most kids picked up an instrument — eight years old at his first show, later graduating from Jack Yates Senior High and moving through the city's earliest independent circuits with The Raise Up Posse.
+              He was performing before most kids picked up an instrument, eight years old at his first show, later graduating from Jack Yates Senior High and moving through the city's earliest independent circuits with The Raise Up Posse.
             </p>
             <p>
-              South Park taught the curriculum: <span className="text-foreground">realism, discipline, authenticity, survival.</span> The block wrote the syllabus. Everything after — the coalitions, the labels, the tokens — is the same lesson, translated forward.
+              South Park taught the curriculum: <span className="text-foreground">realism, discipline, authenticity, survival.</span> The block wrote the syllabus. Everything after, the coalitions, the labels, the tokens, is the same lesson, translated forward.
             </p>
           </Reveal>
         </div>

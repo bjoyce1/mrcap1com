@@ -1,10 +1,11 @@
-import { Helmet } from "react-helmet-async";
 import { ExternalLink, Music, Calendar, ShoppingBag, Mail, Disc3, Users, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import Navigation from "@/components/Navigation";
 import mrCapLogo from "@/assets/mr-cap-logo.webp";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const links = [
   {
@@ -66,27 +67,9 @@ const socialLinks = [
 ];
 
 const Links = () => {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Mr. CAP",
-    "url": "https://mrcap1.com/links",
-    "image": "https://mrcap1.com/images/mr-cap-logo.webp",
-    "sameAs": socialLinks.map(s => s.url)
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Mr. CAP | Links</title>
-        <meta name="description" content="Quick links to Mr. CAP's music, merch, shows, and more. Houston hip-hop legend and South Park Coalition co-founder." />
-        <link rel="canonical" href="https://mrcap1.com/links" />
-        <meta property="og:title" content="Mr. CAP | Links" />
-        <meta property="og:description" content="Quick links to Mr. CAP's music, merch, shows, and more." />
-        <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://mrcap1.com/links" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/links")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -109,7 +92,7 @@ const Links = () => {
             </div>
             <h1 className="text-2xl font-display font-bold mb-1">Mr. CAP</h1>
             <p className="text-muted-foreground text-sm">
-              Houston Hip-Hop Legend • SPC Co-Founder
+              Houston Hip-Hop Legend • Original Member of the South Park Coalition
             </p>
           </div>
 

@@ -6,14 +6,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <!-- Sitewide defaults — per-route title/description/canonical/og:*/twitter:*/JSON-LD
-         are owned by react-helmet-async in each page component, then frozen
-         into static HTML by vite-plugin-prerender at build time. -->
-    <title>Mr. CAP — Official Site</title>
-    <!-- data-rh marks this as Helmet-managed so react-helmet-async REPLACES it per route
-         instead of appending a second <meta name="description">. Keep the attribute. -->
-    <meta data-rh="true" name="description" content="Official site of Mr. CAP — Houston hip-hop artist, South Park Coalition member, and creative entrepreneur. Music, press, booking, and more." />
-    <meta name="author" content="Mr. CAP - Cornelius A. Pratt" />
+    <!-- Sitewide defaults. Per-route title, description, canonical, og:*, twitter:* and JSON-LD
+         come from src/seo/routes.ts: the build writes them into each route's own HTML file
+         (scripts/seo-pages-plugin.ts), and react-helmet-async keeps them current in the app.
+         data-rh="true" marks a tag as Helmet-managed so it is REPLACED per route, not duplicated. -->
+    <title>Mr. CAP | Official Site</title>
+    <meta data-rh="true" name="description" content="Official site of Mr. CAP, Houston rapper and Original Member of the South Park Coalition. New music, the full catalog, live booking, press, and digital art." />
+    <meta name="author" content="Mr. CAP (Cornelius A. Pratt)" />
 
     <!-- Robots -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -26,21 +25,25 @@
     <!-- Preload hero LCP image -->
     <link rel="preload" as="image" href="/images/mrcap-hero-bg.webp" fetchpriority="high" />
 
-    <!-- Sitewide Open Graph fallbacks (non-JS social crawlers).
-         Per-route og:title/og:description/og:url replace these via Helmet/prerender. -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Mr. CAP Legacy" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Mr. CAP - Houston Hip-Hop Artist" />
-
-    <!-- Sitewide Twitter Card fallbacks -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@mrcap1" />
+    <!-- Sitewide Open Graph and Twitter fallbacks; each route's built HTML replaces them. -->
+    <meta data-rh="true" property="og:type" content="website" />
+    <meta data-rh="true" property="og:site_name" content="Mr. CAP" />
+    <meta data-rh="true" property="og:locale" content="en_US" />
+    <meta data-rh="true" property="og:title" content="Mr. CAP | Official Site" />
+    <meta data-rh="true" property="og:description" content="Official site of Mr. CAP, Houston rapper and Original Member of the South Park Coalition. New music, the full catalog, live booking, press, and digital art." />
+    <meta data-rh="true" property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp" />
+    <meta data-rh="true" property="og:image:width" content="1200" />
+    <meta data-rh="true" property="og:image:height" content="630" />
+    <meta data-rh="true" property="og:image:alt" content="Mr. CAP, Houston hip-hop artist" />
+    <meta data-rh="true" name="twitter:card" content="summary_large_image" />
+    <meta data-rh="true" name="twitter:site" content="@mrcap1" />
+    <meta data-rh="true" name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp" />
     <meta name="twitter:creator" content="@mrcap1" />
-    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1772738660503-MrCAP-Hero-section-BG.webp" />
+
+    <!-- The route content block in <body> is for crawlers and visitors without JavaScript.
+         With JavaScript on it stays hidden until React replaces it, so nobody sees a flash. -->
+    <script>document.documentElement.classList.add("js");</script>
+    <style>.js #seo-static{display:none}</style>
 
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/png" href="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/uploads/1770684666573-capfavicon.png" />
@@ -107,10 +110,12 @@
 
   <body class="antialiased">
     <div id="root">
-      <!-- Minimal pre-hydration shell — route-specific content rendered by React -->
+      <!-- Dark pre-hydration background. Inside it, #seo-static is the page for crawlers and
+           visitors without JavaScript; the build replaces the part between the seo:body
+           markers with each route's own heading, summary and links (src/seo/routes.ts). -->
       <div style="background:#0B0C15;min-height:100vh">
-        <noscript>
-          <nav aria-label="Main navigation" style="position:relative;top:0;left:0;right:0;padding:1rem 2rem;display:flex;flex-wrap:wrap;gap:1.5rem;font-family:sans-serif;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1)">
+        <div id="seo-static" style="color:#fff;font-family:sans-serif">
+          <nav aria-label="Main navigation" style="padding:1rem 2rem;display:flex;flex-wrap:wrap;gap:1.5rem;border-bottom:1px solid rgba(255,255,255,0.1)">
             <a href="/" style="color:#D4A843;font-weight:700;font-size:1.25rem;text-decoration:none">Mr.&nbsp;CAP</a>
             <a href="/music" style="color:#ccc;text-decoration:none">Music</a>
             <a href="/live" style="color:#ccc;text-decoration:none">Shows</a>
@@ -123,35 +128,15 @@
             <a href="/mr-cap-discography" style="color:#ccc;text-decoration:none">Discography</a>
             <a href="/nft" style="color:#ccc;text-decoration:none">NFT</a>
           </nav>
-          <main style="color:#fff;font-family:sans-serif;padding:4rem 2rem;max-width:48rem;margin:0 auto">
-            <h1 style="color:#D4A843;font-weight:700;font-size:2rem;margin-bottom:0.5rem">Mr. CAP</h1>
-            <p style="color:#ccc;font-size:1.1rem;margin-bottom:2rem">Houston Hip-Hop Artist &amp; South Park Coalition Original Member</p>
+          <main style="padding:4rem 2rem;max-width:48rem;margin:0 auto">
+            <!--seo:body-->
+            <h1 style="color:#D4A843;font-weight:700;font-size:2rem;margin:0 0 1rem">Mr. CAP</h1>
+            <p style="color:#bbb;line-height:1.7;margin:0 0 1rem">Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, writer, and creative entrepreneur, and an Original Member of the South Park Coalition alongside K-Rino, Klondike Kat, and Point Blank. He has been making music for over 30 years, and in 2021 he became the first Houston rapper to sell a hip-hop NFT.</p>
+            <!--/seo:body-->
 
-            <section style="margin-bottom:2rem;text-align:left">
-              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">About Mr. CAP</h2>
-              <p style="color:#aaa;line-height:1.7">Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, writer, and creative entrepreneur. An original member of the legendary South Park Coalition alongside K-Rino, Klondike Kat, and Point Blank, he has been making music for over 30 years. In 2021, he became the first Houston rapper to sell a Hip-Hop NFT, bridging hip-hop culture and blockchain technology.</p>
-            </section>
-
-            <section style="margin-bottom:2rem;text-align:left">
-              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">Discography</h2>
-              <ul style="color:#aaa;line-height:2;list-style:none;padding:0">
-                <li>&#9658; <strong>The Ties That Bind Us</strong> (2024) — SPC group album, 19 tracks</li>
-                <li>&#9658; <strong>The Art of ISM</strong> (2019) — Sony Music / The Orchard</li>
-                <li>&#9658; <strong>2 Tha Grave</strong> (2011)</li>
-                <li>&#9658; <strong>O.N.E. on O.N.E.</strong> (2005)</li>
-              </ul>
-              <p style="margin-top:0.75rem"><a href="/mr-cap-discography" style="color:#D4A843">Explore the full catalog &rarr;</a></p>
-            </section>
-
-            <section style="margin-bottom:2rem;text-align:left">
-              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">Booking &amp; Contact</h2>
-              <p style="color:#aaa;line-height:1.7">Mr. CAP is available for concerts, festivals, features, speaking engagements, and interviews. Submit inquiries via the <a href="/booking" style="color:#D4A843">official booking form</a>.</p>
-              <p style="margin-top:0.75rem"><a href="/booking" style="color:#D4A843">Submit a booking request &rarr;</a></p>
-            </section>
-
-            <section style="margin-bottom:2rem;text-align:left">
-              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">Stream &amp; Follow</h2>
-              <p style="color:#aaa;line-height:2">
+            <section style="margin-top:2.5rem">
+              <h2 style="color:#D4A843;font-size:1.25rem;margin:0 0 0.75rem">Stream &amp; Follow</h2>
+              <p style="color:#aaa;line-height:2;margin:0">
                 <a href="https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug" style="color:#ccc" rel="noreferrer">Spotify</a> &middot;
                 <a href="https://music.apple.com/us/artist/mr-cap/1506719540" style="color:#ccc" rel="noreferrer">Apple Music</a> &middot;
                 <a href="https://www.youtube.com/@mrcap1" style="color:#ccc" rel="noreferrer">YouTube</a> &middot;
@@ -161,9 +146,9 @@
               </p>
             </section>
 
-            <section style="margin-bottom:2rem;text-align:left">
-              <h2 style="color:#D4A843;font-size:1.25rem;margin-bottom:0.75rem">Explore</h2>
-              <p style="color:#aaa;line-height:2.2">
+            <section style="margin-top:2rem">
+              <h2 style="color:#D4A843;font-size:1.25rem;margin:0 0 0.75rem">Explore</h2>
+              <p style="color:#aaa;line-height:2.2;margin:0">
                 <a href="/who-is-mr-cap" style="color:#ccc">Who Is Mr. CAP?</a> &middot;
                 <a href="/south-park-coalition" style="color:#ccc">South Park Coalition</a> &middot;
                 <a href="/houston-hip-hop-history" style="color:#ccc">Houston Hip-Hop History</a> &middot;
@@ -179,7 +164,7 @@
 
             <p style="color:#666;font-size:0.8rem;margin-top:3rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:1rem">&copy; 2026 Mr. CAP. All rights reserved. South Park Coalition &middot; Houston, TX</p>
           </main>
-        </noscript>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>

@@ -13,6 +13,8 @@ import MediaKitBlock from "@/components/press/MediaKitBlock";
 import QuoteBlock from "@/components/blocks/QuoteBlock";
 import { pressPageData as data } from "@/content/press";
 import { useSanityPressEntries, type SanityPressEntry } from "@/hooks/useSanity";
+import { routeSeo } from "@/seo/routes";
+import { pressListLd } from "@/seo/builders";
 
 function sanityToTimeline(e: SanityPressEntry) {
   return {
@@ -48,60 +50,19 @@ const Press = () => {
   const hasSanity = sanityPress && sanityPress.length > 0;
   const timeline = hasSanity ? sanityPress.map(sanityToTimeline) : data.timeline;
 
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfilePage",
-      name: "Mr. CAP Press Archive",
-      url: "https://mrcap1.com/press",
-      mainEntity: {
-        "@type": "Person",
-        name: "Mr. CAP",
-        alternateName: "Cornelius A. Pratt",
-        sameAs: [
-          "https://www.instagram.com/mrcapism/",
-          "https://x.com/mrcap1",
-          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-          "https://www.wikidata.org/wiki/Q139960172",
-        ],
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      name: "Press Mentions",
-      itemListElement: timeline.map((entry, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        item: {
-          "@type": "NewsArticle",
-          headline: entry.title,
-          datePublished: entry.date,
-          author: entry.author ? { "@type": "Person", name: entry.author } : undefined,
-          publisher: { "@type": "Organization", name: entry.outlet },
-          description: entry.summary,
-          url: entry.url || undefined,
-        },
+  // the press list, from whichever source the page is showing (Sanity or the repo's archive)
+  const pressExtraJsonLd = [
+    pressListLd(
+      timeline.map((e) => ({
+        ...e,
+        slug: (e as { slug?: string }).slug || e.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
       })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-        { "@type": "ListItem", position: 2, name: "Press", item: "https://mrcap1.com/press" },
-      ],
-    },
+    ),
   ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title="Press Kit | Mr. CAP Bios, Photos, Logos & Media Resources"
-        description="Download approved bios, press photos, logos, and media resources for coverage, interviews, and event promotion."
-        canonical="https://mrcap1.com/press"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/press")} extraJsonLd={pressExtraJsonLd} />
       <Navigation />
 
       <main>
@@ -132,7 +93,7 @@ const Press = () => {
             </div>
 
             <QuoteBlock
-              quote="The press doesn't define the legacy — but it documents it. This archive is the record."
+              quote="The press doesn't define the legacy, but it documents it. This archive is the record."
               attribution="Mr. CAP"
             />
           </div>

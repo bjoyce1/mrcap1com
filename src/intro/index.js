@@ -195,7 +195,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     setProgress(1);
   } catch (err) {
     const aborted = signal.aborted;
-    if (!aborted) console.warn('[intro] could not start — continuing to the site', err);
+    if (!aborted) console.warn('[intro] could not start, continuing to the site', err);
     ac.abort();
     audio?.destroy();
     try { universe?.dispose(); engine?.dispose([booth?.scene, universe?.scene].filter(Boolean)); } catch { /* context already gone */ }

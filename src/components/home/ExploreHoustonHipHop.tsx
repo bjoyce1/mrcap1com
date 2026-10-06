@@ -6,19 +6,19 @@ import SectionShell from "@/components/home/SectionShell";
 const cards = [
   {
     title: "Houston Hip Hop History",
-    description: "The independent blueprint that changed the music industry — told from the inside.",
+    description: "The independent blueprint that changed the music industry, told from the inside.",
     href: "/houston-hip-hop-history",
     icon: BookOpen,
   },
   {
     title: "South Park Coalition Legacy",
-    description: "Meet the collective that proved ownership beats clout — 30+ years strong.",
+    description: "Meet the collective that proved ownership beats clout, 30+ years strong.",
     href: "/south-park-coalition-houston",
     icon: Users,
   },
   {
     title: "Mr. CAP Press Coverage",
-    description: "Houston Chronicle, Houston Press, and more — the documented record.",
+    description: "Houston Chronicle, Houston Press, and more, the documented record.",
     href: "/press",
     icon: Newspaper,
   },

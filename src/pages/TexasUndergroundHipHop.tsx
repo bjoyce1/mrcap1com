@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -6,87 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Music, MapPin, ChevronRight, Calendar, Mic2, Play } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
 import heroBg from "@/assets/hero-bg.webp";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const TexasUndergroundHipHop = () => {
-  const pageTitle = "Texas Underground Hip-Hop | Mr. CAP – Houston Rap Pioneer";
-  const metaDescription = "Explore Texas underground hip-hop through Mr. CAP, a Houston rap pioneer and South Park Coalition original. Stream authentic Texas rap, book shows, and discover the underground scene.";
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "headline": "Texas Underground Hip-Hop and the Legacy of Mr. CAP",
-        "author": {
-          "@type": "Person",
-          "name": "Mr. CAP"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "CAP Distributions"
-        },
-        "mainEntityOfPage": "https://mrcap1.com/texas-underground-hip-hop",
-        "description": "An inside look at Texas underground hip-hop culture and the role Mr. CAP plays in its legacy."
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is Texas underground hip-hop?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Texas underground hip-hop refers to the independent rap scene in Texas, particularly Houston, Dallas, and San Antonio. It includes artists who release music independently, often through their own labels, without major label support. Key figures include South Park Coalition, Swishahouse, and Screwed Up Click."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Who are the pioneers of Houston underground hip-hop?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Pioneers of Houston underground hip-hop include DJ Screw (chopped and screwed music), K-Rino and the South Park Coalition (independent rap collective), Scarface and the Geto Boys (bringing Houston to mainstream), and artists like Mr. CAP, Z-Ro, and Trae tha Truth who built careers independently."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How is Texas underground hip-hop different from mainstream rap?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Texas underground hip-hop is characterized by independence (artists own their masters), lyrical focus (complex wordplay and storytelling), regional pride (Houston, Dallas, San Antonio identity), and longevity (careers spanning decades vs. one-hit wonders). Artists like Mr. CAP have been active for 30+ years."
-            }
-          }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Texas Underground Hip-Hop", "item": "https://mrcap1.com/texas-underground-hip-hop" }
-        ]
-      }
-    ]
-  };
-
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content="Texas underground hip hop, Houston rap, underground rap Texas, independent hip hop, South Park Coalition, Mr CAP, Texas rapper, Houston underground, Southern rap, Texas music" />
-        <link rel="canonical" href="https://mrcap1.com/texas-underground-hip-hop" />
-        
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mrcap1.com/texas-underground-hip-hop" />
-        
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@mrcap1" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={metaDescription} />
-        
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/texas-underground-hip-hop")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -118,8 +43,8 @@ const TexasUndergroundHipHop = () => {
               </h1>
               
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                Discover Texas underground hip-hop through Mr. CAP, a Houston pioneer and South Park 
-                Coalition original member. Real music, independent spirit, 30+ years of authenticity.
+                Discover Texas underground hip-hop through Mr. CAP, a Houston pioneer and an Original Member of the South Park
+                Coalition. Real music, independent spirit, 30+ years of authenticity.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -228,7 +153,7 @@ const TexasUndergroundHipHop = () => {
                 <div className="prose prose-lg prose-invert max-w-none space-y-6">
                   <p className="text-muted-foreground text-lg leading-relaxed">
                     <strong>Mr. CAP</strong> represents the essence of Texas underground hip-hop. As an 
-                    original member of the <Link to="/south-park-coalition-houston" className="text-primary hover:underline">South Park Coalition</Link> since 
+                    Original Member of the <Link to="/south-park-coalition-houston" className="text-primary hover:underline">South Park Coalition</Link> since 
                     1992, he has spent over 30 years building his career independently.
                   </p>
                   <p className="text-muted-foreground text-lg leading-relaxed">

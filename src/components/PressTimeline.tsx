@@ -18,7 +18,7 @@ const pressItems: PressItem[] = [
     dateISO: "2014-04-08",
     author: "Andrew Dansby",
     summary:
-      "A Houston Chronicle profile on Mr. CAP's return to Houston, musical lineage, and SPC connection—framed as long-term artistry and independence.",
+      "A Houston Chronicle profile on Mr. CAP's return to Houston, musical lineage, and SPC connection, framed as long-term artistry and independence.",
     prominent: true,
   },
   {
@@ -48,7 +48,7 @@ const pressItems: PressItem[] = [
     dateISO: "2016-10-17",
     author: "Nathan Smith",
     summary:
-      "A Houston Press snapshot of SPC's continuing presence on Houston stages—evidence of sustained relevance and live-performance credibility.",
+      "A Houston Press snapshot of SPC's continuing presence on Houston stages, evidence of sustained relevance and live-performance credibility.",
     prominent: true,
   },
 ];

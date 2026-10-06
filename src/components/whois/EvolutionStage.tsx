@@ -93,10 +93,10 @@ const EvolutionStage = () => {
       <span className="text-foreground">CAP Distributions</span> puts independent artists on global platforms without giving up ownership.
     </>,
     <>
-      In February 2021, Mr. CAP became the <span className="text-foreground">first Houston rapper to sell a Hip-Hop NFT</span> — extending the ownership principle into on-chain culture alongside blockchain projects like <span className="text-foreground">Capicoin (CCHX)</span>.
+      In February 2021, Mr. CAP became the <span className="text-foreground">first Houston rapper to sell a Hip-Hop NFT</span>, extending the ownership principle into on-chain culture alongside blockchain projects like <span className="text-foreground">Capicoin (CCHX)</span>.
     </>,
     <>
-      <span className="text-foreground">The Art of ISM</span> is where the philosophy lives out loud — album, book, and a worldview built around individual sovereignty.
+      <span className="text-foreground">The Art of ISM</span> is where the philosophy lives out loud, album, book, and a worldview built around individual sovereignty.
     </>,
   ];
 
@@ -202,7 +202,7 @@ const EvolutionStage = () => {
                   <motion.div style={{ rotateY: rotY, rotateX: rotX, rotateZ: tilt, scale: coinScale }} className="h-full w-full will-change-transform">
                     <img
                       src={coin}
-                      alt="Mr. CAP coin — Capicoin monogram"
+                      alt="Mr. CAP coin: Capicoin monogram"
                       loading="lazy"
                       decoding="async"
                       className="h-full w-full object-contain drop-shadow-[0_30px_50px_hsl(var(--accent-gold)/0.28)]"

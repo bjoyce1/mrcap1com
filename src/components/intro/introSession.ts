@@ -31,5 +31,5 @@ export function shouldPlayIntro(): boolean {
 
 export function markIntroSeen() {
   seenThisLoad = true;
-  try { sessionStorage.setItem(SEEN_KEY, "1"); } catch { /* storage blocked — the in-memory flag covers this load */ }
+  try { sessionStorage.setItem(SEEN_KEY, "1"); } catch { /* storage blocked, the in-memory flag covers this load */ }
 }

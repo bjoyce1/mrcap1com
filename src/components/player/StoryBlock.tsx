@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 /** Maps a release year to an era label + short contextual note. */
 function getEraContext(year: number | null | undefined): { era: string; note: string } | null {
   if (!year) return null;
-  if (year <= 2004) return { era: "Early Houston Roots", note: "From the streets of Third Ward to the mic — this era laid the foundation." };
-  if (year <= 2007) return { era: "South Park Coalition Era", note: "Recorded during Mr. CAP's formative years as an original SPC member." };
+  if (year <= 2004) return { era: "Early Houston Roots", note: "From the streets of Third Ward to the mic, this era laid the foundation." };
+  if (year <= 2007) return { era: "South Park Coalition Era", note: "Recorded during Mr. CAP's formative years as an Original Member of the South Park Coalition." };
   if (year <= 2012) return { era: "Independent Grind", note: "A period of relentless output, building a catalog brick by brick." };
-  if (year <= 2016) return { era: "Business & Brand Building", note: "Music meets entrepreneurship — CAP Distributions and Mortuary Media take shape." };
-  if (year <= 2026) return { era: "The Art of ISM", note: "A creative peak — narrative-driven lyricism meets major distribution through Sony / The Orchard." };
-  if (year <= 2022) return { era: "Documentary & Legacy", note: "Shifting focus to storytelling beyond music — film, recognition, and cultural preservation." };
-  return { era: "Web3 & Ownership", note: "Pioneering digital ownership — NFTs, first-party streaming, and direct-to-fan infrastructure." };
+  if (year <= 2016) return { era: "Business & Brand Building", note: "Music meets entrepreneurship: CAP Distributions and Mortuary Media take shape." };
+  if (year <= 2026) return { era: "The Art of ISM", note: "A creative peak, narrative-driven lyricism meets major distribution through Sony / The Orchard." };
+  if (year <= 2022) return { era: "Documentary & Legacy", note: "Shifting focus to storytelling beyond music, film, recognition, and cultural preservation." };
+  return { era: "Web3 & Ownership", note: "Pioneering digital ownership: NFTs, first-party streaming, and direct-to-fan infrastructure." };
 }
 
 interface StoryBlockProps {

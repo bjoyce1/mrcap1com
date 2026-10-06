@@ -1,11 +1,12 @@
-import { Helmet } from "react-helmet-async";
 import { Download, FileText, Image, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import OPKLayout from "@/components/OPKLayout";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const pressHighlights = [
-  "Member of the South Park Coalition",
+  "Original Member of the South Park Coalition",
   "Documentary contributor (The Life: Sex Trafficking and Modern-Day Slavery)",
   "First Houston rapper to sell a hip-hop NFT (Feb 25, 2021)",
 ];
@@ -27,46 +28,7 @@ const OPKPress = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Mr. CAP | Press Kit – Media & Interview Requests</title>
-        <meta name="description" content="Official press kit for Mr. CAP. Download bio, photos, and media assets. Request interviews and features with Houston hip-hop veteran." />
-        <link rel="canonical" href="https://mrcap1.com/opk/press" />
-        <meta property="og:title" content="Mr. CAP | Press Kit – Media & Interview Requests" />
-        <meta property="og:description" content="Download press materials and request interviews with Mr. CAP." />
-        <meta property="og:url" content="https://mrcap1.com/opk/press" />
-        <meta property="og:image" content="https://mrcap1.com/images/opk-download.webp" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="1200" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://mrcap1.com/images/opk-download.webp" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Mr. CAP Press Kit",
-            "description": "Official press kit for Mr. CAP with bio, photos, and media assets.",
-            "url": "https://mrcap1.com/opk/press",
-            "mainEntity": {
-              "@type": "Person",
-              "@id": "https://mrcap1.com/#person",
-              "name": "Mr. CAP",
-              "description": "Houston-based hip-hop artist and member of the South Park Coalition.",
-              "knowsAbout": ["Hip-Hop Music", "Blockchain", "NFT", "Independent Music"],
-              "award": "First Houston rapper to sell a hip-hop NFT",
-              "memberOf": { "@type": "MusicGroup", "name": "South Park Coalition" }
-            },
-            "breadcrumb": {
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" },
-                { "@type": "ListItem", "position": 3, "name": "Press", "item": "https://mrcap1.com/opk/press" }
-              ]
-            }
-          })}
-        </script>
-      </Helmet>
+      <SEO entry={routeSeo("/opk/press")} />
 
       <OPKLayout
         title="Houston Hip-Hop Legacy, Built to Last"
@@ -82,7 +44,7 @@ const OPKPress = () => {
               <h2 className="gsap-item text-2xl font-display font-bold mb-6 text-center">Press Bio</h2>
               <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-8">
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Mr. CAP is a Houston-based hip-hop artist whose career reflects the evolution of Southern rap culture. As a member of the iconic South Park Coalition, he emerged from the same creative ecosystem that helped define Houston's influence on hip-hop worldwide.
+                  Mr. CAP is a Houston-based hip-hop artist whose career reflects the evolution of Southern rap culture. As an Original Member of the South Park Coalition, he emerged from the same creative ecosystem that helped define Houston's influence on hip-hop worldwide.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                   Beyond music, Mr. CAP has expanded into media, film, and digital innovation. He contributed music and perspective to the documentary The Life: Sex Trafficking and Modern-Day Slavery.

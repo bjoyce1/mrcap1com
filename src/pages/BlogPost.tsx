@@ -1,6 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useEffect, useMemo, Fragment } from "react";
-import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import NewsletterSignup from "@/components/NewsletterSignup";
@@ -9,6 +8,8 @@ import { useSanityBlogPost, useSanityBlogPosts } from "@/hooks/useSanity";
 import { ChevronRight, Clock, Calendar, Tag, Share2, Twitter, Facebook, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trackBlogRead } from "@/components/GoogleAnalytics";
+import SEO from "@/components/SEO";
+import { blogPostSeo } from "@/seo/builders";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -60,75 +61,11 @@ const BlogPost = () => {
       .slice(0, 2);
   }, [sanityAll, post]);
 
-  const wordCount = post.content ? post.content.split(/\s+/).length : 0;
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": post.title,
-    "description": post.excerpt,
-    "datePublished": post.date,
-    "dateModified": post.date,
-    "author": {
-      "@type": "Person",
-      "name": post.author,
-      "url": "https://mrcap1.com/who-is-mr-cap",
-      "sameAs": [
-        "https://instagram.com/mrcapism",
-        "https://twitter.com/mrcap1",
-        "https://www.wikidata.org/wiki/Q139960172"
-      ]
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Mr. CAP",
-      "url": "https://mrcap1.com",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://mrcap1.com/og-image.png"
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://mrcap1.com/blog/${post.slug}`
-    },
-    "articleSection": post.category,
-    "keywords": post.tags.join(", "),
-    ...(post.image ? { "image": { "@type": "ImageObject", "url": post.image } } : {}),
-    ...(wordCount > 0 ? { "wordCount": wordCount } : {}),
-    "inLanguage": "en-US",
-    "isAccessibleForFree": true,
-    "about": {
-      "@type": "Person",
-      "name": "Mr. CAP",
-      "description": "Houston hip-hop veteran and Web3 pioneer"
-    }
-  };
-
   const shareUrl = `https://mrcap1.com/blog/${post.slug}`;
 
   return (
     <>
-      <Helmet>
-        <title>{post.title} | Mr. CAP Blog</title>
-        <meta name="description" content={post.excerpt} />
-        <link rel="canonical" href={`https://mrcap1.com/blog/${post.slug}`} />
-        
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:image" content={post.image || "https://mrcap1.com/og-image.png"} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://mrcap1.com/blog/${post.slug}`} />
-        <meta property="article:published_time" content={post.date} />
-        <meta property="article:author" content={post.author} />
-        <meta property="article:section" content={post.category} />
-        
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.excerpt} />
-        
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={blogPostSeo(post)} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />

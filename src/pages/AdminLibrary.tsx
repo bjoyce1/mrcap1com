@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import Navigation from "@/components/Navigation";
 import type { Album, Track } from "@/stores/playerStore";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const AdminLibrary = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -164,7 +165,7 @@ const AdminLibrary = () => {
 
   return (
     <>
-      <Helmet><title>Music Library Admin | Mr. CAP</title><meta name="robots" content="noindex, nofollow" /></Helmet>
+      <SEO entry={routeSeo("/admin/library")} />
       <div className="min-h-screen bg-background">
         <Navigation />
         <header className="border-b border-border/30 bg-card/50 backdrop-blur-sm sticky top-0 z-50">

@@ -114,7 +114,7 @@ const TrafficMagnetSection = () => {
                 
                 <h3 className="font-editorial text-2xl md:text-3xl mb-2">Bet'n On Me</h3>
                 <p className="text-sm text-muted-foreground mb-6 text-balance">
-                  Lead single from "The Ties That Bind Us" — a grown-man anthem about self-belief, 
+                  Lead single from "The Ties That Bind Us", a grown-man anthem about self-belief, 
                   resilience, and staying the course.
                 </p>
                 

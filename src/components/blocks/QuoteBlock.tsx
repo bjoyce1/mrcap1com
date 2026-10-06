@@ -11,14 +11,14 @@ const QuoteBlock = ({ quote, attribution }: QuoteBlockProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    const text = attribution ? `"${quote}" — ${attribution}` : `"${quote}"`;
+    const text = attribution ? `"${quote}", ${attribution}` : `"${quote}"`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleShare = () => {
-    const text = attribution ? `"${quote}" — ${attribution}` : `"${quote}"`;
+    const text = attribution ? `"${quote}", ${attribution}` : `"${quote}"`;
     if (navigator.share) {
       navigator.share({ text, url: window.location.href });
     } else {
@@ -36,7 +36,7 @@ const QuoteBlock = ({ quote, attribution }: QuoteBlockProps) => {
     >
       <p className="text-lg italic text-foreground/90 leading-relaxed">"{quote}"</p>
       {attribution && (
-        <cite className="block mt-2 text-sm text-muted-foreground not-italic">— {attribution}</cite>
+        <cite className="block mt-2 text-sm text-muted-foreground not-italic">{attribution}</cite>
       )}
       <div className="flex gap-2 mt-3">
         <button

@@ -78,6 +78,7 @@ const TikTok = lazy(() => import("./pages/TikTok"));
 const AdminApi = lazy(() => import("./pages/AdminApi"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
 const Vinyl = lazy(() => import("./pages/Vinyl"));
+const SelfLoveComingSoon = lazy(() => import("./pages/SelfLoveComingSoon"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -171,8 +172,8 @@ function AppRoutes() {
             <Route path="/self-love" element={<PageTransition><SelfLoveInstallation /></PageTransition>} />
             <Route path="/self-love/2024" element={<PageTransition><SelfLoveRoom2024 /></PageTransition>} />
             <Route path="/self-love/2024/:slug" element={<PageTransition><SelfLoveStory /></PageTransition>} />
-            <Route path="/self-love/2025" element={<PageTransition><div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2025 — Coming Soon</p></div></PageTransition>} />
-            <Route path="/self-love/2026" element={<PageTransition><div className="min-h-screen bg-background text-foreground flex items-center justify-center"><p className="text-xl">2026 — Coming Soon</p></div></PageTransition>} />
+            <Route path="/self-love/2025" element={<PageTransition><SelfLoveComingSoon year={2025} /></PageTransition>} />
+            <Route path="/self-love/2026" element={<PageTransition><SelfLoveComingSoon year={2026} /></PageTransition>} />
             {/* Merch & Streaming */}
             <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />

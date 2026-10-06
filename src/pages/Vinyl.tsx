@@ -7,6 +7,7 @@ import { ArrowRight, Disc3, Package, Truck, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import albumArtOfIsm from "@/assets/album-art-of-ism.webp";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import { routeSeo } from "@/seo/routes";
 
 const BUY_URL = "https://elasticstage.com/mrcap/releases/the-art-of-ism-album";
 const PRICE = "31.90";
@@ -72,41 +73,6 @@ const TrackList = ({ side, tracks }: { side: string; tracks: typeof sideA }) => 
 );
 
 const Vinyl = () => {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Product",
-        name: 'The Art of ISM — 12" Vinyl',
-        image: "https://mrcap1.com/images/covers/album-art-of-ism.webp",
-        description:
-          'Limited 12" vinyl pressing of Mr. CAP\'s 2019 album The Art of ISM. 11 tracks across two sides, pressed and shipped worldwide.',
-        brand: { "@type": "Brand", name: "Mr. CAP" },
-        offers: {
-          "@type": "Offer",
-          price: PRICE,
-          priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
-          url: BUY_URL,
-        },
-      },
-      {
-        "@type": "MusicAlbum",
-        name: "The Art of ISM",
-        byArtist: { "@type": "MusicGroup", name: "Mr. CAP" },
-        datePublished: "2019-09-21",
-        numTracks: 11,
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-          { "@type": "ListItem", position: 2, name: "Vinyl", item: "https://mrcap1.com/vinyl" },
-        ],
-      },
-    ],
-  };
-
   const onBuy = () =>
     trackEvent("begin_checkout", {
       item_name: "The Art of ISM Vinyl",
@@ -116,12 +82,7 @@ const Vinyl = () => {
 
   return (
     <>
-      <SEO
-        title='The Art of ISM Vinyl — 12" Record by Mr. CAP'
-        description='Order the official 12" vinyl pressing of Mr. CAP&apos;s The Art of ISM. 11 tracks, two sides, pressed to order and shipped worldwide.'
-        canonical="https://mrcap1.com/vinyl"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/vinyl")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -163,7 +124,7 @@ const Vinyl = () => {
                       Mr. CAP // 2019 // 11 Tracks // 39 min 4 sec
                     </p>
                     <p className="text-muted-foreground max-w-lg">
-                      The 2019 album pressed to a 12" record — personal growth, artistic
+                      The 2019 album pressed to a 12" record, personal growth, artistic
                       expression and street knowledge cut into two sides. Features Ms. Cookie,
                       Point Blank, Lil Kano, S.U.C. Jhiame, Oddy D, Movin Maserati and
                       Desiree McKinny.

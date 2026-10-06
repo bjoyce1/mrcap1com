@@ -57,7 +57,7 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
             <div className="relative group rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
               <img
                 src={limitlessCover}
-                alt="Limitless — Mr. CAP ft. K-Rino"
+                alt="Limitless: Mr. CAP ft. K-Rino"
                 className="w-full aspect-square object-cover"
                 loading="lazy"
               />
@@ -127,7 +127,7 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
                     width="100%"
                     height="100%"
                     src="https://www.youtube.com/embed/nojd0u9jBr0?autoplay=1"
-                    title="Limitless — Mr. CAP ft. K-Rino (Official Video)"
+                    title="Limitless: Mr. CAP ft. K-Rino (Official Video)"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
@@ -227,7 +227,7 @@ const LimitlessSpotlight = forwardRef<HTMLElement>((_, ref) => {
               Hip Hop NFT on the blockchain. This is a major milestone for
               independent artists and the city of Houston."
               <span className="block mt-1 not-italic text-xs text-primary">
-                — Mr. CAP
+                Mr. CAP
               </span>
             </blockquote>
           </div>

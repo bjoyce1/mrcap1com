@@ -40,16 +40,16 @@ export function NftMilestoneSection() {
                 popular NFT marketplace <span className="font-semibold">OpenSea</span>.
               </p>
               <p>
-                An NFT (Non-Fungible Token) is a unique digital asset—such as music,
-                art, film, or media—verified on a blockchain for authenticity and
+                An NFT (Non-Fungible Token) is a unique digital asset, such as music,
+                art, film, or media, verified on a blockchain for authenticity and
                 ownership. Unlike a typical audio file, Mr. CAP's "Limitless" NFT was
                 created as a one-of-a-kind, collectible piece of Hip Hop history and
                 acquired by a private collector for a noteworthy four-figure sum.
               </p>
               <p>
                 Born <span className="font-semibold">Cornelius A. Pratt</span>, Mr. CAP
-                is a longtime figure in the Houston rap scene and an original member
-                of the legendary{" "}
+                is a longtime figure in the Houston rap scene and an Original Member
+                of the{" "}
                 <span className="font-semibold">South Park Coalition (SPC)</span>, with
                 a career spanning over three decades and collaborations that include
                 K-Rino, Point Blank, Klondike Kat, and more.
@@ -61,7 +61,7 @@ export function NftMilestoneSection() {
                 more creatives to embrace this technology and discover new ways to
                 share and protect their work."
                 <span className="block mt-1 not-italic text-[11px] text-emerald-300">
-                  — Mr. CAP
+                  Mr. CAP
                 </span>
               </p>
               <p>

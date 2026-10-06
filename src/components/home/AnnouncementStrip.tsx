@@ -33,7 +33,7 @@ const AnnouncementStrip = () => {
         <Disc3 className="w-4 h-4 text-primary animate-spin" style={{ animationDuration: "3s" }} />
         <span className="text-foreground/80 font-medium">
           <span className="text-primary font-semibold">NEW:</span>{" "}
-          "The Ties That Bind Us" — SPC Group Album Out Now
+          "The Ties That Bind Us": SPC Group Album Out Now
         </span>
         <Link
           to="/mr-cap-discography"

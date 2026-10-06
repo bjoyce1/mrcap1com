@@ -1,5 +1,4 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,8 @@ import { getCityBySlug, getCitiesByState, allCities, type CityData } from "@/dat
 import { MapPin, Calendar, Music, Mic2, ChevronRight, Play, ExternalLink } from "lucide-react";
 import CitationBlock from "@/components/CitationBlock";
 import heroBg from "@/assets/hero-bg.webp";
+import SEO from "@/components/SEO";
+import { citySeo } from "@/seo/builders";
 
 const CityLanding = () => {
   const { citySlug } = useParams<{ citySlug: string }>();
@@ -18,64 +19,9 @@ const CityLanding = () => {
 
   const stateCities = getCitiesByState(city.state).filter(c => c.slug !== city.slug).slice(0, 6);
   
-  const pageTitle = `Mr. CAP in ${city.name}, ${city.stateAbbr} | Hip-Hop Shows, Music & Booking`;
-  const metaDescription = `Discover Mr. CAP in ${city.name}, ${city.stateAbbr} – South Park Coalition original member bringing Houston hip-hop energy, live performances, and independent music to ${city.name}. Book shows and stream the music.`;
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "name": `Mr. CAP – Live Shows in ${city.name}, ${city.stateAbbr}`,
-        "url": `https://mrcap1.com/city/${city.slug}`,
-        "image": "https://mrcap1.com/images/mrcap-live.jpg",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": city.name,
-          "addressRegion": city.stateAbbr,
-          "addressCountry": "US"
-        },
-        "areaServed": city.name,
-        "sameAs": ["https://mrcap1.com"]
-      },
-      {
-        "@type": "Person",
-        "@id": "https://mrcap1.com/#person",
-        "name": "Mr. CAP",
-        "alternateName": "Cornelius A. Pratt",
-        "description": "Houston hip-hop artist, South Park Coalition original member",
-        "jobTitle": "Hip-Hop Artist"
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Cities", "item": "https://mrcap1.com/cities" },
-          { "@type": "ListItem", "position": 3, "name": city.name, "item": `https://mrcap1.com/city/${city.slug}` }
-        ]
-      }
-    ]
-  };
-
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={`${city.name} hip hop, ${city.name} rap concerts, Mr. CAP ${city.name}, South Park Coalition ${city.stateAbbr}, Houston rapper ${city.name}, book rapper ${city.name}`} />
-        <link rel="canonical" href={`https://mrcap1.com/city/${city.slug}`} />
-        
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://mrcap1.com/city/${city.slug}`} />
-        
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={metaDescription} />
-        
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={citySeo(city)} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -141,7 +87,7 @@ const CityLanding = () => {
                 </h2>
                 <div className="prose prose-lg prose-invert max-w-none">
                   <p className="text-muted-foreground text-lg leading-relaxed">
-                    Mr. CAP is a Houston-born rapper and original member of the South Park Coalition, now taking 
+                    Mr. CAP is a Houston-born rapper and Original Member of the South Park Coalition, now taking 
                     his sound across {city.state} with shows in {city.name} and the surrounding region. From underground 
                     classics to his latest album <em>The Ties That Bind Us</em>, CAP brings the same authenticity, 
                     storytelling, and stage energy everywhere he goes.

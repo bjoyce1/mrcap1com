@@ -56,7 +56,7 @@ const IntroExperience = ({ onFinish }: IntroExperienceProps) => {
       })
       .catch((err) => {
         if (boot.signal.aborted) return;
-        console.error("[intro] failed to load — continuing to the site", err);
+        console.error("[intro] failed to load, continuing to the site", err);
         finishRef.current("/");
       });
 

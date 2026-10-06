@@ -74,7 +74,7 @@ const UnreleasedNFTShowcase = () => {
           <p className="text-muted-foreground max-w-xl font-light leading-relaxed">
             An unreleased NFT featuring Mr. CAP's character for the upcoming
             <span className="text-primary font-medium"> H-Town Fight Minnies </span>
-            video game — where Houston culture meets the blockchain.
+            video game, where Houston culture meets the blockchain.
           </p>
         </div>
 
@@ -123,7 +123,7 @@ const UnreleasedNFTShowcase = () => {
               Born in the trenches of Houston's Southside, <span className="text-foreground font-medium">Mr. CAP</span> rose from the underground rap scene to become an unstoppable force. Known for his razor-sharp wit and cold-blooded bars, he channels that same energy into the ring.
             </p>
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-4">
-              In <span className="text-primary font-medium">H-Town Fight Minnies</span>, Mr. CAP fights with the spirit of Houston — screwed-up combos, chopped-up counters, and a flow that keeps opponents guessing. His signature move, <span className="text-accent font-medium italic">"The Cap Check"</span>, is a devastating finisher that leaves no room for pretenders.
+              In <span className="text-primary font-medium">H-Town Fight Minnies</span>, Mr. CAP fights with the spirit of Houston, screwed-up combos, chopped-up counters, and a flow that keeps opponents guessing. His signature move, <span className="text-accent font-medium italic">"The Cap Check"</span>, is a devastating finisher that leaves no room for pretenders.
             </p>
             <div className="flex flex-wrap gap-2 mb-6">
               <span className="text-[11px] uppercase tracking-wider px-3 py-1 rounded-full ring-1 ring-primary/20 bg-primary/5 text-primary">Southside Houston</span>
