@@ -13,7 +13,8 @@ export interface CaptionInput {
   campaign?: string;
 }
 
-const BASE_HUB = "https://mrcap1.com/tiktok";
+// the TikTok feed lives on the Videos page now
+const BASE_HUB = "https://mrcap1.com/videos#tiktok";
 const HASHTAGS = ["#MrCAPLegacy", "#HoustonHipHop", "#SPC", "#fyp"];
 
 const HOOKS: Record<string, string[]> = {

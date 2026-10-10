@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, Download } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -11,6 +11,9 @@ import OfficialLinksBlock from "@/components/blocks/OfficialLinksBlock";
 import PressTimelineNew from "@/components/press/PressTimelineNew";
 import MediaKitBlock from "@/components/press/MediaKitBlock";
 import QuoteBlock from "@/components/blocks/QuoteBlock";
+import PressKitContents from "@/components/press/PressKitContents";
+import { Button } from "@/components/ui/button";
+import { openPressKitPDF } from "@/content/pressKit";
 import { pressPageData as data } from "@/content/press";
 import { useSanityPressEntries, type SanityPressEntry } from "@/hooks/useSanity";
 import { routeSeo } from "@/seo/routes";
@@ -100,6 +103,23 @@ const Press = () => {
         </section>
 
         <MediaKitBlock body={data.mediaKit.body} ctas={data.mediaKit.ctas} />
+
+        {/* The press kit (this used to be the separate /opk pages) */}
+        <section id="press-kit" aria-labelledby="press-kit-title" className="py-12 scroll-mt-28">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+              <div>
+                <span className="font-mono text-[10px] tracking-[0.32em] uppercase text-[hsl(var(--accent-gold))]">Official Press Kit</span>
+                <h2 id="press-kit-title" className="text-2xl font-display font-bold text-foreground mt-2">Bios, Photos & Logos</h2>
+              </div>
+              <Button variant="flux" className="rounded-none gap-2" onClick={openPressKitPDF}>
+                <Download className="w-4 h-4" />
+                Download Press Kit (PDF)
+              </Button>
+            </div>
+            <PressKitContents long />
+          </div>
+        </section>
 
         <div id="official-links">
           <OfficialLinksBlock />

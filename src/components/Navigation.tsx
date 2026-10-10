@@ -22,11 +22,8 @@ const moreLinks = [
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },
   { to: "/videos", label: "Videos" },
-  { to: "/new-releases", label: "New Releases" },
   { to: "/mr-cap-discography", label: "Discography" },
-  { to: "/biography", label: "Biography" },
   { to: "/nft", label: "NFT" },
-  { to: "/opk", label: "Press Kit" },
 ];
 
 const Navigation = () => {
@@ -121,12 +118,13 @@ const Navigation = () => {
 
         {/* Right Side */}
         <div className="flex items-center gap-5">
-          <Link
-            to="/#contact"
+          {/* the home page has no contact section any more; Contact is the team inbox */}
+          <a
+            href="mailto:music@mrcap1.com"
             className="hidden md:block text-[13px] font-medium tracking-widest uppercase text-foreground/50 hover:text-foreground transition-colors link-sweep"
           >
             Contact
-          </Link>
+          </a>
           
           {/* Mobile Menu Button */}
           <button
@@ -176,13 +174,13 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/#contact"
+            <a
+              href="mailto:music@mrcap1.com"
               onClick={() => setIsMenuOpen(false)}
               className="px-4 py-3 text-sm font-medium tracking-wide text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors rounded-lg"
             >
               Contact
-            </Link>
+            </a>
           </div>
         </nav>
       )}

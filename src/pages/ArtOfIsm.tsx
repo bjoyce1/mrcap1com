@@ -88,7 +88,7 @@ const ArtOfIsm = () => {
                         </a>
                       </Button>
                       <Button variant="outline" size="lg" asChild>
-                        <Link to="/vinyl">
+                        <Link to="/albums/the-art-of-ism">
                           <Disc3 className="w-4 h-4 mr-2" /> Order the Vinyl
                         </Link>
                       </Button>

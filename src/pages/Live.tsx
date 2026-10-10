@@ -10,6 +10,7 @@ import LiveHistoryTimeline from "@/components/live/LiveHistoryTimeline";
 import SEO from "@/components/SEO";
 import { routeSeo } from "@/seo/routes";
 import { pastEventsLd } from "@/seo/builders";
+import { getMetroCities } from "@/data/cities";
 
 /* ── Helpers ── */
 function sanityEventToUpcoming(e: SanityEvent) {
@@ -213,17 +214,28 @@ const Live = () => {
                   </div>
                 </div>
 
+                {/* Where he plays (this replaces the old per-city pages) */}
+                <div className="mb-8">
+                  <h3 className="text-sm uppercase tracking-widest text-muted-foreground mb-4">Where He Plays</h3>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {getMetroCities().map((city) => (
+                      <span
+                        key={city.slug}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-border/50 px-3 py-1.5 text-xs text-muted-foreground"
+                      >
+                        <MapPin className="h-3 w-3 text-primary" aria-hidden />
+                        {city.name}, {city.stateAbbr}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm text-muted-foreground">Texas and Louisiana first, and shows booked nationwide.</p>
+                </div>
+
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button variant="flux" size="lg" asChild>
-                    <a href="https://bookspc.com/artists/mr-cap" target="_blank" rel="noopener noreferrer">
+                    <Link to="/booking#inquiry-form">
                       <Calendar className="mr-2 h-5 w-5" />
                       Submit Booking Request
-                    </a>
-                  </Button>
-                  <Button variant="fluxOutline" size="lg" asChild>
-                    <Link to="/cities">
-                      <MapPin className="mr-2 h-5 w-5" />
-                      View All Tour Cities
                     </Link>
                   </Button>
                 </div>

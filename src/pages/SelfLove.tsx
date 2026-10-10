@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Palette, ExternalLink, Heart, Sparkles, Crown, Calendar, X } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { gsap } from "@/hooks/useGSAP";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import mrCapCoin from "@/assets/mr-cap-coin.webp";
 import { Button } from "@/components/ui/button";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
 
@@ -42,7 +42,7 @@ const installationRooms = [
     title: "The Awakening",
     theme: "Recognition • Vulnerability • First Truths",
     description: "This room introduces the Self Love universe: the moment you realize you've been surviving instead of living. The works here hold raw honesty, the beginning of self-respect, self-definition, and the first refusal to shrink.",
-    link: "https://mrcap1.wixstudio.com/selflove",
+    link: "/self-love/2024",
     linkLabel: "Experience Room I",
     icon: Heart,
     status: "open",
@@ -95,7 +95,7 @@ const artwork2026 = [
   { id: "yanna", title: "Yanna", image: yannaImg, meaning: "Love as legacy", year: "2026" },
 ];
 
-const ArtGallery = () => {
+const SelfLove = () => {
   const heroRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const roomsRef = useRef<HTMLElement>(null);
@@ -203,7 +203,7 @@ const ArtGallery = () => {
 
   return (
     <>
-      <SEO entry={routeSeo("/art")} />
+      <SEO entry={routeSeo("/self-love")} />
 
       <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
         <Navigation />
@@ -335,7 +335,13 @@ const ArtGallery = () => {
                     <p className="text-sm text-primary font-medium mb-4">{room.theme}</p>
                     <p className="text-muted-foreground leading-relaxed mb-6">{room.description}</p>
 
-                    {room.link ? (
+                    {room.link?.startsWith("/") ? (
+                      <Link to={room.link}>
+                        <Button variant="default" className="gap-2">
+                          {room.linkLabel}
+                        </Button>
+                      </Link>
+                    ) : room.link ? (
                       <a
                         href={room.link}
                         target="_blank"
@@ -526,32 +532,10 @@ const ArtGallery = () => {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="py-12 px-6 border-t border-border">
-          <div className="max-w-4xl mx-auto text-center">
-            <Link to="/" className="inline-flex items-center gap-3 mb-4">
-              <img src={mrCapCoin} alt="MR. CAP" className="w-8 h-8 rounded-full object-cover" />
-              <span className="font-display text-lg font-bold uppercase">MR. CAP</span>
-            </Link>
-            <p className="text-sm text-muted-foreground">
-              South Park Born. SPC Raised. Independent & Future-Focused.
-            </p>
-            <div className="mt-4 flex items-center justify-center gap-4">
-              <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition">
-                Home
-              </Link>
-              <Link to="/nft" className="text-sm text-muted-foreground hover:text-foreground transition">
-                NFT Gallery
-              </Link>
-              <Link to="/opk" className="text-sm text-muted-foreground hover:text-foreground transition">
-                OPK
-              </Link>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );
 };
 
-export default ArtGallery;
+export default SelfLove;

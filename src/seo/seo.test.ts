@@ -78,9 +78,28 @@ describe("every built page", () => {
     }
   });
 
-  it("builds a page for every city the app serves, Louisiana included", () => {
-    const paths = new Set(pages.map((p) => p.path));
-    for (const city of allCities) expect(paths.has(`/city/${city.slug}`), city.slug).toBe(true);
+  it("every old city URL still serves a page: the live page", () => {
+    const byPath = new Map(pages.map((p) => [p.path, p]));
+    for (const city of allCities) expect(byPath.get(`/city/${city.slug}`)?.entry.path, city.slug).toBe("/live");
+  });
+
+  it("merged pages serve the page that absorbed them", () => {
+    const byPath = new Map(pages.map((p) => [p.path, p]));
+    const merged: [string, string][] = [
+      ["/biography", "/who-is-mr-cap"],
+      ["/new-releases", "/music"],
+      ["/texas-underground-hip-hop", "/houston-hip-hop-history"],
+      ["/art", "/self-love"],
+      ["/self-love/2025", "/self-love"],
+      ["/tiktok", "/videos"],
+      ["/opk", "/press"],
+      ["/opk/press", "/press"],
+      ["/opk/music", "/booking"],
+      ["/press-kit", "/press"],
+      ["/cities", "/live"],
+      ["/vinyl", "/albums/the-art-of-ism"],
+    ];
+    for (const [from, to] of merged) expect(byPath.get(from)?.entry.path, from).toBe(to);
   });
 });
 
@@ -89,7 +108,7 @@ describe("sitemap", () => {
 
   it("lists each indexable page once, under its canonical URL", () => {
     expect(new Set(urls).size).toBe(urls.length);
-    for (const u of ["https://mrcap1.com/", "https://mrcap1.com/music", "https://mrcap1.com/music/big-boy-drip", "https://mrcap1.com/albums/the-art-of-ism", "https://mrcap1.com/city/new-orleans"])
+    for (const u of ["https://mrcap1.com/", "https://mrcap1.com/music", "https://mrcap1.com/music/big-boy-drip", "https://mrcap1.com/albums/the-art-of-ism", "https://mrcap1.com/live", "https://mrcap1.com/press"])
       expect(urls, u).toContain(u);
     const byUrl = new Map(pages.map((p) => [`https://mrcap1.com${p.path}`, p]));
     for (const u of urls) {
@@ -100,7 +119,7 @@ describe("sitemap", () => {
   });
 
   it("leaves out aliases and noindex pages", () => {
-    for (const u of ["/about", "/listen", "/track/big-boy-drip", "/album/the-art-of-ism", "/admin", "/auth"])
+    for (const u of ["/about", "/listen", "/track/big-boy-drip", "/album/the-art-of-ism", "/admin", "/auth", "/city/new-orleans", "/cities", "/biography", "/opk", "/vinyl", "/tiktok", "/art"])
       expect(urls, u).not.toContain(`https://mrcap1.com${u}`);
   });
 

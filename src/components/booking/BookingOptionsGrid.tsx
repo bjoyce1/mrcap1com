@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
-import { Mic, Music, Radio, MessageSquare } from "lucide-react";
+import { Mic, Music, Radio, MessageSquare, Handshake, Clapperboard } from "lucide-react";
 
 interface OptionCard {
   title: string;
   description: string;
 }
 
-const ICONS = [Mic, Music, Radio, MessageSquare];
+const ICONS = [Mic, Music, Radio, MessageSquare, Handshake, Clapperboard];
 
 const BookingOptionsGrid = ({ items }: { items: OptionCard[] }) => (
   <section className="py-12">
@@ -14,7 +14,7 @@ const BookingOptionsGrid = ({ items }: { items: OptionCard[] }) => (
       <span className="text-xs font-medium tracking-widest uppercase text-primary mb-6 block">
         Booking Types
       </span>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.map((item, i) => {
           const Icon = ICONS[i % ICONS.length];
           return (
