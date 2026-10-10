@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Music, Newspaper, Palette, Calendar } from "lucide-react";
+import { ArrowRight, Music, Newspaper, Palette, Calendar, Mic2, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -113,8 +113,31 @@ const HoustonHipHopHistory = () => {
           </div>
         </motion.section>
 
-        {/* Section 5 */}
+        {/* What sets it apart (carried over from the old Texas underground page) */}
         <motion.section {...fadeUp} className="py-12 md:py-16">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
+              What Sets Houston Underground Rap Apart
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                { icon: Music, title: "Independence", body: "Artists own their masters and control their distribution. No major label middlemen." },
+                { icon: Mic2, title: "Lyrical Focus", body: "Complex wordplay, storytelling, and substance over style. Every bar matters." },
+                { icon: MapPin, title: "Regional Pride", body: "Houston, Dallas, and San Antonio identity. Rep your city and stay connected to the streets." },
+                { icon: Calendar, title: "Longevity", body: "Careers spanning 20 to 30 years and more. Building legacy over chasing trends." },
+              ].map(({ icon: Icon, title, body }) => (
+                <div key={title} className="bg-card/40 border border-border/40 rounded-xl p-5">
+                  <Icon className="w-5 h-5 text-primary mb-3" />
+                  <h3 className="font-display font-bold text-foreground mb-1">{title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Section 5 */}
+        <motion.section {...fadeUp} className="py-12 md:py-16 bg-card/20">
           <div className="container mx-auto px-4 max-w-3xl">
             <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-6">
               Houston Hip Hop Today

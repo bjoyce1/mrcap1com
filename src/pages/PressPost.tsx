@@ -5,7 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Calendar, User, ExternalLink, Music } from "lucide-react";
 import { pressPageData, type PressEntry } from "@/content/press";
 import { useSanityPressEntries, type SanityPressEntry } from "@/hooks/useSanity";
-import FanCaptureBanner from "@/components/FanCaptureBanner";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import { pressPostSeo } from "@/seo/builders";
 
 function slugify(text: string): string {
@@ -121,12 +121,7 @@ const PressPost = () => {
           </div>
 
           {/* Fan Capture */}
-          <FanCaptureBanner
-            sourcePage={`press-${pressSlug}`}
-            headline="Stay Updated"
-            subheadline="Get new releases, press updates, and show alerts from Mr. CAP Legacy."
-            className="mt-10"
-          />
+          <EarlyAccessCard source={`press:${pressSlug}`} className="mt-10" />
         </div>
       </article>
 

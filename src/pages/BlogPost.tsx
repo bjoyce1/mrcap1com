@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { useEffect, useMemo, Fragment } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import NewsletterSignup from "@/components/NewsletterSignup";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import { getBlogPostBySlug, blogPosts } from "@/data/blogPosts";
 import { useSanityBlogPost, useSanityBlogPosts } from "@/hooks/useSanity";
 import { ChevronRight, Clock, Calendar, Tag, Share2, Twitter, Facebook, Linkedin } from "lucide-react";
@@ -238,13 +238,7 @@ const BlogPost = () => {
                 </div>
 
                 {/* Newsletter CTA */}
-                <div className="mt-12 pt-8 border-t border-border/50">
-                  <div className="text-center mb-4">
-                    <h3 className="text-lg font-display font-bold mb-2">Enjoyed this post?</h3>
-                    <p className="text-sm text-muted-foreground">Get more content like this delivered to your inbox.</p>
-                  </div>
-                  <NewsletterSignup source="blog_post" variant="default" />
-                </div>
+                <EarlyAccessCard source={`blog:${post.slug}`} className="mt-12" />
               </div>
             </div>
           </section>

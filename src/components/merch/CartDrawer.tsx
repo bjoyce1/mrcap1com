@@ -1,3 +1,5 @@
+// Not mounted on any page yet: the store's Quick Add fills this cart, but no page shows it,
+// so the store cannot check out. Mount it on /merch once a test order goes through.
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, X, Plus, Minus, Trash2, ArrowRight } from "lucide-react";

@@ -6,7 +6,7 @@ export const bookingPageData = {
       "Live shows, features, interviews, speaking engagements, and select appearances. Based in Houston, TX. Available worldwide. Inquiries answered within 48 hours.",
     ctas: [
       { label: "Submit Inquiry", href: "#inquiry-form", variant: "primary" as const },
-      { label: "Download EPK", href: "/opk", variant: "secondary" as const },
+      { label: "Press Kit", href: "/press#press-kit", variant: "secondary" as const },
     ],
   },
   intro:
@@ -38,6 +38,16 @@ export const bookingPageData = {
       description:
         "Talks and panels on ownership, independence, longevity in music, and Houston culture. Booked for schools, conferences, and community programs. Includes Q&A.",
     },
+    {
+      title: "Brand Partnership",
+      description:
+        "Endorsements, campaigns, music placement, and digital or NFT collaborations, with South Park Coalition credibility and a brand-safe, professional presentation.",
+    },
+    {
+      title: "Film & Music Supervision",
+      description:
+        "Film and documentary projects, music supervision, and on-camera interviews on independent artistry, hip-hop longevity, and life beyond the mainstream industry.",
+    },
   ],
   whyBook:
     "Original Member of the South Park Coalition alongside K-Rino. Distributed through Sony Music and The Orchard. Featured in the Houston Press and connected to a PBS Lone Star Emmy documentary credit. Three decades of shows without missing a beat. When you book Mr. CAP, you book a professional with a track record, not a gamble.",
@@ -50,7 +60,7 @@ export const bookingPageData = {
     body: "Houston Press coverage, official links, photos, and downloadable materials for media and promoters are available in the press kit.",
     ctas: [
       { label: "View Press", href: "/press" },
-      { label: "Download EPK", href: "/opk" },
+      { label: "Press Kit", href: "/press#press-kit" },
     ],
   },
   faq: [

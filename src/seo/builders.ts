@@ -100,7 +100,6 @@ export function trackSeo(track: TrackLike, album?: AlbumLike | null): SeoEntry {
     links: [
       ...(album ? [{ href: albumPath(album.slug), label: `${album.title}, the album` }] : []),
       { href: "/music", label: "Stream the catalog" },
-      { href: "/new-releases", label: "New releases" },
       { href: "/mr-cap-discography", label: "Discography" },
     ],
     jsonLd: [
@@ -194,63 +193,6 @@ export const musicPlaylistLd = (tracks: TrackLike[]): JsonLdNode =>
       ...(t.release_year ? { datePublished: String(t.release_year) } : {}),
     })),
   });
-
-/* ------------------------------------------------------------------ cities */
-
-export interface CityLike {
-  name: string;
-  slug: string;
-  state: string;
-  stateAbbr: string;
-  region?: string;
-}
-
-export function citySeo(city: CityLike): SeoEntry {
-  const path = `/city/${city.slug}`;
-  const where = `${city.name}, ${city.stateAbbr}`;
-  return {
-    path,
-    title: fitTitle(`Mr. CAP in ${where}`, "Hip-Hop Shows & Booking"),
-    description: fitDescription(
-      [`Book Mr. CAP for live hip-hop in ${where}.`, [`Houston rapper and ${SPC_ROLE}, with 30+ years on stage.`, `${SPC_ROLE}, with 30+ years on stage.`]],
-      ["Concerts, festivals, and features.", "Book direct with the artist's team.", "Houston hip-hop, live."],
-    ),
-    h1: noDashes(`Mr. CAP in ${city.name}, ${city.state}`),
-    summary: [
-      `Mr. CAP brings Houston hip-hop and the South Park Coalition legacy to ${city.name}${city.region ? `, in ${city.region}` : ""}. He is a Houston-born rapper and ${SPC_ROLE}, with more than 30 years of stage experience and a catalog that runs from the cassette era to today.`,
-      `Promoters and venues in ${where} can book a full headline set or a featured appearance, plus interviews and speaking engagements, straight through the official booking form.`,
-    ],
-    links: [
-      { href: "/booking", label: "Book Mr. CAP" },
-      { href: "/live", label: "Live shows and history" },
-      { href: "/cities", label: "All tour cities" },
-      { href: "/music", label: "Stream the music" },
-    ],
-    jsonLd: [
-      {
-        "@type": "MusicGroup",
-        name: "Mr. CAP",
-        url: abs(path),
-        description: `Houston hip-hop artist and ${SPC_ROLE}, available for live shows in ${where}.`,
-        areaServed: { "@type": "City", name: city.name, address: { "@type": "PostalAddress", addressLocality: city.name, addressRegion: city.stateAbbr, addressCountry: "US" } },
-      },
-      breadcrumb(["Cities", "/cities"], [city.name, path]),
-    ],
-  };
-}
-
-export const citiesListLd = (cities: CityLike[]): JsonLdNode => ({
-  "@type": "ItemList",
-  name: "Mr. CAP Tour Cities: Texas and Louisiana",
-  description: "Book Mr. CAP for live hip-hop performances across Texas and Louisiana",
-  numberOfItems: cities.length,
-  itemListElement: cities.map((c, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    url: abs(`/city/${c.slug}`),
-    name: `Mr. CAP in ${c.name}, ${c.stateAbbr}`,
-  })),
-});
 
 /* ------------------------------------------------------------------ blog & press */
 
@@ -356,7 +298,7 @@ export function pressPostSeo(entry: PressEntryLike): SeoEntry {
     ).slice(0, 4),
     links: [
       { href: "/press", label: "Press archive" },
-      { href: "/opk/press", label: "Press kit" },
+      { href: "/press#press-kit", label: "Press kit" },
       { href: "/music", label: "Stream the music" },
     ],
     extraMeta: [{ property: "article:published_time", content: entry.date }],
@@ -456,7 +398,6 @@ export function selfLoveStorySeo(story: SelfLoveStoryLike): SeoEntry {
     links: [
       { href: `/self-love/${story.year}`, label: room },
       { href: "/self-love", label: "The Self Love installation" },
-      { href: "/art", label: "Art by Mr. CAP" },
     ],
     jsonLd: [
       cleanJson({

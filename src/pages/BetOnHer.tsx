@@ -4,7 +4,7 @@ import { Play, Pause, Diamond, Mail, Download, Share2, ExternalLink, Instagram, 
 import SEO from "@/components/SEO";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import FanCaptureBanner from "@/components/FanCaptureBanner";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import ShareButtons from "@/components/music/ShareButtons";
 import { routeSeo } from "@/seo/routes";
 
@@ -474,11 +474,7 @@ export default function BetOnHer() {
       <section id="fan-capture" className="relative py-24 bg-black">
         <div className="absolute inset-0 bg-gradient-to-t from-amber-950/10 via-transparent to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 max-w-2xl relative z-10">
-          <FanCaptureBanner
-            sourcePage="bet-on-her"
-            headline="Join The Legacy"
-            subheadline="Be first to access music, NFTs, and unreleased content."
-          />
+          <EarlyAccessCard source="bet-on-her" />
         </div>
       </section>
 

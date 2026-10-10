@@ -95,7 +95,7 @@ const universe = [
   { to: "/south-park-coalition", label: "South Park Coalition", sub: "The blueprint.", img: spcAustin },
   { to: "/art-of-ism", label: "The Art of ISM", sub: "Album · book · philosophy.", img: artOfIsmHero },
   { to: "/nft", label: "NFT Gallery", sub: "On-chain ownership.", img: nftLimitless },
-  { to: "/opk", label: "Press Kit / OPK", sub: "Media assets and downloads.", img: spcStudio },
+  { to: "/press#press-kit", label: "Press Kit", sub: "Bios, photos, logos and downloads.", img: spcStudio },
   { to: "/videos", label: "Videos", sub: "Music & visual archive.", img: spcVinyl },
   { to: "/merch", label: "Store", sub: "Wearable archive.", img: spcSkyline },
   { to: "/booking", label: "Booking", sub: "Shows · features · talks.", img: portrait },

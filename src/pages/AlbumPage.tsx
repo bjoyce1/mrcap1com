@@ -14,6 +14,7 @@ import ReleaseLinks from "@/components/music/ReleaseLinks";
 import RelatedReleases from "@/components/music/RelatedReleases";
 import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import BuyButton from "@/components/music/BuyButton";
+import { VinylOffer } from "@/components/music/VinylOffer";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
@@ -169,6 +170,9 @@ const AlbumPage = () => {
               )}
             </div>
           </div>
+
+          {/* Vinyl, for albums that have one */}
+          <VinylOffer albumSlug={album.slug} albumTitle={album.title} className="mt-8" />
 
           {/* 5. Story Block */}
           <StoryBlock description={album.description} releaseYear={album.release_year} className="mt-8" />

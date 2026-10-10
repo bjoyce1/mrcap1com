@@ -19,7 +19,7 @@ const supportLinks = [
   { label: "Size Guide", href: "#" },
   { label: "Shipping Info", href: "#" },
   { label: "Returns", href: "#" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "mailto:music@mrcap1.com" },
 ];
 
 const legalLinks = [

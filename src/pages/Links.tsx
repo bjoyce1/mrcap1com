@@ -1,7 +1,7 @@
 import { ExternalLink, Music, Calendar, ShoppingBag, Mail, Disc3, Users, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import NewsletterSignup from "@/components/NewsletterSignup";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import Navigation from "@/components/Navigation";
 import mrCapLogo from "@/assets/mr-cap-logo.webp";
 import SEO from "@/components/SEO";
@@ -37,9 +37,9 @@ const links = [
     icon: Sparkles,
   },
   {
-    title: "📰 Press Kit (OPK)",
-    description: "Media & brand partnerships",
-    url: "/opk",
+    title: "📰 Press Kit",
+    description: "Bios, photos, logos and press",
+    url: "/press#press-kit",
     internal: true,
     icon: Users,
   },
@@ -51,9 +51,9 @@ const links = [
     icon: Disc3,
   },
   {
-    title: "🎬 TikTok Feed",
-    description: "Live videos from @mrcapism",
-    url: "/tiktok",
+    title: "🎬 Videos",
+    description: "Music videos and the @mrcapism TikTok feed",
+    url: "/videos",
     internal: true,
     icon: Sparkles,
   },
@@ -154,7 +154,7 @@ const Links = () => {
 
           {/* Newsletter Signup */}
           <div className="mb-8">
-            <NewsletterSignup source="linkinbio" variant="hero" />
+            <EarlyAccessCard source="links" />
           </div>
 
           {/* Website Link */}

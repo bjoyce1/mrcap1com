@@ -254,7 +254,7 @@ For press inquiries, booking, and media resources, visit mrcap1.com/press or sub
   mediaKit: {
     body: "Need a short bio, long bio, press-ready photos, or official links? Use the resources below.",
     ctas: [
-      { label: "Download EPK", href: "/opk" },
+      { label: "Press Kit", href: "#press-kit" },
       { label: "Official Links", href: "#official-links" },
       { label: "Book / Inquire", href: "/booking" },
     ],

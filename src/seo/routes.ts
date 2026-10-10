@@ -14,10 +14,10 @@
 import { liveHistory } from "../content/liveHistory";
 import { bookingPageData } from "../content/booking";
 import { nftPageData } from "../content/nft";
-import { allCities } from "../data/cities";
+
 import { DEFAULT_OG_IMAGE, SAME_AS, SITE_URL, SPC_ROLE, abs } from "./site";
-import { HOME_FAQ, HOUSTON_HISTORY_FAQ, SPC_FAQ, TEXAS_UNDERGROUND_FAQ, WHO_IS_FAQ, faqPage } from "./faqs";
-import { PERSON_ID, artistNode, breadcrumb, citiesListLd, pastEventsLd, personRef } from "./builders";
+import { HOME_FAQ, HOUSTON_HISTORY_FAQ, SPC_FAQ, WHO_IS_FAQ, faqPage } from "./faqs";
+import { PERSON_ID, artistNode, breadcrumb, pastEventsLd, personRef } from "./builders";
 import { cleanJson } from "./text";
 import type { JsonLdNode, SeoEntry, SeoLink } from "./types";
 
@@ -67,26 +67,21 @@ const DISCOGRAPHY_SINGLES = [
 
 const L = {
   music: { href: "/music", label: "Stream the music" },
-  newReleases: { href: "/new-releases", label: "New releases" },
   discography: { href: "/mr-cap-discography", label: "Discography" },
   who: { href: "/who-is-mr-cap", label: "Who is Mr. CAP" },
-  bio: { href: "/biography", label: "Professional biography" },
   spc: { href: "/south-park-coalition", label: "The South Park Coalition" },
   history: { href: "/houston-hip-hop-history", label: "Houston hip-hop history" },
-  texas: { href: "/texas-underground-hip-hop", label: "Texas underground hip-hop" },
   booking: { href: "/booking", label: "Book Mr. CAP" },
   live: { href: "/live", label: "Live shows" },
   press: { href: "/press", label: "Press archive" },
-  opk: { href: "/opk", label: "Press kit (OPK)" },
+  pressKit: { href: "/press#press-kit", label: "Press kit" },
   blog: { href: "/blog", label: "Blog" },
   nft: { href: "/nft", label: "NFT and collector access" },
   merch: { href: "/merch", label: "Official store" },
   artOfIsm: { href: "/art-of-ism", label: "The Art of ISM book" },
-  vinyl: { href: "/vinyl", label: "The Art of ISM on vinyl" },
+  artOfIsmAlbum: { href: "/albums/the-art-of-ism", label: "The Art of ISM album and vinyl" },
   selfLove: { href: "/self-love", label: "Self Love installation" },
-  art: { href: "/art", label: "Art by Mr. CAP" },
   videos: { href: "/videos", label: "Videos" },
-  cities: { href: "/cities", label: "Tour cities" },
 } satisfies Record<string, SeoLink>;
 
 /* ------------------------------------------------------------------ routes */
@@ -122,7 +117,7 @@ export const ROUTES: SeoEntry[] = [
       "Three decades deep: the grind years of O.N.E. on O.N.E. and 2 Tha Grave, The Art of ISM distributed by Sony Music / The Orchard, and The Ties That Bind Us, a 19-track album with the whole South Park Coalition.",
       "In 2021 he became the first Houston rapper to sell a hip-hop NFT. Three decades in, still moving first.",
     ],
-    links: [L.music, L.newReleases, L.who, L.spc, L.booking, L.opk],
+    links: [L.music, L.who, L.spc, L.booking, L.pressKit],
     jsonLd: [
       {
         "@type": "WebSite",
@@ -177,7 +172,7 @@ export const ROUTES: SeoEntry[] = [
       "Out now: the newest singles from Mr. CAP, plus a house chart of the tracks listeners stream most right here on the site.",
       "The albums are here too, The Art of ISM, The Ties That Bind Us with the South Park Coalition, 2 Tha Grave, Tha Cold Ass Pimp, and O.N.E. on O.N.E., along with every single and feature, year by year.",
     ],
-    links: [L.newReleases, L.discography, L.vinyl, L.videos, L.who],
+    links: [L.discography, L.artOfIsmAlbum, L.videos, L.who],
     // the playlist of every track is added from live data (the page at runtime, the build from the catalog)
     jsonLd: [breadcrumb(["Music", "/music"])],
   }),
@@ -191,8 +186,9 @@ export const ROUTES: SeoEntry[] = [
       "Whether it's a packed Houston club or a festival stage in another city, Mr. CAP brings a raw, honest performance, built on decades of experience and a lifetime of stories.",
       "The live history archive collects the flyers that credit Mr. CAP: South Park Coalition anniversaries, Point Blank celebrations, the SPC concert series, and shows with K-Rino, Klondike Kat, and more.",
       "Promoters can book a headline set, a featured appearance, an interview, or a speaking engagement through the official booking form.",
+      "Mr. CAP plays across Texas and Louisiana, from Houston, Dallas, San Antonio, and Austin to New Orleans, Baton Rouge, and Shreveport, and books shows nationwide.",
     ],
-    links: [L.booking, L.cities, L.spc, L.music],
+    links: [L.booking, L.spc, L.music],
     jsonLd: [...pastEventsLd(liveHistory), breadcrumb(["Live", "/live"])],
   }),
 
@@ -206,7 +202,7 @@ export const ROUTES: SeoEntry[] = [
       "This is the official press archive for Mr. CAP, built for journalists, promoters, curators, and anyone researching the catalog, the legacy, and the Houston connection.",
       "Recent releases include Big Boy Drip with Ciddy Boi P, the South Park Coalition single Bet'n On Me, and The Ties That Bind Us, a 19-track SPC group album.",
     ],
-    links: [L.opk, { href: "/opk/press", label: "Press kit downloads" }, L.bio, L.newReleases],
+    links: [L.pressKit, L.who, L.music],
     jsonLd: [
       {
         "@type": "ProfilePage",
@@ -232,19 +228,6 @@ export const ROUTES: SeoEntry[] = [
   }),
 
   route({
-    path: "/cities",
-    title: "Tour Cities | Book Mr. CAP in Texas and Louisiana",
-    description: "Book Mr. CAP for live hip-hop across Texas and Louisiana, from Houston and Dallas to San Antonio, Austin, and El Paso, with the South Park Coalition legacy.",
-    h1: "Tour Cities",
-    summary: [
-      "Bringing authentic Houston hip-hop and the South Park Coalition legacy to Texas and Louisiana.",
-      "Major markets include Houston, Dallas, Fort Worth, San Antonio, Austin, El Paso, Arlington, Corpus Christi, Plano, and Lubbock. Mr. CAP performs nationwide; contact the team for booking in any location.",
-    ],
-    links: [L.booking, L.live, { href: "/city/houston", label: "Mr. CAP in Houston" }, { href: "/city/dallas", label: "Mr. CAP in Dallas" }],
-    jsonLd: [citiesListLd(allCities), breadcrumb(["Cities", "/cities"])],
-  }),
-
-  route({
     path: "/nft",
     title: "NFT & Collector Access | Mr. CAP Digital Art",
     description: "Explore Mr. CAP's digital art and music NFTs: verified collections, contract details, and collector-only unlocks from the first Houston rapper to sell one.",
@@ -254,36 +237,11 @@ export const ROUTES: SeoEntry[] = [
       "This page is built for collectors and curious newcomers alike. Browse the public collection, verify the on-chain details, and unlock private content if you hold an official Mr. CAP NFT.",
       "In 2021 Mr. CAP became the first Houston rapper to sell a hip-hop NFT.",
     ],
-    links: [L.art, L.artOfIsm, { href: "/panties-on-my-piano", label: "Panties on My Piano, the Web3 release" }, L.music],
+    links: [L.selfLove, L.artOfIsm, { href: "/panties-on-my-piano", label: "Panties on My Piano, the Web3 release" }, L.music],
     jsonLd: [
       { ...webPage("/nft", "Mr. CAP NFT & Collector Access", nftPageData.intro), mainEntity: { ...personRef, sameAs: ["https://opensea.io/mrcap1/created"] } },
       faqPage(nftPageData.faq),
       breadcrumb(["NFT", "/nft"]),
-    ],
-  }),
-
-  route({
-    path: "/art",
-    title: "Self Love | Art Installation by Mr. CAP, 2024-2026",
-    description: "Self Love is a living three-year art installation by Houston artist Mr. CAP: character-driven works and symbolic portraits about identity and self-ownership.",
-    h1: "Self Love",
-    summary: [
-      "Self Love is a living, three-year art installation built from original character-driven works, symbolic portraiture, and narrative fragments. It is not a collection in the traditional sense; it is a timeline you step into.",
-      "Each year is a new room in the installation, a shift in voice, mood, color, and emotional weight. Together, 2024, 2025, and 2026 form one continuous story about identity, healing, confidence, and self-ownership.",
-      "The rooms move from The Awakening, to The Becoming, to The Ownership: self-love as a power source, a standard, and a legacy.",
-    ],
-    links: [L.selfLove, { href: "/self-love/2024", label: "Room I, 2024: The Awakening" }, L.nft],
-    jsonLd: [
-      webPage("/art", "Self Love: Art Installation by Mr. CAP", "A living, three-year art installation (2024-2026) built from original character-driven works, symbolic portraiture, and narrative fragments by Houston artist Mr. CAP."),
-      {
-        "@type": "VisualArtwork",
-        name: "Self Love",
-        creator: personRef,
-        artform: "Installation Art",
-        description: "A living, three-year art installation built from original character-driven works, symbolic portraiture, and narrative fragments exploring identity, healing, confidence, and self-ownership.",
-        temporalCoverage: "2024/2026",
-      },
-      breadcrumb(["Art", "/art"]),
     ],
   }),
 
@@ -297,7 +255,7 @@ export const ROUTES: SeoEntry[] = [
       "The coalition emerged from Houston's South Park neighborhood as a collective of artists determined to build their own path. Instead of waiting for record deals, they produced, distributed, and promoted their music independently, keeping full creative control.",
       `Mr. CAP is an ${SPC_ROLE}, and his catalog carries that blueprint forward: own the work, build the audience directly, and outlast the hype.`,
     ],
-    links: [L.history, L.texas, L.who, L.discography, L.press],
+    links: [L.history, L.who, L.discography, L.press],
     jsonLd: [
       {
         "@type": "MusicGroup",
@@ -314,31 +272,6 @@ export const ROUTES: SeoEntry[] = [
   }),
 
   route({
-    path: "/texas-underground-hip-hop",
-    title: "Texas Underground Hip-Hop | Mr. CAP, Houston Pioneer",
-    description: `Texas underground hip-hop explained through Mr. CAP, a Houston pioneer and ${SPC_ROLE}: independent, lyrical, and built to last.`,
-    h1: "Texas Underground Hip-Hop",
-    summary: [
-      `Discover Texas underground hip-hop through Mr. CAP, a Houston pioneer and ${SPC_ROLE}. Real music, independent spirit, 30+ years of authenticity.`,
-      "Texas underground hip-hop is the independent rap scene in Texas, particularly Houston, Dallas, and San Antonio: artists who release music on their own labels, without major label support.",
-      "It values authenticity, storytelling, and longevity. Artists like Mr. CAP and the South Park Coalition built careers spanning decades by owning their masters, controlling distribution, and staying connected to their communities.",
-    ],
-    links: [L.spc, L.history, L.discography, L.booking],
-    jsonLd: [
-      {
-        "@type": "Article",
-        headline: "Texas Underground Hip-Hop and the Legacy of Mr. CAP",
-        author: personRef,
-        publisher: { "@type": "Organization", name: "CAP Distributions" },
-        mainEntityOfPage: abs("/texas-underground-hip-hop"),
-        description: "An inside look at Texas underground hip-hop culture and the role Mr. CAP plays in its legacy.",
-      },
-      faqPage(TEXAS_UNDERGROUND_FAQ),
-      breadcrumb(["Texas Underground Hip-Hop", "/texas-underground-hip-hop"]),
-    ],
-  }),
-
-  route({
     path: "/houston-hip-hop-history",
     title: "Houston Hip Hop History | South Park Coalition Legacy",
     description: "An inside look at Houston's independent hip-hop history: the South Park Coalition blueprint, the underground hustle, and Mr. CAP's role in the culture.",
@@ -348,7 +281,7 @@ export const ROUTES: SeoEntry[] = [
       "While other cities chased major label deals, Houston artists built their own lanes, pressing their own CDs, selling music directly, and creating a culture that didn't depend on outside validation. At the center of that movement was the South Park Coalition.",
       "\"We didn't wait for permission. We pressed our own CDs, drove our own routes, and built our own audience.\"",
     ],
-    links: [L.spc, L.texas, L.who, L.music, L.press],
+    links: [L.spc, L.who, L.music, L.press],
     jsonLd: [
       {
         "@type": "Article",
@@ -383,7 +316,7 @@ export const ROUTES: SeoEntry[] = [
       "Cornelius A. Pratt is the son of two musicians, raised in Houston's Third Ward and South Park, and shaped by a city that has always demanded proof. Mr. CAP is what happens when that proof gets pressed to record, sold direct, and refuses to expire.",
       `An ${SPC_ROLE}, founder of CAP Distributions, and the first Houston rapper to sell a hip-hop NFT, his principle never changed: own the work.`,
     ],
-    links: [L.bio, L.spc, L.discography, L.press, L.booking],
+    links: [L.spc, L.discography, L.press, L.booking],
     jsonLd: [
       {
         ...PERSON_FULL,
@@ -409,7 +342,7 @@ export const ROUTES: SeoEntry[] = [
       "Mr. CAP's catalog is built on independence, longevity, and Houston perspective. Every release reflects a different chapter of that path, not just songs but milestones.",
       "The latest group album, The Ties That Bind Us, features K-Rino, Point Blank, Klondike Kat, and more, with a slowed-and-chopped version released in January 2025.",
     ],
-    links: [L.music, L.newReleases, L.vinyl, L.spc],
+    links: [L.music, L.artOfIsmAlbum, L.spc],
     jsonLd: [
       {
         "@type": "MusicPlaylist",
@@ -435,7 +368,7 @@ export const ROUTES: SeoEntry[] = [
       `Mr. CAP is a Houston-born rapper, ${SPC_ROLE}, author, and entrepreneur with more than 30 years on stage and on record. Promoters, programmers, and media get a professional who shows up prepared, delivers, and makes the event easy.`,
       "Options include a full headline set or featured appearance, custom verses and features, press and podcast interviews, and talks on ownership, independence, and Houston culture.",
     ],
-    links: [L.live, L.cities, { href: "/opk/music", label: "Booking press kit" }, L.music],
+    links: [L.live, L.music],
     jsonLd: [
       {
         "@type": "ProfilePage",
@@ -462,57 +395,8 @@ export const ROUTES: SeoEntry[] = [
       `Quick links to Mr. CAP's music, merch, shows, and more, from the Houston hip-hop artist and ${SPC_ROLE}.`,
       "Start with the latest music, book a show, shop Trap University merch, browse the NFT art gallery, open the press kit, or explore the discography.",
     ],
-    links: [L.newReleases, L.booking, L.merch, L.nft, L.opk, L.discography, { href: "/tiktok", label: "TikTok feed" }],
+    links: [L.music, L.booking, L.merch, L.nft, L.pressKit, L.discography, L.videos],
     jsonLd: [{ ...personRef, url: abs("/links"), image: PERSON_FULL.image, sameAs: SAME_AS }],
-  }),
-
-  route({
-    path: "/biography",
-    title: "Biography | Cornelius A. Pratt, Mr. CAP",
-    description: "The professional biography of Cornelius 'Mr. CAP' Pratt, a Houston artist, entrepreneur, and technologist working across music, media, and digital innovation.",
-    h1: "Cornelius 'Mr. CAP' Pratt",
-    summary: [
-      "Houston-based artist, entrepreneur, technologist, and creative strategist whose work bridges music, media, technology, and digital innovation.",
-      "Born in Houston and raised in the city's historic Third Ward, Cornelius A. Pratt is the son of two musicians. He began performing at eight, graduated from Jack Yates Senior High School, and performed early on with his rap group The Raise Up Posse.",
-      `An ${SPC_ROLE}, he released his debut album 2 Tha Grave on April 5, 2011, founded CAP Distributions to help independent artists distribute globally, and later built Mortuary Media LLC and the Capicoin (CCHX) blockchain project.`,
-    ],
-    links: [L.who, L.discography, L.opk, L.spc],
-    jsonLd: [
-      {
-        "@type": "Person",
-        "@id": PERSON_ID,
-        name: "Cornelius A. Pratt",
-        alternateName: "Mr. CAP",
-        description: "Houston-based artist, entrepreneur, technologist, and creative strategist whose work bridges music, media, technology, and digital innovation.",
-        url: abs("/biography"),
-        sameAs: SAME_AS,
-        birthPlace: { "@type": "Place", name: "Houston, Texas" },
-        alumniOf: { "@type": "EducationalOrganization", name: "Jack Yates Senior High School" },
-        memberOf: { "@type": "MusicGroup", name: "South Park Coalition" },
-        knowsAbout: ["Hip-Hop Music", "Blockchain Technology", "Digital Distribution", "Creative Entrepreneurship", "NFT Art"],
-        brand: [
-          { "@type": "Organization", name: "CAP Distributions" },
-          { "@type": "Organization", name: "Mortuary Media LLC" },
-        ],
-      },
-      breadcrumb(["Biography", "/biography"]),
-    ],
-  }),
-
-  route({
-    path: "/new-releases",
-    title: "New Releases | Latest Music from Mr. CAP",
-    description: "The official release hub for the newest music, stories, and visuals from Mr. CAP. Stream the latest singles and albums, where every drop lands first.",
-    h1: "New Releases",
-    summary: [
-      "The official release hub for the newest music, stories, and visuals from Mr. CAP. Every drop lives here first.",
-      "Stream the newest official release, explore the story behind the music, and catch up on recent singles like Bet On Her, Big Boy Drip, Put The Dope Down, and Panties on My Piano.",
-    ],
-    links: [L.music, L.discography, L.press, L.videos],
-    jsonLd: [
-      { "@type": "CollectionPage", name: "New Releases | Mr. CAP", url: abs("/new-releases"), description: "The official release hub for the newest music, stories, and visuals from Mr. CAP.", isPartOf: { "@id": `${SITE_URL}/#website` } },
-      breadcrumb(["New Releases", "/new-releases"]),
-    ],
   }),
 
   route({
@@ -524,7 +408,7 @@ export const ROUTES: SeoEntry[] = [
       "Official music videos, promos, interviews, and behind-the-scenes clips: the visual side of the ISM.",
       "The archive includes Limitless with K-Rino, Enough Is Enough featuring Jhiame Sinatra, Nothing Without It, and features like B Where U R with Da Homie and King Prez.",
     ],
-    links: [L.music, { href: "/tiktok", label: "TikTok feed" }, L.newReleases],
+    links: [L.music],
     jsonLd: [
       { "@type": "CollectionPage", name: "Mr. CAP Videos", url: abs("/videos"), about: personRef },
       breadcrumb(["Videos", "/videos"]),
@@ -543,7 +427,7 @@ export const ROUTES: SeoEntry[] = [
       "The song was born in a late-night studio session where luxury met raw Houston energy. Mr. CAP paired a grand piano melody with Ciddi Boy P's signature vocal style to blur the line between elegance and trap.",
       "Under the playful surface it's a statement about controlling the narrative, setting the mood, and owning the room.",
     ],
-    links: [L.nft, L.music, L.newReleases],
+    links: [L.nft, L.music],
     jsonLd: [
       {
         "@type": "MusicRecording",
@@ -574,7 +458,7 @@ export const ROUTES: SeoEntry[] = [
       "With polished production by Ciddy Boi Music, the track stands as both a musical statement and a mindset: invest in what truly matters.",
       "The release comes with an exclusive NFT collaboration with digital artist Ali Sabet, another step in Mr. CAP's work at the intersection of music and blockchain.",
     ],
-    links: [L.music, L.newReleases, L.nft],
+    links: [L.music, L.nft],
     jsonLd: [
       {
         "@type": "MusicRecording",
@@ -601,7 +485,7 @@ export const ROUTES: SeoEntry[] = [
       "A philosophy built from experience. Refined through movement. Tested under pressure. This isn't just something you read; it's something you live. It's all ISM.",
       "The Art of ISM is an interactive book experience by Mr. CAP, written as a code of thought, movement, and mastery across 11 immersive chapters, with exclusive ISM codes for readers.",
     ],
-    links: [L.vinyl, L.who, L.music],
+    links: [L.artOfIsmAlbum, L.who, L.music],
     jsonLd: [
       {
         "@type": "Book",
@@ -617,117 +501,6 @@ export const ROUTES: SeoEntry[] = [
   }),
 
   route({
-    path: "/vinyl",
-    title: "The Art of ISM on Vinyl | 12-Inch Record by Mr. CAP",
-    description: "Order the official 12-inch vinyl of Mr. CAP's 2019 album The Art of ISM: 11 tracks on two sides, pressed to order and shipped worldwide by Elastic Stage.",
-    h1: "The Art of ISM",
-    ogType: "product",
-    ogImage: abs("/images/art-of-ism-cover.webp"),
-    summary: [
-      "The 2019 album pressed to a 12-inch record: personal growth, artistic expression, and street knowledge cut into two sides. Features Ms. Cookie, Point Blank, Lil Kano, S.U.C. Jhiame, Oddy D, Movin Maserati, and Desiree McKinny.",
-      "Each copy is pressed to order and shipped worldwide by Elastic Stage. Prices and dispatch dates are shown for your country at checkout.",
-    ],
-    links: [L.artOfIsm, L.music, L.merch],
-    jsonLd: [
-      {
-        "@type": "Product",
-        name: "The Art of ISM, 12-inch Vinyl",
-        image: abs("/images/art-of-ism-cover.webp"),
-        description: "Limited 12-inch vinyl pressing of Mr. CAP's 2019 album The Art of ISM. 11 tracks across two sides, pressed and shipped worldwide.",
-        brand: { "@type": "Brand", name: "Mr. CAP" },
-        offers: { "@type": "Offer", price: "31.90", priceCurrency: "USD", availability: "https://schema.org/InStock", url: "https://elasticstage.com/mrcap/releases/the-art-of-ism-album" },
-      },
-      { "@type": "MusicAlbum", name: "The Art of ISM", byArtist: { "@type": "MusicGroup", name: "Mr. CAP" }, datePublished: "2019-09-21", numTracks: 11 },
-      breadcrumb(["Vinyl", "/vinyl"]),
-    ],
-  }),
-
-  route({
-    path: "/opk",
-    ogImage: abs("/images/opk-og-image.jpg"),
-    title: "Official Press Kit (OPK) | Mr. CAP",
-    description: `The official Online Press Kit for Mr. CAP, Houston hip-hop artist and ${SPC_ROLE}. Choose the music, press, brand, or film kit.`,
-    h1: "Mr. CAP: Official OPK",
-    summary: [
-      `The official Online Press Kit for Mr. CAP, Houston hip-hop artist and proud ${SPC_ROLE}. Select the kit that fits your purpose.`,
-      "Music and booking for full sets, features, and festivals. Press and media. Brand partnerships, endorsements, and licensing. Film and speaking: documentaries, music supervision, and keynotes.",
-    ],
-    links: [
-      { href: "/opk/music", label: "Music & booking OPK" },
-      { href: "/opk/press", label: "Press & media OPK" },
-      { href: "/opk/brands", label: "Brand & partnership OPK" },
-      { href: "/opk/media", label: "Film & speaking OPK" },
-    ],
-    jsonLd: [
-      { ...webPage("/opk", "Mr. CAP Official Online Press Kit", `Official Online Press Kit for Mr. CAP, Houston hip-hop artist and ${SPC_ROLE}.`), mainEntity: PERSON_FULL },
-      breadcrumb(["OPK", "/opk"]),
-    ],
-  }),
-
-  route({
-    path: "/opk/music",
-    ogImage: abs("/images/opk-download.webp"),
-    title: "Booking OPK | Mr. CAP Live Hip-Hop Performer",
-    description: "Book Mr. CAP for a full set, feature, or festival slot. The music and booking press kit for a Houston hip-hop performer with three decades of stage time.",
-    h1: "Mr. CAP",
-    summary: [
-      `Mr. CAP is a Houston hip-hop artist and proud ${SPC_ROLE}. With deep roots in the Screwed Up Click era, his career represents longevity, independence, and authenticity.`,
-      "This kit covers the artist snapshot, booking bio, music highlights, live performance details, and downloadable materials for promoters.",
-    ],
-    links: [L.booking, L.live, L.opk],
-    jsonLd: [webPage("/opk/music", "Mr. CAP Booking OPK", "Booking press kit for Mr. CAP, Houston hip-hop performer."), breadcrumb(["OPK", "/opk"], ["Music", "/opk/music"])],
-  }),
-
-  route({
-    path: "/opk/press",
-    ogImage: abs("/images/opk-download.webp"),
-    title: "Press Kit | Mr. CAP Bio, Photos & Interviews",
-    description: "The official Mr. CAP press kit: press bio, highlights, photos, and logos. Download media assets or request an interview with the Houston hip-hop artist.",
-    h1: "Houston Hip-Hop Legacy, Built to Last",
-    summary: [
-      `Mr. CAP is a Houston-based hip-hop artist whose career reflects the evolution of Southern rap culture. As an ${SPC_ROLE}, he emerged from the same creative ecosystem that helped define Houston's influence on hip-hop worldwide.`,
-      "Beyond music, Mr. CAP has expanded into media, film, and digital innovation. He contributed music and perspective to the documentary The Life: Sex Trafficking and Modern-Day Slavery.",
-      "In 2021, Mr. CAP became the first Houston rapper to sell a hip-hop NFT, a milestone at the intersection of music and blockchain culture.",
-    ],
-    links: [L.press, L.bio, L.opk],
-    jsonLd: [
-      {
-        ...webPage("/opk/press", "Mr. CAP Press Kit", "Official press kit for Mr. CAP with bio, photos, and media assets."),
-        mainEntity: { ...personRef, description: `Houston-based hip-hop artist and ${SPC_ROLE}.`, award: "First Houston rapper to sell a hip-hop NFT", memberOf: { "@type": "MusicGroup", name: "South Park Coalition" } },
-      },
-      breadcrumb(["OPK", "/opk"], ["Press", "/opk/press"]),
-    ],
-  }),
-
-  route({
-    path: "/opk/brands",
-    ogImage: abs("/images/opk-og-image.jpg"),
-    title: "Brand Partnerships | Mr. CAP OPK",
-    description: "Partner with Mr. CAP on endorsements, campaigns, music placement, and digital collaborations: authentic Houston hip-hop credibility for brands with substance.",
-    h1: "Culture. Credibility. Forward Motion.",
-    summary: [
-      "Mr. CAP represents authenticity, independence, and longevity. His career bridges legacy hip-hop culture with modern digital entrepreneurship, a strong fit for brands seeking real cultural alignment, not manufactured influence.",
-      "Partnership options include sponsored content, brand storytelling, event partnerships, music placement, and digital and NFT-based collaborations.",
-    ],
-    links: [L.opk, L.booking, L.nft],
-    jsonLd: [webPage("/opk/brands", "Mr. CAP Brand Partnership OPK", "Brand partnership press kit for Mr. CAP."), breadcrumb(["OPK", "/opk"], ["Brands", "/opk/brands"])],
-  }),
-
-  route({
-    path: "/opk/media",
-    ogImage: abs("/images/opk-og-image.jpg"),
-    title: "Film & Speaking OPK | Mr. CAP",
-    description: "Book Mr. CAP for film projects, music supervision, documentaries, keynotes, and panels: an independent voice in music, media, and culture from Houston.",
-    h1: "Independent Voice in Music, Media & Culture",
-    summary: [
-      "Mr. CAP's career extends beyond music into film, media, and cultural commentary. As a contributor to The Life: Sex Trafficking and Modern-Day Slavery, he brings perspective shaped by lived experience and artistic discipline.",
-      "As hip-hop continues to intersect with technology and entrepreneurship, Mr. CAP stands as an example of evolution without erasure: keeping cultural roots while embracing future platforms.",
-    ],
-    links: [L.opk, L.booking, L.bio],
-    jsonLd: [webPage("/opk/media", "Mr. CAP Film & Speaking OPK", "Film, media, and speaking press kit for Mr. CAP."), breadcrumb(["OPK", "/opk"], ["Film & Speaking", "/opk/media"])],
-  }),
-
-  route({
     path: "/self-love",
     title: "Self Love | An Art Installation by Mr. CAP",
     description: "Self Love, an art installation by Mr. CAP running from 2024 to 2026: three rooms and one continuous story about self-discovery, healing, and self-acceptance.",
@@ -737,7 +510,7 @@ export const ROUTES: SeoEntry[] = [
       "Curator's note: \"Self Love is a visual language built from symbols, names, and lived emotional codes. Every piece is a chapter. Every chapter is a mirror.\"",
       "Room I, 2024: The Awakening is open now. Room II, The Becoming, and Room III, The Ownership, follow in 2025 and 2026.",
     ],
-    links: [{ href: "/self-love/2024", label: "Room I, 2024: The Awakening" }, L.art, L.nft],
+    links: [{ href: "/self-love/2024", label: "Room I, 2024: The Awakening" }, L.nft],
     jsonLd: [
       webPage("/self-love", "Self Love: An Art Installation by Mr. CAP", "A three-room art installation by Mr. CAP, 2024 to 2026."),
       { "@type": "VisualArtwork", name: "Self Love", creator: personRef, artform: "Installation Art", temporalCoverage: "2024/2026" },
@@ -754,34 +527,8 @@ export const ROUTES: SeoEntry[] = [
       "Enter the first room of the installation. Select a story to step into the work.",
       "The Heart Within: a creative soul turns pain into a mural, and discovers love starts from within. The Mirror of Truth: an old cracked mirror becomes the spark, and a mural becomes the truth.",
     ],
-    links: [{ href: "/self-love/2024/amara", label: "The Heart Within" }, L.selfLove, L.art],
+    links: [{ href: "/self-love/2024/amara", label: "The Heart Within" }, L.selfLove],
     jsonLd: [webPage("/self-love/2024", "2024: The Awakening", "Room I of the Self Love art installation by Mr. CAP."), breadcrumb(["Self Love", "/self-love"], ["2024: The Awakening", "/self-love/2024"])],
-  }),
-
-  route({
-    path: "/self-love/2025",
-    title: "2025: The Becoming | Self Love by Mr. CAP",
-    description: "Room II of the Self Love art installation by Mr. CAP, 2025: The Becoming, about growth, boundaries, and voice. This room is coming soon; Room I is open now.",
-    h1: "2025: The Becoming",
-    summary: [
-      "Room II of the Self Love installation: growth, boundaries, and voice. Here, Self Love becomes active, not a feeling but a decision.",
-      "This room is coming soon. Room I, 2024: The Awakening, is open now.",
-    ],
-    links: [{ href: "/self-love/2024", label: "Room I, 2024: The Awakening" }, L.selfLove],
-    noIndex: true,
-  }),
-
-  route({
-    path: "/self-love/2026",
-    title: "2026: The Ownership | Self Love by Mr. CAP",
-    description: "Room III of the Self Love art installation by Mr. CAP, 2026: The Ownership, about mastery, permanence, and legacy. Coming soon; Room I is open now.",
-    h1: "2026: The Ownership",
-    summary: [
-      "Room III of the Self Love installation represents arrival. Not perfection, ownership: self-love as a power source, a standard, and a legacy.",
-      "This room is coming soon. Room I, 2024: The Awakening, is open now.",
-    ],
-    links: [{ href: "/self-love/2024", label: "Room I, 2024: The Awakening" }, L.selfLove],
-    noIndex: true,
   }),
 
   route({
@@ -793,24 +540,11 @@ export const ROUTES: SeoEntry[] = [
       "Exclusive streetwear designed for the culture. Limited drops, unlimited drip.",
       "The store is home to Trap University: the SPC basketball jersey, the TrapU football jersey, dad caps, slides, crop hoodies, backpacks, and premium heavyweight tees.",
     ],
-    links: [L.vinyl, L.music, L.nft],
+    links: [L.artOfIsmAlbum, L.music, L.nft],
     jsonLd: [
       { "@type": "Store", name: "Mr. CAP Official Store", url: abs("/merch"), brand: [{ "@type": "Brand", name: "Trap University" }], parentOrganization: personRef },
       breadcrumb(["Store", "/merch"]),
     ],
-  }),
-
-  route({
-    path: "/tiktok",
-    title: "Mr. CAP on TikTok | Latest Videos and Live Feed",
-    description: "Watch Mr. CAP's latest TikTok videos in a live feed from @mrcapism, plus a caption generator for stitches and duets. Rapper, songwriter, 30+ in the game.",
-    h1: "Mr. CAP",
-    summary: [
-      "The latest TikTok videos from @mrcapism, pulled into one live feed: new music, studio moments, and everyday Houston.",
-      "Rapper, songwriter, and recording artist with 30+ years in the game. Use the caption generator to stitch, duet, and tag.",
-    ],
-    links: [L.videos, L.music, L.newReleases],
-    jsonLd: [{ ...webPage("/tiktok", "Mr. CAP on TikTok", "The latest TikTok videos from @mrcapism."), sameAs: ["https://www.tiktok.com/@mrcapism"] }, breadcrumb(["TikTok", "/tiktok"])],
   }),
 
   route({
@@ -873,19 +607,31 @@ export const ALIASES: Record<string, string> = {
   "/houston-rapper-mr-cap": "/who-is-mr-cap",
   "/innovation": "/who-is-mr-cap",
   "/legacy": "/who-is-mr-cap",
-  "/press-kit": "/opk",
-  "/for-media": "/opk",
+  "/press-kit": "/press",
+  "/for-media": "/press",
   "/discography": "/mr-cap-discography",
   "/listen": "/music",
   "/south-park-coalition-houston": "/south-park-coalition",
   "/epk": "/press",
   "/digital-art": "/nft",
   "/tour": "/live",
-  "/art-of-ism-vinyl": "/vinyl",
-  "/epk/music": "/opk/music",
-  "/epk/press": "/opk/press",
-  "/epk/brands": "/opk/brands",
-  "/epk/media": "/opk/media",
+  "/epk/music": "/booking",
+  "/epk/press": "/press",
+  "/epk/brands": "/booking",
+  "/epk/media": "/booking",
+  "/opk": "/press",
+  "/opk/press": "/press",
+  "/opk/music": "/booking",
+  "/opk/brands": "/booking",
+  "/opk/media": "/booking",
+  "/biography": "/who-is-mr-cap",
+  "/new-releases": "/music",
+  "/texas-underground-hip-hop": "/houston-hip-hop-history",
+  "/art": "/self-love",
+  "/self-love/2025": "/self-love",
+  "/self-love/2026": "/self-love",
+  "/tiktok": "/videos",
+  "/cities": "/live",
 };
 
 const BY_PATH = new Map(ROUTES.map((r) => [r.path, r]));

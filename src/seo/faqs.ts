@@ -59,8 +59,21 @@ export const HOUSTON_HISTORY_FAQ: FaqItem[] = [
     answer:
       "Mr. CAP is a Houston-born rapper and an Original Member of the South Park Coalition, known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
   },
-  SPC_FAQ[2],
-  SPC_FAQ[1],
+  {
+    question: "Who are the pioneers of Houston underground hip-hop?",
+    answer:
+      "Pioneers include DJ Screw (chopped and screwed music), K-Rino and the South Park Coalition (an independent rap collective since 1987), Scarface and the Geto Boys (who brought Houston to the mainstream), and artists like Mr. CAP, Z-Ro, and Trae tha Truth who built careers independently.",
+  },
+  {
+    question: "What is chopped and screwed music?",
+    answer:
+      "Chopped and screwed is a DJ technique invented by DJ Screw in Houston in the early 1990s. It slows the tempo down and adds effects like skips and repeats. The style became synonymous with Houston hip-hop culture and influenced artists worldwide.",
+  },
+  {
+    question: "How is Texas underground hip-hop different from mainstream rap?",
+    answer:
+      "Texas underground hip-hop is built on independence (artists own their masters), lyrical focus (wordplay and storytelling), regional pride (Houston, Dallas, and San Antonio identity), and longevity, with careers spanning decades. Mr. CAP has been active for more than 30 years.",
+  },
   {
     question: "Why do independent hip-hop artists like Mr. CAP avoid major labels?",
     answer:
@@ -70,24 +83,6 @@ export const HOUSTON_HISTORY_FAQ: FaqItem[] = [
     question: "How can I book Mr. CAP for a live performance?",
     answer:
       "Visit mrcap1.com/booking to submit a booking inquiry. Mr. CAP is available for live shows, features, interviews, and speaking engagements worldwide.",
-  },
-];
-
-export const TEXAS_UNDERGROUND_FAQ: FaqItem[] = [
-  {
-    question: "What is Texas underground hip-hop?",
-    answer:
-      "Texas underground hip-hop refers to the independent rap scene in Texas, particularly Houston, Dallas, and San Antonio. It includes artists who release music independently, often through their own labels, without major label support. Key figures include South Park Coalition, Swishahouse, and Screwed Up Click.",
-  },
-  {
-    question: "Who are the pioneers of Houston underground hip-hop?",
-    answer:
-      "Pioneers of Houston underground hip-hop include DJ Screw (chopped and screwed music), K-Rino and the South Park Coalition (independent rap collective), Scarface and the Geto Boys (bringing Houston to mainstream), and artists like Mr. CAP, Z-Ro, and Trae tha Truth who built careers independently.",
-  },
-  {
-    question: "How is Texas underground hip-hop different from mainstream rap?",
-    answer:
-      "Texas underground hip-hop is characterized by independence (artists own their masters), lyrical focus (complex wordplay and storytelling), regional pride (Houston, Dallas, San Antonio identity), and longevity (careers spanning decades vs. one-hit wonders). Artists like Mr. CAP have been active for 30+ years.",
   },
 ];
 

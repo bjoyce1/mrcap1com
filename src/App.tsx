@@ -35,12 +35,9 @@ const Live = lazy(() => import("./pages/Live"));
 const Press = lazy(() => import("./pages/Press"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
-const Cities = lazy(() => import("./pages/Cities"));
-const CityLanding = lazy(() => import("./pages/CityLanding"));
 const NFTGallery = lazy(() => import("./pages/NFTGallery"));
-const ArtGallery = lazy(() => import("./pages/ArtGallery"));
+const SelfLove = lazy(() => import("./pages/SelfLove"));
 const SouthParkCoalition = lazy(() => import("./pages/SouthParkCoalition"));
-const TexasUndergroundHipHop = lazy(() => import("./pages/TexasUndergroundHipHop"));
 const WhoIsMrCap = lazy(() => import("./pages/WhoIsMrCap"));
 const Discography = lazy(() => import("./pages/Discography"));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -49,12 +46,6 @@ const Booking = lazy(() => import("./pages/Booking"));
 const Links = lazy(() => import("./pages/Links"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AnalyticsRedirect = lazy(() => import("./pages/AnalyticsRedirect"));
-const OPKHub = lazy(() => import("./pages/opk/OPKHub"));
-const OPKMusic = lazy(() => import("./pages/opk/OPKMusic"));
-const OPKPress = lazy(() => import("./pages/opk/OPKPress"));
-const OPKBrands = lazy(() => import("./pages/opk/OPKBrands"));
-const OPKMedia = lazy(() => import("./pages/opk/OPKMedia"));
-const SelfLoveInstallation = lazy(() => import("./pages/SelfLoveInstallation"));
 const SelfLoveRoom2024 = lazy(() => import("./pages/SelfLoveRoom2024"));
 const SelfLoveStory = lazy(() => import("./pages/SelfLoveStory"));
 const SelfLoveStoryModal = lazy(() => import("./components/SelfLoveStoryModal"));
@@ -63,23 +54,18 @@ const AlbumPage = lazy(() => import("./pages/AlbumPage"));
 const TrackPage = lazy(() => import("./pages/TrackPage"));
 const AdminLibrary = lazy(() => import("./pages/AdminLibrary"));
 const AdminRoadmap = lazy(() => import("./pages/AdminRoadmap"));
-const NewReleases = lazy(() => import("./pages/NewReleases"));
 const PantiesOnMyPiano = lazy(() => import("./pages/PantiesOnMyPiano"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 const Videos = lazy(() => import("./pages/Videos"));
 const PressPost = lazy(() => import("./pages/PressPost"));
-const Biography = lazy(() => import("./pages/Biography"));
 const BetOnHer = lazy(() => import("./pages/BetOnHer"));
 const HoustonHipHopHistory = lazy(() => import("./pages/HoustonHipHopHistory"));
 const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
 const Listen = lazy(() => import("./pages/Listen"));
-const TikTok = lazy(() => import("./pages/TikTok"));
 const AdminApi = lazy(() => import("./pages/AdminApi"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
-const Vinyl = lazy(() => import("./pages/Vinyl"));
-const SelfLoveComingSoon = lazy(() => import("./pages/SelfLoveComingSoon"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -121,8 +107,8 @@ function AppRoutes() {
             <Route path="/houston-rapper-mr-cap" element={<Navigate to="/who-is-mr-cap" replace />} />
             <Route path="/innovation" element={<Navigate to="/who-is-mr-cap" replace />} />
             <Route path="/legacy" element={<Navigate to="/who-is-mr-cap" replace />} />
-            <Route path="/press-kit" element={<Navigate to="/opk" replace />} />
-            <Route path="/for-media" element={<Navigate to="/opk" replace />} />
+            <Route path="/press-kit" element={<Navigate to="/press" replace />} />
+            <Route path="/for-media" element={<Navigate to="/press" replace />} />
             <Route path="/discography" element={<Navigate to="/mr-cap-discography" replace />} />
             <Route path="/music" element={<PageTransition><Listen /></PageTransition>} />
             <Route path="/listen" element={<Navigate to="/music" replace />} />
@@ -131,13 +117,13 @@ function AppRoutes() {
             <Route path="/press/:pressSlug" element={<PageTransition><PressPost /></PageTransition>} />
             <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
             <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
-            <Route path="/cities" element={<PageTransition><Cities /></PageTransition>} />
-            <Route path="/city/:citySlug" element={<PageTransition><CityLanding /></PageTransition>} />
+            <Route path="/cities" element={<Navigate to="/live" replace />} />
+            <Route path="/city/:citySlug" element={<Navigate to="/live" replace />} />
             <Route path="/nft" element={<PageTransition><NFTGallery /></PageTransition>} />
-            <Route path="/art" element={<PageTransition><ArtGallery /></PageTransition>} />
+            <Route path="/art" element={<Navigate to="/self-love" replace />} />
             <Route path="/south-park-coalition-houston" element={<Navigate to="/south-park-coalition" replace />} />
             <Route path="/south-park-coalition" element={<PageTransition><SouthParkCoalition /></PageTransition>} />
-            <Route path="/texas-underground-hip-hop" element={<PageTransition><TexasUndergroundHipHop /></PageTransition>} />
+            <Route path="/texas-underground-hip-hop" element={<Navigate to="/houston-hip-hop-history" replace />} />
             <Route path="/houston-hip-hop-history" element={<PageTransition><HoustonHipHopHistory /></PageTransition>} />
             <Route path="/who-is-mr-cap" element={<PageTransition><WhoIsMrCap /></PageTransition>} />
             <Route path="/mr-cap-discography" element={<PageTransition><Discography /></PageTransition>} />
@@ -147,8 +133,8 @@ function AppRoutes() {
             <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
             <Route path="/admin/library" element={<PageTransition><AdminLibrary /></PageTransition>} />
             <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />
-            <Route path="/biography" element={<PageTransition><Biography /></PageTransition>} />
-            <Route path="/new-releases" element={<PageTransition><NewReleases /></PageTransition>} />
+            <Route path="/biography" element={<Navigate to="/who-is-mr-cap" replace />} />
+            <Route path="/new-releases" element={<Navigate to="/music" replace />} />
             <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
             <Route path="/unsubscribe" element={<PageTransition><Unsubscribe /></PageTransition>} />
             <Route path="/epk" element={<Navigate to="/press" replace />} />
@@ -158,24 +144,24 @@ function AppRoutes() {
             <Route path="/panties-on-my-piano" element={<PageTransition><PantiesOnMyPiano /></PageTransition>} />
             <Route path="/bet-on-her" element={<PageTransition><BetOnHer /></PageTransition>} />
             <Route path="/art-of-ism" element={<PageTransition><ArtOfIsm /></PageTransition>} />
-            <Route path="/vinyl" element={<PageTransition><Vinyl /></PageTransition>} />
-            <Route path="/art-of-ism-vinyl" element={<Navigate to="/vinyl" replace />} />
-            <Route path="/opk" element={<PageTransition><OPKHub /></PageTransition>} />
-            <Route path="/opk/music" element={<PageTransition><OPKMusic /></PageTransition>} />
-            <Route path="/opk/press" element={<PageTransition><OPKPress /></PageTransition>} />
-            <Route path="/opk/brands" element={<PageTransition><OPKBrands /></PageTransition>} />
-            <Route path="/opk/media" element={<PageTransition><OPKMedia /></PageTransition>} />
+            <Route path="/vinyl" element={<Navigate to="/albums/the-art-of-ism" replace />} />
+            <Route path="/art-of-ism-vinyl" element={<Navigate to="/albums/the-art-of-ism" replace />} />
+            <Route path="/opk" element={<Navigate to="/press" replace />} />
+            <Route path="/opk/music" element={<Navigate to="/booking" replace />} />
+            <Route path="/opk/press" element={<Navigate to="/press" replace />} />
+            <Route path="/opk/brands" element={<Navigate to="/booking" replace />} />
+            <Route path="/opk/media" element={<Navigate to="/booking" replace />} />
             {/* Legacy EPK Redirects */}
-            <Route path="/epk/music" element={<Navigate to="/opk/music" replace />} />
-            <Route path="/epk/press" element={<Navigate to="/opk/press" replace />} />
-            <Route path="/epk/brands" element={<Navigate to="/opk/brands" replace />} />
-            <Route path="/epk/media" element={<Navigate to="/opk/media" replace />} />
+            <Route path="/epk/music" element={<Navigate to="/booking" replace />} />
+            <Route path="/epk/press" element={<Navigate to="/press" replace />} />
+            <Route path="/epk/brands" element={<Navigate to="/booking" replace />} />
+            <Route path="/epk/media" element={<Navigate to="/booking" replace />} />
             {/* Self Love Installation Routes */}
-            <Route path="/self-love" element={<PageTransition><SelfLoveInstallation /></PageTransition>} />
+            <Route path="/self-love" element={<PageTransition><SelfLove /></PageTransition>} />
             <Route path="/self-love/2024" element={<PageTransition><SelfLoveRoom2024 /></PageTransition>} />
             <Route path="/self-love/2024/:slug" element={<PageTransition><SelfLoveStory /></PageTransition>} />
-            <Route path="/self-love/2025" element={<PageTransition><SelfLoveComingSoon year={2025} /></PageTransition>} />
-            <Route path="/self-love/2026" element={<PageTransition><SelfLoveComingSoon year={2026} /></PageTransition>} />
+            <Route path="/self-love/2025" element={<Navigate to="/self-love" replace />} />
+            <Route path="/self-love/2026" element={<Navigate to="/self-love" replace />} />
             {/* Merch & Streaming */}
             <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
@@ -183,7 +169,7 @@ function AppRoutes() {
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/track/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
-            <Route path="/tiktok" element={<PageTransition><TikTok /></PageTransition>} />
+            <Route path="/tiktok" element={<Navigate to="/videos" replace />} />
             <Route path="/admin/api" element={<PageTransition><AdminApi /></PageTransition>} />
             <Route path="/api/docs" element={<PageTransition><ApiDocs /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />

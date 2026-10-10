@@ -1,7 +1,8 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import FanCaptureBanner from "@/components/FanCaptureBanner";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
+import TikTokSection from "@/components/videos/TikTokSection";
 import ScreeningRoomHero from "@/components/videos/ScreeningRoomHero";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -210,12 +211,11 @@ const Videos = () => {
           </div>
         </section>
 
-        <FanCaptureBanner
-          sourcePage="videos"
-          headline="Get New Visuals First"
-          subheadline="Join Mr. CAP Legacy for exclusive video drops, new releases, and show alerts."
-          className="mx-6 md:mx-auto max-w-5xl mb-16"
-        />
+        <TikTokSection />
+
+        <div className="max-w-6xl mx-auto px-6 pb-16">
+          <EarlyAccessCard source="videos" />
+        </div>
       </main>
 
       <Footer />

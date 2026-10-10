@@ -76,7 +76,7 @@ export const BOOK = {
   text: "A philosophy built from experience. Refined through movement. Tested under pressure. This isn't just something you read. It's something you live.",
   features: ['11 immersive chapters', 'Exclusive ISM codes', 'The quote vault', 'Interactive experience'],
   href: 'https://theartofism.com/',
-  vinyl: '/vinyl',
+  vinyl: '/albums/the-art-of-ism',
 };
 
 export const DOCUMENTARY = {
@@ -147,7 +147,7 @@ export const MORE_LINKS = [
   ['Full biography', '/who-is-mr-cap'],
   ['South Park Coalition archive', '/south-park-coalition'],
   ['Houston hip-hop history', '/houston-hip-hop-history'],
-  ['Press kit (OPK)', '/opk'],
+  ['Press kit', '/press#press-kit'],
   ['Discography', '/mr-cap-discography'],
   ['Journal', '/blog'],
   ['Privacy policy', '/privacy'],

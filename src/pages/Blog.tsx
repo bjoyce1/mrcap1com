@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import NewsletterSignup from "@/components/NewsletterSignup";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import { blogPosts, blogCategories } from "@/data/blogPosts";
 import { useSanityBlogPosts, SanityBlogPost } from "@/hooks/useSanity";
 import { ChevronRight, Clock } from "lucide-react";
@@ -238,16 +238,8 @@ const Blog = () => {
           {/* Newsletter CTA */}
           <section className="py-20 bg-gradient-to-b from-primary/10 to-background border-t border-border/50">
             <div className="container mx-auto px-4">
-              <div className="max-w-md mx-auto">
-                <div className="text-center mb-6">
-                  <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-                    Stay Updated
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Get the latest posts, music releases, and tour announcements delivered to your inbox.
-                  </p>
-                </div>
-                <NewsletterSignup source="blog" variant="default" />
+              <div className="max-w-3xl mx-auto">
+                <EarlyAccessCard source="blog" />
               </div>
             </div>
           </section>

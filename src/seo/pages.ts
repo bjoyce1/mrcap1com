@@ -17,7 +17,6 @@ import {
   albumSeo,
   blogListLd,
   blogPostSeo,
-  citySeo,
   musicPlaylistLd,
   pressListLd,
   pressPostSeo,
@@ -84,7 +83,8 @@ export function collectPages(catalog: Catalog = {}): PageSpec[] {
   for (const entry of ROUTES) pages.push({ path: entry.path, entry, extraJsonLd: extraFor(entry.path) });
   for (const [alias, target] of Object.entries(ALIASES)) pages.push({ path: alias, entry: routeSeo(target), extraJsonLd: extraFor(target) });
 
-  for (const city of allCities) pages.push({ path: `/city/${city.slug}`, entry: citySeo(city) });
+  // the city pages were one template with the name swapped; each old URL now serves the live page
+  for (const city of allCities) pages.push({ path: `/city/${city.slug}`, entry: routeSeo("/live") });
   for (const story of selfLove2024) pages.push({ path: `/self-love/${story.year}/${story.slug}`, entry: selfLoveStorySeo(story) });
   for (const post of blog) pages.push({ path: `/blog/${post.slug}`, entry: blogPostSeo(post) });
   for (const entry of press) pages.push({ path: `/press/${entry.slug}`, entry: pressPostSeo(entry) });
@@ -94,6 +94,8 @@ export function collectPages(catalog: Catalog = {}): PageSpec[] {
     const entry = albumSeo(album, tracks.filter((t) => t.album_id && t.album_id === album.id));
     pages.push({ path: albumPath(album.slug), entry });
     pages.push({ path: `/album/${album.slug}`, entry }); // alias, same canonical
+    // the vinyl page folded into its album page
+    if (album.slug === "the-art-of-ism") for (const old of ["/vinyl", "/art-of-ism-vinyl"]) pages.push({ path: old, entry });
   }
   for (const track of tracks) {
     const entry = trackSeo(track, track.album_id ? albumById.get(track.album_id) : null);

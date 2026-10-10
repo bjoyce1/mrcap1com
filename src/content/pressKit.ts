@@ -1,5 +1,5 @@
 /**
- * Shared press kit content — used by /press-kit page and the
+ * Shared press kit content, used by the press kit on /press and the
  * Press Kit modal on /who-is-mr-cap.
  */
 
@@ -50,7 +50,7 @@ export const OFFICIAL_LINKS = [
 export function openPressKitPDF() {
   const printWindow = window.open("", "_blank");
   if (!printWindow) return;
-  const contact = ["wreck", "lessent", "@", "gmail.com"].join("");
+  const contact = ["music", "@", "mrcap1.com"].join("");
   printWindow.document.write(`<!DOCTYPE html><html><head><title>Mr. CAP: Press Kit</title><style>
     body{font-family:system-ui,sans-serif;max-width:700px;margin:40px auto;padding:0 20px;color:#111;line-height:1.6}
     h1{font-size:28px;margin-bottom:4px}
