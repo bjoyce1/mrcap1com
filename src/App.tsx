@@ -66,6 +66,7 @@ const AdminRoadmap = lazy(() => import("./pages/AdminRoadmap"));
 const NewReleases = lazy(() => import("./pages/NewReleases"));
 const PantiesOnMyPiano = lazy(() => import("./pages/PantiesOnMyPiano"));
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
 const Videos = lazy(() => import("./pages/Videos"));
 const PressPost = lazy(() => import("./pages/PressPost"));
 const Biography = lazy(() => import("./pages/Biography"));
@@ -149,6 +150,7 @@ function AppRoutes() {
             <Route path="/biography" element={<PageTransition><Biography /></PageTransition>} />
             <Route path="/new-releases" element={<PageTransition><NewReleases /></PageTransition>} />
             <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+            <Route path="/unsubscribe" element={<PageTransition><Unsubscribe /></PageTransition>} />
             <Route path="/epk" element={<Navigate to="/press" replace />} />
             <Route path="/digital-art" element={<Navigate to="/nft" replace />} />
             <Route path="/videos" element={<PageTransition><Videos /></PageTransition>} />

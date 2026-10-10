@@ -1,1 +1,2 @@
 Use HorizontalShelf's `grid` layout for the five Albums cards while retaining `rail` for scrolling track shelves and `block` for charts; this keeps every album visible without changing shared rail behavior.
+App emails for bookings and list signups are sent by AFTER INSERT triggers that call the notify-new-row function, which reloads the row and sends through send-transactional-email (service role only); this covers every form without editing forms and keeps sending server side.
