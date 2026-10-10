@@ -9,13 +9,10 @@ import { z } from 'npm:zod@3.23.8'
 const OWNER = 'mrcap11@gmail.com'
 const FRESH_MS = 15 * 60 * 1000
 
-const Body = z.union([
-  z.object({
-    table: z.enum(['booking_requests', 'newsletter_subscribers', 'fan_signups']),
-    id: z.string().uuid(),
-  }),
-  z.object({ test: z.literal(true) }),
-])
+const Body = z.object({
+  table: z.enum(['booking_requests', 'newsletter_subscribers', 'fan_signups']),
+  id: z.string().uuid(),
+})
 
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
@@ -42,34 +39,6 @@ Deno.serve(async (req: Request) => {
   }
 
   const body = parsed.data
-
-  // Test mode: one sample of each email, all to the owner, subjects marked [TEST].
-  if ('test' in body) {
-    const since = new Date(Date.now() - 60 * 60 * 1000).toISOString()
-    const { count } = await supabase
-      .from('email_send_log')
-      .select('id', { count: 'exact', head: true })
-      .eq('recipient_email', OWNER)
-      .gte('created_at', since)
-    if ((count ?? 0) >= 20) return json({ error: 'Too many test sends, try later' }, 429)
-    const stamp = Date.now()
-    const now = new Date().toISOString()
-    const booking = {
-      test: true, name: 'Jane Rivera', email: OWNER, phone: '713 555 0100', booking_type: 'show',
-      city: 'Houston, TX', venue: 'Warehouse Live', event_date: '2026-12-05',
-      message: 'Sample booking request. Looking for a 30 minute set.', created_at: now,
-    }
-    const results = [
-      await send('booking-owner-alert', OWNER, `test-booking-owner-${stamp}`, booking),
-      await send('booking-auto-reply', OWNER, `test-booking-reply-${stamp}`, booking),
-      await send('signup-owner-alert', OWNER, `test-signup-owner-${stamp}`, {
-        test: true, email: 'fan@example.com', name: 'Marcus', city: 'Houston', favorite_song: 'Big Boy Drip',
-        source: 'early_access:track:big-boy-drip', list: 'fan_signups', created_at: now,
-      }),
-      await send('list-welcome', OWNER, `test-list-welcome-${stamp}`, { test: true }),
-    ]
-    return json({ results })
-  }
 
   const { table, id } = body
   const { data: row, error } = await supabase.from(table).select('*').eq('id', id).maybeSingle()
