@@ -12,7 +12,7 @@ export const SOCIALS = [
 ];
 
 export const CONTACT = {
-  email: 'wrecklessent@gmail.com',
+  email: 'music@mrcap1.com',
   cashapp: '$CorneliusAPratt',
   zelle: '713-423-5333 (Cap Distributions)',
   bookSpc: 'https://bookspc.com/artists/mr-cap',

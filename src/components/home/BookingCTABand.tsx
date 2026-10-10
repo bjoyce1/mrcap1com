@@ -38,7 +38,7 @@ const BookingCTABand = () => {
               </Link>
             </Button>
             <Button variant="fluxOutline" size="lg" className="rounded-full" asChild>
-              <ObfuscatedMailto user="wrecklessent" domain="gmail.com" subject="Booking Inquiry">
+              <ObfuscatedMailto user="music" domain="mrcap1.com" subject="Booking Inquiry">
                 Email Direct
               </ObfuscatedMailto>
             </Button>

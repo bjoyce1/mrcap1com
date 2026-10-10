@@ -49,8 +49,8 @@ const Booking = () => {
               <p className="text-sm text-muted-foreground">{data.trust.responseTime}</p>
               <p className="text-sm text-muted-foreground">
                 Prefer email? Reach the team directly at{" "}
-                <a href="mailto:wrecklessent@gmail.com" className="text-primary hover:underline">
-                  wrecklessent@gmail.com
+                <a href="mailto:music@mrcap1.com" className="text-primary hover:underline">
+                  music@mrcap1.com
                 </a>
               </p>
             </div>

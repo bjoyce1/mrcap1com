@@ -43,7 +43,7 @@ export const bookingPageData = {
     "Original Member of the South Park Coalition alongside K-Rino. Distributed through Sony Music and The Orchard. Featured in the Houston Press and connected to a PBS Lone Star Emmy documentary credit. Three decades of shows without missing a beat. When you book Mr. CAP, you book a professional with a track record, not a gamble.",
   trust: {
     responseTime: "Every inquiry receives a response within 48 hours.",
-    directContact: "Prefer email? Reach the team directly at wrecklessent@gmail.com.",
+    directContact: "Prefer email? Reach the team directly at music@mrcap1.com.",
   },
   infoStrip: {
     label: "Press Support",
@@ -57,7 +57,7 @@ export const bookingPageData = {
     {
       question: "How do I book Mr. CAP for an event?",
       answer:
-        "Submit a booking inquiry through this page with your event details, date, and budget range. Every inquiry receives a response within 48 hours. You can also email wrecklessent@gmail.com directly.",
+        "Submit a booking inquiry through this page with your event details, date, and budget range. Every inquiry receives a response within 48 hours. You can also email music@mrcap1.com directly.",
     },
     {
       question: "What types of events can Mr. CAP be booked for?",

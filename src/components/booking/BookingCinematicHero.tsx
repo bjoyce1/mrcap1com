@@ -115,7 +115,7 @@ const BookingCinematicHero = () => {
               className="rounded-full border-foreground/20 text-foreground/80 hover:border-[hsl(var(--accent-gold))] hover:text-foreground font-medium uppercase tracking-wider px-8 py-6 text-sm transition-all duration-500"
               asChild
             >
-              <a href="mailto:wrecklessent@gmail.com">
+              <a href="mailto:music@mrcap1.com">
                 <Mail className="mr-2 h-4 w-4" />
                 Email the Team
               </a>
