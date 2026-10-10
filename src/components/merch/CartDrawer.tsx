@@ -1,5 +1,4 @@
-// Not mounted on any page yet: the store's Quick Add fills this cart, but no page shows it,
-// so the store cannot check out. Mount it on /merch once a test order goes through.
+// The store cart, mounted on /merch. Adding an item opens it; checkout runs in CheckoutPanel.
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, X, Plus, Minus, Trash2, ArrowRight } from "lucide-react";
@@ -134,7 +133,7 @@ export const CartDrawer = () => {
   );
 
   const TriggerButton = (
-    <Button variant="ghost" size="icon" className="relative rounded-full">
+    <Button variant="ghost" size="icon" className="relative rounded-full" aria-label={itemCount > 0 ? `Open cart, ${itemCount} item${itemCount === 1 ? "" : "s"}` : "Open cart"}>
       <ShoppingBag className="h-5 w-5" />
       {itemCount > 0 && (
         <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-medium">
