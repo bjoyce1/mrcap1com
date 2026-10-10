@@ -14,7 +14,7 @@
 import { liveHistory } from "../content/liveHistory";
 import { bookingPageData } from "../content/booking";
 import { nftPageData } from "../content/nft";
-import { texasCities } from "../data/cities";
+import { allCities } from "../data/cities";
 import { DEFAULT_OG_IMAGE, SAME_AS, SITE_URL, SPC_ROLE, abs } from "./site";
 import { HOME_FAQ, HOUSTON_HISTORY_FAQ, SPC_FAQ, TEXAS_UNDERGROUND_FAQ, WHO_IS_FAQ, faqPage } from "./faqs";
 import { PERSON_ID, artistNode, breadcrumb, citiesListLd, pastEventsLd, personRef } from "./builders";
@@ -241,7 +241,7 @@ export const ROUTES: SeoEntry[] = [
       "Major markets include Houston, Dallas, Fort Worth, San Antonio, Austin, El Paso, Arlington, Corpus Christi, Plano, and Lubbock. Mr. CAP performs nationwide; contact the team for booking in any location.",
     ],
     links: [L.booking, L.live, { href: "/city/houston", label: "Mr. CAP in Houston" }, { href: "/city/dallas", label: "Mr. CAP in Dallas" }],
-    jsonLd: [citiesListLd(texasCities), breadcrumb(["Cities", "/cities"])],
+    jsonLd: [citiesListLd(allCities), breadcrumb(["Cities", "/cities"])],
   }),
 
   route({
@@ -825,6 +825,20 @@ export const ROUTES: SeoEntry[] = [
     links: [L.booking],
     noIndex: true,
     jsonLd: [{ "@type": "WebPage", name: "Privacy Policy", url: abs("/privacy"), isPartOf: { "@id": `${SITE_URL}/#website` } }],
+  }),
+
+  route({
+    path: "/unsubscribe",
+    title: "Unsubscribe | Mr. CAP",
+    description: "Stop emails from Mr. CAP and mrcap1.com. Use the link in any email to leave the early access list, and rejoin anytime from the music page on the site.",
+    h1: "Unsubscribe",
+    summary: [
+      "Use the unsubscribe link in any email from Mr. CAP to stop receiving them. The address is removed from the early access list right away.",
+      "Changed your mind? Rejoin the early access list anytime from the music page and new songs will reach you before they hit Spotify and Apple Music.",
+    ],
+    links: [L.music],
+    noIndex: true,
+    jsonLd: [{ "@type": "WebPage", name: "Unsubscribe", url: abs("/unsubscribe"), isPartOf: { "@id": `${SITE_URL}/#website` } }],
   }),
 
   route({

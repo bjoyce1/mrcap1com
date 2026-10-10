@@ -6,6 +6,8 @@ import { collectPages, type Catalog } from "./pages";
 import { BODY_END, BODY_START, renderPage, ROBOTS_NOINDEX, scriptJson } from "./render";
 import { fitDescription, fitTitle, hasDash, noDashes } from "./text";
 import { musicPlaylistLd, trackSeo } from "./builders";
+import { sitemapUrls, sitemapXml } from "./sitemap";
+import { allCities } from "../data/cities";
 import type { SeoEntry } from "./types";
 
 const root = path.resolve(__dirname, "../..");
@@ -74,6 +76,39 @@ describe("every built page", () => {
       const c = p.entry.canonical ?? `https://mrcap1.com${p.entry.path}`;
       expect(c, p.path).toMatch(/^https:\/\/mrcap1\.com(\/|$)/);
     }
+  });
+
+  it("builds a page for every city the app serves, Louisiana included", () => {
+    const paths = new Set(pages.map((p) => p.path));
+    for (const city of allCities) expect(paths.has(`/city/${city.slug}`), city.slug).toBe(true);
+  });
+});
+
+describe("sitemap", () => {
+  const urls = sitemapUrls(pages);
+
+  it("lists each indexable page once, under its canonical URL", () => {
+    expect(new Set(urls).size).toBe(urls.length);
+    for (const u of ["https://mrcap1.com/", "https://mrcap1.com/music", "https://mrcap1.com/music/big-boy-drip", "https://mrcap1.com/albums/the-art-of-ism", "https://mrcap1.com/city/new-orleans"])
+      expect(urls, u).toContain(u);
+    const byUrl = new Map(pages.map((p) => [`https://mrcap1.com${p.path}`, p]));
+    for (const u of urls) {
+      const page = byUrl.get(u);
+      expect(page, u).toBeDefined();
+      expect(page!.entry.noIndex, u).toBeFalsy();
+    }
+  });
+
+  it("leaves out aliases and noindex pages", () => {
+    for (const u of ["/about", "/listen", "/track/big-boy-drip", "/album/the-art-of-ism", "/admin", "/auth"])
+      expect(urls, u).not.toContain(`https://mrcap1.com${u}`);
+  });
+
+  it("is well-formed XML with one <url> per page", () => {
+    const xml = sitemapXml(urls);
+    expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true);
+    expect(xml.match(/<url>/g)?.length).toBe(urls.length);
+    expect(xml).not.toMatch(/&(?!amp;|lt;|gt;|quot;)/);
   });
 });
 

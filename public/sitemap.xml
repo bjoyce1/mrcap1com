@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Fallback only. Every build replaces this with a sitemap generated from src/seo (scripts/seo-pages-plugin.ts), so edit routes there, not here. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Main Pages -->
   <url>
