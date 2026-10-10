@@ -828,6 +828,20 @@ export const ROUTES: SeoEntry[] = [
   }),
 
   route({
+    path: "/unsubscribe",
+    title: "Unsubscribe | Mr. CAP",
+    description: "Stop emails from Mr. CAP and mrcap1.com. Use the link in any email to leave the early access list, and rejoin anytime from the music page on the site.",
+    h1: "Unsubscribe",
+    summary: [
+      "Use the unsubscribe link in any email from Mr. CAP to stop receiving them. The address is removed from the early access list right away.",
+      "Changed your mind? Rejoin the early access list anytime from the music page and new songs will reach you before they hit Spotify and Apple Music.",
+    ],
+    links: [L.music],
+    noIndex: true,
+    jsonLd: [{ "@type": "WebPage", name: "Unsubscribe", url: abs("/unsubscribe"), isPartOf: { "@id": `${SITE_URL}/#website` } }],
+  }),
+
+  route({
     path: "/api/docs",
     title: "API Docs | Mr. CAP Catalog API",
     description: "Developer documentation for the Mr. CAP API v1: one JSON API for the whole catalog, including music, press, blog, merch, NFTs, and events, with rate limits.",
