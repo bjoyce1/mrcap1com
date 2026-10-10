@@ -43,3 +43,5 @@ project_id = "qisamkiggoibjkkdtkxq"
     verify_jwt = false
   [functions.handle-email-suppression]
     verify_jwt = false
+  [functions.notify-new-row]
+    verify_jwt = false
