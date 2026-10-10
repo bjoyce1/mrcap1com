@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, MapPin, Music, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { trackEmailSignup } from "@/components/GoogleAnalytics";
 import { motion } from "framer-motion";
 
 interface Props {
@@ -44,6 +45,7 @@ export default function FanCaptureBanner({
       toast({ title: "Something went wrong", description: error.message, variant: "destructive" });
     } else {
       setSubmitted(true);
+      trackEmailSignup(`fan_banner:${sourcePage}`);
       toast({ title: "You're in! 🎶", description: "Welcome to Mr. CAP Legacy." });
     }
   };

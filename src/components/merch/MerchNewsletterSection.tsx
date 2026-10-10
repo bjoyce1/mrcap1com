@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Mail, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { trackEmailSignup } from "@/components/GoogleAnalytics";
 
 export const MerchNewsletterSection = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export const MerchNewsletterSection = () => {
         }
       } else {
         toast.success("Welcome to the community!");
+        trackEmailSignup("merch_page");
         setEmail("");
       }
     } catch (err) {

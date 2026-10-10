@@ -13,6 +13,7 @@ import { trackEvent } from "@/components/GoogleAnalytics";
 import QueueDrawer from "./QueueDrawer";
 import { shareMusic } from "@/lib/shareTrack";
 import BuyButton from "@/components/music/BuyButton";
+import { EarlyAccessNudge, earlyAccessSettled } from "@/components/music/EarlyAccess";
 
 const PREVIEW_SECONDS = 30;
 const PROJECT_ID = import.meta.env.VITE_SUPABASE_PROJECT_ID;
@@ -58,6 +59,15 @@ const StickyPlayer = () => {
   const isOwned = currentTrack ? ownsTrack(currentTrack.id, currentTrack.album_id) : false;
   const isPreview = !!currentTrack && !isOwned;
   const [previewBlocked, setPreviewBlocked] = useState(false);
+  // early access prompt: once per visit, after a song or a preview plays through
+  const [nudge, setNudge] = useState(false);
+  const nudgedRef = useRef(false);
+  const maybeNudge = useCallback((trigger: string) => {
+    if (nudgedRef.current || earlyAccessSettled()) return;
+    nudgedRef.current = true;
+    setNudge(true);
+    trackEvent("early_access_prompt", { trigger });
+  }, []);
 
   // Sync audio element with store
   useEffect(() => {
@@ -202,10 +212,11 @@ const StickyPlayer = () => {
       setCurrentTime(PREVIEW_SECONDS);
       setPreviewBlocked(true);
       usePlayerStore.setState({ isPlaying: false });
+      maybeNudge("preview_end");
       return;
     }
     setCurrentTime(audio.currentTime);
-  }, [setCurrentTime, isPreview]);
+  }, [setCurrentTime, isPreview, maybeNudge]);
 
   const syncedRef = useRef<Record<string, boolean>>({});
 
@@ -228,6 +239,7 @@ const StickyPlayer = () => {
   const handleEnded = useCallback(() => {
     if (currentTrack) {
       trackEvent("track_complete", { track_id: currentTrack.id });
+      maybeNudge("track_complete");
     }
     const { repeatMode: mode, queue: q, queueIndex: qi } = usePlayerStore.getState();
     if (mode === 'one') {
@@ -243,7 +255,7 @@ const StickyPlayer = () => {
     } else {
       usePlayerStore.setState({ isPlaying: false });
     }
-  }, [currentTrack, nextTrack]);
+  }, [currentTrack, nextTrack, maybeNudge]);
 
   const handleSeek = (value: number[]) => {
     if (audioRef.current) {
@@ -278,6 +290,8 @@ const StickyPlayer = () => {
           isMinimized ? "h-16" : "h-auto"
         )}
       >
+        {nudge && <EarlyAccessNudge source={`player:${currentTrack.slug || currentTrack.id}`} onClose={() => setNudge(false)} />}
+
         {/* Progress bar - thin line at top */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-secondary">
           <div

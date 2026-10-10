@@ -18,7 +18,7 @@ import StoryBlock from "@/components/player/StoryBlock";
 import ShareButtons from "@/components/music/ShareButtons";
 import ReleaseLinks from "@/components/music/ReleaseLinks";
 import RelatedReleases from "@/components/music/RelatedReleases";
-import FanCaptureBanner from "@/components/FanCaptureBanner";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import BuyButton from "@/components/music/BuyButton";
 import type { Album } from "@/stores/playerStore";
 import { trackSeo } from "@/seo/builders";
@@ -189,8 +189,8 @@ const TrackPage = () => {
           {/* 7. Related Releases */}
           <RelatedReleases currentTrackId={track.id} currentAlbumId={track.album_id || undefined} className="mt-8" eyebrow="Related" title="More From The Catalog" />
 
-          {/* 8. Fan Capture */}
-          <FanCaptureBanner sourcePage={`/music/${track.slug}`} className="mt-12" />
+          {/* 8. Early access list */}
+          <EarlyAccessCard source={`track:${track.slug}`} className="mt-12" />
         </div>
       </section>
 

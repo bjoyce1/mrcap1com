@@ -9,6 +9,7 @@ import OutNowStage from "@/components/music/OutNowStage";
 import MostPlayedChart from "@/components/music/MostPlayedChart";
 import AlbumCrate from "@/components/music/AlbumCrate";
 import EraWall from "@/components/music/EraWall";
+import { EarlyAccessSection } from "@/components/music/EarlyAccess";
 import AlbumDetailModal from "@/components/music/AlbumDetailModal";
 import { ShelfHeader } from "@/components/music/ShelfParts";
 import { WRAP } from "@/components/music/catalog";
@@ -84,6 +85,8 @@ const Listen = () => {
             <AlbumCrate albums={albums} onOpen={setModalAlbum} />
 
             <EraWall singles={singles} />
+
+            <EarlyAccessSection source="music" />
           </>
         ) : (
           <div className={`${WRAP} grid min-h-[70svh] grid-cols-2 content-start gap-6 py-24 md:grid-cols-4`} aria-busy="true" aria-label="Loading the catalog">

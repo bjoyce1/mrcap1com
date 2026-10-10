@@ -56,8 +56,19 @@
     return getStorage(localStorage, 'consent') === 'yes' || window.mrcapAnalyticsConsent === true;
   }
 
+  // scripted browsers and crawlers that run JavaScript (same rule as src/lib/automation.ts)
+  var BOT_UA = /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|gtmetrix|prerender|facebookexternalhit|bytespider|petalbot|python|curl|wget|axios|node-fetch|phantom|puppeteer|playwright|selenium/i;
+  function isAutomated() {
+    if (navigator.webdriver) return true;
+    if (BOT_UA.test(navigator.userAgent || '')) return true;
+    return !navigator.languages || navigator.languages.length === 0;
+  }
+
   function shouldTrack() {
     if (!isEnabled) return false;
+    if (isAutomated()) return false;
+    // only the live site reports; local builds and previews stay quiet
+    if (!/^(www\.)?mrcap1\.com$/.test(location.hostname)) return false;
     if (Math.random() > cfg.sampleRate) return false;
     if (cfg.respectDnt && (navigator.doNotTrack === '1' || window.doNotTrack === '1')) return false;
     return hasConsent();

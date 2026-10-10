@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
+import { isAutomated, isLiveHost, isPrivatePath } from "@/lib/automation";
 
 declare global {
   interface Window {
@@ -12,43 +13,105 @@ interface GoogleAnalyticsProps {
   measurementId: string;
 }
 
+/** Streaming services, matched on the link's host. */
+const DSP_HOSTS: [RegExp, string][] = [
+  [/(^|\.)spotify\.com$/, "spotify"],
+  [/^(music|itunes)\.apple\.com$/, "apple_music"],
+  [/^music\.youtube\.com$/, "youtube_music"],
+  [/(^|\.)(youtube\.com|youtu\.be)$/, "youtube"],
+  [/(^|\.)tidal\.com$/, "tidal"],
+  [/^music\.amazon\./, "amazon_music"],
+  [/(^|\.)audiomack\.com$/, "audiomack"],
+  [/(^|\.)soundcloud\.com$/, "soundcloud"],
+  [/(^|\.)deezer\.com$/, "deezer"],
+  [/(^|\.)pandora\.com$/, "pandora"],
+  [/(^|\.)bandcamp\.com$/, "bandcamp"],
+];
+
+const SOCIAL_HOSTS: [RegExp, string][] = [
+  [/(^|\.)instagram\.com$/, "instagram"],
+  [/(^|\.)tiktok\.com$/, "tiktok"],
+  [/(^|\.)(x\.com|twitter\.com)$/, "x"],
+  [/(^|\.)facebook\.com$/, "facebook"],
+  [/(^|\.)threads\.net$/, "threads"],
+  [/(^|\.)linkedin\.com$/, "linkedin"],
+];
+
+/** What a clicked link means for the reports, or null when it's an ordinary page link. */
+function classifyLink(href: string): { name: string; params: Record<string, string> } | null {
+  if (href.startsWith("mailto:")) return { name: "email_click", params: {} };
+  if (href.startsWith("tel:")) return { name: "call_click", params: {} };
+  if (href.startsWith("sms:")) return { name: "text_click", params: {} };
+  let host = "";
+  try {
+    const url = new URL(href, window.location.href);
+    if (url.host === window.location.host) return null;
+    host = url.hostname.replace(/^www\./, "");
+  } catch {
+    return null;
+  }
+  const dsp = DSP_HOSTS.find(([re]) => re.test(host));
+  if (dsp) return { name: "dsp_click", params: { platform: dsp[1] } };
+  const social = SOCIAL_HOSTS.find(([re]) => re.test(host));
+  if (social) return { name: "social_click", params: { platform: social[1] } };
+  return null;
+}
+
+/**
+ * GA4 for real listeners only: scripted browsers never load the tag, staff
+ * pages send nothing, and each route sends one page view after its own title
+ * is in place. Off the live domain, events still reach window.dataLayer (handy
+ * for checking them) but the tag itself never loads, so nothing is sent.
+ */
 const GoogleAnalytics = ({ measurementId }: GoogleAnalyticsProps) => {
   const location = useLocation();
+  const enabled = useMemo(() => !isAutomated(), []);
 
   useEffect(() => {
-    // Load Google Analytics script
+    if (!enabled) return;
     const script1 = document.createElement("script");
     script1.async = true;
     script1.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-    document.head.appendChild(script1);
+    if (isLiveHost()) document.head.appendChild(script1);
 
-    // Initialize gtag
+    // page views are sent by hand below, so the config sends none
     const script2 = document.createElement("script");
     script2.innerHTML = `
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', '${measurementId}', {
-        page_path: window.location.pathname,
-      });
+      gtag('config', '${measurementId}', { send_page_view: false });
     `;
     document.head.appendChild(script2);
 
+    // streaming, social, email and phone links, wherever they sit on the page
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!link) return;
+      const hit = classifyLink(link.getAttribute("href") || "");
+      if (hit) trackEvent(hit.name, { ...hit.params, link_url: link.href, page_path: window.location.pathname });
+    };
+    document.addEventListener("click", onClick, true);
+
     return () => {
-      // Cleanup scripts on unmount
-      document.head.removeChild(script1);
+      document.removeEventListener("click", onClick, true);
+      script1.remove();
       document.head.removeChild(script2);
     };
-  }, [measurementId]);
+  }, [measurementId, enabled]);
 
-  // Track page views on route changes
   useEffect(() => {
-    if (window.gtag) {
-      window.gtag("config", measurementId, {
+    if (!enabled || isPrivatePath(location.pathname)) return;
+    // the page's <SEO> sets the title right after it renders; report the view once it has
+    const timer = window.setTimeout(() => {
+      trackEvent("page_view", {
+        page_location: window.location.href,
         page_path: location.pathname + location.search,
+        page_title: document.title,
       });
-    }
-  }, [location, measurementId]);
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname, location.search, enabled]);
 
   return null;
 };
@@ -68,11 +131,11 @@ export const trackEvent = (
 // These are the key events to track in GA4
 // ================================
 
-// Booking form submission - tracks when someone submits a booking request
-export const trackBookingSubmit = () => {
-  trackEvent("booking_submit", {
-    event_category: "conversion",
-    event_label: "booking_form_submit",
+// Booking form submission. GA4's recommended lead event, so it can be a key event.
+export const trackBookingSubmit = (bookingType?: string) => {
+  trackEvent("generate_lead", {
+    lead_type: "booking",
+    booking_type: bookingType || "unknown",
   });
 };
 
@@ -99,11 +162,10 @@ export const trackMusicClick = (platform: string, trackName?: string) => {
   });
 };
 
-// Email signup - tracks newsletter signups
+// Email list signup. GA4's recommended sign_up event; method says which form.
 export const trackEmailSignup = (source?: string) => {
-  trackEvent("email_signup", {
-    event_category: "conversion",
-    event_label: source || "website",
+  trackEvent("sign_up", {
+    method: source || "website",
   });
 };
 
