@@ -131,6 +131,18 @@ Deno.serve(async (req) => {
     return jsonResponse({ error: 'Failed to process unsubscribe' }, 500)
   }
 
+  // Mark the address inactive on the newsletter list as well.
+  const { error: listError } = await supabase
+    .from('newsletter_subscribers')
+    .update({ is_active: false, unsubscribed_at: new Date().toISOString() })
+    .ilike('email', tokenRecord.email)
+  if (listError) {
+    console.error('Failed to deactivate newsletter subscriber', {
+      code: listError.code,
+      email_redacted: redactEmail(tokenRecord.email),
+    })
+  }
+
   console.log('Email unsubscribed', { email_redacted: redactEmail(tokenRecord.email) })
 
   return jsonResponse({ success: true })

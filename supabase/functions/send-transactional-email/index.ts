@@ -56,6 +56,24 @@ Deno.serve(async (req) => {
     )
   }
 
+  // Only server side callers (database triggers, service role) may send.
+  // This stops anyone on the public site from sending mail to arbitrary addresses.
+  const bearer = (req.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '').trim()
+  let callerRole: unknown = null
+  try {
+    const part = bearer.split('.')[1] ?? ''
+    const b64 = part.replaceAll('-', '+').replaceAll('_', '/').padEnd(Math.ceil(part.length / 4) * 4, '=')
+    callerRole = JSON.parse(atob(b64))?.role
+  } catch {
+    callerRole = null
+  }
+  if (callerRole !== 'service_role') {
+    return new Response(JSON.stringify({ error: 'Forbidden' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
   // Parse request body
   let templateName: string
   let recipientEmail: string
@@ -303,6 +321,13 @@ Deno.serve(async (req) => {
       ? template.subject(templateData)
       : template.subject
 
+  const rawReplyTo =
+    typeof template.replyTo === 'function' ? template.replyTo(templateData) : template.replyTo
+  const resolvedReplyTo =
+    typeof rawReplyTo === 'string' && /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(rawReplyTo.trim())
+      ? rawReplyTo.trim()
+      : undefined
+
   // 5. Enqueue the pre-rendered email for async processing by the dispatcher.
   // The dispatcher (process-email-queue) handles sending, retries, and rate-limit backoff.
 
@@ -319,7 +344,8 @@ Deno.serve(async (req) => {
     payload: {
       message_id: messageId,
       to: effectiveRecipient,
-      from: `${SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+      from: `${template.fromName ?? SITE_NAME} <noreply@${FROM_DOMAIN}>`,
+      reply_to: resolvedReplyTo,
       sender_domain: SENDER_DOMAIN,
       subject: resolvedSubject,
       html,
