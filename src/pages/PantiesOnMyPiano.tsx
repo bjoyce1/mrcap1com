@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { trackEmailSignup } from "@/components/GoogleAnalytics";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Play, Pause, Lock, Wallet, Mail, Send, MessageCircle,
@@ -313,6 +314,7 @@ const EmailCapture = () => {
         throw error;
       } else {
         toast.success("You're in! We'll notify you on drop day.");
+        trackEmailSignup("pomp_release");
         setEmail("");
       }
     } catch {

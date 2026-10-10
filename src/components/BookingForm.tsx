@@ -119,7 +119,7 @@ const BookingForm = () => {
     } else {
       setIsSubmitted(true);
       toast.success('Booking request submitted!');
-      trackBookingSubmit();
+      trackBookingSubmit(formData.booking_type);
     }
 
     setIsSubmitting(false);

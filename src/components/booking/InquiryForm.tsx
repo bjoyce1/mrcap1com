@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { trackBookingSubmit } from "@/components/GoogleAnalytics";
 import { CheckCircle, Loader2 } from "lucide-react";
 
 const REQUEST_TYPES = [
@@ -52,6 +53,7 @@ const InquiryForm = () => {
       });
       if (error) throw error;
       setSubmitted(true);
+      trackBookingSubmit(form.booking_type);
     } catch {
       toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
     } finally {

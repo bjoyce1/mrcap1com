@@ -12,7 +12,7 @@ import DSPLinks from "@/components/music/DSPLinks";
 import ShareButtons from "@/components/music/ShareButtons";
 import ReleaseLinks from "@/components/music/ReleaseLinks";
 import RelatedReleases from "@/components/music/RelatedReleases";
-import FanCaptureBanner from "@/components/FanCaptureBanner";
+import { EarlyAccessCard } from "@/components/music/EarlyAccess";
 import BuyButton from "@/components/music/BuyButton";
 import { useAlbumBySlug, useAlbumTracks } from "@/hooks/useStreamingData";
 import { usePlayerStore } from "@/stores/playerStore";
@@ -188,7 +188,7 @@ const AlbumPage = () => {
           <RelatedReleases currentAlbumId={album.id} className="mt-8" eyebrow="Related" title="More From The Catalog" />
 
           {/* 9. Fan Capture */}
-          <FanCaptureBanner sourcePage={`/albums/${album.slug}`} className="mt-12" />
+          <EarlyAccessCard source={`album:${album.slug}`} className="mt-12" />
         </div>
       </section>
 
