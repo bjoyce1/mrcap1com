@@ -14,6 +14,7 @@ import path from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 import { collectPages, type Catalog } from "../src/seo/pages";
 import { renderPage } from "../src/seo/render";
+import { sitemapUrls, sitemapXml } from "../src/seo/sitemap";
 // plain JS module shared with the snapshot script
 // @ts-expect-error no type declarations for the .mjs helper
 import { fetchCatalog } from "./seo-catalog.mjs";
@@ -60,8 +61,11 @@ export function seoPages(env: Record<string, string>): Plugin {
           noIndex: !!p.entry.noIndex,
         }));
         fs.writeFileSync(path.join(outDir, "seo-pages.json"), JSON.stringify({ builtAt: new Date().toISOString(), pages: expected }));
+        // the sitemap lists exactly the indexable pages written above
+        const urls = sitemapUrls(pages);
+        fs.writeFileSync(path.join(outDir, "sitemap.xml"), sitemapXml(urls));
         const source = live?.tracks ? "live catalog" : "catalog snapshot";
-        config.logger.info(`\n[seo] wrote ${pages.length} route pages (${source}: ${catalog.tracks?.length ?? 0} tracks, ${catalog.albums?.length ?? 0} albums)`);
+        config.logger.info(`\n[seo] wrote ${pages.length} route pages and a ${urls.length} URL sitemap (${source}: ${catalog.tracks?.length ?? 0} tracks, ${catalog.albums?.length ?? 0} albums)`);
       } catch (err) {
         config.logger.warn(`[seo] route pages skipped: ${(err as Error).message}`);
       }

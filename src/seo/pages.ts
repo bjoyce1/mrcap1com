@@ -4,7 +4,7 @@
  * the catalog (live from Supabase/Sanity at build time, or the committed snapshot).
  */
 import { blogPosts } from "../data/blogPosts";
-import { texasCities } from "../data/cities";
+import { allCities } from "../data/cities";
 import { selfLove2024 } from "../data/selfLove2024";
 import { pressPageData } from "../content/press";
 import { ALIASES, ROUTES, routeSeo } from "./routes";
@@ -84,7 +84,7 @@ export function collectPages(catalog: Catalog = {}): PageSpec[] {
   for (const entry of ROUTES) pages.push({ path: entry.path, entry, extraJsonLd: extraFor(entry.path) });
   for (const [alias, target] of Object.entries(ALIASES)) pages.push({ path: alias, entry: routeSeo(target), extraJsonLd: extraFor(target) });
 
-  for (const city of texasCities) pages.push({ path: `/city/${city.slug}`, entry: citySeo(city) });
+  for (const city of allCities) pages.push({ path: `/city/${city.slug}`, entry: citySeo(city) });
   for (const story of selfLove2024) pages.push({ path: `/self-love/${story.year}/${story.slug}`, entry: selfLoveStorySeo(story) });
   for (const post of blog) pages.push({ path: `/blog/${post.slug}`, entry: blogPostSeo(post) });
   for (const entry of press) pages.push({ path: `/press/${entry.slug}`, entry: pressPostSeo(entry) });
