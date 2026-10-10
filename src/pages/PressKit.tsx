@@ -411,8 +411,8 @@ const PressKit = () => {
                 For press inquiries, interview requests, and media appearances:
               </p>
               <ObfuscatedMailto
-                user="wrecklessent"
-                domain="gmail.com"
+                user="music"
+                domain="mrcap1.com"
                 subject="Press Inquiry"
                 className="text-primary font-medium hover:underline"
               />

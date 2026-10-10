@@ -31,7 +31,7 @@ const BookingAutoReply = (p: Props) => {
           <Text style={s.text}>{thanks} {req} Every inquiry gets a response within 48 hours.</Text>
           <Text style={s.text}>
             To add details, just reply to this email or write{' '}
-            <Link href="mailto:wrecklessent@gmail.com" style={s.link}>wrecklessent@gmail.com</Link>.
+            <Link href="mailto:music@mrcap1.com" style={s.link}>music@mrcap1.com</Link>.
           </Text>
           <Text style={{ ...s.text, marginBottom: 0 }}>Mr. CAP</Text>
         </Container>
@@ -44,7 +44,7 @@ export const template = {
   component: BookingAutoReply,
   subject: (d: Record<string, any>) => `${s.testPrefix(d)}We got your booking request`,
   fromName: 'Mr. CAP',
-  replyTo: 'wrecklessent@gmail.com',
+  replyTo: 'music@mrcap1.com',
   displayName: 'Booking auto reply',
   previewData: { name: 'Jane Rivera', booking_type: 'show', event_date: '2026-12-05', city: 'Houston, TX' },
 } satisfies TemplateEntry

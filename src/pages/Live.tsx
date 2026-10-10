@@ -203,7 +203,7 @@ const Live = () => {
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <p className="text-sm text-muted-foreground mb-2">Email</p>
-                      <ObfuscatedMailto user="wrecklessent" domain="gmail.com" subject="Booking Inquiry" className="text-primary hover:underline" />
+                      <ObfuscatedMailto user="music" domain="mrcap1.com" subject="Booking Inquiry" className="text-primary hover:underline" />
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground mb-2">Performance Deposits</p>

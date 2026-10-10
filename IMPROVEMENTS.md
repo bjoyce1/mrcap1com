@@ -78,7 +78,7 @@ You already have `@fontsource/bebas-neue`, `@fontsource/outfit`, and `@fontsourc
 
 // AFTER
 <Link to="/privacy" className="...">Privacy Policy</Link>
-<a href="mailto:wrecklessent@gmail.com" className="...">Terms of Service</a>
+<a href="mailto:music@mrcap1.com" className="...">Terms of Service</a>
 ```
 
 ### Fix 6: Duplicate JSON-LD Structured Data
