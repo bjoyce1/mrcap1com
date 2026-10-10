@@ -8,7 +8,7 @@ const VenturesSection = () => {
       icon: Building2,
       name: "Mortuary Media LLC",
       description:
-        "Specialized media services for end-of-life events — including funeral program design, tribute videos, memorial websites, and custom writing — created to honor lives with dignity, creativity, and care.",
+        "Specialized media services for end-of-life events, including funeral program design, tribute videos, memorial websites, and custom writing, created to honor lives with dignity, creativity, and care.",
       color: "primary",
       borderColor: "hsl(var(--primary))",
       gradient: "linear-gradient(145deg, hsl(var(--primary) / 0.15), hsl(var(--background)))",
@@ -17,7 +17,7 @@ const VenturesSection = () => {
       icon: Disc,
       name: "CAP Distributions",
       description:
-        "With his background in computer network engineering, Mr. CAP founded CAP Distributions — a digital distribution company helping independent artists make their music available worldwide. Beyond distribution, it offers professional graphic design, web design, and media solutions.",
+        "With his background in computer network engineering, Mr. CAP founded CAP Distributions, a digital distribution company helping independent artists make their music available worldwide. Beyond distribution, it offers professional graphic design, web design, and media solutions.",
       color: "gold",
       borderColor: "hsl(var(--cap-gold))",
       gradient: "linear-gradient(180deg, hsl(var(--cap-gold) / 0.15), hsl(var(--background)))",
@@ -26,7 +26,7 @@ const VenturesSection = () => {
       icon: Coins,
       name: "Metaverse & Blockchain",
       description:
-        "Mr. CAP's 'Dippin Thru the Metaverse' single reflects his interest in blockchain and NFT culture — portraying the coexistence of street life and digital innovation. His work explores ownership, transparency, and financial empowerment for artists.",
+        "Mr. CAP's 'Dippin Thru the Metaverse' single reflects his interest in blockchain and NFT culture, portraying the coexistence of street life and digital innovation. His work explores ownership, transparency, and financial empowerment for artists.",
       color: "primary",
       borderColor: "hsl(var(--primary))",
       gradient: "linear-gradient(210deg, hsl(var(--primary) / 0.15), hsl(var(--background)))",

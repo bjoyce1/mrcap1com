@@ -11,7 +11,7 @@ const UnlockGrid = ({ cards, unlocked }: { cards: UnlockCard[]; unlocked: boolea
   <section className="py-12">
     <div className="container mx-auto px-4 max-w-3xl">
       <span className="text-xs font-medium tracking-widest uppercase text-primary mb-6 block">
-        {unlocked ? "Collector Access — Unlocked" : "Collector Access — Locked"}
+        {unlocked ? "Collector Access: Unlocked" : "Collector Access: Locked"}
       </span>
       <div className="grid sm:grid-cols-3 gap-4">
         {cards.map((card, i) => (

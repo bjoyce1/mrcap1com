@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
 import { MerchQualitySection } from "@/components/merch/MerchQualitySection";
 import { MerchNewsletterSection } from "@/components/merch/MerchNewsletterSection";
@@ -10,32 +9,13 @@ import { motion } from "framer-motion";
 import whiteHoodie from "@/assets/trap-university/white-hoodie.webp";
 import leatherJacket from "@/assets/trap-university/leather-jacket.webp";
 import backpack from "@/assets/trap-university/backpack.webp";
-
-const storeJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Store",
-  name: "Mr. CAP Official Store",
-  url: "https://mrcap1.com/merch",
-  brand: [{ "@type": "Brand", name: "Trap University" }],
-  parentOrganization: {
-    "@type": "Person",
-    name: "Mr. CAP",
-    url: "https://mrcap1.com",
-  },
-};
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const Merch = () => {
   return (
     <>
-      <Helmet>
-        <title>Official Store | Mr. CAP - Trap University & More</title>
-        <meta name="description" content="Shop the official Mr. CAP store. Home of Trap University streetwear: limited edition apparel, accessories, and collectibles from Houston hip-hop culture." />
-        <meta property="og:title" content="Official Store | Mr. CAP" />
-        <meta property="og:description" content="Shop the official Mr. CAP store. Home of Trap University streetwear and more brands from the house of CAP." />
-        <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://mrcap1.com/merch" />
-        <script type="application/ld+json">{JSON.stringify(storeJsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/merch")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />

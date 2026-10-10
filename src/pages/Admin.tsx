@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -41,6 +40,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 type BookingStatus = 'pending' | 'confirmed' | 'declined' | 'completed';
 
@@ -358,10 +359,7 @@ const Admin = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Admin Dashboard | Mr. CAP</title>
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      <SEO entry={routeSeo("/admin")} />
 
       <div className="min-h-screen bg-background">
         <Navigation />

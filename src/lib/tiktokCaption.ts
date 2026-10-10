@@ -18,21 +18,21 @@ const HASHTAGS = ["#MrCAPLegacy", "#HoustonHipHop", "#SPC", "#fyp"];
 
 const HOOKS: Record<string, string[]> = {
   track: [
-    'New cut from the vault 🎧 "{title}" — {artist}',
+    'New cut from the vault 🎧 "{title}", {artist}',
     'Run it back: "{title}" by {artist} 🔥',
-    '"{title}" hits different on loop. — {artist}',
+    '"{title}" hits different on loop., {artist}',
   ],
   album: [
     '{artist} dropped "{title}". Full body of work, no skips.',
     'Album mode: "{title}" by {artist} 💿',
-    'The "{title}" project by {artist} — start to finish.',
+    'The "{title}" project by {artist}, start to finish.',
   ],
   page: [
     "Pulled up on Mr. CAP's spot. Tap in 👇",
-    "Mr. CAP Legacy — the whole movement, one link.",
+    "Mr. CAP Legacy, the whole movement, one link.",
   ],
   hub: [
-    "Live from @mrcapism on TikTok — newest cuts, stitches & visuals.",
+    "Live from @mrcapism on TikTok, newest cuts, stitches & visuals.",
     "Catch every Mr. CAP drop on the hub. Stitch, duet, tag in.",
   ],
 };

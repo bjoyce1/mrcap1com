@@ -1,8 +1,9 @@
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Music, Newspaper, Briefcase, Film, ArrowRight } from "lucide-react";
 import OPKLayout from "@/components/OPKLayout";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const opkPages = [
   {
@@ -57,59 +58,10 @@ const OPKHub = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Mr. CAP | Official Online Press Kit (OPK) – Houston Hip-Hop Artist</title>
-        <meta 
-          name="description" 
-          content="Official Online Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member. Access booking, press, brand, and media resources." 
-        />
-        <link rel="canonical" href="https://mrcap1.com/opk" />
-        <meta property="og:title" content="Mr. CAP | Official OPK" />
-        <meta property="og:description" content="Official OPK for Houston hip-hop artist Mr. CAP. Booking, press, brands, and media resources." />
-        <meta property="og:url" content="https://mrcap1.com/opk" />
-        <meta property="og:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="640" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Mr. CAP Official Online Press Kit",
-            "description": "Official Online Press Kit for Mr. CAP, Houston hip-hop artist and South Park Coalition member.",
-            "url": "https://mrcap1.com/opk",
-            "mainEntity": {
-              "@type": "Person",
-              "@id": "https://mrcap1.com/#person",
-              "name": "Mr. CAP",
-              "alternateName": "MrCap",
-              "description": "Houston hip-hop artist and member of the South Park Coalition",
-              "genre": ["Hip-Hop", "Southern Hip-Hop", "Houston Rap"],
-              "homeLocation": { "@type": "Place", "name": "Houston, Texas" },
-              "memberOf": { "@type": "MusicGroup", "name": "South Park Coalition" },
-              "sameAs": [
-                "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-                "https://www.instagram.com/mrcapism",
-                "https://www.youtube.com/@mrcap1",
-                "https://twitter.com/mrcap1",
-                "https://www.wikidata.org/wiki/Q139960172"
-              ]
-            },
-            "breadcrumb": {
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" }
-              ]
-            }
-          })}
-        </script>
-      </Helmet>
+      <SEO entry={routeSeo("/opk")} />
 
       <OPKLayout
-        title="MR. CAP — OFFICIAL OPK"
+        title="MR. CAP: OFFICIAL OPK"
         subtitle="South Park Born. SPC Raised. Independent & Future-Focused."
         tagline="Online Press Kit"
         ctaLabel="General Inquiries"
@@ -120,7 +72,7 @@ const OPKHub = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <p className="gsap-item text-lg text-muted-foreground leading-relaxed">
-                Welcome to the official Online Press Kit for Mr. CAP, Houston hip-hop artist and proud member of the legendary South Park Coalition.
+                Welcome to the official Online Press Kit for Mr. CAP, Houston hip-hop artist and proud Original Member of the South Park Coalition.
                 <br /><br />
                 Select the OPK that fits your purpose below.
               </p>

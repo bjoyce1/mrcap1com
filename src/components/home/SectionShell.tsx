@@ -47,7 +47,7 @@ const SectionShell = ({
           className="hidden lg:block absolute top-10 right-10 font-mono text-[10px] tracking-[0.4em] uppercase text-primary/40 select-none pointer-events-none"
           aria-hidden="true"
         >
-          — {index}
+          {index}
         </motion.span>
       )}
 

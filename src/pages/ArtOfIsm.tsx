@@ -9,6 +9,7 @@ import artOfIsmTitle from "@/assets/art-of-ism-title.webp";
 import artOfIsmPoster from "@/assets/art-of-ism-poster.webp";
 import artOfIsmQr from "@/assets/art-of-ism-qr.webp";
 import artOfIsmBg from "@/assets/art-of-ism-bg.webp";
+import { routeSeo } from "@/seo/routes";
 
 const highlights = [
   { icon: BookOpen, label: "11 Immersive Chapters" },
@@ -18,37 +19,9 @@ const highlights = [
 ];
 
 const ArtOfIsm = () => {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Book",
-        "name": "The Art of ISM",
-        "author": { "@type": "Person", "name": "Mr. CAP" },
-        "url": "https://theartofism.com",
-        "description": "A Code of Thought, Movement, and Mastery — an interactive online book experience by Mr. CAP.",
-        "genre": "Philosophy / Self-Development",
-        "publisher": { "@type": "Person", "name": "Mr. CAP" },
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-          { "@type": "ListItem", position: 2, name: "The Art of ISM", item: "https://mrcap1.com/art-of-ism" },
-        ],
-      },
-    ],
-  };
-
   return (
     <>
-      <SEO
-        title="The Art of ISM — Interactive Book by Mr. CAP"
-        description="A Code of Thought, Movement, and Mastery. 11 immersive chapters, exclusive ISM codes, and a quote vault. Enter the interactive online book experience."
-        canonical="https://mrcap1.com/art-of-ism"
-        ogType="book"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/art-of-ism")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -73,7 +46,7 @@ const ArtOfIsm = () => {
                   <div className="flex justify-center">
                     <img
                       src={artOfIsmPoster}
-                      alt="The Art of ISM by Mr. CAP — Book Cover"
+                      alt="The Art of ISM by Mr. CAP: Book Cover"
                       className="w-full max-w-md rounded-2xl shadow-2xl shadow-primary/20 ring-1 ring-white/10"
                     />
                   </div>
@@ -90,7 +63,7 @@ const ArtOfIsm = () => {
                     </p>
                     <p className="text-muted-foreground max-w-lg mx-auto lg:mx-0">
                       A philosophy built from experience. Refined through movement.
-                      Tested under pressure. This isn't just something you read —
+                      Tested under pressure. This isn't just something you read,
                       it's something you live. <em className="text-primary">It's all ISM.</em>
                     </p>
 

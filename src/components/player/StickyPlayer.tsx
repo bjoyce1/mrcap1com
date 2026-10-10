@@ -454,7 +454,7 @@ const StickyPlayer = () => {
 
             {noAudio && (
               <p className="text-xs text-muted-foreground text-center mt-1 italic">
-                Audio coming soon — track preview only
+                Audio coming soon, track preview only
               </p>
             )}
           </div>

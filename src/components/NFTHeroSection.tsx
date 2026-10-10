@@ -92,7 +92,7 @@ export const NFTHeroSection = ({
             </h1>
 
             <p className="hero-animate mt-4 md:mt-6 text-sm md:text-lg text-muted-foreground leading-relaxed font-light">
-              Houston hip-hop meets Web3. Explore MR. CAP's tokenized music, exclusive collaborations, and blockchain collectibles — crafted for collectors.
+              Houston hip-hop meets Web3. Explore MR. CAP's tokenized music, exclusive collaborations, and blockchain collectibles, crafted for collectors.
             </p>
 
             <div className="hero-animate flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-4 mt-6 md:mt-8 w-full">

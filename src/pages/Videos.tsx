@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Play, Loader2, Clock, Eye, Youtube } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { routeSeo } from "@/seo/routes";
 
 interface Video {
   id: string;
@@ -54,26 +55,24 @@ const Videos = () => {
   const formatDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Mr. CAP Videos",
-    url: "https://mrcap1.com/videos",
-    itemListElement: videos.map((v, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: { "@type": "VideoObject", name: v.title, description: v.description || v.title, thumbnailUrl: v.thumbnail },
-    })),
-  };
+  const videosExtraJsonLd = videos.length
+    ? [
+        {
+          "@type": "ItemList",
+          name: "Mr. CAP Videos",
+          url: "https://mrcap1.com/videos",
+          itemListElement: videos.map((v, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: { "@type": "VideoObject", name: v.title, description: v.description || v.title, thumbnailUrl: v.thumbnail },
+          })),
+        },
+      ]
+    : undefined;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title="Videos | Mr. CAP Official Music Videos, Promos & Interviews"
-        description="Watch official music videos, lyric videos, promos, interviews, and behind-the-scenes content from Mr. CAP."
-        canonical="https://mrcap1.com/videos"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/videos")} extraJsonLd={videosExtraJsonLd} />
       <Navigation />
 
       <main>

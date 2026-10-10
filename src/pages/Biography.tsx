@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
@@ -6,6 +5,8 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/blocks/PageHero";
 import CTAButtonRow from "@/components/blocks/CTAButtonRow";
 import { Building2, Music, Film, Coins, Palette, Globe, Award, MapPin } from "lucide-react";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const ventures = [
   {
@@ -16,7 +17,7 @@ const ventures = [
   {
     icon: Building2,
     name: "Mortuary Media LLC",
-    desc: "Digital memorial services including funeral programs, video tributes, and memorial websites — integrating creative media with end-of-life services.",
+    desc: "Digital memorial services including funeral programs, video tributes, and memorial websites, integrating creative media with end-of-life services.",
   },
   {
     icon: Coins,
@@ -32,7 +33,7 @@ const ventures = [
 
 const milestones = [
   { icon: MapPin, label: "Houston, TX", detail: "Third Ward Raised" },
-  { icon: Music, label: "South Park Coalition", detail: "Long-Time Member" },
+  { icon: Music, label: "South Park Coalition", detail: "Original Member" },
   { icon: Award, label: "Lone Star Emmy", detail: "2024 Winner" },
   { icon: Globe, label: "Blockchain Pioneer", detail: "Creator Economy" },
 ];
@@ -54,47 +55,9 @@ const stagger = {
 };
 
 const Biography = () => {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Cornelius A. Pratt",
-    alternateName: "Mr. CAP",
-    description:
-      "Houston-based artist, entrepreneur, technologist, and creative strategist whose work bridges music, media, technology, and digital innovation.",
-    url: "https://mrcap1.com/biography",
-    sameAs: [
-      "https://open.spotify.com/artist/5dRQz7FPkfRCCaImjIJSoj",
-      "https://www.instagram.com/mikisuavecap/",
-      "https://twitter.com/mikisuavecap",
-      "https://www.wikidata.org/wiki/Q139960172",
-    ],
-    birthPlace: { "@type": "Place", name: "Houston, Texas" },
-    alumniOf: { "@type": "EducationalOrganization", name: "Jack Yates Senior High School" },
-    memberOf: { "@type": "MusicGroup", name: "South Park Coalition" },
-    knowsAbout: [
-      "Hip-Hop Music",
-      "Blockchain Technology",
-      "Digital Distribution",
-      "Creative Entrepreneurship",
-      "NFT Art",
-    ],
-    brand: [
-      { "@type": "Organization", name: "CAP Distributions" },
-      { "@type": "Organization", name: "Mortuary Media LLC" },
-    ],
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Professional Biography — Mr. CAP | Cornelius A. Pratt</title>
-        <meta
-          name="description"
-          content="Official professional biography of Cornelius 'Mr. CAP' Pratt — Houston artist, entrepreneur, technologist, and South Park Coalition member bridging music, media, and digital innovation."
-        />
-        <link rel="canonical" href="https://mrcap1.com/biography" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/biography")} />
 
       <Navigation />
 
@@ -145,7 +108,7 @@ const Biography = () => {
             <h2 className="text-2xl font-display font-bold text-foreground mb-4">Music Career</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                A long-time member of the influential South Park Coalition, Mr. CAP has spent decades contributing to the cultural and entrepreneurial landscape of Houston's independent music movement while simultaneously building ventures across media, design, and emerging technology. <Link to="/mr-cap-discography" className="text-primary hover:underline">View the complete discography</Link>.
+                An Original Member of the South Park Coalition, Mr. CAP has spent decades contributing to the cultural and entrepreneurial landscape of Houston's independent music movement while simultaneously building ventures across media, design, and emerging technology. <Link to="/mr-cap-discography" className="text-primary hover:underline">View the complete discography</Link>.
               </p>
               <p>
                 His debut album <em className="text-foreground/80">2 Tha Grave</em>, released on April 5, 2011, featured collaborations with notable Houston artists including members of the South Park Coalition and the Screwed Up Click movement. In addition to performing and recording music, he founded CAP Distributions, a digital distribution company designed to help independent artists retain control over their creative work and revenue streams.

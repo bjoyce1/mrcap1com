@@ -20,7 +20,7 @@ export const CONTACT = {
 
 export const ROLES = [
   ['01', 'Artist', 'Three decades of narrative-driven Southern hip-hop, from cassette-era South Park to global streaming.'],
-  ['02', 'South Park Coalition', 'Long-time member of the DIY collective that wrote the independent playbook for Houston.'],
+  ['02', 'South Park Coalition', 'Original Member of the South Park Coalition, the DIY collective that wrote the independent playbook for Houston.'],
   ['03', 'Entrepreneur', 'Founder of CAP Distributions, Mortuary Media LLC and a creative agency: infrastructure other artists rent.'],
   ['04', 'Cultural Architect', 'Documentary contributor, blockchain pioneer, Capicoin builder, engineering the systems the next era will use.'],
 ];

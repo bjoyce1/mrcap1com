@@ -14,7 +14,7 @@ interface ShareOptions {
 export async function shareMusic({ title, artist, slug, type = "track" }: ShareOptions) {
   const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
   const url = `https://${projectId}.supabase.co/functions/v1/og-share?type=${type}&slug=${encodeURIComponent(slug)}`;
-  const text = `${title} — ${artist}`;
+  const text = `${title}, ${artist}`;
 
   if (navigator.share) {
     try {
@@ -25,6 +25,6 @@ export async function shareMusic({ title, artist, slug, type = "track" }: ShareO
     }
   } else {
     await navigator.clipboard.writeText(url).catch(() => {});
-    toast.success("Link copied!", { description: `${text} — share it everywhere.` });
+    toast.success("Link copied!", { description: `${text}, share it everywhere.` });
   }
 }

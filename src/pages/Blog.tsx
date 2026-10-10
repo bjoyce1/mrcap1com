@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import NewsletterSignup from "@/components/NewsletterSignup";
@@ -18,6 +17,9 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
+import { blogListLd } from "@/seo/builders";
 
 /** Map a Sanity blog post to the shape used by the static data */
 const sanityToLocal = (s: SanityBlogPost) => ({
@@ -55,46 +57,9 @@ const Blog = () => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Blog",
-        "name": "Mr. CAP Blog",
-        "description": "Insights on Houston hip-hop history, South Park Coalition, music industry success, blockchain innovation, and independent artist strategies.",
-        "url": "https://mrcap1.com/blog",
-        "author": { "@type": "Person", "name": "Mr. CAP" },
-        "blogPost": posts.map(post => ({
-          "@type": "BlogPosting",
-          "headline": post.title,
-          "datePublished": post.date,
-          "author": { "@type": "Person", "name": post.author },
-          "url": `https://mrcap1.com/blog/${post.slug}`,
-          "description": post.excerpt
-        }))
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://mrcap1.com/blog" }
-        ]
-      }
-    ]
-  };
-
   return (
     <>
-      <Helmet>
-        <title>News & Stories | Mr. CAP Updates, Releases & Commentary</title>
-        <meta name="description" content="Read updates, release notes, stories, and announcements from Mr. CAP." />
-        <link rel="canonical" href="https://mrcap1.com/blog" />
-        <meta property="og:title" content="News & Stories | Mr. CAP Updates, Releases & Commentary" />
-        <meta property="og:description" content="Read updates, release notes, stories, and announcements from Mr. CAP." />
-        <meta property="og:type" content="blog" />
-        <meta property="og:url" content="https://mrcap1.com/blog" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/blog")} extraJsonLd={allPosts.length ? [blogListLd(allPosts)] : undefined} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />

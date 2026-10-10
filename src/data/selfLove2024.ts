@@ -19,13 +19,13 @@ export const selfLove2024: SelfLoveStory[] = [
     slug: "amara",
     character: "AMARA",
     storyTitle: "The Heart Within",
-    roomTitle: "Room I — 2024: The Awakening",
+    roomTitle: "Room I, 2024: The Awakening",
     bgImage:
       "https://static.wixstatic.com/media/5a6578_07108b1731a244e3a06fc5cb0a8b7e69~mv2.png/v1/fill/w_736,h_1648,al_c,q_90,enc_avif,quality_auto/SELF%20LOVE%201T%20BG1.png",
     coverImage:
       "https://static.wixstatic.com/media/5a6578_98b2ceb8a03a4687b44bfccb13f4de30~mv2.png/v1/fill/w_736,h_1648,al_c,q_90,enc_avif,quality_auto/SELF%20LOVE%201T%20BG.png",
     excerpt:
-      "A creative soul turns pain into a mural — and discovers love starts from within.",
+      "A creative soul turns pain into a mural, and discovers love starts from within.",
     body: `In a vibrant city full of bustling streets and towering buildings, there was a quiet corner where a young woman named Amara found solace. Amara was a creative soul, always exploring new ways to express herself through art. Her latest creation was a vivid mural on a weathered wooden fence, a piece that reflected her journey toward self-acceptance and love.
 
 Amara grew up feeling different from those around her. Her rich, dark skin and voluminous curls often made her stand out, but not always in ways that felt comfortable. She faced comments and stares that chipped away at her confidence. As she grew older, she internalized these judgments, and her self-worth dwindled.
@@ -47,13 +47,13 @@ For Amara, the mural was a symbol of her transformation. She had learned to see 
     slug: "nia",
     character: "NIA",
     storyTitle: "The Mirror of Truth",
-    roomTitle: "Room I — 2024: The Awakening",
+    roomTitle: "Room I, 2024: The Awakening",
     bgImage:
       "https://static.wixstatic.com/media/5a6578_2a3cdc49cad44fdba9682387ced737b6~mv2.png/v1/fill/w_736,h_1648,al_c,q_90,enc_avif,quality_auto/Nia%2010%20BG1.png",
     coverImage:
       "https://static.wixstatic.com/media/5a6578_e9ee1a3587f14848b13bce08d1b17d0f~mv2.png/v1/fill/w_736,h_1648,al_c,q_90,enc_avif,quality_auto/Nia%2010.png",
     excerpt:
-      "An old cracked mirror becomes the spark — and a mural becomes the truth.",
+      "An old cracked mirror becomes the spark, and a mural becomes the truth.",
     body: `In a city bursting with life and color, there was a young woman named Nia who often felt like she was living in the shadows. Despite her radiant beauty and vibrant spirit, Nia struggled to see her own worth. She spent years comparing herself to others, never feeling quite good enough.
 
 One rainy afternoon, Nia stumbled upon an old, cracked mirror in a thrift shop. Something about it called to her. She brought it home and placed it in her room. Every day, she would stand before the mirror, searching for the person she longed to be.
@@ -64,7 +64,7 @@ Moved by this revelation, Nia decided to capture this moment in art. She painted
 
 As Nia worked on the mural, she felt a transformation taking place within her. Each stroke of the brush was a step toward self-acceptance. She painted words of affirmation around the figure: "Worthy," "Beautiful," "Strong," "Enough."
 
-When the mural was complete, Nia stepped back and saw herself anew. The woman in the painting was her — not the person she thought she should be, but the person she truly was. She realized that self-love wasn't about perfection; it was about embracing every part of herself, flaws and all.
+When the mural was complete, Nia stepped back and saw herself anew. The woman in the painting was her, not the person she thought she should be, but the person she truly was. She realized that self-love wasn't about perfection; it was about embracing every part of herself, flaws and all.
 
 The mirror that once reflected her doubts now reflected her truth. And the mural on her wall became a daily reminder of the journey she had taken and the love she had found within herself.
 

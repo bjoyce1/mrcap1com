@@ -3,7 +3,7 @@ export const musicPageData = {
     kicker: "Featured Release",
     title: "The Ties That Bind Us",
     description:
-      "Start with the record that's out now, then move through the catalog that built the legacy — from The Art of ISM to 2 Tha Grave, O.N.E. on O.N.E., and Cold Ass Pimp.",
+      "Start with the record that's out now, then move through the catalog that built the legacy, from The Art of ISM to 2 Tha Grave, O.N.E. on O.N.E., and Cold Ass Pimp.",
     ctas: [
       { label: "Play Now", href: "/album/the-ties-that-bind-us", variant: "primary" as const },
       { label: "Open on Spotify", href: "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug", variant: "secondary" as const },
@@ -11,7 +11,7 @@ export const musicPageData = {
     ],
   },
   intro:
-    "Music without shortcuts. Legacy without compromise. This page is the official listening hub for Mr. CAP — current releases, core projects, and the records that connect Houston history to the next chapter.",
+    "Music without shortcuts. Legacy without compromise. This page is the official listening hub for Mr. CAP, current releases, core projects, and the records that connect Houston history to the next chapter.",
   startHere: [
     {
       title: "The Ties That Bind Us",
@@ -45,11 +45,11 @@ export const musicPageData = {
   faq: [
     {
       question: "What is Mr. CAP known for in Houston hip-hop?",
-      answer: "Mr. CAP is a Houston-born rapper and long-time South Park Coalition member known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
+      answer: "Mr. CAP is a Houston-born rapper and an Original Member of the South Park Coalition, known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
     },
     {
       question: "What is the significance of The Ties That Bind Us album?",
-      answer: "The Ties That Bind Us (2024) is Mr. CAP's latest full-length project — a masterclass in storytelling that reflects 30 years of SPC legacy while embracing digital ownership and the evolving music landscape.",
+      answer: "The Ties That Bind Us (2024) is Mr. CAP's latest full-length project, a masterclass in storytelling that reflects 30 years of SPC legacy while embracing digital ownership and the evolving music landscape.",
     },
     {
       question: "Where can I listen to Mr. CAP's music online?",
@@ -57,7 +57,7 @@ export const musicPageData = {
     },
     {
       question: "Why do independent hip-hop artists like Mr. CAP avoid major labels?",
-      answer: "Independent artists like Mr. CAP prioritize ownership, creative control, and direct audience connection — principles pioneered by the South Park Coalition decades before streaming made independence mainstream.",
+      answer: "Independent artists like Mr. CAP prioritize ownership, creative control, and direct audience connection, principles pioneered by the South Park Coalition decades before streaming made independence mainstream.",
     },
     {
       question: "How does Mr. CAP connect hip-hop and NFT culture?",
@@ -65,11 +65,11 @@ export const musicPageData = {
     },
   ],
   storyNotes:
-    "Mr. CAP's catalog is built on independence, longevity, and Houston perspective. Every release reflects a different chapter of that path — not just songs, but milestones.",
+    "Mr. CAP's catalog is built on independence, longevity, and Houston perspective. Every release reflects a different chapter of that path, not just songs, but milestones.",
   citation: {
     canonicalUrl: "https://mrcap1.com/discography",
     description:
-      "Mr. CAP is a Houston-based rapper and long-time member of the South Park Coalition. This page is the official music hub for catalog discovery, citations, and streaming context.",
+      "Mr. CAP is a Houston-based rapper and an Original Member of the South Park Coalition. This page is the official music hub for catalog discovery, citations, and streaming context.",
     links: [
       { label: "Press", href: "/press" },
       { label: "Booking", href: "/booking" },

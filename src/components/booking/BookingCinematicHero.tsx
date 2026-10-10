@@ -82,7 +82,7 @@ const BookingCinematicHero = () => {
 
         <p className="booking-reveal mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
           Three decades of Houston hip-hop, live and direct. Concerts, festivals,
-          features, and speaking engagements — booked straight with the artist's team.
+          features, and speaking engagements, booked straight with the artist's team.
         </p>
 
         <div className="booking-reveal mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">

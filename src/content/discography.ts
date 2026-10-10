@@ -118,7 +118,7 @@ export const archiveSingles: { year: string; tracks: ArchiveSingle[] }[] = [
     tracks: [
       { title: "I Ain't F*n With You Devils", artist: "Mr. Cap feat. Herb Of The Dynamite Squad", label: "CAP Distributions" },
       { title: "Big Navi L.A. Remix", artist: "Mr. Cap feat. Big Prez", label: "CAP Distributions" },
-      { title: "Unsolved Mysteries – The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
+      { title: "Unsolved Mysteries: The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
     ],
   },
   {

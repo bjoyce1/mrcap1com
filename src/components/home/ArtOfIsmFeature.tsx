@@ -39,7 +39,7 @@ const ArtOfIsmFeature = () => {
           />
           <p className="text-muted-foreground text-sm md:text-base max-w-md mx-auto md:mx-0">
             A philosophy built from experience. Refined through movement.
-            11 immersive chapters, exclusive ISM Codes, and a Quote Vault —
+            11 immersive chapters, exclusive ISM Codes, and a Quote Vault,
             enter the interactive online book experience.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">

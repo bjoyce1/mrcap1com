@@ -1,40 +1,17 @@
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { texasCities, louisianaCities, getMetroCities } from "@/data/cities";
 import { MapPin, ChevronRight, Star } from "lucide-react";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const Cities = () => {
   const metroCities = getMetroCities();
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Mr. CAP Tour Cities - Texas & Louisiana",
-    "description": "Book Mr. CAP for live hip-hop performances across Texas and Louisiana",
-    "numberOfItems": texasCities.length + louisianaCities.length,
-    "itemListElement": [...texasCities, ...louisianaCities].map((city, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "url": `https://mrcapmusic.com/city/${city.slug}`,
-      "name": `Mr. CAP in ${city.name}, ${city.stateAbbr}`
-    }))
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Tour Cities — Mr. CAP Live in Texas & Louisiana | Book Hip-Hop Shows</title>
-        <meta name="description" content="Book Mr. CAP for live hip-hop performances across Texas and Louisiana. From Houston to Dallas, Austin to New Orleans — bringing South Park Coalition to your city." />
-        <link rel="canonical" href="https://mrcapmusic.com/cities" />
-        
-        <meta property="og:title" content="Tour Cities — Mr. CAP Live in Texas & Louisiana" />
-        <meta property="og:description" content="Book Mr. CAP for live hip-hop performances across Texas and Louisiana." />
-        <meta property="og:type" content="website" />
-        
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/cities")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />

@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
 import ShareButtons from "@/components/music/ShareButtons";
+import { routeSeo } from "@/seo/routes";
 
 const COVER_ART_URL = "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(cover%20art).png";
 const AUDIO_URL = `https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/bet-on-her/Bet%20On%20Her%20(Master).wav`;
@@ -94,30 +95,7 @@ export default function BetOnHer() {
 
   return (
     <>
-      <SEO
-        title="Bet On Her – Mr. CAP ft. Billy Cook | Official Release"
-        description="Stream Bet On Her by Mr. CAP ft. Billy Cook. Includes exclusive NFT drop and official release content."
-        canonical="https://mrcap1.com/bet-on-her"
-        ogImage={COVER_ART_URL}
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "MusicRecording",
-          name: "Bet On Her",
-          byArtist: { "@type": "MusicGroup", name: "Mr. CAP" },
-          featuredArtist: { "@type": "MusicGroup", name: "Billy Cook" },
-          datePublished: "2026-03-17",
-          genre: ["Hip-Hop", "Rap"],
-          description: "Bet On Her is a high-stakes hip-hop anthem by Mr. CAP featuring Billy Cook, blending luxury Vegas vibes with themes of loyalty and value.",
-          image: COVER_ART_URL,
-          url: "https://mrcap1.com/bet-on-her",
-          publisher: { "@type": "Organization", name: "Ciddy Boi Music" },
-          offers: {
-            "@type": "Offer",
-            url: "https://mrcap1.com/bet-on-her",
-            availability: "https://schema.org/InStock",
-          },
-        }}
-      />
+      <SEO entry={routeSeo("/bet-on-her")} />
       <Navigation />
       <audio
         ref={audioRef}
@@ -313,10 +291,10 @@ export default function BetOnHer() {
               The Story
             </h2>
             <p className="text-white/60 text-lg leading-relaxed mb-6">
-              "Bet On Her" is a high-stakes anthem about recognizing real value in a world full of illusions. Inspired by the energy of Las Vegas, Mr. CAP flips the concept of gambling into a metaphor for relationships, loyalty, and choosing right. With silky vocals from Houston legend Billy Cook, the record blends cinematic production with street-level storytelling — a sonic bet that pays out every time.
+              "Bet On Her" is a high-stakes anthem about recognizing real value in a world full of illusions. Inspired by the energy of Las Vegas, Mr. CAP flips the concept of gambling into a metaphor for relationships, loyalty, and choosing right. With silky vocals from Houston legend Billy Cook, the record blends cinematic production with street-level storytelling, a sonic bet that pays out every time.
             </p>
             <p className="text-white/60 text-lg leading-relaxed">
-              "Bet On Her" explores themes of loyalty, discernment, and recognizing real value in a world driven by illusion. With polished production by Ciddy Boi Music, the track stands as both a musical statement and a mindset — encouraging listeners to invest in what truly matters.
+              "Bet On Her" explores themes of loyalty, discernment, and recognizing real value in a world driven by illusion. With polished production by Ciddy Boi Music, the track stands as both a musical statement and a mindset, encouraging listeners to invest in what truly matters.
             </p>
           </motion.div>
         </div>
@@ -335,9 +313,9 @@ export default function BetOnHer() {
           >
             <p className="text-[10px] tracking-[0.4em] uppercase text-amber-500/50 mb-2 font-medium">For Immediate Release</p>
             <h2 className="font-[Playfair_Display] text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
-              Mr. CAP Releases "Bet On Her" Featuring Billy Cook — A High-Stakes Anthem Blending Houston Hip-Hop with Luxury Casino Energy
+              Mr. CAP Releases "Bet On Her" Featuring Billy Cook: A High-Stakes Anthem Blending Houston Hip-Hop with Luxury Casino Energy
             </h2>
-            <p className="text-amber-500/60 text-xs mb-8 tracking-wide">Houston, TX — March 17, 2026</p>
+            <p className="text-amber-500/60 text-xs mb-8 tracking-wide">Houston, TX: March 17, 2026</p>
 
             <div className="space-y-5 text-white/55 text-[15px] leading-relaxed">
               <p>
@@ -407,7 +385,7 @@ export default function BetOnHer() {
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <p className="text-xs tracking-[0.3em] uppercase text-amber-400/70 mb-3">Limited Edition</p>
                 <h3 className="font-[Playfair_Display] text-2xl md:text-3xl text-white font-semibold mb-4">
-                  Bet On Her — Digital Collectible
+                  Bet On Her: Digital Collectible
                 </h3>
                 <p className="text-white/50 text-sm leading-relaxed mb-8">
                   Own a piece of the legacy. This exclusive NFT pairs Mr. CAP's music with original visual art by Ali Sabet, merging hip-hop culture with the digital art movement.
@@ -447,7 +425,7 @@ export default function BetOnHer() {
                 <p>"Ok baby body's insane she dape like that cocaine</p>
                 <p>Million dollar campaign toast that with that champagne..."</p>
               </blockquote>
-              <p className="text-amber-500/50 text-xs mt-8 tracking-wider uppercase">— Bet On Her, Verse 1</p>
+              <p className="text-amber-500/50 text-xs mt-8 tracking-wider uppercase">Bet On Her, Verse 1</p>
             </div>
           </motion.div>
         </div>

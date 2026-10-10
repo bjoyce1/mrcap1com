@@ -98,7 +98,7 @@ export const ImageLightbox = ({
           }
         }}
       >
-        <DialogTitle className="sr-only">{active.alt} — enlarged view</DialogTitle>
+        <DialogTitle className="sr-only">{active.alt}, enlarged view</DialogTitle>
         <DialogDescription id="lightbox-description" className="sr-only">
           {canNavigate
             ? "Use the left and right arrow keys, or the on-screen buttons, to browse images. Press Escape to close."

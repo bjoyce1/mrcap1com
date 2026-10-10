@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,9 @@ import { ChevronRight, Calendar, MapPin, Ticket, ExternalLink, Clock, Mic2, Load
 import { useSanityEvents, useSanityPastEvents, type SanityEvent } from "@/hooks/useSanity";
 import { liveHistory, type LiveHistoryEvent } from "@/content/liveHistory";
 import LiveHistoryTimeline from "@/components/live/LiveHistoryTimeline";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
+import { pastEventsLd } from "@/seo/builders";
 
 /* ── Helpers ── */
 function sanityEventToUpcoming(e: SanityEvent) {
@@ -43,7 +45,7 @@ const Live = () => {
     .filter((event) => event.flyer && /\bmr\.?\s*cap\b/i.test(`${event.title} ${event.description ?? ""}`))
     .filter((event) => !/design(?:ed)?\s+by\s*:?.*\bmr\.?\s*cap\b/i.test(`${event.title} ${event.description ?? ""}`))
     .filter((event) => Number.isFinite(Date.parse(event.date)) && Date.parse(event.date) < Date.now())
-    .filter((event) => !liveHistory.some((item) => item.date === event.date.slice(0, 10) && item.title.toLowerCase() === event.title.toLowerCase()))
+    .filter((event) => !liveHistory.some((item) => item.date === event.date.slice(0, 10) && item.title.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() === event.title.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()))
     .map((event) => ({
       title: event.title,
       date: event.date.slice(0, 10),
@@ -57,30 +59,10 @@ const Live = () => {
     }));
   const historyEvents = [...liveHistory, ...additionalHistory];
 
-  const pastEventSchemas = historyEvents.filter((show) => show.date).map((show) => ({
-    "@type": "MusicEvent",
-    name: show.title,
-    startDate: show.date,
-    eventStatus: "https://schema.org/EventCompleted",
-    performer: { "@type": "Person", name: "Mr. CAP" },
-    image: `https://mrcap1.com${show.flyer}`,
-    url: show.source,
-    location: {
-      "@type": "Place",
-      ...(show.venue ? { name: show.venue } : {}),
-      address: {
-        "@type": "PostalAddress",
-        ...(show.city ? { addressLocality: show.city } : {}),
-        ...(show.state ? { addressRegion: show.state } : {}),
-        addressCountry: "US",
-      },
-    },
-  }));
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      ...futureEvents.map((event) => ({
+  // The archive's past shows are already in the route's JSON-LD (src/seo/routes.ts);
+  // add upcoming shows and any extra past shows from Sanity.
+  const liveExtraJsonLd = [
+    ...futureEvents.map((event) => ({
         "@type": "MusicEvent",
         name: event.title,
         startDate: event.date,
@@ -103,29 +85,12 @@ const Live = () => {
           availability: "https://schema.org/InStock",
         } } : {}),
       })),
-      ...pastEventSchemas,
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-          { "@type": "ListItem", position: 2, name: "Live", item: "https://mrcap1.com/live" },
-        ],
-      },
-    ],
-  };
+    ...pastEventsLd(additionalHistory),
+  ];
 
   return (
     <>
-      <Helmet>
-        <title>Live & Appearances | Book Mr. CAP for Shows, Interviews & Speaking</title>
-        <meta name="description" content="Submit a booking inquiry for performances, features, interviews, and speaking engagements." />
-        <link rel="canonical" href="https://mrcap1.com/live" />
-        <meta property="og:title" content="Live & Appearances | Book Mr. CAP for Shows, Interviews & Speaking" />
-        <meta property="og:description" content="Submit a booking inquiry for performances, features, interviews, and speaking engagements." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mrcap1.com/live" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/live")} extraJsonLd={liveExtraJsonLd} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -148,7 +113,7 @@ const Live = () => {
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
                 Whether it's a packed Houston club or a festival stage in another city, Mr. CAP brings a raw,
-                honest performance—built on decades of experience and a lifetime of stories.
+                honest performance, built on decades of experience and a lifetime of stories.
               </p>
             </div>
           </section>

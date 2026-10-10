@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import ChromaGrid from "@/components/ui/ChromaGrid";
 import { Link } from "react-router-dom";
 import { ChevronRight, CheckCircle2, Clock, Circle } from "lucide-react";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 type Status = "planned" | "in_progress" | "complete";
 
@@ -50,7 +52,7 @@ const initialRoadmap: RoadmapItem[] = [
     description: "Short context blocks on track, album, and NFT pages to increase engagement.",
     status: "planned",
     items: [
-      "Add 1–2 lines of context on track pages",
+      "Add 1-2 lines of context on track pages",
       "Add era/intent notes on album pages",
       "Add mission copy on NFT drops",
     ],
@@ -76,7 +78,7 @@ const initialRoadmap: RoadmapItem[] = [
     items: [
       "Simple email form (no long copy)",
       "Promise early access, exclusives, or announcements",
-      "Limit sends to 1–2/month",
+      "Limit sends to 1-2/month",
     ],
   },
   {
@@ -161,6 +163,7 @@ const AdminRoadmap = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO entry={routeSeo("/admin/roadmap")} />
       <Navigation />
 
       <main className="pt-32 pb-20 px-4">
@@ -175,7 +178,7 @@ const AdminRoadmap = () => {
             Platform <span className="text-gradient-orange">Roadmap</span>
           </h1>
           <p className="text-muted-foreground mb-8">
-            Highest-impact improvements to mrcap1.com — listener engagement, conversion, authority, and growth.
+            Highest-impact improvements to mrcap1.com, listener engagement, conversion, authority, and growth.
           </p>
 
           {/* Status Summary */}

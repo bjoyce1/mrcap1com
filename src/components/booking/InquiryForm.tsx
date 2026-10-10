@@ -128,7 +128,7 @@ const InquiryForm = () => {
       </div>
       <div className="space-y-2">
         <Label htmlFor="budget">Budget Range</Label>
-        <Input id="budget" value={form.budget} onChange={(e) => update("budget", e.target.value)} placeholder="e.g. $1,000 – $5,000" className="rounded-xl bg-muted/30" />
+        <Input id="budget" value={form.budget} onChange={(e) => update("budget", e.target.value)} placeholder="e.g. $1,000 to $5,000" className="rounded-xl bg-muted/30" />
       </div>
       <div className="space-y-2">
         <Label htmlFor="message">Details</Label>

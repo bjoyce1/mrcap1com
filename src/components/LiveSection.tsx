@@ -6,14 +6,14 @@ import spcPoster from "@/assets/spc-austin-2025.webp";
 
 const LiveSection = () => {
   const highlights = [
-    "Longtime member and performer with South Park Coalition (SPC)",
+    "Original Member of the South Park Coalition (SPC) and performer",
     "Appearances across Texas: Houston, Austin, San Antonio, Killeen, and more",
     "Live performances alongside Point Blank, K-Rino, Klondike Kat",
     "Themed events, birthday bashes, and special guest appearances",
   ];
 
   const technicalRequirements = [
-    "2–3 quality vocal microphones (Shure SM58 or equivalent)",
+    "2-3 quality vocal microphones (Shure SM58 or equivalent)",
     "Professional sound system with competent engineer",
     "Stereo playback via DJ controller or laptop (USB or auxiliary)",
     "Minimum stage area suitable for full movement and interaction",
@@ -91,7 +91,7 @@ const LiveSection = () => {
                 </div>
                 <div className="glass rounded-xl px-4 py-3 flex items-center gap-2">
                   <Ticket className="w-4 h-4 text-cap-gold" />
-                  <span className="text-sm">$20–$25</span>
+                  <span className="text-sm">$20 to $25</span>
                 </div>
               </div>
               <Button variant="hero" size="lg" className="w-fit rounded-full px-8" asChild>

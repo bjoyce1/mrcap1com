@@ -12,7 +12,7 @@ const PBS_URL = "https://www.pbs.org/show/the-life/";
 
 const STATS = [
   { n: "30+", l: "Years in the catalog" },
-  { n: "SPC", l: "Long-time member" },
+  { n: "SPC", l: "Original Member" },
   { n: "2021", l: "First Houston Hip-Hop NFT" },
   { n: "2024", l: "Lone Star Emmy® Award, The Life", accent: true },
 ];
@@ -38,7 +38,7 @@ const ReceiptsEmmy = ({ trailerId, onPlayTrailer }: Props) => {
     <>
       <motion.img
         src={theLifeDoc}
-        alt="The Life: Sex Trafficking and Modern-Day Slavery — documentary key art announcing the 2024 Emmy Awards winner"
+        alt="The Life: Sex Trafficking and Modern-Day Slavery, documentary key art announcing the 2024 Emmy Awards winner"
         loading="lazy"
         decoding="async"
         width={1581}
@@ -108,7 +108,7 @@ const ReceiptsEmmy = ({ trailerId, onPlayTrailer }: Props) => {
                   type="button"
                   onClick={onPlayTrailer}
                   aria-haspopup="dialog"
-                  aria-label="Play trailer: The Life — Sex Trafficking and Modern-Day Slavery (opens video with captions)"
+                  aria-label="Play the trailer for The Life: Sex Trafficking and Modern-Day Slavery (opens video with captions)"
                   className={`${artClass} relative`}
                 >
                   {artInner}
@@ -118,7 +118,7 @@ const ReceiptsEmmy = ({ trailerId, onPlayTrailer }: Props) => {
                   href={PBS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Watch The Life — Sex Trafficking and Modern-Day Slavery on PBS (opens in a new tab)"
+                  aria-label="Watch The Life: Sex Trafficking and Modern-Day Slavery on PBS (opens in a new tab)"
                   className={`${artClass} relative`}
                 >
                   {artInner}
@@ -153,7 +153,7 @@ const ReceiptsEmmy = ({ trailerId, onPlayTrailer }: Props) => {
                 Public Affairs Programming · PBS documentary
               </p>
               <p className="mt-6 max-w-xl leading-relaxed text-muted-foreground">
-                A social-issue documentary in which Mr. CAP contributes firsthand perspective — using his platform for community engagement and cultural commentary that reaches well outside the record.
+                A social-issue documentary in which Mr. CAP contributes firsthand perspective, using his platform for community engagement and cultural commentary that reaches well outside the record.
               </p>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-[hsl(var(--foreground)/0.7)]">
                 Mr. CAP appears as a featured contributor.

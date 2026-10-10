@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, User, ExternalLink, Music } from "lucide-react";
 import { pressPageData, type PressEntry } from "@/content/press";
 import { useSanityPressEntries, type SanityPressEntry } from "@/hooks/useSanity";
 import FanCaptureBanner from "@/components/FanCaptureBanner";
+import { pressPostSeo } from "@/seo/builders";
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -36,30 +37,9 @@ const PressPost = () => {
     );
   }
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: entry.title,
-    author: entry.author ? { "@type": "Person", name: entry.author } : undefined,
-    publisher: { "@type": "Organization", name: entry.outlet },
-    datePublished: entry.date,
-    description: entry.seoDescription || entry.summary,
-    url: `https://mrcap1.com/press/${pressSlug}`,
-    about: { "@type": "Person", name: "Mr. CAP" },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://mrcap1.com/press/${pressSlug}`,
-    },
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title={entry.seoTitle || `${entry.title} | Mr. CAP Press`}
-        description={entry.seoDescription || entry.summary}
-        canonical={`https://mrcap1.com/press/${pressSlug}`}
-        jsonLd={jsonLd}
-      />
+      <SEO entry={pressPostSeo({ ...entry, slug: pressSlug ?? entry.slug ?? "" })} />
       <Navigation />
 
       <article className="pt-28 pb-16 px-6">

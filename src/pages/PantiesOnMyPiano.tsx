@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Helmet } from "react-helmet-async";
 import {
   Play, Pause, Lock, Wallet, Mail, Send, MessageCircle,
   Share2, Copy, ExternalLink, ChevronRight, Music, Sparkles,
@@ -17,6 +16,8 @@ import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
 import coverStandard from "@/assets/pomp-standard.webp";
 import coverStudio from "@/assets/pomp-studio.webp";
 import coverDeluxe from "@/assets/pomp-deluxe.webp";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 /* ─── Constants ─── */
 const COVERS = [
@@ -122,15 +123,15 @@ const DustParticles = () => (
 
 /* ─── AI Studio Chat ─── */
 const AI_PRELOADED = [
-  { q: "What inspired this song?", a: "Man, this one came from a real late-night session. Piano playing, vibes on ten, and the concept just hit — luxury, intimacy, and that raw Houston energy all mixed together." },
-  { q: "What does the piano symbolize?", a: "The piano represents elegance meeting the streets. It's that contrast — something classical and refined in a trap setting. That's my whole brand." },
+  { q: "What inspired this song?", a: "Man, this one came from a real late-night session. Piano playing, vibes on ten, and the concept just hit, luxury, intimacy, and that raw Houston energy all mixed together." },
+  { q: "What does the piano symbolize?", a: "The piano represents elegance meeting the streets. It's that contrast, something classical and refined in a trap setting. That's my whole brand." },
   { q: "What was the recording session like?", a: "We had the whole studio set up with mood lighting, a real grand piano sample pack, and Ciddi Boy P came through with that energy. It was one take magic on the hook." },
-  { q: "Hidden meanings in the lyrics?", a: "There's layers to it. On the surface it's playful, but underneath it's about seduction as power — controlling the narrative, setting the tone. The piano is the throne." },
+  { q: "Hidden meanings in the lyrics?", a: "There's layers to it. On the surface it's playful, but underneath it's about seduction as power, controlling the narrative, setting the tone. The piano is the throne." },
 ];
 
 const AiStudioSection = () => {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([
-    { role: "assistant", content: "Welcome to the studio. Ask me anything about \"Panties on My Piano\" — the inspiration, the session, the hidden meanings. I'm here. 🎹" },
+    { role: "assistant", content: "Welcome to the studio. Ask me anything about \"Panties on My Piano\", the inspiration, the session, the hidden meanings. I'm here. 🎹" },
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -164,7 +165,7 @@ const AiStudioSection = () => {
         if (error) throw error;
         setMessages(prev => [...prev, { role: "assistant", content: data?.reply || "That's a great question. Let me think on that one..." }]);
       } catch {
-        setMessages(prev => [...prev, { role: "assistant", content: "Real talk — that's a deep question. Hit me with another one. 🎹" }]);
+        setMessages(prev => [...prev, { role: "assistant", content: "Real talk, that's a deep question. Hit me with another one. 🎹" }]);
       } finally {
         setIsTyping(false);
       }
@@ -370,12 +371,12 @@ const BehindTheSong = () => (
           that blurs the line between elegance and trap.
         </p>
         <p className="text-foreground/60 leading-relaxed mt-6">
-          The concept is layered — on the surface, it's provocative and playful. But underneath, it's a
+          The concept is layered, on the surface, it's provocative and playful. But underneath, it's a
           statement about controlling the narrative, setting the mood, and owning the room. The piano
-          isn't just an instrument — it's a symbol of power, refinement, and the unexpected.
+          isn't just an instrument, it's a symbol of power, refinement, and the unexpected.
         </p>
         <p className="text-foreground/60 leading-relaxed mt-6">
-          This Web3 release transforms a single into a full digital experience — interactive AI, limited NFTs,
+          This Web3 release transforms a single into a full digital experience, interactive AI, limited NFTs,
           and token-gated exclusives. Not just music. A case study in artist-led innovation.
         </p>
       </motion.div>
@@ -429,51 +430,9 @@ const PantiesOnMyPiano = () => {
     return () => clearInterval(id);
   }, [paused]);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "MusicRecording",
-        name: "Panties on My Piano",
-        byArtist: { "@type": "MusicGroup", name: "Mr. CAP" },
-        duration: "PT3M30S",
-        url: "https://mrcap1.com/panties-on-my-piano",
-        image: "https://mrcap1.com/images/covers/pomp-standard.webp",
-      },
-      {
-        "@type": "Offer",
-        name: "Standard Edition NFT",
-        priceCurrency: "ETH",
-        availability: "https://schema.org/PreOrder",
-        itemOffered: {
-          "@type": "CreativeWork",
-          name: "Panties on My Piano — Standard Edition NFT",
-        },
-      },
-    ],
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Panties on My Piano – MR. CAP ft. Ciddi Boy P | Official NFT Release</title>
-        <meta name="description" content="Official Web3 release of Panties on My Piano by MR. CAP featuring Ciddi Boy P. Interactive AI studio experience. Limited NFT editions available." />
-        <link rel="canonical" href="https://mrcap1.com/panties-on-my-piano" />
-        <meta property="og:title" content="Panties on My Piano – MR. CAP ft. Ciddi Boy P | Official NFT Release" />
-        <meta property="og:description" content="Official Web3 release of Panties on My Piano by MR. CAP featuring Ciddi Boy P. Interactive AI studio experience. Limited NFT editions available." />
-        <meta property="og:type" content="music.song" />
-        <meta property="og:url" content="https://mrcap1.com/panties-on-my-piano" />
-        <meta property="og:image" content="https://mrcap1.com/images/covers/pomp-standard.webp" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Panties on My Piano cover art" />
-        <meta property="og:site_name" content="Mr. CAP Music" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Panties on My Piano – MR. CAP ft. Ciddi Boy P" />
-        <meta name="twitter:description" content="Official Web3 release. Interactive AI studio. Limited NFT editions." />
-        <meta name="twitter:image" content="https://mrcap1.com/images/covers/pomp-standard.webp" />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/panties-on-my-piano")} />
 
       <Navigation />
 

@@ -262,7 +262,7 @@ const HeroStage = ({ onOpenPressKit }: { onOpenPressKit: () => void }) => {
           <Reveal delay={0.3}>
             <p className="mt-6 max-w-xl text-[15px] font-light leading-relaxed text-[hsl(var(--foreground)/0.78)] md:text-lg lg:text-xl">
               Three decades of <span className="text-foreground">music</span>, <span className="text-foreground">ownership</span>, and{" "}
-              <span className="text-foreground">independent evolution</span> — pressed into vinyl, distributed on-chain, and still built in South Park.
+              <span className="text-foreground">independent evolution</span>, pressed into vinyl, distributed on-chain, and still built in South Park.
             </p>
           </Reveal>
 

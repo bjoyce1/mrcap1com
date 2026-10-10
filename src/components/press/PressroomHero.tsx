@@ -57,7 +57,7 @@ const PressroomHero = () => {
             <Newspaper className="w-3.5 h-3.5 text-gold" />
             The Official Press Archive
           </span>
-          <span>Houston, TX — {dateline}</span>
+          <span>Houston, TX: {dateline}</span>
         </div>
 
         {/* Masthead headline */}
@@ -71,7 +71,7 @@ const PressroomHero = () => {
 
         <p className="press-reveal mt-6 text-center text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           Approved bios, press photos, logos, and every headline that documented
-          the journey — for journalists, bloggers, and researchers.
+          the journey, for journalists, bloggers, and researchers.
         </p>
 
         {/* Masthead bottom rule */}

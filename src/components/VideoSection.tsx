@@ -66,7 +66,7 @@ const VideoSection = () => {
               Video <span className="text-gradient-gold">Gallery</span>
             </h2>
             <p className="text-muted-foreground mt-5 max-w-2xl text-balance">
-              See Mr. CAP in motion — from official music videos to live performance clips
+              See Mr. CAP in motion, from official music videos to live performance clips
               and documentary appearances.
             </p>
           </div>

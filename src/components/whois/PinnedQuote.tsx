@@ -49,7 +49,7 @@ const PinnedQuote = () => {
             style={{ opacity: creditOpacity, y: creditY }}
             className="mt-6 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground"
           >
-            — Mr. CAP · Est. Houston TX
+            Mr. CAP · Est. Houston TX
           </motion.footer>
         </blockquote>
       </div>

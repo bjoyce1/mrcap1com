@@ -3,6 +3,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 function RoomCard({
   room,
@@ -67,6 +69,7 @@ function RoomCard({
 export default function SelfLoveInstallation() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO entry={routeSeo("/self-love")} />
       <Navigation />
       <section className="mx-auto max-w-6xl px-4 py-20 pt-32">
         <ScrollReveal width="100%">
@@ -77,7 +80,7 @@ export default function SelfLoveInstallation() {
             <h1 className="mt-2 text-4xl sm:text-5xl font-extrabold uppercase tracking-wide">
               SELF LOVE
               <span className="block text-lg sm:text-xl font-normal normal-case opacity-80 mt-3">
-                An Art Installation by Mr. CAP (2024–2026)
+                An Art Installation by Mr. CAP (2024-2026)
               </span>
             </h1>
             <p className="mt-6 max-w-3xl text-base sm:text-lg leading-relaxed text-muted-foreground">

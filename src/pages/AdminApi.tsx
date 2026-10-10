@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { Copy, Trash2, Plus, Key } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const ALL_SCOPES = [
   "read:music",
@@ -111,6 +113,7 @@ export default function AdminApi() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO entry={routeSeo("/admin/api")} />
       <Navigation />
       <div className="container max-w-5xl mx-auto pt-32 pb-24 px-4 space-y-8">
         <div>
@@ -126,7 +129,7 @@ export default function AdminApi() {
 
         {newKey && (
           <Card className="p-6 border-primary/40 bg-primary/5">
-            <div className="text-xs uppercase tracking-widest text-primary font-mono mb-2">Save this key — shown once</div>
+            <div className="text-xs uppercase tracking-widest text-primary font-mono mb-2">Save this key, shown once</div>
             <div className="flex items-center gap-2">
               <code className="flex-1 p-3 bg-background rounded font-mono text-sm break-all">{newKey}</code>
               <Button size="sm" onClick={() => copy(newKey)}><Copy className="w-4 h-4" /></Button>

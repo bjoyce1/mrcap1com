@@ -1,8 +1,9 @@
-import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const BASE = "https://qisamkiggoibjkkdtkxq.supabase.co/functions/v1/api-v1";
 
@@ -17,10 +18,9 @@ const endpoints = [
 ];
 
 export default function ApiDocs() {
-  useEffect(() => { document.title = "Mr. CAP API — Developer Docs"; }, []);
-
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO entry={routeSeo("/api/docs")} />
       <Navigation />
       <div className="container max-w-4xl mx-auto pt-32 pb-24 px-4">
         <div className="text-xs font-mono uppercase tracking-widest text-primary/70">Catalog · Developer API</div>

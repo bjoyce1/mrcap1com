@@ -77,7 +77,7 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
     try {
       await navigator.clipboard.writeText(shareUrl);
       toast.success(`${platform === "instagram" ? "Instagram" : "TikTok"} opened`, {
-        description: "Share link copied — paste it into your post, bio, DM, or story.",
+        description: "Share link copied, paste it into your post, bio, DM, or story.",
       });
       markCopied();
     } catch {
@@ -95,7 +95,7 @@ export default function ShareButtons({ title, artist, slug, type = "track", clas
     try {
       await navigator.clipboard.writeText(caption);
       toast.success("TikTok caption copied", {
-        description: "Suggested caption + tracked link — paste it straight into TikTok.",
+        description: "Suggested caption + tracked link, paste it straight into TikTok.",
       });
       markCopied();
     } catch {

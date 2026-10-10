@@ -1,7 +1,8 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import { seoPages } from "./scripts/seo-pages-plugin";
 // vite-plugin-pwa removed — its auto-registered service worker was
 // caching old HTML/JS and causing the Lovable preview (and returning
 // visitors) to see stale builds. public/sw.js is now a kill-switch
@@ -27,8 +28,9 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    // Pre-render plugin removed for build stability. Google's JS rendering
-    // handles per-route Helmet tags; JSON-LD is in the SPA shell.
+    // Writes dist/<route>/index.html with each route's head tags, JSON-LD and a
+    // crawlable content block, from src/seo/routes.ts (no headless browser).
+    seoPages(loadEnv(mode, process.cwd(), "")),
 
   ].filter(Boolean),
   resolve: {

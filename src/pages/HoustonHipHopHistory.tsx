@@ -10,6 +10,8 @@ import CitationBlock from "@/components/blocks/CitationBlock";
 import QuoteBlock from "@/components/blocks/QuoteBlock";
 import FAQAccordion from "@/components/blocks/FAQAccordion";
 import { Button } from "@/components/ui/button";
+import { routeSeo } from "@/seo/routes";
+import { HOUSTON_HISTORY_FAQ } from "@/seo/faqs";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -26,95 +28,16 @@ const exploreCards = [
 ];
 
 const HoustonHipHopHistory = () => {
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: "Houston Hip Hop History: South Park Coalition, Independence & the Legacy of Mr. CAP",
-      author: { "@type": "Person", name: "Mr. CAP" },
-      publisher: { "@type": "Organization", name: "Mr. CAP Music", url: "https://mrcap1.com" },
-      datePublished: "2026-03-31",
-      dateModified: "2026-03-31",
-      description: "An inside look at Houston's independent hip-hop history, the South Park Coalition blueprint, and Mr. CAP's role in shaping the culture.",
-      url: "https://mrcap1.com/houston-hip-hop-history",
-      mainEntityOfPage: "https://mrcap1.com/houston-hip-hop-history",
-      about: [
-        { "@type": "Thing", name: "Houston Hip Hop" },
-        { "@type": "Thing", name: "South Park Coalition" },
-        { "@type": "Thing", name: "Independent Hip Hop" },
-      ],
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "What is Mr. CAP known for in Houston hip-hop?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Mr. CAP is a Houston-born rapper and long-time South Park Coalition member known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What defines Houston hip-hop culture and its independent sound?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Houston hip-hop culture is defined by independence, authenticity, and hustle. Artists pressed their own CDs, sold music hand-to-hand, and built loyal audiences without relying on major labels — a model the South Park Coalition helped pioneer.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How did the South Park Coalition influence underground rap?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "SPC created the blueprint for independent hip-hop — direct-to-fan distribution, full creative ownership, and community-driven growth — decades before streaming platforms made independence mainstream.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Why do independent hip-hop artists like Mr. CAP avoid major labels?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Independent artists like Mr. CAP prioritize ownership, creative control, and direct audience connection — principles pioneered by the South Park Coalition decades before streaming made independence mainstream.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How can I book Mr. CAP for a live performance?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Visit mrcap1.com/booking to submit a booking inquiry. Mr. CAP is available for live shows, features, interviews, and speaking engagements worldwide.",
-          },
-        },
-      ],
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-        { "@type": "ListItem", position: 2, name: "Houston Hip Hop History", item: "https://mrcap1.com/houston-hip-hop-history" },
-      ],
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title="Houston Hip Hop History: South Park Coalition & Mr. CAP Legacy"
-        description="An inside look at Houston's independent hip-hop history, the South Park Coalition blueprint, and Mr. CAP's role in shaping the culture."
-        canonical="https://mrcap1.com/houston-hip-hop-history"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/houston-hip-hop-history")} />
       <Navigation />
 
       <main>
         <PageHero
           kicker="Cultural Archive"
           title="Houston Hip Hop History: South Park Coalition, Independence & the Legacy of Mr. CAP"
-          description="Before streaming, before social media, and before major label dominance, Houston built its own hip hop ecosystem — independent, resilient, and rooted in the streets. This is the story from the inside."
+          description="Before streaming, before social media, and before major label dominance, Houston built its own hip hop ecosystem, independent, resilient, and rooted in the streets. This is the story from the inside."
           ctas={[
             { label: "Explore Mr. CAP Music", href: "/music", variant: "primary" },
             { label: "View Press Coverage", href: "/press", variant: "secondary" },
@@ -122,7 +45,7 @@ const HoustonHipHopHistory = () => {
         />
 
         <SectionIntro
-          body="Houston hip hop has always moved differently. While other cities chased major label deals, Houston artists built their own lanes — pressing their own CDs, selling music directly, and creating a culture that didn't depend on outside validation. At the center of that movement was the South Park Coalition — a collective of artists who prioritized independence, longevity, and authenticity over trends. This page documents that history, the culture behind it, and the role Mr. CAP continues to play in it today."
+          body="Houston hip hop has always moved differently. While other cities chased major label deals, Houston artists built their own lanes, pressing their own CDs, selling music directly, and creating a culture that didn't depend on outside validation. At the center of that movement was the South Park Coalition, a collective of artists who prioritized independence, longevity, and authenticity over trends. This page documents that history, the culture behind it, and the role Mr. CAP continues to play in it today."
         />
 
         {/* Section 1 */}
@@ -132,7 +55,7 @@ const HoustonHipHopHistory = () => {
               The Rise of Houston's Underground Scene
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>Houston's underground hip hop scene wasn't built through radio — it was built through hustle.</p>
+              <p>Houston's underground hip hop scene wasn't built through radio, it was built through hustle.</p>
               <p>Artists created their own distribution systems, sold music hand-to-hand, and built loyal audiences without relying on major labels. This independence gave Houston a unique sound and identity that stood apart from the rest of the country.</p>
               <p>Instead of waiting to be discovered, Houston artists created their own platforms, their own markets, and their own culture.</p>
             </div>
@@ -151,7 +74,7 @@ const HoustonHipHopHistory = () => {
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>The South Park Coalition (SPC) became one of the most influential independent hip hop movements to come out of Houston.</p>
-              <p>SPC was not just a group — it was a blueprint.</p>
+              <p>SPC was not just a group, it was a blueprint.</p>
               <p>Artists within the coalition focused on ownership, consistency, and building a direct connection with their audience. They proved that it was possible to build a career without compromising creative control.</p>
               <p>This approach laid the foundation for what independent hip hop would later become in the digital era.</p>
             </div>
@@ -169,8 +92,8 @@ const HoustonHipHopHistory = () => {
               Mr. CAP's Role in Houston Hip Hop
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>As a long-time member of the South Park Coalition, Mr. CAP represents the continuation of Houston's independent legacy.</p>
-              <p>From early performances to a growing catalog of releases, his work reflects the same principles that defined the city's underground scene — authenticity, ownership, and longevity.</p>
+              <p>As an Original Member of the South Park Coalition, Mr. CAP represents the continuation of Houston's independent legacy.</p>
+              <p>From early performances to a growing catalog of releases, his work reflects the same principles that defined the city's underground scene, authenticity, ownership, and longevity.</p>
               <p>Rather than chasing trends, Mr. CAP has focused on building a catalog and a platform that stands the test of time.</p>
             </div>
           </div>
@@ -183,7 +106,7 @@ const HoustonHipHopHistory = () => {
               Why Houston Artists Didn't Need Major Labels
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>Houston's hip hop scene proved something most of the industry didn't expect — success doesn't require permission.</p>
+              <p>Houston's hip hop scene proved something most of the industry didn't expect, success doesn't require permission.</p>
               <p>By controlling their own distribution and building direct relationships with listeners, Houston artists created a sustainable model long before streaming platforms existed.</p>
               <p>This independence allowed artists to move freely, experiment creatively, and maintain ownership of their work.</p>
             </div>
@@ -198,7 +121,7 @@ const HoustonHipHopHistory = () => {
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>Today, Houston's influence can be seen across the entire music industry.</p>
-              <p>The independent model pioneered by artists in the city is now the standard. Direct-to-fan distribution, ownership, and creative control are no longer rare — they're expected.</p>
+              <p>The independent model pioneered by artists in the city is now the standard. Direct-to-fan distribution, ownership, and creative control are no longer rare, they're expected.</p>
               <p>Mr. CAP continues to build within that tradition, expanding into digital platforms, Web3, and new ways of connecting music with audiences.</p>
             </div>
           </div>
@@ -240,7 +163,7 @@ const HoustonHipHopHistory = () => {
         <motion.section {...fadeUp} className="py-16 bg-card/20">
           <div className="container mx-auto px-4 text-center max-w-2xl">
             <p className="text-lg text-muted-foreground mb-6">
-              This is more than history — it's a blueprint. If you're looking to understand independent hip hop, Houston culture, or the evolution of artist ownership, start here.
+              This is more than history, it's a blueprint. If you're looking to understand independent hip hop, Houston culture, or the evolution of artist ownership, start here.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild><Link to="/mr-cap-discography">Listen Now</Link></Button>
@@ -249,34 +172,11 @@ const HoustonHipHopHistory = () => {
           </div>
         </motion.section>
 
-        <FAQAccordion
-          items={[
-            {
-              question: "What is Mr. CAP known for in Houston hip-hop?",
-              answer: "Mr. CAP is a Houston-born rapper and long-time South Park Coalition member known for independent music, longevity, and innovation across music and Web3. His catalog spans over two decades of authentic Houston hip-hop.",
-            },
-            {
-              question: "What defines Houston hip-hop culture and its independent sound?",
-              answer: "Houston hip-hop culture is defined by independence, authenticity, and hustle. Artists pressed their own CDs, sold music hand-to-hand, and built loyal audiences without relying on major labels — a model the South Park Coalition helped pioneer.",
-            },
-            {
-              question: "How did the South Park Coalition influence underground rap?",
-              answer: "SPC created the blueprint for independent hip-hop — direct-to-fan distribution, full creative ownership, and community-driven growth — decades before streaming platforms made independence mainstream.",
-            },
-            {
-              question: "Why do independent hip-hop artists like Mr. CAP avoid major labels?",
-              answer: "Independent artists like Mr. CAP prioritize ownership, creative control, and direct audience connection — principles pioneered by the South Park Coalition decades before streaming made independence mainstream.",
-            },
-            {
-              question: "How can I book Mr. CAP for a live performance?",
-              answer: "Visit mrcap1.com/booking to submit a booking inquiry. Mr. CAP is available for live shows, features, interviews, and speaking engagements worldwide.",
-            },
-          ]}
-        />
+        <FAQAccordion items={HOUSTON_HISTORY_FAQ} />
 
         <CitationBlock
           canonicalUrl="https://mrcap1.com/houston-hip-hop-history"
-          description="Mr. CAP is a Houston-based rapper and long-time member of the South Park Coalition. This page is part of the official mrcap1.com archive and is intended for citation, research, and cultural documentation."
+          description="Mr. CAP is a Houston-based rapper and an Original Member of the South Park Coalition. This page is part of the official mrcap1.com archive and is intended for citation, research, and cultural documentation."
           links={[
             { label: "Homepage", href: "/" },
             { label: "Press", href: "/press" },

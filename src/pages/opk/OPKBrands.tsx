@@ -1,7 +1,8 @@
-import { Helmet } from "react-helmet-async";
 import { CheckCircle, Sparkles, Megaphone, Calendar, Music, Blocks } from "lucide-react";
 import OPKLayout from "@/components/OPKLayout";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const whyItWorks = [
   "Established South Park Coalition credibility",
@@ -29,46 +30,7 @@ const OPKBrands = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Mr. CAP | Brand Partnership OPK – Sponsorships & Collaborations</title>
-        <meta name="description" content="Partner with Mr. CAP for brand endorsements, campaigns, and product collaborations. Authentic voice. 30+ year legacy. Houston and beyond." />
-        <link rel="canonical" href="https://mrcap1.com/opk/brands" />
-        <meta property="og:title" content="Mr. CAP | Brand Partnership OPK" />
-        <meta property="og:description" content="Brand partnerships, endorsements, and collaborations with Houston hip-hop artist Mr. CAP." />
-        <meta property="og:url" content="https://mrcap1.com/opk/brands" />
-        <meta property="og:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="640" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://mrcap1.com/images/opk-og-image.jpg" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Mr. CAP Brand Partnership OPK",
-            "description": "Partner with Mr. CAP for brand endorsements, campaigns, and collaborations.",
-            "url": "https://mrcap1.com/opk/brands",
-            "mainEntity": {
-              "@type": "Person",
-              "@id": "https://mrcap1.com/#person",
-              "name": "Mr. CAP",
-              "description": "Houston hip-hop artist representing authenticity, independence, and longevity.",
-              "knowsAbout": ["Hip-Hop Culture", "Brand Partnerships", "Digital Marketing", "NFT", "Blockchain"],
-              "memberOf": { "@type": "MusicGroup", "name": "South Park Coalition" }
-            },
-            "potentialAction": { "@type": "ContactAction", "target": "https://mrcap1.com/booking", "name": "Partner With Mr. CAP" },
-            "breadcrumb": {
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-                { "@type": "ListItem", "position": 2, "name": "OPK", "item": "https://mrcap1.com/opk" },
-                { "@type": "ListItem", "position": 3, "name": "Brands", "item": "https://mrcap1.com/opk/brands" }
-              ]
-            }
-          })}
-        </script>
-      </Helmet>
+      <SEO entry={routeSeo("/opk/brands")} />
 
       <OPKLayout
         title="Culture. Credibility. Forward Motion."
@@ -84,7 +46,7 @@ const OPKBrands = () => {
               <h2 className="gsap-item text-2xl font-display font-bold mb-6 text-center">Brand Positioning</h2>
               <div className="gsap-item bg-card/50 border border-border/50 rounded-xl p-8">
                 <p className="text-lg text-muted-foreground leading-relaxed text-center">
-                  Mr. CAP represents authenticity, independence, and longevity. His career bridges legacy hip-hop culture with modern digital entrepreneurship—making him a strong fit for brands seeking real cultural alignment, not manufactured influence.
+                  Mr. CAP represents authenticity, independence, and longevity. His career bridges legacy hip-hop culture with modern digital entrepreneurship, making him a strong fit for brands seeking real cultural alignment, not manufactured influence.
                 </p>
               </div>
             </div>

@@ -4,22 +4,22 @@
  */
 
 export const SHORT_BIO =
-  "Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, South Park Coalition original member, creative technologist, and founder of CAP Distributions. His catalog spans over two decades — from 2003's Cold Ass Pimp to 2024's The Ties That Bind Us — bridging underground hip-hop, blockchain innovation, and independent ownership.";
+  "Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, Original Member of the South Park Coalition, creative technologist, and founder of CAP Distributions. His catalog spans over two decades, from 2003's Cold Ass Pimp to 2024's The Ties That Bind Us, bridging underground hip-hop, blockchain innovation, and independent ownership.";
 
 export const LONG_BIO =
-  "Cornelius A. Pratt, known professionally as Mr. CAP, is a rapper, writer, and entrepreneur from Houston's Third Ward. A graduate of Jack Yates High School, he became one of the original members of the South Park Coalition — one of the longest-running hip-hop collectives in history, founded in 1987. Over a career spanning five studio albums (Cold Ass Pimp, O.N.E. on O.N.E., 2 Tha Grave, The Art of ISM, The Ties That Bind Us), Mr. CAP has built an independent catalog distributed through Sony Music / The Orchard, DistroKid, and his own blockchain-powered channels. Beyond music, he leads CAP Distributions, Mortuary Media LLC, and Wreckless Entertainment — ventures that reflect his commitment to ownership and long-term creative control. His contributions extend to film; the documentary 'The Life: Sex Trafficking and Modern-Day Slavery,' which he helped produce, received a 2024 Lone Star Emmy Award nomination.";
+  "Cornelius A. Pratt, known professionally as Mr. CAP, is a rapper, writer, and entrepreneur from Houston's Third Ward. A graduate of Jack Yates High School, he became an Original Member of the South Park Coalition, one of the longest-running hip-hop collectives in history, founded in 1987. Over a career spanning five studio albums (Cold Ass Pimp, O.N.E. on O.N.E., 2 Tha Grave, The Art of ISM, The Ties That Bind Us), Mr. CAP has built an independent catalog distributed through Sony Music / The Orchard, DistroKid, and his own blockchain-powered channels. Beyond music, he leads CAP Distributions, Mortuary Media LLC, and Wreckless Entertainment, ventures that reflect his commitment to ownership and long-term creative control. His contributions extend to film; the documentary 'The Life: Sex Trafficking and Modern-Day Slavery,' which he helped produce, received a 2024 Lone Star Emmy Award nomination.";
 
 export const PRESS_MENTIONS = [
   { outlet: "Houston Chronicle", title: "The Resurgence of Houston Hip-Hop", date: "2024" },
   { outlet: "Houston Press", title: "Mr. CAP and the SPC Legacy", date: "2023" },
-  { outlet: "Mr. CAP Legacy", title: "Bet'n On Me — Official Press Release", date: "2024" },
+  { outlet: "Mr. CAP Legacy", title: "Bet'n On Me, Official Press Release", date: "2024" },
   { outlet: "Mr. CAP Legacy", title: "Inside The Ties That Bind Us", date: "2024" },
 ];
 
 export const PHOTO_ASSETS = [
-  { label: "Press Photo — Hero Shot", file: "/images/opk-og-image.jpg" },
-  { label: "Press Photo — Studio", file: "/images/cap-wiz-2.jpg" },
-  { label: "Press Photo — About", file: "/images/about-bg.webp" },
+  { label: "Press Photo: Hero Shot", file: "/images/opk-og-image.jpg" },
+  { label: "Press Photo: Studio", file: "/images/cap-wiz-2.jpg" },
+  { label: "Press Photo: About", file: "/images/about-bg.webp" },
 ];
 
 export const LOGO_ASSETS = [
@@ -29,7 +29,7 @@ export const LOGO_ASSETS = [
 
 export const DISCOGRAPHY_HIGHLIGHTS = [
   { title: "The Ties That Bind Us", year: "2024", role: "SPC Group Album" },
-  { title: "The Art of ISM", year: "2019", role: "Solo Album — Sony / The Orchard" },
+  { title: "The Art of ISM", year: "2019", role: "Solo Album: Sony / The Orchard" },
   { title: "2 Tha Grave", year: "2011", role: "Solo Album" },
   { title: "O.N.E. on O.N.E.", year: "2005", role: "Solo Album" },
   { title: "Cold Ass Pimp", year: "2003", role: "Solo Album" },
@@ -51,7 +51,7 @@ export function openPressKitPDF() {
   const printWindow = window.open("", "_blank");
   if (!printWindow) return;
   const contact = ["wreck", "lessent", "@", "gmail.com"].join("");
-  printWindow.document.write(`<!DOCTYPE html><html><head><title>Mr. CAP — Press Kit</title><style>
+  printWindow.document.write(`<!DOCTYPE html><html><head><title>Mr. CAP: Press Kit</title><style>
     body{font-family:system-ui,sans-serif;max-width:700px;margin:40px auto;padding:0 20px;color:#111;line-height:1.6}
     h1{font-size:28px;margin-bottom:4px}
     h2{font-size:18px;margin-top:28px;border-bottom:1px solid #ddd;padding-bottom:6px}
@@ -60,7 +60,7 @@ export function openPressKitPDF() {
     img{max-width:200px;margin:8px 8px 8px 0}
     @media print{body{margin:20px}}
   </style></head><body>
-    <h1>Mr. CAP — Official Press Kit</h1>
+    <h1>Mr. CAP: Official Press Kit</h1>
     <p class="meta">Cornelius A. Pratt | Houston Hip-Hop Artist | South Park Coalition<br/>
     Contact: ${contact} | mrcap1.com</p>
 
@@ -71,7 +71,7 @@ export function openPressKitPDF() {
     <p>${LONG_BIO}</p>
 
     <h2>Discography Highlights</h2>
-    ${DISCOGRAPHY_HIGHLIGHTS.map(a => `<div class="item"><strong>${a.title}</strong> (${a.year}) — ${a.role}</div>`).join("")}
+    ${DISCOGRAPHY_HIGHLIGHTS.map(a => `<div class="item"><strong>${a.title}</strong> (${a.year}), ${a.role}</div>`).join("")}
 
     <h2>Press References</h2>
     ${PRESS_MENTIONS.map(m => `<div class="item"><strong>${m.title}</strong><br/><span class="meta">${m.outlet} · ${m.date}</span></div>`).join("")}

@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { ExternalLink, Play, Heart, MessageCircle, Eye, Share2, Music2, Copy, Check, Wand2, RefreshCw } from "lucide-react";
 import { useState } from "react";
@@ -10,6 +9,8 @@ import Footer from "@/components/Footer";
 import { useTikTokFeed, type TikTokVideo } from "@/hooks/useTikTokFeed";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { generateTikTokCaption } from "@/lib/tiktokCaption";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 const TikTokIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -96,11 +97,11 @@ export default function TikTok() {
     try {
       await navigator.clipboard.writeText(caption);
       setCaptionCopied(true);
-      toast.success("Caption copied", { description: "Paste it into TikTok — link is UTM-tracked." });
+      toast.success("Caption copied", { description: "Paste it into TikTok, link is UTM-tracked." });
       trackEvent("tiktok_caption_copy", { source: "hub" });
       window.setTimeout(() => setCaptionCopied(false), 2000);
     } catch {
-      toast.error("Could not copy — long-press the box to copy manually.");
+      toast.error("Could not copy, long-press the box to copy manually.");
     }
   };
 
@@ -131,22 +132,7 @@ export default function TikTok() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>Mr. CAP on TikTok — Latest Videos, Live Feed & Updates</title>
-        <meta
-          name="description"
-          content="Watch Mr. CAP's latest TikTok videos in a live feed pulled straight from @mrcapism. Follow, share, and remix the movement."
-        />
-        <link rel="canonical" href="https://mrcap1.com/tiktok" />
-        <meta property="og:title" content="Mr. CAP on TikTok" />
-        <meta property="og:description" content="Live TikTok feed from @mrcapism." />
-        <meta property="og:url" content="https://mrcap1.com/tiktok" />
-        {videoSchema.length > 0 && (
-          <script type="application/ld+json">
-            {JSON.stringify({ "@context": "https://schema.org", "@graph": videoSchema })}
-          </script>
-        )}
-      </Helmet>
+      <SEO entry={routeSeo("/tiktok")} extraJsonLd={videoSchema} />
 
       <Navigation />
 
@@ -188,15 +174,15 @@ export default function TikTok() {
                 )}
                 <div className="flex flex-wrap gap-6 text-sm">
                   <div>
-                    <span className="block text-xl font-bold text-foreground">{profile ? formatCount(profile.follower_count) : "—"}</span>
+                    <span className="block text-xl font-bold text-foreground">{profile ? formatCount(profile.follower_count) : "-"}</span>
                     <span className="text-xs uppercase tracking-wider text-muted-foreground">Followers</span>
                   </div>
                   <div>
-                    <span className="block text-xl font-bold text-foreground">{profile ? formatCount(profile.likes_count) : "—"}</span>
+                    <span className="block text-xl font-bold text-foreground">{profile ? formatCount(profile.likes_count) : "-"}</span>
                     <span className="text-xs uppercase tracking-wider text-muted-foreground">Likes</span>
                   </div>
                   <div>
-                    <span className="block text-xl font-bold text-foreground">{profile ? formatCount(profile.video_count) : "—"}</span>
+                    <span className="block text-xl font-bold text-foreground">{profile ? formatCount(profile.video_count) : "-"}</span>
                     <span className="text-xs uppercase tracking-wider text-muted-foreground">Videos</span>
                   </div>
                 </div>
@@ -302,7 +288,7 @@ export default function TikTok() {
                   aria-label="Generated TikTok caption"
                 />
                 <p className="text-[10px] uppercase tracking-wider text-muted-foreground mt-2">
-                  Edit freely — link UTM stays attributed to tiktok / caption_generator.
+                  Edit freely, link UTM stays attributed to tiktok / caption_generator.
                 </p>
               </div>
             </div>
@@ -320,7 +306,7 @@ export default function TikTok() {
                 <h3 className="text-2xl md:text-3xl font-bold mb-3">Stitch, Duet, Tag.</h3>
                 <p className="text-sm text-muted-foreground max-w-2xl">
                   Use any Mr. CAP track or visual in your TikTok. Tag <span className="text-foreground font-medium">@mrcapism</span> and use{" "}
-                  <span className="text-foreground font-medium">#MrCAPLegacy</span> — the best stitches get reposted.
+                  <span className="text-foreground font-medium">#MrCAPLegacy</span>, the best stitches get reposted.
                 </p>
               </div>
               <div className="flex flex-wrap md:flex-col gap-2 md:items-end">

@@ -14,6 +14,8 @@ import { ShelfHeader } from "@/components/music/ShelfParts";
 import { WRAP } from "@/components/music/catalog";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import type { Album } from "@/stores/playerStore";
+import { routeSeo } from "@/seo/routes";
+import { musicPlaylistLd } from "@/seo/builders";
 
 /** How many of the newest releases get the Out Now booth. */
 const OUT_NOW = 4;
@@ -46,31 +48,9 @@ const Listen = () => {
   // the scroll stages measure the page, so they mount together once the catalog is in
   const ready = !!allTracks && !!albums;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "MusicPlaylist",
-    name: "Mr. CAP — Stream Music",
-    description: "Stream Mr. CAP's music directly. Houston hip hop, Southern rap, and underground classics.",
-    url: "https://mrcap1.com/music",
-    numTracks: allTracks?.length || 0,
-    track: (allTracks || []).map((t) => ({
-      "@type": "MusicRecording",
-      name: t.title,
-      url: `https://mrcap1.com/track/${t.slug}`,
-      byArtist: { "@type": "MusicGroup", name: t.artist },
-      ...(t.duration ? { duration: `PT${Math.floor(t.duration / 60)}M${Math.floor(t.duration % 60)}S` } : {}),
-      ...(t.release_year ? { datePublished: String(t.release_year) } : {}),
-    })),
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title="Stream Mr. CAP Music | Listen Free | Houston Hip Hop"
-        description="Stream Mr. CAP's full catalog. Houston hip hop, Southern rap, and underground classics — direct from the artist."
-        canonical="https://mrcap1.com/music"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/music")} extraJsonLd={allTracks?.length ? [musicPlaylistLd(allTracks)] : undefined} />
       <Navigation />
 
       <main id="main">

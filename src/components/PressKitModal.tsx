@@ -47,7 +47,7 @@ const PressKitModal = ({ open, onOpenChange }: PressKitModalProps) => {
               Official Press Kit · File No. 001
             </div>
             <DialogTitle className="font-display text-3xl md:text-4xl leading-[0.95] tracking-tight">
-              Mr. CAP — <span className="text-[hsl(var(--accent-gold))]">Press Kit</span>
+              Mr. CAP <span className="text-[hsl(var(--accent-gold))]">Press Kit</span>
             </DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground max-w-xl">
               Preview what's included, then download the full kit or grab individual assets below.
@@ -93,7 +93,7 @@ const PressKitModal = ({ open, onOpenChange }: PressKitModalProps) => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="absolute inset-x-0 bottom-0 p-2 flex items-center justify-between font-mono text-[9px] tracking-[0.2em] uppercase text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="truncate">{p.label.replace("Press Photo — ", "")}</span>
+                    <span className="truncate">{p.label.replace("Press Photo: ", "")}</span>
                     <Download className="w-3 h-3 shrink-0 ml-2 text-[hsl(var(--accent-gold))]" />
                   </div>
                 </a>

@@ -13,7 +13,7 @@ export default function LiveHistoryTimeline({ events = liveHistory }: Props) {
   const ordered = [...dated, ...unconfirmed];
   const images = ordered.map((event) => ({
     src: event.flyer,
-    alt: `${event.title} flyer — ${event.dateLabel}, ${event.city}, ${event.state}`,
+    alt: `${event.title} flyer, ${event.dateLabel}, ${event.city}, ${event.state}`,
     caption: `${event.title} · ${event.dateLabel} · ${event.city}, ${event.state}`,
     credit: "Flyer from the Point Blank / Wreckless Entertainment event archive",
   }));

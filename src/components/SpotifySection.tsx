@@ -70,7 +70,7 @@ const SpotifySection = () => {
                   </span>
                   <h3 className="font-editorial text-4xl md:text-5xl mb-5">Mr. CAP</h3>
                   <p className="text-muted-foreground mb-8 leading-relaxed text-balance">
-                    South Park Coalition original member. Houston hip-hop legend.
+                    Original Member of the South Park Coalition. Houston hip-hop legend.
                     Over two decades of authentic street music, conscious lyrics,
                     and uncompromising artistry.
                   </p>

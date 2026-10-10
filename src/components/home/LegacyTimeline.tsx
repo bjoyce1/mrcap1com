@@ -24,7 +24,7 @@ const ERAS: Era[] = [
   {
     year: "1987",
     title: "The Foundation",
-    text: "South Park, Houston. An original member of the legendary South Park Coalition — where the ISM was born.",
+    text: "South Park, Houston. An Original Member of the South Park Coalition, where the ISM was born.",
     image: capPortrait,
     link: "/south-park-coalition",
     linkLabel: "The SPC Story",
@@ -48,7 +48,7 @@ const ERAS: Era[] = [
   {
     year: "2019",
     title: "The Art of ISM",
-    text: "The statement album — distributed by Sony Music / The Orchard. A philosophy pressed to wax.",
+    text: "The statement album, distributed by Sony Music / The Orchard. A philosophy pressed to wax.",
     image: albumArtOfIsm,
     link: "/album/the-art-of-ism",
     linkLabel: "The Album",
@@ -64,7 +64,7 @@ const ERAS: Era[] = [
   {
     year: "2024",
     title: "The Ties That Bind Us",
-    text: "A grown-man statement with the whole SPC — 19 tracks of honest, unflinching Houston hip-hop.",
+    text: "A grown-man statement with the whole SPC: 19 tracks of honest, unflinching Houston hip-hop.",
     image: albumTies,
     link: "/album/the-ties-that-bind-us",
     linkLabel: "Stream It",
@@ -158,7 +158,7 @@ const LegacyTimeline = () => {
       {/* Header inside the pinned viewport */}
       <div className="absolute top-0 inset-x-0 z-20 pt-14 lg:pt-20 pointer-events-none">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="catalog-stamp">The Journey · 1987 — Now</p>
+          <p className="catalog-stamp">The Journey · 1987 to Now</p>
           <h2 className="font-display text-4xl md:text-6xl mt-3 text-foreground">
             Three Decades <span className="text-gold">Deep</span>
           </h2>
@@ -198,7 +198,7 @@ const LegacyTimeline = () => {
                 <div className="relative aspect-square overflow-hidden">
                   <img
                     src={era.image}
-                    alt={`${era.title} — ${era.year}`}
+                    alt={`${era.title}, ${era.year}`}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                   />

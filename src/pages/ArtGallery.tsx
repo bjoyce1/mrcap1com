@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Palette, ExternalLink, Heart, Sparkles, Crown, Calendar, X } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import { gsap } from "@/hooks/useGSAP";
@@ -32,6 +31,8 @@ import tyaImg from "@/assets/self-love/tya.webp";
 import velataImg from "@/assets/self-love/velata.webp";
 import wydayaImg from "@/assets/self-love/wydaya.webp";
 import yannaImg from "@/assets/self-love/yanna.webp";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,7 +41,7 @@ const installationRooms = [
     year: "2024",
     title: "The Awakening",
     theme: "Recognition • Vulnerability • First Truths",
-    description: "This room introduces the Self Love universe: the moment you realize you've been surviving instead of living. The works here hold raw honesty — the beginning of self-respect, self-definition, and the first refusal to shrink.",
+    description: "This room introduces the Self Love universe: the moment you realize you've been surviving instead of living. The works here hold raw honesty, the beginning of self-respect, self-definition, and the first refusal to shrink.",
     link: "https://mrcap1.wixstudio.com/selflove",
     linkLabel: "Experience Room I",
     icon: Heart,
@@ -50,7 +51,7 @@ const installationRooms = [
     year: "2025",
     title: "The Becoming",
     theme: "Growth • Boundaries • Voice",
-    description: "This room is motion. The characters evolve, the energy changes, the posture shifts. Here, Self Love becomes active — not a feeling, but a decision. The work speaks louder, stands taller, and draws firmer lines.",
+    description: "This room is motion. The characters evolve, the energy changes, the posture shifts. Here, Self Love becomes active, not a feeling, but a decision. The work speaks louder, stands taller, and draws firmer lines.",
     link: "https://selfloveproject.lovable.app/",
     linkLabel: "Enter Interactive Gallery",
     icon: Sparkles,
@@ -60,7 +61,7 @@ const installationRooms = [
     year: "2026",
     title: "The Ownership",
     theme: "Mastery • Permanence • Legacy",
-    description: "This final room represents arrival. Not perfection — ownership. The work here seals the story into permanence: self-love as a power source, a standard, and a legacy.",
+    description: "This final room represents arrival. Not perfection, ownership. The work here seals the story into permanence: self-love as a power source, a standard, and a legacy.",
     link: null,
     linkLabel: "View Collection Below",
     icon: Crown,
@@ -200,64 +201,9 @@ const ArtGallery = () => {
     }
   };
 
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://mrcap1.com/art",
-        name: "Self Love — Art Installation by Mr. CAP",
-        description: "Self Love is a living, three-year art installation (2024–2026) built from original character-driven works, symbolic portraiture, and narrative fragments by Houston artist Mr. CAP.",
-        url: "https://mrcap1.com/art",
-        isPartOf: { "@id": "https://mrcap1.com/#website" },
-        breadcrumb: { "@id": "https://mrcap1.com/art#breadcrumb" },
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://mrcap1.com/art#breadcrumb",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-          { "@type": "ListItem", position: 2, name: "Art", item: "https://mrcap1.com/art" },
-        ],
-      },
-      {
-        "@type": "VisualArtwork",
-        name: "Self Love",
-        creator: {
-          "@type": "Person",
-          name: "Mr. CAP",
-          url: "https://mrcap1.com",
-        },
-        artform: "Installation Art",
-        description: "A living, three-year art installation built from original character-driven works, symbolic portraiture, and narrative fragments exploring identity, healing, confidence, and self-ownership.",
-        temporalCoverage: "2024/2026",
-      },
-      {
-        "@type": "Person",
-        "@id": "https://mrcap1.com/#person",
-        name: "Mr. CAP",
-        url: "https://mrcap1.com",
-        sameAs: [
-          "https://instagram.com/mrcapism",
-          "https://twitter.com/mrcap1",
-          "https://www.youtube.com/@mrcap1",
-          "https://www.wikidata.org/wiki/Q139960172",
-        ],
-      },
-    ],
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Self Love — Art Installation by Mr. CAP | 2024–2026</title>
-        <meta
-          name="description"
-          content="Self Love is a living, three-year art installation (2024–2026) by Houston artist Mr. CAP. Explore original character-driven works exploring identity, healing, and self-ownership."
-        />
-        <link rel="canonical" href="https://mrcap1.com/art" />
-        <script type="application/ld+json">{JSON.stringify(schemaData)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/art")} />
 
       <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
         <Navigation />
@@ -291,7 +237,7 @@ const ArtGallery = () => {
             <div className="gsap-hero-item inline-flex items-center gap-2 px-4 py-2 mb-6 bg-primary/10 ring-1 ring-primary/20 rounded-full">
               <Heart className="w-4 h-4 text-primary" />
               <span className="text-sm text-muted-foreground uppercase tracking-widest font-medium">
-                Art Installation • 2024–2026
+                Art Installation • 2024-2026
               </span>
             </div>
 
@@ -306,7 +252,7 @@ const ArtGallery = () => {
             <p className="gsap-hero-item text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mt-6">
               Self Love is a living, three-year art installation built from original character-driven works, 
               symbolic portraiture, and narrative fragments. This installation is not a "collection" in the 
-              traditional sense — it is a timeline you step into.
+              traditional sense, it is a timeline you step into.
             </p>
 
             <p className="gsap-hero-item text-sm text-muted-foreground/80 max-w-xl mx-auto mt-4">
@@ -431,7 +377,7 @@ const ArtGallery = () => {
                 The Becoming
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Growth, Boundaries, and Voice — Self Love as active decision.
+                Growth, Boundaries, and Voice, Self Love as active decision.
               </p>
             </div>
 
@@ -552,9 +498,9 @@ const ArtGallery = () => {
             <blockquote className="gsap-curator-item text-lg md:text-xl text-muted-foreground leading-relaxed italic">
               "Self Love is a visual language built from symbols, names, and lived emotional codes.
               Every piece is a chapter. Every chapter is a mirror.
-              If you see yourself in the work — that's not an accident. That's the installation working."
+              If you see yourself in the work, that's not an accident. That's the installation working."
             </blockquote>
-            <p className="gsap-curator-item mt-6 text-sm text-muted-foreground">— Mr. CAP</p>
+            <p className="gsap-curator-item mt-6 text-sm text-muted-foreground">Mr. CAP</p>
           </div>
         </section>
 

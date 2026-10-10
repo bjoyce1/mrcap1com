@@ -19,6 +19,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { shareMusic } from "@/lib/shareTrack";
 import artOfIsmBg from "@/assets/art-of-ism-bg.webp";
+import { albumSeo } from "@/seo/builders";
 
 function formatTotalDuration(tracks: { duration: number }[]): string {
   const total = tracks.reduce((s, t) => s + t.duration, 0);
@@ -82,35 +83,9 @@ const AlbumPage = () => {
     );
   }
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "MusicAlbum",
-    name: album.title,
-    byArtist: { "@type": "MusicGroup", name: album.artist },
-    datePublished: `${album.release_year}`,
-    numTracks: album.track_count,
-    url: `https://mrcap1.com/albums/${album.slug}`,
-    image: album.cover_art_url,
-    ...(tracks && {
-      track: tracks.map((t, i) => ({
-        "@type": "MusicRecording",
-        name: t.title,
-        position: i + 1,
-        duration: `PT${Math.floor(t.duration / 60)}M${t.duration % 60}S`,
-        url: `https://mrcap1.com/music/${t.slug}`,
-      })),
-    }),
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground relative">
-      <SEO
-        title={`${album.title} | Album by Mr. CAP`}
-        description={`Official release page for "${album.title}" by ${album.artist}. ${album.track_count} tracks, released ${album.release_year}. Listen, explore credits, and get updates from Mr. CAP Legacy.`}
-        canonical={`https://mrcap1.com/albums/${album.slug}`}
-        ogImage={album.cover_art_url || undefined}
-        jsonLd={jsonLd}
-      />
+      <SEO entry={albumSeo(album, tracks ?? [])} />
 
       {album.slug === "the-art-of-ism" && (
         <div className="fixed inset-0 z-0 pointer-events-none">

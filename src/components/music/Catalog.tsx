@@ -32,7 +32,7 @@ export default function Catalog() {
   }, []);
 
   const cards: CardItem[] = (albums ?? []).map((a: Album) => ({
-    year: a.release_year ? String(a.release_year) : "—",
+    year: a.release_year ? String(a.release_year) : "-",
     title: a.title,
     meta: `${a.track_count || ""}${a.track_count ? " TRACKS · " : ""}${(a.artist || "MR. CAP").toUpperCase()}`,
     img: a.cover_art_url || FALLBACK_COVER,

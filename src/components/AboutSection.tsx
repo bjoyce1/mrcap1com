@@ -45,7 +45,7 @@ const AboutSection = () => {
               <p className="text-lg md:text-xl text-foreground leading-relaxed font-light text-balance">
                 <span className="text-primary font-medium">Mr. CAP</span> (born Cornelius A. Pratt, April 5, 1973) is a Houston-based
                 rapper, entrepreneur, and media producer whose career spans decades within the Southern hip hop underground.
-                Raised in Houston's Third Ward, he began performing at a young age and later became an original member of the
+                Raised in Houston's Third Ward, he began performing at a young age and later became an Original Member of the
                 South Park Coalition, one of Texas' most enduring independent hip hop collectives.
               </p>
             </ScrollReveal>
@@ -76,7 +76,7 @@ const AboutSection = () => {
                 <p className="text-xl md:text-2xl text-foreground italic font-light leading-relaxed">
                   "These recognitions reflect not just music, but years of cultural contribution and storytelling."
                 </p>
-                <cite className="text-sm text-muted-foreground not-italic mt-3 block">— Mr. CAP</cite>
+                <cite className="text-sm text-muted-foreground not-italic mt-3 block">Mr. CAP</cite>
               </blockquote>
             </ScrollReveal>
 

@@ -6,6 +6,8 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/hooks/useGSAP";
 import { ArrowLeft } from "lucide-react";
 import ChromaGrid, { ChromaGridItem } from "@/components/ui/ChromaGrid";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 export default function SelfLoveRoom2024() {
   const location = useLocation();
@@ -54,6 +56,7 @@ export default function SelfLoveRoom2024() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO entry={routeSeo("/self-love/2024")} />
       <Navigation />
       <section ref={sectionRef} className="mx-auto max-w-6xl px-4 py-20 pt-32">
         <Link

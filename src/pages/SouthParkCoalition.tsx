@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -12,78 +11,17 @@ import QuoteBlock from "@/components/blocks/QuoteBlock";
 import FAQAccordion from "@/components/blocks/FAQAccordion";
 import { motion } from "framer-motion";
 import { Music, Newspaper, Gem, CalendarCheck } from "lucide-react";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
+import { SPC_FAQ } from "@/seo/faqs";
 
 const SouthParkCoalition = () => {
-  const pageTitle = "South Park Coalition: Houston's Independent Hip Hop Movement | Mr. CAP";
-  const metaDescription =
-    "The South Park Coalition created a blueprint for artist ownership, longevity, and cultural impact in Houston hip hop. Explore the origins, legacy, and Mr. CAP's role.";
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "MusicGroup",
-        "name": "South Park Coalition",
-        "foundingLocation": { "@type": "Place", "name": "Houston, Texas" },
-        "genre": ["Hip-Hop", "Southern Hip-Hop"],
-        "member": { "@type": "Person", "name": "Mr. CAP" },
-        "url": "https://mrcap1.com/south-park-coalition",
-        "description":
-          "The South Park Coalition is one of the most influential independent hip hop collectives to come out of Houston, Texas.",
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Who are the key members of the South Park Coalition and their impact?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Key SPC members include K-Rino (founder), Mr. CAP, Klondike Kat, Dope-E, Point Blank, Low-G, and Ganksta N-I-P. The coalition pioneered independent hip-hop distribution in Texas and proved artists could build sustainable careers without major label support.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name": "How did the South Park Coalition influence underground rap?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "SPC created the blueprint for independent hip-hop — direct-to-fan distribution, full creative ownership, and community-driven growth — decades before streaming platforms made independence mainstream.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name": "What defines Houston hip-hop culture and its independent sound?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Houston hip-hop culture is defined by independence, authenticity, and hustle. Artists pressed their own CDs, sold music hand-to-hand, and built loyal audiences without relying on major labels — a model the South Park Coalition helped pioneer.",
-            },
-          },
-          {
-            "@type": "Question",
-            "name": "What makes independent hip-hop artists successful long-term?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ownership, consistency, and direct audience connection. Artists like Mr. CAP and the South Park Coalition proved that longevity comes from controlling your own catalog, building genuine fan relationships, and never compromising creative vision.",
-            },
-          },
-        ],
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://mrcap1.com" },
-          { "@type": "ListItem", "position": 2, "name": "South Park Coalition", "item": "https://mrcap1.com/south-park-coalition" },
-        ],
-      },
-    ],
-  };
-
   const sections = [
     {
       title: "The Origins of the South Park Coalition",
       paragraphs: [
         "The South Park Coalition emerged from Houston's South Park neighborhood as a collective of artists determined to build their own path in the music industry.",
-        "Instead of waiting for record deals, they created their own systems — producing, distributing, and promoting their music independently.",
+        "Instead of waiting for record deals, they created their own systems, producing, distributing, and promoting their music independently.",
         "This grassroots approach allowed the coalition to grow organically while maintaining full creative control.",
       ],
     },
@@ -106,8 +44,8 @@ const SouthParkCoalition = () => {
     {
       title: "Mr. CAP and the Continuation of the SPC Legacy",
       paragraphs: [
-        "As a long-time member of the South Park Coalition, Mr. CAP represents the continuation of Houston's independent tradition.",
-        "His catalog, performances, and creative direction reflect the same principles that defined the coalition — ownership, discipline, and longevity.",
+        "As an Original Member of the South Park Coalition, Mr. CAP represents the continuation of Houston's independent tradition.",
+        "His catalog, performances, and creative direction reflect the same principles that defined the coalition, ownership, discipline, and longevity.",
         "Through music, media, and digital innovation, Mr. CAP continues to build on the foundation established by SPC.",
       ],
     },
@@ -130,23 +68,7 @@ const SouthParkCoalition = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta
-          name="keywords"
-          content="South Park Coalition, SPC Houston, Houston rap collective, Houston underground hip hop, Mr CAP, independent hip hop, Houston music history"
-        />
-        <link rel="canonical" href="https://mrcap1.com/south-park-coalition" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:type" content="organization" />
-        <meta property="og:url" content="https://mrcap1.com/south-park-coalition" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={metaDescription} />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/south-park-coalition")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -261,7 +183,7 @@ const SouthParkCoalition = () => {
           <section className="py-16 bg-card/30 border-y border-border/30">
             <div className="container mx-auto px-4 text-center max-w-3xl">
               <p className="text-lg text-muted-foreground mb-2">
-                The South Park Coalition didn't just create music — it created a system.
+                The South Park Coalition didn't just create music, it created a system.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
                 If you want to understand independent hip hop at its core, this is where the blueprint begins.
@@ -277,32 +199,13 @@ const SouthParkCoalition = () => {
 
           {/* Cinematic pull quote */}
           <PullQuoteBand
-            quote="The South Park Coalition didn't just create music — it created a system. This is where the blueprint begins."
+            quote="The South Park Coalition didn't just create music, it created a system. This is where the blueprint begins."
             attribution="South Park Coalition · Houston TX"
             image={spcAustin}
           />
 
           {/* FAQ */}
-          <FAQAccordion
-            items={[
-              {
-                question: "Who are the key members of the South Park Coalition and their impact?",
-                answer: "Key SPC members include K-Rino (founder), Mr. CAP, Klondike Kat, Dope-E, Point Blank, Low-G, and Ganksta N-I-P. The coalition pioneered independent hip-hop distribution in Texas and proved artists could build sustainable careers without major label support.",
-              },
-              {
-                question: "How did the South Park Coalition influence underground rap?",
-                answer: "SPC created the blueprint for independent hip-hop — direct-to-fan distribution, full creative ownership, and community-driven growth — decades before streaming platforms made independence mainstream.",
-              },
-              {
-                question: "What defines Houston hip-hop culture and its independent sound?",
-                answer: "Houston hip-hop culture is defined by independence, authenticity, and hustle. Artists pressed their own CDs, sold music hand-to-hand, and built loyal audiences without relying on major labels — a model the South Park Coalition helped pioneer.",
-              },
-              {
-                question: "What makes independent hip-hop artists successful long-term?",
-                answer: "Ownership, consistency, and direct audience connection. Artists like Mr. CAP and the South Park Coalition proved that longevity comes from controlling your own catalog, building genuine fan relationships, and never compromising creative vision.",
-              },
-            ]}
-          />
+          <FAQAccordion items={SPC_FAQ} />
 
           {/* Quote Block */}
           <QuoteBlock
@@ -313,7 +216,7 @@ const SouthParkCoalition = () => {
           {/* Citation */}
           <CitationBlock
             canonicalUrl="https://mrcap1.com/south-park-coalition"
-            description="Mr. CAP is a Houston-based rapper and long-time member of the South Park Coalition. This page is part of the official mrcap1.com archive and is intended for citation, research, and cultural documentation."
+            description="Mr. CAP is a Houston-based rapper and an Original Member of the South Park Coalition. This page is part of the official mrcap1.com archive and is intended for citation, research, and cultural documentation."
             lastUpdated="2026-03-31"
             links={[
               { label: "Homepage", href: "/" },

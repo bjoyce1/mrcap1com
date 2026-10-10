@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import Navigation from "@/components/Navigation";
@@ -18,6 +17,8 @@ import albumGrave from "@/assets/album-grave.webp";
 import albumColdAss from "@/assets/album-cold-ass-pimp.webp";
 import albumOneOnOne from "@/assets/album-one-on-one.webp";
 import capHeroPortrait from "@/assets/cap-hero-portrait.webp";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 type SingleTrack = {
   title: string;
@@ -137,7 +138,7 @@ const singlesData: { year: string; tracks: SingleTrack[] }[] = [
     tracks: [
       { title: "I Ain't F*n With You Devils", artist: "Mr. Cap feat. Herb Of The Dynamite Squad", label: "CAP Distributions" },
       { title: "Big Navi L.A. Remix", artist: "Mr. Cap feat. Big Prez", label: "CAP Distributions" },
-      { title: "Unsolved Mysteries – The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
+      { title: "Unsolved Mysteries: The Single Pt. 1", artist: "Mr Cap & K-Rino", label: "ISM Muzik" },
     ],
   },
   {
@@ -186,11 +187,6 @@ const Soundwave = ({ className = "" }: { className?: string }) => (
 );
 
 const Discography = () => {
-  const pageTitle = "Mr. CAP Discography | Complete Album & Singles List | Houston Hip-Hop";
-  const metaDescription =
-    "Explore the complete discography of Houston rapper Mr. CAP. Albums include The Ties That Bind Us (2024), The Art of ISM (2019), 2 Tha Grave (2011), O.N.E. on O.N.E. (2005), plus singles, mixtapes, and NFT releases.";
-
-  const allSingles = singlesData.flatMap((g) => g.tracks);
   const featuredAlbum = studioAlbums.find((a) => a.featured) ?? studioAlbums[0];
 
   const [activeAlbum, setActiveAlbum] = useState<Album | null>(null);
@@ -268,73 +264,9 @@ const Discography = () => {
     };
   }, [activeAlbum]);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "MusicPlaylist",
-        name: "Mr. CAP Complete Discography",
-        description: metaDescription,
-        url: "https://mrcap1.com/mr-cap-discography",
-        numTracks: studioAlbums.length + allSingles.length,
-        track: [
-          ...studioAlbums.map((album) => ({
-            "@type": "MusicAlbum",
-            name: album.title,
-            datePublished: album.year,
-            byArtist: { "@type": "Person", name: "Mr. CAP" },
-          })),
-          ...allSingles.map((single) => ({
-            "@type": "MusicRecording",
-            name: single.title,
-            byArtist: { "@type": "Person", name: "Mr. CAP" },
-          })),
-        ],
-      },
-      {
-        "@type": "Person",
-        "@id": "https://mrcap1.com/#person",
-        name: "Mr. CAP",
-        alternateName: ["Cornelius A. Pratt"],
-        url: "https://mrcap1.com",
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-          { "@type": "ListItem", position: 2, name: "Discography", item: "https://mrcap1.com/mr-cap-discography" },
-        ],
-      },
-    ],
-  };
-
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta
-          name="keywords"
-          content="mr cap discography, mr cap albums, mr cap singles, ties that bind us, art of ism, houston rap albums, south park coalition music, mr cap songs, mr cap music list"
-        />
-        <link rel="canonical" href="https://mrcap1.com/mr-cap-discography" />
-
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:type" content="music.album" />
-        <meta property="og:url" content="https://mrcap1.com/mr-cap-discography" />
-        <meta property="og:image" content="https://mrcap1.com/images/covers/album-ties.webp" />
-        <meta property="og:site_name" content="Mr. CAP Legacy" />
-        <meta property="og:locale" content="en_US" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@mrcap1" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={metaDescription} />
-        <meta name="twitter:image" content="https://mrcap1.com/images/covers/album-ties.webp" />
-
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/mr-cap-discography")} />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -394,7 +326,7 @@ const Discography = () => {
                   LISTEN
                 </h1>
                 <p className="mt-8 max-w-2xl mx-auto text-base md:text-lg text-muted-foreground">
-                  Twenty plus years of Houston hip-hop — albums, singles, mixtapes, and on-chain releases from Mr. CAP and the South Park Coalition.
+                  Twenty plus years of Houston hip-hop, albums, singles, mixtapes, and on-chain releases from Mr. CAP and the South Park Coalition.
                 </p>
               </div>
             </div>
@@ -408,7 +340,7 @@ const Discography = () => {
           {/* ============ ALBUM GRID (editorial / MJ-style) ============ */}
           <section className="relative py-24 md:py-32 border-t border-white/5">
             <div className="container mx-auto px-6 mb-16 md:mb-20 text-center">
-              <span className="catalog-stamp mb-3 block">01 — Albums</span>
+              <span className="catalog-stamp mb-3 block">01: Albums</span>
               <h2 className="text-3xl md:text-5xl font-display font-bold">Studio &amp; Collab Records</h2>
               <div className="archive-rule mt-4 mx-auto w-24" />
             </div>
@@ -522,7 +454,7 @@ const Discography = () => {
           <section className="relative py-20 md:py-28 border-t border-white/5">
             <div className="container mx-auto px-6">
               <div className="mb-12">
-                <span className="catalog-stamp mb-3 block">02 — Full Catalog</span>
+                <span className="catalog-stamp mb-3 block">02: Full Catalog</span>
                 <h2 className="text-3xl md:text-5xl font-display font-bold">Every Album. Every Era.</h2>
                 <div className="archive-rule mt-4 w-24" />
               </div>
@@ -563,7 +495,7 @@ const Discography = () => {
           <section className="relative py-20 md:py-28 border-t border-white/5 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent">
             <div className="container mx-auto px-6">
               <div className="mb-12">
-                <span className="catalog-stamp mb-3 block">03 — Singles &amp; Features</span>
+                <span className="catalog-stamp mb-3 block">03: Singles &amp; Features</span>
                 <h2 className="text-3xl md:text-5xl font-display font-bold">A Decade of Drops</h2>
                 <div className="archive-rule mt-4 w-24" />
               </div>

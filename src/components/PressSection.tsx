@@ -35,7 +35,7 @@ const PressSection = () => {
     },
     {
       title: "Movie Soundtrack",
-      subtitle: "Dear Frank – Song: \"Get Me Right\"",
+      subtitle: "Dear Frank, Song: \"Get Me Right\"",
       image: dearFrankSoundtrack,
       borderColor: "#3B82F6",
       gradient: "linear-gradient(210deg, rgba(59,130,246,0.1), hsl(var(--background)))",
@@ -120,7 +120,7 @@ const PressSection = () => {
                     </div>
                     <div className="space-y-4">
                       <blockquote className="border-l-2 border-cap-gold pl-4 py-2">
-                        <p className="text-foreground italic text-sm">"A true architect of South Park storytelling — bridging old school reality rap with forward-thinking ideas."</p>
+                        <p className="text-foreground italic text-sm">"A true architect of South Park storytelling, bridging old school reality rap with forward-thinking ideas."</p>
                       </blockquote>
                       <blockquote className="border-l-2 border-primary pl-4 py-2">
                         <p className="text-foreground italic text-sm">"Mr. CAP brings the perspective of someone who's lived it, learned from it, and decided to build something greater."</p>

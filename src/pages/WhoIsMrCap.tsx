@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet-async";
 import { useMemo, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -52,14 +51,16 @@ import originChildhood from "@/assets/cap-origin-childhood.png.asset.json";
 import originChildhood400 from "@/assets/cap-origin-childhood-400.webp.asset.json";
 import originChildhood800 from "@/assets/cap-origin-childhood-800.webp.asset.json";
 import originChildhood1200 from "@/assets/cap-origin-childhood-1200.webp.asset.json";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 /* ---------------- Data ---------------- */
 
 const pillars = [
-  { k: "01", t: "Artist", d: "Three decades of narrative-driven Southern hip-hop — from cassette-era South Park to global streaming." },
-  { k: "02", t: "South Park Coalition", d: "Long-time member of the DIY collective that wrote the independent playbook for Houston." },
-  { k: "03", t: "Entrepreneur", d: "Founder of CAP Distributions, Mortuary Media LLC, and a creative agency — building the infrastructure other artists rent." },
-  { k: "04", t: "Cultural Architect", d: "Documentary contributor, blockchain pioneer, Capicoin builder — engineering the systems the next era will use." },
+  { k: "01", t: "Artist", d: "Three decades of narrative-driven Southern hip-hop, from cassette-era South Park to global streaming." },
+  { k: "02", t: "South Park Coalition", d: "Original Member of the South Park Coalition, the DIY collective that wrote the independent playbook for Houston." },
+  { k: "03", t: "Entrepreneur", d: "Founder of CAP Distributions, Mortuary Media LLC, and a creative agency, building the infrastructure other artists rent." },
+  { k: "04", t: "Cultural Architect", d: "Documentary contributor, blockchain pioneer, Capicoin builder, engineering the systems the next era will use." },
 ];
 
 const timeline: TimelineEntry[] = [
@@ -68,7 +69,7 @@ const timeline: TimelineEntry[] = [
     year: "Origin",
     tag: "ORIGIN",
     title: "Houston, Texas",
-    body: "Cornelius A. Pratt — son of two musicians. Raised in the Third Ward and South Park.",
+    body: "Cornelius A. Pratt, son of two musicians. Raised in the Third Ward and South Park.",
     art: {
       src: originChildhood1200.url,
       srcSet: `${originChildhood400.url} 400w, ${originChildhood800.url} 800w, ${originChildhood1200.url} 1200w`,
@@ -80,12 +81,12 @@ const timeline: TimelineEntry[] = [
     credit: "Courtesy of the Pratt family archive",
   },
   { slug: "spc-1990s", year: "1990s", tag: "COALITION", title: "South Park Coalition", body: "Joins the collective that codified independence for Houston hip-hop.", art: spcOrigins, alt: "Mr. CAP with the South Park Coalition in Houston" },
-  { slug: "one-on-one-2005", year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E. — narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne, alt: "O.N.E. on O.N.E. album artwork" },
-  { slug: "cold-ass-pimp-2006", year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement — street realism as literature.", art: albumColdPimp, alt: "Tha Cold Ass Pimp album artwork" },
-  { slug: "2-tha-grave-2011", year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP — collaborations across SPC and the Screwed Up Click movement.", art: albumGrave, alt: "2 Tha Grave album artwork" },
-  { slug: "art-of-ism-2019", year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record — released via Sony Music / The Orchard.", art: albumArtOfIsm, alt: "The Art of ISM album artwork" },
+  { slug: "one-on-one-2005", year: "2005", tag: "CATALOG", title: "O.N.E. on O.N.E.", body: "Collab album with O.N.E.: narrative, discipline, Houston-rooted craftsmanship.", art: albumOneOnOne, alt: "O.N.E. on O.N.E. album artwork" },
+  { slug: "cold-ass-pimp-2006", year: "2006", tag: "CATALOG", title: "Tha Cold Ass Pimp", body: "An early solo statement, street realism as literature.", art: albumColdPimp, alt: "Tha Cold Ass Pimp album artwork" },
+  { slug: "2-tha-grave-2011", year: "2011", tag: "DEBUT", title: "2 Tha Grave", body: "Debut LP, collaborations across SPC and the Screwed Up Click movement.", art: albumGrave, alt: "2 Tha Grave album artwork" },
+  { slug: "art-of-ism-2019", year: "2019", tag: "OPUS", title: "The Art of ISM", body: "A philosophy pressed to record, released via Sony Music / The Orchard.", art: albumArtOfIsm, alt: "The Art of ISM album artwork" },
   { slug: "first-nft-2021", year: "2021", tag: "FIRST", title: "First Houston rapper to sell a Hip-Hop NFT", body: "Ownership on-chain. Independence, upgraded.", art: nftLimitless, alt: "Limitless NFT artwork" },
-  { slug: "ties-that-bind-2024", year: "2024", tag: "COLLECTIVE", title: "The Ties That Bind Us", body: "SPC group album — featuring “Bet'n On Me.”", art: albumTies, alt: "The Ties That Bind Us album artwork" },
+  { slug: "ties-that-bind-2024", year: "2024", tag: "COLLECTIVE", title: "The Ties That Bind Us", body: "SPC group album, featuring “Bet'n On Me.”", art: albumTies, alt: "The Ties That Bind Us album artwork" },
   { slug: "legacy-now", year: "NOW", tag: "ERA", title: "Legacy in Motion", body: "Capicoin (CCHX), Art of ISM ecosystem, and the ongoing catalog.", art: coin, alt: "Capicoin (CCHX) medallion" },
 ];
 
@@ -117,7 +118,7 @@ const WhoIsMrCap = () => {
             src: art.src,
             srcSet: art.srcSet,
             sizes: art.sizes,
-            alt: m.alt || `${m.title} — ${m.tag}`,
+            alt: m.alt || `${m.title}, ${m.tag}`,
             caption: m.caption || `${m.year} · ${m.title}`,
             credit: m.credit || "Mr. CAP Archive",
           };
@@ -131,96 +132,9 @@ const WhoIsMrCap = () => {
     return timelineImages.findIndex((img) => img.src === src);
   };
 
-  const pageTitle = "Who Is Mr. CAP? — Houston Original, SPC Legend, Independent Architect";
-  const metaDescription =
-    "Mr. CAP (Cornelius A. Pratt) — Houston-born rapper, South Park Coalition member, entrepreneur and blockchain pioneer. Three decades of music, ownership, and independent evolution.";
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Person",
-        "@id": "https://mrcap1.com/#person",
-        name: "Mr. CAP",
-        alternateName: "Cornelius A. Pratt",
-        url: "https://mrcap1.com/who-is-mr-cap",
-        birthPlace: { "@type": "Place", name: "Houston, Texas, USA" },
-        jobTitle: ["Rapper", "Entrepreneur", "Founder"],
-        description:
-          "Houston-born rapper, entrepreneur, and cultural architect. Long-time member of the South Park Coalition and founder of CAP Distributions.",
-        affiliation: [{ "@type": "MusicGroup", name: "South Park Coalition" }],
-        owns: { "@type": "Organization", name: "CAP Distributions" },
-        sameAs: [
-          "https://mrcap1.com",
-          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-          "https://www.instagram.com/mrcapism/",
-          "https://twitter.com/mrcap1",
-          "https://www.youtube.com/@mrcap1",
-          "https://music.apple.com/us/artist/mr-cap/561550224",
-          "https://opensea.io/mrcap",
-          "https://www.wikidata.org/wiki/Q139960172",
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "Who is Mr. CAP?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, entrepreneur, and cultural architect best known as a long-time member of the South Park Coalition. His career spans three decades of independent music, business ventures, and blockchain innovation.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "What is Mr. CAP's real name?",
-            acceptedAnswer: { "@type": "Answer", text: "Cornelius A. Pratt. Born in Houston, Texas and raised in South Park." },
-          },
-          {
-            "@type": "Question",
-            name: "Is Mr. CAP part of South Park Coalition?",
-            acceptedAnswer: { "@type": "Answer", text: "Yes — Mr. CAP is a long-time member of the South Park Coalition (SPC), one of Houston's most influential independent hip-hop collectives." },
-          },
-          {
-            "@type": "Question",
-            name: "What is CAP Distributions?",
-            acceptedAnswer: { "@type": "Answer", text: "CAP Distributions is a digital distribution company founded by Mr. CAP to help independent artists release music globally without sacrificing ownership." },
-          },
-          {
-            "@type": "Question",
-            name: "How can I book Mr. CAP?",
-            acceptedAnswer: { "@type": "Answer", text: "Book Mr. CAP for concerts, festivals, features, speaking engagements, interviews, and creative/technology conversations at mrcap1.com/booking." },
-          },
-        ],
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-          { "@type": "ListItem", position: 2, name: "Who Is Mr. CAP", item: "https://mrcap1.com/who-is-mr-cap" },
-        ],
-      },
-    ],
-  };
-
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <link rel="canonical" href="https://mrcap1.com/who-is-mr-cap" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://mrcap1.com/who-is-mr-cap" />
-        <meta property="og:image" content="https://mrcap1.com/images/spc-mr-cap-studio.jpg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@mrcap1" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={metaDescription} />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <SEO entry={routeSeo("/who-is-mr-cap")} />
 
       <div className="min-h-screen bg-background text-foreground selection:bg-[hsl(var(--accent-gold))] selection:text-background">
         <Navigation />
@@ -311,7 +225,7 @@ const WhoIsMrCap = () => {
         <Dialog open={docOpen} onOpenChange={setDocOpen}>
           <DialogContent className="max-w-4xl p-0 bg-background border-[hsl(var(--foreground)/0.1)]">
             <DialogTitle className="sr-only">
-              The Life: Sex Trafficking and Modern-Day Slavery — Trailer
+              The Life: Sex Trafficking and Modern-Day Slavery, Trailer
             </DialogTitle>
             <DialogDescription className="sr-only">
               Documentary trailer video. Captions are enabled by default. Press Escape to close.
@@ -320,7 +234,7 @@ const WhoIsMrCap = () => {
               <div className="relative w-full aspect-video bg-black">
                 <iframe
                   src={`https://www.youtube-nocookie.com/embed/${TRAILER_YOUTUBE_ID}?autoplay=1&cc_load_policy=1&cc_lang_pref=en&hl=en&rel=0&modestbranding=1`}
-                  title="The Life: Sex Trafficking and Modern-Day Slavery — Trailer (captions enabled)"
+                  title="The Life: Sex Trafficking and Modern-Day Slavery, Trailer (captions enabled)"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   loading="lazy"

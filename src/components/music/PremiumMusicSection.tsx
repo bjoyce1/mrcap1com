@@ -377,7 +377,7 @@ export default function PremiumMusicSection() {
                     </span>
                   </span>
                   <span className="flex items-center justify-end text-xs text-muted-foreground tabular-nums">
-                    {track.duration > 0 ? formatTime(track.duration) : "—"}
+                    {track.duration > 0 ? formatTime(track.duration) : "-"}
                   </span>
                 </button>
               );
@@ -605,7 +605,7 @@ export default function PremiumMusicSection() {
                     const isCurrent = currentTrack?.id === t.id;
                     const isTrackPlaying = isCurrent && isPlaying;
                     const albumName =
-                      albums?.find((a) => a.id === t.album_id)?.title || "—";
+                      albums?.find((a) => a.id === t.album_id)?.title || "-";
 
                     return (
                       <React.Fragment key={t.id}>
@@ -664,12 +664,12 @@ export default function PremiumMusicSection() {
 
                           {/* Year */}
                           <span className="hidden sm:flex items-center text-xs text-muted-foreground">
-                            {t.release_year || "—"}
+                            {t.release_year || "-"}
                           </span>
 
                           {/* Duration */}
                           <span className="flex items-center justify-end sm:justify-start text-xs text-muted-foreground tabular-nums">
-                            {t.duration > 0 ? formatTime(t.duration) : "—"}
+                            {t.duration > 0 ? formatTime(t.duration) : "-"}
                           </span>
 
                           {/* Actions */}
@@ -809,10 +809,10 @@ export default function PremiumMusicSection() {
                           </span>
                         </span>
                         <span className="hidden sm:flex items-center text-xs text-muted-foreground">
-                          {track.release_year || "—"}
+                          {track.release_year || "-"}
                         </span>
                         <span className="flex items-center justify-end text-xs text-muted-foreground tabular-nums">
-                          {track.duration > 0 ? formatTime(track.duration) : "—"}
+                          {track.duration > 0 ? formatTime(track.duration) : "-"}
                         </span>
                       </button>
                     ))}
@@ -833,7 +833,7 @@ export default function PremiumMusicSection() {
               </h3>
               <p className="text-sm text-muted-foreground max-w-md mx-auto">
                 Featured placements, music videos, interviews, playlists, and
-                brand collaborations — this tab is your press &amp; platform
+                brand collaborations, this tab is your press &amp; platform
                 flex.
               </p>
             </div>
@@ -925,7 +925,7 @@ export default function PremiumMusicSection() {
                   <div>
                     <p className="text-xs text-muted-foreground mb-1">Year</p>
                     <p className="text-sm font-medium text-foreground">
-                      {activeDetail.release_year ?? "—"}
+                      {activeDetail.release_year ?? "-"}
                     </p>
                   </div>
                   <div>

@@ -12,6 +12,7 @@ import VerifiedContractBlock from "@/components/nft/VerifiedContractBlock";
 import WalletConnectPanel from "@/components/nft/WalletConnectPanel";
 import UnlockGrid from "@/components/nft/UnlockGridNew";
 import { nftPageData as data } from "@/content/nft";
+import { routeSeo } from "@/seo/routes";
 
 const NFTGallery = () => {
   const [holderVerified, setHolderVerified] = useState(false);
@@ -25,46 +26,9 @@ const NFTGallery = () => {
     idle(() => setShow3D(true));
   }, []);
 
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      name: "Mr. CAP NFT & Collector Access",
-      url: "https://mrcap1.com/nft",
-      description: data.intro,
-      mainEntity: {
-        "@type": "Person",
-        name: "Mr. CAP",
-        sameAs: ["https://opensea.io/mrcap1/created"],
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: data.faq.map((f) => ({
-        "@type": "Question",
-        name: f.question,
-        acceptedAnswer: { "@type": "Answer", text: f.answer },
-      })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-        { "@type": "ListItem", position: 2, name: "NFT", item: "https://mrcap1.com/nft" },
-      ],
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title="Digital Art & Web3 | Mr. CAP Collections, Context & Links"
-        description="Explore the intersection of hip-hop and digital ownership through Mr. CAP's digital-art and Web3 work."
-        canonical="https://mrcap1.com/nft"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/nft")} />
       <Navigation />
 
       <main>

@@ -115,11 +115,11 @@ For professional inquiries, booking for shows, festivals, and interviews, or to 
     content: `
 ## Back to the Beginning
 
-After years of pioneering blockchain technology, NFT releases, and digital innovation, Mr. CAP is returning to what started it all – the raw, unfiltered sound of Houston hip-hop.
+After years of pioneering blockchain technology, NFT releases, and digital innovation, Mr. CAP is returning to what started it all, the raw, unfiltered sound of Houston hip-hop.
 
 ## South Park Coalition Legacy
 
-As a founding member of the South Park Coalition, Mr. CAP has always carried the weight of Houston's underground legacy. This return to his musical roots represents a full-circle moment, reconnecting with the streets and sounds that shaped his artistry.
+As an Original Member of the South Park Coalition, Mr. CAP has always carried the weight of Houston's underground legacy. This return to his musical roots represents a full-circle moment, reconnecting with the streets and sounds that shaped his artistry.
 
 ## The Balance of Innovation and Tradition
 
@@ -129,7 +129,7 @@ While Mr. CAP continues to push boundaries in the digital space, he understands 
 
 Fans can expect new music that blends the classic Houston sound with modern production techniques. Mr. CAP proves that you can embrace the future while respecting the past.
 
-Stay tuned for upcoming releases that showcase the best of both worlds – innovation rooted in tradition.
+Stay tuned for upcoming releases that showcase the best of both worlds, innovation rooted in tradition.
     `,
     category: "Behind the Music",
     date: "2024-03-15",
@@ -145,7 +145,7 @@ Stay tuned for upcoming releases that showcase the best of both worlds – innov
     content: `
 ## A Groundbreaking Fusion
 
-In 2020, Mr. CAP embarked on a unique creative journey with internationally acclaimed visual artist **Ali Sabet**. The result was **"Sunshade + Bet on Her"** – a groundbreaking project that merges fine art with hip-hop music.
+In 2020, Mr. CAP embarked on a unique creative journey with internationally acclaimed visual artist **Ali Sabet**. The result was **"Sunshade + Bet on Her"**, a groundbreaking project that merges fine art with hip-hop music.
 
 ## About Ali Sabet
 
@@ -211,7 +211,7 @@ In the post Mr. CAP emphasises that the goal is not only to tell his story but a
   },
   {
     slug: "southern-sounds-mrcap-release",
-    title: "Southern Sounds – Mr. CAP Release",
+    title: "Southern Sounds: Mr. CAP Release",
     excerpt: "A soulful collaboration with singer Venita Vyne that takes listeners on a sonic road trip through the American South.",
     image: "/images/southern-sounds-blog.webp",
     content: `
@@ -276,7 +276,7 @@ In February 2018 Mr. CAP released **"Today Was A Great Day,"** an uplifting sing
 
 ## A Different Energy
 
-While Mr. CAP is known for conscious content and street narratives, this track showcases his range – proving he can deliver feel-good energy when the moment calls for it.
+While Mr. CAP is known for conscious content and street narratives, this track showcases his range, proving he can deliver feel-good energy when the moment calls for it.
 
 *Additional details about production and collaborators coming soon.*
     `,
@@ -319,7 +319,7 @@ This 2015 headline makes a playful statement about Mr. CAP's unique identity in 
 
 ## Originality Matters
 
-In an industry full of similar names and borrowed styles, standing out requires authenticity. Mr. CAP has built his career on being unmistakably himself – from his South Park Coalition roots to his tech-forward approach.
+In an industry full of similar names and borrowed styles, standing out requires authenticity. Mr. CAP has built his career on being unmistakably himself, from his South Park Coalition roots to his tech-forward approach.
 
 *Full story and context coming soon.*
     `,
@@ -373,7 +373,7 @@ In conclusion, the sale of Mr. CAP's Hip Hop NFT has set a new standard for arti
     content: `
 ## A Classic Reimagined
 
-In 2023 Mr. CAP revisited his 2019 single **"I'm Bout To Blow"** and reimagined it as a digital collectible. The track is a gritty anthem about perseverance and self-belief – and now he's decided to mint it as an NFT.
+In 2023 Mr. CAP revisited his 2019 single **"I'm Bout To Blow"** and reimagined it as a digital collectible. The track is a gritty anthem about perseverance and self-belief, and now he's decided to mint it as an NFT.
 
 By turning the song into a limited-edition digital asset he offers fans a way to invest in his music and own a piece of hip-hop history.
 
@@ -459,7 +459,7 @@ In closing Mr. CAP encourages listeners to share the song, reflect on O.N.E.'s i
   },
   {
     slug: "discover-pwa-power-weed-alcohol-the-hottest-collaboration-from-mr-cap-and-devyn-kelly",
-    title: "Discover 'PWA (Power Weed & Alcohol)' – The Hottest Collaboration from Mr. CAP and Devyn Kelly",
+    title: "Discover 'PWA (Power Weed & Alcohol)', The Hottest Collaboration from Mr. CAP and Devyn Kelly",
     excerpt: "Mr. CAP teams up with singer Devyn Kelly and producer Ciddy Boi Music for a steamy blend of hip-hop and R&B.",
     image: "/images/pwa-blog.webp",
     content: `
@@ -492,14 +492,14 @@ For listeners who prefer traditional platforms, "PWA" was simultaneously release
   {
     slug: "h-town-represent",
     title: "H-Town Represent",
-    excerpt: "Mr. CAP pays homage to Houston with the exclusive NFT anthem 'H-Town Represent' – a rallying cry for anyone proud to call Houston home.",
+    excerpt: "Mr. CAP pays homage to Houston with the exclusive NFT anthem 'H-Town Represent', a rallying cry for anyone proud to call Houston home.",
     image: "/images/h-town-represent-blog.webp",
     content: `
 ## A Houston Anthem
 
 Houston's hip-hop scene is known for its loyalty and swagger, and in this post Mr. CAP pays homage with the exclusive NFT anthem **"H-Town Represent."**
 
-Produced by **Ciddy Boi P**, the song features heavy bass, chopped-and-screwed influences and lyrics that name-check neighbourhoods and legends. The track is more than music – it's a rallying cry for anyone proud to call Houston home.
+Produced by **Ciddy Boi P**, the song features heavy bass, chopped-and-screwed influences and lyrics that name-check neighbourhoods and legends. The track is more than music, it's a rallying cry for anyone proud to call Houston home.
 
 ## Limited NFT Release
 
@@ -547,11 +547,11 @@ The article serves as a credit roll, listing the artists involved and encouragin
   {
     slug: "hangin-with-mr-cap-of-the-spc",
     title: "Hangin' With Mr. CAP of the SPC",
-    excerpt: "A look back at hanging out with Mr. CAP, a founding member of the South Park Coalition (SPC).",
+    excerpt: "A look back at hanging out with Mr. CAP, an Original Member of the South Park Coalition (SPC).",
     content: `
-## A Founding Member
+## An Original Member
 
-This post from March 2015 documents time spent with Mr. CAP, a founding member of the **South Park Coalition (SPC)**.
+This post from March 2015 documents time spent with Mr. CAP, an Original Member of the **South Park Coalition (SPC)**.
 
 ## The SPC Legacy
 
@@ -593,33 +593,33 @@ In 2016 Mr. CAP made an appearance on the television show **Fame Train** for an 
     content: `
 ## The Name You've Heard But Don't Know
 
-In every city, there are artists whose fingerprints are all over the culture even if their names never sit comfortably in mainstream headlines. In Houston, one of those names is Mr. CAP—rapper, writer, technologist, and original South Park Coalition member whose story tracks the evolution of Southern hip-hop itself.
+In every city, there are artists whose fingerprints are all over the culture even if their names never sit comfortably in mainstream headlines. In Houston, one of those names is Mr. CAP, rapper, writer, technologist, and Original Member of the South Park Coalition whose story tracks the evolution of Southern hip-hop itself.
 
 ## From Third Ward to the Mic
 
-Mr. CAP's journey starts in Houston's Third Ward, raised in a musical family and performing from a young age. Long before streaming, before social media, he was learning how to move a crowd face to face—talent shows, local stages, and wherever a microphone would stand still long enough.
+Mr. CAP's journey starts in Houston's Third Ward, raised in a musical family and performing from a young age. Long before streaming, before social media, he was learning how to move a crowd face to face, talent shows, local stages, and wherever a microphone would stand still long enough.
 
 ## South Park Coalition & The Ethics of Independence
 
-Becoming an original member of the South Park Coalition (SPC) didn't just plug CAP into a rap crew—it plugged him into a philosophy. Independence. Lyricism. Community. SPC was a place where wordplay mattered as much as hustle, and where artists learned to move like business owners long before it was trendy to call yourself a "brand."
+Becoming an Original Member of the South Park Coalition (SPC) didn't just plug CAP into a rap crew, it plugged him into a philosophy. Independence. Lyricism. Community. SPC was a place where wordplay mattered as much as hustle, and where artists learned to move like business owners long before it was trendy to call yourself a "brand."
 
 ## Life, Loss, and Lessons the Industry Doesn't Teach
 
-CAP's story includes hard chapters—time behind bars, broken deals, missed opportunities. But those same chapters sharpened his perspective. Instead of chasing a quick hit, he started thinking about ownership, rights, and how easily artists can lose everything if they don't understand the paperwork behind the music.
+CAP's story includes hard chapters, time behind bars, broken deals, missed opportunities. But those same chapters sharpened his perspective. Instead of chasing a quick hit, he started thinking about ownership, rights, and how easily artists can lose everything if they don't understand the paperwork behind the music.
 
 ## From 2 Tha Grave to The Ties That Bind Us
 
-His debut album, *2 Tha Grave*, captured the hunger and raw reality of that era. Fast forward, *The Ties That Bind Us* picks up the story from a different angle—more seasoned, more reflective, but just as honest. Together, the catalog maps out a life lived in real time, not a label-manufactured storyline.
+His debut album, *2 Tha Grave*, captured the hunger and raw reality of that era. Fast forward, *The Ties That Bind Us* picks up the story from a different angle, more seasoned, more reflective, but just as honest. Together, the catalog maps out a life lived in real time, not a label-manufactured storyline.
 
-## Rapper, Yes—But Also Technologist
+## Rapper, Yes, But Also Technologist
 
 What separates Mr. CAP from a lot of his peers is what he did when he wasn't on stage. He studied Computer Network Engineering and Computer Science, worked in corporate environments, and later stepped into digital distribution, web design, blockchain, and AI.
 
-That means when he talks about "owning your masters" or "controlling your data," it's not just rap rhetoric—he actually understands the systems behind the music.
+That means when he talks about "owning your masters" or "controlling your data," it's not just rap rhetoric, he actually understands the systems behind the music.
 
 ## The Hidden Architect
 
-You won't always see Mr. CAP centered in the spotlight. Sometimes he's behind the scenes—helping other artists navigate distribution, tech, or strategy. Other times he's building platforms and infrastructure independent artists can use long after the show ends.
+You won't always see Mr. CAP centered in the spotlight. Sometimes he's behind the scenes, helping other artists navigate distribution, tech, or strategy. Other times he's building platforms and infrastructure independent artists can use long after the show ends.
 
 That's why "hidden architect" fits. Not everybody knows the name. But if you trace enough stories, records, and ideas around Houston, his influence keeps showing up.
 
@@ -647,22 +647,22 @@ For a lot of artists, blockchain and NFTs were just buzzwords in 2021. For Mr. C
 
 ## Houston Hustle Meets Web3
 
-Coming out of Houston's independent grind, the idea of direct-to-fan, traceable ownership felt natural. Mr. CAP didn't approach Web3 as a hype train—he approached it like a new distribution channel.
+Coming out of Houston's independent grind, the idea of direct-to-fan, traceable ownership felt natural. Mr. CAP didn't approach Web3 as a hype train, he approached it like a new distribution channel.
 
 ## The First Hip-Hop NFT from Houston
 
 In February 2021, Mr. CAP minted "Limitless" on OpenSea, becoming the first Houston rapper to sell a Hip Hop NFT on the blockchain. The sale was for a four-figure sum, but the significance went far beyond money.
 
-It was proof of concept: artists could tokenize their work, create scarcity, and build direct relationships with collectors—without a label or distributor in between.
+It was proof of concept: artists could tokenize their work, create scarcity, and build direct relationships with collectors, without a label or distributor in between.
 
 ## What NFTs Should Have Been About
 
 Not "get rich quick," but:
 
-- **Proven ownership** — Blockchain records who created what and when
-- **Limited digital editions** — Scarcity that fans can actually own
-- **Unlocking experiences** — Shows, calls, exclusives tied to tokens
-- **Building a direct supporter base** — No algorithms deciding who sees your work
+- **Proven ownership**, Blockchain records who created what and when
+- **Limited digital editions**, Scarcity that fans can actually own
+- **Unlocking experiences**, Shows, calls, exclusives tied to tokens
+- **Building a direct supporter base**, No algorithms deciding who sees your work
 
 ## Smart Contracts, Real Talk
 
@@ -674,7 +674,7 @@ Imagine every time a record gets resold or streamed in a new format, a smart con
 2. **Use Web3 where it adds real value**, not just marketing hype.
 3. **Focus on ownership**, not trends.
 4. **Build community** before you drop anything.
-5. **Think long-term** — tokens should represent lasting value, not quick flips.
+5. **Think long-term**, tokens should represent lasting value, not quick flips.
 
 ## What's Next for Mr. CAP in Tech
 
@@ -711,7 +711,7 @@ SPC was never just about music. It was about:
 
 ## The Original Members
 
-The original lineup included some of the most talented lyricists Houston has ever produced. Mr. CAP joined as one of the founding members, bringing his unique perspective and flow to the collective.
+The original lineup included some of the most talented lyricists Houston has ever produced. Mr. CAP joined as an Original Member, bringing his unique perspective and flow to the collective.
 
 ## Impact on Houston Hip-Hop
 
@@ -728,14 +728,14 @@ Over 1,000 albums released collectively. Countless shows performed. Generations 
 
 ## Lessons for Today's Artists
 
-1. **Quality over quantity** — SPC releases always had substance
-2. **Community over competition** — They elevated each other
-3. **Long-term thinking** — Building catalogs, not just singles
-4. **Business acumen** — Understanding the industry, not just the art
+1. **Quality over quantity**: SPC releases always had substance
+2. **Community over competition**: They elevated each other
+3. **Long-term thinking**: Building catalogs, not just singles
+4. **Business acumen**: Understanding the industry, not just the art
 
 ## The Legacy Continues
 
-Today, South Park Coalition stands as a testament to what independent hip-hop can achieve. As members like Mr. CAP continue to release new music and embrace new technologies, SPC proves that authentic hip-hop never dies—it evolves.
+Today, South Park Coalition stands as a testament to what independent hip-hop can achieve. As members like Mr. CAP continue to release new music and embrace new technologies, SPC proves that authentic hip-hop never dies, it evolves.
     `,
     category: "South Park Coalition",
     date: "2024-11-15",
@@ -750,13 +750,13 @@ Today, South Park Coalition stands as a testament to what independent hip-hop ca
     content: `
 ## The Game Has Changed
 
-When I started in the late '80s, the music industry looked completely different. Today, independent artists have more opportunities than ever—but also more competition and more noise to cut through.
+When I started in the late '80s, the music industry looked completely different. Today, independent artists have more opportunities than ever, but also more competition and more noise to cut through.
 
 Here's what actually works.
 
 ## Rule #1: Own Your Masters
 
-This is non-negotiable. Never sign away ownership of your music unless you absolutely have to—and understand exactly what you're giving up.
+This is non-negotiable. Never sign away ownership of your music unless you absolutely have to, and understand exactly what you're giving up.
 
 Your catalog is your retirement plan. Every stream, every sync, every sample clearance for the rest of your life.
 
@@ -770,11 +770,11 @@ The artists who survive industry changes are the ones who can reach their fans w
 
 Music streaming pays pennies per stream. Smart artists think about:
 
-- **Live shows** — Still the best money in music
-- **Merchandise** — Especially limited editions
-- **Sync licensing** — TV, film, commercials, games
-- **NFTs and collectibles** — Direct-to-fan ownership
-- **Teaching and consulting** — Share what you know
+- **Live shows**, Still the best money in music
+- **Merchandise**, Especially limited editions
+- **Sync licensing**, TV, film, commercials, games
+- **NFTs and collectibles**, Direct-to-fan ownership
+- **Teaching and consulting**, Share what you know
 
 ## Rule #4: Stay Consistent
 
@@ -788,7 +788,7 @@ From blockchain to AI, new technology offers new opportunities. Don't be afraid 
 
 ## Rule #6: Think Long-Term
 
-Success in music isn't a sprint—it's a marathon. Focus on building something that lasts, not chasing the next viral moment.
+Success in music isn't a sprint, it's a marathon. Focus on building something that lasts, not chasing the next viral moment.
 
 The goal isn't one hit. The goal is a career.
 
@@ -847,12 +847,12 @@ Releasing through Sony Music / The Orchard gave the album the distribution it de
   {
     slug: "why-betn-on-me-is-more-than-a-song",
     title: "Why 'Bet'n On Me' Is More Than a Song",
-    excerpt: "The lead single from 'The Ties That Bind Us' isn't just a record — it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.",
+    excerpt: "The lead single from 'The Ties That Bind Us' isn't just a record, it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.",
     image: "/images/betn-on-me-blog.webp",
     content: `
 ## A Philosophy Shaped by Decades
 
-"Bet'n On Me" isn't just a record — it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.
+"Bet'n On Me" isn't just a record, it's a philosophy shaped by decades of survival, independence, and ownership in the music industry.
 
 When Mr. CAP stepped into the booth to record this track for the South Park Coalition's *The Ties That Bind Us* album, he wasn't just making another song. He was distilling 30+ years of lessons into three minutes and forty-five seconds.
 
@@ -867,7 +867,7 @@ While the music industry was busy signing artists to exploitative contracts, SPC
 - Building direct relationships with fans
 - Keeping 100% of their masters
 
-This wasn't just a business model — it was a survival strategy. And "Bet'n On Me" is the anthem for everyone who's ever had to bet on themselves when no one else would.
+This wasn't just a business model, it was a survival strategy. And "Bet'n On Me" is the anthem for everyone who's ever had to bet on themselves when no one else would.
 
 ## The Independent Grind
 
@@ -881,7 +881,7 @@ The music industry has always been designed to extract value from artists. Recor
 
 Mr. CAP saw through all of it.
 
-Through CAP Distributions, he built an alternative — a way for independent artists to reach global platforms without surrendering their ownership. "Bet'n On Me" is the soundtrack to that mission.
+Through CAP Distributions, he built an alternative, a way for independent artists to reach global platforms without surrendering their ownership. "Bet'n On Me" is the soundtrack to that mission.
 
 ## The Long-Term Vision
 
@@ -896,7 +896,7 @@ It's about:
 
 ## The Message
 
-From South Park streets to blockchain technology, from cassette tapes to streaming platforms — the constant has always been the same: **bet on yourself**.
+From South Park streets to blockchain technology, from cassette tapes to streaming platforms, the constant has always been the same: **bet on yourself**.
 
 Because when you bet on yourself, you can never lose. Even when you fail, you learn. Even when you fall, you get back up. And eventually, the bets start paying off.
 
@@ -979,7 +979,7 @@ Mr. CAP's journey is a reflection of the SPC's overarching philosophy: staying t
 
 In recent years, his [return to his musical roots](/blog/mr-cap-returns-to-his-musical-roots) has signaled a resurgence of interest in the classic SPC sound. He continues to push the brand forward, ensuring that the message of the coalition reaches a new generation of listeners.
 
-![Mr. CAP — Keep'em Clappin single cover art](/images/spc-mr-cap-studio.jpg)
+![Mr. CAP, Keep'em Clappin single cover art](/images/spc-mr-cap-studio.jpg)
 
 ## 7. The Powerhouse Members: Point Blank and Klondike Kat
 
@@ -1035,7 +1035,7 @@ Explore the latest from the collective and stay updated on upcoming events by vi
   {
     slug: "why-music-nfts-will-change-the-way-you-collect-houston-hip-hop",
     title: "Why Music NFTs Will Change the Way You Collect Houston Hip Hop",
-    excerpt: "From cassette tapes to the blockchain — how Music NFTs are reintroducing digital scarcity and verifiable ownership to Houston's legendary hip hop scene.",
+    excerpt: "From cassette tapes to the blockchain, how Music NFTs are reintroducing digital scarcity and verifiable ownership to Houston's legendary hip hop scene.",
     category: "NFT Art & Music",
     date: "2026-03-20",
     author: "Mr. CAP",
@@ -1054,7 +1054,7 @@ For the average listener, streaming is a convenience. For the true collector, it
 
 When you explore music NFTs for sale, you aren't just buying a file. You are acquiring a unique digital asset that is permanently etched into the blockchain. This technology allows fans to own a specific, documented piece of an artist's catalog, creating a level of exclusivity that streaming can never replicate. Browse the [full music catalog](/music) to discover the releases behind these collectible moments.
 
-![Mr. CAP in South Park Coalition (SPC) gear—iconic Houston roots.](https://cdn.marblism.com/7p18rlR80ja.webp)
+![Mr. CAP in South Park Coalition (SPC) gear, iconic Houston roots.](https://cdn.marblism.com/7p18rlR80ja.webp)
 
 ## Mr. CAP: A Pioneer on the Blockchain
 
@@ -1062,13 +1062,13 @@ Innovation is nothing new to the legendary figures of the South Park Coalition. 
 
 With a career spanning over three decades, Mr. CAP has witnessed the evolution of the Houston hip hop scene from the ground up. He understood early on that the future of music isn't just about the sound: it's about the sovereignty of the artist and the loyalty of the collector.
 
-![Mr. CAP—groundbreaking Houston rap pioneer presence.](https://cdn.marblism.com/beoOR9Ow27g.webp)
+![Mr. CAP, groundbreaking Houston rap pioneer presence.](https://cdn.marblism.com/beoOR9Ow27g.webp)
 
 ## Preserving Houston Hip Hop History Through Technology
 
 Music NFTs allow for the implementation of smart contracts. These are automated agreements that ensure artists receive their fair share of royalties every single time an NFT is resold on the secondary market. Imagine a world where a rare track from the South Park Coalition era could be traded like a high-end painting, with the artist benefiting from its growth in value over time. Dive deeper into the [South Park Coalition legacy](/south-park-coalition) and its influence on the Houston underground.
 
-![Mr. CAP—internationally acclaimed Houston hip hop legacy.](https://cdn.marblism.com/Rs11ZdPA5aa.webp)
+![Mr. CAP, internationally acclaimed Houston hip hop legacy.](https://cdn.marblism.com/Rs11ZdPA5aa.webp)
 
 ## Building a Future-Proof Legacy
 

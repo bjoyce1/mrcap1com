@@ -5,6 +5,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { gsap } from "@/hooks/useGSAP";
 import { ArrowLeft } from "lucide-react";
+import SEO from "@/components/SEO";
+import { selfLoveStorySeo } from "@/seo/builders";
 
 export default function SelfLoveStory() {
   const nav = useNavigate();
@@ -56,6 +58,7 @@ export default function SelfLoveStory() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO entry={selfLoveStorySeo(story)} />
       <Navigation />
       <section className="mx-auto max-w-4xl px-4 py-20 pt-32">
         <Link

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Download, Music, Disc3 } from "lucide-react";
-import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import SEO from "@/components/SEO";
+import { routeSeo } from "@/seo/routes";
 
 interface PurchaseRow {
   id: string;
@@ -159,11 +160,7 @@ const Library = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>Your Library | Mr. CAP</title>
-        <meta name="description" content="Download the music you've purchased from Mr. CAP." />
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      <SEO entry={routeSeo("/library")} />
       <Navigation />
 
       <main className="container mx-auto px-4 py-12 max-w-5xl">
@@ -205,7 +202,7 @@ const Library = () => {
                     </div>
                     <h2 className="text-lg font-semibold truncate">{it.title}</h2>
                     <p className="text-xs text-muted-foreground">
-                      Purchased {it.paid_at ? new Date(it.paid_at).toLocaleDateString() : "—"} · ${(it.amount_cents / 100).toFixed(2)}
+                      Purchased {it.paid_at ? new Date(it.paid_at).toLocaleDateString() : "-"} · ${(it.amount_cents / 100).toFixed(2)}
                     </p>
                   </div>
                   {it.item_type === "track" && (

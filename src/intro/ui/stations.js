@@ -179,7 +179,7 @@ function build() {
   // STAGE
   add('booking', 'station--left station--trail', `
     <article class="card">
-      ${eyebrow('Now booking 2026–27')}
+      ${eyebrow('Now booking 2026-27')}
       <h2>Bring the ISM<br/><em>to your stage.</em></h2>
       <p>Concerts, festivals, features and speaking, booked straight with the artist's team. Every inquiry gets a response within 48 hours.</p>
       <ul class="types">${BOOKING_TYPES.filter((b) => b.text).map((b) => `<li><b>${b.label}</b><span>${b.text}</span></li>`).join('')}</ul>

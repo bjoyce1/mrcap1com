@@ -12,53 +12,12 @@ import WhyBookStrip from "@/components/booking/WhyBookStrip";
 import InquiryForm from "@/components/booking/InquiryForm";
 import CredentialsBand from "@/components/booking/CredentialsBand";
 import { bookingPageData as data } from "@/content/booking";
+import { routeSeo } from "@/seo/routes";
 
 const Booking = () => {
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfilePage",
-      name: "Book Mr. CAP",
-      url: "https://mrcap1.com/booking",
-      mainEntity: {
-        "@type": "Person",
-        name: "Mr. CAP",
-        alternateName: "Cornelius A. Pratt",
-        description: "Houston hip-hop artist, South Park Coalition member, and entrepreneur",
-        sameAs: [
-          "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-          "https://www.instagram.com/mrcapism/",
-          "https://www.wikidata.org/wiki/Q139960172",
-        ],
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: data.faq.map((f) => ({
-        "@type": "Question",
-        name: f.question,
-        acceptedAnswer: { "@type": "Answer", text: f.answer },
-      })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://mrcap1.com" },
-        { "@type": "ListItem", position: 2, name: "Booking", item: "https://mrcap1.com/booking" },
-      ],
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title="Book Mr. CAP | Shows, Features & Speaking"
-        description="Submit a qualified booking request for Mr. CAP, including event details, timeline, and contact information."
-        canonical="https://mrcap1.com/booking"
-        jsonLd={jsonLd}
-      />
+      <SEO entry={routeSeo("/booking")} />
       <Navigation />
 
       <main>

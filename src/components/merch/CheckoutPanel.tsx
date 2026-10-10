@@ -437,7 +437,7 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Shipping{quote?.shipping_name ? ` (${quote.shipping_name})` : ''}</span>
-                <span>{quote ? `$${(quote.shipping_cents / 100).toFixed(2)}` : '—'}</span>
+                <span>{quote ? `$${(quote.shipping_cents / 100).toFixed(2)}` : '-'}</span>
               </div>
               <div className="pt-3 flex justify-between">
                 <span className="font-medium">Total</span>

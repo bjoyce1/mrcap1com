@@ -139,7 +139,7 @@ export const MerchHero = () => {
                 transition={{ duration: 0.7, delay: 0.5 }}
                 className="text-muted-foreground max-w-xl text-lg"
               >
-                Premium apparel and accessories. Limited drops from Mr. CAP's creative universe — Houston made, worldwide worn.
+                Premium apparel and accessories. Limited drops from Mr. CAP's creative universe, Houston made, worldwide worn.
               </motion.p>
             </motion.div>
           </div>
