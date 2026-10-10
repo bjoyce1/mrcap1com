@@ -2,6 +2,7 @@ import { PrintfulProductGrid } from "@/components/merch/PrintfulProductGrid";
 import { MerchQualitySection } from "@/components/merch/MerchQualitySection";
 import { MerchNewsletterSection } from "@/components/merch/MerchNewsletterSection";
 import { MerchFooter } from "@/components/merch/MerchFooter";
+import { CartDrawer } from "@/components/merch/CartDrawer";
 import Navigation from "@/components/Navigation";
 import BrandStrip from "@/components/merch/BrandStrip";
 import trapUniversityLogo from "@/assets/trap-university-logo.webp";
@@ -19,6 +20,12 @@ const Merch = () => {
 
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
+
+        {/* the cart: Quick Add and the product pop-up fill it and open it, and checkout runs from here.
+            No backdrop blur on this wrapper: it would trap the fixed checkout panel inside it. */}
+        <div className="fixed right-4 top-24 z-50 rounded-full bg-background/95 ring-1 ring-border shadow-lg md:right-6">
+          <CartDrawer />
+        </div>
 
         <section className="relative pt-32 pb-20 overflow-hidden">
           {/* Floating product shots — desktop atmosphere */}
