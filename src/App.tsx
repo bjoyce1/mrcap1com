@@ -65,6 +65,7 @@ const ArtOfIsm = lazy(() => import("./pages/ArtOfIsm"));
 const Library = lazy(() => import("./pages/Library"));
 const Listen = lazy(() => import("./pages/Listen"));
 const AdminApi = lazy(() => import("./pages/AdminApi"));
+const AdminCaptions = lazy(() => import("./pages/AdminCaptions"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
 
 // ── Loading fallback (matches site theme) ───────────────────
@@ -171,6 +172,7 @@ function AppRoutes() {
             <Route path="/library" element={<PageTransition><Library /></PageTransition>} />
             <Route path="/tiktok" element={<Navigate to="/videos" replace />} />
             <Route path="/admin/api" element={<PageTransition><AdminApi /></PageTransition>} />
+            <Route path="/admin/captions" element={<PageTransition><AdminCaptions /></PageTransition>} />
             <Route path="/api/docs" element={<PageTransition><ApiDocs /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
