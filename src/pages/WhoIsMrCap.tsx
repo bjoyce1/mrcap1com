@@ -168,6 +168,10 @@ const WhoIsMrCap = () => {
                   <p>
                     One name signs the paperwork. The other signs the work. They operate under the same principle: own it, ship it, outlast the rest.
                   </p>
+                  <p>
+                    Mr. CAP, professionally known in music as Mr. CAP and legally named Cornelius A. Pratt, is also a technology entrepreneur, digital architect, and media professional. His technology ventures, business projects, and professional portfolio are featured at{" "}
+                    <a href="https://corneliusapratt.com/" className="text-primary underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">CorneliusAPratt.com</a>.
+                  </p>
                 </Reveal>
               </div>
 

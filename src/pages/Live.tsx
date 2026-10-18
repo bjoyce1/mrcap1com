@@ -9,7 +9,7 @@ import { liveHistory, type LiveHistoryEvent } from "@/content/liveHistory";
 import LiveHistoryTimeline from "@/components/live/LiveHistoryTimeline";
 import SEO from "@/components/SEO";
 import { routeSeo } from "@/seo/routes";
-import { pastEventsLd } from "@/seo/builders";
+import { pastEventsLd, personRef } from "@/seo/builders";
 import { getMetroCities } from "@/data/cities";
 
 /* ── Helpers ── */
@@ -79,7 +79,7 @@ const Live = () => {
             addressCountry: "US",
           },
         } } : {}),
-        performer: { "@type": "Person", name: "Mr. CAP" },
+        performer: personRef,
         ...(event.ticketUrl ? { offers: {
           "@type": "Offer",
           url: event.ticketUrl,
