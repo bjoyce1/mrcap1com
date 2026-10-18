@@ -3,13 +3,13 @@
  * stories) and the list-style JSON-LD some static pages carry. Pure functions: the
  * React pages call them with live data, the build calls them with the catalog snapshot.
  */
-import { DEFAULT_OG_IMAGE, SAME_AS, SITE_URL, SPC_ROLE, abs } from "./site";
+import { DEFAULT_OG_IMAGE, PROFESSIONAL_URL, SAME_AS, SITE_URL, SPC_ROLE, abs } from "./site";
 import { cleanJson, fitDescription, fitTitle, noDashes, paragraphs, plainText } from "./text";
 import type { JsonLdNode, SeoEntry } from "./types";
 
 /* ------------------------------------------------------------------ shared nodes */
 
-export const PERSON_ID = `${SITE_URL}/#person`;
+export const PERSON_ID = `${PROFESSIONAL_URL}#person`;
 
 export const breadcrumb = (...crumbs: [string, string][]): JsonLdNode => ({
   "@type": "BreadcrumbList",
@@ -21,7 +21,13 @@ export const breadcrumb = (...crumbs: [string, string][]): JsonLdNode => ({
   })),
 });
 
-export const personRef = { "@type": "Person", "@id": PERSON_ID, name: "Mr. CAP" };
+export const personRef = {
+  "@type": "Person",
+  "@id": PERSON_ID,
+  name: "Cornelius A. Pratt",
+  alternateName: "Mr. CAP",
+  url: PROFESSIONAL_URL,
+};
 
 export const artistNode = { "@type": "MusicGroup", name: "Mr. CAP", "@id": `${SITE_URL}/#artist`, sameAs: SAME_AS };
 
@@ -236,7 +242,9 @@ export function blogPostSeo(post: BlogPostLike): SeoEntry {
         description: post.excerpt,
         datePublished: post.date,
         dateModified: post.date,
-        author: { "@type": "Person", name: post.author || "Mr. CAP", url: abs("/who-is-mr-cap") },
+        author: !post.author || ["Mr. CAP", "Cornelius A. Pratt"].includes(post.author)
+          ? personRef
+          : { "@type": "Person", name: post.author, url: abs("/who-is-mr-cap") },
         publisher: { "@type": "Organization", name: "Mr. CAP", url: SITE_URL },
         mainEntityOfPage: { "@type": "WebPage", "@id": abs(path) },
         ...(post.category ? { articleSection: post.category } : {}),
@@ -306,7 +314,9 @@ export function pressPostSeo(entry: PressEntryLike): SeoEntry {
       cleanJson({
         "@type": "Article",
         headline: entry.title,
-        ...(entry.author ? { author: { "@type": "Person", name: entry.author } } : {}),
+        ...(entry.author ? { author: ["Mr. CAP", "Cornelius A. Pratt"].includes(entry.author)
+          ? personRef
+          : { "@type": "Person", name: entry.author } } : {}),
         publisher: { "@type": "Organization", name: entry.outlet },
         datePublished: entry.date,
         description: entry.seoDescription || entry.summary,

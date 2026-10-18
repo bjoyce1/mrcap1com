@@ -15,7 +15,7 @@ import { liveHistory } from "../content/liveHistory";
 import { bookingPageData } from "../content/booking";
 import { nftPageData } from "../content/nft";
 
-import { DEFAULT_OG_IMAGE, SAME_AS, SITE_URL, SPC_ROLE, abs } from "./site";
+import { DEFAULT_OG_IMAGE, PERSON_SAME_AS, PROFESSIONAL_URL, SAME_AS, SITE_URL, SPC_ROLE, abs } from "./site";
 import { HOME_FAQ, HOUSTON_HISTORY_FAQ, SPC_FAQ, WHO_IS_FAQ, faqPage } from "./faqs";
 import { PERSON_ID, artistNode, breadcrumb, pastEventsLd, personRef } from "./builders";
 import { cleanJson } from "./text";
@@ -24,15 +24,11 @@ import type { JsonLdNode, SeoEntry, SeoLink } from "./types";
 /* ------------------------------------------------------------------ shared JSON-LD */
 
 const PERSON_FULL: JsonLdNode = {
-  "@type": "Person",
-  "@id": PERSON_ID,
-  name: "Mr. CAP",
-  alternateName: ["Cornelius A. Pratt", "Mr CAP", "MrCAP"],
+  ...personRef,
   jobTitle: "Rapper, Writer, Technologist",
   description: `Houston-born rapper, ${SPC_ROLE}, and creative technologist bridging hip-hop, business, and blockchain.`,
-  url: SITE_URL,
   image: "https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg",
-  sameAs: SAME_AS,
+  sameAs: PERSON_SAME_AS,
   knowsAbout: ["Hip-Hop Music", "Blockchain Technology", "NFTs", "South Park Coalition", "Music Production", "Digital Distribution"],
   memberOf: { "@type": "MusicGroup", name: "South Park Coalition", foundingLocation: { "@type": "Place", name: "Houston, Texas" } },
   address: { "@type": "PostalAddress", addressLocality: "Houston", addressRegion: "TX", addressCountry: "US" },
@@ -208,7 +204,7 @@ export const ROUTES: SeoEntry[] = [
         "@type": "ProfilePage",
         name: "Mr. CAP Press Archive",
         url: abs("/press"),
-        mainEntity: { ...personRef, alternateName: "Cornelius A. Pratt", sameAs: SAME_AS },
+        mainEntity: { ...personRef, sameAs: PERSON_SAME_AS },
       },
       breadcrumb(["Press", "/press"]),
     ],
@@ -315,12 +311,12 @@ export const ROUTES: SeoEntry[] = [
       "Three decades of music, ownership, and independent evolution, pressed into vinyl, distributed on-chain, and still built in South Park.",
       "Cornelius A. Pratt is the son of two musicians, raised in Houston's Third Ward and South Park, and shaped by a city that has always demanded proof. Mr. CAP is what happens when that proof gets pressed to record, sold direct, and refuses to expire.",
       `An ${SPC_ROLE}, founder of CAP Distributions, and the first Houston rapper to sell a hip-hop NFT, his principle never changed: own the work.`,
+      "Mr. CAP, professionally known in music as Mr. CAP and legally named Cornelius A. Pratt, is also a technology entrepreneur, digital architect, and media professional. His technology ventures, business projects, and professional portfolio are featured at CorneliusAPratt.com.",
     ],
-    links: [L.spc, L.discography, L.press, L.booking],
+    links: [L.spc, L.discography, L.press, L.booking, { href: PROFESSIONAL_URL, label: "CorneliusAPratt.com" }],
     jsonLd: [
       {
         ...PERSON_FULL,
-        url: abs("/who-is-mr-cap"),
         birthPlace: { "@type": "Place", name: "Houston, Texas, USA" },
         jobTitle: ["Rapper", "Entrepreneur", "Founder"],
         owns: { "@type": "Organization", name: "CAP Distributions" },
@@ -376,9 +372,8 @@ export const ROUTES: SeoEntry[] = [
         url: abs("/booking"),
         mainEntity: {
           ...personRef,
-          alternateName: "Cornelius A. Pratt",
           description: `Houston hip-hop artist, ${SPC_ROLE}, and entrepreneur`,
-          sameAs: SAME_AS,
+          sameAs: PERSON_SAME_AS,
         },
       },
       faqPage(bookingPageData.faq),
@@ -396,7 +391,7 @@ export const ROUTES: SeoEntry[] = [
       "Start with the latest music, book a show, shop Trap University merch, browse the NFT art gallery, open the press kit, or explore the discography.",
     ],
     links: [L.music, L.booking, L.merch, L.nft, L.pressKit, L.discography, L.videos],
-    jsonLd: [{ ...personRef, url: abs("/links"), image: PERSON_FULL.image, sameAs: SAME_AS }],
+    jsonLd: [{ ...personRef, image: PERSON_FULL.image, sameAs: PERSON_SAME_AS }],
   }),
 
   route({

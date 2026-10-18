@@ -6,6 +6,7 @@ export const SITE_URL = "https://mrcap1.com";
 export const SITE_NAME = "Mr. CAP";
 export const TWITTER_HANDLE = "@mrcap1";
 export const LOCALE = "en_US";
+export const PROFESSIONAL_URL = "https://corneliusapratt.com/";
 
 /** 1200x630 hero card used when a page has no artwork of its own. */
 export const DEFAULT_OG_IMAGE =
@@ -25,6 +26,14 @@ export const SAME_AS = [
   "https://music.apple.com/us/artist/mr-cap/1506719540",
   "https://www.tiktok.com/@mrcapism",
   "https://www.wikidata.org/wiki/Q139960172",
+];
+
+/** Personal identity links; keep company and MusicGroup profile lists unchanged. */
+export const PERSON_SAME_AS = [
+  ...SAME_AS,
+  `${SITE_URL}/`,
+  PROFESSIONAL_URL,
+  "https://www.linkedin.com/in/mrcap/",
 ];
 
 export const abs = (path: string) => (/^https?:\/\//.test(path) ? path : `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`);
