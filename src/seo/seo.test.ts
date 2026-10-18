@@ -5,7 +5,7 @@ import { ALIASES, ROUTES, routeSeo } from "./routes";
 import { collectPages, type Catalog } from "./pages";
 import { BODY_END, BODY_START, renderPage, ROBOTS_NOINDEX, scriptJson } from "./render";
 import { fitDescription, fitTitle, hasDash, noDashes } from "./text";
-import { musicPlaylistLd, trackSeo } from "./builders";
+import { blogPostSeo, musicPlaylistLd, personRef, pressPostSeo, trackSeo } from "./builders";
 import { sitemapUrls, sitemapXml } from "./sitemap";
 import { allCities } from "../data/cities";
 import type { SeoEntry } from "./types";
