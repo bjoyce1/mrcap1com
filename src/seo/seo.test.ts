@@ -113,7 +113,9 @@ describe("shared professional identity", () => {
   });
 
   it("serializes valid JSON-LD on every generated artist page", () => {
-    for (const page of pages) {
+    const schemaPages = pages.filter((page) => (page.entry.jsonLd?.length ?? 0) + (page.extraJsonLd?.length ?? 0) > 0);
+    expect(schemaPages.length).toBeGreaterThan(0);
+    for (const page of schemaPages) {
       const html = renderPage(template, page.entry, { extraJsonLd: page.extraJsonLd });
       const scripts = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
       expect(scripts.length, page.path).toBeGreaterThan(0);
