@@ -59,6 +59,69 @@ describe("static routes", () => {
   });
 });
 
+describe("shared professional identity", () => {
+  const identity = {
+    "@type": "Person",
+    "@id": "https://corneliusapratt.com/#person",
+    name: "Cornelius A. Pratt",
+    alternateName: "Mr. CAP",
+    url: "https://corneliusapratt.com/",
+  };
+
+  it("uses the exact shared identity on both full artist profiles", () => {
+    for (const route of ["/", "/who-is-mr-cap"]) {
+      const people = routeSeo(route).jsonLd?.filter((node) => node["@type"] === "Person") ?? [];
+      expect(people, route).toHaveLength(1);
+      expect(people[0]).toMatchObject(identity);
+      expect(people[0]?.sameAs).toEqual(expect.arrayContaining([
+        "https://corneliusapratt.com/",
+        "https://mrcap1.com/",
+        "https://www.linkedin.com/in/mrcap/",
+      ]));
+    }
+  });
+
+  it("keeps every nested artist Person attached to the shared identity", () => {
+    const visit = (value: unknown): void => {
+      if (!value || typeof value !== "object") return;
+      if (Array.isArray(value)) { value.forEach(visit); return; }
+      const node = value as Record<string, unknown>;
+      if (node["@type"] === "Person" && ["Mr. CAP", "Cornelius A. Pratt"].includes(String(node.name))) {
+        expect(node).toMatchObject(identity);
+      }
+      Object.values(node).forEach(visit);
+    };
+    for (const page of pages) visit([page.entry.jsonLd, page.extraJsonLd]);
+    expect(personRef).toEqual(identity);
+  });
+
+  it("preserves separate company and musical artist entities", () => {
+    expect(routeSeo("/").jsonLd).toEqual(expect.arrayContaining([
+      expect.objectContaining({ "@type": "Organization", "@id": "https://mrcap1.com/#organization", name: "CAP Distributions", founder: { "@id": identity["@id"] } }),
+      expect.objectContaining({ "@type": "MusicGroup", "@id": "https://mrcap1.com/#artist", name: "Mr. CAP" }),
+    ]));
+    const recording = trackSeo({ slug: "identity-test", title: "Identity Test", artist: "Mr. CAP" }).jsonLd?.find((node) => node["@type"] === "MusicRecording");
+    expect(recording?.byArtist).toMatchObject({ "@type": "MusicGroup", name: "Mr. CAP" });
+  });
+
+  it("preserves other authors and press outlet publishers", () => {
+    const post = { slug: "identity-test", title: "Identity Test", excerpt: "Artist identity", date: "2026-10-18", author: "Guest Writer" };
+    expect(blogPostSeo(post).jsonLd?.find((node) => node["@type"] === "BlogPosting")?.author).toMatchObject({ "@type": "Person", name: "Guest Writer" });
+    const article = pressPostSeo({ ...post, summary: "Artist identity", outlet: "Houston Press" }).jsonLd?.find((node) => node["@type"] === "Article");
+    expect(article?.author).toEqual({ "@type": "Person", name: "Guest Writer" });
+    expect(article?.publisher).toEqual({ "@type": "Organization", name: "Houston Press" });
+  });
+
+  it("serializes valid JSON-LD on every generated artist page", () => {
+    for (const page of pages) {
+      const html = renderPage(template, page.entry, { extraJsonLd: page.extraJsonLd });
+      const scripts = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
+      expect(scripts.length, page.path).toBeGreaterThan(0);
+      for (const script of scripts) expect(JSON.parse(script[1])["@context"]).toBe("https://schema.org");
+    }
+  });
+});
+
 describe("every built page", () => {
   it("covers static routes, aliases, cities, stories, blog, press, albums and tracks", () => {
     const paths = new Set(pages.map((p) => p.path));
