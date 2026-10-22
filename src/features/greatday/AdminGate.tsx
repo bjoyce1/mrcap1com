@@ -5,11 +5,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import Navigation from '@/components/Navigation';
 import { Button } from '@/components/ui/button';
-import { greatdayAccess } from './model';
+import { greatdayAccess, greatdayDemoAccess } from './model';
 
 export default function AdminGate({ children }: { children: ReactNode }) {
   const { user, isAdmin, loading } = useAuth();
   const location = useLocation();
+  const demoAccess = greatdayDemoAccess(location.pathname);
   const [verified, setVerified] = useState<{ id: string; admin: boolean } | null>(null);
   useEffect(() => {
     // Also neutralize unmanaged app-shell robots tags for direct preview visits.
@@ -20,7 +21,7 @@ export default function AdminGate({ children }: { children: ReactNode }) {
   }, []);
   useEffect(() => {
     let active = true;
-    if (!user) { setVerified(null); return; }
+    if (demoAccess || !user) { setVerified(null); return; }
     const id = user.id;
     async function verify() {
       try {
@@ -37,9 +38,9 @@ export default function AdminGate({ children }: { children: ReactNode }) {
     }
     void verify();
     return () => { active = false; };
-  }, [user?.id]);
+  }, [user?.id, demoAccess]);
   const checking = loading || (!!user && verified?.id !== user.id);
-  const access = greatdayAccess(checking, !!user, isAdmin && verified?.admin === true);
+  const access = demoAccess ? 'allow' : greatdayAccess(checking, !!user, isAdmin && verified?.admin === true);
   return <>
     <Helmet><title>Private review | Mr. CAP</title><meta name="robots" content="noindex, nofollow" /><meta name="googlebot" content="noindex, nofollow" /></Helmet>
     {access === 'signin' ? <Navigate to="/auth" state={{ greatdayReturnTo: location.pathname }} replace /> : access === 'allow' ? children : <>

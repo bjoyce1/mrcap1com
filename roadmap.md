@@ -6,6 +6,8 @@
 
 # Great Day private review
 
+- [x] Temporarily allow signed-out Great Day demo access only, preserving protected admin pages and all commercial restrictions.
+
 - [x] Add isolated admin-only preview and Release Studio with private route exclusions.
 - [x] Build draft Houston experience with simulated wall, no audio, no real signup, disabled proposed tiers.
 - [x] Document future architecture and publication gates without creating tables or connecting services.
