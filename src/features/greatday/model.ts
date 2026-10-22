@@ -35,6 +35,9 @@ export function campaignLink(platform: Platform, day: number): string {
   url.searchParams.set('utm_content', `day_${safeDay}`);
   return url.toString();
 }
+export function greatdayDemoAccess(pathname: string): boolean {
+  return pathname === '/greatday-preview';
+}
 export function greatdayAccess(loading: boolean, hasUser: boolean, isAdmin: boolean) {
   if (loading) return 'loading';
   if (!hasUser) return 'signin';

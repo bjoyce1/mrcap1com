@@ -1,10 +1,16 @@
 import { describe, it, expect } from 'vitest';
-import { campaignLink, greatdayAccess, PLATFORMS, safeGreatdayReturn, TIERS } from './model';
+import { campaignLink, greatdayAccess, greatdayDemoAccess, PLATFORMS, safeGreatdayReturn, TIERS } from './model';
 import { isPrivatePath } from '@/lib/automation';
 import { collectPages } from '@/seo/pages';
 import { sitemapUrls } from '@/seo/sitemap';
 
 describe('Great Day review rules', () => {
+  it('temporarily opens only the Great Day demo without authentication', () => {
+    expect(greatdayDemoAccess('/greatday-preview')).toBe(true);
+    for (const path of ['/admin/greatday', '/admin', '/admin/captions', '/library', '/auth']) {
+      expect(greatdayDemoAccess(path)).toBe(false);
+    }
+  });
   it('waits during auth loading', () => expect(greatdayAccess(true, true, true)).toBe('loading'));
   it('requires a signed-in user even if an admin flag exists', () => expect(greatdayAccess(false, false, true)).toBe('signin'));
   it('denies signed-in non-admins', () => expect(greatdayAccess(false, true, false)).toBe('denied'));
