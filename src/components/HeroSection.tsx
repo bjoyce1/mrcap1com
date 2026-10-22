@@ -282,7 +282,7 @@ const HeroSection = () => {
               className="rounded-full text-foreground/50 hover:text-primary font-medium uppercase tracking-wider text-xs transition-all duration-500"
               asChild
             >
-              <a href="#fan-capture">Join the Legacy List →</a>
+              <a href="/music#early-access">Join the Legacy List →</a>
             </Button>
           </MagneticWrapper>
         </div>

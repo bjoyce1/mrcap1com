@@ -126,7 +126,7 @@ function SignupForm({ source, compact = false }: { source: string; compact?: boo
 /** Full-width section for /music: the heading on the left, the form opposite. */
 export function EarlyAccessSection({ source }: { source: string }) {
   return (
-    <section aria-labelledby="early-access-title" className="catalog-section relative overflow-x-clip py-20 md:py-28">
+    <section id="early-access" aria-labelledby="early-access-title" className="catalog-section relative overflow-x-clip py-20 md:py-28">
       <div className={WRAP}>
         <span className="catalog-stamp mb-4 block">Early access</span>
         <ShelfHeader
