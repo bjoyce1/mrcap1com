@@ -23,4 +23,4 @@ export function isAutomated(): boolean {
 export const isLiveHost = () => typeof location !== "undefined" && /^(www\.)?mrcap1\.com$/.test(location.hostname);
 
 /** Staff and sign-in pages stay out of the reports. */
-export const isPrivatePath = (path: string) => /^\/(admin|auth|analytics)(\/|$)/.test(path);
+export const isPrivatePath = (path: string) => /^\/(admin|auth|analytics|greatday-preview)(\/|$)/.test(path);

@@ -25,6 +25,8 @@ import MobileBottomNav from "@/components/MobileBottomNav";
 import MotionToggle from "@/components/MotionToggle";
 import IntroGate from "@/components/intro/IntroGate";
 import { useIntroStore } from "@/stores/introStore";
+import GreatDayAdminGate from "@/features/greatday/AdminGate";
+import { PRIVATE_GREATDAY_PATHS } from "@/features/greatday/model";
 
 // The "Step inside the ISM" intro — replayable at /intro
 const IntroReplay = lazy(() => import("@/components/intro/IntroReplay"));
@@ -67,6 +69,8 @@ const Listen = lazy(() => import("./pages/Listen"));
 const AdminApi = lazy(() => import("./pages/AdminApi"));
 const AdminCaptions = lazy(() => import("./pages/AdminCaptions"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
+const GreatDayPreview = lazy(() => import("./features/greatday/GreatDayPreview"));
+const GreatDayStudio = lazy(() => import("./features/greatday/GreatDayStudio"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -91,6 +95,7 @@ function AppRoutes() {
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location } | null;
   const introActive = useIntroStore((s) => s.active);
+  const greatdayPrivate = PRIVATE_GREATDAY_PATHS.some((path) => path === location.pathname);
 
   return (
     <>
@@ -101,6 +106,8 @@ function AppRoutes() {
         <Suspense fallback={<PageLoader />}>
           <Routes location={state?.backgroundLocation || location} key={location.pathname}>
             <Route path="/analytics" element={<AnalyticsRedirect />} />
+            <Route path="/greatday-preview" element={<GreatDayAdminGate><GreatDayPreview /></GreatDayAdminGate>} />
+            <Route path="/admin/greatday" element={<GreatDayAdminGate><GreatDayStudio /></GreatDayAdminGate>} />
             <Route path="/" element={<PageTransition><IntroGate><Index /></IntroGate></PageTransition>} />
             <Route path="/intro" element={<IntroReplay />} />
             {/* Page consolidation redirects */}
@@ -188,10 +195,10 @@ function AppRoutes() {
       )}
 
       {/* StickyPlayer stays mounted during the intro (hidden + paused) so its <audio> and stream counts survive */}
-      <div hidden={introActive}>
+      <div hidden={introActive || greatdayPrivate}>
         <StickyPlayer />
       </div>
-      {!introActive && (
+      {!introActive && !greatdayPrivate && (
         <>
           <MobileBottomNav />
           <MotionToggle />

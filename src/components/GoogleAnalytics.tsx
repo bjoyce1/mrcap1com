@@ -68,7 +68,7 @@ const GoogleAnalytics = ({ measurementId }: GoogleAnalyticsProps) => {
   const enabled = useMemo(() => !isAutomated(), []);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || /^\/(greatday-preview|admin\/greatday)(\/|$)/.test(location.pathname)) return;
     const script1 = document.createElement("script");
     script1.async = true;
     script1.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
@@ -98,7 +98,7 @@ const GoogleAnalytics = ({ measurementId }: GoogleAnalyticsProps) => {
       script1.remove();
       document.head.removeChild(script2);
     };
-  }, [measurementId, enabled]);
+  }, [measurementId, enabled, /^\/(greatday-preview|admin\/greatday)(\/|$)/.test(location.pathname)]);
 
   useEffect(() => {
     if (!enabled || isPrivatePath(location.pathname)) return;
@@ -121,6 +121,7 @@ export const trackEvent = (
   eventName: string,
   eventParams?: Record<string, unknown>
 ) => {
+  if (/^\/(greatday-preview|admin\/greatday)(\/|$)/.test(window.location.pathname)) return;
   if (window.gtag) {
     window.gtag("event", eventName, eventParams);
   }
