@@ -83,7 +83,7 @@ export function collectPages(catalog: Catalog = {}): PageSpec[] {
   for (const entry of ROUTES) pages.push({ path: entry.path, entry, extraJsonLd: extraFor(entry.path) });
   // Private auth shells contain no release content and are never sitemap entries.
   for (const path of ["/greatday-preview", "/admin/greatday"]) pages.push({ path, entry: {
-    path, title: "Private review | Mr. CAP", description: "Administrator access required. Private review only.",
+    path, title: "Private review | Mr. CAP", description: "Administrator access is required for this private Mr. CAP review. This restricted page offers no public release, audio, purchases or newsletter registration.",
     h1: "Private review", summary: ["Administrator access required."], noIndex: true,
   } });
   for (const [alias, target] of Object.entries(ALIASES)) pages.push({ path: alias, entry: routeSeo(target), extraJsonLd: extraFor(target) });
