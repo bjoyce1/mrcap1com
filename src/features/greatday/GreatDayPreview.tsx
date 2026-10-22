@@ -1,60 +1,260 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowDown, ArrowUpRight, LockKeyhole, Play, Pause, Sun, Check } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Navigation from '@/components/Navigation';
-import houston from '@/assets/greatday/houston-sunrise-concept.jpg';
-import SharePreflight from './SharePreflight';
+import { AnimatePresence, MotionConfig, motion, useInView, useMotionValue, useMotionValueEvent, useReducedMotion, useSpring, type MotionValue } from 'framer-motion';
+import { ArrowUpRight, Loader2, Pause, Play, RotateCcw } from 'lucide-react';
+import concept from '@/assets/greatday/houston-sunrise-concept.jpg';
+import pendantFrame from '@/assets/greatday/render/pendant.webp';
+import locketFrame from '@/assets/greatday/render/locket.webp';
 import { TIERS } from './model';
-import './greatday.css';
+import { CLIPS, COVER, HASHTAG, LYRICS, PREVIEW_SECONDS, SAMPLE_STORIES, THEME_LINE, VOICES } from './content';
+import { PREVIEW_URL, formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
+import './world.css';
 
-const stories = [
-  { place: 'THE MORNING', story: 'A slow morning. A long conversation. Nothing to rush.', name: 'Demo story 01' },
-  { place: 'THE CITY', story: 'Windows down. Familiar streets. A little room to breathe.', name: 'Demo story 02' },
-  { place: 'THE PEOPLE', story: 'Everybody made it to the table. That was enough.', name: 'Demo story 03' },
-];
+/** A jeweler's string tag. Used only where the preview holds a placeholder. */
+function Tag({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return <span className={`gdc-tag ${className}`}>
+    <svg className="gdc-tag-string" viewBox="0 0 40 16" aria-hidden="true"><path d="M1 3c12 13 24-6 38 6" /></svg>
+    <span className="gdc-tag-paper">{children}</span>
+  </span>;
+}
+
+function PlayButton({ audio, small = false }: { audio: PreviewAudio; small?: boolean }) {
+  const { status } = audio;
+  const busy = status === 'playing' || status === 'loading';
+  const label = busy ? 'Pause the preview' : status === 'ended' ? 'Play the preview again' : 'Play the original single preview';
+  const size = small ? 18 : 26;
+  return <button type="button" className={`gdc-play ${small ? 'is-small' : ''}`} onClick={audio.toggle} aria-label={label}>
+    {status === 'loading' ? <Loader2 size={size} className="gdc-spin" aria-hidden /> : status === 'playing' ? <Pause size={size} fill="currentColor" aria-hidden /> : status === 'ended' ? <RotateCcw size={size} aria-hidden /> : <Play size={size} fill="currentColor" aria-hidden className="gdc-play-icon" />}
+  </button>;
+}
+
+// where the gold stops on the chain: the clasp is 34px wide, so the fill tracks its center
+const chainFill = (value: number) => `calc(${value} * (100% - 34px) + 17px)`;
+
+/** The seek bar is a rope chain; the thumb is its lobster clasp. */
+function ChainSeek({ audio }: { audio: PreviewAudio }) {
+  const ref = useRef<HTMLInputElement>(null);
+  const { progress } = audio;
+  useMotionValueEvent(progress, 'change', (value) => ref.current?.style.setProperty('--p', chainFill(value)));
+  useEffect(() => { ref.current?.style.setProperty('--p', chainFill(progress.get())); }, [progress]);
+  return <input ref={ref} type="range" className="gdc-chain" min={0} max={PREVIEW_SECONDS} step={1} value={Math.min(audio.time, PREVIEW_SECONDS)}
+    onChange={(event) => audio.seek(Number(event.target.value))} aria-label="Seek within the preview"
+    aria-valuetext={`${formatTime(audio.time)} of ${formatTime(PREVIEW_SECONDS)}`} />;
+}
+
+function statusLine(status: PreviewAudio['status']) {
+  switch (status) {
+    case 'loading': return 'Loading the preview';
+    case 'playing': return 'Now playing the original single';
+    case 'paused': return 'Paused';
+    case 'ended': return 'That was the 30-second preview';
+    case 'error': return 'The preview did not load. Press play to try again.';
+    default: return 'Play the original single';
+  }
+}
+
+function Pendant({ tilt }: { tilt: MotionValue<number> }) {
+  const reduce = useReducedMotion();
+  const rotate = useSpring(tilt, { stiffness: 70, damping: 10, mass: 1.1 });
+  useEffect(() => {
+    if (reduce) return;
+    // hung a little off true, then let it settle
+    rotate.jump(-6);
+    rotate.set(0);
+  }, [reduce, rotate]);
+  return <motion.figure className="gdc-pendant" style={reduce ? undefined : { rotate }}>
+    <span className="gdc-hook-chain" aria-hidden />
+    <span className="gdc-bail" aria-hidden />
+    <div className="gdc-bezel">
+      <img className="gdc-bezel-cover" src={COVER} alt="Temporary cover art: Mr. CAP, Paul Wall and Lil Keke over the Houston skyline, with all four artists named" width={480} height={480} fetchPriority="high" />
+      <img className="gdc-bezel-frame" src={pendantFrame} alt="" width={1000} height={1000} />
+    </div>
+    <figcaption><Tag>Temporary cover art</Tag></figcaption>
+  </motion.figure>;
+}
+
+function Lyrics({ audio }: { audio: PreviewAudio }) {
+  const listRef = useRef<HTMLOListElement>(null);
+  const timed = LYRICS.some((line) => typeof line.at === 'number');
+  let active = -1;
+  if (timed) LYRICS.forEach((line, index) => { if (line.at !== undefined && line.at <= audio.time) active = index; });
+  useEffect(() => {
+    const list = listRef.current;
+    const item = list?.children[active] as HTMLElement | undefined;
+    if (!list || !item || audio.status !== 'playing') return;
+    list.scrollTo({ top: item.offsetTop - list.clientHeight / 2 + item.clientHeight / 2, behavior: 'smooth' });
+  }, [active, audio.status]);
+  return <ol ref={listRef} className={`gdc-lyrics ${timed ? 'is-timed' : ''}`} tabIndex={0} aria-label="Lyrics">
+    {LYRICS.map((line, index) => <li key={index} className={index === active ? 'is-active' : index < active ? 'is-past' : undefined} aria-current={index === active ? 'true' : undefined}>{line.line}</li>)}
+  </ol>;
+}
+
+function Engraver() {
+  const [draft, setDraft] = useState('');
+  return <div className="gdc-bench">
+    <label htmlFor="gdc-engrave" className="gdc-label">Try the engraver</label>
+    <input id="gdc-engrave" className="gdc-field" value={draft} maxLength={80} onChange={(event) => setDraft(event.target.value)} placeholder="What made today great?" autoComplete="off" aria-describedby="gdc-engrave-note" />
+    <p id="gdc-engrave-note" className="gdc-note">Preview only. What you type stays on this screen. Nothing is saved or sent.</p>
+    <div className="gdc-bracelet" aria-hidden>
+      <span className="gdc-bracelet-link" />
+      <p className="gdc-idplate"><span className={draft ? undefined : 'is-ghost'}>{draft || 'What made today great?'}</span><i className="gdc-needle" /></p>
+      <span className="gdc-bracelet-link" />
+    </div>
+  </div>;
+}
 
 export default function GreatDayPreview() {
-  const [playerDemo, setPlayerDemo] = useState(false);
-  const [wallDemo, setWallDemo] = useState(false);
-  return <div className="greatday-world">
-    <Helmet><title>Great Day Universe private review | Mr. CAP</title><meta name="description" content="Private, admin-only Great Day Universe concept review. No audio, sales or signups are active." /><meta name="robots" content="noindex, nofollow" /><meta name="googlebot" content="noindex, nofollow" /></Helmet>
-    <Navigation />
-    <div className="gd-review-bar"><span><LockKeyhole size={13} /> PRIVATE CONCEPT REVIEW</span><Link to="/admin/greatday">Release Studio <ArrowUpRight size={14} /></Link></div>
-    <main>
-      <section className="gd-hero" aria-labelledby="gd-title">
-        <img src={houston} width={1920} height={1280} alt="Generated campaign concept of a chrome-accented slab car against the Houston skyline at sunrise" className="gd-hero-image" fetchPriority="high" />
-        <div className="gd-hero-shade" />
-        <div className="gd-hero-copy">
-          <p className="gd-kicker">MR. CAP / HOUSTON, TEXAS / REMIX</p>
-          <h1 id="gd-title">TODAY WAS<br />A GREAT DAY<span className="gd-title-dot">.</span></h1>
-          <p className="gd-roster">Mr. CAP ft. Paul Wall, Lil Keke &amp; Lisa Dinero</p>
-          <p className="gd-manifesto">A GREAT DAY IS A STATE OF MIND</p>
-          <Button asChild variant="secondary" className="gd-button gd-hero-button"><a href="#gd-record">Step into the day <ArrowDown size={17} /></a></Button>
-        </div>
-        <div className="gd-hero-bottom"><span>INDEPENDENT RE-RELEASE / DATE NOT SET</span><span>GENERATED CAMPAIGN VISUAL / DRAFT</span></div>
-      </section>
+  const audio = usePreviewAudio();
+  const heroRef = useRef<HTMLElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const controlsVisible = useInView(controlsRef, { margin: '0px 0px -8% 0px' });
+  const tilt = useMotionValue(0);
+  const showMini = !controlsVisible && audio.status !== 'idle';
 
-      <section id="gd-record" className="gd-section gd-record">
-        <div className="gd-cover-wrap"><img src="/images/covers/opt/today-great-day-cover-480.webp" alt="Existing Today Was A Great Day cover, temporary draft artwork, not final approval" width={480} height={480} loading="lazy" className="gd-cover" /><span className="gd-art-label">TEMPORARY ARTWORK / NOT FINAL</span></div>
-        <div className="gd-record-copy"><p className="gd-kicker">01 / THE RECORD</p><h2>Houston.<br />On repeat.</h2><p className="gd-large">Today Was A Great Day (Remix)</p><p className="gd-muted">Mr. CAP ft. Paul Wall, Lil Keke &amp; Lisa Dinero</p>
-          <div className="gd-player"><div className="gd-player-top"><Button variant="secondary" size="icon" aria-label={playerDemo ? 'Stop silent player demo' : 'Start silent player demo'} aria-pressed={playerDemo} onClick={() => setPlayerDemo(!playerDemo)} className="gd-button">{playerDemo ? <Pause size={20} /> : <Play size={20} />}</Button><div><strong>SILENT PLAYER DEMO</strong><p className="gd-muted">No audio loaded. Rights and master pending.</p></div><LockKeyhole size={17} /></div><div className={`gd-wave ${playerDemo ? 'gd-wave-active' : ''}`} aria-hidden="true">{Array.from({ length: 36 }, (_, i) => <span key={i} />)}</div><p role="status" className="gd-muted">{playerDemo ? 'Visual demo running. No sound or streaming.' : 'Remix playback unavailable in this review.'}</p></div>
-        </div>
-      </section>
+  const lean = (event: PointerEvent<HTMLElement>) => {
+    if (event.pointerType !== 'mouse' || !heroRef.current) return;
+    const box = heroRef.current.getBoundingClientRect();
+    tilt.set((((event.clientX - box.left) / box.width) * 2 - 1) * 2.4);
+  };
 
-      <section className="gd-city" aria-labelledby="gd-city-title"><img src={houston} alt="Draft Houston sunrise campaign scene" loading="lazy" width={1920} height={1280} className="gd-city-image" /><div className="gd-city-shade" /><div className="gd-city-copy"><p className="gd-kicker">02 / A DAY IN THE CITY</p><h2 id="gd-city-title">Sun up.<br />Windows down.<br />Head high.</h2><p>EDITORIAL DRAFT / NOT AN ARTIST BIOGRAPHY</p><div className="gd-city-moments"><span><Sun size={17} /> Morning light</span><span>Chrome in the afternoon</span><span>Skyline after hours</span></div></div></section>
+  return <MotionConfig reducedMotion="user">
+    <div className="gd-case">
+      <Helmet><title>Today Was A Great Day (Remix) private preview | Mr. CAP</title><meta name="description" content="Private preview of the Today Was A Great Day (Remix) release world. Not public." /><meta name="robots" content="noindex, nofollow" /><meta name="googlebot" content="noindex, nofollow" /></Helmet>
+      <audio ref={audio.audioRef} src={PREVIEW_URL} preload="none" />
 
-      <section className="gd-section gd-story"><div><p className="gd-kicker">03 / THE PEOPLE BEHIND THE RECORD</p><h2>Four voices.<br />One great day.</h2></div><div><p className="gd-large">Mr. CAP<br />Paul Wall<br />Lil Keke<br />Lisa Dinero</p><p className="gd-muted">Lead artist: Mr. CAP. Featured artists: Paul Wall, Lil Keke &amp; Lisa Dinero.</p><p className="gd-muted">Independent re-release in planning. Production, songwriting, publishing and final license credits pending verification.</p><p className="gd-kicker">STORY COPY IS EDITORIAL DRAFT</p><p className="gd-muted">A visual direction built around Houston light, chrome and everyday gratitude. No artist quotes or personal histories are represented here.</p></div></section>
+      <header className="gdc-strip">
+        <p><span className="gdc-strip-dot" aria-hidden />Private preview<span className="gdc-strip-more">. Not public. Remix audio, sales and signups open after approval.</span></p>
+        <nav aria-label="Preview"><Link to="/admin/greatday">Release Studio</Link><Link to="/">mrcap1.com</Link></nav>
+      </header>
 
-      <section className="gd-section gd-wall"><div className="gd-section-heading"><div><p className="gd-kicker">04 / DEMO ONLY</p><h2>The Great Day Wall</h2></div><span className="gd-muted">FICTIONAL SAMPLES / NOT FAN TESTIMONIALS</span></div><div className="gd-wall-grid">{stories.map((story) => <article key={story.name} className="gd-wall-card"><p className="gd-kicker">{story.place}</p><p className="gd-story-text">{story.story}</p><p className="gd-muted">{story.name} / DEMO ONLY</p></article>)}</div><div className="gd-wall-action"><div><h3>Your great day belongs here.</h3><p className="gd-muted">Submission simulation only. No text, identity or story is collected.</p></div><Button variant="secondary" className="gd-button" onClick={() => setWallDemo(true)}><Check size={16} /> Simulate a submission</Button></div><p role="status" className="gd-muted">{wallDemo ? 'DEMO: sample submission acknowledged locally. Nothing was saved or sent.' : ''}</p></section>
+      <main>
+        <section ref={heroRef} className="gdc-hero gdc-velvet" aria-labelledby="gdc-title" onPointerMove={lean} onPointerLeave={() => tilt.set(0)}>
+          <Pendant tilt={tilt} />
+          <div className="gdc-hero-copy">
+            <h1 id="gdc-title"><span className="gdc-nameplate">Today Was A Great Day</span> <span className="gdc-remix">Remix</span></h1>
+            <p className="gdc-roster"><strong>Mr. CAP</strong> featuring Paul Wall, Lil Keke &amp; Lisa Dinero</p>
+            <p className="gdc-bar">{THEME_LINE}</p>
+            <div ref={controlsRef} className="gdc-player">
+              <PlayButton audio={audio} />
+              <div className="gdc-player-body">
+                <p className="gdc-player-label" aria-live="polite">{statusLine(audio.status)}</p>
+                <ChainSeek audio={audio} />
+                <p className="gdc-time"><span>{formatTime(audio.time)}</span><span>{formatTime(PREVIEW_SECONDS)}</span></p>
+              </div>
+            </div>
+            <Tag>Original 2024 single, 30-second preview. Remix master pending.</Tag>
+          </div>
+        </section>
 
-      <section className="gd-optin gd-section"><p className="gd-kicker">05 / PRE-RELEASE LIST / DEMO ONLY</p><h2>Be there for<br />the next great day.</h2><p className="gd-muted">No release date yet. Signups are not open in this private review.</p><div className="gd-email-mock"><label htmlFor="gd-email">Email address mockup</label><input id="gd-email" type="text" value="DEMO ONLY: no email collected" disabled aria-describedby="gd-email-note" /><Button variant="secondary" disabled className="gd-button">Signup unavailable</Button></div><p id="gd-email-note" className="gd-muted">This is a disabled mockup, not a mailing-list form. Do not enter a real address.</p></section>
+        <section className="gdc-words" aria-labelledby="gdc-words-title">
+          <h2 id="gdc-words-title" className="gdc-h2">The Words</h2>
+          {LYRICS.length ? <Lyrics audio={audio} /> : <div className="gdc-words-empty">
+            <p className="gdc-plate">Lyrics are being engraved</p>
+            <p className="gdc-note">When the words arrive, each line lights up here as the song plays.</p>
+            <Tag>Lyrics to be supplied</Tag>
+          </div>}
+        </section>
 
-      <section className="gd-section gd-editions"><p className="gd-kicker">06 / PROPOSED EDITIONS</p><h2>Own the day.<br />When it is ready.</h2><div className="gd-tier-grid">{TIERS.map((tier, i) => <article key={tier.name} className="gd-tier"><span className="gd-kicker">EDITION 0{i + 1} / PROPOSED PRICE</span><h3>{tier.name}</h3><p className="gd-price">{tier.price}</p><p className="gd-muted">{tier.detail}</p><Button variant="secondary" disabled className="gd-button"><LockKeyhole size={15} /> NOT FOR SALE</Button></article>)}</div><p className="gd-muted">No checkout, payment collection or download is connected.</p></section>
+        <section className="gdc-film gdc-velvet" aria-labelledby="gdc-film-title">
+          <div className="gdc-film-copy">
+            <h2 id="gdc-film-title" className="gdc-h2">Behind the Record</h2>
+            {!CLIPS.length && <Tag>Concept image. Clips to be supplied.</Tag>}
+          </div>
+          {CLIPS.length ? <div className="gdc-clips">{CLIPS.map((clip) => <figure key={clip.src} className="gdc-window"><video src={clip.src} poster={clip.poster} controls preload="none" playsInline /><figcaption>{clip.title}</figcaption></figure>)}</div>
+            : <figure className="gdc-window">
+              <img src={concept} alt="Concept image: a chrome-trimmed slab car against the Houston skyline at sunrise" width={1920} height={1280} loading="lazy" />
+            </figure>}
+        </section>
 
-      <section className="gd-section gd-preflight"><p className="gd-kicker">07 / SHARE PREFLIGHT</p><h2>A great day.<br />Worth passing on.</h2><SharePreflight /></section>
-    </main>
-    <footer className="gd-footer"><strong>CAP Distributions</strong><p>Great Day Universe / Private review only</p><p>Recording rights, composition clearance, licenses and final credits pending. No audio distribution. No release date set.</p><Link to="/admin/greatday">Back to Release Studio <ArrowUpRight size={14} /></Link></footer>
-  </div>;
+        <section className="gdc-voices gdc-velvet" aria-labelledby="gdc-voices-title">
+          <div className="gdc-voices-head">
+            <h2 id="gdc-voices-title" className="gdc-h2">The Voices</h2>
+            {VOICES.some((voice) => !voice.photo) && <Tag>Portraits to be supplied</Tag>}
+          </div>
+          <span className="gdc-rail" aria-hidden />
+          <ul className="gdc-lockets">
+            {VOICES.map((voice) => <li key={voice.name} className={voice.role === 'Lead artist' ? 'is-lead' : undefined}>
+              <span className="gdc-locket-chain" aria-hidden />
+              <div className="gdc-locket">
+                {voice.photo ? <img className="gdc-locket-photo" src={voice.photo} alt={voice.name} loading="lazy" /> : <span className="gdc-locket-face" aria-hidden><span className="gdc-monogram">{voice.monogram}</span></span>}
+                <img className="gdc-locket-frame" src={locketFrame} alt="" width={600} height={600} loading="lazy" />
+              </div>
+              <h3>{voice.name}</h3>
+              <p className="gdc-role">{voice.role}</p>
+              {voice.note && <p className="gdc-note">{voice.note}</p>}
+            </li>)}
+          </ul>
+        </section>
+
+        <section className="gdc-wall" aria-labelledby="gdc-wall-title">
+          <div className="gdc-wall-head">
+            <h2 id="gdc-wall-title" className="gdc-h2">The Great Day Wall</h2>
+            <p className="gdc-lede">Fans say what made their day great. Approved stories get engraved and hung here, every one under {HASHTAG}.</p>
+          </div>
+          <div className="gdc-rack">
+            <span className="gdc-rack-rail" aria-hidden />
+            <ul>{SAMPLE_STORIES.map((story) => <li key={story} className="gdc-dogtag"><span className="gdc-ballchain" aria-hidden /><p>{story}</p></li>)}</ul>
+            <Tag>Sample stories, written for the preview</Tag>
+          </div>
+          <div className="gdc-wall-foot">
+            <Engraver />
+            <div className="gdc-hashtag">
+              <p className="gdc-hashtag-text">{HASHTAG}</p>
+              <Tag>Campaign starts at launch</Tag>
+            </div>
+          </div>
+        </section>
+
+        <section className="gdc-editions gdc-velvet" aria-labelledby="gdc-editions-title">
+          <h2 id="gdc-editions-title" className="gdc-h2">The Editions</h2>
+          <p className="gdc-lede">Digital editions, direct from CAP Distributions. No middleman.</p>
+          <ul className="gdc-boxes">
+            {TIERS.map((tier, index) => <li key={tier.name} className={`gdc-box gdc-box-${index + 1}`}>
+              <div className="gdc-case-box" aria-hidden>
+                <div className="gdc-lid"><span className="gdc-lid-plate">{tier.name}</span></div>
+                <div className="gdc-insert"><span className="gdc-disc" style={{ '--cover': `url(${COVER})` } as CSSProperties} /></div>
+              </div>
+              <h3>{tier.name} Edition</h3>
+              <p className="gdc-note">Digital. Contents pending approval.</p>
+              <Tag>{tier.price} proposed</Tag>
+              <button type="button" className="gdc-btn" disabled>Not for sale yet</button>
+            </li>)}
+          </ul>
+        </section>
+
+        <section className="gdc-hold" aria-labelledby="gdc-hold-title">
+          <h2 id="gdc-hold-title" className="gdc-h2">Be First When It Drops</h2>
+          <form className="gdc-hold-form" onSubmit={(event) => event.preventDefault()}>
+            <label htmlFor="gdc-hold-email" className="gdc-label">Email</label>
+            <div className="gdc-hold-row">
+              <input id="gdc-hold-email" className="gdc-field" type="email" placeholder="you@example.com" disabled aria-describedby="gdc-hold-note" />
+              <button type="submit" className="gdc-btn" disabled>Hold my spot</button>
+            </div>
+            <p id="gdc-hold-note" className="gdc-note">Nothing can be entered or sent from this preview.</p>
+          </form>
+          <Tag>Signups open at launch</Tag>
+        </section>
+      </main>
+
+      <footer className="gdc-foot">
+        <p className="gdc-foot-mark">Presented by CAP Distributions</p>
+        <p className="gdc-foot-line">Stream Direct. No Middleman.</p>
+        <p className="gdc-note">Private preview. Credits, licensing and the release date are pending, and nothing here is for sale yet.</p>
+        <nav aria-label="Leave the preview"><Link to="/admin/greatday">Release Studio <ArrowUpRight size={15} aria-hidden /></Link><Link to="/">mrcap1.com <ArrowUpRight size={15} aria-hidden /></Link></nav>
+      </footer>
+
+      <AnimatePresence>
+        {showMini && <motion.div key="mini" className="gdc-mini" role="region" aria-label="Preview player"
+          initial={{ y: 110, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 110, opacity: 0 }} transition={{ type: 'spring', bounce: 0, duration: 0.4 }}>
+          <PlayButton audio={audio} small />
+          <div className="gdc-mini-body">
+            <p className="gdc-mini-title">Today Was A Great Day <span>original single preview</span></p>
+            <ChainSeek audio={audio} />
+          </div>
+          <span className="gdc-time">{formatTime(audio.time)}</span>
+        </motion.div>}
+      </AnimatePresence>
+    </div>
+  </MotionConfig>;
 }

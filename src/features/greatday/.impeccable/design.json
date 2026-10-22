@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T09:45:00Z",
+  "title": "Design System: Great Day Release World",
+  "extensions": {
+    "colorMeta": {
+      "case-velvet": { "role": "primary", "displayName": "Case Velvet", "canonical": "hsl(229 58% 30%)", "tonalRamp": ["#0a1028", "#111a45", "#18245f", "#203079", "#2c3f97", "#4157b4", "#7084cf", "#b3bfea"] },
+      "case-velvet-deep": { "role": "primary", "displayName": "Case Velvet Deep", "canonical": "hsl(231 62% 15%)", "tonalRamp": ["#05081a", "#0a0f2c", "#0f163e", "#172058", "#202c73", "#344394", "#6070bd", "#a9b3e2"] },
+      "case-light": { "role": "primary", "displayName": "Case Light", "canonical": "hsl(226 64% 46%)", "tonalRamp": ["#0d1838", "#162a66", "#203c94", "#2a4dc0", "#4c6bd2", "#7590df", "#a5b7eb", "#d4ddf6"] },
+      "gold-leaf-text": { "role": "secondary", "displayName": "Gold Leaf Text", "canonical": "#F0CD72", "tonalRamp": ["#3a2a06", "#634a10", "#8f6c1c", "#b98f2c", "#dcb052", "#f0cd72", "#f6dfa3", "#fbf0d2"] },
+      "engraving-umber": { "role": "secondary", "displayName": "Engraving Umber", "canonical": "hsl(36 72% 13%)", "tonalRamp": ["#1c1304", "#392609", "#5a3d10", "#7d5618", "#a27124", "#c69142", "#ddb87b", "#f1dfbf"] },
+      "glass-white": { "role": "neutral", "displayName": "Glass White", "canonical": "hsl(228 60% 97%)" },
+      "frost-blue": { "role": "neutral", "displayName": "Frost Blue", "canonical": "hsl(226 52% 84%)" },
+      "counter-night": { "role": "neutral", "displayName": "Counter Night", "canonical": "hsl(232 64% 9%)" },
+      "tag-cotton": { "role": "neutral", "displayName": "Tag Cotton", "canonical": "hsl(42 40% 95%)" },
+      "tag-ink": { "role": "neutral", "displayName": "Tag Ink", "canonical": "hsl(230 52% 20%)" },
+      "box-leatherette": { "role": "neutral", "displayName": "Box Leatherette", "canonical": "#121A58" },
+      "dogtag-ink": { "role": "neutral", "displayName": "Dog Tag Ink", "canonical": "#222A3B" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Nameplate", "purpose": "The release title, filled with the rendered gold bar." },
+      "headline": { "displayName": "Section Nameplate", "purpose": "Section names, the hashtag and the footer line." },
+      "title": { "displayName": "Name", "purpose": "Artist and edition names on velvet." },
+      "body": { "displayName": "Body", "purpose": "Notes, story text, footer copy." },
+      "lede": { "displayName": "Lede", "purpose": "One supporting sentence beside a section name." },
+      "label": { "displayName": "Engraved Label", "purpose": "Labels for controls and objects, roles, the theme bar." },
+      "tag": { "displayName": "Tag", "purpose": "Placeholder tags only." }
+    },
+    "shadows": [
+      { "name": "lift", "value": "0 22px 44px hsl(232 70% 5% / 0.55), 0 4px 10px hsl(232 70% 5% / 0.4)", "purpose": "Objects resting on velvet." },
+      { "name": "metal-edge", "value": "inset 0 2px 1px rgb(255 250 225 / 0.8), inset 0 -3px 5px rgb(92 58 10 / 0.55)", "purpose": "Thickness of a gold plate." },
+      { "name": "tray", "value": "inset 0 22px 34px -18px hsl(232 70% 3% / 0.9), inset 0 -22px 34px -18px hsl(232 70% 3% / 0.9)", "purpose": "Recessed sections." },
+      { "name": "rendered-drop", "value": "filter: drop-shadow(0 22px 22px hsl(232 70% 5% / 0.5)) drop-shadow(0 4px 6px hsl(232 70% 5% / 0.4))", "purpose": "Rendered metal frames, following their alpha." }
+    ],
+    "motion": [
+      { "name": "case-sweep", "value": "1.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, once", "purpose": "The case light passing over the hero on load." },
+      { "name": "nameplate-glint", "value": "1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s, once", "purpose": "A glint across the gold title, synced with the sweep." },
+      { "name": "pendant-spring", "value": "spring stiffness 70, damping 10, mass 1.1", "purpose": "The hanging pendant settling and leaning toward the pointer." },
+      { "name": "mini-player", "value": "spring bounce 0, duration 0.4s, y 110px", "purpose": "The mini player entering and leaving along the same path." }
+    ],
+    "breakpoints": [
+      { "name": "stack", "value": "860px" },
+      { "name": "strip", "value": "720px" },
+      { "name": "rack-2", "value": "640px" },
+      { "name": "phone", "value": "520px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Play Button",
+      "kind": "button",
+      "refersTo": "button-play",
+      "description": "Velvet disc in a gold ring; the primary action of the world.",
+      "html": "<button class=\"ds-play\" aria-label=\"Play the preview\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M7 4v16l13-8z\"/></svg></button>",
+      "css": ".ds-play { display: grid; place-items: center; width: 78px; height: 78px; border: 5px solid transparent; border-radius: 50%; background: radial-gradient(circle at 50% 30%, #2a4dc0, #0f163e 78%) padding-box, linear-gradient(180deg, #f4dc94, #e3b75a 55%, #8a5d18 80%, #e9c06a) border-box; color: #f6d988; cursor: pointer; box-shadow: 0 22px 44px rgb(5 8 30 / 0.55), 0 4px 10px rgb(5 8 30 / 0.4); transition: transform 120ms ease-out, filter 200ms ease-out; } .ds-play svg { margin-left: 4px; } .ds-play:hover { filter: brightness(1.14); } .ds-play:active { transform: scale(0.96); } .ds-play:focus-visible { outline: 2px solid #f0cd72; outline-offset: 3px; }"
+    },
+    {
+      "name": "Gold Button",
+      "kind": "button",
+      "refersTo": "button-gold",
+      "description": "Brushed gold bar with engraved text. In the build the fill is the rendered gold-plate.webp texture.",
+      "html": "<button class=\"ds-btn-gold\">Hold my spot</button>",
+      "css": ".ds-btn-gold { min-height: 48px; padding: 0.8rem 1.4rem; border: 0; border-radius: 999px; background: linear-gradient(180deg, #f4dc94, #edc76e 45%, #c99634 72%, #7d5618 82%, #e3b75a); color: #392609; font: 700 0.9rem/1.2 Archivo, system-ui, sans-serif; cursor: pointer; box-shadow: inset 0 2px 1px rgb(255 250 225 / 0.8), inset 0 -3px 5px rgb(92 58 10 / 0.55), 0 8px 16px rgb(5 8 30 / 0.45); } .ds-btn-gold:hover { filter: brightness(1.06); } .ds-btn-gold:focus-visible { outline: 2px solid #f0cd72; outline-offset: 3px; }"
+    },
+    {
+      "name": "Waiting Button",
+      "kind": "button",
+      "refersTo": "button-gold-disabled",
+      "description": "Disabled state, always labelled with what it waits for.",
+      "html": "<button class=\"ds-btn-wait\" disabled>Not for sale yet</button>",
+      "css": ".ds-btn-wait { min-height: 48px; padding: 0.8rem 1.4rem; border: 0; border-radius: 999px; background: #080c26; color: #c1cbeb; font: 700 0.9rem/1.2 Archivo, system-ui, sans-serif; box-shadow: inset 0 0 0 1.5px rgb(240 205 114 / 0.45); cursor: not-allowed; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Counter Night field with an engraved label above it.",
+      "html": "<label class=\"ds-label\" for=\"ds-f\">Try the engraver</label><input id=\"ds-f\" class=\"ds-field\" placeholder=\"What made today great?\">",
+      "css": ".ds-label { display: block; margin-bottom: 0.75rem; font: 400 0.7rem Michroma, sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: #f0cd72; } .ds-field { width: 100%; min-height: 52px; padding: 0.85rem 1rem; border: 1.5px solid rgb(42 77 192 / 0.75); border-radius: 10px; background: #080c26; color: #f3f5fc; font: 500 1rem/1.4 Archivo, system-ui, sans-serif; transition: border-color 160ms ease-out; } .ds-field::placeholder { color: rgb(193 203 235 / 0.78); } .ds-field:focus { border-color: #f0cd72; outline: none; } .ds-field:focus-visible { outline: 2px solid #f0cd72; outline-offset: 2px; }"
+    },
+    {
+      "name": "Placeholder Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Cotton string tag, only where content is a placeholder.",
+      "html": "<span class=\"ds-tag\"><svg class=\"ds-tag-string\" viewBox=\"0 0 40 16\"><path d=\"M1 3c12 13 24-6 38 6\"/></svg><span class=\"ds-tag-paper\">$2.99 proposed</span></span>",
+      "css": ".ds-tag { position: relative; display: inline-flex; margin-left: 34px; rotate: -2deg; filter: drop-shadow(0 3px 4px rgb(5 8 30 / 0.45)); } .ds-tag-string { position: absolute; right: calc(100% - 13px); top: 50%; width: 40px; height: 16px; translate: 0 -40%; overflow: visible; } .ds-tag-string path { fill: none; stroke: #ebe4d2; stroke-width: 1.4; stroke-linecap: round; } .ds-tag-paper { position: relative; padding: 0.42rem 0.8rem 0.42rem 1.45rem; background: #f7f4ed; color: #0b185b; font: 700 0.6875rem/1.3 Archivo, system-ui, sans-serif; letter-spacing: 0.06em; text-transform: uppercase; clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); } .ds-tag-paper::before { content: ''; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; translate: 0 -50%; border-radius: 50%; background: #0f163e; }"
+    },
+    {
+      "name": "Theme Bar",
+      "kind": "custom",
+      "refersTo": "theme-bar",
+      "description": "An engraved gold ID bar carrying the theme line.",
+      "html": "<p class=\"ds-bar\">A Great Day Is a State of Mind</p>",
+      "css": ".ds-bar { display: inline-block; margin: 0; padding: 0.75rem 1.5rem; border-radius: 999px; background: linear-gradient(180deg, #f4dc94, #edc76e 45%, #c99634 72%, #7d5618 82%, #e3b75a); color: #392609; font: 400 0.8rem Michroma, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; text-shadow: 0 1px 0 rgb(255 244 200 / 0.7); box-shadow: inset 0 2px 1px rgb(255 250 225 / 0.8), inset 0 -3px 5px rgb(92 58 10 / 0.55), 0 10px 22px rgb(5 8 30 / 0.5); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Jeweler's Counter",
+    "overview": "The release is shown the way a Houston jeweler shows a custom piece: lit from above, under a glass lip, laid on royal-blue case velvet. Every object on the page is something you could find on that counter. The metal is rendered, not drawn: frames, bail, rope chain and brushed bars come from a three.js light tent, and CSS only places, clips and shades them.",
+    "keyCharacteristics": [
+      "Committed color: royal-blue velvet owns most of every viewport; gold carries the light.",
+      "Real rendered metal: rope edges, channel-set brilliants, polished round wire.",
+      "Gold script nameplates for display type, engraved wide caps for labels, Archivo for reading.",
+      "Cotton string tags appear only on placeholders. Their presence means \"not final\".",
+      "One authored motion moment (the case light sweep and nameplate glint) plus physical motion on the hanging pendant."
+    ],
+    "rules": [
+      { "name": "The Velvet Owns the Room Rule", "body": "Velvet covers most of every viewport. Gold is the light on it, never a field of its own; the largest gold surfaces are plates and frames.", "section": "colors" },
+      { "name": "The Tinted Secondary Rule", "body": "Secondary text on velvet is Frost Blue. Gray text does not exist in this world.", "section": "colors" },
+      { "name": "The Nameplate Rule", "body": "Script is for names: the title, section names and the hashtag. Never set a sentence, a button or a label in it.", "section": "typography" },
+      { "name": "The Engraved Label Rule", "body": "Uppercase Michroma is a label for the control or object directly beneath or around it. It never sits above a heading as an eyebrow.", "section": "typography" },
+      { "name": "The Rendered Metal Rule", "body": "New metal objects are rendered in the light tent (scripts/greatday-render/) and placed as images or textures. Linear gradients do not stand in for gold.", "section": "elevation" },
+      { "name": "The Light From Above Rule", "body": "Every shadow falls downward. Highlights sit on top edges. The glass lip lives at the top of the hero.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do render new metal in the light tent and place it as an image or texture.",
+      "Do keep velvet as the field and gold as the light.",
+      "Do tag every placeholder with a cotton string tag, and only placeholders.",
+      "Do keep one authored motion moment per surface: the case light sweep (1.9s, cubic-bezier(0.16, 1, 0.3, 1)) with the nameplate glint (1.7s). Remove both under reduced motion.",
+      "Do give hanging objects physical motion (springs) and keep everything else still."
+    ],
+    "donts": [
+      "Don't fill gold with CSS linear gradients or fake metal with stacked bevels.",
+      "Don't set sentences, buttons or labels in the script face.",
+      "Don't put an eyebrow or kicker above a section name.",
+      "Don't add bounce or elastic easing, or hover sway with no state behind it.",
+      "Don't use gray secondary text on velvet."
+    ]
+  }
+}

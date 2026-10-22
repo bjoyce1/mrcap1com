@@ -1,0 +1,178 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Great Day light tent</title>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js"}}</script>
+</head>
+<body style="margin:0;background:#203079">
+<script type="module">
+// Renders the Great Day jewelry (frames, bail, rope chain, brushed bars) for src/assets/greatday/render.
+// Driven by render.mjs; window.renderAsset(name) returns a PNG data URL.
+import * as THREE from 'three';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.setClearColor(0x000000, 0);
+document.body.appendChild(renderer.domElement);
+
+// a jeweler's light tent: a dark room with strip softboxes, so polished metal shows deep reflections and bright edges
+function lightTent() {
+  const room = new THREE.Scene();
+  room.add(new THREE.Mesh(new THREE.SphereGeometry(20, 32, 16), new THREE.MeshBasicMaterial({ color: new THREE.Color().setRGB(0.1, 0.085, 0.07), side: THREE.BackSide })));
+  const strip = (w, h, x, y, z, k, tint = [1, 1, 1]) => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color().setRGB(k * tint[0], k * tint[1], k * tint[2]), side: THREE.DoubleSide }));
+    m.position.set(x, y, z); m.lookAt(0, 0, 0); room.add(m);
+  };
+  strip(14, 2.2, 0, 9, 4, 6);                          // overhead strip
+  strip(2, 10, -9, 1, 5, 4.5);                         // left strip
+  strip(2, 10, 9, 0, 3, 3.2);                          // right strip
+  strip(10, 1.6, 0, -6, 7, 1.6, [1, 0.8, 0.55]);       // warm bounce from below
+  strip(9, 6.5, 0, 0.6, 11, 1.05, [1, 0.86, 0.62]);    // the card behind the lens
+  strip(9, 0.5, 0, -0.2, 10.6, 0.04);                  // a dark seam across it, so flat gold carries a line
+  strip(4, 4, -3, 4, 10, 2.2);                         // soft front key
+  strip(6, 2, 4, -3, -8, 1.2);                         // back rim
+  return room;
+}
+const env = new THREE.PMREMGenerator(renderer).fromScene(lightTent(), 0.02).texture;
+
+const goldMat = () => new THREE.MeshPhysicalMaterial({
+  color: new THREE.Color().setRGB(1.0, 0.72, 0.3, THREE.LinearSRGBColorSpace),
+  metalness: 1, roughness: 0.14, envMapIntensity: 1.15, clearcoat: 0.35, clearcoatRoughness: 0.06,
+});
+const stoneMat = new THREE.MeshStandardMaterial({ color: new THREE.Color().setRGB(0.92, 0.96, 1.0, THREE.LinearSRGBColorSpace), metalness: 1, roughness: 0.02, flatShading: true, envMapIntensity: 3.6 });
+
+function stage() {
+  const s = new THREE.Scene();
+  s.environment = env;
+  const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(-2, 3, 4); s.add(key);
+  return s;
+}
+function ortho(halfW, halfH) { const c = new THREE.OrthographicCamera(-halfW, halfW, halfH, -halfH, 0.1, 20); c.position.set(0, 0, 8); c.lookAt(0, 0, 0); return c; }
+function rr(path, h, r) {
+  path.moveTo(-h + r, -h);
+  path.lineTo(h - r, -h); path.quadraticCurveTo(h, -h, h, -h + r);
+  path.lineTo(h, h - r); path.quadraticCurveTo(h, h, h - r, h);
+  path.lineTo(-h + r, h); path.quadraticCurveTo(-h, h, -h, h - r);
+  path.lineTo(-h, -h + r); path.quadraticCurveTo(-h, -h, -h + r, -h);
+  return path;
+}
+const reversed = (path, n = 256) => new THREE.Path(path.getSpacedPoints(n).reverse());
+
+// round brilliant: table, crown, girdle, pavilion, turned on a lathe and faceted by flat shading
+function brilliant(r) {
+  const prof = [[0, -0.9], [1, -0.12], [1, -0.04], [0.56, 0.2], [0, 0.2]].map(([x, y]) => new THREE.Vector2(x * r, y * r));
+  const g = new THREE.LatheGeometry(prof, 16);
+  g.rotateX(Math.PI / 2);
+  return g;
+}
+function setStones(s, pts, r, z) {
+  const g = brilliant(r);
+  pts.forEach((p, i) => {
+    const m = new THREE.Mesh(g, stoneMat);
+    m.position.set(p.x, p.y, z);
+    m.rotation.z = (i * 0.37) % (Math.PI / 8);
+    s.add(m);
+  });
+}
+
+// wire along a closed outline: a polished round wire, or a twisted rope of three strands
+function wire(points2d, radius, z) {
+  const curve = new THREE.CatmullRomCurve3(points2d.map((p) => new THREE.Vector3(p.x, p.y, z)), true);
+  return new THREE.Mesh(new THREE.TubeGeometry(curve, points2d.length, radius, 20, true), goldMat());
+}
+function rope(points2d, radius, z, twist) {
+  const group = new THREE.Group();
+  const n = points2d.length; let len = 0; const arc = [0];
+  for (let i = 1; i < n; i++) { len += points2d[i].distanceTo(points2d[i - 1]); arc.push(len); }
+  for (let k = 0; k < 3; k++) {
+    const pts = points2d.map((p, i) => {
+      const q = points2d[(i + 1) % n], o = points2d[(i - 1 + n) % n];
+      const t = new THREE.Vector2(q.x - o.x, q.y - o.y).normalize();
+      const nrm = new THREE.Vector2(-t.y, t.x);
+      const th = (arc[i] / twist) * Math.PI * 2 + (k * Math.PI * 2) / 3;
+      return new THREE.Vector3(p.x + nrm.x * radius * Math.cos(th), p.y + nrm.y * radius * Math.cos(th), z + radius * Math.sin(th));
+    });
+    group.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), n * 2, radius * 0.95, 12, true), goldMat()));
+  }
+  return group;
+}
+const plate = { depth: 0.03, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.012, bevelSegments: 6, curveSegments: 64 };
+// the frames' window: half-size 0.83 inside a 1.06 view, so content sits at a 10.85% inset (world.css uses 10%)
+const WINDOW = (1.06 - 0.83) / 2.12;
+
+const builds = {
+  // square pendant: rope edge, channel of brilliants, polished inner wire
+  pendant() {
+    const s = stage();
+    const sh = rr(new THREE.Shape(), 1, 0.15); sh.holes.push(reversed(rr(new THREE.Path(), 0.845, 0.075)));
+    s.add(new THREE.Mesh(new THREE.ExtrudeGeometry(sh, plate), goldMat()));
+    const outline = (h, r, n) => rr(new THREE.Path(), h, r).getSpacedPoints(n).slice(0, n);
+    s.add(rope(outline(0.962, 0.13, 1800), 0.019, 0.07, 0.085));
+    s.add(wire(outline(0.869, 0.085, 900), 0.024, 0.065));
+    setStones(s, outline(0.9175, 0.105, 152), 0.0235, 0.075);
+    return { s, cam: ortho(1.06, 1.06), w: 1000, h: 1000, window: WINDOW };
+  },
+  locket() {
+    const s = stage();
+    const sh = new THREE.Shape().absarc(0, 0, 1, 0, Math.PI * 2, false); sh.holes.push(new THREE.Path().absarc(0, 0, 0.845, 0, Math.PI * 2, true));
+    s.add(new THREE.Mesh(new THREE.ExtrudeGeometry(sh, plate), goldMat()));
+    const circle = (r, n) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2; return new THREE.Vector2(Math.cos(a) * r, Math.sin(a) * r); });
+    s.add(rope(circle(0.962, 1400), 0.019, 0.07, 0.085));
+    s.add(wire(circle(0.869, 720), 0.024, 0.065));
+    setStones(s, circle(0.9175, 118), 0.0235, 0.075);
+    return { s, cam: ortho(1.06, 1.06), w: 600, h: 600, window: WINDOW };
+  },
+  bail() {
+    const s = stage();
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.17, 48, 128), goldMat());
+    ring.rotation.y = 0.45;
+    s.add(ring);
+    return { s, cam: ortho(0.82, 0.82), w: 180, h: 180 };
+  },
+  // rope chain: four twisted strands; the frame holds exactly two quarter-turn periods so it tiles
+  rope(horizontal = false) {
+    const s = stage();
+    const group = new THREE.Group();
+    const R = 0.2, tube = 0.125, pitch = 1.6;
+    for (let k = 0; k < 4; k++) {
+      const pts = [];
+      for (let t = -24; t <= 24; t += 0.05) {
+        const a = t + (k * Math.PI) / 2;
+        pts.push(new THREE.Vector3(R * Math.cos(a), (pitch * t) / (Math.PI * 2), R * Math.sin(a)));
+      }
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 2400, tube, 16, false), goldMat()));
+    }
+    if (horizontal) group.rotation.z = Math.PI / 2;
+    s.add(group);
+    const across = 0.4375, along = 0.4; // 140px across, 128px along at 160px per unit
+    return horizontal ? { s, cam: ortho(along, across), w: 128, h: 140 } : { s, cam: ortho(across, along), w: 140, h: 128 };
+  },
+  ropeH() { return builds.rope(true); },
+  // a brushed bar, gently domed: the middle carries the light and the lower edge falls off
+  plate(silver = false) {
+    const s = stage();
+    const g = new THREE.PlaneGeometry(4, 1, 320, 120);
+    const pos = g.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), y = pos.getY(i) * 2;
+      pos.setZ(i, -0.085 * y * y + 0.004 * Math.sin(x * 2.3));
+    }
+    g.computeVertexNormals();
+    const brushed = goldMat(); brushed.roughness = 0.3; brushed.clearcoatRoughness = 0.2;
+    if (silver) brushed.color.setRGB(0.93, 0.94, 0.96, THREE.LinearSRGBColorSpace);
+    s.add(new THREE.Mesh(g, brushed));
+    return { s, cam: ortho(2, 0.5), w: 1024, h: 256 };
+  },
+  silverPlate() { return builds.plate(true); },
+};
+
+window.renderAsset = (name) => {
+  const { s, cam, w, h, window: win } = builds[name]();
+  renderer.setSize(w, h);
+  renderer.render(s, cam);
+  return { url: renderer.domElement.toDataURL('image/png'), window: win ?? null };
+};
+window.studioReady = true;
+</script>
+</body></html>

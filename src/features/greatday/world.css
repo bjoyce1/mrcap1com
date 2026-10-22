@@ -1,0 +1,307 @@
+/*! GREAT DAY CASE (direction contract)
+THESIS: The release is shown the way a Houston jeweler shows a custom piece, under glass on Mr. CAP's own counter. It refuses the dark photo hero, stream buttons and card grid of a promo landing page.
+OWN-WORLD: Royal-blue case velvet lit from above, polished 14k gold metal (nameplate script, pendant and locket bezels with stone channels, rope-chain seek bar with a lobster clasp), silver dog tags on ball chain, a glass lip, engraved wide caps, and cotton-string tags only on placeholders.
+STORY: Reviewers hear the original single, see where the words, voices, wall and editions will live, and can tell at a glance what is still pending.
+FIRST VIEWPORT: The cover art in a gold pendant hangs from a rope chain at left. At right sit the gold nameplate title, the roster, the engraved theme bar and the play control on the chain.
+FORM: Houston jeweler's display counter, grounded list #7, seed efbdfcbf.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+*/
+
+@font-face { font-family: 'GD Lily'; src: url('../../assets/greatday/fonts/lily-script-one-latin.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'GD Michroma'; src: url('../../assets/greatday/fonts/michroma-latin.woff2') format('woff2'); font-display: swap; }
+
+.gd-case {
+  --v: 229 58% 30%;
+  --v-deep: 231 62% 15%;
+  --v-lit: 226 64% 46%;
+  --ink: 228 60% 97%;
+  --ink-soft: 226 52% 84%;
+  --tag: 42 40% 95%;
+  --tag-ink: 230 52% 20%;
+  --engrave: 36 72% 13%;
+  --gold-text: #f0cd72;
+  --gold: url('../../assets/greatday/render/gold-plate.webp') center / cover no-repeat;
+  --silver: url('../../assets/greatday/render/silver-plate.webp') center / cover no-repeat;
+  --rope: url('../../assets/greatday/render/rope.webp') center top / 100% auto repeat-y;
+  --rope-h: url('../../assets/greatday/render/ropeH.webp') left center / auto 100% repeat-x;
+  --metal-edge: inset 0 2px 1px rgb(255 250 225 / 0.8), inset 0 -3px 5px rgb(92 58 10 / 0.55);
+  --lift: 0 22px 44px hsl(232 70% 5% / 0.55), 0 4px 10px hsl(232 70% 5% / 0.4);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --gutter: clamp(16px, 6vw, 96px);
+  --section-y: clamp(5rem, 10vw, 8rem);
+  min-height: 100vh;
+  overflow-x: clip;
+  background: hsl(var(--v-deep));
+  color: hsl(var(--ink));
+  font-family: Archivo, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.gd-case :focus-visible { outline: 2px solid var(--gold-text); outline-offset: 3px; }
+.gd-case a { color: inherit; text-underline-offset: 0.2em; }
+.gd-case a:hover { text-decoration: underline; }
+
+/* materials */
+.gdc-velvet {
+  background-color: hsl(var(--v));
+  background-image: var(--grain), radial-gradient(ellipse 75% 60% at 28% 0%, hsl(var(--v-lit) / 0.95), transparent 72%), radial-gradient(ellipse 120% 80% at 50% 115%, hsl(var(--v-deep)), transparent 62%);
+  background-blend-mode: soft-light, normal, normal;
+}
+.gdc-words, .gdc-wall, .gdc-hold {
+  background-color: hsl(var(--v-deep));
+  background-image: var(--grain), radial-gradient(ellipse 70% 55% at 50% 0%, hsl(var(--v) / 0.85), transparent 75%);
+  background-blend-mode: soft-light, normal;
+  box-shadow: inset 0 22px 34px -18px hsl(232 70% 3% / 0.9), inset 0 -22px 34px -18px hsl(232 70% 3% / 0.9);
+}
+.gdc-nameplate, .gdc-h2, .gdc-monogram, .gdc-hashtag-text, .gdc-foot-line {
+  font-family: 'GD Lily', cursive;
+  font-weight: 400;
+  color: transparent;
+  background-image: linear-gradient(100deg, transparent 42%, rgb(255 252 236 / 0.95) 50%, transparent 58%), url('../../assets/greatday/render/gold-plate.webp');
+  background-size: 250% 100%, 100% 100%;
+  background-size: 250% 100%, 100% 1lh;
+  background-position: 0 0, 0 0;
+  background-repeat: no-repeat, repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  filter: drop-shadow(0 2px 0 #6b4410) drop-shadow(0 12px 16px rgb(4 8 36 / 0.55));
+}
+
+/* the quiet private-preview strip */
+.gdc-strip { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.7rem var(--gutter); background: hsl(232 64% 9%); color: hsl(var(--ink-soft)); font-size: 0.8125rem; font-weight: 500; }
+.gdc-strip p { margin: 0; }
+.gdc-strip-dot { display: inline-block; width: 7px; height: 7px; margin-right: 0.6rem; border-radius: 50%; background: var(--gold-text); vertical-align: 0.08em; }
+.gdc-strip nav { display: flex; gap: 1.25rem; flex-shrink: 0; }
+.gdc-strip nav a { color: hsl(var(--ink)); }
+
+/* string tags mark placeholders, and only placeholders */
+.gdc-tag { position: relative; display: inline-flex; align-items: center; margin-left: 34px; rotate: -2deg; filter: drop-shadow(0 3px 4px hsl(232 70% 5% / 0.45)); }
+.gdc-tag-string { position: absolute; right: calc(100% - 13px); top: 50%; width: 40px; height: 16px; translate: 0 -40%; overflow: visible; }
+.gdc-tag-string path { fill: none; stroke: #ebe4d2; stroke-width: 1.4; stroke-linecap: round; }
+.gdc-tag-paper { position: relative; padding: 0.42rem 0.8rem 0.42rem 1.45rem; background: hsl(var(--tag)); color: hsl(var(--tag-ink)); font-size: 0.6875rem; font-weight: 700; line-height: 1.3; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); }
+.gdc-tag-paper::before { content: ''; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; translate: 0 -50%; border-radius: 50%; background: hsl(var(--v-deep)); }
+
+/* hero: the counter */
+.gdc-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; min-height: calc(100svh - 42px); padding: 0 var(--gutter) clamp(3rem, 7vh, 5rem); overflow: clip; }
+.gdc-hero::before { content: ''; position: absolute; inset: 0 0 auto; height: 26px; border-top: 1px solid rgb(255 255 255 / 0.75); background: linear-gradient(180deg, rgb(255 255 255 / 0.4), rgb(214 226 255 / 0.1) 45%, transparent); pointer-events: none; z-index: 3; }
+.gdc-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 34%, rgb(255 255 255 / 0.16) 44%, rgb(255 255 255 / 0.04) 51%, transparent 60%); opacity: 0; pointer-events: none; z-index: 2; animation: gdc-sweep 1.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+.gdc-pendant { justify-self: center; display: flex; flex-direction: column; align-items: center; width: clamp(220px, 30vw, 410px); margin: 0; transform-origin: 50% 0; }
+.gdc-hook-chain { width: 14px; height: clamp(56px, 13vh, 132px); background: var(--rope); filter: drop-shadow(4px 8px 6px hsl(232 70% 5% / 0.45)); }
+.gdc-bail { width: 40px; height: 40px; margin-top: -8px; background: url('../../assets/greatday/render/bail.webp') center / contain no-repeat; filter: drop-shadow(0 6px 6px hsl(232 70% 5% / 0.4)); }
+/* the frame is a rendered piece: rope edge, channel-set stones, polished inner wire. the cover sits in its window */
+.gdc-bezel { position: relative; width: 100%; aspect-ratio: 1; margin-top: -10px; filter: drop-shadow(0 22px 22px hsl(232 70% 5% / 0.5)) drop-shadow(0 4px 6px hsl(232 70% 5% / 0.4)); }
+.gdc-bezel-cover, .gdc-locket-face, .gdc-locket-photo { position: absolute; inset: 10%; width: 80%; height: 80%; object-fit: cover; }
+.gdc-bezel-cover { border-radius: 4%; }
+.gdc-bezel-frame, .gdc-locket-frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.gdc-bezel::after { content: ''; position: absolute; inset: 10%; border-radius: 4%; background: linear-gradient(128deg, rgb(255 255 255 / 0.2), transparent 30%, transparent 72%, rgb(255 255 255 / 0.07)); pointer-events: none; }
+.gdc-window::after { content: ''; position: absolute; inset: clamp(13px, 1.5vw, 18px); border-radius: 12px; background: linear-gradient(128deg, rgb(255 255 255 / 0.2), transparent 30%, transparent 72%, rgb(255 255 255 / 0.07)); pointer-events: none; }
+.gdc-pendant figcaption { align-self: flex-end; width: max-content; margin-top: 1.1rem; }
+.gdc-hero-copy { align-self: center; padding-top: clamp(3rem, 9vh, 6rem); }
+.gdc-hero h1 { margin: 0; font-size: inherit; line-height: inherit; }
+.gdc-nameplate { font-size: clamp(3.1rem, 6.4vw, 6rem); line-height: 1.04; padding: 0 0.12em 0.1em 0; text-wrap: balance; animation: gdc-glint 1.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both; }
+.gdc-remix { display: flex; align-items: center; gap: 1rem; margin-top: 0.6rem; font-family: 'GD Michroma', sans-serif; font-size: clamp(0.78rem, 1vw, 0.92rem); letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold-text); }
+.gdc-remix::after { content: ''; width: 3.5rem; height: 2px; border-radius: 1px; background: var(--gold); }
+.gdc-roster { margin: 1.5rem 0 0; max-width: 32ch; font-size: clamp(1.05rem, 1.45vw, 1.28rem); line-height: 1.5; color: hsl(var(--ink-soft)); }
+.gdc-roster strong { color: hsl(var(--ink)); font-weight: 700; }
+.gdc-bar { display: inline-block; margin: 1.4rem 0 0; padding: 0.75rem 1.5rem; border-radius: 999px; background: var(--gold); color: hsl(var(--engrave)); font-family: 'GD Michroma', sans-serif; font-size: clamp(0.66rem, 0.95vw, 0.8rem); letter-spacing: 0.14em; text-transform: uppercase; text-shadow: 0 1px 0 rgb(255 244 200 / 0.7); box-shadow: var(--metal-edge), 0 10px 22px hsl(232 70% 5% / 0.5); }
+
+/* the player */
+.gdc-player { display: flex; align-items: center; gap: 1.25rem; max-width: 31rem; margin: clamp(2rem, 5vh, 3rem) 0 1.25rem; }
+.gdc-play { flex: none; display: grid; place-items: center; width: 78px; height: 78px; border: 5px solid transparent; border-radius: 50%; background: radial-gradient(circle at 50% 30%, hsl(var(--v-lit)), hsl(var(--v-deep)) 78%) padding-box, var(--gold) border-box; color: #f6d988; box-shadow: var(--lift); cursor: pointer; transition: transform 120ms ease-out, filter 200ms ease-out; }
+.gdc-play:hover { filter: brightness(1.14); }
+.gdc-play:active { transform: scale(0.96); }
+.gdc-play.is-small { width: 50px; height: 50px; border-width: 3px; box-shadow: none; }
+.gdc-play-icon { margin-left: 4px; }
+.gdc-play.is-small .gdc-play-icon { margin-left: 2px; }
+.gdc-spin { animation: gdc-spin 0.9s linear infinite; }
+.gdc-player-body { flex: 1; min-width: 0; }
+.gdc-player-label { margin: 0 0 0.2rem; font-size: 0.95rem; font-weight: 600; color: hsl(var(--ink)); }
+.gdc-time { display: flex; justify-content: space-between; margin: 0; font-size: 0.8rem; font-weight: 500; font-variant-numeric: tabular-nums; color: hsl(var(--ink-soft)); }
+.gdc-chain { --p: 17px; --clasp: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 20'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff3c4'/%3E%3Cstop offset='.45' stop-color='%23e3b24c'/%3E%3Cstop offset='1' stop-color='%238a5d18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='5' cy='10' r='3.6' fill='none' stroke='url(%23g)' stroke-width='2.4'/%3E%3Cpath d='M8.5 10c0-5 5-8.5 12-8.5 6.5 0 11.5 3.6 11.5 8.5s-5 8.5-11.5 8.5c-7 0-12-3.5-12-8.5z' fill='url(%23g)'/%3E%3Cpath d='M15 6.2c3-1.6 8.2-1.6 11.4.6' fill='none' stroke='%237a5013' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 32px; margin: 0; background: transparent; cursor: pointer; }
+.gdc-chain::-webkit-slider-runnable-track { height: 10px; border-radius: 5px; background: linear-gradient(90deg, transparent var(--p), hsl(var(--v-deep) / 0.72) var(--p)), var(--rope-h); }
+.gdc-chain::-moz-range-track { height: 10px; border-radius: 5px; background: linear-gradient(90deg, transparent var(--p), hsl(var(--v-deep) / 0.72) var(--p)), var(--rope-h); }
+.gdc-chain::-webkit-slider-thumb { -webkit-appearance: none; width: 34px; height: 20px; margin-top: -6px; border: 0; background: var(--clasp) center / contain no-repeat; filter: drop-shadow(0 2px 3px hsl(232 70% 5% / 0.6)); }
+.gdc-chain::-moz-range-thumb { width: 34px; height: 20px; border: 0; border-radius: 0; background: var(--clasp) center / contain no-repeat; }
+.gdc-chain:focus-visible { outline-offset: 2px; border-radius: 6px; }
+@media (pointer: coarse) { .gdc-chain { height: 44px; } }
+
+/* section headings are gold nameplates */
+.gdc-h2 { margin: 0 0 2.25rem; font-size: clamp(2.6rem, 5.2vw, 4.5rem); line-height: 1.06; padding-bottom: 0.08em; text-wrap: balance; }
+.gdc-note { margin: 0; max-width: 60ch; text-wrap: pretty; font-size: 0.9375rem; line-height: 1.6; color: hsl(var(--ink-soft)); }
+.gdc-lede { margin: 0; max-width: 40ch; text-wrap: balance; font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; color: hsl(var(--ink-soft)); }
+.gdc-label { font-family: 'GD Michroma', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-text); }
+
+/* the words */
+.gdc-words { padding: var(--section-y) var(--gutter); text-align: center; }
+.gdc-words-empty { display: grid; justify-items: center; gap: 1.4rem; }
+.gdc-plate { position: relative; width: min(100%, 46rem); margin: 0; padding: clamp(2rem, 4.5vw, 3.25rem) 3rem; border-radius: 14px; background: var(--gold); color: hsl(var(--engrave)); font-family: 'GD Michroma', sans-serif; font-size: clamp(0.9rem, 1.9vw, 1.3rem); letter-spacing: 0.16em; text-transform: uppercase; text-shadow: 0 1px 0 rgb(255 244 200 / 0.75); box-shadow: var(--metal-edge), var(--lift); }
+.gdc-plate::before, .gdc-plate::after { content: ''; position: absolute; top: 50%; width: 11px; height: 11px; translate: 0 -50%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff3c4, #a6731f 70%); box-shadow: inset 0 0 0 1px rgb(92 58 10 / 0.6); }
+.gdc-plate::before { left: 1.1rem; }
+.gdc-plate::after { right: 1.1rem; }
+.gdc-lyrics { max-width: 44rem; max-height: min(62vh, 34rem); margin: 0 auto; padding: 3rem 1rem; overflow: auto; list-style: none; font-size: clamp(1.25rem, 2.4vw, 1.85rem); font-weight: 600; line-height: 1.5; color: hsl(var(--ink)); -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); }
+.gdc-lyrics li + li { margin-top: 0.6em; }
+.gdc-lyrics.is-timed li { color: hsl(var(--ink-soft) / 0.62); transition: color 300ms ease-out; }
+.gdc-lyrics.is-timed li.is-past { color: hsl(var(--ink-soft) / 0.85); }
+.gdc-lyrics.is-timed li.is-active { color: #f6d988; }
+
+/* behind the record */
+.gdc-film { display: grid; justify-items: center; gap: 2.25rem; padding: var(--section-y) var(--gutter); }
+.gdc-film-copy { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 1.5rem; }
+.gdc-film-copy .gdc-h2 { margin: 0; }
+.gdc-clips { display: grid; gap: 2rem; width: min(100%, 72rem); }
+.gdc-window { position: relative; width: min(100%, 72rem); margin: 0; padding: clamp(13px, 1.5vw, 18px); border-radius: 22px; background: var(--gold); box-shadow: var(--metal-edge), var(--lift); }
+.gdc-window img, .gdc-window video { display: block; width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center 62%; border-radius: 12px; background: hsl(var(--v-deep)); }
+.gdc-window figcaption { margin-top: 0.75rem; color: hsl(var(--engrave)); font-weight: 600; }
+
+/* the voices: lockets hanging from one rail */
+.gdc-voices { padding: var(--section-y) var(--gutter); }
+.gdc-voices-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; max-width: 72rem; margin: 0 auto 2.5rem; }
+.gdc-voices-head .gdc-h2 { margin: 0; }
+.gdc-rail { display: block; max-width: 72rem; height: 10px; margin: 0 auto; border-radius: 5px; background: var(--gold); box-shadow: var(--metal-edge), 0 8px 12px hsl(232 70% 5% / 0.5); }
+.gdc-lockets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem clamp(1rem, 3vw, 2.5rem); max-width: 72rem; margin: 0 auto; padding: 0; list-style: none; text-align: center; }
+.gdc-lockets li { display: flex; flex-direction: column; align-items: center; }
+.gdc-locket-chain { width: 11px; height: 64px; background: var(--rope); filter: drop-shadow(3px 6px 5px hsl(232 70% 5% / 0.4)); }
+.gdc-lockets li:nth-child(2) .gdc-locket-chain { height: 92px; }
+.gdc-lockets li:nth-child(3) .gdc-locket-chain { height: 76px; }
+.gdc-lockets li:nth-child(4) .gdc-locket-chain { height: 104px; }
+.gdc-locket { position: relative; width: clamp(122px, 15vw, 176px); aspect-ratio: 1; margin-top: -4px; filter: drop-shadow(0 18px 18px hsl(232 70% 5% / 0.5)) drop-shadow(0 3px 5px hsl(232 70% 5% / 0.4)); }
+.gdc-lockets li.is-lead .gdc-locket { width: clamp(150px, 19vw, 224px); }
+.gdc-locket-face, .gdc-locket-photo { border-radius: 50%; }
+.gdc-locket-face { display: grid; place-items: center; }
+.gdc-locket-face { background-color: hsl(var(--v-deep)); background-image: var(--grain), radial-gradient(circle at 50% 30%, hsl(var(--v)), hsl(var(--v-deep)) 72%); background-blend-mode: soft-light, normal; box-shadow: inset 0 6px 14px rgb(3 6 25 / 0.75); }
+.gdc-monogram { font-family: "GD Michroma", sans-serif; font-size: clamp(1.2rem, 2.1vw, 1.8rem); line-height: 1.2; letter-spacing: 0.04em; }
+.gdc-lockets li.is-lead .gdc-monogram { font-size: clamp(1.45rem, 2.6vw, 2.2rem); }
+.gdc-lockets h3 { margin: 1.3rem 0 0.25rem; font-size: clamp(1.05rem, 1.6vw, 1.25rem); font-weight: 700; color: hsl(var(--ink)); }
+.gdc-role { margin: 0 0 0.5rem; font-family: 'GD Michroma', sans-serif; font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-text); }
+.gdc-lockets .gdc-note { max-width: 22ch; font-size: 0.875rem; }
+
+/* the wall: an engraving bench and a rack of tags */
+.gdc-wall { display: grid; gap: clamp(3.5rem, 7vw, 5.5rem); padding: var(--section-y) max(var(--gutter), (100% - 76rem) / 2); }
+.gdc-wall-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.25rem 3rem; }
+.gdc-wall-head .gdc-h2 { margin: 0; }
+.gdc-wall-foot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 3rem clamp(2rem, 5vw, 4.5rem); }
+.gdc-bench { display: grid; gap: 0.75rem; align-content: start; }
+.gdc-field { width: 100%; min-height: 52px; padding: 0.85rem 1rem; border: 1.5px solid hsl(var(--v-lit) / 0.75); border-radius: 10px; background: hsl(232 64% 9%); color: hsl(var(--ink)); font: 500 1rem/1.4 Archivo, system-ui, sans-serif; transition: border-color 160ms ease-out; }
+.gdc-field::placeholder { color: hsl(var(--ink-soft) / 0.78); }
+.gdc-field:focus { border-color: var(--gold-text); outline: none; }
+.gdc-field:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 2px; }
+.gdc-field:disabled { cursor: not-allowed; opacity: 0.7; }
+.gdc-bracelet { display: flex; align-items: center; margin-top: 1.5rem; }
+.gdc-bracelet-link { flex: 1 1 2rem; min-width: 1.25rem; height: 12px; background: var(--rope-h); filter: drop-shadow(0 4px 4px hsl(232 70% 5% / 0.45)); }
+.gdc-idplate { flex: 0 1 30rem; display: grid; place-items: center; min-height: 7rem; margin: 0; padding: 1.25rem 1.75rem; border-radius: 3.5rem; background: var(--gold); color: hsl(var(--engrave)); font-family: "GD Michroma", sans-serif; font-size: clamp(0.78rem, 1.15vw, 0.95rem); line-height: 1.6; letter-spacing: 0.09em; text-transform: uppercase; text-align: center; text-shadow: 0 1px 0 rgb(255 244 200 / 0.75); overflow-wrap: anywhere; box-shadow: var(--metal-edge), var(--lift); }
+.gdc-idplate .is-ghost { opacity: 0.5; }
+.gdc-needle { display: inline-block; width: 2px; height: 1.15em; margin-left: 3px; vertical-align: -0.2em; background: hsl(var(--engrave)); opacity: 0; }
+.gdc-bench:focus-within .gdc-needle { opacity: 1; animation: gdc-blink 1.1s steps(2, jump-none) infinite; }
+/* one rail, five tags; when they wrap, each tag hangs from the one above it */
+.gdc-rack { --cols: 5; display: grid; justify-items: center; }
+.gdc-rack-rail { display: block; width: 100%; height: 8px; border-radius: 4px; background: var(--silver); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 6px 10px hsl(232 70% 5% / 0.5); }
+.gdc-rack ul { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 0 clamp(0.75rem, 2vw, 1.5rem); width: 100%; margin: 0 0 2rem; padding: 0; list-style: none; }
+.gdc-dogtag { display: flex; flex-direction: column; align-items: center; }
+.gdc-ballchain { width: 6px; height: 34px; background: radial-gradient(circle, #f2f4f8 0 1.5px, #8d96a8 2.3px, transparent 2.8px) 50% 0 / 6px 7px repeat-y; }
+.gdc-dogtag:nth-child(2) .gdc-ballchain { height: 70px; }
+.gdc-dogtag:nth-child(3) .gdc-ballchain { height: 48px; }
+.gdc-dogtag:nth-child(4) .gdc-ballchain { height: 84px; }
+.gdc-dogtag:nth-child(5) .gdc-ballchain { height: 56px; }
+.gdc-dogtag p { position: relative; width: 100%; min-height: 8.75rem; margin: -2px 0 0; padding: 1.6rem 1.05rem 1.2rem; border-radius: 16px; background: url('../../assets/greatday/render/silver-plate.webp') center top / 100% 118% no-repeat; color: #222a3b; font-size: 0.95rem; font-weight: 600; line-height: 1.45; text-wrap: pretty; box-shadow: inset 0 2px 1px rgb(255 255 255 / 0.9), inset 0 -3px 5px rgb(60 70 95 / 0.35), 0 14px 26px hsl(232 70% 5% / 0.5); }
+.gdc-dogtag p::before { content: ""; position: absolute; top: 0.55rem; left: 50%; width: 10px; height: 10px; translate: -50% 0; border-radius: 50%; background: hsl(var(--v-deep)); box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.7); }
+.gdc-hashtag { display: grid; justify-items: center; gap: 1rem; text-align: center; }
+.gdc-hashtag-text { margin: 0; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.15; padding-bottom: 0.08em; overflow-wrap: anywhere; }
+
+/* the editions: three presentation boxes, growing with the edition */
+.gdc-editions { padding: var(--section-y) var(--gutter); text-align: center; }
+.gdc-editions .gdc-h2 { margin-bottom: 1rem; }
+.gdc-editions .gdc-lede { margin: 0 auto 3.5rem; }
+.gdc-boxes { display: flex; align-items: flex-end; justify-content: center; gap: clamp(1.5rem, 4vw, 3.5rem); max-width: 72rem; margin: 0 auto; padding: 0; list-style: none; }
+.gdc-box { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; width: var(--w); }
+.gdc-box-1 { --w: clamp(196px, 20vw, 236px); }
+.gdc-box-2 { --w: clamp(220px, 24vw, 286px); }
+.gdc-box-3 { --w: clamp(244px, 28vw, 336px); }
+.gdc-case-box { width: 100%; margin-bottom: 0.9rem; filter: drop-shadow(0 22px 26px hsl(232 70% 5% / 0.55)); }
+.gdc-lid { display: grid; place-items: center; aspect-ratio: 16 / 7; border: 9px solid #121a58; border-bottom-width: 4px; border-radius: 14px 14px 4px 4px; background: radial-gradient(ellipse 60% 80% at 50% 30%, #f3f6fe, #c3cff0 70%, #a9b8e2); box-shadow: inset 0 10px 16px rgb(28 40 96 / 0.35); }
+.gdc-lid-plate { padding: 0.45rem 0.95rem; border-radius: 6px; background: var(--gold); color: hsl(var(--engrave)); font-family: 'GD Michroma', sans-serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; box-shadow: var(--metal-edge), 0 3px 6px rgb(28 40 96 / 0.35); }
+.gdc-insert { display: grid; place-items: center; aspect-ratio: 16 / 9; border: 9px solid #121a58; border-top-width: 4px; border-radius: 4px 4px 14px 14px; background-color: hsl(var(--v-deep)); background-image: var(--grain), radial-gradient(ellipse at 50% 30%, hsl(var(--v)), hsl(var(--v-deep)) 75%); background-blend-mode: soft-light, normal; box-shadow: inset 0 12px 20px rgb(3 6 25 / 0.75); }
+.gdc-disc { position: relative; width: 46%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 25deg, rgb(255 255 255 / 0.42), transparent 14%, transparent 48%, rgb(255 255 255 / 0.32) 62%, transparent 78%), repeating-radial-gradient(circle, #b8862b 0 1px, #f1cf73 1px 2.6px); box-shadow: 0 6px 12px rgb(3 6 25 / 0.6), inset 0 0 0 2px rgb(92 58 10 / 0.5); }
+.gdc-disc::after { content: ''; position: absolute; inset: 31%; border-radius: 50%; background: radial-gradient(circle, #1b1407 0 9%, transparent 11%), var(--cover) center / cover; box-shadow: 0 0 0 2px rgb(92 58 10 / 0.55); }
+.gdc-box h3 { margin: 0; font-size: 1.15rem; font-weight: 700; color: hsl(var(--ink)); }
+.gdc-box .gdc-note { font-size: 0.875rem; }
+.gdc-btn { min-height: 48px; margin-top: 0.4rem; padding: 0.8rem 1.4rem; border: 0; border-radius: 999px; background: var(--gold); color: hsl(var(--engrave)); font: 700 0.9rem/1.2 Archivo, system-ui, sans-serif; cursor: pointer; box-shadow: var(--metal-edge), 0 8px 16px hsl(232 70% 5% / 0.45); }
+.gdc-btn:disabled { background: hsl(232 64% 9%); color: hsl(var(--ink-soft)); box-shadow: inset 0 0 0 1.5px rgb(240 205 114 / 0.45); cursor: not-allowed; }
+
+/* hold list and close */
+.gdc-hold { display: grid; justify-items: center; gap: 1.25rem; padding: var(--section-y) var(--gutter); text-align: center; }
+.gdc-hold .gdc-h2 { margin-bottom: 0.5rem; }
+.gdc-hold-form { display: grid; gap: 0.6rem; width: min(100%, 34rem); text-align: left; }
+.gdc-hold-row { display: flex; gap: 0.75rem; }
+.gdc-hold-row .gdc-field { flex: 1; min-width: 0; }
+.gdc-hold-row .gdc-btn { margin: 0; flex: none; }
+.gdc-foot { display: grid; justify-items: center; gap: 0.8rem; padding: 3.5rem var(--gutter) 8rem; background: hsl(232 64% 8%); border-top: 1px solid rgb(255 255 255 / 0.35); box-shadow: inset 0 14px 16px -12px rgb(214 226 255 / 0.18); text-align: center; }
+.gdc-foot p { margin: 0; }
+.gdc-foot-mark { font-family: 'GD Michroma', sans-serif; font-size: 0.75rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-text); }
+.gdc-foot-line { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.2; padding-bottom: 0.08em; }
+.gdc-foot nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.75rem; margin-top: 0.5rem; }
+.gdc-foot nav a { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 44px; font-weight: 600; }
+
+/* the mini player follows once the counter scrolls away */
+.gdc-mini { position: fixed; z-index: 60; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 0.9rem; width: min(560px, calc(100% - 24px)); margin-inline: auto; padding: 0.55rem 1.1rem 0.55rem 0.55rem; border: 2px solid transparent; border-radius: 999px; background: linear-gradient(hsl(232 64% 11%), hsl(232 64% 11%)) padding-box, var(--gold) border-box; box-shadow: 0 24px 48px hsl(232 70% 3% / 0.6), 0 6px 14px hsl(232 70% 3% / 0.45); }
+.gdc-mini-body { flex: 1; min-width: 0; }
+.gdc-mini-title { margin: 0; overflow: hidden; font-size: 0.85rem; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; }
+.gdc-mini-title span { margin-left: 0.4rem; font-weight: 500; color: hsl(var(--ink-soft)); }
+.gdc-mini .gdc-chain { height: 24px; }
+.gdc-mini .gdc-time { flex: none; }
+
+@keyframes gdc-sweep { 0% { opacity: 1; translate: -65% 0; } 80% { opacity: 1; } 100% { opacity: 0; translate: 65% 0; } }
+@keyframes gdc-glint { from { background-position: 100% 0, 0 0; } to { background-position: 0 0, 0 0; } }
+@keyframes gdc-spin { to { rotate: 360deg; } }
+@keyframes gdc-blink { 50% { opacity: 0; } }
+
+@media (max-width: 860px) {
+  .gdc-hero { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 0; min-height: 0; padding-bottom: 3.5rem; text-align: center; }
+  .gdc-pendant { width: min(62vw, 280px); }
+  .gdc-pendant figcaption { align-self: center; }
+  .gdc-hook-chain { height: 44px; }
+  .gdc-hero-copy { display: grid; justify-items: center; padding-top: 2rem; }
+  .gdc-remix { justify-content: center; }
+  .gdc-remix::before { content: ''; width: 3.5rem; height: 2px; border-radius: 1px; background: var(--gold); }
+  .gdc-player { width: 100%; text-align: left; }
+  .gdc-wall-foot { grid-template-columns: minmax(0, 1fr); }
+  .gdc-rack { --cols: 3; }
+  .gdc-dogtag:nth-child(n) .gdc-ballchain { height: 34px; }
+  .gdc-lockets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gdc-lockets li:nth-child(n) .gdc-locket-chain { height: 56px; }
+  .gdc-lockets li:nth-child(even) .gdc-locket-chain { height: 84px; }
+  .gdc-boxes { flex-direction: column; align-items: center; gap: 3.5rem; }
+  .gdc-box-1 { --w: min(100%, 230px); }
+  .gdc-box-2 { --w: min(100%, 260px); }
+  .gdc-box-3 { --w: min(100%, 290px); }
+}
+@media (max-width: 720px) {
+  .gdc-strip-more { display: none; }
+  .gdc-window img, .gdc-window video { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 640px) {
+  .gdc-rack { --cols: 2; }
+  .gdc-dogtag p { min-height: 10.5rem; padding-inline: 0.9rem; font-size: 0.875rem; }
+}
+@media (max-width: 520px) {
+  .gdc-pendant { width: min(56vw, 220px); }
+  .gdc-hook-chain { height: 28px; }
+  .gdc-hero-copy { padding-top: 1.5rem; }
+  .gdc-nameplate { font-size: 2.9rem; }
+  .gdc-roster { margin-top: 1rem; }
+  .gdc-bar { padding: 0.7rem 1rem; font-size: 0.6rem; letter-spacing: 0.08em; }
+  .gdc-player { margin: 1.5rem 0 1rem; }
+  .gdc-hold-row { flex-direction: column; }
+  .gdc-plate { padding-inline: 2.25rem; letter-spacing: 0.12em; }
+  .gdc-bracelet-link { min-width: 0.75rem; }
+  .gdc-idplate { padding-inline: 1.25rem; }
+  .gdc-mini-title span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-case *, .gd-case *::before, .gd-case *::after { animation: none !important; transition-duration: 1ms !important; }
+  .gdc-bench:focus-within .gdc-needle { opacity: 1; }
+}
+@media (forced-colors: active) {
+  .gdc-nameplate, .gdc-h2, .gdc-monogram, .gdc-hashtag-text, .gdc-foot-line { background: none; color: CanvasText; filter: none; }
+}

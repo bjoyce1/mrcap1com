@@ -2,9 +2,11 @@
 
 ## Current review
 
-- `/greatday-preview`: signed-in administrators only. Gate validates existing identity and role through the backend before mounting the lazy experience. Anonymous access returns through existing `/auth`; other users receive access denied.
+- `/greatday-preview`: open review link with no sign-in since commit 405e559 (`greatdayDemoAccess`), still noindex and outside navigation and the sitemap. `/admin/greatday` keeps the backend identity and role check.
+- The preview is built as the release world itself, a Houston jeweler's counter (`world.css`, direction contract at its top). It carries one quiet private-preview strip, and small string tags only where content is a placeholder.
+- Owner-supplied slots live in `content.ts`: `LYRICS` (lines with optional start seconds), `VOICES[].photo` (cleared portraits) and `CLIPS` (behind-the-record video). Empty slots render a tagged placeholder.
 - `/admin/greatday`: private Release Studio. Readiness checklist and event dictionary are documentation, not database approval workflows. Tagged-link generation is deterministic and copying is local only. Existing `/admin/captions` is reused unchanged.
-- No audio element, remix audio URL, commerce integration, signup submission, wall form persistence, newsletter insert or email action exists in this feature. Player is a clearly labeled silent animation. Email mockup is disabled. Wall acknowledgment is component-local state only.
+- The player plays the 30-second preview of the original 2024 single (catalog track `09aa34c7-b890-4929-99a8-2e87c2b4aa26`) through the existing `audio-preview` function, approved by the owner on 2026-10-22. It stops at 30 seconds and reports no events. No remix audio URL, commerce integration, signup submission, wall form persistence, newsletter insert or email action exists in this feature. The email field is disabled. The wall engraver is component-local state only; typed text is never saved or sent.
 - Existing cover at `/images/covers/opt/today-great-day-cover-480.webp` is TEMPORARY, NOT FINAL. Generated Houston scene is campaign concept imagery, not final artwork or historical documentary evidence.
 - Single $2.99, Deluxe $9.99 and Supporter $24.99 are PROPOSED PRICE / NOT FOR SALE. All purchase controls are disabled; contents are pending approval.
 - No release date is approved. Artist roster: Mr. CAP ft. Paul Wall, Lil Keke & Lisa Dinero. All other credits and license statements remain pending verification.
@@ -59,4 +61,4 @@ Use Instagram, TikTok, X and a Facebook comparison. Links use `utm_medium=social
 
 ## QA boundaries
 
-Verify signed-out redirect/return, signed-in non-admin denial, signed-in administrator access, delayed auth loading, all disabled purchase/signup states, zero new audio elements, local-only wall simulation, no Great Day analytics emissions, no public navigation links, no sitemap URLs, mobile/desktop layout and reduced motion. The project harness runs production builds automatically; do not start a second build manually. Record observed results honestly in the delivery summary.
+Verify signed-out redirect/return, signed-in non-admin denial, signed-in administrator access, delayed auth loading, all disabled purchase/signup states, one audio element playing only the original single preview and stopping at 30 seconds, local-only wall engraver, no Great Day analytics emissions, no public navigation links, no sitemap URLs, mobile/desktop layout and reduced motion. The project harness runs production builds automatically; do not start a second build manually. Record observed results honestly in the delivery summary.
