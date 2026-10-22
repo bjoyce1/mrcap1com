@@ -18,6 +18,8 @@
 .gd-manifesto { font-size: 13px; color: hsl(var(--gd-chrome)); }
 .greatday-world .gd-button { gap: 10px; background: hsl(var(--secondary)); color: hsl(var(--foreground)); box-shadow: var(--gd-shadow); border: 0; border-radius: 4px; white-space: normal; min-height: 44px; height: auto; padding: 13px 20px; }
 .greatday-world .gd-button:hover:not(:disabled) { background: hsl(var(--gd-gold)); color: hsl(var(--gd-dark)); }
+.greatday-world .gd-button svg { flex-shrink: 0; }
+.gd-player-top .gd-button { flex-shrink: 0; width: 46px; height: 46px; padding: 10px; }
 .greatday-world .gd-hero-button { margin-top: 30px; background: hsl(var(--gd-gold)); color: hsl(var(--gd-dark)); }
 .gd-hero-bottom { position: absolute; bottom: 28px; left: 6%; right: 6%; display: flex; justify-content: space-between; gap: 16px; font-family: 'Space Mono', monospace; font-size: 10px; color: hsl(var(--gd-chrome)); }
 .gd-section { padding: 100px 6%; max-width: 1440px; margin-inline: auto; scroll-margin-top: 120px; }

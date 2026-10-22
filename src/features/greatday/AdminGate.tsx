@@ -12,6 +12,13 @@ export default function AdminGate({ children }: { children: ReactNode }) {
   const location = useLocation();
   const [verified, setVerified] = useState<{ id: string; admin: boolean } | null>(null);
   useEffect(() => {
+    // Also neutralize unmanaged app-shell robots tags for direct preview visits.
+    const tags = Array.from(document.head.querySelectorAll<HTMLMetaElement>('meta[name="robots"]:not([data-rh]), meta[name="googlebot"]:not([data-rh])'));
+    const previous = tags.map((tag) => tag.content);
+    tags.forEach((tag) => { tag.content = 'noindex, nofollow'; });
+    return () => { tags.forEach((tag, index) => { tag.content = previous[index]; }); };
+  }, []);
+  useEffect(() => {
     let active = true;
     if (!user) { setVerified(null); return; }
     const id = user.id;

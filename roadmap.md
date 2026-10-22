@@ -6,7 +6,7 @@
 
 # Great Day private review
 
-- [ ] Add isolated admin-only preview and Release Studio with private route exclusions.
-- [ ] Build draft Houston experience with simulated wall, no audio, no real signup, disabled proposed tiers.
-- [ ] Document future architecture and publication gates without creating tables or connecting services.
-- [ ] Test access rules, campaign links, desktop/mobile and existing pages; report files and preview URL without publishing.
+- [x] Add isolated admin-only preview and Release Studio with private route exclusions.
+- [x] Build draft Houston experience with simulated wall, no audio, no real signup, disabled proposed tiers.
+- [x] Document future architecture and publication gates without creating tables or connecting services.
+- [x] Test access rules, campaign links, desktop/mobile and existing pages; report files and preview URL without publishing.
