@@ -13,3 +13,11 @@
 
 /index.html
   Cache-Control: no-cache
+
+/greatday-preview
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+
+/admin/greatday
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store

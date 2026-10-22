@@ -66,6 +66,8 @@
 
   function shouldTrack() {
     if (!isEnabled) return false;
+    // Great Day is a review-only experience, never a visitor or conversion source.
+    if (/^\/(greatday-preview|admin\/greatday)(\/|$)/.test(location.pathname)) return false;
     if (isAutomated()) return false;
     // only the live site reports; local builds and previews stay quiet
     if (!/^(www\.)?mrcap1\.com$/.test(location.hostname)) return false;

@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Great Day tokens are scoped to the private feature, never the public theme. */
+.greatday-world {
+  --background: 0 0% 4%;
+  --foreground: 45 18% 93%;
+  --secondary: 0 0% 11%;
+  --secondary-foreground: 45 18% 93%;
+  --muted-foreground: 40 9% 69%;
+  --ring: 43 79% 64%;
+  --gd-gold: 43 79% 64%;
+  --gd-dark: 0 0% 4%;
+  --gd-chrome: 200 10% 78%;
+  --gd-oxblood: 352 35% 16%;
+  --gd-shadow: 0 24px 70px hsl(var(--gd-dark) / 0.6);
+  --gd-hero-shade: linear-gradient(90deg, hsl(var(--gd-dark) / 0.74), hsl(var(--gd-dark) / 0.08)), linear-gradient(0deg, hsl(var(--gd-dark)), transparent 48%);
+  --gd-city-shade: linear-gradient(90deg, hsl(var(--gd-dark) / 0.86), hsl(var(--gd-dark) / 0.12)), linear-gradient(0deg, hsl(var(--gd-dark)), transparent 25%);
+}
+
 @layer base {
   :root {
     /* The Candy Archive — Lacquer base, bone text, candy accents */

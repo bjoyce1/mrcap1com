@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { safeGreatdayReturn } from '@/features/greatday/model';
 import { z } from 'zod';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -33,12 +34,14 @@ const Auth = () => {
   
   const { user, signIn, signUp } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo = safeGreatdayReturn((location.state as { greatdayReturnTo?: unknown } | null)?.greatdayReturnTo);
 
   useEffect(() => {
     if (user) {
-      navigate('/admin');
+      navigate(returnTo, { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, navigate, returnTo]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +70,7 @@ const Auth = () => {
           }
         } else {
           toast.success('Welcome back!');
-          navigate('/admin');
+          navigate(returnTo, { replace: true });
         }
       } else {
         const result = signupSchema.safeParse({ fullName, email, password });
@@ -90,7 +93,7 @@ const Auth = () => {
           }
         } else {
           toast.success('Account created successfully!');
-          navigate('/admin');
+          navigate(returnTo, { replace: true });
         }
       }
     } catch (err) {
