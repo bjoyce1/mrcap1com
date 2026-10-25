@@ -601,3 +601,55 @@ html.modal-open .cap-intro .screw { opacity: 0; pointer-events: none; }
   .cap-intro .screw__disc { width: 38px; height: 38px; }
   .cap-intro .screw__disc i { inset: 12px; }
 }
+
+/* ─── touch snapping: each flick settles on the nearest beat (index.js lays the points) ─── */
+html.intro-snap { scroll-snap-type: y proximity; }
+.cap-intro .snap-pt { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; }
+
+/* cards are liner notes, not windows: denser glass so covers drifting behind never read through the copy */
+.cap-intro .card { background: rgba(20,12,27,.9); }
+
+/* the caption sits over the lit portrait on wide screens too (phones keep their top band) */
+@media (min-width: 761px) {
+  .cap-intro .scrim--caption { display: block; inset: 0 auto 0 0; width: min(62vw, 760px); background: radial-gradient(ellipse 62% 42% at 24% 50%, rgba(14,8,20,.72), rgba(14,8,20,0) 100%); }
+}
+
+/* ─── phones: the world stays on screen. One bar on top, one row at the bottom, cards as sheets ─── */
+@media (max-width: 760px) {
+  /* chrome: the chapter tabs give way to the progress line; chop & screw shares the player's row */
+  .cap-intro .chapters { display: none; }
+  .cap-intro .player { left: 10px; right: 70px; bottom: 12px; }
+  .cap-intro .screw { left: auto; right: 10px; bottom: 18px; z-index: 36; padding: 4px; gap: 0; }
+  .cap-intro .screw__disc { width: 44px; height: 44px; }
+  .cap-intro .screw__disc i { inset: 14px; }
+  .cap-intro .screw__label { position: absolute; right: calc(100% + 10px); bottom: 2px; white-space: nowrap; padding: 9px 13px; border-radius: 14px;
+    background: rgba(16,9,22,.96); border: 1px solid var(--line-2); opacity: 0; transform: translateX(8px); pointer-events: none;
+    transition: opacity .35s var(--ease), transform .35s var(--ease); }
+  .cap-intro .screw.is-hint .screw__label, .cap-intro .screw:focus-visible .screw__label { opacity: 1; transform: none; }
+  .cap-intro .toast { bottom: 90px; }
+  .cap-intro .hero__ctas .btn--ghost { background: rgba(14,8,20,.92); }
+
+  /* cards are sheets above the bottom row: no inner scrolling, so a swipe anywhere moves the journey */
+  .cap-intro .station--left { align-items: flex-end; padding: 64px 10px 86px; }
+  .cap-intro .card { max-height: none; overflow: visible; overscroll-behavior: auto; padding: 18px 18px 16px; border-radius: 22px; background: rgba(16,9,22,.95); }
+  .cap-intro .card h2 { font-size: 25px; line-height: 1.04; margin-bottom: 10px; }
+  .cap-intro .card p { font-size: 14px; line-height: 1.5; }
+  .cap-intro .card p + p { margin-top: 8px; }
+  .cap-intro .card .row { margin-top: 14px; }
+  .cap-intro .card .eyebrow { margin-bottom: 10px; }
+  .cap-intro .card blockquote { margin-top: 12px; font-size: 15px; }
+  .cap-intro .card .muted, .cap-intro .card .fine:not(.hint-3d), .cap-intro .specs, .cap-intro .checks { display: none; }
+  .cap-intro .blueprint { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
+  .cap-intro .blueprint li { padding: 6px 11px; border: 1px solid rgba(217,164,65,.45); border-radius: 999px; }
+  .cap-intro .blueprint b { font-size: 13px; }
+  .cap-intro .blueprint + .btn { margin-top: 12px; }
+  .cap-intro [data-station="latest"] .card > p:not(.byline) { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .cap-intro .vids li:nth-child(n + 3) { display: none; }
+  .cap-intro .kpis { margin-top: 12px; }
+  .cap-intro .station--wall, .cap-intro .station--merch { padding-bottom: 86px; }
+
+  /* chapter taglines sit on a band at the foot of the screen, clear of the standing word */
+  .cap-intro .station--word { padding-bottom: 98px; }
+  .cap-intro .scrim--word { height: 38vh; background: linear-gradient(180deg, rgba(14,8,20,0) 0%, rgba(14,8,20,.84) 52%, rgba(14,8,20,.92) 100%); }
+  .cap-intro .word-tag { font-size: 22px; }
+}

@@ -27,7 +27,7 @@ import { createModals } from './ui/modals.js';
 import { createNav } from './ui/nav.js';
 import { TOTAL, SCENE_SWITCH, MOMENTS, WORDS, STATIONS, range, smooth, clamp } from './core/timeline.js';
 import { TRACKS, ALBUMS, HERO_TRACK, LATEST, SINGLES, HOUSE_CHARTS, albumTracks, bySlug } from './data/catalog.js';
-import { CONTACT } from './data/content.js';
+import { CONTACT, TIMELINE } from './data/content.js';
 
 const SKELETON = /* html */ `
   <div class="loader" data-el="loader" role="dialog" aria-modal="true" aria-label="Mr. CAP intro">
@@ -80,7 +80,7 @@ function claimPage() {
     history.scrollRestoration = 'manual';
   }
 }
-const PAGE_CLASSES = ['intro-active', 'modal-open', 'modal-crate', 'lenis', 'lenis-smooth', 'lenis-stopped', 'lenis-scrolling'];
+const PAGE_CLASSES = ['intro-active', 'intro-snap', 'modal-open', 'modal-crate', 'lenis', 'lenis-smooth', 'lenis-stopped', 'lenis-scrolling'];
 function releasePage() {
   if (--live > 0) return;
   live = 0;
@@ -222,14 +222,38 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
   // ── scroll ──────────────────────────────────────────────────────────────────
   const track = el('track');
   let vh = innerHeight, vw = innerWidth;
-  const sizeTrack = () => { track.style.height = `${(TOTAL + 1) * vh}px`; };
+  // Phones: a flick settles on the nearest beat (a card, a chapter word, a year, an album) instead of
+  // stopping between them. Native proximity snapping, so it rides the phone's own momentum.
+  const snapOn = coarse && !reduced && !(import.meta.env.DEV && new URLSearchParams(location.search).has('sc-verify'));
+  const [ta, tb] = STATIONS.timeline;
+  const SNAP_U = [
+    (STATIONS.caption[0] + STATIONS.caption[1]) / 2,
+    (STATIONS.stepInside[0] + STATIONS.stepInside[1]) / 2,
+    ...WORDS.map((w) => w.u[1]),
+    ...['who', 'blueprint', 'listening', 'latest', 'charts', 'first', 'book', 'receipts', 'screening', 'booking'].map((k) => (STATIONS[k][0] + STATIONS[k][1]) / 2),
+    ...TIMELINE.map((_, i) => ta + 0.4 + ((i + 0.5) / TIMELINE.length) * (tb - ta - 1.05)),
+    ...ALBUMS.map((_, i) => uForAlbum(i)),
+  ];
+  const snaps = snapOn ? SNAP_U.map((u) => {
+    const m = document.createElement('i');
+    m.className = 'snap-pt';
+    track.appendChild(m);
+    return [u, m];
+  }) : [];
+  const setSnap = (on) => document.documentElement.classList.toggle('intro-snap', on && snapOn);
+  const sizeTrack = () => {
+    track.style.height = `${(TOTAL + 1) * vh}px`;
+    for (const [u, m] of snaps) m.style.top = `${u * vh}px`;
+  };
   sizeTrack();
   const lenis = new Lenis({ lerp: reduced ? 1 : 0.075, wheelMultiplier: 0.85, touchMultiplier: 1.2, smoothWheel: !reduced });
   lenis.stop();
   let currentU = 0;
   const goto = (u, opts = {}) => {
     const immediate = reduced || !!opts.immediate;
-    lenis.scrollTo(u * vh, { duration: immediate ? 0 : Math.min(6, 1.2 + Math.abs(u - currentU) * 0.12), immediate, force: true, lock: false });
+    // snapping would catch every frame of a programmatic glide, so it steps aside until the glide lands
+    setSnap(false);
+    lenis.scrollTo(u * vh, { duration: immediate ? 0 : Math.min(6, 1.2 + Math.abs(u - currentU) * 0.12), immediate, force: true, lock: false, onComplete: () => setSnap(entered) });
   };
 
   // ── UI ──────────────────────────────────────────────────────────────────────
@@ -355,7 +379,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
   // Houston slowed it down first. Holding sags the record to a syrup tempo and slows the world's
   // clock with it; letting go chops the last half-beat back in.
   const screwEl = el('screw');
-  let screwHeld = false, screwAmt = 0, chopK = 0, screwShown = false, screwHinted = false;
+  let screwHeld = false, screwAmt = 0, chopK = 0, screwShown = false, screwHinted = false, screwTipped = false;
   screwEl.inert = true;
   const holdScrew = (on) => {
     if (on === screwHeld || (on && (exiting || !screwShown))) return;
@@ -444,6 +468,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     const h1 = host.querySelector('.hero__title');
     if (h1) { h1.tabIndex = -1; h1.focus({ preventScroll: true }); }
     lenis.start();
+    setSnap(true);
     const h = location.hash.slice(1);
     const w = WORDS.find((x) => x.id === h);
     if (w) goto(w.u[0] + 0.05, { immediate: true });
@@ -500,6 +525,7 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
   const canvas = host.querySelector('#gl');
   const right = new THREE.Vector3(), upv = new THREE.Vector3(), tmp = new THREE.Vector3();
   let lastT = performance.now(), lastFov = 0, crackle = -1, clock = 0, bank = 0, lastU = 0;
+  let sheetK = 0, lift = 0, lastLift = 0;
 
   function step(now) {
     const realDt = Math.min(0.05, (now - lastT) / 1000);
@@ -571,6 +597,13 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
     }
     const fov = sample.fov + kick + (reduced ? 0 : screwAmt * 4);
     if (Math.abs(fov - lastFov) > 0.01) { camera.fov = lastFov = fov; camera.updateProjectionMatrix(); }
+    // phones: while a card sheet is up, the world rises into the space above it instead of hiding behind it
+    const liftTo = vw < vh * 0.9 ? sheetK * 0.17 : 0;
+    lift += (liftTo - lift) * Math.min(1, realDt * 5);
+    if (Math.abs(lift - lastLift) > 2e-4) {
+      lastLift = lift;
+      if (lift > 2e-3) camera.setViewOffset(vw, vh, 0, vh * lift, vw, vh); else camera.clearViewOffset();
+    }
 
     // ── worlds
     let frontAlbum, speed = 0;
@@ -603,6 +636,12 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
       screwEl.classList.toggle('is-on', showScrew);
       screwEl.inert = !showScrew;
       if (!showScrew) holdScrew(false);
+      // phones show the disc alone; its label rides out beside it the first time it appears
+      if (showScrew && !screwTipped) {
+        screwTipped = true;
+        screwEl.classList.add('is-hint');
+        setTimeout(() => screwEl.classList.remove('is-hint'), 4200);
+      }
     }
     if (showScrew && !screwHinted && levels.playing && u >= SCENE_SWITCH) {
       screwHinted = true;
@@ -626,14 +665,31 @@ export async function mountIntro(host, { onEnter, onNavigate, insert, signal: ou
       if (i >= 0) renderer.initTexture(warm.splice(i, 1)[0]);
     }
 
-    stations.update(u, { frontAlbum });
+    sheetK = stations.update(u, { frontAlbum });
     nav.update(u, TOTAL);
     player.tick(levels);
     verifyState?.();
   }
+  // `?intro&hud`: a small on-device readout, so a real phone can report how the intro runs on it
+  const hud = new URLSearchParams(location.search).has('hud') ? document.createElement('output') : null;
+  let hudFrames = 0, hudSince = performance.now(), hudWorst = 0, hudLast = performance.now();
+  if (hud) {
+    hud.style.cssText = 'position:fixed;left:10px;top:62px;z-index:99;padding:6px 9px;border-radius:10px;background:rgba(0,0,0,.72);color:#f3d58a;font:600 11px/1.45 ui-monospace,monospace;white-space:pre;pointer-events:none';
+    host.appendChild(hud);
+  }
   function frame(now) {
     if (destroyed) return;
     step(now);
+    if (hud) {
+      hudFrames++;
+      hudWorst = Math.max(hudWorst, now - hudLast);
+      hudLast = now;
+      if (now - hudSince > 1000) {
+        const fps = Math.round((hudFrames * 1000) / (now - hudSince));
+        hud.textContent = `${fps} fps · worst ${Math.round(hudWorst)}ms\ntier ${engine.tier} · dpr ${renderer.getPixelRatio().toFixed(2)}\n${innerWidth}×${innerHeight} · u ${currentU.toFixed(1)}`;
+        hudFrames = 0; hudWorst = 0; hudSince = now;
+      }
+    }
     raf = requestAnimationFrame(frame);
   }
   raf = requestAnimationFrame(frame);

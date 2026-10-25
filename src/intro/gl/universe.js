@@ -84,7 +84,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
   scene.add(sky);
 
   // ── stars ────────────────────────────────────────────────────────────────────
-  const STARS = coarse ? 2600 : 6000;
+  const STARS = coarse ? 1800 : 6000;
   const sPos = new Float32Array(STARS * 3), sCol = new Float32Array(STARS * 3), sSeed = new Float32Array(STARS);
   const palette = [new THREE.Color('#fff4e0'), new THREE.Color(GOLD), new THREE.Color(MAGENTA), new THREE.Color('#b9a6ff')];
   for (let i = 0; i < STARS; i++) {

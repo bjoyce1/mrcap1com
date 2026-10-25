@@ -109,7 +109,9 @@ export function createEngine(canvas, { signal, onContextLost, onContextRestored 
   composer.addPass(new OutputPass());
   composer.addPass(film);
 
-  let tierIndex = isTouch ? 1 : 0;
+  // phones start at medium; low-memory or few-core phones start at low rather than stuttering into it
+  const modest = (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+  let tierIndex = isTouch ? (modest ? 2 : 1) : 0;
   let tier = TIERS[tierIndex];
   let w = 0, h = 0;
 

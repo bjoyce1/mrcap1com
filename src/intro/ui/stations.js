@@ -229,7 +229,8 @@ export function createStations(root, { onWall, verify = false } = {}) {
   const els = [...root.querySelectorAll('.station')].map((el) => {
     const id = el.dataset.station;
     const win = STATIONS[id] || [Number(el.dataset.in), Number(el.dataset.out)];
-    const s = { el, id, a: win[0], b: win[1], alpha: -1, p: -1 };
+    // `sheet`: a card laid over the world; on phones the camera lifts the scene above it
+    const s = { el, id, a: win[0], b: win[1], alpha: -1, p: -1, sheet: el.classList.contains('station--left') };
     if (verify) {
       // scroll-craft harness: it grades each copy block by its OWN opacity, so the fade lives on the blocks
       el.style.opacity = 1;
@@ -293,9 +294,12 @@ export function createStations(root, { onWall, verify = false } = {}) {
   }
 
   return {
+    /** Fades every station for this scroll position and returns how present the topmost card is (0 to 1). */
     update(u, { frontAlbum } = {}) {
+      let sheet = 0;
       for (const s of els) {
-        const alpha = s.b > 40 ? (u < s.a ? 0 : Math.min(1, (u - s.a) / 0.4)) : envelope(u, s.a, s.b, s.id === 'hero' ? 0.01 : 0.38);
+        const alpha = s.b > 40 ? (u < s.a ? 0 : Math.min(1, (u - s.a) / 0.4)) : envelope(u, s.a, s.b, s.id === 'hero' ? 0.01 : 0.3);
+        if (s.sheet) sheet = Math.max(sheet, alpha);
         const heroAlpha = s.id === 'hero' ? 1 - range(u, 0.05, s.b) : alpha;
         const a = Math.round(heroAlpha * 1000) / 1000;
         if (a !== s.alpha) {
@@ -318,6 +322,7 @@ export function createStations(root, { onWall, verify = false } = {}) {
       if (u > ta - 0.5 && u < tb + 0.5) setTimeline(Math.min(TIMELINE.length - 1, Math.floor(clamp((u - ta - 0.4) / (tb - ta - 1.05)) * TIMELINE.length)));
       if (frontAlbum != null && u > STATIONS.wall[0] - 0.5 && u < STATIONS.wall[1] + 0.5) setWall(frontAlbum);
       if (!counted && u > STATIONS.receipts[0] && u < STATIONS.receipts[1]) countUp();
+      return sheet;
     },
     get wallIndex() { return wall.current; },
   };
