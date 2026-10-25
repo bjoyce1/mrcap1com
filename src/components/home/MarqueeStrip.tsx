@@ -13,13 +13,13 @@ const ITEMS = [
  * Infinite scrolling marquee — the legacy ticker.
  * Two copies of the track animate side by side; CSS handles the loop.
  */
-const MarqueeStrip = ({ reverse = false }: { reverse?: boolean }) => {
+const MarqueeStrip = ({ reverse = false, items = ITEMS }: { reverse?: boolean; items?: string[] }) => {
   const Track = ({ ariaHidden = false }: { ariaHidden?: boolean }) => (
     <div
       aria-hidden={ariaHidden || undefined}
       className={`marquee-track flex shrink-0 items-center ${reverse ? "marquee-reverse" : ""}`}
     >
-      {ITEMS.map((item, i) => (
+      {items.map((item, i) => (
         <span key={i} className="flex items-center">
           <span className="font-display text-2xl md:text-4xl uppercase tracking-tight text-foreground/90 whitespace-nowrap px-6 md:px-10">
             {item}

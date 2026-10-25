@@ -1,0 +1,56 @@
+/* Today Was a Great Day: the site's own lacquer, candy and gold, at campaign scale.
+   The sun comes up over Houston and the record is the sun. */
+
+.gd2-sky { object-position: 30% 62%; filter: saturate(1.08) contrast(1.05); }
+.gd2-grade {
+  background:
+    linear-gradient(180deg, hsl(265 37% 7% / .94) 0%, hsl(266 42% 10% / .8) 26%, hsl(300 38% 14% / .32) 55%, hsl(265 37% 7% / .62) 80%, hsl(265 37% 7%) 100%),
+    radial-gradient(ellipse 80% 60% at 50% 58%, transparent 40%, hsl(265 37% 7% / .55) 100%);
+}
+
+/* the record: grooves turn, the light on them stays put */
+.gd2-record { position: relative; aspect-ratio: 1; isolation: isolate; }
+.gd2-record__disc {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: repeating-radial-gradient(circle, #140f19 0 1.3px, #1f1828 1.3px 2.8px);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .85), inset 0 0 0 1px rgba(255, 255, 255, .07);
+}
+.gd2-record::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from 30deg, rgba(255, 255, 255, .16), transparent 11%, transparent 44%, rgba(255, 255, 255, .11) 55%, transparent 68%);
+  -webkit-mask: radial-gradient(circle, transparent 0 31%, #000 31.5%); mask: radial-gradient(circle, transparent 0 31%, #000 31.5%);
+}
+.gd2-record__label { position: absolute; inset: 31%; border-radius: 50%; background: var(--cover) center / cover; box-shadow: 0 0 0 2px rgba(0, 0, 0, .55); }
+.gd2-record__label::after { content: ''; position: absolute; left: 50%; top: 50%; width: 7%; height: 7%; translate: -50% -50%; border-radius: 50%; background: #0c0810; }
+.gd2-record.is-playing .gd2-record__disc { animation: gd2-spin 1.8s linear infinite; }
+.gd2-record--sun .gd2-record__disc { box-shadow: 0 0 0 2px hsl(39 67% 55% / .55), 0 0 70px hsl(39 95% 65% / .45), 0 30px 80px -20px rgba(0, 0, 0, .85), inset 0 0 0 1px rgba(255, 255, 255, .07); }
+/* in the hero the record rises like the sun: a gold corona behind it */
+.gd2-record--sun::before {
+  content: ''; position: absolute; inset: -60%; z-index: -1; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle closest-side, hsl(42 100% 78% / .95) 0%, hsl(39 90% 62% / .7) 40%, hsl(28 80% 52% / .32) 58%, hsl(333 64% 51% / .14) 76%, transparent 100%);
+  animation: gd2-breathe 7s ease-in-out infinite;
+}
+
+/* gold to magenta, the same gradient as the site's scroll rail */
+.gd2-progress { --p: 0%; -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 18px; margin: 0; background: transparent; cursor: pointer; }
+.gd2-progress::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, hsl(39 67% 55%), hsl(333 64% 51%)) 0 0 / var(--p) 100% no-repeat, hsl(38 33% 89% / .16); }
+.gd2-progress::-moz-range-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, hsl(39 67% 55%), hsl(333 64% 51%)) 0 0 / var(--p) 100% no-repeat, hsl(38 33% 89% / .16); }
+.gd2-progress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border: 0; border-radius: 50%; background: hsl(38 33% 89%); box-shadow: 0 0 0 4px hsl(333 64% 51% / .35); }
+.gd2-progress::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: hsl(38 33% 89%); box-shadow: 0 0 0 4px hsl(333 64% 51% / .35); }
+.gd2-progress:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 4px; border-radius: 4px; }
+
+.gd2-outline { color: transparent; -webkit-text-stroke: 1.5px hsl(39 67% 55% / .85); }
+.gd2-voices-glow { background: radial-gradient(ellipse 60% 70% at 50% 38%, hsl(39 67% 55% / .13), transparent 70%), radial-gradient(ellipse 45% 55% at 82% 85%, hsl(333 64% 51% / .1), transparent 70%); }
+
+/* instant prints, the same objects that hang in the intro's ORIGIN chapter */
+.gd2-print { position: relative; margin: 0; padding: 10px 10px 0; border-radius: 3px; background: #ece4d6; rotate: var(--tilt, 0deg); box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .75), 0 2px 6px rgba(0, 0, 0, .4); }
+.gd2-print__photo { aspect-ratio: 1; background-size: 340%; background-repeat: no-repeat; filter: saturate(1.05) contrast(1.05) sepia(.08); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .25); }
+.gd2-print figcaption { min-height: 76px; padding: 12px 6px 16px; color: #2b2219; font: italic 600 14px/1.38 'Archivo', sans-serif; text-wrap: pretty; overflow-wrap: anywhere; }
+.gd2-print.is-ghost figcaption { color: #8a7f70; }
+.gd2-edition-art { background: radial-gradient(circle at 50% 45%, hsl(39 67% 55% / .26), transparent 62%), hsl(266 30% 12%); }
+
+@keyframes gd2-spin { to { rotate: 360deg; } }
+@keyframes gd2-breathe { 50% { opacity: .78; scale: .96; } }
+@media (prefers-reduced-motion: reduce) {
+  .gd2-record.is-playing .gd2-record__disc, .gd2-record--sun::before { animation: none; }
+}

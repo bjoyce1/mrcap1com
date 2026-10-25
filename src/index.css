@@ -15,8 +15,6 @@
   --gd-chrome: 200 10% 78%;
   --gd-oxblood: 352 35% 16%;
   --gd-shadow: 0 24px 70px hsl(var(--gd-dark) / 0.6);
-  --gd-hero-shade: linear-gradient(90deg, hsl(var(--gd-dark) / 0.74), hsl(var(--gd-dark) / 0.08)), linear-gradient(0deg, hsl(var(--gd-dark)), transparent 48%);
-  --gd-city-shade: linear-gradient(90deg, hsl(var(--gd-dark) / 0.86), hsl(var(--gd-dark) / 0.12)), linear-gradient(0deg, hsl(var(--gd-dark)), transparent 25%);
 }
 
 @layer base {
