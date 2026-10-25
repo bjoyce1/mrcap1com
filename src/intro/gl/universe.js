@@ -311,7 +311,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
   scene.add(ismTitle);
 
   const holoSrc = ['/intro/img/ism/nft-limitless.webp', '/intro/img/ism/nft-art-of-ism.webp', '/intro/img/ism/dippin-metaverse.webp', '/intro/img/story/the-life-documentary.webp'];
-  const holoLayout = [[-9, 2.6, -566, 0.5], [8.5, -2.4, -592, -0.45], [-8.2, -2.2, -604, 0.45], [7.2, 1.0, -600, -0.3]];
+  const holoLayout = [[-9, 2.6, -566, 0.5], [8.5, -2.4, -592, -0.45], [-8.2, -2.2, -604, 0.45], [9.4, 1.4, -590, -0.4]];
   const holos = holoSrc.map((src, i) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(4.4, 4.4), photoMaterial(tex(src), { holo: 1, rim: i % 2 ? MAGENTA : GOLD }));
     const [x, y, z, ry] = holoLayout[i];
@@ -411,7 +411,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     passThrough(o, fill(o));
     // gallery drift + timeline
     key(11.2, [-0.6, 0.4, -156], [2.5, 0, -186], fov, 0.75);
-    key(12.8, [0.4, 0.8, -176], [3.2, 0, -206], fov, 0.75);
+    key(12.8, [0.4, 0.8, -169], [3.2, 0, -206], fov, 0.75);
     key(13.8, [0.2, 0.4, -190], [3.4, -0.8, -214]);
     key(16.0, [0.6, 0.2, -248], [3.6, -1.2, -276]);
     // SOUND — through the O, inside the EQ halo
@@ -427,7 +427,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     key(28.0, [-0.6, 0.4, -532], [3.8, 0.3, -560], fov, 0.75);
     key(29.4, [-0.4, 0.5, -556], [3.8, 0.6, -584], fov, 0.75);
     key(30.9, [0, 0.3, -582], [2.0, 0, -610], fov, 0.75);
-    key(32.4, [-1.2, 0.5, -596], [10, 1.2, -614], fov, 0.75);
+    key(32.4, [-2.4, 0.5, -592], [10, 1.2, -616], fov, 0.75);
     // STAGE — the curtain rises
     passThrough(st, fill(st));
     key(36.2, [0.8, 0.8, -722], [-1.5, 0.3, -752], fov, 0.75);

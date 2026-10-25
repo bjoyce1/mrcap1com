@@ -606,8 +606,55 @@ html.modal-open .cap-intro .screw { opacity: 0; pointer-events: none; }
 html.intro-snap { scroll-snap-type: y proximity; }
 .cap-intro .snap-pt { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; }
 
-/* cards are liner notes, not windows: denser glass so covers drifting behind never read through the copy */
-.cap-intro .card { background: rgba(20,12,27,.9); }
+/* ─── stations: editorial compositions on the world, not boxes over it ─────────
+   One voice for statements (Anton, the voice of STEP INSIDE THE ISM and the finale),
+   Archivo for reading, gold for figures. Each block reads on its own local backdrop. */
+.cap-intro .card { width: min(540px, 100%); padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.cap-intro .card::before { content: none; }
+.cap-intro .card--wide { width: min(600px, 100%); }
+.cap-intro .scrim--side { inset: 0; background: radial-gradient(ellipse 46% 80% at 21% 52%, rgba(11,6,16,.9) 0%, rgba(11,6,16,.74) 44%, rgba(11,6,16,0) 80%); }
+.cap-intro .station--trail .scrim--side { background: radial-gradient(ellipse 46% 80% at 79% 52%, rgba(11,6,16,.9) 0%, rgba(11,6,16,.74) 44%, rgba(11,6,16,0) 80%); }
+.cap-intro .station > .scrim { transform: none; }
+
+.cap-intro .card .stmt { font: 400 clamp(46px, 4.5vw, 78px)/.92 var(--f-cond); letter-spacing: .004em; text-transform: uppercase; color: var(--cream); margin: 0 0 20px; text-shadow: 0 8px 40px rgba(6,3,10,.55); }
+.cap-intro .card .stmt--long { font-size: clamp(38px, 3.5vw, 60px); }
+.cap-intro .card .stmt em { font: inherit; letter-spacing: inherit; color: var(--gold-hi); }
+.cap-intro .stmt .ln { display: block; overflow: hidden; padding: .04em 0 .08em; margin: -.04em 0 -.08em; }
+.cap-intro .stmt .ln > span { display: block; transform: translate3d(0, calc((1 - clamp(0, var(--a, 1) * 1.8 - var(--i, 0) * .32, 1)) * 106%), 0); }
+.cap-intro .meta { font: 700 11.5px/1.4 var(--f-body); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin: -6px 0 18px; }
+.cap-intro .card p { font-size: 17px; line-height: 1.6; max-width: 44ch; }
+.cap-intro .card p.fine { font-size: 13px; }
+.cap-intro .card blockquote { margin-top: 22px; padding-left: 18px; border-left: 2px solid var(--gold); font: 400 26px/1.12 var(--f-cond); letter-spacing: .01em; text-transform: uppercase; color: var(--gold-hi); }
+
+.cap-intro .figures { list-style: none; padding: 0; margin: 24px 0 10px; display: flex; flex-wrap: wrap; gap: 14px 38px; }
+.cap-intro .figures li { display: grid; align-content: start; gap: 8px; }
+.cap-intro .figures b { font: 400 clamp(54px, 4.8vw, 76px)/.84 var(--f-cond); color: var(--gold-hi); }
+.cap-intro .figures span { font: 700 11px/1.35 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); max-width: 13ch; }
+
+.cap-intro .tenets { list-style: none; padding: 0; margin: 24px 0; display: grid; }
+.cap-intro .tenets li { display: grid; grid-template-columns: 40px 1fr; column-gap: 8px; padding: 13px 0; border-top: 1px solid rgba(217,164,65,.3); }
+.cap-intro .tenets li:last-child { border-bottom: 1px solid rgba(217,164,65,.3); }
+.cap-intro .tenets i { font: 400 15px/1.8 var(--f-cond); font-style: normal; color: var(--gold); }
+.cap-intro .tenets b { font: 400 30px/1 var(--f-cond); letter-spacing: .01em; text-transform: uppercase; color: var(--cream); }
+.cap-intro .tenets span { grid-column: 2; margin-top: 6px; font-size: 14px; color: var(--muted); }
+
+.cap-intro .tracks--chart { gap: 2px; margin-top: 2px; }
+.cap-intro .tracks--chart .trow__meta b { font-size: 16px; }
+.cap-intro .tracks--chart .trow__meta b i { font: 400 22px/1 var(--f-cond); margin-right: 12px; vertical-align: -2px; }
+.cap-intro .card--wide .vids { grid-template-columns: repeat(2, 1fr); gap: 16px 14px; }
+.cap-intro .vids li:nth-child(n + 5) { display: none; }
+.cap-intro .card .byline { margin: -8px 0 14px; }
+/* chrome recedes: the chapters are a quiet index, not another pill */
+.cap-intro .chapters { background: none; border-color: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.cap-intro .chapters__btn { text-shadow: 0 1px 12px rgba(6,3,10,.95); }
+.cap-intro .chapters__btn.is-active { background: none; }
+@media (min-width: 761px) {
+  /* the golden rail already carries the year at full scale */
+  .cap-intro .card--timeline .tl { grid-template-columns: 1fr; min-height: 0; }
+  .cap-intro .card--timeline .tl__year { display: none; }
+  .cap-intro .card--timeline h3 { font: 400 clamp(40px, 3.6vw, 58px)/.95 var(--f-cond); text-transform: uppercase; letter-spacing: .005em; }
+}
+@media (prefers-reduced-motion: reduce) { .cap-intro .stmt .ln > span { transform: none !important; } }
 
 /* the caption sits over the lit portrait on wide screens too (phones keep their top band) */
 @media (min-width: 761px) {
@@ -622,8 +669,8 @@ html.intro-snap { scroll-snap-type: y proximity; }
   .cap-intro .screw { left: auto; right: 10px; bottom: 18px; z-index: 36; padding: 4px; gap: 0; }
   .cap-intro .screw__disc { width: 44px; height: 44px; }
   .cap-intro .screw__disc i { inset: 14px; }
-  .cap-intro .screw__label { position: absolute; right: calc(100% + 10px); bottom: 2px; white-space: nowrap; padding: 9px 13px; border-radius: 14px;
-    background: rgba(16,9,22,.96); border: 1px solid var(--line-2); opacity: 0; transform: translateX(8px); pointer-events: none;
+  .cap-intro .screw__label { position: absolute; right: 0; bottom: calc(100% + 10px); white-space: nowrap; padding: 9px 13px; border-radius: 14px;
+    background: rgba(16,9,22,.96); border: 1px solid var(--line-2); opacity: 0; transform: translateY(6px); pointer-events: none;
     transition: opacity .35s var(--ease), transform .35s var(--ease); }
   .cap-intro .screw.is-hint .screw__label, .cap-intro .screw:focus-visible .screw__label { opacity: 1; transform: none; }
   .cap-intro .toast { bottom: 90px; }
@@ -639,10 +686,20 @@ html.intro-snap { scroll-snap-type: y proximity; }
   .cap-intro .card .eyebrow { margin-bottom: 10px; }
   .cap-intro .card blockquote { margin-top: 12px; font-size: 15px; }
   .cap-intro .card .muted, .cap-intro .card .fine:not(.hint-3d), .cap-intro .specs, .cap-intro .checks { display: none; }
-  .cap-intro .blueprint { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
-  .cap-intro .blueprint li { padding: 6px 11px; border: 1px solid rgba(217,164,65,.45); border-radius: 999px; }
-  .cap-intro .blueprint b { font-size: 13px; }
-  .cap-intro .blueprint + .btn { margin-top: 12px; }
+  .cap-intro .scrim--side { display: none; }
+  .cap-intro .card .stmt { font-size: 34px; margin-bottom: 10px; text-shadow: none; }
+  .cap-intro .card .stmt--long { font-size: 28px; }
+  .cap-intro .meta { font-size: 10.5px; margin: -2px 0 10px; }
+  .cap-intro .card blockquote { margin-top: 12px; font-size: 19px; }
+  .cap-intro .figures { margin: 12px 0 4px; gap: 10px 22px; }
+  .cap-intro .figures b { font-size: 40px; }
+  .cap-intro .figures--4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cap-intro .figures--4 b { font-size: 30px; }
+  .cap-intro .figures span { font-size: 9.5px; letter-spacing: .12em; }
+  .cap-intro .tenets { margin: 12px 0 14px; }
+  .cap-intro .tenets li { padding: 8px 0; grid-template-columns: 28px 1fr; }
+  .cap-intro .tenets b { font-size: 21px; }
+  .cap-intro .tenets span { display: none; }
   .cap-intro [data-station="latest"] .card > p:not(.byline) { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .cap-intro .vids li:nth-child(n + 3) { display: none; }
   .cap-intro .kpis { margin-top: 12px; }

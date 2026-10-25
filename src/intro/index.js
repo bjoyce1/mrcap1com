@@ -52,7 +52,7 @@ const SKELETON = /* html */ `
     <nav class="topbar__right" aria-label="Quick actions">
       <button class="link-btn" data-action="toggle-motion" aria-pressed="false">Pause motion</button>
       <button class="link-btn" data-open="crate">The Crate <em>${TRACKS.length}</em></button>
-      <button class="btn btn--candy btn--sm" data-open="booking">Book Mr. CAP <span class="arrow" aria-hidden="true">→</span></button>
+      <button class="link-btn" data-open="booking">Book Mr. CAP</button>
       <button class="btn btn--enter" data-action="enter-site">Enter site <span class="arrow" aria-hidden="true">→</span></button>
     </nav>
   </header>

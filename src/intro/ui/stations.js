@@ -1,7 +1,7 @@
 import { STATIONS, WORDS, envelope, range, clamp } from '../core/timeline.js';
 import { ALBUMS, TRACKS, SINGLES, HOUSE_CHARTS, LATEST, bySlug } from '../data/catalog.js';
 import {
-  ROLES, BLUEPRINT, TIMELINE, STATS, NFT, BOOK, DOCUMENTARY, PRESS, VIDEOS, SHOWS,
+  BLUEPRINT, TIMELINE, STATS, NFT, BOOK, DOCUMENTARY, PRESS, VIDEOS, SHOWS,
   BOOKING_TYPES, MERCH, STORE_URL, SOCIALS, CONTACT, MORE_LINKS,
 } from '../data/content.js';
 import { STREAM } from '../config.js';
@@ -12,6 +12,9 @@ export const fmt = (s) => (s ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60
 const ext = (href, label, cls = 'btn btn--ghost btn--sm') => `<a class="${cls}" href="${esc(href)}" target="_blank" rel="noopener">${label} <span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>`;
 const eyebrow = (t) => `<p class="eyebrow"><span class="eyebrow__line"></span>${t}</p>`;
 const byline = (t) => (t.ft ? `${esc(t.artist)} ft. ${esc(t.ft)}` : esc(t.artist));
+// a statement rises line by line out of a mask as its station arrives (intro.css reads --a and each line's --i)
+const statement = (lines, cls = '') => `<h2 class="stmt ${cls}">${lines.map((l, i) => `<span class="ln" style="--i:${i}"><span>${l}</span></span>`).join(' ')}</h2>`;
+const meta = (t) => `<p class="meta">${t}</p>`;
 
 function trackRow(t, i, { plays = false } = {}) {
   return `
@@ -28,7 +31,7 @@ function trackRow(t, i, { plays = false } = {}) {
 
 function build() {
   const S = [];
-  const add = (id, cls, inner, extra = '') => S.push(`<section class="station ${cls}" data-station="${id}" id="${id}" ${extra}>${inner}</section>`);
+  const add = (id, cls, inner, extra = '') => S.push(`<section class="station ${cls}" data-station="${id}" id="${id}" ${extra}>${cls.includes('station--left') ? '<div class="scrim scrim--side" aria-hidden="true"></div>' : ''}${inner}</section>`);
 
   // HERO
   add('hero', 'station--hero', `
@@ -56,18 +59,17 @@ function build() {
   // ORIGIN
   add('who', 'station--left', `
     <article class="card">
-      <h2>Two names.<br/><em>One code.</em></h2>
+      ${statement(['Two names.', '<em>One code.</em>'])}
       <p>Cornelius A. Pratt is the son of two musicians, raised in Houston's Third Ward and South Park. On stage at eight years old, a Jack Yates Senior High graduate, and a veteran of the city's earliest independent circuits with The Raise Up Posse.</p>
       <p class="muted">One name signs the paperwork. The other signs the work. Both run on the same principle: own it, ship it, outlast the rest.</p>
-      <ul class="roles">${ROLES.map(([, t, d]) => `<li><b>${t}</b><span>${d}</span></li>`).join('')}</ul>
       <blockquote>“The technology changed. The principle didn't: own the work.”</blockquote>
     </article>`);
 
   add('blueprint', 'station--left', `
     <article class="card">
-      <h2>Not a badge.<br/><em>A blueprint.</em></h2>
+      ${statement(['Not a badge.', '<em>A blueprint.</em>'])}
       <p>Long before streaming, the South Park Coalition built a direct-to-fan machine: masters retained, product moved hand to hand, artists carried on tour by artists. Mr. CAP has spent a career inside that model, and building on top of it.</p>
-      <ul class="blueprint">${BLUEPRINT.map(([, t, d]) => `<li><b>${t}</b><span>${d}</span></li>`).join('')}</ul>
+      <ol class="tenets">${BLUEPRINT.map(([n, t, d]) => `<li><i>${n}</i><b>${t}</b><span>${d}</span></li>`).join('')}</ol>
       ${ext('/south-park-coalition', 'Enter the SPC archive')}
     </article>`);
 
@@ -84,9 +86,9 @@ function build() {
   // SOUND
   add('listening', 'station--left station--trail', `
     <article class="card">
-      <h2>Stream direct.<br/><em>No middleman.</em></h2>
+      ${statement(['Stream direct.', '<em>No middleman.</em>'])}
       <p>Three decades of Houston hip-hop, straight from the source. Press play and the whole universe moves with the record.</p>
-      <ul class="kpis"><li><b>${TRACKS.length}</b><span>Tracks</span></li><li><b>${ALBUMS.length}</b><span>Albums</span></li><li><b>${SINGLES.length}</b><span>Singles & features</span></li></ul>
+      <ul class="figures"><li><b>${TRACKS.length}</b><span>Tracks</span></li><li><b>${ALBUMS.length}</b><span>Albums</span></li><li><b>${SINGLES.length}</b><span>Singles & features</span></li></ul>
       <div class="row">
         <button class="btn btn--candy btn--sm" data-action="play-catalog">${icon('play')} Play the catalog</button>
         <button class="btn btn--ghost btn--sm" data-action="open-crate">Open the Crate</button>
@@ -97,8 +99,8 @@ function build() {
   const her = bySlug['bet-on-her'];
   add('latest', 'station--left station--trail', `
     <article class="card">
-      ${eyebrow('Latest drop · 2026')}
-      <h2>${esc(her.title)}</h2>
+      ${statement([esc(her.title)])}
+      ${meta('Latest drop · 2026')}
       <p class="byline">${byline(her)} · ${fmt(her.d)}</p>
       <p>${esc(her.story)}</p>
       <p class="fine">${esc(her.credits)}</p>
@@ -111,9 +113,9 @@ function build() {
 
   add('charts', 'station--left station--trail', `
     <article class="card">
-      <h2>Most played,<br/><em>right here.</em></h2>
-      <p class="muted">What listeners are streaming on the site.</p>
-      <ol class="tracks">${HOUSE_CHARTS.map((t, i) => trackRow(t, i, { plays: true })).join('')}</ol>
+      ${statement(['Most played,', '<em>right here.</em>'])}
+      ${meta('Streaming on the site')}
+      <ol class="tracks tracks--chart">${HOUSE_CHARTS.map((t, i) => trackRow(t, i, { plays: true })).join('')}</ol>
     </article>`);
 
   add('wall', 'station--wall', `
@@ -134,8 +136,8 @@ function build() {
   // LEGACY
   add('first', 'station--left', `
     <article class="card">
-      ${eyebrow('February 2021 · First of a kind')}
-      <h2>The first Houston rapper to sell a <em>hip-hop NFT.</em></h2>
+      ${statement(['The first Houston rapper', 'to sell a <em>hip-hop NFT.</em>'], 'stmt--long')}
+      ${meta('February 2021 · First of a kind')}
       <p>Same principle, new infrastructure. CAP Distributions puts independent artists on global platforms without giving up ownership. In 2021 that ownership went on-chain.</p>
       <dl class="specs">
         <div><dt>Collection</dt><dd>${NFT.collection}</dd></div>
@@ -148,8 +150,8 @@ function build() {
 
   add('book', 'station--left', `
     <article class="card">
-      ${eyebrow('The Art of ISM · The book')}
-      <h2>${BOOK.kicker.replace('Movement,', 'Movement,<br/>')}</h2>
+      ${statement([esc(BOOK.kicker)], 'stmt--long')}
+      ${meta('The Art of ISM · The book')}
       <p>${esc(BOOK.text)}</p>
       <ul class="checks">${BOOK.features.map((f) => `<li>${f}</li>`).join('')}</ul>
       <div class="row">${ext(BOOK.href, 'Enter the book', 'btn btn--candy btn--sm')}${ext(BOOK.vinyl, 'Order the vinyl')}</div>
@@ -157,8 +159,8 @@ function build() {
 
   add('receipts', 'station--left', `
     <article class="card">
-      <h2>Cultural impact,<br/><em>documented.</em></h2>
-      <ul class="kpis kpis--4">${STATS.map((s) => `<li><b data-count="${s.n}" data-suffix="${s.suffix}">0</b><span>${s.label}</span></li>`).join('')}</ul>
+      ${statement(['Cultural impact,', '<em>documented.</em>'])}
+      <ul class="figures figures--4">${STATS.map((s) => `<li><b${['', '+'].includes(s.suffix) ? ` data-count="${s.n}" data-suffix="${s.suffix}">0` : `>${s.n}${s.suffix}`}</b><span>${s.label}</span></li>`).join('')}</ul>
       <a class="doc" href="${DOCUMENTARY.href}" target="_blank" rel="noopener">
         <img src="${DOCUMENTARY.img}" alt="" loading="lazy" width="72" height="72" />
         <span><small>${DOCUMENTARY.note}</small><b>${DOCUMENTARY.title}</b></span><span class="arrow" aria-hidden="true">↗</span>
@@ -168,7 +170,7 @@ function build() {
 
   add('screening', 'station--left', `
     <article class="card card--wide">
-      <h2>Now <em>showing.</em></h2>
+      ${statement(['Now <em>showing.</em>'])}
       <ul class="vids">${VIDEOS.map((v) => `
         <li><button data-action="open-video" data-id="${v.id}" aria-label="Watch ${esc(v.title)}">
           <img src="/intro/img/videos/${v.id}.jpg" alt="" loading="lazy" width="160" height="90" /><span class="vids__play">${icon('play')}</span><i>${v.len}</i>
@@ -179,8 +181,8 @@ function build() {
   // STAGE
   add('booking', 'station--left station--trail', `
     <article class="card">
-      ${eyebrow('Now booking 2026-27')}
-      <h2>Bring the ISM<br/><em>to your stage.</em></h2>
+      ${statement(['Bring the ISM', '<em>to your stage.</em>'])}
+      ${meta('Now booking 2026-27')}
       <p>Concerts, festivals, features and speaking, booked straight with the artist's team. Every inquiry gets a response within 48 hours.</p>
       <ul class="types">${BOOKING_TYPES.filter((b) => b.text).map((b) => `<li><b>${b.label}</b><span>${b.text}</span></li>`).join('')}</ul>
       <div class="row">
