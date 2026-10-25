@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { CameraRail } from './path.js';
-import { vinylMaterial, glowMaterial, beamMaterial, photoMaterial } from './materials.js';
+import { vinylMaterial, glowMaterial, beamMaterial, photoMaterial, chapterLight } from './materials.js';
 import { textSprite, radial, GOLD, MAGENTA, VIOLET } from './textures.js';
 import { WORDS, range, smooth, easeInOut, clamp, lerp } from '../core/timeline.js';
 import { ALBUMS, SINGLES } from '../data/catalog.js';
@@ -173,6 +173,15 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
   const words = WORDS.map((w) => buildWord(font, w, faceMat, sideMat, geoCache));
   words.forEach((w) => scene.add(w.group));
 
+  // a soft shadow behind each print and sleeve, so it reads as an object hanging in the light
+  const shadowTex = radial('rgba(3,1,8,0.82)');
+  function castShadow(m, w, h) {
+    const sh = new THREE.Mesh(new THREE.PlaneGeometry(w * 1.32, h * 1.32), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: 0 }));
+    sh.position.set(w * 0.07, -h * 0.1, -0.4);
+    m.add(sh);
+    m.userData.shadow = sh;
+  }
+
   // ── 3 · ORIGIN — floating memories + the golden timeline rail ─────────────────
   const gallery = new THREE.Group();
   scene.add(gallery);
@@ -181,19 +190,26 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     [5.4, 1.2, -160, -0.4], [7.8, -2.0, -172, -0.45], [4.9, -1.4, -184, -0.3],
     [-9, 3.8, -198, 0.5], [6.2, 1.0, -206, -0.32], [8.6, -1.6, -222, -0.4],
   ];
-  const captionMat = (text) => textSprite(text.toUpperCase(), { font: '"Archivo", sans-serif', weight: 600, size: 52, color: '#ede4d3' });
+  // finished prints: the photo on a paper mat with a deeper bottom margin, its caption printed on the mat
+  const MAT = 0.3, MAT_BOTTOM = 1.05;
+  const inkLabel = (text, width) => {
+    const map = textSprite(text.toUpperCase(), { font: '"Archivo", sans-serif', weight: 700, size: 66, color: '#3a2f24' }).material.map;
+    return new THREE.Mesh(new THREE.PlaneGeometry(width, width / 2), new THREE.MeshBasicMaterial({ map, transparent: true, depthWrite: false }));
+  };
   const galleryMats = [];
   GALLERY.forEach((g, i) => {
     const [x, y, z, ry] = galleryLayout[i];
     const h = 5.4, w = h * g.w / g.h;
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), photoMaterial(tex(g.src), { rim: i % 2 ? MAGENTA : GOLD }));
+    const W = w + MAT * 2, H = h + MAT + MAT_BOTTOM;
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(W, H), photoMaterial(tex(g.src), { print: { mat: MAT, bottom: MAT_BOTTOM }, size: [W, H] }));
     m.position.set(x, y, z);
     m.rotation.y = ry;
-    const cap = captionMat(g.caption);
-    cap.scale.set(5, 2.5, 1);
-    cap.position.set(0, -h / 2 - 0.6, 0.01);
+    const cap = inkLabel(g.caption, Math.min(W * 0.92, 6));
+    cap.position.set(0, -H / 2 + MAT_BOTTOM / 2, 0.01);
+    cap.renderOrder = 1; // drawn after its print, never under it
     m.add(cap);
-    m.userData = { baseY: y, seed: i * 1.7, cap };
+    castShadow(m, W, H);
+    m.userData = { baseY: y, seed: i * 1.7, cap, shadow: m.userData.shadow };
     gallery.add(m);
     galleryMats.push(m);
   });
@@ -240,21 +256,23 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
   scene.add(singles);
   const singleMeshes = SINGLES.filter((s) => s.slug !== 'bet-on-her').map((s, i) => {
     const size = 2.6 + (i % 3) * 0.35;
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(size, size), photoMaterial(tex(s.cover), { rim: i % 2 ? MAGENTA : GOLD }));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(size, size), photoMaterial(tex(s.cover), { sleeve: true }));
+    castShadow(m, size, size);
     // a helix the camera flies down the axis of
     const a = i * 0.78 + 0.6;
     m.position.set(Math.cos(a) * 7.2, Math.sin(a) * 4.8, -336 - i * 3.4);
     m.lookAt(0, 0, m.position.z + 8);
-    m.userData = { baseY: m.position.y, seed: i * 2.3, track: s, hover: 0 };
+    m.userData = { ...m.userData, baseY: m.position.y, seed: i * 2.3, track: s, hover: 0 };
     clickables.push(m);
     singles.add(m);
     return m;
   });
-  const hero = new THREE.Mesh(new THREE.PlaneGeometry(6.4, 6.4), photoMaterial(tex('/intro/img/covers/bet-on-her.webp'), { rim: GOLD }));
+  const hero = new THREE.Mesh(new THREE.PlaneGeometry(6.4, 6.4), photoMaterial(tex('/intro/img/covers/bet-on-her.webp'), { sleeve: true }));
+  castShadow(hero, 6.4, 6.4);
   // left of the path: the SOUND cards trail on the right
   hero.position.set(-6.4, 0.4, -380);
   hero.rotation.y = 0.32;
-  hero.userData = { baseY: 0.4, seed: 1, track: SINGLES.find((s) => s.slug === 'bet-on-her'), hover: 0 };
+  hero.userData = { ...hero.userData, baseY: 0.4, seed: 1, track: SINGLES.find((s) => s.slug === 'bet-on-her'), hover: 0 };
   clickables.push(hero);
   scene.add(hero);
 
@@ -266,7 +284,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     const holder = new THREE.Group();
     carousel.add(holder);
     const coverTex = tex(a.cover);
-    const sleeve = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), photoMaterial(coverTex, { rim: a.tone }));
+    const sleeve = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), photoMaterial(coverTex, { sleeve: true }));
     sleeve.position.z = 0.05;
     const recMat = vinylMaterial(coverTex, { labelR: 0.36, tint: a.tone, lightAngle: 1.2 });
     const rec = new THREE.Mesh(new THREE.CircleGeometry(1, 96), recMat); // vinyl shader works on a unit disc
@@ -465,6 +483,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     skyMat.uniforms.uDeep.value.copy(cA.set(pA.deep)).lerp(cB.set(pB.deep), f);
     skyMat.uniforms.uHaze.value.copy(cA.set(pA.haze)).lerp(cB.set(pB.haze), f);
     skyMat.uniforms.uHaze2.value.copy(cA.set(pA.haze2)).lerp(cB.set(pB.haze2), f);
+    chapterLight.value.copy(skyMat.uniforms.uHaze.value);
     scene.fog.color.copy(skyMat.uniforms.uDeep.value).multiplyScalar(0.7);
     skyMat.uniforms.uEnergy.value = audio.energy;
     sky.position.copy(camera.position);
@@ -518,7 +537,9 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
       m.rotation.z = Math.sin(time * 0.4 + m.userData.seed) * 0.02;
       const o = distFade(m, camera, 70, 6);
       m.material.uniforms.uOpacity.value = o;
+      m.material.uniforms.uDevelop.value = smooth(clamp((64 - m.position.distanceTo(camera.position)) / 26));
       m.userData.cap.material.opacity = o;
+      m.userData.shadow.material.opacity = o * 0.6;
       m.visible = o > 0.003;
     });
 
@@ -567,11 +588,13 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
         m.position.y = m.userData.baseY + Math.sin(time * 0.7 + m.userData.seed) * 0.3;
         const o = distFade(m, camera, 60, 3);
         m.material.uniforms.uOpacity.value = o;
+        m.userData.shadow.material.opacity = o * 0.55;
         m.visible = o > 0.003;
         hoverUniform(m, dt);
       });
       hero.position.y = 0.4 + Math.sin(time * 0.8) * 0.2;
       hero.material.uniforms.uOpacity.value = distFade(hero, camera, 70, 4);
+      hero.userData.shadow.material.opacity = hero.material.uniforms.uOpacity.value * 0.6;
       hoverUniform(hero, dt);
     }
 

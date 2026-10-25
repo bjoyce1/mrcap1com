@@ -615,6 +615,7 @@ html.intro-snap { scroll-snap-type: y proximity; }
 .cap-intro .scrim--side { inset: 0; background: radial-gradient(ellipse 46% 80% at 21% 52%, rgba(11,6,16,.9) 0%, rgba(11,6,16,.74) 44%, rgba(11,6,16,0) 80%); }
 .cap-intro .station--trail .scrim--side { background: radial-gradient(ellipse 46% 80% at 79% 52%, rgba(11,6,16,.9) 0%, rgba(11,6,16,.74) 44%, rgba(11,6,16,0) 80%); }
 .cap-intro .station > .scrim { transform: none; }
+.cap-intro .station:has(.card--wide) .scrim--side { background: radial-gradient(ellipse 60% 84% at 25% 52%, rgba(11,6,16,.92) 0%, rgba(11,6,16,.8) 50%, rgba(11,6,16,0) 82%); }
 
 .cap-intro .card .stmt { font: 400 clamp(46px, 4.5vw, 78px)/.92 var(--f-cond); letter-spacing: .004em; text-transform: uppercase; color: var(--cream); margin: 0 0 20px; text-shadow: 0 8px 40px rgba(6,3,10,.55); }
 .cap-intro .card .stmt--long { font-size: clamp(38px, 3.5vw, 60px); }

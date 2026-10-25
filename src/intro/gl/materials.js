@@ -119,25 +119,58 @@ export function beamMaterial(color, strength = 0.5) {
   });
 }
 
-// ── Photo plane with a soft fade + rim (gallery frames, NFT holograms) ─────────
-export function photoMaterial(map, { holo = 0, rim = '#d9a441', key = 0 } = {}) {
+// The chapter's light: prints and sleeves pick up the current chapter's key colour (universe.js sets it every frame).
+export const chapterLight = { value: new THREE.Color('#d9a441') };
+
+// ── Photo plane: a matted print, a record sleeve, an NFT hologram or a keyed cut-out ─────────
+// `print: { mat, bottom }` (plane units) puts the photo on a paper mat with a deeper bottom margin;
+// `sleeve` gives cover art a printed card's edges and gloss. `size` is the plane's [width, height].
+export function photoMaterial(map, { holo = 0, rim = '#d9a441', key = 0, print = null, sleeve = false, size = [1, 1] } = {}) {
+  const [w, h] = size;
   return new THREE.ShaderMaterial({
     uniforms: {
       uMap: { value: map }, uOpacity: { value: 1 }, uTime: { value: 0 }, uHolo: { value: holo },
       uRim: { value: new THREE.Color(rim) }, uHover: { value: 0 }, uKey: { value: key },
+      uMode: { value: print ? 1 : sleeve ? 2 : 0 }, uDevelop: { value: 1 }, uLight: chapterLight,
+      // mat widths in uv: sides, top, bottom
+      uMat: { value: new THREE.Vector3(print ? print.mat / w : 0, print ? print.mat / h : 0, print ? print.bottom / h : 0) },
     },
     vertexShader: /* glsl */ `
       varying vec2 vUv;
       void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: /* glsl */ `
-      uniform sampler2D uMap; uniform float uOpacity, uTime, uHolo, uHover, uKey; uniform vec3 uRim; varying vec2 vUv;
+      uniform sampler2D uMap; uniform float uOpacity, uTime, uHolo, uHover, uKey, uMode, uDevelop; uniform vec3 uRim, uLight, uMat; varying vec2 vUv;
+      float grain(vec2 p) { return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
       void main() {
-        vec4 c = texture2D(uMap, vUv);
+        bool isPrint = uMode > 0.5 && uMode < 1.5, isSleeve = uMode > 1.5;
+        vec2 lo = vec2(uMat.x, uMat.z), hi = vec2(1.0 - uMat.x, 1.0 - uMat.y);
+        vec2 puv = isPrint ? (vUv - lo) / (hi - lo) : vUv;
+        vec4 c = texture2D(uMap, clamp(puv, 0.0, 1.0));
         c.rgb *= 0.84; // keep bright photos just under the bloom threshold
         vec2 d = min(vUv, 1.0 - vUv);
         float edge = min(d.x, d.y);
-        float rim = smoothstep(0.012, 0.0, edge) * (1.0 - uKey);
+        float rim = isPrint || isSleeve ? 0.0 : smoothstep(0.012, 0.0, edge) * (1.0 - uKey);
         vec3 col = c.rgb;
+        if (isPrint) {
+          // cream paper with a little tooth; like instant film, the photo develops out of a dark emulsion as the camera approaches
+          vec3 paper = vec3(0.74, 0.7, 0.64) * (0.965 + 0.035 * grain(floor(vUv * 380.0)));
+          vec2 pe2 = min(puv, 1.0 - puv);
+          float pe = min(pe2.x, pe2.y);
+          vec3 photo = mix(vec3(0.15, 0.14, 0.13), col, uDevelop) * mix(0.8, 1.0, smoothstep(0.0, 0.014, pe));
+          col = pe > 0.0 ? photo : paper;
+          c.a = 1.0;
+        }
+        if (isSleeve) {
+          // printed card stock: a lit top edge, a soft gloss streak, darker corners
+          col += 0.05 * smoothstep(0.014, 0.0, 1.0 - vUv.y);
+          col += 0.06 * smoothstep(0.03, 0.0, abs(vUv.y + vUv.x * 0.35 - 1.08));
+        }
+        if (isPrint || isSleeve) {
+          col *= mix(0.55, 1.0, smoothstep(0.0, 0.007, edge));      // the card's edge
+          float key = smoothstep(1.3, 0.0, distance(vUv, vec2(0.0, 1.0)));
+          col += uLight * key * (isPrint ? 0.14 : 0.1);             // the chapter's light, from the top left
+          col *= 0.94 + 0.06 * (vUv.y - vUv.x * 0.3);               // and its fall-off to the bottom right
+        }
         if (uHolo > 0.0) {
           float scan = 0.92 + 0.08 * sin(vUv.y * 320.0 + uTime * 4.0);
           float sweep = smoothstep(0.08, 0.0, abs(fract(vUv.y * 0.5 - uTime * 0.12) - 0.5) - 0.42);
