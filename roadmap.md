@@ -1,5 +1,10 @@
 # Identity connection
 
+# Caption Studio access
+
+- [ ] Reproduce and repair the admin role-loading redirect without weakening access checks.
+- [ ] Test delayed roles, refresh, and denied access without publishing.
+
 # Header transition repair
 
 - [x] Keep one header mounted across page changes and remove the obscuring page curtain.
