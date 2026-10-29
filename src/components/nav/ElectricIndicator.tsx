@@ -11,20 +11,15 @@ import "./electric-indicator.css";
  * makes the whole shape: how far behind the head the tail is running, in seconds.
  *
  * Colours and sizes live in electric-indicator.css; this reads them back.
- * Navigation remounts with every page, so the last resting spot lives at module scope.
+ * The persistent header keeps the current position through route changes.
  */
 
 type Spot = { x: number; y: number };
-
-// undefined: the menu has not been on screen yet this visit; null: no item was active (home)
-let lastSpot: Spot | null | undefined;
 
 const T_MOVE = 0.625; // seconds, the same for every distance
 const REF_W = 44; // the reference bar width; distances are scaled to it so the stretch keeps its proportions
 // capped below half the run so the tail is always moving at the start and the end of a long run
 const freeze = (d: number, w: number) => Math.min(T_MOVE * 0.4, 0.00089 * d * (REF_W / w));
-// the page transition's curtain covers the header for about half a second after a route change
-const ARRIVAL_DELAY = 480;
 
 function measure(nav: HTMLElement, el: HTMLElement | null | undefined, gap: number): Spot | null {
   if (!el || !nav.offsetParent) return null;
@@ -39,6 +34,7 @@ export default function ElectricIndicator({
   activeKey: string | null;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const lastSpotRef = useRef<Spot | null | undefined>(undefined);
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current;
@@ -61,7 +57,7 @@ export default function ElectricIndicator({
     };
     readStyle();
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let raf = 0, timer = 0, dpr = 1, settled = false;
+    let raf = 0, dpr = 1, settled = false, disposed = false;
     let resting: Spot | null = null;
 
     const size = () => {
@@ -119,6 +115,7 @@ export default function ElectricIndicator({
 
     const rest = (s: Spot | null) => {
       resting = s;
+      lastSpotRef.current = s;
       if (s) draw(s.x - W / 2, s.x + W / 2, s.y, 0); else draw(0, 0, 0, 0, 0);
     };
 
@@ -134,6 +131,7 @@ export default function ElectricIndicator({
         const tau = t <= half - P ? 0 : t <= half ? t - (half - P) : t <= half + P ? half + P - t : 0;
         const head = x0 + dir * v * t;
         const tail = head - dir * (W + v * tau);
+        lastSpotRef.current = { x: (head + tail) / 2, y: from.y + (end.y - from.y) * (t / T_MOVE) };
         draw(tail, head, from.y + (end.y - from.y) * (t / T_MOVE), P ? tau / P : 0, to ? 1 : 1 - t / T_MOVE);
         if (t < T_MOVE) { raf = requestAnimationFrame(step); return; }
         rest(to);
@@ -144,24 +142,23 @@ export default function ElectricIndicator({
 
     size();
     const target = measure(nav, activeEl(), GAP);
+    const lastSpot = lastSpotRef.current;
     if (reduced || lastSpot === undefined || (!lastSpot && !target) || (lastSpot && target && lastSpot.x === target.x)) {
       // first view of the visit, or nothing to travel: just rest
       rest(target);
       settled = true;
     } else {
       // from the page you left, or in from the left edge when you came from home
-      const from = lastSpot ?? { x: -W, y: target!.y };
-      rest(null);
-      timer = window.setTimeout(() => fly(from, target), ARRIVAL_DELAY);
+      const from = lastSpot ?? { x: -W, y: target?.y ?? 0 };
+      fly(from, target);
     }
-    lastSpot = target;
 
     // fonts and window size move the items; keep the bar under its item
     const remeasure = () => {
+      if (disposed) return;
       readStyle();
       size();
       const s = measure(nav, activeEl(), GAP);
-      lastSpot = s;
       if (settled) rest(s);
       else if (resting) rest(resting);
     };
@@ -170,8 +167,8 @@ export default function ElectricIndicator({
     document.fonts?.ready.then(remeasure).catch(() => {});
 
     return () => {
+      disposed = true;
       cancelAnimationFrame(raf);
-      clearTimeout(timer);
       ro.disconnect();
     };
     // activeEl reads refs; the effect only needs to rerun when the active item changes
