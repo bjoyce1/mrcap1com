@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import mrCapCoin from "@/assets/mr-cap-coin.webp";
 import ElectricIndicator from "@/components/nav/ElectricIndicator";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,15 +28,24 @@ const moreLinks = [
   { to: "/nft", label: "NFT" },
 ];
 
-const Navigation = () => {
+// Existing page mounts are inert when the app owns the persistent header.
+export const NavigationManagedContext = createContext(false);
+
+export const PersistentNavigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
+  const [pendingKey, setPendingKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setPendingKey(null);
+  }, [location.pathname]);
 
   const isMoreActive = moreLinks.some(link => location.pathname === link.to);
   // the item the electric underline rests under: a primary link, More, or nothing (home)
-  const activeKey = primaryLinks.find((link) => location.pathname === link.to)?.to ?? (isMoreActive ? "more" : null);
+  const activeKey = pendingKey ?? primaryLinks.find((link) => location.pathname === link.to)?.to ?? (isMoreActive ? "more" : null);
   const itemRefs = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
@@ -80,6 +90,9 @@ const Navigation = () => {
             <Link
               key={link.to}
               to={link.to}
+              onClick={(event) => {
+                if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) setPendingKey(link.to);
+              }}
               ref={(el) => { itemRefs.current[link.to] = el; }}
               aria-current={location.pathname === link.to ? "page" : undefined}
               className={cn(
@@ -134,13 +147,16 @@ const Navigation = () => {
           </a>
           
           {/* Mobile Menu Button */}
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
             aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -193,6 +209,11 @@ const Navigation = () => {
       )}
     </header>
   );
+};
+
+const Navigation = () => {
+  const managed = useContext(NavigationManagedContext);
+  return managed ? null : <PersistentNavigation />;
 };
 
 export default Navigation;

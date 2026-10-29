@@ -11,7 +11,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
 
 const Index = lazy(() => import("@/pages/Index"));
@@ -19,6 +18,7 @@ const Index = lazy(() => import("@/pages/Index"));
 // ── Keep these synchronous (they appear on every page) ──────
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import PageTransition from "@/components/PageTransition";
+import { NavigationManagedContext, PersistentNavigation } from "@/components/Navigation";
 import ScrollToTop from "@/components/ScrollToTop";
 import StickyPlayer from "@/components/player/StickyPlayer";
 import MobileBottomNav from "@/components/MobileBottomNav";
@@ -102,9 +102,12 @@ function AppRoutes() {
       <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
       <ScrollToTop />
       
-      <AnimatePresence mode="wait">
+      <div hidden={introActive || greatdayPrivate || location.pathname === "/intro"}>
+        <PersistentNavigation />
+      </div>
+      <NavigationManagedContext.Provider value={!greatdayPrivate}>
         <Suspense fallback={<PageLoader />}>
-          <Routes location={state?.backgroundLocation || location} key={location.pathname}>
+          <Routes location={state?.backgroundLocation || location}>
             <Route path="/analytics" element={<AnalyticsRedirect />} />
             <Route path="/greatday-preview" element={<GreatDayAdminGate><GreatDayPreview /></GreatDayAdminGate>} />
             <Route path="/admin/greatday" element={<GreatDayAdminGate><GreatDayStudio /></GreatDayAdminGate>} />
@@ -184,7 +187,7 @@ function AppRoutes() {
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>
-      </AnimatePresence>
+      </NavigationManagedContext.Provider>
 
       {state?.backgroundLocation && (
         <Suspense fallback={null}>
@@ -216,7 +219,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true }}>
             <AppRoutes />
           </BrowserRouter>
         </TooltipProvider>
