@@ -1,11 +1,21 @@
 // Content for the private Great Day preview. Everything here is either approved
-// (roster, theme line, catalog track) or an empty slot waiting on the owner.
+// (roster, credits and artwork from the official cover, theme line) or an empty slot waiting on the owner.
+import cover from '@/assets/greatday/art/twagd-slowed-chopped-cover.webp';
+import coverSmall from '@/assets/greatday/art/twagd-slowed-chopped-cover-480.webp';
+import portraitCap from '@/assets/greatday/art/portrait-cap.webp';
+import portraitPaul from '@/assets/greatday/art/portrait-paul.webp';
+import portraitKeke from '@/assets/greatday/art/portrait-keke.webp';
+import portraitLisa from '@/assets/greatday/art/portrait-lisa.webp';
 
-/** The original 2024 single in the catalog; the preview plays its 30-second clip until the slowed and chopped audio arrives. */
-export const ORIGINAL_SINGLE_ID = '09aa34c7-b890-4929-99a8-2e87c2b4aa26';
+export const TITLE = 'Today Was a Great Day';
+export const VERSION = 'Slowed & Chopped';
+/** the credit as the cover prints it */
+export const CHOPPED_BY = 'Chopped and Slowed by Lil Randy';
+export const PRODUCTION = 'Single produced by P-Rod · Trackhouse Productions';
 export const PREVIEW_SECONDS = 30;
-/** temporary cover art (not final), shown in the pendant and on the edition discs */
-export const COVER = '/images/covers/opt/today-great-day-cover-480.webp';
+/** the official Slowed & Chopped cover, full size and a small copy for record labels */
+export const COVER = cover;
+export const COVER_SMALL = coverSmall;
 
 export const THEME_LINE = 'A Great Day Is a State of Mind';
 export const HASHTAG = '#TodayWasAGreatDay';
@@ -21,15 +31,15 @@ export interface Voice {
   monogram: string;
   role: 'Lead artist' | 'Featuring';
   note?: string;
-  /** cleared portrait, supplied by the owner */
+  /** portrait, cropped from the official cover */
   photo?: string;
 }
 
 export const VOICES: Voice[] = [
-  { name: 'Mr. CAP', monogram: 'CAP', role: 'Lead artist', note: 'Original Member of the South Park Coalition' },
-  { name: 'Paul Wall', monogram: 'PW', role: 'Featuring' },
-  { name: 'Lil Keke', monogram: 'LK', role: 'Featuring' },
-  { name: 'Lisa Dinero', monogram: 'LD', role: 'Featuring' },
+  { name: 'Mr. CAP', monogram: 'CAP', role: 'Lead artist', note: 'Original Member of the South Park Coalition', photo: portraitCap },
+  { name: 'Paul Wall', monogram: 'PW', role: 'Featuring', photo: portraitPaul },
+  { name: 'Lil Keke', monogram: 'LK', role: 'Featuring', photo: portraitKeke },
+  { name: 'Lisa Dinero', monogram: 'LD', role: 'Featuring', photo: portraitLisa },
 ];
 
 /** Behind-the-record clips, supplied by the owner. Until then the concept image holds the space. */

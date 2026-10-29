@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
 import { useMotionValue, type MotionValue } from 'framer-motion';
-import { ORIGINAL_SINGLE_ID, PREVIEW_SECONDS } from './content';
+import { PREVIEW_SECONDS } from './content';
+import previewClip from '@/assets/greatday/audio/twagd-slowed-chopped-preview.mp3';
 
-// Same preview endpoint the site player uses. The 30-second cap is enforced here,
-// and nothing is reported: Great Day analytics stay off during the private review.
-export const PREVIEW_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/audio-preview?track_id=${ORIGINAL_SINGLE_ID}`;
+// A 30-second excerpt of the Slowed & Chopped version (0:15 to 0:45, faded at both ends); the
+// full master stays out of the site. The cap is enforced here too, and nothing is reported:
+// Great Day analytics stay off during the private review.
+export const PREVIEW_URL = previewClip;
 
 export type AudioStatus = 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error';
 

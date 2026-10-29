@@ -1,0 +1,156 @@
+/* Today Was a Great Day (Slowed & Chopped). The design language is the cover's: Houston after
+   dark in indigo and electric violet, chrome script and chrome slab lettering, the city glowing
+   inside GREAT DAY, a crown between filigree rules, condensed credits. Motion is slowed down,
+   and the title gets chopped while the record plays. */
+
+@font-face { font-family: 'GD Lobster'; src: url('../../assets/greatday/fonts/lobster-latin.woff2') format('woff2'); font-display: swap; }
+
+/* the page's night: the site's tokens, re-lit by the cover */
+.gd3 {
+  --background: 248 55% 5%;
+  --card: 250 45% 9%;
+  --secondary: 252 40% 13%;
+  --muted: 252 35% 14%;
+  --muted-foreground: 245 25% 72%;
+  --border: 255 35% 20%;
+  --input: 252 35% 18%;
+  --primary: 268 92% 68%;
+  --ring: 268 92% 68%;
+  --violet: 268 92% 68%;
+  --ice: 214 100% 85%;
+  --chrome: linear-gradient(180deg, #ffffff 0%, #eef0ff 24%, #a9aee9 46%, #ffffff 53%, #d4d8fa 70%, #8187d0 100%);
+}
+
+.gd3-script { font-family: 'GD Lobster', 'Lobster', cursive; font-weight: 400; letter-spacing: 0; }
+.gd3-cond { font-family: 'Bebas Neue', 'Anton', sans-serif; font-weight: 400; text-transform: uppercase; }
+.gd3-ice { color: hsl(var(--ice)); }
+.gd3-dot { width: 6px; height: 6px; border-radius: 50%; background: hsl(var(--violet)); box-shadow: 0 0 8px hsl(var(--violet)); }
+
+/* chrome lettering, lit violet from behind like the cover's */
+.gd3-chrome {
+  color: transparent;
+  background-image: var(--chrome);
+  -webkit-background-clip: text; background-clip: text;
+  filter: drop-shadow(0 0 7px hsl(268 92% 62% / .75)) drop-shadow(0 2px 0 hsl(258 70% 22%));
+}
+.gd3-glow { color: hsl(276 100% 92%); text-shadow: 0 0 10px hsl(276 100% 70% / .9), 0 0 24px hsl(268 92% 60% / .7); }
+/* GREAT DAY: the city glows inside the letters, under a chrome sheen */
+.gd3-skyfill {
+  color: transparent;
+  background-image: linear-gradient(180deg, rgba(255,255,255,.72) 0%, rgba(214,218,255,.18) 42%, rgba(255,255,255,.75) 50%, rgba(170,176,240,.22) 64%, rgba(255,255,255,.55) 100%), var(--sky);
+  background-size: 100% 100%, cover; background-position: center, center 40%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-stroke: 1.5px rgba(240, 242, 255, .85);
+  filter: drop-shadow(0 0 10px hsl(268 92% 62% / .8)) drop-shadow(0 4px 0 hsl(258 70% 18%));
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.gd3-outline-text { color: transparent; -webkit-text-stroke: 1.5px hsl(268 92% 75% / .85); filter: drop-shadow(0 0 12px hsl(268 92% 60% / .45)); }
+
+/* the crown between two chrome rules */
+.gd3-crown { display: flex; align-items: center; gap: 12px; width: min(280px, 80%); }
+.gd3-crown span { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, hsl(240 60% 90% / .85)); }
+.gd3-crown span:last-child { background: linear-gradient(90deg, hsl(240 60% 90% / .85), transparent); }
+.gd3-crown svg { flex: none; fill: none; stroke: #eef0ff; stroke-width: 1.6; stroke-linejoin: round; filter: drop-shadow(0 0 6px hsl(268 92% 62%)); }
+.gd3-crown circle { fill: hsl(268 92% 68%); stroke: none; }
+
+/* the hero night */
+.gd3-sky { object-position: 50% 45%; }
+.gd3-grade {
+  background:
+    linear-gradient(180deg, hsl(248 55% 5% / .82) 0%, hsl(248 55% 5% / .25) 22%, hsl(248 55% 5% / .15) 55%, hsl(248 55% 5% / .7) 85%, hsl(248 55% 5%) 100%),
+    radial-gradient(ellipse 70% 60% at 30% 50%, hsl(268 92% 50% / .18), transparent 70%);
+}
+@media (min-width: 1024px) {
+  .gd3-grade { background:
+    linear-gradient(90deg, hsl(248 55% 5% / .1) 0%, hsl(248 55% 5% / .35) 50%, hsl(248 55% 5% / .78) 100%),
+    linear-gradient(180deg, hsl(248 55% 5% / .82) 0%, hsl(248 55% 5% / .2) 22%, hsl(248 55% 5% / .1) 60%, hsl(248 55% 5%) 100%); }
+}
+
+/* the cover as a sleeve, a record riding out of it */
+.gd3-sleeve-wrap { position: relative; aspect-ratio: 1; }
+.gd3-sleeve {
+  position: relative; z-index: 1; width: 100%; height: 100%; border-radius: 6px;
+  box-shadow: 0 0 0 1px hsl(240 60% 92% / .5), 0 0 40px hsl(268 92% 55% / .45), 0 40px 80px -24px rgba(2, 1, 12, .9);
+}
+.gd3-sleeve-wrap .gd3-sleeve-record { position: absolute; top: 4%; right: 4%; width: 92%; z-index: 0; translate: 10% 0; transition: translate 2.4s cubic-bezier(.16, 1, .3, 1); }
+.gd3-sleeve-wrap:has(.is-playing) .gd3-sleeve-record { translate: 20% 0; }
+@media (max-width: 1023px) {
+  .gd3-sleeve-wrap .gd3-sleeve-record { translate: 0 7%; }
+  .gd3-sleeve-wrap:has(.is-playing) .gd3-sleeve-record { translate: 0 20%; }
+}
+
+/* the record: grooves turn, the light on them stays put */
+.gd3-record { position: relative; aspect-ratio: 1; isolation: isolate; }
+.gd3-record__disc {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: repeating-radial-gradient(circle, #0c0a1c 0 1.3px, #19152e 1.3px 2.8px);
+  box-shadow: 0 0 0 1px hsl(240 60% 90% / .22), 0 0 34px hsl(268 92% 55% / .35), 0 24px 60px -18px rgba(0, 0, 0, .9);
+}
+.gd3-record::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+  background: conic-gradient(from 30deg, hsl(268 92% 80% / .22), transparent 11%, transparent 44%, hsl(214 100% 85% / .16) 55%, transparent 68%);
+  -webkit-mask: radial-gradient(circle, transparent 0 31%, #000 31.5%); mask: radial-gradient(circle, transparent 0 31%, #000 31.5%);
+}
+.gd3-record__label { position: absolute; inset: 31%; border-radius: 50%; background: var(--cover) center / cover; box-shadow: 0 0 0 2px rgba(0, 0, 0, .6); }
+.gd3-record__label::after { content: ''; position: absolute; left: 50%; top: 50%; width: 7%; height: 7%; translate: -50% -50%; border-radius: 50%; background: #07051a; }
+/* slowed down: a long, syrupy turn */
+.gd3-record.is-playing .gd3-record__disc { animation: gd3-spin 3.6s linear infinite; }
+
+/* chopped: the title stutters, a phrase repeated twice */
+.gd3 h1.is-chopped > span { animation: gd3-chop .52s steps(1, end) 1; }
+.gd3 h1.is-chopped > span:nth-child(2) { animation-delay: .04s; }
+@keyframes gd3-chop {
+  0% { translate: 0 0; opacity: 1; }
+  14% { translate: -.035em 0; opacity: .55; }
+  28% { translate: 0 0; opacity: 1; }
+  42% { translate: -.035em 0; opacity: .55; }
+  56% { translate: .015em 0; opacity: 1; }
+  100% { translate: 0 0; opacity: 1; }
+}
+
+.gd3-progress { --p: 0%; -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 18px; margin: 0; background: transparent; cursor: pointer; }
+.gd3-progress::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, hsl(268 92% 68%), hsl(214 100% 85%)) 0 0 / var(--p) 100% no-repeat, hsl(240 60% 92% / .16); }
+.gd3-progress::-moz-range-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, hsl(268 92% 68%), hsl(214 100% 85%)) 0 0 / var(--p) 100% no-repeat, hsl(240 60% 92% / .16); }
+.gd3-progress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px hsl(268 92% 68% / .4), 0 0 12px hsl(268 92% 68%); }
+.gd3-progress::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px hsl(268 92% 68% / .4); }
+.gd3-progress:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 4px; border-radius: 4px; }
+
+.gd3 .gd3-outline-btn { border-color: hsl(240 60% 90% / .45); }
+.gd3 .gd3-outline-btn:hover { border-color: hsl(240 60% 95% / .85); background: hsl(268 92% 68% / .08); }
+.gd3-pending {
+  display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 12px;
+  border: 1px solid hsl(268 92% 72% / .5); background: hsl(248 55% 5% / .8); color: hsl(var(--ice));
+  font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+}
+
+/* panels and frames: thin chrome edges, violet light */
+.gd3-panel { border-radius: 24px; border: 1px solid hsl(255 35% 22%); background: hsl(250 45% 9% / .8); box-shadow: 0 30px 60px -30px rgba(2, 1, 12, .9), inset 0 1px 0 hsl(240 60% 92% / .08); }
+.gd3-frame { border-radius: 24px; box-shadow: 0 0 0 1px hsl(240 60% 92% / .25), 0 0 40px hsl(268 92% 55% / .25); }
+
+/* the voices: four portraits cut from the cover */
+.gd3-voices { background: radial-gradient(ellipse 60% 70% at 50% 20%, hsl(268 92% 50% / .16), transparent 70%), hsl(250 45% 7%); }
+.gd3-portrait { position: relative; overflow: hidden; border-radius: 18px; background: hsl(250 45% 9%); box-shadow: 0 0 0 1px hsl(240 60% 92% / .28), 0 24px 50px -24px rgba(2, 1, 12, .9); }
+.gd3-portrait.is-lead { box-shadow: 0 0 0 1.5px hsl(240 60% 95% / .7), 0 0 34px hsl(268 92% 60% / .45), 0 24px 50px -24px rgba(2, 1, 12, .9); }
+.gd3-portrait img { transition: scale 1.6s cubic-bezier(.16, 1, .3, 1); }
+.gd3-portrait:hover img { scale: 1.04; }
+.gd3-portrait__label { position: absolute; inset: auto 0 0 0; padding: 48px 14px 14px; background: linear-gradient(180deg, transparent, hsl(248 55% 5% / .92) 55%); }
+
+/* instant prints, the same objects that hang in the intro's ORIGIN chapter */
+.gd3-print { position: relative; margin: 0; padding: 10px 10px 0; border-radius: 3px; background: #ebe8f2; rotate: var(--tilt, 0deg); box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .8), 0 0 24px hsl(268 92% 55% / .18); }
+.gd3-print__photo { aspect-ratio: 1; background-size: cover; background-repeat: no-repeat; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .25); }
+.gd3-print figcaption { min-height: 76px; padding: 12px 6px 16px; color: #241d38; font: italic 600 14px/1.38 'Archivo', sans-serif; text-wrap: pretty; overflow-wrap: anywhere; }
+.gd3-print.is-ghost figcaption { color: #8a84a0; }
+
+.gd3-edition { position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px; border: 1px solid hsl(255 35% 22%); background: hsl(250 45% 9%); padding: 24px; text-align: left; }
+.gd3-edition.is-featured { border-color: hsl(240 60% 92% / .55); box-shadow: 0 0 40px hsl(268 92% 55% / .3); }
+.gd3-edition__art { background: radial-gradient(circle at 50% 45%, hsl(268 92% 55% / .3), transparent 62%), hsl(250 40% 11%); }
+
+.gd3-first-grade { background: linear-gradient(90deg, hsl(248 55% 5% / .95) 0%, hsl(248 55% 5% / .82) 42%, hsl(248 55% 5% / .2) 75%, transparent 100%); }
+
+@keyframes gd3-spin { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .gd3-record.is-playing .gd3-record__disc, .gd3 h1.is-chopped > span { animation: none; }
+  .gd3-sleeve-record, .gd3-portrait img { transition: none; }
+}
