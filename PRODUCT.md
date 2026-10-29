@@ -10,7 +10,7 @@ web
 
 - **Fans of Mr. CAP and Houston hip-hop.** They find the site through search, social posts and the link in his bios. They come to stream, buy, join the early access list, or learn the South Park Coalition story.
 - **Promoters, venues and media.** They come to book shows or features, and to get the press kit.
-- **Release reviewers (Today Was A Great Day remix, pre-launch).** These are Mr. CAP and his team, the featured artists (Paul Wall, Lil Keke, Lisa Dinero) and their teams, and partners or press, all getting an early private look at the release world before it goes public.
+- **Release reviewers (Today Was a Great Day (Slowed & Chopped), pre-launch).** These are Mr. CAP and his team, the featured artists (Paul Wall, Lil Keke, Lisa Dinero) and their teams, and partners or press, all getting an early private look at the release world before it goes public.
 
 ## Product Purpose
 
@@ -18,7 +18,7 @@ mrcap1.com is the official home of Mr. CAP (Cornelius A. Pratt), a Houston rappe
 
 Success means real engagement: visits from real people, qualified streams, early access signups, bookings and sales. Likes and bot traffic don't count.
 
-**Today Was A Great Day (Remix)** (Mr. CAP featuring Paul Wall, Lil Keke and Lisa Dinero, presented by CAP Distributions) is the proof of concept for an artist-owned release system that every later release can reuse. Its theme line is "A Great Day Is a State of Mind." The release world is planned for greatday.mrcap1.com. It is meant to be a destination, not a promo landing page:
+**Today Was a Great Day (Slowed & Chopped)** (Mr. CAP featuring Paul Wall, Lil Keke and Lisa Dinero, slowed and chopped by Lil Randy, presented by CAP Distributions) is the proof of concept for an artist-owned release system that every later release can reuse. Its theme line is "A Great Day Is a State of Mind." The release world is planned for greatday.mrcap1.com. It is meant to be a destination, not a promo landing page:
 - an immersive listening experience with lyrics and visuals
 - the artists
 - a Great Day Wall where fans share positive stories
@@ -27,7 +27,7 @@ Success means real engagement: visits from real people, qualified streams, early
 
 ## Positioning
 
-"Stream Direct. No Middleman." Three decades of Houston hip-hop, owned and distributed by the artist himself. The Great Day remix is released as a world built around the song, not just a single on streaming services.
+"Stream Direct. No Middleman." Three decades of Houston hip-hop, owned and distributed by the artist himself. The Great Day slowed and chopped release is a world built around the song, not just a single on streaming services.
 
 ## Operating Context
 
@@ -52,13 +52,15 @@ Success means real engagement: visits from real people, qualified streams, early
   - secure checkout and private downloads
   - legal and copy review
   - owner approval to publish
-- **Not active yet:** remix audio, sales, real signups and wall submissions.
+- **Not active yet:** the slowed and chopped audio, sales, real signups and wall submissions.
 - **Proposed editions, not for sale:** Single $2.99, Deluxe $9.99, Supporter $24.99. No release date is set.
 - **Assets the owner has approved for the preview:**
-  - the remix lyrics (to be supplied)
+  - the lyrics (to be supplied)
+  - the slowed and chopped artwork (to be supplied; it sets the page's design language)
+  - the slowed and chopped audio (to be supplied)
   - cleared photos of all four artists (to be supplied)
   - video clips (to be supplied)
-  - the original "Today Was a Great Day" single (2024, already in the catalog with audio), which the preview player may use until the remix master is cleared
+  - the original "Today Was a Great Day" single (2024, already in the catalog with audio), which the preview player may use until the slowed and chopped audio arrives
 - **Labels on the preview.** One quiet "private preview" strip, plus small tags only where content is a placeholder (sample wall stories, proposed prices). The world should otherwise look like the finished release.
 
 ## Brand Commitments
@@ -67,6 +69,7 @@ Success means real engagement: visits from real people, qualified streams, early
 - No em dashes or en dashes anywhere in copy, code comments or commits.
 - The public booking and contact email is music@mrcap1.com.
 - The Great Day artist roster is exactly: Mr. CAP featuring Paul Wall, Lil Keke and Lisa Dinero. Other credits stay pending until verified.
+- The release is "Today Was a Great Day (Slowed & Chopped)", slowed and chopped by Lil Randy. Never call it "Screwed and Chopped": that name belongs to DJ Screw, who did not make this version.
 
 ## Evidence on Hand
 

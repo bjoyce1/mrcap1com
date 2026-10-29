@@ -1,7 +1,7 @@
 // Content for the private Great Day preview. Everything here is either approved
 // (roster, theme line, catalog track) or an empty slot waiting on the owner.
 
-/** The original 2024 single in the catalog; the preview plays its 30-second clip until the remix master is cleared. */
+/** The original 2024 single in the catalog; the preview plays its 30-second clip until the slowed and chopped audio arrives. */
 export const ORIGINAL_SINGLE_ID = '09aa34c7-b890-4929-99a8-2e87c2b4aa26';
 export const PREVIEW_SECONDS = 30;
 /** temporary cover art (not final), shown in the pendant and on the edition discs */
@@ -11,7 +11,7 @@ export const THEME_LINE = 'A Great Day Is a State of Mind';
 export const HASHTAG = '#TodayWasAGreatDay';
 
 /**
- * Remix lyrics, supplied by the owner. `at` is the second the line starts in the
+ * Lyrics, supplied by the owner. `at` is the second the line starts in the
  * audio that is playing; leave it out to show the words without line timing.
  */
 export const LYRICS: { line: string; at?: number }[] = [];

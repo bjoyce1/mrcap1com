@@ -84,8 +84,8 @@ export default function GreatDayPreview() {
   return <MotionConfig reducedMotion="user">
     <div className="min-h-screen overflow-x-clip bg-background text-foreground">
       <Helmet>
-        <title>Today Was a Great Day (Remix) | private preview | Mr. CAP</title>
-        <meta name="description" content="Private preview of the Today Was a Great Day (Remix) campaign page. Not public." />
+        <title>Today Was a Great Day (Slowed &amp; Chopped) | private preview | Mr. CAP</title>
+        <meta name="description" content="Private preview of the Today Was a Great Day (Slowed & Chopped) campaign page. Not public." />
         <meta name="robots" content="noindex, nofollow" /><meta name="googlebot" content="noindex, nofollow" />
       </Helmet>
       <audio ref={audio.audioRef} src={PREVIEW_URL} preload="none" />
@@ -102,7 +102,7 @@ export default function GreatDayPreview() {
             <Record playing={playing} className="gd2-record--sun h-[min(36vh,360px)] w-[min(36vh,360px)]" />
           </motion.div>
 
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.8 }} className="mb-3 text-[11px] font-semibold uppercase tracking-[0.36em] text-gold">The Remix</motion.p>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.8 }} className="mb-3 text-[11px] font-semibold uppercase tracking-[0.36em] text-gold">Slowed &amp; Chopped by Lil Randy</motion.p>
           <motion.h1 id="gd2-title" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 1, ease }} className="font-display text-balance leading-[0.92] text-foreground drop-shadow-[0_8px_40px_rgba(10,4,16,0.6)]">
             <span className="block text-[clamp(30px,4vw,60px)]">Today Was a</span>
             <span className="block text-[clamp(62px,9.4vw,152px)] text-gold">Great Day</span>
@@ -121,16 +121,16 @@ export default function GreatDayPreview() {
               <Progress audio={audio} />
               <div className="mt-1 flex justify-between text-[11px] tabular-nums text-foreground/60"><span>{formatTime(audio.time)}</span><span>{audio.status === 'error' ? 'The preview did not load. Press play to try again.' : 'Original single · 30-second preview'}</span><span>{formatTime(PREVIEW_SECONDS)}</span></div>
             </div>
-            <Pending>Original 2024 single · remix master pending</Pending>
+            <Pending>Original 2024 single · slowed &amp; chopped preview coming</Pending>
           </motion.div>
         </section>
 
         <MarqueeStrip items={MARQUEE} />
 
         <SectionShell id="words" eyebrow="The Words" align="center" title={<>Read along, <span className="text-gold">line by line.</span></>}
-          description="When the remix drops, every lyric lights up here in time with the record.">
+          description="When it drops, every lyric lights up here in time with the record.">
           {LYRICS.length ? <Lyrics audio={audio} /> : <div className="flex flex-col items-center gap-5 text-center">
-            <p className="gd2-outline font-display text-[clamp(40px,7vw,96px)] leading-none">Lyrics drop<br />with the remix</p>
+            <p className="gd2-outline font-display text-[clamp(40px,7vw,96px)] leading-none">Lyrics drop<br />with the record</p>
             <Pending>Lyrics to come</Pending>
           </div>}
         </SectionShell>
