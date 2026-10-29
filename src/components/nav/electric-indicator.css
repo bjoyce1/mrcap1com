@@ -1,0 +1,15 @@
+/* The menu's electric underline (ElectricIndicator.tsx). The script names no colour and no
+   size; it reads these back. The glow is the site's candy magenta; set --arc-glow-rgb to
+   96 152 255 for the reference's electric blue. */
+.nav-arc {
+  --arc-core-rgb: 255 255 255;
+  --arc-glow-rgb: 226 72 160;
+  --arc-w: 28px;    /* fixed, not a fraction of the word */
+  --arc-h: 3px;
+  --arc-gap: 10px;  /* from the bottom of the label to the bar */
+  --arc-bleed: 18px; /* room around the menu for the glow */
+  position: absolute;
+  left: calc(var(--arc-bleed) * -1);
+  top: calc(var(--arc-bleed) * -1);
+  pointer-events: none;
+}
