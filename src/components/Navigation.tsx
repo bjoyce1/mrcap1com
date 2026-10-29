@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import mrCapCoin from "@/assets/mr-cap-coin.webp";
+import ElectricIndicator from "@/components/nav/ElectricIndicator";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,6 +34,9 @@ const Navigation = () => {
   const location = useLocation();
 
   const isMoreActive = moreLinks.some(link => location.pathname === link.to);
+  // the item the electric underline rests under: a primary link, More, or nothing (home)
+  const activeKey = primaryLinks.find((link) => location.pathname === link.to)?.to ?? (isMoreActive ? "more" : null);
+  const itemRefs = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,13 +75,15 @@ const Navigation = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="relative hidden lg:flex items-center gap-8">
           {primaryLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
+              ref={(el) => { itemRefs.current[link.to] = el; }}
+              aria-current={location.pathname === link.to ? "page" : undefined}
               className={cn(
-                "text-[13px] font-medium tracking-widest uppercase transition-colors link-sweep",
+                "text-[13px] font-medium tracking-widest uppercase transition-colors",
                 location.pathname === link.to
                   ? "text-foreground"
                   : "text-foreground/50 hover:text-foreground"
@@ -89,7 +95,7 @@ const Navigation = () => {
 
           {/* More Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className={cn(
+            <DropdownMenuTrigger ref={(el) => { itemRefs.current.more = el; }} className={cn(
               "flex items-center gap-1 text-[13px] font-medium tracking-widest uppercase transition-colors outline-none",
               isMoreActive
                 ? "text-foreground"
@@ -114,6 +120,7 @@ const Navigation = () => {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          <ElectricIndicator activeKey={activeKey} activeEl={() => (activeKey ? itemRefs.current[activeKey] : null)} />
         </nav>
 
         {/* Right Side */}
