@@ -1,5 +1,10 @@
 # Identity connection
 
+# Header transition repair
+
+- [ ] Keep one header mounted across page changes and remove the obscuring page curtain.
+- [ ] Start the electric indicator immediately and verify navigation, intro, and reduced motion without publishing.
+
 - [x] Add the requested biography statement and professional portfolio link.
 - [x] Unify existing Person references without altering unrelated SEO or artist branding.
 - [x] Validate JSON-LD, reciprocal website evidence, and existing artist pages; report changes without publishing.
