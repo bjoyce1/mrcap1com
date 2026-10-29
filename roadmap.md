@@ -2,8 +2,8 @@
 
 # Caption Studio access
 
-- [ ] Reproduce and repair the admin role-loading redirect without weakening access checks.
-- [ ] Test delayed roles, refresh, and denied access without publishing.
+- [x] Reproduce and repair the admin role-loading redirect without weakening access checks.
+- [x] Test delayed roles, refresh, and denied access without publishing.
 
 # Header transition repair
 
