@@ -125,9 +125,9 @@ export interface Voice {
 
 /** Roles in the owner's words: original members, never founders. */
 export const VOICES: Voice[] = [
-  { name: 'Mr. CAP', monogram: 'CAP', role: 'Lead artist', note: 'Original Member of the South Park Coalition', photo: portraitCap, instagram: 'mrcapism' },
-  { name: 'Paul Wall', monogram: 'PW', role: 'Featuring', note: 'Original Member of the Swishahouse', photo: portraitPaul, instagram: 'paulwallbaby' },
-  { name: 'Lil Keke', monogram: 'LK', role: 'Featuring', note: 'Original Member of the Screwed Up Click', photo: portraitKeke, instagram: 'donke713' },
+  { name: 'Mr. CAP', monogram: 'CAP', role: 'Lead artist', note: 'South Park Coalition', photo: portraitCap, instagram: 'mrcapism' },
+  { name: 'Paul Wall', monogram: 'PW', role: 'Featuring', note: 'Swishahouse', photo: portraitPaul, instagram: 'paulwallbaby' },
+  { name: 'Lil Keke', monogram: 'LK', role: 'Featuring', note: 'Screwed Up Click', photo: portraitKeke, instagram: 'donke713' },
   { name: 'Lisa Dinero', monogram: 'LD', role: 'Featuring', photo: portraitLisa, instagram: 'iamlisacrawford' },
 ];
 
