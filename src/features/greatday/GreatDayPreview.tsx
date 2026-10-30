@@ -20,8 +20,8 @@ import wall2 from '@/assets/greatday/slab/wall-2.webp';
 import wall3 from '@/assets/greatday/slab/wall-3.webp';
 import wall4 from '@/assets/greatday/slab/wall-4.webp';
 import { TIERS } from './model';
-import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
-import { PREVIEW_URL, formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
+import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_LABEL, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
+import { formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
 import './greatday-sc.css';
 
 const GlassPanel = lazy(() => import('./GlassPanel'));
@@ -57,9 +57,9 @@ function PlayButton({ audio, size = 'lg' }: { audio: PreviewAudio; size?: 'lg' |
   const label = busy ? 'Pause' : status === 'ended' ? 'Play it again' : 'Play the preview';
   const icon = status === 'loading' ? <Loader2 className="animate-spin" /> : status === 'playing' ? <Pause fill="currentColor" /> : status === 'ended' ? <RotateCcw /> : <Play fill="currentColor" />;
   if (size === 'sm') {
-    return <button type="button" onClick={audio.toggle} aria-label={`${label}, 30-second preview`} className="candy-sheen grid h-11 w-11 shrink-0 place-items-center rounded-full text-foreground [&_svg]:h-4 [&_svg]:w-4">{icon}</button>;
+    return <button type="button" onClick={audio.toggle} aria-label={`${label}, ${PREVIEW_LABEL.toLowerCase()}`} className="candy-sheen grid h-11 w-11 shrink-0 place-items-center rounded-full text-foreground [&_svg]:h-4 [&_svg]:w-4">{icon}</button>;
   }
-  return <Button variant="flux" size="lg" onClick={audio.toggle} className="h-12 gap-2.5 rounded-full px-7 text-sm [&_svg]:h-4 [&_svg]:w-4" aria-label={`${label}, 30-second preview of the Slowed & Chopped version`}>{icon}{label}</Button>;
+  return <Button variant="flux" size="lg" onClick={audio.toggle} className="h-12 gap-2.5 rounded-full px-7 text-sm [&_svg]:h-4 [&_svg]:w-4" aria-label={`${label}, ${PREVIEW_LABEL.toLowerCase()} of the Slowed & Chopped version`}>{icon}{label}</Button>;
 }
 
 /** Violet-to-ice progress line. */
@@ -235,7 +235,7 @@ export default function GreatDayPreview() {
         <meta name="description" content={`Private preview of the ${TITLE} (${VERSION}) campaign page. Not public.`} />
         <meta name="robots" content="noindex, nofollow" /><meta name="googlebot" content="noindex, nofollow" />
       </Helmet>
-      <audio ref={audio.audioRef} src={PREVIEW_URL} preload="none" />
+      <audio ref={audio.audioRef} preload="none" />
       <Navigation />
 
       <main>
@@ -278,7 +278,7 @@ export default function GreatDayPreview() {
                   <div className={`grid transition-[grid-template-rows,opacity] duration-700 ${audio.status === 'idle' ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr] opacity-100'}`} aria-hidden={audio.status === 'idle'}>
                     <div className="-mx-2 min-h-0 overflow-hidden px-2">
                       <div className="pt-4"><Progress audio={audio} /></div>
-                      <div className="mt-1 flex justify-between text-[11px] tabular-nums text-foreground/60"><span>{formatTime(audio.time)}</span><span>{audio.status === 'error' ? 'The preview did not load. Press play to try again.' : '30-second preview'}</span><span>{formatTime(PREVIEW_SECONDS)}</span></div>
+                      <div className="mt-1 flex justify-between text-[11px] tabular-nums text-foreground/60"><span>{formatTime(audio.time)}</span><span>{audio.status === 'error' ? 'The preview did not load. Press play to try again.' : PREVIEW_LABEL}</span><span>{formatTime(PREVIEW_SECONDS)}</span></div>
                     </div>
                   </div>
                 </HeroPlayer>

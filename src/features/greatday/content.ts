@@ -12,7 +12,9 @@ export const VERSION = 'Slowed & Chopped';
 /** the credit as the cover prints it */
 export const CHOPPED_BY = 'Chopped and Slowed by Lil Randy';
 export const PRODUCTION = 'Single produced by P-Rod · Trackhouse Productions';
-export const PREVIEW_SECONDS = 30;
+/** the preview: one minute of the Slowed & Chopped version, from 0:15 */
+export const PREVIEW_SECONDS = 60;
+export const PREVIEW_LABEL = 'One-minute preview';
 /** the official Slowed & Chopped cover, full size and a small copy for record labels */
 export const COVER = cover;
 export const COVER_SMALL = coverSmall;
@@ -27,7 +29,7 @@ export interface LyricPart {
   lines: string[];
   /** [start, end) line ranges shown before release; the rest wait for the record */
   peek: [number, number][];
-  /** the 30-second preview (0:15 to 0:45) plays from inside this part */
+  /** the one-minute preview (0:15 to 1:15) starts inside this part */
   inPreview?: boolean;
 }
 

@@ -3,10 +3,21 @@ import { useMotionValue, type MotionValue } from 'framer-motion';
 import { PREVIEW_SECONDS } from './content';
 import previewClip from '@/assets/greatday/audio/twagd-slowed-chopped-preview.mp3';
 
-// A 30-second excerpt of the Slowed & Chopped version (0:15 to 0:45, faded at both ends); the
+// A one-minute excerpt of the Slowed & Chopped version (0:15 to 1:15, faded at both ends); the
 // full master stays out of the site. The cap is enforced here too, and nothing is reported:
 // Great Day analytics stay off during the private review.
 export const PREVIEW_URL = previewClip;
+
+/**
+ * The host sends the clip whole and never in byte ranges, so Chrome will not seek in it and
+ * Safari may not play it at all. On the first press the clip (about 1.2 MB) downloads once and
+ * plays from a copy held in memory, which seeks anywhere. Kept for the session.
+ */
+let held: Promise<string> | null = null;
+const holdClip = () => (held ??= fetch(PREVIEW_URL)
+  .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(`preview ${r.status}`))))
+  .then((blob) => URL.createObjectURL(blob))
+  .catch((error: unknown) => { held = null; throw error; }));
 
 export type AudioStatus = 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error';
 
@@ -31,6 +42,8 @@ export function usePreviewAudio(): PreviewAudio {
   const [status, setStatus] = useState<AudioStatus>('idle');
   const [time, setTime] = useState(0);
   const progress = useMotionValue(0);
+  /** a press is waiting on the download; a second press cancels it */
+  const wanted = useRef(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -84,7 +97,9 @@ export function usePreviewAudio(): PreviewAudio {
     const audio = audioRef.current;
     if (!audio) return;
     if (status === 'playing' || status === 'loading') {
+      wanted.current = false;
       audio.pause();
+      if (status === 'loading') setStatus('paused');
       return;
     }
     if (status === 'ended' || audio.currentTime >= PREVIEW_SECONDS) {
@@ -92,9 +107,18 @@ export function usePreviewAudio(): PreviewAudio {
       setTime(0);
       progress.set(0);
     }
-    if (status === 'error') audio.load();
+    const retry = status === 'error';
     setStatus('loading');
-    audio.play().catch((error: unknown) => {
+    wanted.current = true;
+    holdClip().then((url) => {
+      if (!wanted.current) return;
+      if (audio.src !== url) {
+        const at = audio.currentTime;
+        audio.src = url;
+        audio.currentTime = at;
+      } else if (retry) audio.load();
+      return audio.play();
+    }).catch((error: unknown) => {
       // a pause during loading rejects the play promise; that is not a failure
       if (error instanceof DOMException && error.name === 'AbortError') return;
       setStatus('error');
