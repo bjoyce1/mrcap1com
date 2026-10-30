@@ -55,7 +55,7 @@ Success means real engagement: visits from real people, qualified streams, early
 - **Not active yet:** the slowed and chopped audio, sales, real signups and wall submissions.
 - **Proposed editions, not for sale:** Single $2.99, Deluxe $9.99, Supporter $24.99. No release date is set.
 - **Assets the owner has approved for the preview:**
-  - the lyrics (to be supplied)
+  - the lyrics (supplied 2026-10-29; the page shows a sneak peek: the hook plus six bars a verse)
   - the slowed and chopped artwork (to be supplied; it sets the page's design language)
   - the slowed and chopped audio (to be supplied)
   - cleared photos of all four artists (to be supplied)

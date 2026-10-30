@@ -129,6 +129,36 @@
 .gd3-panel { border-radius: 24px; border: 1px solid hsl(255 35% 22%); background: hsl(250 45% 9% / .8); box-shadow: 0 30px 60px -30px rgba(2, 1, 12, .9), inset 0 1px 0 hsl(240 60% 92% / .08); }
 .gd3-frame { border-radius: 24px; box-shadow: 0 0 0 1px hsl(240 60% 92% / .25), 0 0 40px hsl(268 92% 55% / .25); }
 
+/* the sneak peek: the hook in the clear, the verses under a haze */
+.gd3-face { width: 44px; height: 44px; flex: none; border-radius: 50%; object-fit: cover; object-position: 50% 18%; box-shadow: 0 0 0 1.5px hsl(240 60% 92% / .6), 0 0 16px hsl(268 92% 60% / .45); }
+.gd3-hook { background: radial-gradient(ellipse 80% 60% at 20% 0%, hsl(268 92% 55% / .2), transparent 70%), hsl(250 45% 9% / .85); }
+/* the chop: "great day" repeated, each echo fainter and more drawn out */
+.gd3-echo { margin-top: .2em; color: transparent; -webkit-text-stroke: 1.2px hsl(268 92% 75% / .7); font-size: clamp(24px, 2.7vw, 38px); letter-spacing: .06em; }
+.gd3-echo.is-2 { -webkit-text-stroke-color: hsl(268 92% 75% / .35); font-size: clamp(20px, 2.3vw, 32px); letter-spacing: .16em; }
+.gd3-chopstack.is-chopped > * { animation: gd3-chop .52s steps(1, end) 1; }
+.gd3-chopstack.is-chopped > :nth-child(2) { animation-delay: .06s; }
+.gd3-chopstack.is-chopped > :nth-child(3) { animation-delay: .12s; }
+
+.gd3-sheet { background: radial-gradient(ellipse 70% 40% at 80% 0%, hsl(268 92% 55% / .14), transparent 70%), hsl(250 45% 9% / .8); }
+.gd3-line {
+  position: relative; isolation: isolate; padding: 4px 0;
+  font-size: clamp(16px, 1.45vw, 19px); line-height: 1.5; font-weight: 500; color: hsl(240 40% 92% / .88);
+  transition: filter 1.2s cubic-bezier(.16, 1, .3, 1), opacity 1.2s cubic-bezier(.16, 1, .3, 1), color .8s, text-shadow .8s;
+}
+.gd3-line.is-near { filter: blur(2.5px); opacity: .5; }
+.gd3-line.is-far { filter: blur(6px); opacity: .3; }
+.gd3-line.is-focus { color: #fff; text-shadow: 0 0 16px hsl(268 92% 65% / .85); }
+/* a slowed double image trails the line in focus */
+.gd3-line__ghost { position: absolute; inset: 4px 0 auto; z-index: -1; color: hsl(268 92% 75%); text-shadow: none; pointer-events: none; animation: gd3-ghost 1.6s cubic-bezier(.16, 1, .3, 1) forwards; }
+@keyframes gd3-ghost { from { opacity: .7; translate: 0 0; } to { opacity: .3; translate: .07em .05em; } }
+/* where bars are held back: a splice in the tape */
+.gd3-splice { width: 54px; height: 1px; margin: 12px 0; background: repeating-linear-gradient(90deg, hsl(268 92% 72% / .7) 0 5px, transparent 5px 10px); }
+.gd3-live { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; padding: 4px 10px; border-radius: 999px; border: 1px solid hsl(268 92% 72% / .5); color: hsl(var(--ice)); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+.gd3-live .gd3-dot { animation: gd3-pulse 1.6s ease-in-out infinite; }
+@keyframes gd3-pulse { 50% { opacity: .3; } }
+.gd3-hint-touch { display: none; }
+@media (hover: none) { .gd3-hint-hover { display: none; } .gd3-hint-touch { display: inline; } }
+
 /* the voices: four portraits cut from the cover */
 .gd3-voices { background: radial-gradient(ellipse 60% 70% at 50% 20%, hsl(268 92% 50% / .16), transparent 70%), hsl(250 45% 7%); }
 .gd3-portrait { position: relative; overflow: hidden; border-radius: 18px; background: hsl(250 45% 9%); box-shadow: 0 0 0 1px hsl(240 60% 92% / .28), 0 24px 50px -24px rgba(2, 1, 12, .9); }
@@ -151,6 +181,6 @@
 
 @keyframes gd3-spin { to { rotate: 360deg; } }
 @media (prefers-reduced-motion: reduce) {
-  .gd3-record.is-playing .gd3-record__disc, .gd3 h1.is-chopped > span { animation: none; }
-  .gd3-sleeve-record, .gd3-portrait img { transition: none; }
+  .gd3-record.is-playing .gd3-record__disc, .gd3 h1.is-chopped > span, .gd3-chopstack.is-chopped > *, .gd3-line__ghost, .gd3-live .gd3-dot { animation: none; }
+  .gd3-sleeve-record, .gd3-portrait img, .gd3-line { transition: none; }
 }

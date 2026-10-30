@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, useEffect, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { AnimatePresence, MotionConfig, motion, useInView, useMotionValueEvent } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, useInView, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Loader2, Pause, Play, RotateCcw } from 'lucide-react';
 import '@fontsource/bebas-neue/400.css';
 import Navigation from '@/components/Navigation';
@@ -20,7 +20,7 @@ import wall2 from '@/assets/greatday/slab/wall-2.webp';
 import wall3 from '@/assets/greatday/slab/wall-3.webp';
 import wall4 from '@/assets/greatday/slab/wall-4.webp';
 import { TIERS } from './model';
-import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, LYRICS, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSION, VOICES } from './content';
+import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
 import { PREVIEW_URL, formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
 import './greatday-sc.css';
 
@@ -71,14 +71,95 @@ function Progress({ audio }: { audio: PreviewAudio }) {
     onChange={(e) => audio.seek(Number(e.target.value))} aria-label="Seek within the preview" aria-valuetext={`${formatTime(audio.time)} of ${formatTime(PREVIEW_SECONDS)}`} />;
 }
 
-function Lyrics({ audio }: { audio: PreviewAudio }) {
-  const timed = LYRICS.some((l) => typeof l.at === 'number');
-  let active = -1;
-  if (timed) LYRICS.forEach((l, i) => { if (l.at !== undefined && l.at <= audio.time) active = i; });
-  return <ol className="mx-auto max-w-3xl space-y-4 text-center" aria-label="Lyrics">
-    {LYRICS.map((l, i) => <li key={i} aria-current={i === active ? 'true' : undefined}
-      className={`font-display text-2xl leading-snug transition-colors duration-300 md:text-4xl ${!timed || i === active ? 'text-foreground' : i < active ? 'text-foreground/45' : 'text-foreground/25'} ${i === active ? 'gd3-chrome' : ''}`}>{l.line}</li>)}
-  </ol>;
+/** A part's name with its voice's face from the cover. */
+function PartHead({ part, voice, children }: { part: string; voice: string; children?: ReactNode }) {
+  const photo = VOICES.find((v) => v.name === voice)?.photo;
+  return <div className="flex flex-wrap items-center gap-3">
+    {photo && <img src={photo} alt="" width={44} height={44} loading="lazy" className="gd3-face" />}
+    <div className="min-w-0">
+      <p className="gd3-cond text-[13px] tracking-[0.28em] text-[hsl(var(--ice))]">{part}</p>
+      <p className="gd3-chrome font-display text-xl leading-tight md:text-2xl">{voice}</p>
+    </div>
+    {children}
+  </div>;
+}
+
+/** The hook, clear of the haze: the line everybody will sing, then the chop, a phrase repeated as it fades. */
+function Hook({ chopping }: { chopping: boolean }) {
+  const [swangas, silver, feels, greatDay] = HOOK.lines;
+  const [slab, sun] = swangas.split(', ');
+  return <figure className="gd3-panel gd3-hook p-7 md:p-10 lg:sticky lg:top-28">
+    <figcaption><PartHead part={HOOK.part} voice={HOOK.voice} /></figcaption>
+    <blockquote className="mt-8">
+      <p className="gd3-script gd3-chrome text-[clamp(32px,3.4vw,50px)] leading-[1.08]">{slab},<br />{sun}</p>
+      <p className="gd3-cond mt-5 text-[clamp(20px,2vw,26px)] tracking-[0.1em] text-[hsl(var(--ice))]">{silver}</p>
+      <p className="mt-2 text-lg italic text-foreground/80">{feels}</p>
+      <div className={`gd3-chopstack mt-7 ${chopping ? 'is-chopped' : ''}`}>
+        <p className="gd3-chrome font-display text-[clamp(28px,3.2vw,44px)] leading-[1.05] [text-wrap:balance]">{greatDay}</p>
+        {[1, 2].map((n) => <motion.p key={n} aria-hidden="true" initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-80px' }}
+          transition={{ delay: 0.5 * n, duration: 1.4, ease }} className={`gd3-echo font-display leading-none is-${n}`}>Great day</motion.p>)}
+      </div>
+    </blockquote>
+  </figure>;
+}
+
+const SHEET = VERSES.map((v) => ({
+  ...v,
+  chunks: v.peek.map(([a, b]) => v.lines.slice(a, b)),
+  hidden: v.lines.length - v.peek.reduce((n, [a, b]) => n + b - a, 0),
+}));
+const PEEK_LINES = SHEET.reduce((n, v) => n + v.chunks.flat().length, 0);
+
+/**
+ * The verses under a haze. One line at a time comes into focus, drifting down the sheet at a
+ * slowed-down pace until the visitor points at a line. Only the peek lines are on the page.
+ */
+function LyricSheet({ playing }: { playing: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: '-15% 0px -15% 0px' });
+  const reduce = useReducedMotion();
+  const [focus, setFocus] = useState(0);
+  const [clear, setClear] = useState(false);
+  const hold = useRef(0);
+  const haze = !clear && !reduce;
+
+  useEffect(() => {
+    if (!haze || !inView) return;
+    const id = window.setInterval(() => { if (performance.now() > hold.current) setFocus((f) => (f + 1) % PEEK_LINES); }, 2600);
+    return () => clearInterval(id);
+  }, [haze, inView]);
+
+  const pick = (e: PointerEvent<HTMLDivElement>) => {
+    const line = (e.target as HTMLElement).closest<HTMLElement>('[data-line]');
+    if (!line) return;
+    setFocus(Number(line.dataset.line));
+    hold.current = e.pointerType === 'mouse' ? Infinity : performance.now() + 8000;
+  };
+  const release = () => { if (hold.current === Infinity) hold.current = performance.now() + 2000; };
+
+  let n = 0;
+  return <div ref={ref} className="gd3-panel gd3-sheet p-6 md:p-9" onPointerOver={haze ? pick : undefined} onPointerLeave={release}>
+    {!reduce && <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-5">
+      <p className="text-[11px] uppercase tracking-[0.2em] text-foreground/60"><span className="gd3-hint-hover">Point at a line to read it</span><span className="gd3-hint-touch">Tap a line to read it</span></p>
+      <Button variant="fluxOutline" size="sm" aria-pressed={clear} onClick={() => setClear((c) => !c)} className="gd3-outline-btn h-9 rounded-full px-4 text-xs">{clear ? 'Bring the haze back' : 'Clear the haze'}</Button>
+    </div>}
+    {SHEET.map((v) => <section key={v.part} aria-label={`${v.part}, ${v.voice}`} className="border-b border-border/60 py-7 last:border-0 last:pb-0">
+      <PartHead part={v.part} voice={v.voice}>{v.inPreview && playing && <span className="gd3-live"><span className="gd3-dot" aria-hidden="true" />In the preview</span>}</PartHead>
+      <ol className="mt-5">
+        {v.chunks.map((chunk, c) => <Fragment key={c}>
+          {c > 0 && <li aria-hidden="true" className="gd3-splice" />}
+          {chunk.map((line) => {
+            const i = n++;
+            const d = haze ? Math.abs(i - focus) : -1;
+            return <li key={i} data-line={i} className={`gd3-line ${d === 0 ? 'is-focus' : d === 1 ? 'is-near' : d > 1 ? 'is-far' : ''}`}>
+              {line}{d === 0 && <span aria-hidden="true" className="gd3-line__ghost">{line}</span>}
+            </li>;
+          })}
+        </Fragment>)}
+      </ol>
+      <p className="gd3-cond mt-4 text-[13px] tracking-[0.24em] text-foreground/55">+{v.hidden} more bars when it drops</p>
+    </section>)}
+  </div>;
 }
 
 /** An instant print on the wall: the photo, the caption written on the bottom margin. */
@@ -173,12 +254,12 @@ export default function GreatDayPreview() {
 
         <MarqueeStrip items={MARQUEE} />
 
-        <SectionShell id="words" eyebrow="The Words" align="center" title={<>Read along, <span className="gd3-chrome">line by line.</span></>}
-          description="When it drops, every lyric lights up here in time with the record.">
-          {LYRICS.length ? <Lyrics audio={audio} /> : <div className="flex flex-col items-center gap-5 text-center">
-            <p className="gd3-outline-text font-display text-[clamp(40px,7vw,96px)] leading-none">Lyrics drop<br />with the record</p>
-            <Pending>Lyrics to come</Pending>
-          </div>}
+        <SectionShell id="words" eyebrow="Sneak Peek" title={<>A few bars, <span className="gd3-chrome">slowed down.</span></>}
+          description="Every voice on the record, a few lines each, under the haze. The full lyric sheet comes with the release.">
+          <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-12">
+            <Hook chopping={chopping} />
+            <LyricSheet playing={playing} />
+          </div>
         </SectionShell>
 
         <section className="gd3-voices relative overflow-hidden border-y border-border/60 py-20 md:py-28" aria-labelledby="gd3-voices">
