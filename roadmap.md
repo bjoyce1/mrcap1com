@@ -2,8 +2,8 @@
 
 # Great Day Wall Plasma UI
 
-- [ ] Integrate installed Plasma UI into the wall only, retaining sample stories and disabled posting.
-- [ ] Verify typing, desktop glass, phone fallback, reduced motion and no publication.
+- [x] Integrate installed Plasma UI into the wall only, retaining sample stories and disabled posting.
+- [x] Verify typing, desktop glass, phone fallback, reduced motion and no publication.
 
 # Caption Studio access
 
