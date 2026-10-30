@@ -1,10 +1,5 @@
 # Identity connection
 
-# Great Day Wall Plasma UI
-
-- [x] Integrate installed Plasma UI into the wall only, retaining sample stories and disabled posting.
-- [x] Verify typing, desktop glass, phone fallback, reduced motion and no publication.
-
 # Caption Studio access
 
 - [x] Reproduce and repair the admin role-loading redirect without weakening access checks.

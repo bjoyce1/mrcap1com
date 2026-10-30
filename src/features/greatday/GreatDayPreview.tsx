@@ -13,15 +13,21 @@ import heroNight from '@/assets/greatday/slab/hero-night.webp';
 import heroNightPhone from '@/assets/greatday/slab/hero-night-phone.webp';
 import swangaNight from '@/assets/greatday/slab/swanga-night.webp';
 import meetupNight from '@/assets/greatday/slab/meetup-night.webp';
-import GreatDayWall from './GreatDayWall';
+import trunkGreatDay from '@/assets/greatday/slab/trunk-great-day.webp';
+import wall0 from '@/assets/greatday/slab/wall-0.webp';
+import wall1 from '@/assets/greatday/slab/wall-1.webp';
+import wall2 from '@/assets/greatday/slab/wall-2.webp';
+import wall3 from '@/assets/greatday/slab/wall-3.webp';
+import wall4 from '@/assets/greatday/slab/wall-4.webp';
 import { TIERS } from './model';
-import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_SECONDS, PRODUCTION, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
+import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
 import { PREVIEW_URL, formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
 import './greatday-sc.css';
 
 const GlassPanel = lazy(() => import('./GlassPanel'));
 
 const MARQUEE = [TITLE, VERSION, 'Mr. CAP', 'Paul Wall', 'Lil Keke', 'Lisa Dinero', CHOPPED_BY, HASHTAG];
+const WALL_PHOTOS = [wall0, wall1, wall2, wall3, wall4];
 const ease = [0.16, 1, 0.3, 1] as const;
 
 /** Small chrome pill marking a placeholder. The page carries these only where content is not final. */
@@ -186,6 +192,17 @@ function LyricSheet({ playing }: { playing: boolean }) {
   </div>;
 }
 
+/** An instant print on the wall: the photo, the caption written on the bottom margin. */
+function Print({ caption, photo, focus = '50% 50%', tilt, sample = false, className = '' }: { caption: string; photo: string; focus?: string; tilt: number; sample?: boolean; className?: string }) {
+  return <figure className={`gd3-print ${className}`} style={{ '--tilt': `${tilt}deg` } as CSSProperties}>
+    <div className="gd3-print__photo" style={{ backgroundImage: `url(${photo})`, backgroundPosition: focus }} />
+    <figcaption>{caption}</figcaption>
+    {sample && <Pending className="absolute -right-2 -top-3 rotate-3 shadow-lg">Sample</Pending>}
+  </figure>;
+}
+
+const PRINT_TILT = [-3.5, 2.5, -1.5, 3, -2.5];
+
 /** While the preview plays, the title gets chopped: a short stutter every few seconds. */
 function useChop(playing: boolean) {
   const [chopping, setChopping] = useState(false);
@@ -206,6 +223,7 @@ export default function GreatDayPreview() {
   const heroRef = useRef<HTMLElement>(null);
   const heroCtas = useRef<HTMLDivElement>(null);
   const ctasVisible = useInView(heroCtas, { margin: '0px 0px -10% 0px' });
+  const [draft, setDraft] = useState('');
   const playing = audio.status === 'playing';
   const showDock = !ctasVisible && audio.status !== 'idle';
   const chopping = useChop(playing);
@@ -309,7 +327,26 @@ export default function GreatDayPreview() {
 
         <SectionShell id="wall" eyebrow={HASHTAG} title={<>The Great Day <span className="gd3-chrome">Wall</span></>}
           description="Fans post what made their day great. Approved stories hang here as prints, every one tagged #TodayWasAGreatDay.">
-          <GreatDayWall />
+          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+            <ul className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3" aria-label="Sample stories and photos made for the preview">
+              {SAMPLE_STORIES.map((s, i) => <li key={s} className={i === 1 ? 'sm:mt-10' : i === 3 ? 'sm:-mt-4' : ''}>
+                <Print caption={s} photo={WALL_PHOTOS[i]} tilt={PRINT_TILT[i]} sample={i === 0} />
+              </li>)}
+            </ul>
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, ease }}
+              className="gd3-panel p-6 md:p-8 lg:sticky lg:top-28">
+              <h3 className="font-display text-2xl text-foreground md:text-3xl">Add your great day</h3>
+              <p className="mt-2 text-sm text-muted-foreground">Write it and watch it print. In this preview nothing is saved or sent.</p>
+              <label htmlFor="gd3-story" className="mt-6 block text-[11px] font-semibold uppercase tracking-[0.24em] text-[hsl(var(--ice))]">What made today great?</label>
+              <textarea id="gd3-story" value={draft} maxLength={90} rows={2} onChange={(e) => setDraft(e.target.value)} placeholder="Windows down, the whole family in the car."
+                className="mt-2 w-full resize-none rounded-xl border border-input bg-background/70 px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+              <div className="mx-auto mt-6 w-[min(100%,260px)]"><Print caption={draft || 'Your great day, in your words.'} photo={trunkGreatDay} focus="42% 22%" tilt={-1.5} className={draft ? '' : 'is-ghost'} /></div>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Button variant="flux" disabled className="rounded-full">Post to the wall</Button>
+                <Pending>Opens at launch</Pending>
+              </div>
+            </motion.div>
+          </div>
         </SectionShell>
 
         <SectionShell id="behind" eyebrow="Behind the Record" title={<>Houston, <span className="gd3-chrome">after dark.</span></>} className="pt-0 md:pt-0 lg:pt-0">
