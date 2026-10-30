@@ -23,6 +23,16 @@ import { TIERS } from './model';
 import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
 import { PREVIEW_URL, formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
 import './greatday-sc.css';
+import { LiquidWall, useLiquidCapable } from './PlasmaWall';
+
+function PlasmaWall() {
+  const liquid = useLiquidCapable();
+  const cls = 'grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3';
+  const items = SAMPLE_STORIES.map((s, i) => ({ key: s, className: i === 1 ? 'sm:mt-10' : i === 3 ? 'sm:-mt-4' : '',
+    node: <Print caption={s} photo={WALL_PHOTOS[i]} tilt={PRINT_TILT[i]} sample={i === 0} /> }));
+  if (liquid) return <LiquidWall items={items} className={cls} />;
+  return <ul className={cls} aria-label="Sample stories and photos made for the preview">{items.map((it) => <li key={it.key} className={it.className}>{it.node}</li>)}</ul>;
+}
 
 const GlassPanel = lazy(() => import('./GlassPanel'));
 
