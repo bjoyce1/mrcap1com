@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from 'react';
+import { Fragment, lazy, Suspense, useEffect, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode, type RefObject } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { AnimatePresence, MotionConfig, motion, useInView, useMotionValueEvent, useReducedMotion } from 'framer-motion';
@@ -23,6 +23,8 @@ import { TIERS } from './model';
 import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
 import { PREVIEW_URL, formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
 import './greatday-sc.css';
+
+const GlassPanel = lazy(() => import('./GlassPanel'));
 
 const MARQUEE = [TITLE, VERSION, 'Mr. CAP', 'Paul Wall', 'Lil Keke', 'Lisa Dinero', CHOPPED_BY, HASHTAG];
 const WALL_PHOTOS = [wall0, wall1, wall2, wall3, wall4];
@@ -69,6 +71,34 @@ function Progress({ audio }: { audio: PreviewAudio }) {
   useEffect(() => { paint(progress.get()); }, [progress]);
   return <input ref={ref} type="range" className="gd3-progress" min={0} max={PREVIEW_SECONDS} step={1} value={Math.min(audio.time, PREVIEW_SECONDS)}
     onChange={(e) => audio.seek(Number(e.target.value))} aria-label="Seek within the preview" aria-valuetext={`${formatTime(audio.time)} of ${formatTime(PREVIEW_SECONDS)}`} />;
+}
+
+const GLASS_QUERY = '(min-width: 1024px) and (hover: hover) and (pointer: fine)';
+
+function useMedia(query: string) {
+  const [match, setMatch] = useState(false);
+  useEffect(() => {
+    const q = matchMedia(query);
+    const on = () => setMatch(q.matches);
+    on();
+    q.addEventListener('change', on);
+    return () => q.removeEventListener('change', on);
+  }, [query]);
+  return match;
+}
+
+/**
+ * The hero player. On desktops, while the hero is near the screen, it sits in liquid glass
+ * (GlassPanel); everywhere else it is a plain box of the same size, so nothing moves when the
+ * glass forms in or goes away.
+ */
+function HeroPlayer({ scene, children }: { scene: RefObject<HTMLElement>; children: ReactNode }) {
+  const desktop = useMedia(GLASS_QUERY);
+  const near = useInView(scene, { margin: '300px 0px 300px 0px' });
+  const box = desktop ? 'flex flex-col -mx-[18px] p-[18px]' : 'flex flex-col';
+  const plain = <div className={box}>{children}</div>;
+  if (!desktop || !near) return plain;
+  return <Suspense fallback={plain}><GlassPanel scene={scene} image={heroNight} className={box}>{children}</GlassPanel></Suspense>;
 }
 
 /** A part's name with its voice's face from the cover. */
@@ -190,6 +220,7 @@ function useChop(playing: boolean) {
 
 export default function GreatDayPreview() {
   const audio = usePreviewAudio();
+  const heroRef = useRef<HTMLElement>(null);
   const heroCtas = useRef<HTMLDivElement>(null);
   const ctasVisible = useInView(heroCtas, { margin: '0px 0px -10% 0px' });
   const [draft, setDraft] = useState('');
@@ -209,7 +240,7 @@ export default function GreatDayPreview() {
 
       <main>
         {/* Houston after dark, the way the cover sees it: the record in the middle of the city */}
-        <section className="relative isolate overflow-hidden" aria-labelledby="gd3-title">
+        <section ref={heroRef} className="relative isolate overflow-hidden" aria-labelledby="gd3-title">
           <p className="absolute inset-x-0 top-16 z-10 flex items-center justify-center gap-2 bg-background/70 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-foreground/75 backdrop-blur md:hidden"><span className="gd3-dot" aria-hidden="true" />Private preview · <Link to="/admin/greatday" className="gd3-ice">Studio</Link></p>
           <picture>
             <source media="(max-width: 767px)" srcSet={heroNightPhone} />
@@ -238,14 +269,19 @@ export default function GreatDayPreview() {
               </motion.div>
 
               <motion.div ref={heroCtas} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, duration: 1.2, ease }} className="mx-auto mt-7 flex w-full max-w-md flex-col gap-4 lg:mx-0">
-                <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
-                  <PlayButton audio={audio} />
-                  <Button variant="fluxOutline" size="lg" asChild className="gd3-outline-btn h-12 rounded-full px-6 text-sm"><a href="#wall">Share your great day</a></Button>
-                </div>
-                <div className={`w-full transition-opacity duration-500 ${audio.status === 'idle' ? 'opacity-0' : 'opacity-100'}`} aria-hidden={audio.status === 'idle'}>
-                  <Progress audio={audio} />
-                  <div className="mt-1 flex justify-between text-[11px] tabular-nums text-foreground/60"><span>{formatTime(audio.time)}</span><span>{audio.status === 'error' ? 'The preview did not load. Press play to try again.' : '30-second preview'}</span><span>{formatTime(PREVIEW_SECONDS)}</span></div>
-                </div>
+                <HeroPlayer scene={heroRef}>
+                  <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+                    <PlayButton audio={audio} />
+                    <Button variant="fluxOutline" size="lg" asChild className="gd3-outline-btn h-12 rounded-full px-6 text-sm"><a href="#wall">Share your great day</a></Button>
+                  </div>
+                  {/* the meter opens when the preview starts */}
+                  <div className={`grid transition-[grid-template-rows,opacity] duration-700 ${audio.status === 'idle' ? 'grid-rows-[0fr] opacity-0' : 'grid-rows-[1fr] opacity-100'}`} aria-hidden={audio.status === 'idle'}>
+                    <div className="-mx-2 min-h-0 overflow-hidden px-2">
+                      <div className="pt-4"><Progress audio={audio} /></div>
+                      <div className="mt-1 flex justify-between text-[11px] tabular-nums text-foreground/60"><span>{formatTime(audio.time)}</span><span>{audio.status === 'error' ? 'The preview did not load. Press play to try again.' : '30-second preview'}</span><span>{formatTime(PREVIEW_SECONDS)}</span></div>
+                    </div>
+                  </div>
+                </HeroPlayer>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-foreground/55">{PRODUCTION} · CAP Distributions</p>
               </motion.div>
             </div>
