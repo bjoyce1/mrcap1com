@@ -31,16 +31,13 @@ export interface LyricPart {
   inPreview?: boolean;
 }
 
-/**
- * The hook, sung by Lisa Dinero. The sheet marks the fifth line "[Peace in?]" in the first two
- * hooks and prints "Free in" in the outro; the outro wording stands until the owner confirms.
- */
+/** The hook, sung by Lisa Dinero, as the owner's corrected sheet gives it. */
 export const HOOK: LyricPart = {
   part: 'The Hook', voice: 'Lisa Dinero', peek: [[0, 4]],
   lines: [
     'Slab on swangas, the sun’s still shinin’',
     'Today’s a great day, I can see the silver lining',
-    'You just don’t know how it feels',
+    'You just don’t know how it feels to me-eeeee',
     'Today was a great day',
     'Free in the streets, everything’s chill',
     'South side rollin’ while I’m workin’ wood wheel',
@@ -122,13 +119,16 @@ export interface Voice {
   note?: string;
   /** portrait, cropped from the official cover */
   photo?: string;
+  /** Instagram handle, as the owner gave it (2026-10-29) */
+  instagram?: string;
 }
 
+/** Roles in the owner's words: original members, never founders. */
 export const VOICES: Voice[] = [
-  { name: 'Mr. CAP', monogram: 'CAP', role: 'Lead artist', note: 'Original Member of the South Park Coalition', photo: portraitCap },
-  { name: 'Paul Wall', monogram: 'PW', role: 'Featuring', photo: portraitPaul },
-  { name: 'Lil Keke', monogram: 'LK', role: 'Featuring', photo: portraitKeke },
-  { name: 'Lisa Dinero', monogram: 'LD', role: 'Featuring', photo: portraitLisa },
+  { name: 'Mr. CAP', monogram: 'CAP', role: 'Lead artist', note: 'Original Member of the South Park Coalition', photo: portraitCap, instagram: 'mrcapism' },
+  { name: 'Paul Wall', monogram: 'PW', role: 'Featuring', note: 'Original Member of the Swishahouse', photo: portraitPaul, instagram: 'paulwallbaby' },
+  { name: 'Lil Keke', monogram: 'LK', role: 'Featuring', note: 'Original Member of the Screwed Up Click', photo: portraitKeke, instagram: 'donke713' },
+  { name: 'Lisa Dinero', monogram: 'LD', role: 'Featuring', photo: portraitLisa, instagram: 'iamlisacrawford' },
 ];
 
 /** Behind-the-record clips, supplied by the owner. Until then the concept image holds the space. */

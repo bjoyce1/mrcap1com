@@ -2,7 +2,7 @@ import { Fragment, lazy, Suspense, useEffect, useRef, useState, type CSSProperti
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { AnimatePresence, MotionConfig, motion, useInView, useMotionValueEvent, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Loader2, Pause, Play, RotateCcw } from 'lucide-react';
+import { ArrowUpRight, Instagram, Loader2, Pause, Play, RotateCcw } from 'lucide-react';
 import '@fontsource/bebas-neue/400.css';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -305,14 +305,18 @@ export default function GreatDayPreview() {
               <Crown className="mx-auto mt-4" />
             </div>
             <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-              {VOICES.map((v, i) => <motion.li key={v.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 1, delay: i * 0.12, ease }}
-                className={`gd3-portrait ${i === 0 ? 'is-lead' : ''}`}>
-                {v.photo && <img src={v.photo} alt={v.name} loading="lazy" className="aspect-[4/5] w-full object-cover" />}
-                <div className="gd3-portrait__label">
-                  <p className="gd3-cond text-[13px] tracking-[0.28em] text-[hsl(var(--ice))]">{i === 0 ? 'Lead artist' : 'Featuring'}</p>
-                  <p className="gd3-chrome font-display text-[clamp(20px,2.2vw,30px)] leading-tight">{v.name}</p>
-                  {v.note && <p className="mt-1 text-[11px] leading-snug text-foreground/70">{v.note}</p>}
+              {VOICES.map((v, i) => <motion.li key={v.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 1, delay: i * 0.12, ease }}>
+                <div className={`gd3-portrait ${i === 0 ? 'is-lead' : ''}`}>
+                  {v.photo && <img src={v.photo} alt={v.name} loading="lazy" className="aspect-[4/5] w-full object-cover" />}
+                  <div className="gd3-portrait__label">
+                    <p className="gd3-cond text-[13px] tracking-[0.28em] text-[hsl(var(--ice))]">{i === 0 ? 'Lead artist' : 'Featuring'}</p>
+                    <p className="gd3-chrome font-display text-[clamp(20px,2.2vw,30px)] leading-tight">{v.name}</p>
+                    {v.note && <p className="mt-1 text-[11px] leading-snug text-foreground/70">{v.note}</p>}
+                  </div>
                 </div>
+                {v.instagram && <a href={`https://www.instagram.com/${v.instagram}/`} target="_blank" rel="noreferrer" aria-label={`${v.name} on Instagram, @${v.instagram} (opens in a new tab)`} className="gd3-ig">
+                  <Instagram aria-hidden="true" /><span className="truncate">@{v.instagram}</span>
+                </a>}
               </motion.li>)}
             </ul>
             <p className="mt-10 text-center">
