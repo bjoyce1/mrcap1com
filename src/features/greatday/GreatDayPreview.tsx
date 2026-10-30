@@ -23,6 +23,16 @@ import { TIERS } from './model';
 import { CHOPPED_BY, CLIPS, COVER, COVER_SMALL, HASHTAG, HOOK, PREVIEW_SECONDS, PRODUCTION, SAMPLE_STORIES, THEME_LINE, TITLE, VERSES, VERSION, VOICES } from './content';
 import { PREVIEW_URL, formatTime, usePreviewAudio, type PreviewAudio } from './usePreviewAudio';
 import './greatday-sc.css';
+import { LiquidWall, useLiquidCapable } from './PlasmaWall';
+
+function PlasmaWall() {
+  const liquid = useLiquidCapable();
+  const cls = 'grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3';
+  const items = SAMPLE_STORIES.map((s, i) => ({ key: s, className: i === 1 ? 'sm:mt-10' : i === 3 ? 'sm:-mt-4' : '',
+    node: <Print caption={s} photo={WALL_PHOTOS[i]} tilt={PRINT_TILT[i]} sample={i === 0} /> }));
+  if (liquid) return <LiquidWall items={items} className={cls} />;
+  return <ul className={cls} aria-label="Sample stories and photos made for the preview">{items.map((it) => <li key={it.key} className={it.className}>{it.node}</li>)}</ul>;
+}
 
 const GlassPanel = lazy(() => import('./GlassPanel'));
 
@@ -328,11 +338,8 @@ export default function GreatDayPreview() {
         <SectionShell id="wall" eyebrow={HASHTAG} title={<>The Great Day <span className="gd3-chrome">Wall</span></>}
           description="Fans post what made their day great. Approved stories hang here as prints, every one tagged #TodayWasAGreatDay.">
           <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-            <ul className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3" aria-label="Sample stories and photos made for the preview">
-              {SAMPLE_STORIES.map((s, i) => <li key={s} className={i === 1 ? 'sm:mt-10' : i === 3 ? 'sm:-mt-4' : ''}>
-                <Print caption={s} photo={WALL_PHOTOS[i]} tilt={PRINT_TILT[i]} sample={i === 0} />
-              </li>)}
-            </ul>
+            <PlasmaWall />
+            
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, ease }}
               className="gd3-panel p-6 md:p-8 lg:sticky lg:top-28">
               <h3 className="font-display text-2xl text-foreground md:text-3xl">Add your great day</h3>
