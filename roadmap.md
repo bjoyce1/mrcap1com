@@ -1,5 +1,9 @@
 # Identity connection
 
+# SPC Legends debit and credit checkout
+
+- [x] Enable PayPal card funding in the existing Legends spin checkout and verify eligible card options without charging.
+
 # SPC Legends Supreme Legendary
 
 - [x] Add connecting paylines and six-reel Supreme Legendary virtual XP and badge to guest and account play.
