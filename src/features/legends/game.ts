@@ -8,6 +8,7 @@ import {loadProfile,loadHistory,requestSpin,startCheckout,capturePack,paypalClie
 import {renderBoard,animateReels,animateCounter,Confetti,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl} from './motion';
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
+import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
@@ -153,7 +154,7 @@ function loadPayPal():Promise<boolean>{
     const clientId=await paypalClientId();if(!clientId)return false;
     return await new Promise<boolean>(resolve=>{
       const script=document.createElement('script');
-      script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=USD&intent=capture&components=buttons`;
+      script.src=legendsPayPalSdkUrl(clientId);
       script.setAttribute('data-namespace','legendsPayPal');
       script.async=true;script.onload=()=>resolve(!!paypalGlobal());script.onerror=()=>resolve(false);
       document.body.appendChild(script);
@@ -196,7 +197,7 @@ async function openShop(scrollTo=false){
   buttonsShown=true;shopMessage('');
   const paypal=paypalGlobal();if(!paypal){buttonsShown=false;return;}
   paypalButtons=paypal.Buttons({
-    style:{layout:'horizontal',color:'gold',shape:'pill',label:'pay',tagline:false,height:42},
+    style:legendsPayPalButtonStyle,
     onClick:(_data:unknown,actions:{resolve:()=>void;reject:()=>void})=>{
       if(busy||confirmingPayment||pendingOrder()){shopMessage('Finish your spin or retry payment confirmation before buying another pack.');return actions.reject();}
       if($('shop-age').checked){shopMessage('');return actions.resolve();}
