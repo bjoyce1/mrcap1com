@@ -8,7 +8,9 @@ export const ARTISTS = Object.freeze([
   {id:'klondike-kat',name:'Klondike Kat',color:'#ffc354',short:'KK'},
   {id:'point-blank',name:'Point Blank',color:'#ff5b6a',short:'PB'},
   {id:'k-water',name:'K-Water',color:'#35ecaa',short:'KW'},
-  {id:'cl-che',name:"Cl'Che'",color:'#ff5bbe',short:'CC'}
+  {id:'cl-che',name:"Cl'Che'",color:'#ff5bbe',short:'CC'},
+  {id:'murder-one',name:'Murder One',color:'#ff5b6a',short:'MO'},
+  {id:'rapper-k',name:'Rapper K',color:'#be64ff',short:'RK'}
 ]);
 export const MUSIC = Object.freeze([
   {id:'mic',name:'Gold Microphone',color:'#ffce65'},

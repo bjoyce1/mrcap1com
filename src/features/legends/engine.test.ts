@@ -11,7 +11,7 @@ test('wild substitutes first reel when matching, not scatter',()=>{assert.deepEq
 test('all wild does not create a fictional character win',()=>{assert.equal(lineMatch(Array(6).fill('wild')),null);});
 test('wild + two matches before break produces exactly three',()=>{assert.deepEqual(lineMatch(['wild','wild','mr-cap','mixer','mr-cap','mr-cap']),{symbol:'mr-cap',count:3});});
 test('three 713 scatter symbols trigger Houston bonus independent of location',()=>{const b=grid();b[0][0]='bonus';b[3][2]='bonus';b[5][1]='bonus';const r=evaluateBoard(b);assert(r.wins.some(w=>w.type==='bonus'&&w.count===3));assert(r.hitCells.includes('3:2'));});
-test('six distinct artists across middle activate SPC Unity',()=>{const b=grid();ARTISTS.forEach((x,i)=>b[i][1]=x.id);const r=evaluateBoard(b);assert(r.wins.some(w=>w.type==='unity'&&w.row===1));assert.equal(r.found.length,6);});
+test('six distinct artists across middle activate SPC Unity',()=>{const b=grid();ARTISTS.slice(2,8).forEach((x,i)=>b[i][1]=x.id);const r=evaluateBoard(b);assert(r.wins.some(w=>w.type==='unity'&&w.row===1));assert.equal(r.found.length,6);});
 test('artist order in reels does not weight their value',()=>{for(const a of ARTISTS){const b=grid();b[0][1]=a.id;b[1][1]=a.id;b[2][1]=a.id;const win=evaluateBoard(b).wins.find(w=>w.type==='line'&&w.payline===1);assert.equal(win.xp,50,a.name);}});
 test('daily counter resets on Chicago date change incl DST',()=>{const s={...initialState(d),spinsToday:3,xp:100,totalSpins:5};const tomorrow=new Date('2026-11-01T19:00:00Z');const t=normalizeState(s,tomorrow);assert.equal(t.spinsToday,0);assert.equal(t.totalSpins,5);assert.equal(t.xp,100);assert.equal(localDay(new Date('2026-11-01T04:30:00Z')),'2026-10-31');});
 test('apply spin records virtual XP, preserves collection and limits three spins',()=>{const b=grid();for(let i=0;i<3;i++)b[i][1]='k-rino';let s={...initialState(d),welcomeLeft:0};for(let i=0;i<3;i++){const out=applySpin(s,b,d);s=out.state;}assert.equal(s.spinsToday,3);assert(s.collection.includes('k-rino'));assert.equal(s.totalSpins,3);assert.throws(()=>applySpin(s,b,d),/Daily spin limit/);});
@@ -67,5 +67,5 @@ test('special symbols are rarer than every artist and music symbol; artists stay
   assert.deepEqual(MULTIPLIERS,{double:2,triple:3});
   assert.equal(SYMBOL_WEIGHTS.double,2);assert.equal(SYMBOL_WEIGHTS.triple,1);
   assert.equal(new Set(ARTISTS.map(a=>SYMBOL_WEIGHTS[a.id])).size,1);
-  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),140);
+  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),160);
 });
