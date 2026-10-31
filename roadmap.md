@@ -2,7 +2,7 @@
 
 # SPC Legends temporary guest play
 
-- [ ] Enable signed-out demo spins without changing account balances or payment access, and verify guest play.
+- [x] Enable signed-out demo spins without changing account balances or payment access, and verify guest play.
 
 # SPC Legends purchase integration
 
