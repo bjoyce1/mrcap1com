@@ -435,6 +435,126 @@ export type Database = {
         }
         Relationships: []
       }
+      legends_players: {
+        Row: {
+          badges: string[]
+          best: number
+          collection: string[]
+          day: string
+          last_board: Json | null
+          last_spin_at: string | null
+          paid_spins: number
+          spins_today: number
+          total_spins: number
+          updated_at: string
+          user_id: string
+          welcome_left: number
+          xp: number
+        }
+        Insert: {
+          badges?: string[]
+          best?: number
+          collection?: string[]
+          day?: string
+          last_board?: Json | null
+          last_spin_at?: string | null
+          paid_spins?: number
+          spins_today?: number
+          total_spins?: number
+          updated_at?: string
+          user_id: string
+          welcome_left?: number
+          xp?: number
+        }
+        Update: {
+          badges?: string[]
+          best?: number
+          collection?: string[]
+          day?: string
+          last_board?: Json | null
+          last_spin_at?: string | null
+          paid_spins?: number
+          spins_today?: number
+          total_spins?: number
+          updated_at?: string
+          user_id?: string
+          welcome_left?: number
+          xp?: number
+        }
+        Relationships: []
+      }
+      legends_spin_purchases: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          id: string
+          paid_at: string | null
+          paypal_capture_id: string | null
+          paypal_order_id: string
+          spins: number
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          paypal_capture_id?: string | null
+          paypal_order_id: string
+          spins?: number
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          paid_at?: string | null
+          paypal_capture_id?: string | null
+          paypal_order_id?: string
+          spins?: number
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      legends_spins: {
+        Row: {
+          board: Json
+          created_at: string
+          id: string
+          idempotency_key: string
+          result: Json
+          source: string
+          user_id: string
+          wins: Json
+          xp: number
+        }
+        Insert: {
+          board: Json
+          created_at?: string
+          id?: string
+          idempotency_key: string
+          result: Json
+          source: string
+          user_id: string
+          wins: Json
+          xp: number
+        }
+        Update: {
+          board?: Json
+          created_at?: string
+          id?: string
+          idempotency_key?: string
+          result?: Json
+          source?: string
+          user_id?: string
+          wins?: Json
+          xp?: number
+        }
+        Relationships: []
+      }
       merch_orders: {
         Row: {
           created_at: string
@@ -813,6 +933,15 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      legends_balance: { Args: { _user: string }; Returns: Json }
+      legends_commit_spin: {
+        Args: { _board: Json; _key: string; _outcome: Json; _user: string }
+        Returns: Json
+      }
+      legends_credit_purchase: {
+        Args: { _capture: string; _order: string; _user: string }
+        Returns: Json
       }
       move_to_dlq: {
         Args: {
