@@ -8,6 +8,13 @@
       "when": 1791669580295,
       "tag": "0000_notify_on_booking_and_signup",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793482814338,
+      "tag": "0001_legends_paid_spins",
+      "breakpoints": true
     }
   ]
 }
