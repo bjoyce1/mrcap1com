@@ -1,7 +1,7 @@
 // Ported from the SPC Legends source package (src/main.js). Wires the pure engine to the motion layer
 // inside one container, so the game can mount and unmount with its React page.
 import {ARTISTS,MUSIC,SPECIAL,SYMBOL_MAP,GAME_CONFIG} from './config';
-import {createBoard,applySpin,normalizeState,anticipationReels} from './engine';
+import {createBoard,applySpin,normalizeState,anticipationReels,spinsLeft,onWelcomeSpins} from './engine';
 import {loadState,saveState} from './storage';
 import {renderBoard,animateReels,animateCounter,Confetti,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl} from './motion';
 
@@ -18,7 +18,7 @@ const motionButton=$('motion');
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
 // While reels move the spin button becomes a stop button; it only shortens the animation, never the outcome.
-function buttonState(){const spinsLeft=GAME_CONFIG.dailySpins-state.spinsToday;$('spin').disabled=busy?!reelControl.skip:spinsLeft<=0;$('spin-label').textContent=busy?'TAP TO STOP':spinsLeft?'SPIN THE MIX':'BACK TOMORROW';}
+function buttonState(){const left=spinsLeft(state);$('spin').disabled=busy?!reelControl.skip:left<=0;$('spin-label').textContent=busy?'TAP TO STOP':left?'SPIN THE MIX':'BACK TOMORROW';}
 function renderCollection(){
   const ids=new Set(state.collection);
   $('collection').replaceChildren(...ARTISTS.map(a=>{
@@ -35,7 +35,9 @@ function renderHistory(){const list=$('history');list.replaceChildren();if(!stat
   for(const h of state.history.slice(0,6)){const el=document.createElement('li');const label=document.createElement('span');label.textContent=historyLabel(h);const xp=document.createElement('strong');xp.textContent=`+${h.xp} XP`;el.append(label,xp);list.append(el);}}
 function refresh(animateXP=null){
   state=normalizeState(state);saveState(state);
-  $('spins').textContent=GAME_CONFIG.dailySpins-state.spinsToday;
+  $('spins').textContent=spinsLeft(state);
+  // The counter shows welcome spins first, then today's free spins.
+  $('spins-label').textContent=onWelcomeSpins(state)?'WELCOME SPINS':'SPINS TODAY';
   if(animateXP!==null)animateCounter($('xp'),animateXP,state.xp,{reducedMotion:userReducedMotion});else $('xp').textContent=state.xp.toLocaleString();
   $('best').textContent=state.best.toLocaleString();$('total-spins').textContent=state.totalSpins.toLocaleString();
   renderCollection();renderHistory();buttonState();
@@ -53,7 +55,7 @@ function showWin(xp,{isMajor=false,unity=false}={}){
 }
 async function spin(){
   if(busy){reelControl.skip?.();return;}
-  state=normalizeState(state);if(state.spinsToday>=GAME_CONFIG.dailySpins){refresh();return;}
+  state=normalizeState(state);if(spinsLeft(state)<=0){refresh();return;}
   busy=true;buttonState();paylines.clear();hits.clear();$('spin').classList.add('is-spinning');
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const target=createBoard(),prior=activeBoard;

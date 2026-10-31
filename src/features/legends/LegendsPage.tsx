@@ -30,7 +30,7 @@ const LegendsGame = memo(function LegendsGame() {
        <h1 className="hero-title"><span className="lg-wordmark"><img src={ui("wordmark")} alt="SPC Legends" width={750} height={147} /></span></h1>
        <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
        <p className="hero-copy">Six legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a free-play arcade experience.</p>
-       <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> 20 PAYLINES</span><span>3 DAILY SPINS</span><span>VIRTUAL XP ONLY</span></div>
+       <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> 20 PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
       </section>
       <section className="lg-container game-layout" data-lg="game" aria-label="SPC Legends game">
        <div className="machine-shell">
@@ -39,7 +39,7 @@ const LegendsGame = memo(function LegendsGame() {
           <div className="reel-board" data-lg="board" aria-label="Six reels with three symbols each"><div data-lg="reels" className="reels"></div></div>
           <div className="board-bottom"><span><span className="board-led"></span> SIX REELS ACTIVE</span><span>SPC // 713</span></div></div>
         <div className="hud">
-         <div className="hud-block"><span className="hud-label">SPINS LEFT</span><strong data-lg="spins">3</strong></div>
+         <div className="hud-block"><span className="hud-label" data-lg="spins-label">WELCOME SPINS</span><strong data-lg="spins">25</strong></div>
          <div className="hud-block"><span className="hud-label">LEGENDS XP</span><strong data-lg="xp">0</strong></div>
          <div className="hud-block"><span className="hud-label">COLLECTED</span><strong data-lg="collected">0 / 6</strong></div>
          <div className="hud-block"><span className="hud-label">BEST SPIN</span><strong data-lg="best">0</strong></div>
@@ -55,7 +55,7 @@ const LegendsGame = memo(function LegendsGame() {
        </aside>
       </section>
       <section className="lg-container below-grid" data-lg="rules">
-       <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Get three free spins each Houston calendar day. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of 20 paylines earn virtual XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover K-Rino, Mr. CAP, Klondike Kat, Point Blank, K-Water, and Cl'Che'.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus, or line up all six unique artists for SPC Unity.</p></div></div></div>
+       <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Start with 25 free spins. After those, get three free spins each Houston calendar day. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of 20 paylines earn virtual XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover K-Rino, Mr. CAP, Klondike Kat, Point Blank, K-Water, and Cl'Che'.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus, or line up all six unique artists for SPC Unity.</p></div></div></div>
        <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/6</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong>Guest / Local</strong></div><p className="panel-note">Progress is saved in this browser only.</p></div>
       </section>
       <section className="lg-container symbol-library">

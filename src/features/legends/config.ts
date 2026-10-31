@@ -24,7 +24,8 @@ export const SPECIAL = Object.freeze([{id:'wild',name:'SPC Wild',color:'#ffc766'
 export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL];
 export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
 export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:s.id==='wild'?2:3])));
-export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:3,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:true});
+// welcomeSpins: one-time starter spins every player gets, used before the daily allowance.
+export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:3,welcomeSpins:25,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:true});
 // 20 unique six-column paths. Each row index is 0,1,2. Visible-line evaluation does not wrap.
 export const PAYLINES=Object.freeze([
   [1,1,1,1,1,1], [0,0,0,0,0,0], [2,2,2,2,2,2],

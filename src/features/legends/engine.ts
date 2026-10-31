@@ -8,12 +8,14 @@ export function localDay(date=new Date(),timeZone=GAME_CONFIG.timezone){
   return `${x.year}-${x.month}-${x.day}`;
 }
 export function initialState(date=new Date()){
-  return {schema:3,day:localDay(date),spinsToday:0,totalSpins:0,xp:0,best:0,collection:[],history:[],badges:[],lastBoard:null};
+  return {schema:3,day:localDay(date),spinsToday:0,welcomeLeft:GAME_CONFIG.welcomeSpins,totalSpins:0,xp:0,best:0,collection:[],history:[],badges:[],lastBoard:null};
 }
 export function normalizeState(state,date=new Date()){
   const empty=initialState(date);
   const safe={...empty,...(state&&typeof state==='object'?state:{})};
-  safe.spinsToday=Number.isSafeInteger(safe.spinsToday)?Math.max(0,Math.min(3,safe.spinsToday)):0;
+  safe.spinsToday=Number.isSafeInteger(safe.spinsToday)?Math.max(0,Math.min(GAME_CONFIG.dailySpins,safe.spinsToday)):0;
+  // Players saved before welcome spins existed have no field and get the full welcome; bad values are clamped.
+  safe.welcomeLeft=Number.isSafeInteger(safe.welcomeLeft)?Math.max(0,Math.min(GAME_CONFIG.welcomeSpins,safe.welcomeLeft)):GAME_CONFIG.welcomeSpins;
   safe.xp=Number.isSafeInteger(safe.xp)?Math.max(0,safe.xp):0;
   safe.totalSpins=Number.isSafeInteger(safe.totalSpins)?Math.max(0,safe.totalSpins):0;
   safe.best=Number.isSafeInteger(safe.best)?Math.max(0,safe.best):0;
@@ -94,14 +96,23 @@ export function anticipationReels(board){
   let landed=0;
   return board.map(col=>{const tease=landed===2;landed+=col.filter(id=>id==='bonus').length;return tease;});
 }
+/** Spins the player can take right now: welcome spins while any remain, then what is left of today's free spins. */
+export function spinsLeft(state,date=new Date()){
+  const s=normalizeState(state,date);
+  return s.welcomeLeft>0?s.welcomeLeft:GAME_CONFIG.dailySpins-s.spinsToday;
+}
+/** True while the player is still on welcome spins (the HUD labels the counter accordingly). */
+export function onWelcomeSpins(state,date=new Date()){return normalizeState(state,date).welcomeLeft>0;}
 export function applySpin(state,board,date=new Date()){
   const normalized=normalizeState(state,date);
-  if(normalized.spinsToday>=GAME_CONFIG.dailySpins)throw new Error('Daily spin limit reached');
+  const welcome=normalized.welcomeLeft>0;
+  if(!welcome&&normalized.spinsToday>=GAME_CONFIG.dailySpins)throw new Error('Daily spin limit reached');
   const outcome=evaluateBoard(board);
   const collection=[...new Set([...normalized.collection,...outcome.found])];
   const badges=[...normalized.badges];
   if(collection.length===6&&!badges.includes('six-legends'))badges.push('six-legends');
   if(outcome.wins.some(w=>w.type==='unity')&&!badges.includes('spc-unity'))badges.push('spc-unity');
-  const next={...normalized,spinsToday:normalized.spinsToday+1,totalSpins:normalized.totalSpins+1,xp:normalized.xp+outcome.xp,best:Math.max(normalized.best,outcome.xp),collection,badges,lastBoard:board,history:[{at:date.toISOString(),xp:outcome.xp,wins:outcome.wins.map(w=>({type:w.type,count:w.count||0,symbol:w.symbol||null}))},...normalized.history].slice(0,12)};
+  // Welcome spins are spent first and do not touch the daily count.
+  const next={...normalized,spinsToday:normalized.spinsToday+(welcome?0:1),welcomeLeft:normalized.welcomeLeft-(welcome?1:0),totalSpins:normalized.totalSpins+1,xp:normalized.xp+outcome.xp,best:Math.max(normalized.best,outcome.xp),collection,badges,lastBoard:board,history:[{at:date.toISOString(),xp:outcome.xp,wins:outcome.wins.map(w=>({type:w.type,count:w.count||0,symbol:w.symbol||null}))},...normalized.history].slice(0,12)};
   return {state:next,outcome,newCharacters:collection.filter(x=>!normalized.collection.includes(x))};
 }
