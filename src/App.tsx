@@ -71,6 +71,7 @@ const AdminCaptions = lazy(() => import("./pages/AdminCaptions"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
 const GreatDayPreview = lazy(() => import("./features/greatday/GreatDayPreview"));
 const GreatDayStudio = lazy(() => import("./features/greatday/GreatDayStudio"));
+const LegendsPage = lazy(() => import("./features/legends/LegendsPage"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -175,6 +176,7 @@ function AppRoutes() {
             <Route path="/self-love/2026" element={<Navigate to="/self-love" replace />} />
             {/* Merch & Streaming */}
             <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
+            <Route path="/legends" element={<PageTransition><LegendsPage /></PageTransition>} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
@@ -204,7 +206,8 @@ function AppRoutes() {
       {!introActive && !greatdayPrivate && (
         <>
           <MobileBottomNav />
-          <MotionToggle />
+          {/* SPC Legends has its own motion switch; the floating pill would cover its HUD on phones. */}
+          {location.pathname !== "/legends" && <MotionToggle />}
         </>
       )}
       

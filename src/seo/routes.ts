@@ -583,6 +583,19 @@ export const ROUTES: SeoEntry[] = [
     noIndex: true,
   }),
 
+  route({
+    path: "/legends",
+    title: "SPC Legends | Spin the Mix Arcade Game",
+    description: "Play SPC Legends: Spin the Mix, a free six reel arcade game with K-Rino, Mr. CAP, Klondike Kat, Point Blank, K-Water and Cl'Che' of the South Park Coalition.",
+    h1: "SPC Legends",
+    summary: [
+      "SPC Legends: Spin the Mix is a six reel, three row arcade game starring six South Park Coalition artists. Everyone gets three free spins each Houston day.",
+      "Match symbols on 20 paylines for virtual Legends XP, collect all six artists, and hit the 713 Bonus or SPC Unity. XP has no cash value.",
+    ],
+    links: [L.music],
+    noIndex: true,
+  }),
+
   admin("/auth", "Admin Login | Mr. CAP"),
   admin("/admin", "Admin | Mr. CAP"),
   admin("/admin/library", "Admin Library | Mr. CAP"),

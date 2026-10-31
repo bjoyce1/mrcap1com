@@ -1,0 +1,22 @@
+// Ported from the SPC Legends source package (tests/engine.test.mjs). Same cases, run by Vitest.
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import {GAME_CONFIG,PAYLINES,ARTISTS} from './config';
+import {lineMatch, evaluateBoard, applySpin, initialState, normalizeState, localDay, validateBoard, createBoard, anticipationReels} from './engine';
+const d=new Date('2026-10-31T19:00:00Z');
+const grid=()=>Array.from({length:6},()=>['mic','mixer','headphones']);
+test('six-by-three board and twenty unique paylines',()=>{assert.equal(GAME_CONFIG.reels,6);assert.equal(GAME_CONFIG.rows,3);assert.equal(PAYLINES.length,20);assert.equal(new Set(PAYLINES.map(x=>x.join(''))).size,20);assert(PAYLINES.every(p=>p.length===6&&p.every(y=>y>=0&&y<=2)));});
+test('matching first three on central row gives character XP',()=>{const b=grid();for(let i=0;i<3;i++)b[i][1]='k-rino';const r=evaluateBoard(b);assert(r.xp>=50);assert(r.wins.some(x=>x.type==='line'&&x.count===3&&x.symbol==='k-rino'));});
+test('wild substitutes first reel when matching, not scatter',()=>{assert.deepEqual(lineMatch(['wild','k-rino','k-rino','mic','mic','mic']),{symbol:'k-rino',count:3});assert.equal(lineMatch(['bonus','k-rino','k-rino','k-rino','k-rino','k-rino']),null);});
+test('all wild does not create a fictional character win',()=>{assert.equal(lineMatch(Array(6).fill('wild')),null);});
+test('wild + two matches before break produces exactly three',()=>{assert.deepEqual(lineMatch(['wild','wild','mr-cap','mixer','mr-cap','mr-cap']),{symbol:'mr-cap',count:3});});
+test('three 713 scatter symbols trigger Houston bonus independent of location',()=>{const b=grid();b[0][0]='bonus';b[3][2]='bonus';b[5][1]='bonus';const r=evaluateBoard(b);assert(r.wins.some(w=>w.type==='bonus'&&w.count===3));assert(r.hitCells.includes('3:2'));});
+test('six distinct artists across middle activate SPC Unity',()=>{const b=grid();ARTISTS.forEach((x,i)=>b[i][1]=x.id);const r=evaluateBoard(b);assert(r.wins.some(w=>w.type==='unity'&&w.row===1));assert.equal(r.found.length,6);});
+test('artist order in reels does not weight their value',()=>{for(const a of ARTISTS){const b=grid();b[0][1]=a.id;b[1][1]=a.id;b[2][1]=a.id;const win=evaluateBoard(b).wins.find(w=>w.type==='line'&&w.payline===1);assert.equal(win.xp,50,a.name);}});
+test('daily counter resets on Chicago date change incl DST',()=>{const s={...initialState(d),spinsToday:3,xp:100,totalSpins:5};const tomorrow=new Date('2026-11-01T19:00:00Z');const t=normalizeState(s,tomorrow);assert.equal(t.spinsToday,0);assert.equal(t.totalSpins,5);assert.equal(t.xp,100);assert.equal(localDay(new Date('2026-11-01T04:30:00Z')),'2026-10-31');});
+test('apply spin records virtual XP, preserves collection and limits three spins',()=>{const b=grid();for(let i=0;i<3;i++)b[i][1]='k-rino';let s=initialState(d);for(let i=0;i<3;i++){const out=applySpin(s,b,d);s=out.state;}assert.equal(s.spinsToday,3);assert(s.collection.includes('k-rino'));assert.equal(s.totalSpins,3);assert.throws(()=>applySpin(s,b,d),/Daily spin limit/);});
+test('invalid symbols and shapes rejected',()=>{assert.equal(validateBoard([['mic']]),false);const b=grid();b[4][1]='unknown';assert.throws(()=>evaluateBoard(b),/Expected six reels/);});
+test('random injected deterministic source builds valid board',()=>{const b=createBoard(()=>0);assert(validateBoard(b));assert(b.flat().every(s=>s==='k-rino'));});
+test('line wins expose the exact payline cells used for highlighting',()=>{const b=grid();b[0][0]='k-water';b[1][1]='k-water';b[2][2]='k-water';b[3][2]='k-water';const r=evaluateBoard(b);const win=r.wins.find(w=>w.type==='line'&&w.symbol==='k-water');assert(win);assert.deepEqual(win.cells,PAYLINES[win.payline-1].slice(0,win.count).map((row,col)=>`${col}:${row}`));});
+test('anticipation starts after exactly two 713 symbols land and stops after a third',()=>{const b=grid();assert.deepEqual(anticipationReels(b),[false,false,false,false,false,false]);b[0][0]='bonus';assert.deepEqual(anticipationReels(b),[false,false,false,false,false,false]);b[2][1]='bonus';assert.deepEqual(anticipationReels(b),[false,false,false,true,true,true]);b[4][2]='bonus';assert.deepEqual(anticipationReels(b),[false,false,false,true,true,false]);});
+test('anticipation is presentation only and never changes the outcome',()=>{const b=grid();b[0][0]='bonus';b[1][0]='bonus';const before=JSON.stringify(evaluateBoard(b));anticipationReels(b);assert.equal(JSON.stringify(evaluateBoard(b)),before);assert.throws(()=>anticipationReels([['bonus']]),/Expected six reels/);});
