@@ -109,7 +109,7 @@ export class PaylineOverlay {
   }
   /** autoCycle=false draws the lines dim and waits for focus()/cycle(), so the hit show can lead. */
   show(wins:Win[],{reducedMotion=false,autoCycle=true}={}){
-    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
+    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='supreme');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
   }
   focus(win:Win){this.paths.forEach(p=>p.g.classList.toggle('focus',p.win===win));}
   cycle(){this.autoCycle=true;this.draw();}
@@ -121,11 +121,11 @@ export class PaylineOverlay {
     const centre=key=>{const el=this.board.querySelector(`[data-cell="${key}"]`);if(!el)return null;const r=el.getBoundingClientRect();return [r.left-box.left+r.width/2,r.top-box.top+r.height/2];};
     this.paths=[];
     const paths=this.wins.map(win=>{
-      const keys=win.type==='unity'?win.cells:PAYLINES[win.payline-1].map((row,col)=>`${col}:${row}`);
+      const keys=win.type!=='line'?win.cells:(PAYLINES[(win.payline??0)-1]??[]).map((row,col)=>`${col}:${row}`);
       const points=keys.map(centre);if(points.some(p=>!p))return null;
-      const lit=win.type==='unity'?6:win.count;
-      const g=document.createElementNS(SVG,'g');g.setAttribute('class','payline');
-      g.style.setProperty('--line',win.type==='unity'?'#fff1c2':SYMBOL_MAP[win.symbol]?.color||'#ffd27a');
+      const lit=win.type!=='line'?6:win.count;
+      const g=document.createElementNS(SVG,'g');g.setAttribute('class',win.type==='supreme'?'payline supreme-path':'payline');
+      g.style.setProperty('--line',win.type==='supreme'?'var(--gold)':win.type==='unity'?'#fff1c2':SYMBOL_MAP[win.symbol]?.color||'#ffd27a');
       // Faint guide across the full payline, bright stroke over the matched run, a node on each matched cell.
       const guide=document.createElementNS(SVG,'polyline');guide.setAttribute('class','payline-guide');guide.setAttribute('points',points.map(p=>p.join(',')).join(' '));
       const run=document.createElementNS(SVG,'polyline');run.setAttribute('class','payline-run');run.setAttribute('points',points.slice(0,lit).map(p=>p.join(',')).join(' '));

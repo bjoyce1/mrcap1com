@@ -86,6 +86,13 @@ export function evaluateBoard(board){
       wins.push({type:'unity',row:y,xp:XP_TABLE.unity,cells});xp+=XP_TABLE.unity;cells.forEach(k=>hits.add(k));
     }
   }
+  // One Supreme path per board: a real artist on every reel, any row, repeats allowed.
+  const supremeRows=board.map(col=>col.findIndex(id=>artistIds.has(id)));
+  if(supremeRows.every(row=>row>=0)){
+    const cells=supremeRows.map((row,col)=>cellKey(col,row));
+    wins.unshift({type:'supreme',count:6,xp:XP_TABLE.supreme,cells});
+    xp+=XP_TABLE.supreme;cells.forEach(k=>hits.add(k));
+  }
   // Double and Triple Bonus anywhere on a winning board multiply its XP (x2, x3, both x6). On a losing board they do nothing.
   const baseXp=xp;let multiplier=1;
   if(baseXp>0){
@@ -123,8 +130,9 @@ export function applySpin(state,board,date=new Date()){
   const outcome=evaluateBoard(board);
   const collection=[...new Set([...normalized.collection,...outcome.found])];
   const badges=[...normalized.badges];
-  if(collection.length===6&&!badges.includes('six-legends'))badges.push('six-legends');
+  if(collection.length>=6&&!badges.includes('six-legends'))badges.push('six-legends');
   if(outcome.wins.some(w=>w.type==='unity')&&!badges.includes('spc-unity'))badges.push('spc-unity');
+  if(outcome.wins.some(w=>w.type==='supreme')&&!badges.includes('supreme-legends'))badges.push('supreme-legends');
   // Welcome spins are spent first and do not touch the daily count.
   const next={...normalized,spinsToday:normalized.spinsToday+(welcome?0:1),welcomeLeft:normalized.welcomeLeft-(welcome?1:0),totalSpins:normalized.totalSpins+1,xp:normalized.xp+outcome.xp,best:Math.max(normalized.best,outcome.xp),collection,badges,lastBoard:board,history:[{at:date.toISOString(),xp:outcome.xp,wins:outcome.wins.map(w=>({type:w.type,count:w.count||0,symbol:w.symbol||null}))},...normalized.history].slice(0,12)};
   return {state:next,outcome,newCharacters:collection.filter(x=>!normalized.collection.includes(x))};
