@@ -85,6 +85,7 @@ async function spin(){
   if(loading)return;
   if(confirmingPayment)return;
   if(!userId){signIn();return;}
+  const player=userId;
   if(totalSpins(balance)<=0){openShop(true);return;}
   busy=true;buttonState();paylines.clear();hits.clear();$('spin').classList.add('is-spinning');
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
@@ -99,10 +100,11 @@ async function spin(){
       if(answer.error==='no_spins'){if(answer.balance)balance=answer.balance;refresh();setResult('OUT OF SPINS','Grab 25 more spins for $1, or come back tomorrow for 3 free spins (Houston time).','REFILL');openShop(true);return;}
       setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');return;
     }
+    if(unmounted||userId!==player)return;
     pendingKey=null;
     const target=answer.board,prior=activeBoard,outcome=answer.outcome;
     await animateReels($('reels'),prior,target,{reducedMotion:userReducedMotion,anticipate:anticipationReels(target),control:reelControl,onReady:buttonState,onStop:i=>audio.stop(i),onAnticipate:()=>{audio.tease();setResult('TWO 713s LANDED…','One more 713 anywhere unlocks the Houston bonus.','HOLD UP');}});
-    if(unmounted)return;
+    if(unmounted||userId!==player)return;
     const oldXP=xp;
     xp+=outcome.xp;best=Math.max(best,outcome.xp);spinsTaken+=1;activeBoard=target;balance=answer.balance;
     collection=[...new Set([...collection,...answer.newCharacters])];
@@ -205,7 +207,12 @@ async function openShop(scrollTo=false){
 // ----- Account -----
 async function loadAccount(nextUser:string|null){
   const revision=++accountRevision;
-  if(nextUser!==userId)pendingKey=null;
+  if(nextUser!==userId){
+    pendingKey=null;
+    void paypalButtons?.close?.().catch(()=>undefined);
+    paypalButtons=null;buttonsShown=false;$('shop-paypal').replaceChildren();
+    $('shop-retry').hidden=true;
+  }
   userId=nextUser;loading=!!nextUser;history=[];
   if(!nextUser){
     xp=0;best=0;spinsTaken=0;collection=[];balance={welcomeLeft:25,dailyLeft:3,paidSpins:0};
@@ -223,6 +230,7 @@ async function loadAccount(nextUser:string|null){
     if(!totalSpins(balance))openShop();
     if(pendingOrder()){await openShop();$('shop-retry').hidden=false;}
   }catch(error){
+    if(unmounted||userId!==nextUser||revision!==accountRevision)return;
     console.error('Could not load Legends account',error);
     setResult('COULD NOT LOAD YOUR GAME','Refresh the page to try again.','TRY AGAIN');
   }finally{if(!unmounted&&userId===nextUser&&revision===accountRevision){loading=false;refresh();}}
