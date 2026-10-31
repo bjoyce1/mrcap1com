@@ -53,9 +53,9 @@
 /* Hero: the sheet's chrome wordmark, gold slab subtitle, skylines and the official logo. */
 .legends-world .hero{padding:34px 0 30px}
 .legends-world .hero-title{margin:6px 0 0;line-height:0;background:none;filter:none;-webkit-text-fill-color:initial}
-.legends-world .lg-wordmark{position:relative;display:inline-block;width:min(750px,94%)}
+.legends-world .hero-title .lg-wordmark{position:relative;display:block;width:min(750px,94%);margin-inline:auto;background:none;background-clip:border-box}
 .legends-world .lg-wordmark img{display:block;width:100%;height:auto;max-width:100%}
-.legends-world .lg-wordmark:after{content:'';position:absolute;inset:0;pointer-events:none;-webkit-mask:url(/games/spc-legends/ui/wordmark.webp) center/100% 100% no-repeat;mask:url(/games/spc-legends/ui/wordmark.webp) center/100% 100% no-repeat;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.8) 50%,transparent 58%) 150% 0/260% 100% no-repeat;animation:lg-shine 9s ease-in-out 1.2s infinite}
+.legends-world .lg-wordmark:after{content:none}
 @keyframes lg-shine{0%,84%{background-position:150% 0}100%{background-position:-60% 0}}
 .legends-world .hero-subtitle{font:400 clamp(20px,3.3vw,40px)/1.1 var(--lg-slab);letter-spacing:.3em;margin-top:6px;background:var(--lg-gold);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.6px #5a3207;text-shadow:none;filter:drop-shadow(0 2px 0 #2a1402) drop-shadow(0 0 14px rgba(255,180,60,.35))}
 .legends-world .hero-subtitle em{font-style:normal}
