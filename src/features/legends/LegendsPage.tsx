@@ -6,6 +6,7 @@ import { mountLegendsGame } from "./game";
 import { symbolUrl } from "./motion";
 import { ARTISTS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
+import wordmarkComplete from "@/assets/legends/wordmark-complete.png";
 import "@fontsource/russo-one/400.css";
 import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
@@ -32,7 +33,7 @@ const LegendsGame = memo(function LegendsGame() {
        <img className="hero-skyline is-right" src={ui("skyline-right")} alt="" />
        <img className="hero-logo" src={ui("spc-logo")} alt="South Park Coalition, Houston, TX" width={420} height={384} />
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
-       <h1 className="hero-title"><span className="lg-wordmark"><img src={ui("wordmark")} alt="SPC Legends" width={750} height={147} /></span></h1>
+       <h1 className="hero-title"><span className="lg-wordmark"><img src={wordmarkComplete} alt="SPC Legends" width={1536} height={512} /></span></h1>
        <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
        <p className="hero-copy">Eight legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
        <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> {PAYLINES.length} PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
