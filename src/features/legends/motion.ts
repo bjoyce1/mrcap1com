@@ -139,7 +139,7 @@ export class PaylineOverlay {
   }
 }
 /** The win celebration: winning tiles pop out over the reels, step by step (see hitSchedule).
- * Artists bob and tilt in their frame with a name banner and sparks; the Wild flashes gold; the 713 Bonus
+ * Artists bob and tilt in their frame (their painted name banner rides along) with sparks; the Wild flashes gold; the 713 Bonus
  * spins up light rays. Clones sit in their own layer, so the reels underneath are never moved. */
 export class HitShow {
   board:HTMLElement;layer:HTMLDivElement;timers:ReturnType<typeof setTimeout>[]=[];
@@ -169,7 +169,6 @@ export class HitShow {
       pop.className=`hit-pop${isArtist(id)?' is-char':''}${id==='wild'?' is-wild':''}${id==='bonus'?' is-bonus':''}`;
       pop.style.cssText=`left:${r.left-box.left}px;top:${r.top-box.top}px;width:${r.width}px;height:${r.height}px;--d:${cell.delay}ms;--sym:${SYMBOL_MAP[id]?.color||'#ffd27a'}`;
       pop.append(makeTile(id));
-      if(isArtist(id)){const name=document.createElement('span');name.className='hit-name';name.textContent=SYMBOL_MAP[id].name;pop.append(name);}
       for(let k=0;k<8;k++){
         const spark=document.createElement('i'),a=(k/8)*Math.PI*2+Math.random()*.6,dist=.62+Math.random()*.38;
         spark.className='hit-spark';spark.style.setProperty('--dx',`${Math.cos(a)*dist*r.width}px`);spark.style.setProperty('--dy',`${Math.sin(a)*dist*r.height}px`);

@@ -108,11 +108,9 @@
 .legends-world .hit-pop .symbol-tile:after{content:'';position:absolute;inset:0;z-index:3;background:radial-gradient(circle at 50% 35%,transparent 38%,color-mix(in srgb,var(--sym) 75%,transparent) 100%);mix-blend-mode:screen;opacity:0;animation:lg-rim .8s ease-out var(--d) both}
 @keyframes lg-pop{0%{transform:scale(1)}24%{transform:scale(1.38) translateY(-7%)}38%{transform:scale(1.2) translateY(-4%)}80%{transform:scale(1.2) translateY(-4%)}100%{transform:scale(1)}}
 @keyframes lg-rim{0%,100%{opacity:0}30%,70%{opacity:1}}
-/* Artists come alive in their frame: a bob and tilt, a rim light in their colour, and a name banner. */
+/* Artists come alive in their frame: a bob and tilt and a rim light in their colour. */
 .legends-world .hit-pop.is-char .symbol-tile img{transform-origin:50% 85%;animation:lg-char .8s ease-in-out var(--d) both}
 @keyframes lg-char{0%,100%{transform:none}25%{transform:rotate(-6deg) scale(1.1)}45%{transform:rotate(5deg) scale(1.13) translateY(-4%)}65%{transform:rotate(-2deg) scale(1.08)}}
-.legends-world .hit-name{position:absolute;left:50%;top:calc(100% + 3px);white-space:nowrap;font:400 clamp(10px,1.35vw,17px)/1 var(--lg-display);letter-spacing:.03em;background:linear-gradient(180deg,#fff 30%,var(--sym));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.5px rgba(0,0,0,.55);filter:drop-shadow(0 2px 0 #000) drop-shadow(0 0 8px var(--sym));animation:lg-name .8s ease-out var(--d) both}
-@keyframes lg-name{0%{opacity:0;transform:translate(-50%,6px)}25%,85%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,0)}}
 .legends-world .hit-spark{position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;background:#fff6d0;box-shadow:0 0 6px var(--sym),0 0 12px var(--sym);opacity:0;animation:lg-spark .7s ease-out calc(var(--d) + 110ms) both}
 @keyframes lg-spark{0%{opacity:1;transform:translate(0,0) rotate(45deg) scale(.4)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(45deg) scale(1)}}
 /* The Wild flashes gold; the 713 Bonus spins up light rays behind itself. */
@@ -130,3 +128,7 @@
 .legends-world .collection-tile.just-found{animation:lg-flip .9s cubic-bezier(.2,1.2,.35,1) both}
 @keyframes lg-flip{0%{transform:perspective(500px) rotateY(90deg) scale(.8);opacity:.3}100%{transform:none;opacity:1}}
 @media(max-width:620px){.legends-world .lg-label{gap:8px;font-size:10px;letter-spacing:.12em;white-space:nowrap}.legends-world .lg-label:before,.legends-world .lg-label:after{flex:0 1 48px;min-width:18px}}
+
+/* Artist tiles carry their painted name banner from the sheet, so text names would only repeat it. */
+.legends-world .collection-tile:after{content:none}
+.legends-world .library-item.is-char b{display:none}
