@@ -1,5 +1,12 @@
 # Identity connection
 
+# SPC Legends purchase integration
+
+- [x] Show all real spin balances and protect payment/account refreshes.
+- [x] Load the actual PayPal client ID and support retrying approved payments.
+- [x] Verify signed-in real order creation and persisted spins.
+- [ ] Verify capture credits 25 paid spins after a buyer approves an actual $1 PayPal payment. Blocker: no approved payment yet.
+
 # Caption Studio access
 
 - [x] Reproduce and repair the admin role-loading redirect without weakening access checks.
