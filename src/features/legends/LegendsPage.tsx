@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
@@ -55,6 +55,7 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="controls"><button type="button" data-lg="spin" className="spin-button"><span aria-hidden="true">✦</span> <span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">›</span></button><button type="button" data-lg="sound" className="icon-button" aria-pressed="false" title="Enable sound" aria-label="Toggle sound"><span data-lg="sound-icon" aria-hidden="true">♫̸</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button></div>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
         <button type="button" className="shop-open" data-lg="shop-open" aria-expanded="false" aria-controls="lg-shop" hidden>GET 25 SPINS FOR $1</button>
+        <Button variant="link" asChild className="w-full mt-2"><Link to="/legends-store">Visit the Spin Store</Link></Button>
         <section className="spin-shop" data-lg="shop" id="lg-shop" aria-label="Buy spins" hidden>
          <div className="lg-label">SPIN PACK</div>
          <strong className="shop-price">25 SPINS FOR $1</strong>

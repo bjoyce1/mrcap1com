@@ -1,0 +1,6 @@
+.legends-store{padding:130px 0 100px;letter-spacing:0}
+.legends-store .ls-title{font-family:'Russo One',sans-serif;font-size:52px;line-height:1.1;letter-spacing:0}
+.legends-store .ls-wordmark{width:300px;max-width:90%;height:auto}
+.legends-store .ls-pack-art{width:100%;max-height:350px;object-fit:contain;aspect-ratio:1.1}
+.legends-store .ls-pack{min-width:0}
+@media(max-width:640px){.legends-store{padding-top:100px;padding-bottom:120px}.legends-store .ls-title{font-size:36px}.legends-store .ls-pack-art{max-height:260px}}

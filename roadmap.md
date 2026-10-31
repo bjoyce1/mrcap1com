@@ -2,6 +2,9 @@
 
 # SPC Legends purchase integration
 
+- [ ] Add /legends-store with signed-in PayPal checkout and balance updates.
+- [ ] Verify the store, sign-in return, payment recovery and game link without publishing.
+
 - [x] Show all real spin balances and protect payment/account refreshes.
 - [x] Load the actual PayPal client ID and support retrying approved payments.
 - [x] Verify signed-in real order creation and persisted spins.

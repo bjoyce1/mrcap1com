@@ -596,6 +596,16 @@ export const ROUTES: SeoEntry[] = [
     noIndex: true,
   }),
 
+  route({
+    path: "/legends-store",
+    title: "SPC Legends Spin Store | Mr. CAP",
+    description: "Buy 25 SPC Legends spins for $1.00 USD through PayPal. Packs stack and never expire. Sign in to add paid spins to your account and keep the mix going.",
+    h1: "SPIN STORE",
+    summary: ["Buy 25 SPC Legends spins for $1.00 USD. Packs stack in your account and never expire.", "Welcome spins are used first, then today's free spins, then paid spins. Virtual XP has no cash value."],
+    links: [{ href: "/legends", label: "Play SPC Legends" }],
+    noIndex: true,
+  }),
+
   admin("/auth", "Admin Login | Mr. CAP"),
   admin("/admin", "Admin | Mr. CAP"),
   admin("/admin/library", "Admin Library | Mr. CAP"),

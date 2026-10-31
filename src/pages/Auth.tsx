@@ -37,8 +37,8 @@ const Auth = () => {
   const location = useLocation();
   const authState = location.state as { greatdayReturnTo?: unknown; returnTo?: unknown } | null;
   // Players arriving from the SPC Legends game go back to it; everything else keeps the Great Day / admin rule.
-  const fromLegends = authState?.returnTo === "/legends";
-  const returnTo = fromLegends ? "/legends" : safeGreatdayReturn(authState?.greatdayReturnTo);
+  const fromLegends = authState?.returnTo === "/legends" || authState?.returnTo === "/legends-store";
+  const returnTo = fromLegends ? authState.returnTo as "/legends" | "/legends-store" : safeGreatdayReturn(authState?.greatdayReturnTo);
 
   useEffect(() => {
     if (user) {
