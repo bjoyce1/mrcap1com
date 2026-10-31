@@ -1,6 +1,6 @@
 // @ts-nocheck
 // Ported from the SPC Legends source package (src/game/engine.mjs). Pure: no DOM, no storage.
-import {ARTISTS, MUSIC, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE} from './config.ts';
+import {ARTISTS, MUSIC, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE, MULTIPLIERS} from './config.ts';
 const artistIds=new Set(ARTISTS.map(a=>a.id));
 const musicIds=new Set(MUSIC.map(a=>a.id));
 export function localDay(date=new Date(),timeZone=GAME_CONFIG.timezone){
@@ -86,8 +86,20 @@ export function evaluateBoard(board){
       wins.push({type:'unity',row:y,xp:XP_TABLE.unity,cells});xp+=XP_TABLE.unity;cells.forEach(k=>hits.add(k));
     }
   }
+  // Double and Triple Bonus anywhere on a winning board multiply its XP (x2, x3, both x6). On a losing board they do nothing.
+  const baseXp=xp;let multiplier=1;
+  if(baseXp>0){
+    for(const [id,factor] of Object.entries(MULTIPLIERS)){
+      const cells=[];board.forEach((col,x)=>col.forEach((s,y)=>{if(s===id)cells.push(cellKey(x,y))}));
+      if(!cells.length)continue;
+      multiplier*=factor;wins.push({type:'multiplier',symbol:id,multiplier:factor,count:cells.length,xp:0,cells});cells.forEach(k=>hits.add(k));
+    }
+    xp=baseXp*multiplier;
+    // Each multiplier win reports the extra XP it added, so history and stored wins add up.
+    let running=baseXp;for(const w of wins)if(w.type==='multiplier'){w.xp=running*(w.multiplier-1);running*=w.multiplier;}
+  }
   const found=[...new Set(board.flat().filter(id=>artistIds.has(id)))];
-  return {xp,wins,hitCells:[...hits],found,highest:Math.max(0,...wins.map(w=>w.xp))};
+  return {xp,baseXp,multiplier,wins,hitCells:[...hits],found,highest:Math.max(0,...wins.filter(w=>w.type!=='multiplier').map(w=>w.xp))*multiplier};
 }
 /** Presentation hint only: reels that spin longer because exactly two 713 Bonus symbols already landed on earlier reels.
  * It reads a finished board and never changes the outcome or XP.

@@ -166,9 +166,12 @@ export class HitShow {
       const tile=this.board.querySelector<HTMLElement>(`.reels [data-cell="${cell.key}"]`);if(!tile)continue;
       const r=tile.getBoundingClientRect(),id=tile.dataset.symbol||'';
       const pop=document.createElement('div');
-      pop.className=`hit-pop${isArtist(id)?' is-char':''}${id==='wild'?' is-wild':''}${id==='bonus'?' is-bonus':''}`;
+      const mult=step.win.type==='multiplier';
+      pop.className=`hit-pop${isArtist(id)?' is-char':''}${id==='wild'?' is-wild':''}${id==='bonus'?' is-bonus':''}${mult?' is-mult':''}`;
       pop.style.cssText=`left:${r.left-box.left}px;top:${r.top-box.top}px;width:${r.width}px;height:${r.height}px;--d:${cell.delay}ms;--sym:${SYMBOL_MAP[id]?.color||'#ffd27a'}`;
       pop.append(makeTile(id));
+      // Multiplier finale: the tile flares and stamps its factor over the board.
+      if(mult){const badge=document.createElement('span');badge.className='mult-badge';badge.textContent=`×${(step.win as HitWin&{multiplier?:number}).multiplier??''}`;pop.append(badge);}
       for(let k=0;k<8;k++){
         const spark=document.createElement('i'),a=(k/8)*Math.PI*2+Math.random()*.6,dist=.62+Math.random()*.38;
         spark.className='hit-spark';spark.style.setProperty('--dx',`${Math.cos(a)*dist*r.width}px`);spark.style.setProperty('--dy',`${Math.sin(a)*dist*r.height}px`);

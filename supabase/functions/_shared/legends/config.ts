@@ -21,10 +21,13 @@ export const MUSIC = Object.freeze([
   {id:'legend',name:'Legend Crown',color:'#ffd078'},
   {id:'speakers',name:'Speakers',color:'#a764ff'}
 ]);
-export const SPECIAL = Object.freeze([{id:'wild',name:'SPC Wild',color:'#ffc766'},{id:'bonus',name:'713 Bonus',color:'#fcd965'}]);
+export const SPECIAL = Object.freeze([{id:'wild',name:'SPC Wild',color:'#ffc766'},{id:'bonus',name:'713 Bonus',color:'#fcd965'},{id:'double',name:'713 Double Bonus',color:'#ff4fd8'},{id:'triple',name:'SPC Triple Bonus',color:'#ff3a2e'}]);
+// Double and Triple Bonus multiply a winning spin's XP; both on one board multiply by 6. They never pay on their own.
+export const MULTIPLIERS = Object.freeze({double:2,triple:3});
 export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL];
 export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
-export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:s.id==='wild'?2:3])));
+const SPECIAL_WEIGHTS={wild:2,bonus:3,double:2,triple:1};
+export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:SPECIAL_WEIGHTS[s.id]])));
 // welcomeSpins: one-time starter spins every player gets, used before the daily allowance.
 export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:3,welcomeSpins:25,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:true});
 // 20 unique six-column paths. Each row index is 0,1,2. Visible-line evaluation does not wrap.

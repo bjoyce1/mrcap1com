@@ -1,7 +1,7 @@
 // Ported from the SPC Legends source package (tests/engine.test.mjs). Same cases, run by Vitest.
 import { test } from 'vitest';
 import assert from 'node:assert/strict';
-import {GAME_CONFIG,PAYLINES,ARTISTS} from './config';
+import {GAME_CONFIG,PAYLINES,ARTISTS,SYMBOL_WEIGHTS,MULTIPLIERS} from './config';
 import {lineMatch, evaluateBoard, applySpin, initialState, normalizeState, localDay, validateBoard, createBoard, anticipationReels, spinsLeft, onWelcomeSpins} from './engine';
 const d=new Date('2026-10-31T19:00:00Z');
 const grid=()=>Array.from({length:6},()=>['mic','mixer','headphones']);
@@ -41,4 +41,31 @@ test('players saved before welcome spins get the full 25; bad values are clamped
   assert.equal(normalizeState({...legacy,welcomeLeft:999},d).welcomeLeft,25);
   assert.equal(normalizeState({...legacy,welcomeLeft:-4},d).welcomeLeft,0);
   assert.equal(normalizeState({...legacy,welcomeLeft:'25'},d).welcomeLeft,25);
+});
+// A board with no wins at all: no symbol appears in more than one reel.
+const quiet=()=>[['mic','mixer','vinyl'],['tape','headphones','legend'],['speakers','houston','mic'],['mixer','vinyl','tape'],['legend','speakers','houston'],['headphones','mic','mixer']];
+test('713 Double Bonus doubles a winning spin, SPC Triple Bonus triples it, both make x6',()=>{
+  const win=()=>{const b=quiet();for(let i=0;i<3;i++)b[i][1]='k-rino';return b;};
+  const plain=evaluateBoard(win());assert.equal(plain.xp,50);assert.equal(plain.multiplier,1);
+  const dbl=win();dbl[5][0]='double';const d2=evaluateBoard(dbl);
+  assert.equal(d2.xp,100);assert.equal(d2.baseXp,50);assert.equal(d2.multiplier,2);assert(d2.hitCells.includes('5:0'));
+  assert.deepEqual(d2.wins.find(w=>w.type==='multiplier'),{type:'multiplier',symbol:'double',multiplier:2,count:1,xp:50,cells:['5:0']});
+  const tri=win();tri[4][2]='triple';assert.equal(evaluateBoard(tri).xp,150);
+  const both=win();both[5][0]='double';both[4][2]='triple';both[3][0]='double';const b6=evaluateBoard(both);
+  assert.equal(b6.xp,300);assert.equal(b6.multiplier,6,'two Doubles still count once');
+  assert.equal(b6.wins.filter(w=>w.type==='multiplier').reduce((t,w)=>t+w.xp,0),250,'multiplier wins add up to the extra XP');
+  assert.equal(b6.highest,300);
+});
+test('multipliers do nothing on a losing spin and never form or extend a payline',()=>{
+  assert.equal(evaluateBoard(quiet()).xp,0);
+  const b=quiet();b[0][1]='double';b[1][1]='double';b[2][1]='double';b[3][1]='triple';
+  const r=evaluateBoard(b);assert.equal(r.xp,0);assert.equal(r.multiplier,1);assert.equal(r.wins.length,0);
+  assert.equal(lineMatch(['k-rino','k-rino','double','k-rino','k-rino','k-rino']),null);
+  assert.deepEqual(lineMatch(['k-rino','k-rino','k-rino','double','k-rino','k-rino']),{symbol:'k-rino',count:3});
+});
+test('special symbols are rarer than every artist and music symbol; artists stay equal',()=>{
+  assert.deepEqual(MULTIPLIERS,{double:2,triple:3});
+  assert.equal(SYMBOL_WEIGHTS.double,2);assert.equal(SYMBOL_WEIGHTS.triple,1);
+  assert.equal(new Set(ARTISTS.map(a=>SYMBOL_WEIGHTS[a.id])).size,1);
+  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),140);
 });

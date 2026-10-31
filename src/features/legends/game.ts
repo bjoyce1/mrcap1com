@@ -51,7 +51,13 @@ function renderCollection(){
   $('completion').textContent=`${Math.round(ids.size/6*100)}%`;$('collection-progress').style.width=`${ids.size/6*100}%`;
   $('collection-note').textContent=ids.size===6?'Complete! All six Legends collected. The collection badge is yours.':'Collect all six artist portraits as they appear on your reels.';
 }
-function historyLabel(h:HistoryItem){const first=h.wins?.[0];if(!first)return 'Spin complete';if(first.type==='unity')return 'SPC UNITY';if(first.type==='bonus')return '713 HOUSTON BONUS';return `${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}`;}
+/** Total multiplier from Double and Triple Bonus wins (1 when none landed). */
+const multiplierOf=(wins:{type:string;multiplier?:number}[])=>wins.filter(w=>w.type==='multiplier').reduce((m,w)=>m*(w.multiplier??1),1);
+function historyLabel(h:HistoryItem){
+  const first=h.wins?.[0];if(!first)return 'Spin complete';
+  const label=first.type==='unity'?'SPC UNITY':first.type==='bonus'?'713 HOUSTON BONUS':`${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}`;
+  const m=multiplierOf(h.wins);return m>1?`${label} • ×${m}`:label;
+}
 function renderHistory(){const list=$('history');list.replaceChildren();if(!history.length){const el=document.createElement('li');el.textContent=userId?'No spins yet. The stage is yours.':'Sign in to start your spin history.';list.append(el);return;}
   for(const h of history.slice(0,6)){const el=document.createElement('li');const label=document.createElement('span');label.textContent=historyLabel(h);const gained=document.createElement('strong');gained.textContent=`+${h.xp} XP`;el.append(label,gained);list.append(el);}}
 function renderBalance(){
@@ -121,7 +127,8 @@ async function spin(){
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
       const top=outcome.wins[0],lines=outcome.wins.filter(w=>w.type==='line').length;
       const description=unity?'All six featured SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
-      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),'YOU HIT A MIX');
+      const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
+      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
     }else{
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');

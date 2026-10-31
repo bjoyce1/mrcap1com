@@ -4,11 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { balanceFromRow, type Balance, type PlayerRow } from "./balance";
 
 export type Profile = { xp: number; best: number; totalSpins: number; collection: string[]; badges: string[]; lastBoard: string[][] | null; balance: Balance };
-export type HistoryItem = { xp: number; wins: { type: string; count?: number; symbol?: string | null }[] };
-export type SpinWin = { type: string; payline?: number; count?: number; symbol?: string; xp: number; cells: string[] };
+export type HistoryItem = { xp: number; wins: { type: string; count?: number; symbol?: string | null; multiplier?: number }[] };
+export type SpinWin = { type: string; payline?: number; count?: number; symbol?: string; multiplier?: number; xp: number; cells: string[] };
 export type SpinResult = {
   board: string[][];
-  outcome: { wins: SpinWin[]; hitCells: string[]; xp: number; found: string[]; highest: number };
+  outcome: { wins: SpinWin[]; hitCells: string[]; xp: number; found: string[]; highest: number; multiplier?: number };
   newCharacters: string[];
   source: "welcome" | "daily" | "paid";
   balance: Balance;

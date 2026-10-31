@@ -41,6 +41,21 @@ describe("hitSchedule", () => {
     expect(isArtist("wild")).toBe(false);
   });
 
+  it("plays Double and Triple Bonus last, after every line", () => {
+    const board = [['k-rino','mic','vinyl'],['k-rino','headphones','legend'],['k-rino','houston','mic'],['mixer','vinyl','tape'],['legend','speakers','double'],['triple','mic','mixer']];
+    const steps = hitSchedule(evaluateBoard(board).wins);
+    expect(steps.map((s) => s.win.type)).toEqual(["line", "multiplier", "multiplier"]);
+    expect(steps.slice(1).map((s) => s.win.symbol)).toEqual(["double", "triple"]);
+  });
+
+  it("never cuts the multiplier finale when the regular wins hit the cap", () => {
+    const wins: HitWin[] = [1, 2, 3, 4, 5].map((p) => line(p, 50, ["0:0", "1:0", "2:0"]));
+    wins.push({ type: "multiplier", symbol: "triple", multiplier: 3, xp: 500, cells: ["5:2"] });
+    const steps = hitSchedule(wins, { maxWins: 4 });
+    expect(steps).toHaveLength(5);
+    expect(steps[4].win.symbol).toBe("triple");
+  });
+
   it("returns nothing for a losing spin", () => {
     expect(hitSchedule([])).toEqual([]);
   });
