@@ -7,13 +7,14 @@ import {activePool,totalSpins,type Balance} from './balance';
 import {loadProfile,loadHistory,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem} from './account';
 import {renderBoard,animateReels,animateCounter,Confetti,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl} from './motion';
 import {supabase} from '@/integrations/supabase/client';
+import {guestSpin} from './guest';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
 const paypalGlobal=()=>(window as unknown as {legendsPayPal?:PayPalNamespace}).legendsPayPal;
 
-/** Start the game inside `root` (elements are found by data-lg). `signIn` sends the visitor to sign in. Returns a cleanup function. */
-export function mountLegendsGame(root:HTMLElement,{signIn}:{signIn:()=>void}){
+/** Start the game inside `root` (elements are found by data-lg). Returns a cleanup function. */
+export function mountLegendsGame(root:HTMLElement){
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- ported DOM code; each data-lg element has its own type
 const $=(id:string):any=>root.querySelector(`[data-lg="${id}"]`);
 const respectsReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -38,7 +39,7 @@ function applyMotionPreference(){root.classList.toggle('reduce-motion',userReduc
 function buttonState(){
   const left=totalSpins(balance);
   $('spin').disabled=confirmingPayment||(busy?!reelControl.skip:loading);
-  $('spin-label').textContent=busy?'TAP TO STOP':loading?'LOADING…':!userId?'SIGN IN TO PLAY':left?'SPIN THE MIX':'GET MORE SPINS';
+  $('spin-label').textContent=busy?'TAP TO STOP':loading?'LOADING…':!userId?'SPIN THE MIX':left?'SPIN THE MIX':'GET MORE SPINS';
 }
 function renderCollection(){
   const ids=new Set(collection);
@@ -58,14 +59,14 @@ function historyLabel(h:HistoryItem){
   const label=first.type==='unity'?'SPC UNITY':first.type==='bonus'?'713 HOUSTON BONUS':`${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}`;
   const m=multiplierOf(h.wins);return m>1?`${label} • ×${m}`:label;
 }
-function renderHistory(){const list=$('history');list.replaceChildren();if(!history.length){const el=document.createElement('li');el.textContent=userId?'No spins yet. The stage is yours.':'Sign in to start your spin history.';list.append(el);return;}
+function renderHistory(){const list=$('history');list.replaceChildren();if(!history.length){const el=document.createElement('li');el.textContent='No spins yet. The stage is yours.';list.append(el);return;}
   for(const h of history.slice(0,6)){const el=document.createElement('li');const label=document.createElement('span');label.textContent=historyLabel(h);const gained=document.createElement('strong');gained.textContent=`+${h.xp} XP`;el.append(label,gained);list.append(el);}}
 function renderBalance(){
   const pool=activePool(balance);
-  $('spins-label').textContent=pool.label;$('spins').textContent=pool.count;
+  $('spins-label').textContent=userId?pool.label:'DEMO SPINS';$('spins').textContent=userId?pool.count:'∞';
   $('shop-paid').textContent=balance.paidSpins?`You have ${balance.paidSpins} paid spin${balance.paidSpins===1?'':'s'}.`:'';
-  $('mode').textContent=userId?'Account':'Guest';
-  $('balance-summary').textContent=userId?`${balance.welcomeLeft} welcome · ${balance.dailyLeft} free today · ${balance.paidSpins} paid · ${totalSpins(balance)} total spins`:'Sign in to receive 25 welcome spins.';
+  $('mode').textContent=userId?'Account':'Guest demo';
+  $('balance-summary').textContent=userId?`${balance.welcomeLeft} welcome · ${balance.dailyLeft} free today · ${balance.paidSpins} paid · ${totalSpins(balance)} total spins`:'Guest demo · Progress resets when you leave · No account spins spent';
 }
 function refresh(animateFrom:number|null=null){
   if(animateFrom!==null)animateCounter($('xp'),animateFrom,xp,{reducedMotion:userReducedMotion});else $('xp').textContent=xp.toLocaleString();
@@ -90,19 +91,18 @@ async function spin(){
   if(busy){reelControl.skip?.();return;}
   if(loading)return;
   if(confirmingPayment)return;
-  if(!userId){signIn();return;}
   const player=userId;
-  if(totalSpins(balance)<=0){openShop(true);return;}
+  if(userId&&totalSpins(balance)<=0){openShop(true);return;}
   busy=true;buttonState();paylines.clear();hits.clear();$('spin').classList.add('is-spinning');
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
   try{
-    let answer=await requestSpin(key);
+    let answer=player?await requestSpin(key):guestSpin(collection);
     // The server allows one spin every 1.2 seconds; a quick tap after "tap to stop" waits and retries the same key.
     if('error' in answer&&answer.error==='cooldown'){await wait(1300);answer=await requestSpin(key);}
     if('error' in answer){
       if(answer.error!=='failed')pendingKey=null;
-      if(answer.error==='signed_out'){userId=null;refresh();setResult('SIGN IN TO PLAY','Your session ended. Sign in again to keep spinning.','SIGNED OUT');return;}
+      if(answer.error==='signed_out'){await loadAccount(null);return;}
       if(answer.error==='no_spins'){if(answer.balance)balance=answer.balance;refresh();setResult('OUT OF SPINS','Grab 25 more spins for $1, or come back tomorrow for 3 free spins (Houston time).','REFILL');openShop(true);return;}
       setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');return;
     }
@@ -131,10 +131,10 @@ async function spin(){
       setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
     }else{
-      setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
+      setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
     }
     refresh(oldXP);
-    if(!totalSpins(balance))openShop(true);
+    if(userId&&!totalSpins(balance))openShop(true);
   }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
   finally{busy=false;$('spin').classList.remove('is-spinning');buttonState();}
 }
@@ -222,9 +222,9 @@ async function loadAccount(nextUser:string|null){
   }
   userId=nextUser;loading=!!nextUser;history=[];
   if(!nextUser){
-    xp=0;best=0;spinsTaken=0;collection=[];balance={welcomeLeft:25,dailyLeft:3,paidSpins:0};
+    xp=0;best=0;spinsTaken=0;collection=[];balance={welcomeLeft:0,dailyLeft:0,paidSpins:0};
     $('shop').hidden=true;refresh();
-    setResult('SIGN IN TO PLAY','Create a free account and your first 25 spins are on us.','FREE TO START');
+    setResult('THE SOUTH SIDE IS CALLING.','Press SPIN THE MIX to reveal your next lineup.','GUEST DEMO');
     return;
   }
   refresh();

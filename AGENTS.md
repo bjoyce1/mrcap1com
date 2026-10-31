@@ -7,3 +7,4 @@ AppRoutes owns the persistent public header outside route loading and content tr
 AuthProvider keeps access loading until the current session's server role lookup completes and discards stale lookups; protected routes must not redirect on an unresolved admin role.
 - SPC Legends spin balances live only in legends_* tables, changed solely by service-role SQL functions (legends_commit_spin, legends_credit_purchase) called from legends-spin, legends-spins-checkout and legends-spins-capture; this keeps spends and PayPal credits atomic and out of the browser's reach.
 - SPC Legends uses a namespaced PayPal SDK with the configured client ID and stores only approved order IDs per user for capture retries; this avoids sandbox SDK collisions and duplicate payments after network failures.
+- Temporary signed-out Legends play uses an in-memory guest demo with the pure engine, isolated from server balances and PayPal; account play and paid spins still require sign-in.
