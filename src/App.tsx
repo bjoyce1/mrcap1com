@@ -72,6 +72,7 @@ const ApiDocs = lazy(() => import("./pages/ApiDocs"));
 const GreatDayPreview = lazy(() => import("./features/greatday/GreatDayPreview"));
 const GreatDayStudio = lazy(() => import("./features/greatday/GreatDayStudio"));
 const LegendsPage = lazy(() => import("./features/legends/LegendsPage"));
+const LegendsStore = lazy(() => import("./features/legends/LegendsStore"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -177,6 +178,7 @@ function AppRoutes() {
             {/* Merch & Streaming */}
             <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
             <Route path="/legends" element={<PageTransition><LegendsPage /></PageTransition>} />
+            <Route path="/legends-store" element={<PageTransition><LegendsStore /></PageTransition>} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
