@@ -5,7 +5,7 @@ import {GAME_CONFIG,PAYLINES,ARTISTS,SYMBOL_WEIGHTS,MULTIPLIERS} from './config'
 import {lineMatch, evaluateBoard, applySpin, initialState, normalizeState, localDay, validateBoard, createBoard, anticipationReels, spinsLeft, onWelcomeSpins} from './engine';
 const d=new Date('2026-10-31T19:00:00Z');
 const grid=()=>Array.from({length:6},()=>['mic','mixer','headphones']);
-test('six-by-three board and twenty unique paylines',()=>{assert.equal(GAME_CONFIG.reels,6);assert.equal(GAME_CONFIG.rows,3);assert.equal(PAYLINES.length,20);assert.equal(new Set(PAYLINES.map(x=>x.join(''))).size,20);assert(PAYLINES.every(p=>p.length===6&&p.every(y=>y>=0&&y<=2)));});
+test('six-by-three board and twenty-six unique paylines',()=>{assert.equal(GAME_CONFIG.reels,6);assert.equal(GAME_CONFIG.rows,3);assert.equal(PAYLINES.length,26);assert.equal(new Set(PAYLINES.map(x=>x.join(''))).size,26);assert(PAYLINES.every(p=>p.length===6&&p.every(y=>y>=0&&y<=2)));});
 test('matching first three on central row gives character XP',()=>{const b=grid();for(let i=0;i<3;i++)b[i][1]='k-rino';const r=evaluateBoard(b);assert(r.xp>=50);assert(r.wins.some(x=>x.type==='line'&&x.count===3&&x.symbol==='k-rino'));});
 test('wild substitutes first reel when matching, not scatter',()=>{assert.deepEqual(lineMatch(['wild','k-rino','k-rino','mic','mic','mic']),{symbol:'k-rino',count:3});assert.equal(lineMatch(['bonus','k-rino','k-rino','k-rino','k-rino','k-rino']),null);});
 test('all wild does not create a fictional character win',()=>{assert.equal(lineMatch(Array(6).fill('wild')),null);});

@@ -31,7 +31,7 @@ const SPECIAL_WEIGHTS={wild:2,bonus:3,double:2,triple:1};
 export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:SPECIAL_WEIGHTS[s.id]])));
 // welcomeSpins: one-time starter spins every player gets, used before the daily allowance.
 export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:3,welcomeSpins:25,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:true});
-// 20 unique six-column paths. Each row index is 0,1,2. Visible-line evaluation does not wrap.
+// 26 unique six-column paths. Each row index is 0,1,2. Visible-line evaluation does not wrap.
 export const PAYLINES=Object.freeze([
   [1,1,1,1,1,1], [0,0,0,0,0,0], [2,2,2,2,2,2],
   [0,1,2,2,1,0], [2,1,0,0,1,2],
@@ -42,6 +42,9 @@ export const PAYLINES=Object.freeze([
   [1,1,0,1,1,0], [1,1,2,1,1,2],
   [0,1,1,1,1,2], [2,1,1,1,1,0],
   [1,0,0,1,2,2], [1,2,2,1,0,0],
-  [0,2,1,1,2,0]
+  [0,2,1,1,2,0],
+  [1,0,0,0,0,0], [2,0,0,0,0,0],
+  [0,1,1,1,1,1], [2,1,1,1,1,1],
+  [0,2,2,2,2,2], [1,2,2,2,2,2]
 ].map(line=>Object.freeze(line)));
-export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},unity:2000,bonus:300});
+export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},unity:2000,supreme:5000,bonus:300});

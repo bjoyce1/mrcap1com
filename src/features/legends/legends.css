@@ -155,3 +155,14 @@
 @keyframes lg-stamp{0%{opacity:0;transform:translate(-50%,-50%) scale(2.6) rotate(-12deg)}35%{opacity:1;transform:translate(-50%,-50%) scale(.92) rotate(-6deg)}50%,85%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(-6deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.1) rotate(-6deg)}}
 .legends-world .library-grid.is-four{grid-template-columns:repeat(4,minmax(0,1fr));max-width:820px;margin-inline:auto}
 @media(max-width:620px){.legends-world .library-grid.is-four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Supreme celebration uses the existing gold palette and exact six-cell path. */
+.legends-world .supreme-path .payline-run{stroke-width:6;stroke-dasharray:12 3}
+.legends-world .supreme-path.focus .payline-run{animation:lg-supreme-trace .6s linear 3}
+@keyframes lg-supreme-trace{to{stroke-dashoffset:-30}}
+.legends-world .supreme-badge{color:var(--gold);font-family:var(--lg-display);font-size:16px;margin-block:14px;letter-spacing:0}
+.legends-world .win-overlay.is-supreme .win-overlay-core{width:min(940px,calc(100% - 32px))}
+.legends-world .win-overlay.is-supreme strong{font-size:64px;line-height:1.1;letter-spacing:0;overflow-wrap:normal;background:var(--lg-gold);background-clip:text;-webkit-background-clip:text}
+@media(max-width:620px){.legends-world .win-overlay.is-supreme strong{font-size:36px}.legends-world .win-overlay.is-supreme small{font-size:18px;letter-spacing:0}}
+@media(prefers-reduced-motion:reduce){.legends-world .supreme-path.focus .payline-run{animation:none}}
+.legends-world.reduce-motion .supreme-path.focus .payline-run{animation:none}

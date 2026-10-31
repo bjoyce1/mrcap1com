@@ -22,6 +22,7 @@ const audio=new SynthSound(),confetti=new Confetti($('confetti')),paylines=new P
 // Artists collected on the latest spin get a card flip in the collection panel.
 let justFound=new Set<string>();
 let userId:string|null=null,loading=true,busy=false,userReducedMotion=respectsReduced.matches;
+let badges:string[]=[];
 let xp=0,best=0,spinsTaken=0,collection:string[]=[],history:HistoryItem[]=[];
 let balance:Balance={welcomeLeft:25,dailyLeft:3,paidSpins:0},activeBoard=createBoard();
 // A spin whose answer never arrived is retried with the same key, so the server replays it instead of spending another.
@@ -56,8 +57,8 @@ function renderCollection(){
 /** Total multiplier from Double and Triple Bonus wins (1 when none landed). */
 const multiplierOf=(wins:{type:string;multiplier?:number}[])=>wins.filter(w=>w.type==='multiplier').reduce((m,w)=>m*(w.multiplier??1),1);
 function historyLabel(h:HistoryItem){
-  const first=h.wins?.[0];if(!first)return 'Spin complete';
-  const label=first.type==='unity'?'SPC UNITY':first.type==='bonus'?'713 HOUSTON BONUS':`${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}`;
+  const first=h.wins?.find(w=>w.type==='supreme')??h.wins?.[0];if(!first)return 'Spin complete';
+  const label=first.type==='supreme'?'SUPREME LEGENDARY':first.type==='unity'?'SPC UNITY':first.type==='bonus'?'713 HOUSTON BONUS':`${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}`;
   const m=multiplierOf(h.wins);return m>1?`${label} • ×${m}`:label;
 }
 function renderHistory(){const list=$('history');list.replaceChildren();if(!history.length){const el=document.createElement('li');el.textContent='No spins yet. The stage is yours.';list.append(el);return;}
@@ -73,6 +74,7 @@ function refresh(animateFrom:number|null=null){
   if(animateFrom!==null)animateCounter($('xp'),animateFrom,xp,{reducedMotion:userReducedMotion});else $('xp').textContent=xp.toLocaleString();
   $('best').textContent=best.toLocaleString();$('total-spins').textContent=spinsTaken.toLocaleString();
   renderBalance();renderCollection();renderHistory();buttonState();
+  $('supreme-badge').hidden=!badges.includes('supreme-legends');
   $('shop-open').hidden=!userId;
 }
 /** Restart a one-shot CSS animation class. */
@@ -82,8 +84,9 @@ function setResult(title:string,description:string,kicker='NOW PLAYING'){
   result.classList.remove('swap');void result.offsetWidth;result.classList.add('swap');
 }
 /** Big-win banner and confetti; smaller wins are celebrated by the hit show alone. */
-function showWin(gained:number,{isMajor=false,unity=false}={}){
-  const modal=$('win-overlay');$('overlay-title').textContent=unity?'SPC UNITY!':isMajor?'LEGENDARY!':'NICE MIX!';$('overlay-text').textContent=`+${gained.toLocaleString()} VIRTUAL XP`;
+function showWin(gained:number,{isMajor=false,unity=false,supreme=false}={}){
+  const modal=$('win-overlay');$('overlay-title').textContent=supreme?'SUPREME LEGENDARY!':unity?'SPC UNITY!':isMajor?'LEGENDARY!':'NICE MIX!';$('overlay-text').textContent=`+${gained.toLocaleString()} VIRTUAL XP`;
+  modal.classList.toggle('is-supreme',supreme);
   if(!userReducedMotion){modal.classList.add('visible');confetti.burst({major:isMajor});setTimeout(()=>modal.classList.remove('visible'),isMajor?1400:950);}
 }
 const wait=(ms:number)=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -116,20 +119,21 @@ async function spin(){
     xp+=outcome.xp;best=Math.max(best,outcome.xp);spinsTaken+=1;activeBoard=target;balance=answer.balance;
     collection=[...new Set([...collection,...answer.newCharacters])];
     history=[{xp:outcome.xp,wins:outcome.wins},...history].slice(0,6);
-    const unity=outcome.wins.some(w=>w.type==='unity'),isMajor=unity||outcome.highest>=500;
+    const supreme=outcome.wins.some(w=>w.type==='supreme'),unity=outcome.wins.some(w=>w.type==='unity'),isMajor=supreme||unity||outcome.highest>=500;
+    if(supreme&&!badges.includes('supreme-legends'))badges.push('supreme-legends');
     justFound=new Set(answer.newCharacters);
     renderBoard($('reels'),target,outcome.hitCells);
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
     paylines.show(outcome.wins,{reducedMotion:userReducedMotion,autoCycle:false});
-    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{paylines.cycle();if(isMajor)showWin(outcome.xp,{isMajor,unity});}});
+    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{paylines.cycle();if(isMajor)showWin(outcome.xp,{isMajor,unity,supreme});}});
     const fresh=answer.newCharacters.length;
     if(outcome.xp>0){
       floatText($('board'),`+${outcome.xp.toLocaleString()} XP`,{reducedMotion:userReducedMotion});
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
-      const top=outcome.wins[0],lines=outcome.wins.filter(w=>w.type==='line').length;
-      const description=unity?'Six distinct SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
+      const top=outcome.wins.filter(w=>w.type!=='multiplier').sort((a,b)=>b.xp-a.xp)[0],lines=outcome.wins.filter(w=>w.type==='line').length;
+      const description=supreme?'Six reels of Legends! 5,000 base XP + Supreme Legendary badge.':unity?'Six distinct SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
-      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
+      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
     }else{
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
@@ -223,7 +227,7 @@ async function loadAccount(nextUser:string|null){
   }
   userId=nextUser;loading=!!nextUser;history=[];
   if(!nextUser){
-    xp=0;best=0;spinsTaken=0;collection=[];balance={welcomeLeft:0,dailyLeft:0,paidSpins:0};
+    xp=0;best=0;spinsTaken=0;collection=[];badges=[];balance={welcomeLeft:0,dailyLeft:0,paidSpins:0};
     $('shop').hidden=true;refresh();
     setResult('THE SOUTH SIDE IS CALLING.','Press SPIN THE MIX to reveal your next lineup.','GUEST DEMO');
     return;
@@ -232,7 +236,7 @@ async function loadAccount(nextUser:string|null){
   try{
     const [profile,recent]=await Promise.all([loadProfile(nextUser),loadHistory()]);
     if(unmounted||userId!==nextUser||revision!==accountRevision)return;
-    xp=profile.xp;best=profile.best;spinsTaken=profile.totalSpins;collection=profile.collection;balance=profile.balance;history=recent;
+    xp=profile.xp;best=profile.best;spinsTaken=profile.totalSpins;collection=profile.collection;badges=profile.badges;balance=profile.balance;history=recent;
     if(profile.lastBoard&&!busy){activeBoard=profile.lastBoard;renderBoard($('reels'),activeBoard);}
     setResult('THE SOUTH SIDE IS CALLING.',totalSpins(balance)?'Press SPIN THE MIX to reveal your next lineup.':'You are out of spins. Grab 25 more for $1 or come back tomorrow.','READY TO ROLL');
     if(!totalSpins(balance))openShop();
