@@ -4,7 +4,12 @@ import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
 import { mountLegendsGame } from "./game";
 import { symbolUrl } from "./motion";
+import "@fontsource/russo-one/400.css";
+import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
+
+/** Page art cut from the approved symbol sheet (scripts/build_ui_assets.py in the game package). */
+const ui = (name: string) => `/games/spc-legends/ui/${name}.webp`;
 
 /**
  * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game (phase 1: free play only).
@@ -16,9 +21,13 @@ const LegendsGame = memo(function LegendsGame() {
   useEffect(() => (root.current ? mountLegendsGame(root.current) : undefined), []);
   return (
     <div ref={root} className="legends-world">
+      <div className="lg-smoke" aria-hidden="true"><span /><span /><span /></div>
       <section className="hero lg-container">
-       <div className="hero-kicker"><span className="ruleline"></span> SOUTH PARK COALITION PRESENTS <span className="ruleline"></span></div>
-       <h1 className="hero-title">SPC <span>LEGENDS</span></h1>
+       <img className="hero-skyline is-left" src={ui("skyline-left")} alt="" />
+       <img className="hero-skyline is-right" src={ui("skyline-right")} alt="" />
+       <img className="hero-logo" src={ui("spc-logo")} alt="South Park Coalition, Houston, TX" width={420} height={384} />
+       <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
+       <h1 className="hero-title"><span className="lg-wordmark"><img src={ui("wordmark")} alt="SPC Legends" width={750} height={147} /></span></h1>
        <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
        <p className="hero-copy">Six legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a free-play arcade experience.</p>
        <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> 20 PAYLINES</span><span>3 DAILY SPINS</span><span>VIRTUAL XP ONLY</span></div>
@@ -49,7 +58,12 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Get three free spins each Houston calendar day. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of 20 paylines earn virtual XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover K-Rino, Mr. CAP, Klondike Kat, Point Blank, K-Water, and Cl'Che'.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus, or line up all six unique artists for SPC Unity.</p></div></div></div>
        <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/6</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong>Guest / Local</strong></div><p className="panel-note">Progress is saved in this browser only.</p></div>
       </section>
-      <section className="lg-container symbol-library"><div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL LIBRARY</h2></div><p>Uniform premium art tiles • six artist legends, eight music symbols, two special symbols</p></div><div className="library-grid" data-lg="symbol-library"></div></section>
+      <section className="lg-container symbol-library">
+        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>Six artist legends, two special symbols, eight music and Houston symbols</p></div>
+        <div className="library-group"><div className="lg-label">CHARACTER SYMBOLS</div><div className="library-grid is-six" data-lg="lib-characters" /></div>
+        <div className="library-group"><div className="lg-label">SPECIAL SYMBOLS</div><div className="library-grid is-two" data-lg="lib-special" /></div>
+        <div className="library-group"><div className="lg-label">MUSIC &amp; HOUSTON SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-music" /></div>
+      </section>
       
       <canvas data-lg="confetti" className="confetti" aria-hidden="true"></canvas>
       <div data-lg="win-overlay" className="win-overlay" aria-hidden="true"><div className="win-overlay-core"><span>SPC LEGENDS</span><strong data-lg="overlay-title">LEGENDARY!</strong><small data-lg="overlay-text">+500 LEGENDS XP</small></div></div>

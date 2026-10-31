@@ -1,6 +1,7 @@
 // Ported from the SPC Legends source package (src/ui/motion.js). Animation, sound and canvas only; never decides outcomes.
 import {SYMBOL_MAP,PAYLINES} from './config';
 import {createBoard} from './engine';
+import {hitSchedule,isArtist,type HitStep,type HitWin} from './hits';
 /** Symbol art lives in public/games/spc-legends/symbols. */
 /** Set by animateReels while reels move; calling skip() lands every reel at its final stop. */
 export type ReelControl={skip?:(()=>void)|null};
@@ -14,6 +15,7 @@ export function makeTile(id,{mini=false,filler=false}={}){
   const root=document.createElement('div');root.className=`symbol-tile${filler?' filler':''}`;root.dataset.symbol=id;
   if(filler)root.setAttribute('aria-hidden','true');else{root.setAttribute('role','img');root.setAttribute('aria-label',SYMBOL_MAP[id]?.name||id);}
   const image=document.createElement('img');image.src=symbolUrl(id);image.alt='';image.loading=mini?'lazy':'eager';image.decoding='async';image.draggable=false;
+  root.style.setProperty('--sym',SYMBOL_MAP[id]?.color||'#ffd27a');
   root.appendChild(image);return root;
 }
 export function renderBoard(container,board,hits=[]){
@@ -95,21 +97,26 @@ const SVG='http://www.w3.org/2000/svg';
 /** Draw winning paylines over the board. Lines take turns being emphasised unless motion is reduced. */
 export class PaylineOverlay {
   board:HTMLElement;wins:Win[];timer:ReturnType<typeof setInterval>|null;reducedMotion:boolean;svg:SVGSVGElement;resize:ResizeObserver;
+  autoCycle=true;paths:{win:Win;g:SVGGElement}[]=[];
   constructor(board:HTMLElement){
     this.board=board;this.wins=[];this.timer=null;this.reducedMotion=false;
     this.svg=document.createElementNS(SVG,'svg');this.svg.setAttribute('class','payline-overlay');this.svg.setAttribute('aria-hidden','true');
     board.append(this.svg);
     this.resize=new ResizeObserver(()=>this.wins.length&&this.draw());this.resize.observe(board);
   }
-  show(wins,{reducedMotion=false}={}){
-    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity');this.reducedMotion=reducedMotion;this.draw();
+  /** autoCycle=false draws the lines dim and waits for focus()/cycle(), so the hit show can lead. */
+  show(wins:Win[],{reducedMotion=false,autoCycle=true}={}){
+    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
   }
-  clear(){this.wins=[];clearInterval(this.timer);this.timer=null;this.svg.replaceChildren();}
+  focus(win:Win){this.paths.forEach(p=>p.g.classList.toggle('focus',p.win===win));}
+  cycle(){this.autoCycle=true;this.draw();}
+  clear(){this.wins=[];this.paths=[];clearInterval(this.timer);this.timer=null;this.svg.replaceChildren();}
   draw(){
     clearInterval(this.timer);this.svg.replaceChildren();
     const box=this.board.getBoundingClientRect();
     this.svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);
     const centre=key=>{const el=this.board.querySelector(`[data-cell="${key}"]`);if(!el)return null;const r=el.getBoundingClientRect();return [r.left-box.left+r.width/2,r.top-box.top+r.height/2];};
+    this.paths=[];
     const paths=this.wins.map(win=>{
       const keys=win.type==='unity'?win.cells:PAYLINES[win.payline-1].map((row,col)=>`${col}:${row}`);
       const points=keys.map(centre);if(points.some(p=>!p))return null;
@@ -123,12 +130,60 @@ export class PaylineOverlay {
       const core=run.cloneNode() as SVGPolylineElement;core.setAttribute('class','payline-core');
       g.append(guide,run,core);
       for(const [x,y] of points.slice(0,lit)){const dot=document.createElementNS(SVG,'circle');dot.setAttribute('cx',String(x));dot.setAttribute('cy',String(y));dot.setAttribute('r',String(Math.max(3,box.width/180)));dot.setAttribute('class','payline-node');g.append(dot);}
-      this.svg.append(g);return g;
+      this.svg.append(g);this.paths.push({win,g});return g;
     }).filter(Boolean);
-    if(paths.length<2||this.reducedMotion){paths.forEach(g=>g.classList.add('focus'));return;}
+    if(this.reducedMotion||(this.autoCycle&&paths.length<2)){paths.forEach(g=>g.classList.add('focus'));return;}
+    if(!this.autoCycle)return;
     let i=0;const step=()=>{paths.forEach((g,n)=>g.classList.toggle('focus',n===i));i=(i+1)%paths.length;};
     step();this.timer=setInterval(step,1100);
   }
+}
+/** The win celebration: winning tiles pop out over the reels, step by step (see hitSchedule).
+ * Artists bob and tilt in their frame with a name banner and sparks; the Wild flashes gold; the 713 Bonus
+ * spins up light rays. Clones sit in their own layer, so the reels underneath are never moved. */
+export class HitShow {
+  board:HTMLElement;layer:HTMLDivElement;timers:ReturnType<typeof setTimeout>[]=[];
+  constructor(board:HTMLElement){
+    this.board=board;this.layer=document.createElement('div');this.layer.className='hit-layer';this.layer.setAttribute('aria-hidden','true');board.append(this.layer);
+  }
+  clear(){
+    this.timers.forEach(clearTimeout);this.timers=[];this.layer.replaceChildren();
+    this.board.querySelectorAll('.popping').forEach(el=>el.classList.remove('popping'));this.board.classList.remove('lg-shake');
+  }
+  play(wins:HitWin[],{reducedMotion=false,big=false,onStep=(_win:HitWin)=>{},onDone=()=>{}}={}){
+    this.clear();
+    const steps=reducedMotion?[]:hitSchedule(wins);
+    if(!steps.length){onDone();return;}
+    if(big){this.board.classList.add('lg-shake');this.later(520,()=>this.board.classList.remove('lg-shake'));}
+    steps.forEach(step=>this.later(step.start,()=>{onStep(step.win);this.pop(step);}));
+    this.later(steps[steps.length-1].start+1250,()=>{this.clear();onDone();});
+  }
+  private later(ms:number,fn:()=>void){this.timers.push(setTimeout(fn,ms));}
+  private pop(step:HitStep){
+    this.layer.replaceChildren();this.board.querySelectorAll('.popping').forEach(el=>el.classList.remove('popping'));
+    const box=this.board.getBoundingClientRect();
+    for(const cell of step.cells){
+      const tile=this.board.querySelector<HTMLElement>(`.reels [data-cell="${cell.key}"]`);if(!tile)continue;
+      const r=tile.getBoundingClientRect(),id=tile.dataset.symbol||'';
+      const pop=document.createElement('div');
+      pop.className=`hit-pop${isArtist(id)?' is-char':''}${id==='wild'?' is-wild':''}${id==='bonus'?' is-bonus':''}`;
+      pop.style.cssText=`left:${r.left-box.left}px;top:${r.top-box.top}px;width:${r.width}px;height:${r.height}px;--d:${cell.delay}ms;--sym:${SYMBOL_MAP[id]?.color||'#ffd27a'}`;
+      pop.append(makeTile(id));
+      if(isArtist(id)){const name=document.createElement('span');name.className='hit-name';name.textContent=SYMBOL_MAP[id].name;pop.append(name);}
+      for(let k=0;k<8;k++){
+        const spark=document.createElement('i'),a=(k/8)*Math.PI*2+Math.random()*.6,dist=.62+Math.random()*.38;
+        spark.className='hit-spark';spark.style.setProperty('--dx',`${Math.cos(a)*dist*r.width}px`);spark.style.setProperty('--dy',`${Math.sin(a)*dist*r.height}px`);
+        pop.append(spark);
+      }
+      this.layer.append(pop);tile.classList.add('popping');
+    }
+  }
+}
+/** "+150 XP" rising out of an element; skipped when motion is reduced. */
+export function floatText(host:HTMLElement,text:string,{reducedMotion=false}={}){
+  if(reducedMotion)return;
+  const el=document.createElement('span');el.className='xp-float';el.textContent=text;el.setAttribute('aria-hidden','true');
+  host.append(el);el.addEventListener('animationend',()=>el.remove(),{once:true});
 }
 export function animateCounter(el,from,to,{duration=650,reducedMotion=false}={}){
   if(reducedMotion||to===from){el.textContent=to.toLocaleString();return;}

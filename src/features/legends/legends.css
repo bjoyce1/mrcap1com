@@ -32,3 +32,101 @@
 
 /* Clears the site's fixed header (73px desktop, 65px phone) above the hero. */
 .legends-page{padding-top:48px;background:#07060c}
+
+/* ===== Symbol sheet look (v0.5): chrome and gold type, gold frames, neon per symbol, purple smoke =====
+   Display: Russo One (wide, heavy, like the sheet's lettering). Slab: Alfa Slab One (like "SYMBOL SET").
+   --sym is set per tile/item from the symbol's colour in config.ts. */
+.legends-world{--lg-display:'Russo One',Impact,'Arial Black',sans-serif;--lg-slab:'Alfa Slab One',Georgia,serif;
+  --lg-gold-edge:linear-gradient(135deg,#fff0b5,#b9781f 22%,#ffe28c 45%,#8f5512 70%,#ffe7a3);
+  --lg-chrome:linear-gradient(180deg,#fff 0%,#e9edf8 36%,#9aa3c4 52%,#f4f6ff 70%,#c3c9e2 100%);
+  --lg-gold:linear-gradient(180deg,#fff6cf 0%,#ffd76a 44%,#c98b22 56%,#ffe7a0 100%);
+  position:relative;background:#06040b;overflow-x:clip}
+.legends-world .lg-container{position:relative;z-index:1}
+/* Purple smoke drifting behind everything, like the sheet's background. */
+.legends-world .lg-smoke{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.legends-world .lg-smoke span{position:absolute;width:62vw;height:42vw;max-width:900px;max-height:620px;border-radius:50%;background:radial-gradient(closest-side,rgba(138,43,226,.42),rgba(90,20,160,.16) 55%,transparent);animation:lg-drift 36s ease-in-out infinite alternate}
+.legends-world .lg-smoke span:nth-child(1){left:-18vw;top:-6vw}
+.legends-world .lg-smoke span:nth-child(2){right:-20vw;top:8vw;animation-duration:44s;animation-direction:alternate-reverse}
+.legends-world .lg-smoke span:nth-child(3){left:20vw;top:70vw;opacity:.7;animation-duration:52s}
+@keyframes lg-drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(6vw,3vw,0) scale(1.15)}}
+
+/* Hero: the sheet's chrome wordmark, gold slab subtitle, skylines and the official logo. */
+.legends-world .hero{padding:34px 0 30px}
+.legends-world .hero-title{margin:6px 0 0;line-height:0;background:none;filter:none;-webkit-text-fill-color:initial}
+.legends-world .lg-wordmark{position:relative;display:inline-block;width:min(750px,94%)}
+.legends-world .lg-wordmark img{display:block;width:100%;height:auto;max-width:100%}
+.legends-world .lg-wordmark:after{content:'';position:absolute;inset:0;pointer-events:none;-webkit-mask:url(/games/spc-legends/ui/wordmark.webp) center/100% 100% no-repeat;mask:url(/games/spc-legends/ui/wordmark.webp) center/100% 100% no-repeat;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.8) 50%,transparent 58%) 150% 0/260% 100% no-repeat;animation:lg-shine 9s ease-in-out 1.2s infinite}
+@keyframes lg-shine{0%,84%{background-position:150% 0}100%{background-position:-60% 0}}
+.legends-world .hero-subtitle{font:400 clamp(20px,3.3vw,40px)/1.1 var(--lg-slab);letter-spacing:.3em;margin-top:6px;background:var(--lg-gold);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.6px #5a3207;text-shadow:none;filter:drop-shadow(0 2px 0 #2a1402) drop-shadow(0 0 14px rgba(255,180,60,.35))}
+.legends-world .hero-subtitle em{font-style:normal}
+.legends-world .hero-skyline{position:absolute;bottom:0;width:min(300px,23vw);height:auto;pointer-events:none;z-index:-1;opacity:.95}
+.legends-world .hero-skyline.is-left{left:-10px}
+.legends-world .hero-skyline.is-right{right:-10px}
+.legends-world .hero-logo{position:absolute;top:8px;right:2%;width:min(150px,12vw);height:auto;z-index:-1;filter:drop-shadow(0 0 18px rgba(200,40,40,.35));transform:rotate(-4deg)}
+@media(max-width:1100px){.legends-world .hero-logo{display:none}}
+@media(max-width:760px){.legends-world .hero-skyline{opacity:.45;width:38vw}}
+
+/* Gold arrow labels, as in "> CHARACTER SYMBOLS <" on the sheet. */
+.legends-world .lg-label{display:flex;align-items:center;justify-content:center;gap:12px;color:#f3dfae;font:400 11px/1.2 var(--lg-display);letter-spacing:.2em;text-transform:uppercase;margin:0 0 12px;text-shadow:0 0 10px rgba(255,190,80,.35)}
+.legends-world .lg-label:before,.legends-world .lg-label:after{content:'';height:8px;flex:0 1 160px;background:linear-gradient(90deg,transparent,#d9a548);clip-path:polygon(0 42%,calc(100% - 8px) 42%,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,calc(100% - 8px) 58%,0 58%)}
+.legends-world .lg-label:after{transform:scaleX(-1)}
+.legends-world .section-label{color:#e8c77a;font-family:var(--lg-display);font-weight:400;letter-spacing:.18em}
+.legends-world .section-label:before{content:"\25B8\00a0";color:#f2b84b}
+
+/* Chrome headings with a gold edge, matching the wordmark. */
+.legends-world .machine-title,.legends-world .panel h2,.legends-world .library-heading h2,.legends-world .win-overlay-core strong{font-family:var(--lg-display);font-weight:400;background:var(--lg-chrome);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.8px rgba(233,178,74,.95);filter:drop-shadow(0 2px 0 #3a1d05) drop-shadow(0 0 10px rgba(255,190,80,.3))}
+.legends-world .win-overlay-core strong{-webkit-text-stroke:2px #e9b24a;filter:drop-shadow(0 4px 0 #3a1d05) drop-shadow(0 0 30px rgba(255,190,80,.6))}
+.legends-world .reel-headers{font-family:var(--lg-display);color:#e2b75c}
+.legends-world .hud-block strong{font-family:var(--lg-display);font-weight:400}
+.legends-world .rules-grid b{font-family:var(--lg-display);font-weight:400}
+
+/* Gold frames: the cabinet, the reel window and every panel. */
+.legends-world .machine-shell{border:2px solid transparent;background:linear-gradient(135deg,#1f1230,#0b0714 40%,#120a1f 70%,#24112c) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 0 1px #2b1606,0 0 26px rgba(255,190,80,.16),0 0 70px rgba(150,60,220,.22),0 25px 70px rgba(0,0,0,.7)}
+.legends-world .cabinet-inset{border:2px solid transparent;background:linear-gradient(180deg,#0f0a1c,#04030a) padding-box,var(--lg-gold-edge) border-box}
+.legends-world .panel{border:1px solid transparent;background:linear-gradient(150deg,#170d27,#0b0814 72%) padding-box,linear-gradient(135deg,#e7c06a,#6f4210 38%,#f3d68a 62%,#5e3a0d) border-box;box-shadow:0 0 22px rgba(150,60,220,.14)}
+.legends-world .symbol-tile{border-color:#d8a548;box-shadow:inset 0 0 0 1px rgba(255,230,160,.5),inset 0 0 14px color-mix(in srgb,var(--sym) 55%,transparent),inset 0 0 14px #000}
+.legends-world .symbol-tile.match{border-color:#fff1c2;box-shadow:0 0 0 2px #ffe08a,0 0 18px 4px var(--sym),inset 0 0 0 2px #ffeb9c}
+
+/* Spin button: gold bar like the sheet's WILD lettering; shimmers while reels move. */
+.legends-world .spin-button{position:relative;overflow:hidden;background:linear-gradient(180deg,#fff3c4 0%,#f5c443 46%,#c27c17 54%,#ffd56b 100%);border:1px solid #fff0b5;color:#2a1402;font-family:var(--lg-display);font-weight:400;box-shadow:0 5px 0 #6a3a0a,0 0 26px rgba(255,190,80,.35),inset 0 1px 0 #fff}
+.legends-world .spin-button.is-spinning:after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);transform:translateX(-100%);animation:lg-btn 1s linear infinite}
+@keyframes lg-btn{to{transform:translateX(100%)}}
+
+/* Library grouped like the sheet; artists carry their name in their own colour. */
+.legends-world .library-group{margin-top:22px}
+.legends-world .library-grid.is-six{grid-template-columns:repeat(6,minmax(0,1fr))}
+.legends-world .library-grid.is-two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px;margin-inline:auto}
+.legends-world .library-grid.is-eight{grid-template-columns:repeat(8,minmax(0,1fr))}
+.legends-world .library-item img{border:1px solid #d8a548;box-shadow:0 0 0 1px #2a1606,0 0 16px color-mix(in srgb,var(--sym) 45%,transparent),0 6px 14px #0008}
+.legends-world .library-item.is-char b{font:400 clamp(10px,1.2vw,14px)/1.1 var(--lg-display);letter-spacing:.02em;background:linear-gradient(180deg,#fff 25%,var(--sym));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 6px color-mix(in srgb,var(--sym) 70%,transparent))}
+@media(max-width:620px){.legends-world .library-grid.is-six{grid-template-columns:repeat(3,minmax(0,1fr))}.legends-world .library-grid.is-eight{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ===== Hit show: winning tiles pop out of the reels ===== */
+.legends-world .hit-layer{position:absolute;inset:0;pointer-events:none;z-index:7}
+.legends-world .hit-pop{position:absolute;animation:lg-pop .8s cubic-bezier(.2,1.25,.35,1) var(--d) both;will-change:transform}
+.legends-world .hit-pop .symbol-tile{width:100%;height:100%;aspect-ratio:auto;box-shadow:0 0 0 2px #ffe08a,0 0 24px 6px var(--sym),0 12px 26px rgba(0,0,0,.65)}
+.legends-world .hit-pop .symbol-tile:after{content:'';position:absolute;inset:0;z-index:3;background:radial-gradient(circle at 50% 35%,transparent 38%,color-mix(in srgb,var(--sym) 75%,transparent) 100%);mix-blend-mode:screen;opacity:0;animation:lg-rim .8s ease-out var(--d) both}
+@keyframes lg-pop{0%{transform:scale(1)}24%{transform:scale(1.38) translateY(-7%)}38%{transform:scale(1.2) translateY(-4%)}80%{transform:scale(1.2) translateY(-4%)}100%{transform:scale(1)}}
+@keyframes lg-rim{0%,100%{opacity:0}30%,70%{opacity:1}}
+/* Artists come alive in their frame: a bob and tilt, a rim light in their colour, and a name banner. */
+.legends-world .hit-pop.is-char .symbol-tile img{transform-origin:50% 85%;animation:lg-char .8s ease-in-out var(--d) both}
+@keyframes lg-char{0%,100%{transform:none}25%{transform:rotate(-6deg) scale(1.1)}45%{transform:rotate(5deg) scale(1.13) translateY(-4%)}65%{transform:rotate(-2deg) scale(1.08)}}
+.legends-world .hit-name{position:absolute;left:50%;top:calc(100% + 3px);white-space:nowrap;font:400 clamp(10px,1.35vw,17px)/1 var(--lg-display);letter-spacing:.03em;background:linear-gradient(180deg,#fff 30%,var(--sym));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.5px rgba(0,0,0,.55);filter:drop-shadow(0 2px 0 #000) drop-shadow(0 0 8px var(--sym));animation:lg-name .8s ease-out var(--d) both}
+@keyframes lg-name{0%{opacity:0;transform:translate(-50%,6px)}25%,85%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,0)}}
+.legends-world .hit-spark{position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;background:#fff6d0;box-shadow:0 0 6px var(--sym),0 0 12px var(--sym);opacity:0;animation:lg-spark .7s ease-out calc(var(--d) + 110ms) both}
+@keyframes lg-spark{0%{opacity:1;transform:translate(0,0) rotate(45deg) scale(.4)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(45deg) scale(1)}}
+/* The Wild flashes gold; the 713 Bonus spins up light rays behind itself. */
+.legends-world .hit-pop.is-wild .symbol-tile{box-shadow:0 0 0 2px #fff1c2,0 0 30px 10px rgba(255,200,90,.85),0 12px 26px rgba(0,0,0,.65)}
+.legends-world .hit-pop.is-bonus:before{content:'';position:absolute;inset:-38%;z-index:-1;border-radius:50%;background:repeating-conic-gradient(rgba(255,215,110,.6) 0 7deg,transparent 7deg 20deg);-webkit-mask:radial-gradient(closest-side,#000 25%,transparent);mask:radial-gradient(closest-side,#000 25%,transparent);animation:lg-rays 1.1s linear var(--d) both}
+@keyframes lg-rays{0%{opacity:0;transform:rotate(0) scale(.6)}25%{opacity:1}100%{opacity:0;transform:rotate(110deg) scale(1.1)}}
+
+/* Big wins shake the board; XP rises off it; the HUD and new collection cards react. */
+.legends-world .reel-board.lg-shake{animation:lg-shake .5s cubic-bezier(.36,.07,.19,.97)}
+@keyframes lg-shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(3px)}30%,50%,70%{transform:translateX(-5px)}40%,60%{transform:translateX(5px)}}
+.legends-world .xp-float{position:absolute;left:50%;top:40%;z-index:8;pointer-events:none;white-space:nowrap;font:400 clamp(26px,4.2vw,48px)/1 var(--lg-display);background:var(--lg-gold);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px #5a3207;filter:drop-shadow(0 3px 0 #2a1402) drop-shadow(0 0 16px rgba(255,180,60,.6));animation:lg-float 1.7s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes lg-float{0%{opacity:0;transform:translate(-50%,24px) scale(.8)}15%{opacity:1;transform:translate(-50%,0) scale(1.08)}70%{opacity:1;transform:translate(-50%,-34px) scale(1)}100%{opacity:0;transform:translate(-50%,-64px) scale(1)}}
+.legends-world .hud-block.bump{animation:lg-bump .55s cubic-bezier(.2,1.6,.4,1)}
+@keyframes lg-bump{40%{transform:scale(1.09)}}
+.legends-world .collection-tile.just-found{animation:lg-flip .9s cubic-bezier(.2,1.2,.35,1) both}
+@keyframes lg-flip{0%{transform:perspective(500px) rotateY(90deg) scale(.8);opacity:.3}100%{transform:none;opacity:1}}
+@media(max-width:620px){.legends-world .lg-label{gap:8px;font-size:10px;letter-spacing:.12em;white-space:nowrap}.legends-world .lg-label:before,.legends-world .lg-label:after{flex:0 1 48px;min-width:18px}}

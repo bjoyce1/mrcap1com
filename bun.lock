@@ -13,6 +13,7 @@
         "@fontsource/instrument-serif": "^5.2.8",
         "@fontsource/outfit": "^5.2.8",
         "@fontsource/playfair-display": "^5.2.8",
+        "@fontsource/russo-one": "5.3.0",
         "@fontsource/space-mono": "^5.2.9",
         "@hookform/resolvers": "^3.10.0",
         "@paypal/react-paypal-js": "^9.2.0",
@@ -219,6 +220,8 @@
     "@fontsource/outfit": ["@fontsource/outfit@5.2.8", "", {}, "sha512-rXC6g0MqD7cOBjht0bMqc43qM6lRqDLML9KXsmg9uykz0wLQhy8Z/ajrMG6iyoT3NJR+MYgU+OEHp7uHoTb+Yw=="],
 
     "@fontsource/playfair-display": ["@fontsource/playfair-display@5.2.8", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/playfair-display/-/playfair-display-5.2.8.tgz", {}, "sha512-fUEhib70SszNhQVsGbUMSsWJhr7Je0rdeuZdtGpDNu0GKF1xJM8QhpI/y0pckU25GcChXm9TLOmeZupkvvZo2g=="],
+
+    "@fontsource/russo-one": ["@fontsource/russo-one@5.3.0", "", {}, "sha512-loHnqTq6D+H2WQdOB2pnAeCHbbsGqobmxnxU79MNFKjPWV2TPXdc78dbbkOAcWuKWDEY+FNXZFZ1nhaQvCWNAw=="],
 
     "@fontsource/space-mono": ["@fontsource/space-mono@5.2.9", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/space-mono/-/space-mono-5.2.9.tgz", {}, "sha512-b61faFOHEISQ/pD25G+cfGY9o/WW6lRv6hBQQfpWvEJ4y1V+S4gmth95EVyBE2VL3qDYHeVQ8nBzrplzdXTDDg=="],
 
