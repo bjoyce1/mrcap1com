@@ -15,6 +15,13 @@
       "when": 1793482814338,
       "tag": "0001_legends_paid_spins",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793482917790,
+      "tag": "0002_legends_fix_badge_append",
+      "breakpoints": true
     }
   ]
 }
