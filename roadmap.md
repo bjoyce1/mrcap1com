@@ -2,7 +2,7 @@
 
 # SPC Legends roster additions
 
-- [ ] Add Murder One and Rapper K artwork to guest and server spins, collection and library, and verify gameplay.
+- [x] Add Murder One and Rapper K artwork to guest and server spins, collection and library, and verify gameplay.
 
 # SPC Legends temporary guest play
 
