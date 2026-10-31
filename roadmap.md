@@ -1,5 +1,10 @@
 # Identity connection
 
+# SPC Legends Supreme Legendary
+
+- [ ] Add connecting paylines and six-reel Supreme Legendary virtual XP and badge to guest and account play.
+- [ ] Verify scoring, server parity and celebration without publishing.
+
 # SPC Legends roster additions
 
 - [x] Add Murder One and Rapper K artwork to guest and server spins, collection and library, and verify gameplay.
