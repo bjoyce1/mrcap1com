@@ -35,7 +35,10 @@ const Auth = () => {
   const { user, signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const returnTo = safeGreatdayReturn((location.state as { greatdayReturnTo?: unknown } | null)?.greatdayReturnTo);
+  const authState = location.state as { greatdayReturnTo?: unknown; returnTo?: unknown } | null;
+  // Players arriving from the SPC Legends game go back to it; everything else keeps the Great Day / admin rule.
+  const fromLegends = authState?.returnTo === "/legends";
+  const returnTo = fromLegends ? "/legends" : safeGreatdayReturn(authState?.greatdayReturnTo);
 
   useEffect(() => {
     if (user) {
@@ -126,12 +129,16 @@ const Auth = () => {
           <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-white/5 p-8">
             <div className="text-center mb-8">
               <h1 className="font-display text-3xl font-medium tracking-tight mb-2">
-                {isLogin ? 'Admin Login' : 'Create Account'}
+                {fromLegends ? 'Play SPC Legends' : isLogin ? 'Admin Login' : 'Create Account'}
               </h1>
               <p className="text-sm text-muted-foreground">
-                {isLogin
-                  ? 'Sign in to access the admin dashboard'
-                  : 'Create an account to get started'}
+                {fromLegends
+                  ? isLogin
+                    ? 'Sign in to keep spinning. New here? Sign up below for 25 free spins.'
+                    : 'Create a free account and your first 25 spins are on us.'
+                  : isLogin
+                    ? 'Sign in to access the admin dashboard'
+                    : 'Create an account to get started'}
               </p>
             </div>
 

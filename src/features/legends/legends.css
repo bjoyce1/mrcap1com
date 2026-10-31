@@ -132,3 +132,18 @@
 /* Artist tiles carry their painted name banner from the sheet, so text names would only repeat it. */
 .legends-world .collection-tile:after{content:none}
 .legends-world .library-item.is-char b{display:none}
+
+/* Spin pack: $1 for 25 spins (PayPal). Gold framed like the panels; the PayPal button renders inside. */
+.legends-world .shop-open{display:block;width:100%;margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid #d8a548;background:linear-gradient(180deg,#24142f,#120a1c);color:#f3dfae;font:400 13px/1 var(--lg-display);letter-spacing:.12em;cursor:pointer;box-shadow:0 0 14px rgba(255,190,80,.15)}
+.legends-world .shop-open:hover{color:#fff1c2;box-shadow:0 0 20px rgba(255,190,80,.3)}
+.legends-world .shop-open:focus-visible,.legends-world .shop-age input:focus-visible{outline:2px solid #ffd27a;outline-offset:3px}
+.legends-world .spin-shop{margin-top:12px;padding:16px;border-radius:14px;text-align:center;border:1px solid transparent;background:linear-gradient(160deg,#1c1030,#0b0814 70%) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 26px rgba(150,60,220,.18)}
+.legends-world .spin-shop[hidden]{display:none}
+.legends-world .shop-price{display:block;font:400 clamp(20px,3vw,28px)/1.1 var(--lg-display);background:var(--lg-gold);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.6px #5a3207;filter:drop-shadow(0 2px 0 #2a1402)}
+.legends-world .spin-shop p{font-size:12px;line-height:1.6;color:#c9b8d6;margin:8px auto 0;max-width:46ch}
+.legends-world .shop-age{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#f3dfae;cursor:pointer}
+.legends-world .shop-age input{width:18px;height:18px;accent-color:#f5c443}
+.legends-world .shop-paypal{max-width:340px;margin:14px auto 0;min-height:44px}
+.legends-world .shop-msg{color:#ffe08a!important;font-weight:600;min-height:1em}
+.legends-world .shop-paid{color:#9fe0b5!important}
+.legends-world .shop-fine{font-size:10.5px!important;color:#9c8bad!important}

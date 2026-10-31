@@ -1,26 +1,42 @@
-// Ported from the SPC Legends source package (src/main.js). Wires the pure engine to the motion layer
-// inside one container, so the game can mount and unmount with its React page.
-import {ARTISTS,MUSIC,SPECIAL,SYMBOL_MAP,GAME_CONFIG} from './config';
-import {createBoard,applySpin,normalizeState,anticipationReels,spinsLeft,onWelcomeSpins} from './engine';
-import {loadState,saveState} from './storage';
+// Ported from the SPC Legends source package (src/main.js). Wires the server (account.ts) to the motion layer
+// inside one container, so the game can mount and unmount with its React page. Spins, outcomes and balances
+// come from the server; this file only animates and displays them.
+import {ARTISTS,MUSIC,SPECIAL,SYMBOL_MAP} from './config';
+import {createBoard,anticipationReels} from './engine';
+import {activePool,totalSpins,type Balance} from './balance';
+import {loadProfile,loadHistory,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem} from './account';
 import {renderBoard,animateReels,animateCounter,Confetti,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl} from './motion';
+import {supabase} from '@/integrations/supabase/client';
 
-/** Start the game inside `root` (elements are found by data-lg). Returns a cleanup function. */
-export function mountLegendsGame(root:HTMLElement){
+type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
+type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
+const paypalGlobal=()=>(window as unknown as {paypal?:PayPalNamespace}).paypal;
+
+/** Start the game inside `root` (elements are found by data-lg). `signIn` sends the visitor to sign in. Returns a cleanup function. */
+export function mountLegendsGame(root:HTMLElement,{signIn}:{signIn:()=>void}){
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- ported DOM code; each data-lg element has its own type
 const $=(id:string):any=>root.querySelector(`[data-lg="${id}"]`);
 const respectsReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const audio=new SynthSound(),confetti=new Confetti($('confetti')),paylines=new PaylineOverlay($('board')),hits=new HitShow($('board')),reelControl:ReelControl={};
 // Artists collected on the latest spin get a card flip in the collection panel.
 let justFound=new Set<string>();
-let state=loadState(),activeBoard=state.lastBoard||createBoard(),busy=false,userReducedMotion=respectsReduced.matches;
+let userId:string|null=null,loading=true,busy=false,userReducedMotion=respectsReduced.matches;
+let xp=0,best=0,spinsTaken=0,collection:string[]=[],history:HistoryItem[]=[];
+let balance:Balance={welcomeLeft:25,dailyLeft:3,paidSpins:0},activeBoard=createBoard();
+// A spin whose answer never arrived is retried with the same key, so the server replays it instead of spending another.
+let pendingKey:string|null=null;
+let unmounted=false;
 const motionButton=$('motion');
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
 // While reels move the spin button becomes a stop button; it only shortens the animation, never the outcome.
-function buttonState(){const left=spinsLeft(state);$('spin').disabled=busy?!reelControl.skip:left<=0;$('spin-label').textContent=busy?'TAP TO STOP':left?'SPIN THE MIX':'BACK TOMORROW';}
+function buttonState(){
+  const left=totalSpins(balance);
+  $('spin').disabled=busy?!reelControl.skip:loading;
+  $('spin-label').textContent=busy?'TAP TO STOP':loading?'LOADING…':!userId?'SIGN IN TO PLAY':left?'SPIN THE MIX':'GET MORE SPINS';
+}
 function renderCollection(){
-  const ids=new Set(state.collection);
+  const ids=new Set(collection);
   $('collection').replaceChildren(...ARTISTS.map(a=>{
     const element=document.createElement('div');element.className=`collection-tile${ids.has(a.id)?'':' locked'}${justFound.has(a.id)?' just-found':''}`;element.dataset.label=a.name;element.title=ids.has(a.id)?`${a.name} discovered`:`${a.name} is undiscovered`;
     const img=document.createElement('img');img.src=symbolUrl(a.id);img.alt='';img.loading='lazy';element.append(img);return element;
@@ -30,60 +46,159 @@ function renderCollection(){
   $('completion').textContent=`${Math.round(ids.size/6*100)}%`;$('collection-progress').style.width=`${ids.size/6*100}%`;
   $('collection-note').textContent=ids.size===6?'Complete! All six Legends collected. The collection badge is yours.':'Collect all six artist portraits as they appear on your reels.';
 }
-function historyLabel(h){const first=h.wins?.[0];if(!first)return 'Spin complete';if(first.type==='unity')return 'SPC UNITY';if(first.type==='bonus')return '713 HOUSTON BONUS';return `${first.count}× ${SYMBOL_MAP[first.symbol]?.name||'Match'}`;}
-function renderHistory(){const list=$('history');list.replaceChildren();if(!state.history.length){const el=document.createElement('li');el.textContent='No spins yet. The stage is yours.';list.append(el);return;}
-  for(const h of state.history.slice(0,6)){const el=document.createElement('li');const label=document.createElement('span');label.textContent=historyLabel(h);const xp=document.createElement('strong');xp.textContent=`+${h.xp} XP`;el.append(label,xp);list.append(el);}}
-function refresh(animateXP=null){
-  state=normalizeState(state);saveState(state);
-  $('spins').textContent=spinsLeft(state);
-  // The counter shows welcome spins first, then today's free spins.
-  $('spins-label').textContent=onWelcomeSpins(state)?'WELCOME SPINS':'SPINS TODAY';
-  if(animateXP!==null)animateCounter($('xp'),animateXP,state.xp,{reducedMotion:userReducedMotion});else $('xp').textContent=state.xp.toLocaleString();
-  $('best').textContent=state.best.toLocaleString();$('total-spins').textContent=state.totalSpins.toLocaleString();
-  renderCollection();renderHistory();buttonState();
+function historyLabel(h:HistoryItem){const first=h.wins?.[0];if(!first)return 'Spin complete';if(first.type==='unity')return 'SPC UNITY';if(first.type==='bonus')return '713 HOUSTON BONUS';return `${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}`;}
+function renderHistory(){const list=$('history');list.replaceChildren();if(!history.length){const el=document.createElement('li');el.textContent=userId?'No spins yet. The stage is yours.':'Sign in to start your spin history.';list.append(el);return;}
+  for(const h of history.slice(0,6)){const el=document.createElement('li');const label=document.createElement('span');label.textContent=historyLabel(h);const gained=document.createElement('strong');gained.textContent=`+${h.xp} XP`;el.append(label,gained);list.append(el);}}
+function renderBalance(){
+  const pool=activePool(balance);
+  $('spins-label').textContent=pool.label;$('spins').textContent=pool.count;
+  $('shop-paid').textContent=balance.paidSpins?`You have ${balance.paidSpins} paid spin${balance.paidSpins===1?'':'s'}.`:'';
+  $('mode').textContent=userId?'Account':'Guest';
+}
+function refresh(animateFrom:number|null=null){
+  if(animateFrom!==null)animateCounter($('xp'),animateFrom,xp,{reducedMotion:userReducedMotion});else $('xp').textContent=xp.toLocaleString();
+  $('best').textContent=best.toLocaleString();$('total-spins').textContent=spinsTaken.toLocaleString();
+  renderBalance();renderCollection();renderHistory();buttonState();
+  $('shop-open').hidden=!userId;
 }
 /** Restart a one-shot CSS animation class. */
 function retrigger(el:HTMLElement,cls:string){el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);}
-function setResult(title,description,kicker='NOW PLAYING'){
+function setResult(title:string,description:string,kicker='NOW PLAYING'){
   const result=$('result');$('result-title').textContent=title;$('result-desc').textContent=description;result.querySelector('.result-kicker').textContent=kicker;
   result.classList.remove('swap');void result.offsetWidth;result.classList.add('swap');
 }
 /** Big-win banner and confetti; smaller wins are celebrated by the hit show alone. */
-function showWin(xp,{isMajor=false,unity=false}={}){
-  const modal=$('win-overlay');$('overlay-title').textContent=unity?'SPC UNITY!':isMajor?'LEGENDARY!':'NICE MIX!';$('overlay-text').textContent=`+${xp.toLocaleString()} VIRTUAL XP`;
+function showWin(gained:number,{isMajor=false,unity=false}={}){
+  const modal=$('win-overlay');$('overlay-title').textContent=unity?'SPC UNITY!':isMajor?'LEGENDARY!':'NICE MIX!';$('overlay-text').textContent=`+${gained.toLocaleString()} VIRTUAL XP`;
   if(!userReducedMotion){modal.classList.add('visible');confetti.burst({major:isMajor});setTimeout(()=>modal.classList.remove('visible'),isMajor?1400:950);}
 }
+const wait=(ms:number)=>new Promise(resolve=>setTimeout(resolve,ms));
+
 async function spin(){
   if(busy){reelControl.skip?.();return;}
-  state=normalizeState(state);if(spinsLeft(state)<=0){refresh();return;}
+  if(loading)return;
+  if(!userId){signIn();return;}
+  if(totalSpins(balance)<=0){openShop(true);return;}
   busy=true;buttonState();paylines.clear();hits.clear();$('spin').classList.add('is-spinning');
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
-  const target=createBoard(),prior=activeBoard;
+  const key=pendingKey??crypto.randomUUID();pendingKey=key;
   try{
+    let answer=await requestSpin(key);
+    // The server allows one spin every 1.2 seconds; a quick tap after "tap to stop" waits and retries the same key.
+    if('error' in answer&&answer.error==='cooldown'){await wait(1300);answer=await requestSpin(key);}
+    if('error' in answer){
+      if(answer.error!=='failed')pendingKey=null;
+      if(answer.error==='signed_out'){userId=null;refresh();setResult('SIGN IN TO PLAY','Your session ended. Sign in again to keep spinning.','SIGNED OUT');return;}
+      if(answer.error==='no_spins'){if(answer.balance)balance=answer.balance;refresh();setResult('OUT OF SPINS','Grab 25 more spins for $1, or come back tomorrow for 3 free spins (Houston time).','REFILL');openShop(true);return;}
+      setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');return;
+    }
+    pendingKey=null;
+    const target=answer.board,prior=activeBoard,outcome=answer.outcome;
     await animateReels($('reels'),prior,target,{reducedMotion:userReducedMotion,anticipate:anticipationReels(target),control:reelControl,onReady:buttonState,onStop:i=>audio.stop(i),onAnticipate:()=>{audio.tease();setResult('TWO 713s LANDED…','One more 713 anywhere unlocks the Houston bonus.','HOLD UP');}});
-    const oldXP=state.xp;
-    const {state:next,outcome,newCharacters}=applySpin(state,target);
-    state=next;activeBoard=target;saveState(state);
+    if(unmounted)return;
+    const oldXP=xp;
+    xp+=outcome.xp;best=Math.max(best,outcome.xp);spinsTaken+=1;activeBoard=target;balance=answer.balance;
+    collection=[...new Set([...collection,...answer.newCharacters])];
+    history=[{xp:outcome.xp,wins:outcome.wins},...history].slice(0,6);
     const unity=outcome.wins.some(w=>w.type==='unity'),isMajor=unity||outcome.highest>=500;
-    justFound=new Set(newCharacters);
+    justFound=new Set(answer.newCharacters);
     renderBoard($('reels'),target,outcome.hitCells);
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
     paylines.show(outcome.wins,{reducedMotion:userReducedMotion,autoCycle:false});
     hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{paylines.cycle();if(isMajor)showWin(outcome.xp,{isMajor,unity});}});
+    const fresh=answer.newCharacters.length;
     if(outcome.xp>0){
       floatText($('board'),`+${outcome.xp.toLocaleString()} XP`,{reducedMotion:userReducedMotion});
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
-      const best=outcome.wins[0],lines=outcome.wins.filter(w=>w.type==='line').length;
-      const description=unity?'All six featured SPC artists lined up!':best?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':best?.type==='line'?`${best.count} ${SYMBOL_MAP[best.symbol]?.name||'symbol'} symbols connected.`:'';
-      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+(lines>1?` • ${lines} paylines hit`:'')+(newCharacters.length?` • ${newCharacters.length} new character${newCharacters.length>1?'s':''}!`:''),'YOU HIT A MIX');
+      const top=outcome.wins[0],lines=outcome.wins.filter(w=>w.type==='line').length;
+      const description=unity?'All six featured SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
+      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),'YOU HIT A MIX');
       audio.win(isMajor);
     }else{
-      setResult('KEEP THE MIX GOING',newCharacters.length?`${newCharacters.length} new legend${newCharacters.length>1?'s':''} collected, even without a matching line.`:'No payline match on this spin. Try again tomorrow if you are out of spins.','SPIN COMPLETE');
+      setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
     }
     refresh(oldXP);
-  }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Please refresh and try again. No spins were deducted.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
+    if(!totalSpins(balance))openShop(true);
+  }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
   finally{busy=false;$('spin').classList.remove('is-spinning');buttonState();}
 }
+
+// ----- Spin packs: $1 for 25 spins through the site's PayPal account -----
+let paypalReady:Promise<boolean>|null=null;
+function shopMessage(text:string){$('shop-msg').textContent=text;}
+function loadPayPal():Promise<boolean>{
+  paypalReady??=(async()=>{
+    if(paypalGlobal())return true;
+    const clientId=await paypalClientId();if(!clientId)return false;
+    return await new Promise<boolean>(resolve=>{
+      const script=document.createElement('script');
+      script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=USD&intent=capture`;
+      script.async=true;script.onload=()=>resolve(!!paypalGlobal());script.onerror=()=>resolve(false);
+      document.body.appendChild(script);
+    });
+  })();
+  return paypalReady;
+}
+let buttonsShown=false;
+async function openShop(scrollTo=false){
+  if(!userId)return;
+  $('shop').hidden=false;$('shop-open').setAttribute('aria-expanded','true');
+  if(scrollTo)$('shop').scrollIntoView({block:'nearest',behavior:userReducedMotion?'auto':'smooth'});
+  if(buttonsShown)return;
+  shopMessage('Loading PayPal…');
+  if(!(await loadPayPal())){paypalReady=null;shopMessage('PayPal could not load. Check your connection and try again.');return;}
+  if(unmounted||buttonsShown)return;
+  buttonsShown=true;shopMessage('');
+  paypalGlobal()!.Buttons({
+    style:{layout:'horizontal',color:'gold',shape:'pill',label:'pay',tagline:false,height:42},
+    onClick:(_data:unknown,actions:{resolve:()=>void;reject:()=>void})=>{
+      if($('shop-age').checked){shopMessage('');return actions.resolve();}
+      shopMessage('Please confirm you are 18 or older to buy spins.');return actions.reject();
+    },
+    createOrder:async()=>{
+      const order=await startCheckout();
+      if('orderID' in order)return order.orderID;
+      shopMessage(order.error==='not_on_sale'?'Spin packs go on sale soon. Your free spins come back every day (Houston time).':order.error==='signed_out'?'Please sign in again to buy spins.':'Checkout could not start. Please try again.');
+      throw new Error(order.error);
+    },
+    onApprove:async(data:{orderID:string})=>{
+      shopMessage('Confirming your payment…');
+      const paid=await capturePack(data.orderID);
+      if('balance' in paid){
+        balance=paid.balance;refresh();
+        shopMessage('Payment received. 25 spins added. Good luck!');
+        setResult('25 SPINS ADDED','Thanks for supporting the Legends. Spin the mix!','READY');
+      }else{
+        shopMessage(paid.error==='not_completed'?'PayPal did not complete the payment, so nothing was charged and no spins were added.':'We could not confirm the payment yet. If PayPal charged you, your spins will be added; contact music@mrcap1.com.');
+      }
+    },
+    onError:(err:unknown)=>{console.error('PayPal error',err);if(!$('shop-msg').textContent)shopMessage('PayPal ran into a problem. No payment was taken.');},
+  }).render($('shop-paypal')).catch(err=>{console.error('PayPal render failed',err);buttonsShown=false;shopMessage('PayPal could not load. Please try again.');});
+}
+
+// ----- Account -----
+async function loadAccount(nextUser:string|null){
+  userId=nextUser;loading=!!nextUser;history=[];
+  if(!nextUser){
+    xp=0;best=0;spinsTaken=0;collection=[];balance={welcomeLeft:25,dailyLeft:3,paidSpins:0};
+    $('shop').hidden=true;refresh();
+    setResult('SIGN IN TO PLAY','Create a free account and your first 25 spins are on us.','FREE TO START');
+    return;
+  }
+  refresh();
+  try{
+    const [profile,recent]=await Promise.all([loadProfile(nextUser),loadHistory()]);
+    if(unmounted||userId!==nextUser)return;
+    xp=profile.xp;best=profile.best;spinsTaken=profile.totalSpins;collection=profile.collection;balance=profile.balance;history=recent;
+    if(profile.lastBoard&&!busy){activeBoard=profile.lastBoard;renderBoard($('reels'),activeBoard);}
+    setResult('THE SOUTH SIDE IS CALLING.',totalSpins(balance)?'Press SPIN THE MIX to reveal your next lineup.':'You are out of spins. Grab 25 more for $1 or come back tomorrow.','READY TO ROLL');
+    if(!totalSpins(balance))openShop();
+  }catch(error){
+    console.error('Could not load Legends account',error);
+    setResult('COULD NOT LOAD YOUR GAME','Refresh the page to try again.','TRY AGAIN');
+  }finally{if(userId===nextUser){loading=false;refresh();}}
+}
+
 /** The library mirrors the symbol sheet: character, special, and music and Houston groups. */
 function populateLibrary(){
   const groups:[string,readonly {id:string;name:string;color:string}[]][]=[['lib-characters',ARTISTS],['lib-special',SPECIAL],['lib-music',MUSIC]];
@@ -96,19 +211,23 @@ function populateLibrary(){
   }
 }
 $('spin').addEventListener('click',spin);
+$('shop-open').addEventListener('click',()=>{if($('shop').hidden)openShop(true);else{$('shop').hidden=true;$('shop-open').setAttribute('aria-expanded','false');}});
 $('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'♫':'♫̸';$('sound').title=audio.enabled?'Mute sound':'Enable sound';if(audio.enabled)audio.tone(523,.14);});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=e=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
-const onStorage=event=>{if(event.key===GAME_CONFIG.localStorageKey&&!busy){state=loadState();refresh();}};
-// Keep the daily limit aligned to the Houston calendar even if the page stays open overnight.
-const onVisible=()=>{if(document.visibilityState==='visible'&&!busy){state=normalizeState(state);refresh();}};
+// The daily allowance rolls over at Houston midnight; re-read the balance when the tab comes back.
+const onVisible=()=>{if(document.visibilityState==='visible'&&!busy&&userId)loadAccount(userId);};
 respectsReduced.addEventListener?.('change',onReducedChange);
-window.addEventListener('storage',onStorage);
 document.addEventListener('visibilitychange',onVisible);
-renderBoard($('reels'),activeBoard);populateLibrary();refresh();applyMotionPreference();
+renderBoard($('reels'),activeBoard);populateLibrary();applyMotionPreference();refresh();
+// Supabase sends each new listener the current session first (INITIAL_SESSION), then sign-ins and sign-outs.
+const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
+  const next=session?.user?.id??null;
+  if((event==='INITIAL_SESSION'||next!==userId)&&!busy)loadAccount(next);
+});
 return ()=>{
+  unmounted=true;subscription.unsubscribe();
   respectsReduced.removeEventListener?.('change',onReducedChange);
-  window.removeEventListener('storage',onStorage);
   document.removeEventListener('visibilitychange',onVisible);
   reelControl.skip?.();paylines.clear();paylines.resize.disconnect();paylines.svg.remove();hits.clear();hits.layer.remove();
 };

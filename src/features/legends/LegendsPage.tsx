@@ -1,4 +1,5 @@
 import { memo, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
@@ -18,7 +19,12 @@ const ui = (name: string) => `/games/spc-legends/ui/${name}.webp`;
  */
 const LegendsGame = memo(function LegendsGame() {
   const root = useRef<HTMLDivElement>(null);
-  useEffect(() => (root.current ? mountLegendsGame(root.current) : undefined), []);
+  const navigate = useNavigate();
+  useEffect(
+    // Sign-in sends the player back here afterwards (see returnTo in pages/Auth.tsx).
+    () => (root.current ? mountLegendsGame(root.current, { signIn: () => navigate("/auth", { state: { returnTo: "/legends" } }) }) : undefined),
+    [navigate],
+  );
   return (
     <div ref={root} className="legends-world">
       <div className="lg-smoke" aria-hidden="true"><span /><span /><span /></div>
@@ -29,7 +35,7 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
        <h1 className="hero-title"><span className="lg-wordmark"><img src={ui("wordmark")} alt="SPC Legends" width={750} height={147} /></span></h1>
        <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
-       <p className="hero-copy">Six legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a free-play arcade experience.</p>
+       <p className="hero-copy">Six legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
        <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> 20 PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
       </section>
       <section className="lg-container game-layout" data-lg="game" aria-label="SPC Legends game">
@@ -46,7 +52,18 @@ const LegendsGame = memo(function LegendsGame() {
         </div>
         <div className="controls"><button type="button" data-lg="spin" className="spin-button"><span aria-hidden="true">✦</span> <span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">›</span></button><button type="button" data-lg="sound" className="icon-button" aria-pressed="false" title="Enable sound" aria-label="Toggle sound"><span data-lg="sound-icon" aria-hidden="true">♫̸</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button></div>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
-        <div className="game-disclaimer">FREE PLAY • No purchases, cash, prize redemption, or real-world rewards. Legends XP is for entertainment only. Daily limits use Houston time.</div>
+        <button type="button" className="shop-open" data-lg="shop-open" aria-expanded="false" aria-controls="lg-shop" hidden>GET 25 SPINS FOR $1</button>
+        <section className="spin-shop" data-lg="shop" id="lg-shop" aria-label="Buy spins" hidden>
+         <div className="lg-label">SPIN PACK</div>
+         <strong className="shop-price">25 SPINS FOR $1</strong>
+         <p>Buy another pack any time. Paid spins never expire and are used after your free spins.</p>
+         <label className="shop-age"><input type="checkbox" data-lg="shop-age" /> I am 18 or older</label>
+         <div className="shop-paypal" data-lg="shop-paypal" />
+         <p className="shop-msg" data-lg="shop-msg" role="status" aria-live="polite" />
+         <p className="shop-paid" data-lg="shop-paid" />
+         <p className="shop-fine">Legends XP, ranks and badges have no cash value and cannot be exchanged for money or prizes. Wins never pay out spins. All sales are final unless the law requires a refund. Payments are handled by PayPal.</p>
+        </section>
+        <div className="game-disclaimer">25 FREE SPINS TO START, THEN 3 FREE SPINS A DAY (HOUSTON TIME) • Extra spins are $1 for 25 • No cash, prizes or real-world rewards. Legends XP is for entertainment only.</div>
        </div>
        <aside className="sidebar">
          <section className="panel collection-panel" data-lg="collection-panel"><div className="panel-heading"><div><span className="section-label">YOUR LEGACY</span><h2>LEGENDS COLLECTION</h2></div><span data-lg="collection-count" className="small-chip">0 / 6</span></div><div className="collection-grid" data-lg="collection"></div><div className="progress-track"><div data-lg="collection-progress" className="progress-fill"></div></div><p data-lg="collection-note" className="panel-note">Spin to discover all six artists.</p></section>
@@ -56,7 +73,7 @@ const LegendsGame = memo(function LegendsGame() {
       </section>
       <section className="lg-container below-grid" data-lg="rules">
        <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Start with 25 free spins. After those, get three free spins each Houston calendar day. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of 20 paylines earn virtual XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover K-Rino, Mr. CAP, Klondike Kat, Point Blank, K-Water, and Cl'Che'.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus, or line up all six unique artists for SPC Unity.</p></div></div></div>
-       <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/6</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong>Guest / Local</strong></div><p className="panel-note">Progress is saved in this browser only.</p></div>
+       <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/6</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong data-lg="mode">Guest</strong></div><p className="panel-note">Sign in and your spins, XP and collection are saved to your account.</p></div>
       </section>
       <section className="lg-container symbol-library">
         <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>Six artist legends, two special symbols, eight music and Houston symbols</p></div>
