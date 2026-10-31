@@ -1,5 +1,9 @@
 # Identity connection
 
+# SPC Legends roster additions
+
+- [x] Add Murder One and Rapper K artwork to guest and server spins, collection and library, and verify gameplay.
+
 # SPC Legends temporary guest play
 
 - [x] Enable signed-out demo spins without changing account balances or payment access, and verify guest play.

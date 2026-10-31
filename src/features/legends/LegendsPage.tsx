@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
 import { mountLegendsGame } from "./game";
 import { symbolUrl } from "./motion";
+import { ARTISTS } from "./config";
 import { Button } from "@/components/ui/button";
 import "@fontsource/russo-one/400.css";
 import "@fontsource/alfa-slab-one/400.css";
@@ -33,7 +34,7 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
        <h1 className="hero-title"><span className="lg-wordmark"><img src={ui("wordmark")} alt="SPC Legends" width={750} height={147} /></span></h1>
        <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
-       <p className="hero-copy">Six legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
+       <p className="hero-copy">Eight legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
        <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> 20 PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
       </section>
       <section className="lg-container game-layout" data-lg="game" aria-label="SPC Legends game">
@@ -45,7 +46,7 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="hud">
          <div className="hud-block"><span className="hud-label" data-lg="spins-label">WELCOME SPINS</span><strong data-lg="spins">25</strong></div>
          <div className="hud-block"><span className="hud-label">LEGENDS XP</span><strong data-lg="xp">0</strong></div>
-         <div className="hud-block"><span className="hud-label">COLLECTED</span><strong data-lg="collected">0 / 6</strong></div>
+         <div className="hud-block"><span className="hud-label">COLLECTED</span><strong data-lg="collected">0 / {ARTISTS.length}</strong></div>
          <div className="hud-block"><span className="hud-label">BEST SPIN</span><strong data-lg="best">0</strong></div>
         </div>
         <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
@@ -66,18 +67,18 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="game-disclaimer">25 FREE SPINS TO START, THEN 3 FREE SPINS A DAY (HOUSTON TIME) • Extra spins are $1 for 25 • No cash, prizes or real-world rewards. Legends XP is for entertainment only.</div>
        </div>
        <aside className="sidebar">
-         <section className="panel collection-panel" data-lg="collection-panel"><div className="panel-heading"><div><span className="section-label">YOUR LEGACY</span><h2>LEGENDS COLLECTION</h2></div><span data-lg="collection-count" className="small-chip">0 / 6</span></div><div className="collection-grid" data-lg="collection"></div><div className="progress-track"><div data-lg="collection-progress" className="progress-fill"></div></div><p data-lg="collection-note" className="panel-note">Spin to discover all six artists.</p></section>
+         <section className="panel collection-panel" data-lg="collection-panel"><div className="panel-heading"><div><span className="section-label">YOUR LEGACY</span><h2>LEGENDS COLLECTION</h2></div><span data-lg="collection-count" className="small-chip">0 / {ARTISTS.length}</span></div><div className="collection-grid" data-lg="collection"></div><div className="progress-track"><div data-lg="collection-progress" className="progress-fill"></div></div><p data-lg="collection-note" className="panel-note">Spin to discover every artist.</p></section>
          <section className="panel panel-special"><div className="panel-heading"><div><span className="section-label">GAME CHANGERS</span><h2>SPECIAL SYMBOLS</h2></div></div><div className="special-grid"><div className="special"><img src={symbolUrl("wild")} alt="SPC Wild symbol" /><b>SPC WILD</b><small>Substitutes in lines</small></div><div className="special"><img src={symbolUrl("bonus")} alt="713 Bonus symbol" /><b>713 BONUS</b><small>3+ on the board</small></div><div className="special"><img src={symbolUrl("double")} alt="713 Double Bonus symbol" /><b>713 DOUBLE BONUS</b><small>×2 XP on a winning spin</small></div><div className="special"><img src={symbolUrl("triple")} alt="SPC Triple Bonus symbol" /><b>SPC TRIPLE BONUS</b><small>×3 XP on a winning spin</small></div></div></section>
          <section className="panel history-panel"><div className="panel-heading"><div><span className="section-label">YOUR LAST SETS</span><h2>SPIN HISTORY</h2></div></div><ol data-lg="history" className="history" /></section>
        </aside>
       </section>
       <section className="lg-container below-grid" data-lg="rules">
-       <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Start with 25 free spins. After those, get three free spins each Houston calendar day. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of 20 paylines earn virtual XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover K-Rino, Mr. CAP, Klondike Kat, Point Blank, K-Water, and Cl'Che'.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus, or line up all six unique artists for SPC Unity. A 713 Double Bonus doubles a winning spin's XP, an SPC Triple Bonus triples it, and both together multiply it by six.</p></div></div></div>
-       <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/6</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong data-lg="mode">Guest</strong></div><p className="panel-note">Sign in and your spins, XP and collection are saved to your account.</p></div>
+       <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Start with 25 free spins. After those, get three free spins each Houston calendar day. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of 20 paylines earn virtual XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover {ARTISTS.map(artist => artist.name).join(', ')}.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus, or line up any six distinct artists for SPC Unity. A 713 Double Bonus doubles a winning spin's XP, an SPC Triple Bonus triples it, and both together multiply it by six.</p></div></div></div>
+       <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/{ARTISTS.length}</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong data-lg="mode">Guest</strong></div><p className="panel-note">Sign in and your spins, XP and collection are saved to your account.</p></div>
       </section>
       <section className="lg-container symbol-library">
-        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>Six artist legends, four special symbols, eight music and Houston symbols</p></div>
-        <div className="library-group"><div className="lg-label">CHARACTER SYMBOLS</div><div className="library-grid is-six" data-lg="lib-characters" /></div>
+        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>Eight artist legends, four special symbols, eight music and Houston symbols</p></div>
+        <div className="library-group"><div className="lg-label">CHARACTER SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-characters" /></div>
         <div className="library-group"><div className="lg-label">SPECIAL SYMBOLS</div><div className="library-grid is-four" data-lg="lib-special" /></div>
         <div className="library-group"><div className="lg-label">MUSIC &amp; HOUSTON SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-music" /></div>
       </section>

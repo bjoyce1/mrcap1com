@@ -2,6 +2,8 @@
 import {SYMBOL_MAP,PAYLINES} from './config';
 import {createBoard} from './engine';
 import {hitSchedule,isArtist,type HitStep,type HitWin} from './hits';
+import murderOneAsset from '@/assets/legends/murder-one.asset.json';
+import rapperKAsset from '@/assets/legends/rapper-k.asset.json';
 /** Symbol art lives in public/games/spc-legends/symbols. */
 /** Set by animateReels while reels move; calling skip() lands every reel at its final stop. */
 export type ReelControl={skip?:(()=>void)|null};
@@ -9,7 +11,8 @@ export type ReelControl={skip?:(()=>void)|null};
 export type Win={type:string;payline?:number;count?:number;symbol?:string;cells:string[]};
 type ReelOptions={reducedMotion?:boolean;anticipate?:boolean[];control?:ReelControl;onReady?:()=>void;onStop?:(reel:number)=>void;onAnticipate?:()=>void};
 type Particle={x:number;y:number;vx:number;vy:number;age:number;life:number;size:number;rot:number;color:string};
-export const symbolUrl=(id:string)=>`/games/spc-legends/symbols/${id}.webp`;
+const uploadedSymbols:Record<string,string>={'murder-one':murderOneAsset.url,'rapper-k':rapperKAsset.url};
+export const symbolUrl=(id:string)=>uploadedSymbols[id]??`/games/spc-legends/symbols/${id}.webp`;
 /** Reel motor: GPU-accelerated symbol strips. Resolves only after the six staggered reels settle. */
 export function makeTile(id,{mini=false,filler=false}={}){
   const root=document.createElement('div');root.className=`symbol-tile${filler?' filler':''}`;root.dataset.symbol=id;

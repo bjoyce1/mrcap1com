@@ -48,9 +48,10 @@ function renderCollection(){
     const img=document.createElement('img');img.src=symbolUrl(a.id);img.alt='';img.loading='lazy';element.append(img);return element;
   }));
   justFound=new Set();
-  $('collection-count').textContent=`${ids.size} / 6`;$('collected').textContent=`${ids.size} / 6`;$('found').textContent=`${ids.size}/6`;
-  $('completion').textContent=`${Math.round(ids.size/6*100)}%`;$('collection-progress').style.width=`${ids.size/6*100}%`;
-  $('collection-note').textContent=ids.size===6?'Complete! All six Legends collected. The collection badge is yours.':'Collect all six artist portraits as they appear on your reels.';
+  const count=ARTISTS.length;
+  $('collection-count').textContent=`${ids.size} / ${count}`;$('collected').textContent=`${ids.size} / ${count}`;$('found').textContent=`${ids.size}/${count}`;
+  $('completion').textContent=`${Math.round(ids.size/count*100)}%`;$('collection-progress').style.width=`${ids.size/count*100}%`;
+  $('collection-note').textContent=ids.size===count?'Complete! Every Legend collected.':'Collect every artist portrait as they appear on your reels.';
 }
 /** Total multiplier from Double and Triple Bonus wins (1 when none landed). */
 const multiplierOf=(wins:{type:string;multiplier?:number}[])=>wins.filter(w=>w.type==='multiplier').reduce((m,w)=>m*(w.multiplier??1),1);
@@ -126,7 +127,7 @@ async function spin(){
       floatText($('board'),`+${outcome.xp.toLocaleString()} XP`,{reducedMotion:userReducedMotion});
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
       const top=outcome.wins[0],lines=outcome.wins.filter(w=>w.type==='line').length;
-      const description=unity?'All six featured SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
+      const description=unity?'Six distinct SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
       setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
