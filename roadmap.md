@@ -2,7 +2,7 @@
 
 # SPC Legends debit and credit checkout
 
-- [ ] Enable PayPal card funding in the existing Legends spin checkout and verify eligible card options without charging.
+- [x] Enable PayPal card funding in the existing Legends spin checkout and verify eligible card options without charging.
 
 # SPC Legends Supreme Legendary
 
