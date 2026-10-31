@@ -10,7 +10,7 @@ import {supabase} from '@/integrations/supabase/client';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
-const paypalGlobal=()=>(window as unknown as {paypal?:PayPalNamespace}).paypal;
+const paypalGlobal=()=>(window as unknown as {legendsPayPal?:PayPalNamespace}).legendsPayPal;
 
 /** Start the game inside `root` (elements are found by data-lg). `signIn` sends the visitor to sign in. Returns a cleanup function. */
 export function mountLegendsGame(root:HTMLElement,{signIn}:{signIn:()=>void}){
@@ -26,13 +26,18 @@ let balance:Balance={welcomeLeft:25,dailyLeft:3,paidSpins:0},activeBoard=createB
 // A spin whose answer never arrived is retried with the same key, so the server replays it instead of spending another.
 let pendingKey:string|null=null;
 let unmounted=false;
+let confirmingPayment=false,accountRevision=0;
+let paypalButtons:PayPalButtons|null=null;
+const pendingOrderKey=(id:string)=>`legends-approved-order:${id}`;
+function pendingOrder(){try{return userId?localStorage.getItem(pendingOrderKey(userId)):null;}catch{return null;}}
+function storeOrder(orderID:string|null){try{if(userId){if(orderID)localStorage.setItem(pendingOrderKey(userId),orderID);else localStorage.removeItem(pendingOrderKey(userId));}}catch{/* Payment can still complete without browser storage. */}}
 const motionButton=$('motion');
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
 // While reels move the spin button becomes a stop button; it only shortens the animation, never the outcome.
 function buttonState(){
   const left=totalSpins(balance);
-  $('spin').disabled=busy?!reelControl.skip:loading;
+  $('spin').disabled=confirmingPayment||(busy?!reelControl.skip:loading);
   $('spin-label').textContent=busy?'TAP TO STOP':loading?'LOADING…':!userId?'SIGN IN TO PLAY':left?'SPIN THE MIX':'GET MORE SPINS';
 }
 function renderCollection(){
@@ -54,6 +59,7 @@ function renderBalance(){
   $('spins-label').textContent=pool.label;$('spins').textContent=pool.count;
   $('shop-paid').textContent=balance.paidSpins?`You have ${balance.paidSpins} paid spin${balance.paidSpins===1?'':'s'}.`:'';
   $('mode').textContent=userId?'Account':'Guest';
+  $('balance-summary').textContent=userId?`${balance.welcomeLeft} welcome · ${balance.dailyLeft} free today · ${balance.paidSpins} paid · ${totalSpins(balance)} total spins`:'Sign in to receive 25 welcome spins.';
 }
 function refresh(animateFrom:number|null=null){
   if(animateFrom!==null)animateCounter($('xp'),animateFrom,xp,{reducedMotion:userReducedMotion});else $('xp').textContent=xp.toLocaleString();
@@ -77,6 +83,7 @@ const wait=(ms:number)=>new Promise(resolve=>setTimeout(resolve,ms));
 async function spin(){
   if(busy){reelControl.skip?.();return;}
   if(loading)return;
+  if(confirmingPayment)return;
   if(!userId){signIn();return;}
   if(totalSpins(balance)<=0){openShop(true);return;}
   busy=true;buttonState();paylines.clear();hits.clear();$('spin').classList.add('is-spinning');
@@ -132,7 +139,8 @@ function loadPayPal():Promise<boolean>{
     const clientId=await paypalClientId();if(!clientId)return false;
     return await new Promise<boolean>(resolve=>{
       const script=document.createElement('script');
-      script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=USD&intent=capture`;
+      script.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=USD&intent=capture&components=buttons`;
+      script.setAttribute('data-namespace','legendsPayPal');
       script.async=true;script.onload=()=>resolve(!!paypalGlobal());script.onerror=()=>resolve(false);
       document.body.appendChild(script);
     });
@@ -140,6 +148,29 @@ function loadPayPal():Promise<boolean>{
   return paypalReady;
 }
 let buttonsShown=false;
+async function confirmPayment(orderID:string){
+  if(confirmingPayment||busy||!userId)return;
+  const buyer=userId;
+  confirmingPayment=true;accountRevision++;storeOrder(orderID);buttonState();
+  $('shop-retry').hidden=true;shopMessage('Confirming your payment…');
+  try{
+    const paid=await capturePack(orderID);
+    if(unmounted||userId!==buyer)return;
+    if('error' in paid){
+      $('shop-retry').hidden=false;
+      shopMessage('Payment is not confirmed yet. Retry confirmation before buying another pack. If you were charged, do not pay again.');
+      return;
+    }
+    storeOrder(null);balance=paid.balance;refresh();
+    shopMessage('Payment confirmed. Your paid spin balance is updated.');
+    setResult('25 SPINS ADDED','Thanks for supporting the Legends. Spin the mix!','READY');
+  }catch{
+    if(!unmounted&&userId===buyer){$('shop-retry').hidden=false;shopMessage('Confirmation could not finish. Retry before buying another pack.');}
+  }finally{
+    confirmingPayment=false;
+    if(!unmounted){loading=false;buttonState();}
+  }
+}
 async function openShop(scrollTo=false){
   if(!userId)return;
   $('shop').hidden=false;$('shop-open').setAttribute('aria-expanded','true');
@@ -149,9 +180,11 @@ async function openShop(scrollTo=false){
   if(!(await loadPayPal())){paypalReady=null;shopMessage('PayPal could not load. Check your connection and try again.');return;}
   if(unmounted||buttonsShown)return;
   buttonsShown=true;shopMessage('');
-  paypalGlobal()!.Buttons({
+  const paypal=paypalGlobal();if(!paypal){buttonsShown=false;return;}
+  paypalButtons=paypal.Buttons({
     style:{layout:'horizontal',color:'gold',shape:'pill',label:'pay',tagline:false,height:42},
     onClick:(_data:unknown,actions:{resolve:()=>void;reject:()=>void})=>{
+      if(busy||confirmingPayment||pendingOrder()){shopMessage('Finish your spin or retry payment confirmation before buying another pack.');return actions.reject();}
       if($('shop-age').checked){shopMessage('');return actions.resolve();}
       shopMessage('Please confirm you are 18 or older to buy spins.');return actions.reject();
     },
@@ -161,23 +194,18 @@ async function openShop(scrollTo=false){
       shopMessage(order.error==='not_on_sale'?'Spin packs go on sale soon. Your free spins come back every day (Houston time).':order.error==='signed_out'?'Please sign in again to buy spins.':'Checkout could not start. Please try again.');
       throw new Error(order.error);
     },
-    onApprove:async(data:{orderID:string})=>{
-      shopMessage('Confirming your payment…');
-      const paid=await capturePack(data.orderID);
-      if('balance' in paid){
-        balance=paid.balance;refresh();
-        shopMessage('Payment received. 25 spins added. Good luck!');
-        setResult('25 SPINS ADDED','Thanks for supporting the Legends. Spin the mix!','READY');
-      }else{
-        shopMessage(paid.error==='not_completed'?'PayPal did not complete the payment, so nothing was charged and no spins were added.':'We could not confirm the payment yet. If PayPal charged you, your spins will be added; contact music@mrcap1.com.');
-      }
-    },
-    onError:(err:unknown)=>{console.error('PayPal error',err);if(!$('shop-msg').textContent)shopMessage('PayPal ran into a problem. No payment was taken.');},
-  }).render($('shop-paypal')).catch(err=>{console.error('PayPal render failed',err);buttonsShown=false;shopMessage('PayPal could not load. Please try again.');});
+    onApprove:async(data:{orderID:string})=>confirmPayment(data.orderID),
+    onCancel:()=>shopMessage('Checkout cancelled. No spins added.'),
+    onError:()=>{if(!$('shop-msg').textContent)shopMessage('PayPal ran into a problem. Check payment confirmation before trying again.');},
+  });
+  await paypalButtons.render($('shop-paypal')).catch(()=>{buttonsShown=false;shopMessage('PayPal could not load. Please try again.');});
+  if(pendingOrder()){$('shop-retry').hidden=false;shopMessage('An approved payment needs confirmation. Retry before buying another pack.');}
 }
 
 // ----- Account -----
 async function loadAccount(nextUser:string|null){
+  const revision=++accountRevision;
+  if(nextUser!==userId)pendingKey=null;
   userId=nextUser;loading=!!nextUser;history=[];
   if(!nextUser){
     xp=0;best=0;spinsTaken=0;collection=[];balance={welcomeLeft:25,dailyLeft:3,paidSpins:0};
@@ -188,15 +216,16 @@ async function loadAccount(nextUser:string|null){
   refresh();
   try{
     const [profile,recent]=await Promise.all([loadProfile(nextUser),loadHistory()]);
-    if(unmounted||userId!==nextUser)return;
+    if(unmounted||userId!==nextUser||revision!==accountRevision)return;
     xp=profile.xp;best=profile.best;spinsTaken=profile.totalSpins;collection=profile.collection;balance=profile.balance;history=recent;
     if(profile.lastBoard&&!busy){activeBoard=profile.lastBoard;renderBoard($('reels'),activeBoard);}
     setResult('THE SOUTH SIDE IS CALLING.',totalSpins(balance)?'Press SPIN THE MIX to reveal your next lineup.':'You are out of spins. Grab 25 more for $1 or come back tomorrow.','READY TO ROLL');
     if(!totalSpins(balance))openShop();
+    if(pendingOrder()){await openShop();$('shop-retry').hidden=false;}
   }catch(error){
     console.error('Could not load Legends account',error);
     setResult('COULD NOT LOAD YOUR GAME','Refresh the page to try again.','TRY AGAIN');
-  }finally{if(userId===nextUser){loading=false;refresh();}}
+  }finally{if(!unmounted&&userId===nextUser&&revision===accountRevision){loading=false;refresh();}}
 }
 
 /** The library mirrors the symbol sheet: character, special, and music and Houston groups. */
@@ -211,22 +240,24 @@ function populateLibrary(){
   }
 }
 $('spin').addEventListener('click',spin);
+$('shop-retry').addEventListener('click',()=>{const orderID=pendingOrder();if(orderID)void confirmPayment(orderID);});
 $('shop-open').addEventListener('click',()=>{if($('shop').hidden)openShop(true);else{$('shop').hidden=true;$('shop-open').setAttribute('aria-expanded','false');}});
 $('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'♫':'♫̸';$('sound').title=audio.enabled?'Mute sound':'Enable sound';if(audio.enabled)audio.tone(523,.14);});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
-const onReducedChange=e=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
+const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
 // The daily allowance rolls over at Houston midnight; re-read the balance when the tab comes back.
-const onVisible=()=>{if(document.visibilityState==='visible'&&!busy&&userId)loadAccount(userId);};
+const onVisible=()=>{if(document.visibilityState==='visible'&&!busy&&!confirmingPayment&&userId)loadAccount(userId);};
 respectsReduced.addEventListener?.('change',onReducedChange);
 document.addEventListener('visibilitychange',onVisible);
 renderBoard($('reels'),activeBoard);populateLibrary();applyMotionPreference();refresh();
 // Supabase sends each new listener the current session first (INITIAL_SESSION), then sign-ins and sign-outs.
 const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   const next=session?.user?.id??null;
-  if((event==='INITIAL_SESSION'||next!==userId)&&!busy)loadAccount(next);
+  if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
   unmounted=true;subscription.unsubscribe();
+  void paypalButtons?.close?.().catch(()=>undefined);
   respectsReduced.removeEventListener?.('change',onReducedChange);
   document.removeEventListener('visibilitychange',onVisible);
   reelControl.skip?.();paylines.clear();paylines.resize.disconnect();paylines.svg.remove();hits.clear();hits.layer.remove();

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
 import { mountLegendsGame } from "./game";
 import { symbolUrl } from "./motion";
+import { Button } from "@/components/ui/button";
 import "@fontsource/russo-one/400.css";
 import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
@@ -13,7 +14,7 @@ import "./legends.css";
 const ui = (name: string) => `/games/spc-legends/ui/${name}.webp`;
 
 /**
- * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game (phase 1: free play only).
+ * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game with account spins and PayPal packs.
  * The markup is static; mountLegendsGame drives it imperatively (reels, HUD, history, overlays),
  * so this component never re-renders its own content. See docs in the SPC Legends source package.
  */
@@ -50,6 +51,7 @@ const LegendsGame = memo(function LegendsGame() {
          <div className="hud-block"><span className="hud-label">COLLECTED</span><strong data-lg="collected">0 / 6</strong></div>
          <div className="hud-block"><span className="hud-label">BEST SPIN</span><strong data-lg="best">0</strong></div>
         </div>
+        <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
         <div className="controls"><button type="button" data-lg="spin" className="spin-button"><span aria-hidden="true">✦</span> <span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">›</span></button><button type="button" data-lg="sound" className="icon-button" aria-pressed="false" title="Enable sound" aria-label="Toggle sound"><span data-lg="sound-icon" aria-hidden="true">♫̸</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button></div>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
         <button type="button" className="shop-open" data-lg="shop-open" aria-expanded="false" aria-controls="lg-shop" hidden>GET 25 SPINS FOR $1</button>
@@ -60,6 +62,7 @@ const LegendsGame = memo(function LegendsGame() {
          <label className="shop-age"><input type="checkbox" data-lg="shop-age" /> I am 18 or older</label>
          <div className="shop-paypal" data-lg="shop-paypal" />
          <p className="shop-msg" data-lg="shop-msg" role="status" aria-live="polite" />
+         <Button type="button" variant="secondary" data-lg="shop-retry" hidden>Retry payment confirmation</Button>
          <p className="shop-paid" data-lg="shop-paid" />
          <p className="shop-fine">Legends XP, ranks and badges have no cash value and cannot be exchanged for money or prizes. Wins never pay out spins. All sales are final unless the law requires a refund. Payments are handled by PayPal.</p>
         </section>

@@ -75,8 +75,9 @@ export async function capturePack(orderID: string): Promise<{ balance: Balance }
   return { error: status === 402 || status === 409 ? "not_completed" : "failed" };
 }
 
-/** The site's live PayPal client id, so PayPal buttons approve orders on the same account. */
+/** The site's configured PayPal client ID, so buttons approve orders on the same account. */
 export async function paypalClientId(): Promise<string | null> {
   const { data, error } = await supabase.functions.invoke("paypal-checkout?action=client-id");
-  return error ? null : ((data as { clientId?: string })?.clientId ?? null);
+  const clientId = (data as { clientId?: string })?.clientId;
+  return error || !clientId || clientId === "sb" ? null : clientId;
 }
