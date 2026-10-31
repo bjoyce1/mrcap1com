@@ -13,6 +13,7 @@ const primaryTabs = [
 ];
 
 const moreLinks = [
+  { to: "/legends", label: "SPC Legends" },
   { to: "/who-is-mr-cap", label: "Who Is Mr. CAP?" },
   { to: "/booking", label: "Booking" },
   { to: "/videos", label: "Videos" },

@@ -21,6 +21,7 @@ const primaryLinks = [
 ];
 
 const moreLinks = [
+  { to: "/legends", label: "SPC Legends" },
   { to: "/press", label: "Press" },
   { to: "/blog", label: "Blog" },
   { to: "/videos", label: "Videos" },
