@@ -1,5 +1,9 @@
 # Identity connection
 
+# SPC Legends temporary guest play
+
+- [x] Enable signed-out demo spins without changing account balances or payment access, and verify guest play.
+
 # SPC Legends purchase integration
 
 - [x] Show all real spin balances and protect payment/account refreshes.

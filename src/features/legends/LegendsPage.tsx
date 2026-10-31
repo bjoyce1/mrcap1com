@@ -1,5 +1,4 @@
 import { memo, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
@@ -20,11 +19,9 @@ const ui = (name: string) => `/games/spc-legends/ui/${name}.webp`;
  */
 const LegendsGame = memo(function LegendsGame() {
   const root = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
   useEffect(
-    // Sign-in sends the player back here afterwards (see returnTo in pages/Auth.tsx).
-    () => (root.current ? mountLegendsGame(root.current, { signIn: () => navigate("/auth", { state: { returnTo: "/legends" } }) }) : undefined),
-    [navigate],
+    () => (root.current ? mountLegendsGame(root.current) : undefined),
+    [],
   );
   return (
     <div ref={root} className="legends-world">
