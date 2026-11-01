@@ -53,11 +53,24 @@ const LegendsGame = memo(function LegendsGame() {
         <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
         <div className="controls"><button type="button" data-lg="spin" className="spin-button"><span aria-hidden="true">✦</span> <span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">›</span></button><button type="button" data-lg="sound" className="icon-button" aria-pressed="false" title="Enable sound" aria-label="Toggle sound"><span data-lg="sound-icon" aria-hidden="true">♫̸</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button></div>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
-        <button type="button" className="shop-open" data-lg="shop-open" aria-expanded="false" aria-controls="lg-shop" hidden>GET 25 SPINS FOR $1</button>
+        <button type="button" className="buy-button" data-lg="shop-open" data-state="idle" aria-expanded="false" aria-controls="lg-shop" hidden>
+         <span className="buy-sweep" aria-hidden="true" />
+         <span className="buy-label">GET MORE SPINS</span>
+         <span className="buy-orb" aria-hidden="true">
+          <svg className="buy-ring" viewBox="0 0 48 48"><circle className="buy-ring-track" cx="24" cy="24" r="20" /><circle className="buy-ring-run" cx="24" cy="24" r="20" /></svg>
+          <span className="buy-dot" />
+          <svg className="buy-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+         </span>
+        </button>
         <section className="spin-shop" data-lg="shop" id="lg-shop" aria-label="Buy spins" hidden>
          <div className="lg-label">SPIN PACK</div>
-         <strong className="shop-price">25 SPINS FOR $1</strong>
-         <p>Buy another pack any time. Paid spins never expire and are used after your free spins.</p>
+         <div className="pack-card is-selected" aria-label="Selected package: 25 spins for 1 dollar">
+          <span className="pack-icon" aria-hidden="true">✦</span>
+          <span className="pack-spins">25 SPINS</span>
+          <span className="pack-price">$1.00</span>
+          <span className="pack-note">PAID SPINS NEVER EXPIRE</span>
+         </div>
+         <p>Buy another pack any time. Paid spins are used after your free spins.</p>
          <label className="shop-age"><input type="checkbox" data-lg="shop-age" /> I am 18 or older</label>
          <div className="shop-paypal" data-lg="shop-paypal" />
          <p className="shop-msg" data-lg="shop-msg" role="status" aria-live="polite" />

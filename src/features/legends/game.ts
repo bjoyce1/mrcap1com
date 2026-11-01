@@ -9,6 +9,7 @@ import {renderBoard,animateReels,animateCounter,Confetti,SynthSound,PaylineOverl
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
+import {createPurchaseButton} from './purchase-button';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
@@ -34,6 +35,8 @@ let paypalButtons:PayPalButtons|null=null;
 const pendingOrderKey=(id:string)=>`legends-approved-order:${id}`;
 function pendingOrder(){try{return userId?localStorage.getItem(pendingOrderKey(userId)):null;}catch{return null;}}
 function storeOrder(orderID:string|null){try{if(userId){if(orderID)localStorage.setItem(pendingOrderKey(userId),orderID);else localStorage.removeItem(pendingOrderKey(userId));}}catch{/* Payment can still complete without browser storage. */}}
+// The spin store's pill-to-circle control; it only mirrors real checkout states.
+const buyButton=createPurchaseButton($('shop-open'),{reducedMotion:()=>userReducedMotion});
 const motionButton=$('motion');
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
@@ -167,35 +170,42 @@ async function confirmPayment(orderID:string){
   if(confirmingPayment||busy||!userId)return;
   const buyer=userId;
   confirmingPayment=true;accountRevision++;storeOrder(orderID);buttonState();
+  buyButton.setState('processing');
   $('shop-retry').hidden=true;shopMessage('Confirming your payment…');
   try{
     const paid=await capturePack(orderID);
     if(unmounted||userId!==buyer)return;
     if('error' in paid){
-      $('shop-retry').hidden=false;
+      $('shop-retry').hidden=false;buyButton.setState('error');
       shopMessage('Payment is not confirmed yet. Retry confirmation before buying another pack. If you were charged, do not pay again.');
       return;
     }
+    const beforeSpins=activePool(balance).count;
     storeOrder(null);balance=paid.balance;refresh();
+    buyButton.setState('success');
+    // The balance number climbs to the server-confirmed total with a cyan and gold glow.
+    animateCounter($('spins'),beforeSpins,activePool(balance).count,{reducedMotion:userReducedMotion});
+    const spinsBlock=$('spins').closest('.hud-block');if(spinsBlock)retrigger(spinsBlock,'balance-glow');
     shopMessage('Payment confirmed. Your paid spin balance is updated.');
     setResult('25 SPINS ADDED','Thanks for supporting the Legends. Spin the mix!','READY');
   }catch{
-    if(!unmounted&&userId===buyer){$('shop-retry').hidden=false;shopMessage('Confirmation could not finish. Retry before buying another pack.');}
+    if(!unmounted&&userId===buyer){$('shop-retry').hidden=false;buyButton.setState('error');shopMessage('Confirmation could not finish. Retry before buying another pack.');}
   }finally{
     confirmingPayment=false;
     if(!unmounted){loading=false;buttonState();}
   }
 }
-async function openShop(scrollTo=false){
-  if(!userId)return;
+/** Opens the spin store and renders the PayPal buttons. Resolves true once they are on screen. */
+async function openShop(scrollTo=false):Promise<boolean>{
+  if(!userId)return false;
   $('shop').hidden=false;$('shop-open').setAttribute('aria-expanded','true');
   if(scrollTo)$('shop').scrollIntoView({block:'nearest',behavior:userReducedMotion?'auto':'smooth'});
-  if(buttonsShown)return;
+  if(buttonsShown)return true;
   shopMessage('Loading PayPal…');
-  if(!(await loadPayPal())){paypalReady=null;shopMessage('PayPal could not load. Check your connection and try again.');return;}
-  if(unmounted||buttonsShown)return;
+  if(!(await loadPayPal())){paypalReady=null;shopMessage('PayPal could not load. Check your connection and try again.');return false;}
+  if(unmounted||buttonsShown)return !unmounted;
   buttonsShown=true;shopMessage('');
-  const paypal=paypalGlobal();if(!paypal){buttonsShown=false;return;}
+  const paypal=paypalGlobal();if(!paypal){buttonsShown=false;return false;}
   paypalButtons=paypal.Buttons({
     style:legendsPayPalButtonStyle,
     onClick:(_data:unknown,actions:{resolve:()=>void;reject:()=>void})=>{
@@ -213,8 +223,9 @@ async function openShop(scrollTo=false){
     onCancel:()=>shopMessage('Checkout cancelled. No spins added.'),
     onError:()=>{if(!$('shop-msg').textContent)shopMessage('PayPal ran into a problem. Check payment confirmation before trying again.');},
   });
-  await paypalButtons.render($('shop-paypal')).catch(()=>{buttonsShown=false;shopMessage('PayPal could not load. Please try again.');});
+  const rendered=await paypalButtons.render($('shop-paypal')).then(()=>true).catch(()=>{buttonsShown=false;shopMessage('PayPal could not load. Please try again.');return false;});
   if(pendingOrder()){$('shop-retry').hidden=false;shopMessage('An approved payment needs confirmation. Retry before buying another pack.');}
+  return rendered;
 }
 
 // ----- Account -----
@@ -224,7 +235,7 @@ async function loadAccount(nextUser:string|null){
     pendingKey=null;
     void paypalButtons?.close?.().catch(()=>undefined);
     paypalButtons=null;buttonsShown=false;$('shop-paypal').replaceChildren();
-    $('shop-retry').hidden=true;
+    $('shop-retry').hidden=true;buyButton.setState('idle');
   }
   userId=nextUser;loading=!!nextUser;history=[];
   if(!nextUser){
@@ -262,7 +273,12 @@ function populateLibrary(){
 }
 $('spin').addEventListener('click',spin);
 $('shop-retry').addEventListener('click',()=>{const orderID=pendingOrder();if(orderID)void confirmPayment(orderID);});
-$('shop-open').addEventListener('click',()=>{if($('shop').hidden)openShop(true);else{$('shop').hidden=true;$('shop-open').setAttribute('aria-expanded','false');}});
+$('shop-open').addEventListener('click',()=>{
+  if(buyButton.state()==='processing')return;
+  if(!$('shop').hidden){$('shop').hidden=true;$('shop-open').setAttribute('aria-expanded','false');return;}
+  buyButton.setState('processing');
+  void openShop(true).then(ok=>buyButton.setState(ok?'idle':'error'));
+});
 $('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'♫':'♫̸';$('sound').title=audio.enabled?'Mute sound':'Enable sound';if(audio.enabled)audio.tone(523,.14);});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
@@ -277,7 +293,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;subscription.unsubscribe();
+  unmounted=true;subscription.unsubscribe();buyButton.destroy();
   void paypalButtons?.close?.().catch(()=>undefined);
   respectsReduced.removeEventListener?.('change',onReducedChange);
   document.removeEventListener('visibilitychange',onVisible);
