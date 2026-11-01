@@ -72,7 +72,10 @@ const LegendsGame = memo(function LegendsGame() {
          </div>
          <p>Buy another pack any time. Paid spins are used after your free spins.</p>
          <label className="shop-age"><input type="checkbox" data-lg="shop-age" /> I am 18 or older</label>
-         <div className="shop-paypal" data-lg="shop-paypal" />
+         <div className="shop-checkout">
+          <div className="lg-label">SECURE CHECKOUT</div>
+          <div className="shop-paypal" data-lg="shop-paypal" />
+         </div>
          <p className="shop-msg" data-lg="shop-msg" role="status" aria-live="polite" />
          <Button type="button" variant="secondary" data-lg="shop-retry" hidden>Retry payment confirmation</Button>
          <p className="shop-paid" data-lg="shop-paid" />
