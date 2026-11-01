@@ -198,6 +198,20 @@
 .legends-world .supreme-path.focus .payline-run{animation:lg-supreme-trace .6s linear 3}
 @keyframes lg-supreme-trace{to{stroke-dashoffset:-30}}
 .legends-world .supreme-badge{color:var(--gold);font-family:var(--lg-display);font-size:16px;margin-block:14px;letter-spacing:0}
+.legends-world .supreme-player-title{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:10px 0 16px;color:var(--gold);font:400 16px/1.5 var(--lg-display);letter-spacing:0;text-align:center}
+.legends-world .supreme-player-title span{font-size:26px;line-height:1}
+.legends-world .supreme-player-title small{flex-basis:100%;font:10px/1.5 var(--font-body);color:var(--muted)}
+.legends-world .supreme-prize{padding-block:8px 20px}
+.legends-world .supreme-prize h3{font:400 19px/1.4 var(--lg-display);color:var(--gold);margin:10px 0}
+.legends-world .supreme-prize p{font-size:12px;line-height:1.7;color:var(--muted);margin:8px 0}
+.legends-world .supreme-prize .prize-status{color:var(--gold);font-size:10px;min-height:34px}
+.legends-world .prize-equip{width:100%;min-height:44px;height:auto;padding:10px;font-size:11px;white-space:normal;color:var(--gold);background:var(--surface);border:0;box-shadow:0 0 8px color-mix(in srgb,var(--gold) 25%,transparent)}
+.legends-world .prize-equip[aria-pressed='true']{background:var(--lg-gold);color:var(--bg)}
+.legends-world .supreme-prize small{display:block;color:var(--muted);font-size:10px;line-height:1.7;margin-top:10px}
+.legends-world.supreme-equipped .cabinet-inset{background:var(--surface);box-shadow:0 0 20px color-mix(in srgb,var(--gold) 45%,transparent),inset 0 0 14px color-mix(in srgb,var(--gold) 15%,transparent)}
+.legends-world.supreme-equipped .reel-headers{background:var(--lg-gold);background-clip:text;-webkit-background-clip:text;color:transparent}
+.legends-world.supreme-equipped .reel-window{box-shadow:0 0 0 1px var(--gold),0 0 10px color-mix(in srgb,var(--gold) 35%,transparent)}
+.legends-world.supreme-equipped .cabinet-tag{color:var(--gold);background:var(--surface)}
 .legends-world .win-overlay.is-supreme .win-overlay-core{width:min(940px,calc(100% - 32px))}
 .legends-world .win-overlay.is-supreme strong{font-size:64px;line-height:1.1;letter-spacing:0;overflow-wrap:normal;background:var(--lg-gold);background-clip:text;-webkit-background-clip:text}
 @media(max-width:620px){.legends-world .win-overlay.is-supreme strong{font-size:36px}.legends-world .win-overlay.is-supreme small{font-size:18px;letter-spacing:0}}

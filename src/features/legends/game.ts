@@ -10,6 +10,7 @@ import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 import {createPurchaseButton} from './purchase-button';
+import {renderSupremePrize} from './supreme-prize';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
@@ -25,6 +26,7 @@ const audio=new SynthSound(),confetti=new Confetti($('confetti')),paylines=new P
 let justFound=new Set<string>();
 let userId:string|null=null,loading=true,busy=false,userReducedMotion=respectsReduced.matches;
 let badges:string[]=[];
+let supremeLookEnabled=true;
 // Artists this player has swept: their collection card turns into a gold Legend card.
 let swept=new Set<string>();
 let xp=0,best=0,spinsTaken=0,collection:string[]=[],history:HistoryItem[]=[];
@@ -82,6 +84,7 @@ function refresh(animateFrom:number|null=null){
   $('best').textContent=best.toLocaleString();$('total-spins').textContent=spinsTaken.toLocaleString();
   renderBalance();renderCollection();renderHistory();buttonState();
   $('supreme-badge').hidden=!badges.includes('supreme-legends');
+  renderSupremePrize(root,badges,!!userId,supremeLookEnabled);
   $('shop-open').hidden=!userId;
 }
 /** Restart a one-shot CSS animation class. */
@@ -93,7 +96,7 @@ function setResult(title:string,description:string,kicker='NOW PLAYING'){
 /** Big-win banner and confetti; smaller wins are celebrated by the hit show alone. */
 function showWin(gained:number,{isMajor=false,unity=false,supreme=false,sweep=null as string|null}={}){
   const modal=$('win-overlay');$('overlay-title').textContent=sweep?'LEGEND SWEEP!':supreme?'SUPREME LEGENDARY!':unity?'SPC UNITY!':isMajor?'LEGENDARY!':'NICE MIX!';
-  $('overlay-text').textContent=sweep?`${SYMBOL_MAP[sweep]?.name} on all six reels • +${gained.toLocaleString()} VIRTUAL XP`:`+${gained.toLocaleString()} VIRTUAL XP`;
+  $('overlay-text').textContent=sweep?`${SYMBOL_MAP[sweep]?.name} on all six reels • +${gained.toLocaleString()} VIRTUAL XP`:supreme?`GOLD CABINET + PLAYER TITLE UNLOCKED • +${gained.toLocaleString()} VIRTUAL XP`:`+${gained.toLocaleString()} VIRTUAL XP`;
   // A sweep shows the artist's card in the banner, and the banner stays up longer.
   const art=$('overlay-art');art.hidden=!sweep;if(sweep)art.src=symbolUrl(sweep);
   modal.classList.toggle('is-supreme',supreme&&!sweep);modal.classList.toggle('is-sweep',!!sweep);
@@ -143,7 +146,7 @@ async function spin(){
       floatText($('board'),`+${outcome.xp.toLocaleString()} XP`,{reducedMotion:userReducedMotion});
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
       const top=outcome.wins.filter(w=>w.type!=='multiplier').sort((a,b)=>b.xp-a.xp)[0],lines=outcome.wins.filter(w=>w.type==='line').length;
-      const description=sweep?`${sweeps.map(id=>SYMBOL_MAP[id]?.name).join(' and ')} on all six reels! ${XP_TABLE.sweep.toLocaleString()} XP + a gold Legend card.`:supreme?`Six reels of Legends! ${XP_TABLE.supreme} base XP + Supreme Legendary badge.`:unity?'Six distinct SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
+      const description=sweep?`${sweeps.map(id=>SYMBOL_MAP[id]?.name).join(' and ')} on all six reels! ${XP_TABLE.sweep.toLocaleString()} XP + a gold Legend card.${supreme?' Supreme title + Gold Cabinet unlocked.':''}`:supreme?`Six reels of Legends! ${XP_TABLE.supreme} base XP + Supreme Legendary badge, player title and Gold Cabinet unlock.`:unity?'Six distinct SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
       setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
@@ -241,6 +244,7 @@ async function loadAccount(nextUser:string|null){
   const revision=++accountRevision;
   if(nextUser!==userId){
     pendingKey=null;
+    badges=[];supremeLookEnabled=true;
     void paypalButtons?.close?.().catch(()=>undefined);
     paypalButtons=null;buttonsShown=false;$('shop-paypal').replaceChildren();
     $('shop-retry').hidden=true;buyButton.setState('idle');
@@ -281,6 +285,7 @@ function populateLibrary(){
   }
 }
 $('spin').addEventListener('click',spin);
+$('prize-equip').addEventListener('click',()=>{if(!badges.includes('supreme-legends'))return;supremeLookEnabled=!supremeLookEnabled;renderSupremePrize(root,badges,!!userId,supremeLookEnabled);});
 $('shop-retry').addEventListener('click',()=>{const orderID=pendingOrder();if(orderID)void confirmPayment(orderID);});
 $('shop-open').addEventListener('click',()=>{
   if(buyButton.state()==='processing')return;
