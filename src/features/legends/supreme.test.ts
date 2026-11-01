@@ -25,12 +25,12 @@ test('each connecting path follows all six matching reels', () => {
   }
 });
 
-test('every one of the 729 six-reel artist paths wins Supreme once for 5000 base XP', () => {
+test('every one of the 729 six-reel artist paths wins Supreme once for its base XP', () => {
   for(let code=0;code<729;code++){
     let n=code;const board=quiet();const cells:string[]=[];
     for(let col=0;col<6;col++){const row=n%3;n=Math.floor(n/3);board[col][row]=ARTISTS[col].id;cells.push(`${col}:${row}`);}
     const outcome=evaluateBoard(board);
-    expect(outcome.wins.filter(w=>w.type==='supreme')).toEqual([{type:'supreme',count:6,xp:5000,cells}]);
+    expect(outcome.wins.filter(w=>w.type==='supreme')).toEqual([{type:'supreme',count:6,xp:XP_TABLE.supreme,cells}]);
     expect(outcome.hitCells).toEqual(expect.arrayContaining(cells));
     expect(serverEvaluate(board)).toEqual(outcome);
   }
@@ -38,7 +38,7 @@ test('every one of the 729 six-reel artist paths wins Supreme once for 5000 base
 
 test('repeated artists qualify, but wilds and music do not replace a missing reel Legend', () => {
   const board=quiet();board.forEach((col,i)=>col[i%3]='mr-cap');
-  expect(evaluateBoard(board).wins.find(w=>w.type==='supreme')?.xp).toBe(5000);
+  expect(evaluateBoard(board).wins.find(w=>w.type==='supreme')?.xp).toBe(XP_TABLE.supreme);
   board[5][2]='wild';expect(evaluateBoard(board).wins.some(w=>w.type==='supreme')).toBe(false);
   board[5][2]='legend';expect(evaluateBoard(board).wins.some(w=>w.type==='supreme')).toBe(false);
 });
@@ -64,7 +64,7 @@ test('existing Unity remains and multipliers include Supreme XP', () => {
   board[4][2]='double';board[5][2]='triple';
   const outcome=evaluateBoard(board);
   expect(outcome.wins.find(w=>w.type==='unity')?.xp).toBe(2000);
-  expect(outcome.baseXp).toBe(7000);expect(outcome.xp).toBe(42000);
+  expect(XP_TABLE.supreme).toBe(250);expect(outcome.baseXp).toBe(2250);expect(outcome.xp).toBe(13500);
   expect(outcome.wins.reduce((sum,w)=>sum+w.xp,0)).toBe(outcome.xp);
   expect(hitSchedule(outcome.wins)[0].win.type).toBe('supreme');
 });

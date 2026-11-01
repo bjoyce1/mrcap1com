@@ -40,6 +40,14 @@ export async function loadProfile(userId: string): Promise<Profile> {
   };
 }
 
+/** Artists this player has swept (same artist on all six reels), read from their own spin records. */
+export async function loadSweeps(): Promise<string[]> {
+  const { data, error } = await supabase.from("legends_spins").select("wins").contains("wins", [{ type: "sweep" }]);
+  if (error) throw error;
+  const swept = (data ?? []).flatMap((row) => ((row.wins as HistoryItem["wins"]) ?? []).filter((w) => w.type === "sweep").map((w) => w.symbol as string));
+  return [...new Set(swept)];
+}
+
 export async function loadHistory(): Promise<HistoryItem[]> {
   const { data, error } = await supabase.from("legends_spins").select("xp, wins").order("created_at", { ascending: false }).limit(6);
   if (error) throw error;

@@ -109,7 +109,7 @@ export class PaylineOverlay {
   }
   /** autoCycle=false draws the lines dim and waits for focus()/cycle(), so the hit show can lead. */
   show(wins:Win[],{reducedMotion=false,autoCycle=true}={}){
-    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='supreme');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
+    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='supreme'||w.type==='sweep');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
   }
   focus(win:Win){this.paths.forEach(p=>p.g.classList.toggle('focus',p.win===win));}
   cycle(){this.autoCycle=true;this.draw();}
@@ -124,8 +124,8 @@ export class PaylineOverlay {
       const keys=win.type!=='line'?win.cells:(PAYLINES[(win.payline??0)-1]??[]).map((row,col)=>`${col}:${row}`);
       const points=keys.map(centre);if(points.some(p=>!p))return null;
       const lit=win.type!=='line'?6:win.count;
-      const g=document.createElementNS(SVG,'g');g.setAttribute('class',win.type==='supreme'?'payline supreme-path':'payline');
-      g.style.setProperty('--line',win.type==='supreme'?'var(--gold)':win.type==='unity'?'#fff1c2':SYMBOL_MAP[win.symbol]?.color||'#ffd27a');
+      const g=document.createElementNS(SVG,'g');g.setAttribute('class',win.type==='sweep'?'payline supreme-path sweep-path':win.type==='supreme'?'payline supreme-path':'payline');
+      g.style.setProperty('--line',win.type==='sweep'?SYMBOL_MAP[win.symbol]?.color||'#ffd27a':win.type==='supreme'?'var(--gold)':win.type==='unity'?'#fff1c2':SYMBOL_MAP[win.symbol]?.color||'#ffd27a');
       // Faint guide across the full payline, bright stroke over the matched run, a node on each matched cell.
       const guide=document.createElementNS(SVG,'polyline');guide.setAttribute('class','payline-guide');guide.setAttribute('points',points.map(p=>p.join(',')).join(' '));
       const run=document.createElementNS(SVG,'polyline');run.setAttribute('class','payline-run');run.setAttribute('points',points.slice(0,lit).map(p=>p.join(',')).join(' '));
@@ -170,7 +170,7 @@ export class HitShow {
       const r=tile.getBoundingClientRect(),id=tile.dataset.symbol||'';
       const pop=document.createElement('div');
       const mult=step.win.type==='multiplier';
-      pop.className=`hit-pop${isArtist(id)?' is-char':''}${id==='wild'?' is-wild':''}${id==='bonus'?' is-bonus':''}${mult?' is-mult':''}`;
+      pop.className=`hit-pop${isArtist(id)?' is-char':''}${id==='wild'?' is-wild':''}${id==='bonus'?' is-bonus':''}${mult?' is-mult':''}${step.win.type==='sweep'?' is-sweep':''}`;
       pop.style.cssText=`left:${r.left-box.left}px;top:${r.top-box.top}px;width:${r.width}px;height:${r.height}px;--d:${cell.delay}ms;--sym:${SYMBOL_MAP[id]?.color||'#ffd27a'}`;
       pop.append(makeTile(id));
       // Multiplier finale: the tile flares and stamps its factor over the board.

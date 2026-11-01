@@ -203,3 +203,22 @@
 @media(max-width:620px){.legends-world .win-overlay.is-supreme strong{font-size:36px}.legends-world .win-overlay.is-supreme small{font-size:18px;letter-spacing:0}}
 @media(prefers-reduced-motion:reduce){.legends-world .supreme-path.focus .payline-run{animation:none}}
 .legends-world.reduce-motion .supreme-path.focus .payline-run{animation:none}
+
+/* ===== Legend Sweep: the same artist on all six reels (the jackpot) ===== */
+/* Gold Legend card: a swept artist's collection card gets a gold frame, a crown and a slow shine. */
+.legends-world .collection-tile.swept{border:2px solid #ffd76a;box-shadow:0 0 0 1px #6a3a0a,0 0 16px rgba(255,200,90,.7),inset 0 0 12px rgba(255,215,110,.45)}
+.legends-world .collection-tile.swept:before{content:'\265B';position:absolute;top:2px;right:4px;z-index:3;font-size:14px;line-height:1;color:#ffd76a;text-shadow:0 0 6px #ffb52e,0 1px 0 #3a1d05}
+.legends-world .collection-tile.swept img{filter:saturate(1.15) brightness(1.06)}
+.legends-world .collection-tile.swept:after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,240,190,.55) 50%,transparent 65%);transform:translateX(-120%);animation:lg-card-shine 4.5s ease-in-out 1s infinite}
+@keyframes lg-card-shine{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+/* The sweep's pop-out is bigger and gold, on top of the artist's own bob and rim light. */
+.legends-world .hit-pop.is-sweep{animation-name:lg-pop-sweep}
+.legends-world .hit-pop.is-sweep .symbol-tile{box-shadow:0 0 0 3px #ffd76a,0 0 36px 12px var(--sym),0 0 70px 18px rgba(255,200,90,.45),0 14px 30px rgba(0,0,0,.7)}
+@keyframes lg-pop-sweep{0%{transform:scale(1)}24%{transform:scale(1.5) translateY(-9%)}38%{transform:scale(1.3) translateY(-5%)}80%{transform:scale(1.3) translateY(-5%)}100%{transform:scale(1)}}
+.legends-world .sweep-path .payline-run{stroke-width:7}
+/* Sweep banner: the artist's card above the words, held longer than other wins. */
+.legends-world .overlay-art{display:block;width:clamp(120px,22vw,220px);height:auto;margin:0 auto 14px;border-radius:14px;border:3px solid #ffd76a;box-shadow:0 0 0 2px #6a3a0a,0 0 40px rgba(255,200,90,.8);animation:lg-art-in .7s cubic-bezier(.2,1.4,.35,1) both}
+@keyframes lg-art-in{from{opacity:0;transform:scale(.4) rotate(-8deg)}to{opacity:1;transform:none}}
+.legends-world .win-overlay.is-sweep .win-overlay-core{width:min(940px,calc(100% - 32px))}
+.legends-world .win-overlay.is-sweep strong{font-size:clamp(44px,8vw,96px);line-height:1.05;background:var(--lg-gold);-webkit-background-clip:text;background-clip:text}
+.legends-world .win-overlay.is-sweep small{font-size:clamp(14px,2vw,22px);letter-spacing:.08em}
