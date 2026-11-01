@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Disc3, X } from "lucide-react";
 
@@ -8,6 +8,29 @@ const AnnouncementStrip = () => {
   const [dismissed, setDismissed] = useState(
     () => sessionStorage.getItem(STORAGE_KEY) === "true"
   );
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  // Pin the strip above the fixed header by publishing its height as a CSS
+  // variable; the header offsets itself with it and resets when it unmounts.
+  useEffect(() => {
+    if (dismissed) return;
+    const strip = stripRef.current;
+    if (!strip) return;
+
+    const publish = () =>
+      document.documentElement.style.setProperty(
+        "--announcement-offset",
+        `${strip.offsetHeight}px`
+      );
+    publish();
+
+    const observer = new ResizeObserver(publish);
+    observer.observe(strip);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.setProperty("--announcement-offset", "0px");
+    };
+  }, [dismissed]);
 
   if (dismissed) return null;
 
@@ -17,7 +40,10 @@ const AnnouncementStrip = () => {
   };
 
   return (
-    <div className="relative z-50 bg-primary/10 border-b border-primary/20 backdrop-blur-sm overflow-hidden">
+    <div
+      ref={stripRef}
+      className="fixed top-0 left-0 right-0 z-[60] bg-primary/10 border-b border-primary/20 backdrop-blur-sm overflow-hidden"
+    >
       {/* Slow horizontal shimmer */}
       <div
         className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-[announcement-shimmer_8s_linear_infinite]"
