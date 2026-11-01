@@ -5,7 +5,10 @@ import {ARTISTS,MUSIC,SPECIAL,SYMBOL_MAP,XP_TABLE} from './config';
 import {createBoard,anticipationReels} from './engine';
 import {activePool,totalSpins,type Balance} from './balance';
 import {loadProfile,loadHistory,loadSweeps,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem} from './account';
-import {renderBoard,animateReels,animateCounter,Confetti,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl} from './motion';
+import {renderBoard,animateReels,animateCounter,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl,type Tease} from './motion';
+import {BigWin} from './bigwin';
+import {buildMarquee,attractMode} from './cabinet';
+import {sweepTease,tiersFor} from './fx';
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
@@ -21,7 +24,8 @@ export function mountLegendsGame(root:HTMLElement){
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- ported DOM code; each data-lg element has its own type
 const $=(id:string):any=>root.querySelector(`[data-lg="${id}"]`);
 const respectsReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
-const audio=new SynthSound(),confetti=new Confetti($('confetti')),paylines=new PaylineOverlay($('board')),hits=new HitShow($('board')),reelControl:ReelControl={};
+const audio=new SynthSound(),paylines=new PaylineOverlay($('board')),hits=new HitShow($('board')),reelControl:ReelControl={};
+const bigWin=new BigWin(root,audio),removeMarquee=buildMarquee(root.querySelector('.machine-shell') as HTMLElement);
 // Artists collected on the latest spin get a card flip in the collection panel.
 let justFound=new Set<string>();
 let userId:string|null=null,loading=true,busy=false,userReducedMotion=respectsReduced.matches;
@@ -42,6 +46,7 @@ function storeOrder(orderID:string|null){try{if(userId){if(orderID)localStorage.
 // The spin store's pill-to-circle control; it only mirrors real checkout states.
 const buyButton=createPurchaseButton($('shop-open'),{reducedMotion:()=>userReducedMotion});
 const motionButton=$('motion');
+const attract=attractMode(root,{isBusy:()=>busy,reduced:()=>userReducedMotion});
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
 // While reels move the spin button becomes a stop button; it only shortens the animation, never the outcome.
@@ -93,15 +98,9 @@ function setResult(title:string,description:string,kicker='NOW PLAYING'){
   const result=$('result');$('result-title').textContent=title;$('result-desc').textContent=description;result.querySelector('.result-kicker').textContent=kicker;
   result.classList.remove('swap');void result.offsetWidth;result.classList.add('swap');
 }
-/** Big-win banner and confetti; smaller wins are celebrated by the hit show alone. */
-function showWin(gained:number,{isMajor=false,unity=false,supreme=false,sweep=null as string|null}={}){
-  const modal=$('win-overlay');$('overlay-title').textContent=sweep?'LEGEND SWEEP!':supreme?'SUPREME LEGENDARY!':unity?'SPC UNITY!':isMajor?'LEGENDARY!':'NICE MIX!';
-  $('overlay-text').textContent=sweep?`${SYMBOL_MAP[sweep]?.name} on all six reels • +${gained.toLocaleString()} VIRTUAL XP`:supreme?`GOLD CABINET + PLAYER TITLE UNLOCKED • +${gained.toLocaleString()} VIRTUAL XP`:`+${gained.toLocaleString()} VIRTUAL XP`;
-  // A sweep shows the artist's card in the banner, and the banner stays up longer.
-  const art=$('overlay-art');art.hidden=!sweep;if(sweep)art.src=symbolUrl(sweep);
-  modal.classList.toggle('is-supreme',supreme&&!sweep);modal.classList.toggle('is-sweep',!!sweep);
-  if(!userReducedMotion){modal.classList.add('visible');confetti.burst({major:isMajor});setTimeout(()=>modal.classList.remove('visible'),sweep?3200:isMajor?1400:950);}
-}
+/** Marquee bulbs flash together for a moment after a win. */
+let winningTimer=0;
+function flashMarquee(ms:number){root.classList.add('lg-winning');clearTimeout(winningTimer);winningTimer=window.setTimeout(()=>root.classList.remove('lg-winning'),ms);}
 const wait=(ms:number)=>new Promise(resolve=>setTimeout(resolve,ms));
 
 async function spin(){
@@ -110,7 +109,7 @@ async function spin(){
   if(confirmingPayment)return;
   const player=userId;
   if(userId&&totalSpins(balance)<=0){openShop(true);return;}
-  busy=true;buttonState();paylines.clear();hits.clear();$('spin').classList.add('is-spinning');
+  busy=true;buttonState();paylines.clear();hits.clear();bigWin.close();attract.poke();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
   try{
@@ -126,21 +125,34 @@ async function spin(){
     if(unmounted||userId!==player)return;
     pendingKey=null;
     const target=answer.board,prior=activeBoard,outcome=answer.outcome;
-    await animateReels($('reels'),prior,target,{reducedMotion:userReducedMotion,anticipate:anticipationReels(target),control:reelControl,onReady:buttonState,onStop:i=>audio.stop(i),onAnticipate:()=>{audio.tease();setResult('TWO 713s LANDED…','One more 713 anywhere unlocks the Houston bonus.','HOLD UP');}});
+    // Teases only lengthen and light reels that have not landed yet; the board above is already decided.
+    const bonusTease=anticipationReels(target),sweepHint=sweepTease(target);
+    const anticipate:Tease[]=target.map((_,i)=>sweepHint.reels[i]?'sweep':bonusTease[i]?'bonus':false);
+    await animateReels($('reels'),prior,target,{reducedMotion:userReducedMotion,anticipate,teaseColor:sweepHint.artist?SYMBOL_MAP[sweepHint.artist]?.color:'',control:reelControl,onReady:buttonState,onStop:i=>audio.stop(i),onAnticipate:kind=>{
+      audio.tease();
+      if(kind==='sweep')setResult('LEGEND SWEEP INCOMING…',`${SYMBOL_MAP[sweepHint.artist as string]?.name} has landed on every reel so far.`,'HOLD UP');
+      else setResult('TWO 713s LANDED…','One more 713 anywhere unlocks the Houston bonus.','HOLD UP');
+    }});
+    root.classList.remove('lg-spinning');
     if(unmounted||userId!==player)return;
     const oldXP=xp;
     xp+=outcome.xp;best=Math.max(best,outcome.xp);spinsTaken+=1;activeBoard=target;balance=answer.balance;
     collection=[...new Set([...collection,...answer.newCharacters])];
     history=[{xp:outcome.xp,wins:outcome.wins},...history].slice(0,6);
     const sweeps=outcome.wins.filter(w=>w.type==='sweep').map(w=>w.symbol as string),sweep=sweeps[0]??null;
-    const supreme=outcome.wins.some(w=>w.type==='supreme'),unity=outcome.wins.some(w=>w.type==='unity'),isMajor=!!sweep||supreme||unity||outcome.highest>=500;
+    const supreme=outcome.wins.some(w=>w.type==='supreme'),unity=outcome.wins.some(w=>w.type==='unity'),isMajor=!!sweep||unity||tiersFor(outcome.xp).length>0;
     sweeps.forEach(id=>swept.add(id));if(sweep&&!badges.includes('legend-sweep'))badges.push('legend-sweep');
     if(supreme&&!badges.includes('supreme-legends'))badges.push('supreme-legends');
     justFound=new Set(answer.newCharacters);
     renderBoard($('reels'),target,outcome.hitCells);
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
     paylines.show(outcome.wins,{reducedMotion:userReducedMotion,autoCycle:false});
-    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{paylines.cycle();if(isMajor)showWin(outcome.xp,{isMajor,unity,supreme,sweep});}});
+    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{
+      paylines.cycle();
+      // Big Win show for 500+ XP, SPC Unity and every Legend Sweep (all of those reach a tier).
+      void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',reducedMotion:userReducedMotion});
+    }});
+    if(outcome.xp>0)flashMarquee(isMajor?3200:1400);
     const fresh=answer.newCharacters.length;
     if(outcome.xp>0){
       floatText($('board'),`+${outcome.xp.toLocaleString()} XP`,{reducedMotion:userReducedMotion});
@@ -156,7 +168,7 @@ async function spin(){
     refresh(oldXP);
     if(userId&&!totalSpins(balance))openShop(true);
   }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
-  finally{busy=false;$('spin').classList.remove('is-spinning');buttonState();}
+  finally{busy=false;$('spin').classList.remove('is-spinning');root.classList.remove('lg-spinning');attract.poke();buttonState();}
 }
 
 // ----- Spin packs: $1 for 25 spins through the site's PayPal account -----
@@ -307,7 +319,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;subscription.unsubscribe();buyButton.destroy();
+  unmounted=true;subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();clearTimeout(winningTimer);
   void paypalButtons?.close?.().catch(()=>undefined);
   respectsReduced.removeEventListener?.('change',onReducedChange);
   document.removeEventListener('visibilitychange',onVisible);

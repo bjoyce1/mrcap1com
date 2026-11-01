@@ -9,8 +9,9 @@ import rapperKAsset from '@/assets/legends/rapper-k.asset.json';
 export type ReelControl={skip?:(()=>void)|null};
 /** The parts of an engine win the overlay draws. */
 export type Win={type:string;payline?:number;count?:number;symbol?:string;cells:string[]};
-type ReelOptions={reducedMotion?:boolean;anticipate?:boolean[];control?:ReelControl;onReady?:()=>void;onStop?:(reel:number)=>void;onAnticipate?:()=>void};
-type Particle={x:number;y:number;vx:number;vy:number;age:number;life:number;size:number;rot:number;color:string};
+/** Per reel: false, or which tease lengthens and lights it ('bonus': two 713s landed; 'sweep': one artist on every reel so far). */
+export type Tease=false|'bonus'|'sweep';
+type ReelOptions={reducedMotion?:boolean;anticipate?:(Tease|boolean)[];teaseColor?:string;control?:ReelControl;onReady?:()=>void;onStop?:(reel:number)=>void;onAnticipate?:(kind:Tease)=>void};
 const uploadedSymbols:Record<string,string>={'murder-one':murderOneAsset.url,'rapper-k':rapperKAsset.url};
 export const symbolUrl=(id:string)=>uploadedSymbols[id]??`/games/spc-legends/symbols/${id}.webp`;
 /** Reel motor: GPU-accelerated symbol strips. Resolves only after the six staggered reels settle. */
@@ -39,7 +40,7 @@ const BASE=820,STAGGER=170,TEASE=700,MS_PER_TILE=62;
 /** Spin all six reels to `target`. `control.skip()` (set while running) slams every reel to its final stop.
  * `anticipate[i]` only lengthens reel i's spin and lights it; it never changes which symbols land.
  */
-export async function animateReels(container:HTMLElement,previous:string[][],target:string[][],{reducedMotion=false,anticipate=[],control={},onReady=()=>{},onStop=()=>{},onAnticipate=()=>{}}:ReelOptions={}){
+export async function animateReels(container:HTMLElement,previous:string[][],target:string[][],{reducedMotion=false,anticipate=[],teaseColor='',control={},onReady=()=>{},onStop=()=>{},onAnticipate=()=>{}}:ReelOptions={}){
   if(reducedMotion){renderBoard(container,target);for(let i=0;i<6;i++)onStop(i);return;}
   container.setAttribute('aria-busy','true');
   container.classList.remove('has-wins');
@@ -58,7 +59,9 @@ export async function animateReels(container:HTMLElement,previous:string[][],tar
     const fillers=Math.max(6,Math.round(duration/MS_PER_TILE));
     const filler=[];while(filler.length<fillers)filler.push(...createBoard()[0]);
     track.append(...(previous[col]||createBoard()[col]).map(id=>makeTile(id)),...filler.slice(0,fillers).map(id=>makeTile(id,{filler:true})),...target[col].map(id=>makeTile(id)));
-    reel.append(track);container.append(reel);
+    // A light streak runs down the reel while it spins (transform only, so it costs nothing per frame).
+    const streak=document.createElement('span');streak.className='reel-streak';streak.setAttribute('aria-hidden','true');
+    reel.append(track,streak);container.append(reel);
     reels.push({reel,track,col,duration,fillers,stopped:false});
   }
   // Wait for layout; calculate step from actual tile geometry for any responsive viewport.
@@ -85,16 +88,30 @@ export async function animateReels(container:HTMLElement,previous:string[][],tar
     // Swap the long strip for exactly three final tiles so the settled reel is cheap to composite.
     track.replaceChildren(...target[col].map(id=>makeTile(id)));
     item.stopped=true;
-    reel.classList.remove('spinning','anticipate');
+    reel.classList.remove('spinning','anticipate','sweep-tease');reel.querySelector('.reel-streak')?.remove();
     reel.classList.add('settle');
+    // Impact: the reel squashes and rebounds as it lands and throws sparks from its base.
+    reel.animate([{transform:'translate3d(0,6px,0) scaleY(.97)'},{transform:'translate3d(0,-2px,0)'},{transform:'none'}],{duration:280,easing:'cubic-bezier(.2,1.4,.4,1)'});
+    stopSparks(reel);
     onStop(col);
     const teasing=reels.filter(r=>!r.stopped&&anticipate[r.col]);
-    if(teasing.length&&!teasing.some(r=>r.reel.classList.contains('anticipate'))){teasing.forEach(r=>r.reel.classList.add('anticipate'));onAnticipate();}
+    if(teasing.length&&!teasing.some(r=>r.reel.classList.contains('anticipate'))){
+      teasing.forEach(r=>{r.reel.classList.add('anticipate');if(anticipate[r.col]==='sweep'){r.reel.classList.add('sweep-tease');r.reel.style.setProperty('--tease',teaseColor||'#ffd27a');}});
+      const kind=anticipate[teasing[0].col];onAnticipate(kind==='sweep'?'sweep':'bonus');
+    }
     setTimeout(()=>reel.classList.remove('settle'),450);
   });
   try{await Promise.all(tasks);}
   finally{removeEventListener('resize',onResize);control.skip=null;}
   container.removeAttribute('aria-busy');
+}
+/** Six gold sparks kicked up from the base of a reel as it lands. */
+function stopSparks(reel:HTMLElement){
+  for(let i=0;i<6;i++){
+    const spark=document.createElement('i');spark.className='stop-spark';spark.setAttribute('aria-hidden','true');
+    spark.style.setProperty('--dx',`${(Math.random()-.5)*70}px`);spark.style.setProperty('--dy',`${-18-Math.random()*40}px`);
+    reel.append(spark);spark.addEventListener('animationend',()=>spark.remove(),{once:true});
+  }
 }
 const SVG='http://www.w3.org/2000/svg';
 /** Draw winning paylines over the board. Lines take turns being emphasised unless motion is reduced. */
@@ -132,6 +149,15 @@ export class PaylineOverlay {
       // A thin white core keeps the line readable over tiles that share its colour.
       const core=run.cloneNode() as SVGPolylineElement;core.setAttribute('class','payline-core');
       g.append(guide,run,core);
+      // A comet races along the matched run while this line is in focus.
+      if(!this.reducedMotion&&lit>=2){
+        const d='M'+points.slice(0,lit).map(p=>p.join(' ')).join(' L');
+        for(const [cls,r] of [['payline-comet-halo',11],['payline-comet',5]] as const){
+          const c=document.createElementNS(SVG,'circle');c.setAttribute('class',cls);c.setAttribute('r',String(r));
+          const motion=document.createElementNS(SVG,'animateMotion');motion.setAttribute('path',d);motion.setAttribute('dur','1.1s');motion.setAttribute('repeatCount','indefinite');
+          c.append(motion);g.append(c);
+        }
+      }
       for(const [x,y] of points.slice(0,lit)){const dot=document.createElementNS(SVG,'circle');dot.setAttribute('cx',String(x));dot.setAttribute('cy',String(y));dot.setAttribute('r',String(Math.max(3,box.width/180)));dot.setAttribute('class','payline-node');g.append(dot);}
       this.svg.append(g);this.paths.push({win,g});return g;
     }).filter(Boolean);
@@ -199,35 +225,6 @@ export function animateCounter(el,from,to,{duration=650,reducedMotion=false}={})
     if(t<1)requestAnimationFrame(run);
   };requestAnimationFrame(run);
 }
-export class Confetti {
-  canvas:HTMLCanvasElement;ctx:CanvasRenderingContext2D|null;raf:number|null;particles:Particle[];
-  constructor(canvas:HTMLCanvasElement){this.canvas=canvas;this.ctx=canvas.getContext('2d');this.raf=null;this.particles=[];}
-  burst({reducedMotion=false,major=false}={}){
-    if(reducedMotion||!this.ctx)return;
-    cancelAnimationFrame(this.raf);
-    const rect=this.canvas.getBoundingClientRect();const dpr=Math.min(2,devicePixelRatio||1);
-    this.canvas.width=Math.round(rect.width*dpr);this.canvas.height=Math.round(rect.height*dpr);
-    const width=rect.width,height=rect.height,ctx=this.ctx;
-    const colors=['#fbc66d','#ff57b7','#12caff','#9f5bff','#fff','#4ffab3'];
-    // Fewer particles on small screens keeps the burst smooth on phones.
-    const count=Math.round((major?135:55)*(width<620?.6:1));
-    this.particles=Array.from({length:count},()=>({x:width/2+(Math.random()-.5)*100,y:height*.38,vx:(Math.random()-.5)*9,vy:-Math.random()*8-1,age:0,life:70+Math.random()*60,size:2+Math.random()*6,rot:Math.random()*6.28,color:colors[Math.floor(Math.random()*colors.length)]}));
-    let last=performance.now();
-    const loop=now=>{
-      // Advance by elapsed frames so the burst runs at the same pace on 60Hz and 120Hz displays.
-      const k=Math.min(3,(now-last)/16.67);last=now;
-      ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-      for(const p of this.particles){
-        p.age+=k;p.x+=p.vx*k;p.y+=p.vy*k;p.vy+=.16*k;p.vx*=Math.pow(.995,k);p.rot+=.08*k;
-        const c=Math.cos(p.rot)*dpr,s=Math.sin(p.rot)*dpr;
-        ctx.setTransform(c,s,-s,c,p.x*dpr,p.y*dpr);ctx.globalAlpha=Math.max(0,1-p.age/p.life);ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size/3,p.size,p.size*.6);
-      }
-      ctx.globalAlpha=1;
-      this.particles=this.particles.filter(p=>p.age<p.life&&p.y<height+50);
-      if(this.particles.length)this.raf=requestAnimationFrame(loop);else{ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,this.canvas.width,this.canvas.height);}
-    };this.raf=requestAnimationFrame(loop);
-  }
-}
 export class SynthSound {
   enabled:boolean;ctx:AudioContext|null;
   constructor(){this.enabled=false;this.ctx=null;}
@@ -240,7 +237,33 @@ export class SynthSound {
     vol.gain.exponentialRampToValueAtTime(.0001,t+duration);
     osc.connect(vol);vol.connect(this.ctx.destination);osc.start(t);osc.stop(t+duration+.015);
   }
-  stop(n){this.tone(260+n*73,.09,{wave:'triangle',gain:.025});}
-  tease(){[440,554,659].forEach((note,i)=>this.tone(note,.16,{wave:'sine',gain:.02,delay:i*.07}));}
+  /** A short pitch-dropping bass hit, the "thump" of a reel landing. */
+  thump(){
+    if(!this.enabled||!this.ctx)return;
+    const t=this.ctx.currentTime,osc=this.ctx.createOscillator(),vol=this.ctx.createGain();
+    osc.type='sine';osc.frequency.setValueAtTime(130,t);osc.frequency.exponentialRampToValueAtTime(48,t+.14);
+    vol.gain.setValueAtTime(.09,t);vol.gain.exponentialRampToValueAtTime(.0001,t+.18);
+    osc.connect(vol);vol.connect(this.ctx.destination);osc.start(t);osc.stop(t+.2);
+  }
+  stop(n){this.thump();this.tone(260+n*73,.09,{wave:'triangle',gain:.022});this.feel(12);}
+  /** A filtered rising sweep under an anticipation tease. */
+  riser(seconds=.9){
+    if(!this.enabled||!this.ctx)return;
+    const t=this.ctx.currentTime,osc=this.ctx.createOscillator(),filter=this.ctx.createBiquadFilter(),vol=this.ctx.createGain();
+    osc.type='sawtooth';osc.frequency.setValueAtTime(180,t);osc.frequency.exponentialRampToValueAtTime(880,t+seconds);
+    filter.type='lowpass';filter.frequency.setValueAtTime(600,t);filter.frequency.exponentialRampToValueAtTime(3200,t+seconds);
+    vol.gain.setValueAtTime(0,t);vol.gain.linearRampToValueAtTime(.022,t+seconds*.8);vol.gain.exponentialRampToValueAtTime(.0001,t+seconds+.1);
+    osc.connect(filter);filter.connect(vol);vol.connect(this.ctx.destination);osc.start(t);osc.stop(t+seconds+.15);
+  }
+  /** The Big Win count-up tick. */
+  tick(){this.tone(1100+Math.random()*300,.025,{wave:'square',gain:.006});}
+  /** Tier stinger: a bigger chord for each tier (1 BIG, 2 MEGA, 3 LEGENDARY). */
+  tier(level:number){
+    const chords=[[523,659,784],[587,740,880,1175],[523,659,784,1047,1319,1568]];
+    this.thump();(chords[level-1]??chords[0]).forEach((note,i)=>this.tone(note,.45,{wave:'triangle',gain:.03,delay:i*.06}));
+  }
+  /** Phone vibration, only while sound is on (the same switch means "sound and feel"). */
+  feel(pattern:number|number[]){if(this.enabled)try{navigator.vibrate?.(pattern);}catch{/* not supported */}}
+  tease(){[440,554,659].forEach((note,i)=>this.tone(note,.16,{wave:'sine',gain:.02,delay:i*.07}));this.riser();}
   win(major=false){const notes=major?[392,523,659,784,988]:[392,494,587];notes.forEach((note,i)=>this.tone(note,.25,{wave:'triangle',gain:.033,delay:i*.08}));}
 }

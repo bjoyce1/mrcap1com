@@ -101,8 +101,6 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="library-group"><div className="lg-label">MUSIC &amp; HOUSTON SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-music" /></div>
       </section>
       
-      <canvas data-lg="confetti" className="confetti" aria-hidden="true"></canvas>
-      <div data-lg="win-overlay" className="win-overlay" aria-hidden="true"><div className="win-overlay-core"><img data-lg="overlay-art" className="overlay-art" alt="" hidden /><span>SPC LEGENDS</span><strong data-lg="overlay-title">LEGENDARY!</strong><small data-lg="overlay-text">+500 LEGENDS XP</small></div></div>
     </div>
   );
 });

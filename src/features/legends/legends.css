@@ -236,3 +236,64 @@
 .legends-world .win-overlay.is-sweep .win-overlay-core{width:min(940px,calc(100% - 32px))}
 .legends-world .win-overlay.is-sweep strong{font-size:clamp(44px,8vw,96px);line-height:1.05;background:var(--lg-gold);-webkit-background-clip:text;background-clip:text}
 .legends-world .win-overlay.is-sweep small{font-size:clamp(14px,2vw,22px);letter-spacing:.08em}
+
+/* ===== High-level motion pass (2026-11-01). Every animation is transform or opacity only. ===== */
+
+/* Marquee bulbs along the top and bottom of the machine: a slow chase at rest, racing while the reels spin,
+   all flashing together after a win. */
+.legends-world .machine-shell{position:relative}
+.legends-world .marquee{display:flex;justify-content:space-between;gap:4px;padding:0 10px;height:12px;align-items:center}
+.legends-world .marquee.is-top{margin:-6px 0 8px}
+.legends-world .marquee.is-bottom{margin:10px 0 -6px}
+.legends-world .marquee i{display:block;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffbe6,#ffd76a 45%,#b26b12);box-shadow:0 0 6px 2px rgba(255,200,90,.75);opacity:.25;animation:lg-bulb 2.4s linear infinite;animation-delay:calc(var(--i) * -.085s)}
+@keyframes lg-bulb{0%,100%{opacity:.22}8%{opacity:1}24%{opacity:.22}}
+.legends-world.lg-spinning .marquee i{animation-duration:.8s;animation-delay:calc(var(--i) * -.028s)}
+.legends-world.lg-winning .marquee i{animation:lg-bulb-flash .32s steps(2,jump-none) infinite;animation-delay:0s}
+.legends-world.lg-winning .marquee i:nth-child(odd){animation-delay:-.16s}
+@keyframes lg-bulb-flash{0%{opacity:1}100%{opacity:.25}}
+@media(max-width:620px){.legends-world .marquee i:nth-child(n+19){display:none}.legends-world .marquee i{width:6px;height:6px}}
+
+/* Attract mode: idle tiles catch a passing glint, and the spin button breathes. */
+.legends-world .symbol-tile.glint:after{content:'';position:absolute;inset:-60%;z-index:3;pointer-events:none;background:linear-gradient(110deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);transform:translateX(-70%) rotate(18deg);animation:lg-glint 1.05s ease-out forwards}
+@keyframes lg-glint{to{transform:translateX(70%) rotate(18deg)}}
+.legends-world .spin-button.attract{animation:lg-breathe 1.8s ease-in-out infinite}
+@keyframes lg-breathe{50%{box-shadow:0 5px 0 #6a3a0a,0 0 46px rgba(255,200,90,.75),inset 0 1px 0 #fff}}
+
+/* Reels: a light streak runs down each spinning reel; landing kicks up gold sparks. */
+.legends-world .reel-streak{position:absolute;left:0;right:0;top:-40%;height:40%;z-index:4;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(255,240,200,.16) 45%,rgba(255,255,255,.32) 50%,rgba(255,240,200,.16) 55%,transparent);animation:lg-streak .28s linear infinite}
+@keyframes lg-streak{to{transform:translate3d(0,350%,0)}}
+.legends-world .stop-spark{position:absolute;left:50%;bottom:4px;z-index:5;width:5px;height:5px;margin-left:-2px;border-radius:1px;background:#fff1c2;box-shadow:0 0 6px #ffcf6b,0 0 12px #ff9f1c;pointer-events:none;animation:lg-stop-spark .5s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes lg-stop-spark{0%{opacity:1;transform:translate(0,0) rotate(45deg) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(45deg) scale(.3)}}
+/* Legend Sweep tease: the waiting reels glow in that artist's colour. */
+.legends-world .reel-window.sweep-tease{box-shadow:0 0 0 2px var(--tease),0 0 26px 6px var(--tease)}
+.legends-world .reel-window.sweep-tease:after{background:linear-gradient(180deg,color-mix(in srgb,var(--tease) 45%,transparent),transparent 30%,transparent 70%,color-mix(in srgb,var(--tease) 45%,transparent))}
+
+/* Payline comets: a bright head with a soft halo, shown only on the line in focus. */
+.legends-world .payline-comet,.legends-world .payline-comet-halo{opacity:0;transition:opacity .2s}
+.legends-world .payline-comet{fill:#fff}
+.legends-world .payline-comet-halo{fill:var(--line)}
+.legends-world .payline.focus .payline-comet{opacity:1}
+.legends-world .payline.focus .payline-comet-halo{opacity:.45}
+
+/* ===== Big Win show ===== */
+.legends-world .bigwin{position:fixed;inset:0;z-index:95;display:grid;place-items:center;overflow:hidden;cursor:pointer;opacity:0;transition:opacity .3s ease;background:radial-gradient(ellipse at center,rgba(40,10,60,.55),rgba(3,1,8,.92) 70%)}
+.legends-world .bigwin[hidden]{display:none}
+.legends-world .bigwin.is-open{opacity:1}
+.legends-world .bigwin-rays{position:absolute;left:50%;top:50%;width:160vmax;height:160vmax;margin:-80vmax 0 0 -80vmax;background:repeating-conic-gradient(rgba(255,200,90,.16) 0 6deg,transparent 6deg 18deg);-webkit-mask:radial-gradient(closest-side,#000 20%,transparent 75%);mask:radial-gradient(closest-side,#000 20%,transparent 75%);animation:lg-rays-spin 18s linear infinite}
+.legends-world .bigwin[data-level="2"] .bigwin-rays{background:repeating-conic-gradient(rgba(255,79,216,.18) 0 6deg,transparent 6deg 18deg);animation-duration:11s}
+.legends-world .bigwin[data-level="3"] .bigwin-rays{background:repeating-conic-gradient(rgba(255,215,110,.28) 0 7deg,transparent 7deg 15deg);animation-duration:6s}
+@keyframes lg-rays-spin{to{transform:rotate(360deg)}}
+.legends-world .bigwin-coins{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.legends-world .bigwin-core{position:relative;display:grid;justify-items:center;gap:6px;padding:0 16px;text-align:center;transform:scale(.7);transition:transform .45s cubic-bezier(.2,1.5,.35,1)}
+.legends-world .bigwin.is-open .bigwin-core{transform:none}
+.legends-world .bigwin-art{width:clamp(110px,20vw,200px);height:auto;border-radius:14px;border:3px solid #ffd76a;box-shadow:0 0 0 2px #6a3a0a,0 0 40px rgba(255,200,90,.8);animation:lg-art-in .7s cubic-bezier(.2,1.4,.35,1) both}
+.legends-world .bigwin-art[hidden]{display:none}
+.legends-world .bigwin-kicker{font:400 clamp(13px,2vw,20px)/1 var(--lg-display);letter-spacing:.24em;color:#f3dfae;text-shadow:0 0 12px rgba(255,190,80,.6)}
+.legends-world .bigwin-kicker:empty{display:none}
+.legends-world .bigwin-tier{font:400 clamp(46px,10vw,120px)/1 var(--lg-display);background:var(--lg-chrome);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:2px #e9b24a;filter:drop-shadow(0 5px 0 #3a1d05) drop-shadow(0 0 30px rgba(255,190,80,.55));min-height:1em}
+.legends-world .bigwin[data-level="2"] .bigwin-tier{-webkit-text-stroke-color:#ff4fd8;filter:drop-shadow(0 5px 0 #3a0a2e) drop-shadow(0 0 34px rgba(255,79,216,.65))}
+.legends-world .bigwin[data-level="3"] .bigwin-tier{background:var(--lg-gold);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke-color:#fff1c2;filter:drop-shadow(0 6px 0 #3a1d05) drop-shadow(0 0 44px rgba(255,200,90,.9))}
+.legends-world .bigwin-tier.slam{animation:lg-slam .55s cubic-bezier(.2,1.6,.35,1)}
+@keyframes lg-slam{0%{transform:scale(2.4) rotate(-6deg);opacity:0}45%{transform:scale(.9) rotate(1deg);opacity:1}70%{transform:scale(1.06)}100%{transform:none}}
+.legends-world .bigwin-amount{font:400 clamp(36px,7vw,84px)/1 var(--lg-display);font-variant-numeric:tabular-nums;background:var(--lg-gold);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.5px #5a3207;filter:drop-shadow(0 4px 0 #2a1402) drop-shadow(0 0 20px rgba(255,180,60,.6))}
+.legends-world .bigwin-sub{font:400 12px/1 var(--lg-display);letter-spacing:.24em;color:#c9b8d6}
