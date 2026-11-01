@@ -35,7 +35,7 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
        <h1 className="hero-title"><span className="lg-wordmark"><img src={wordmarkComplete} alt="SPC Legends" width={1536} height={512} /></span></h1>
        <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
-       <p className="hero-copy">Eight legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
+       <p className="hero-copy">{ARTISTS.length} legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
        <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> {PAYLINES.length} PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
       </section>
       <section className="lg-container game-layout" data-lg="game" aria-label="SPC Legends game">
@@ -95,7 +95,7 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><p data-lg="supreme-badge" className="supreme-badge" hidden>✦ SUPREME LEGENDARY</p><div className="supreme-prize"><span className="section-label">SUPREME REWARD</span><h3>THE GOLD CABINET</h3><p>Exclusive gold reel trim and a crowned Supreme Legendary player title.</p><p className="prize-status" data-lg="prize-status" aria-live="polite">LOCKED · WIN SUPREME LEGENDARY</p><Button type="button" variant="secondary" className="prize-equip" data-lg="prize-equip" aria-pressed="false" disabled>LOCKED</Button><small>Cosmetic reward only. No cash value or extra spins.</small></div><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/{ARTISTS.length}</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong data-lg="mode">Guest</strong></div><p className="panel-note">Sign in and your spins, XP and collection are saved to your account.</p></div>
       </section>
       <section className="lg-container symbol-library">
-        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>Eight artist legends, four special symbols, eight music and Houston symbols</p></div>
+        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>{ARTISTS.length} artist legends, four special symbols, eight music and Houston symbols</p></div>
         <div className="library-group"><div className="lg-label">CHARACTER SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-characters" /></div>
         <div className="library-group"><div className="lg-label">SPECIAL SYMBOLS</div><div className="library-grid is-four" data-lg="lib-special" /></div>
         <div className="library-group"><div className="lg-label">MUSIC &amp; HOUSTON SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-music" /></div>

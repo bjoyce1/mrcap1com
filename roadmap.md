@@ -13,6 +13,7 @@
 
 # SPC Legends roster additions
 
+- [ ] Update all ten character portraits and add Komodo DBX and Ganxsta Nip to guest and account play, then verify artwork and roster parity.
 - [x] Add Murder One and Rapper K artwork to guest and server spins, collection and library, and verify gameplay.
 
 # SPC Legends temporary guest play
