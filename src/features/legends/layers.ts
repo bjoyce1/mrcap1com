@@ -18,14 +18,17 @@ export function layersFor(id:string,entries:Record<string,Entry>=manifest,assets
 }
 
 const ready=new Set<string>(),loading=new Set<string>();
+// The decoded images stay referenced, so the browser keeps their pixels ready for the next win instead of decoding again.
+const warm:HTMLImageElement[]=[];
 /** Downloads and decodes these Legends' layers in the background. Until all three are ready, wins use the flat pop. */
 export function preloadLayers(ids:Iterable<string>){
   for(const id of ids){
     const l=layersFor(id);
     if(!l||ready.has(id)||loading.has(id))continue;
     loading.add(id);
-    Promise.all([l.bg,l.char,l.plate].map(src=>{const img=new Image();img.src=src;return img.decode();}))
-      .then(()=>{ready.add(id);},()=>{})
+    const imgs=[l.bg,l.char,l.plate].map(src=>{const img=new Image();img.src=src;return img;});
+    Promise.all(imgs.map(img=>img.decode()))
+      .then(()=>{warm.push(...imgs);ready.add(id);},()=>{})
       .finally(()=>loading.delete(id));
   }
 }

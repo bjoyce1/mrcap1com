@@ -41,7 +41,9 @@ export function makeTile(id,{mini=false,filler=false}={}){
 function makeLayeredTile(id:string,l:Layers){
   const root=makeTile(id),rest=root.querySelector('img') as HTMLImageElement;
   root.classList.add('layered');root.dataset.slam=l.slam?'1':'0';root.style.setProperty('--split',String(l.split));
-  const img=(cls:string,src:string)=>{const i=document.createElement('img');i.className=cls;i.src=src;i.alt='';i.draggable=false;return i;};
+  // Sync decoding, like makeTile's portrait: the layers were already decoded once (preloadLayers), so the first
+  // painted frame has every layer instead of an empty tile while the browser decodes in the background.
+  const img=(cls:string,src:string)=>{const i=document.createElement('img');i.className=cls;i.src=src;i.alt='';i.draggable=false;i.decoding='sync';return i;};
   const clip=document.createElement('div');clip.className='lt-clip';rest.classList.add('lt-rest');clip.append(img('lt-bg',l.bg),rest);
   // The light sweep is masked by the plate art, so it only lights the chrome letters.
   const glint=document.createElement('div');glint.className='lt-glint';glint.append(document.createElement('b'));

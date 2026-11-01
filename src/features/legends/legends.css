@@ -300,7 +300,8 @@
 /* Layered Legend win (layers.ts): the portrait at rest, then his city pushes in, he leans out past the frame and points,
    and his name plate slams and catches a light sweep. --split is where the plate starts; he pivots there, so his cut
    waist stays behind it. A plate cut as a plain strip (data-slam="0") only takes the light. */
-.legends-world .symbol-tile.layered{overflow:visible;contain:none}
+/* No tile fill: if a layer is late to paint, the board tile underneath (the same portrait) shows instead of an empty frame. */
+.legends-world .symbol-tile.layered{overflow:visible;contain:none;background:none}
 .legends-world .symbol-tile.layered .lt-clip{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
 .legends-world .symbol-tile.layered img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .legends-world .symbol-tile.layered .lt-rest{z-index:1}

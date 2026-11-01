@@ -58,7 +58,7 @@ export class BigWin {
   private counting = false; private finishNow: (() => void) | null = null; private timer = 0; private raf = 0;
   constructor(host: HTMLElement, private sound: SynthSound) {
     this.el = document.createElement("div"); this.el.className = "bigwin"; this.el.hidden = true; this.el.setAttribute("aria-hidden", "true");
-    this.el.innerHTML = '<div class="bigwin-rays"></div><canvas class="bigwin-coins"></canvas><div class="bigwin-core"><div class="bigwin-hero" hidden><img class="bh-bg" alt="" /><img class="bh-char" alt="" /><img class="bh-plate" alt="" /></div><img class="bigwin-art" alt="" hidden /><span class="bigwin-kicker"></span><strong class="bigwin-tier"></strong><b class="bigwin-amount">0</b><small class="bigwin-sub">VIRTUAL XP • TAP TO CONTINUE</small></div>';
+    this.el.innerHTML = '<div class="bigwin-rays"></div><canvas class="bigwin-coins"></canvas><div class="bigwin-core"><div class="bigwin-hero" hidden><img class="bh-bg" alt="" decoding="sync" /><img class="bh-char" alt="" decoding="sync" /><img class="bh-plate" alt="" decoding="sync" /></div><img class="bigwin-art" alt="" hidden /><span class="bigwin-kicker"></span><strong class="bigwin-tier"></strong><b class="bigwin-amount">0</b><small class="bigwin-sub">VIRTUAL XP • TAP TO CONTINUE</small></div>';
     host.append(this.el);
     this.coins = new CoinShower(this.el.querySelector("canvas")!);
     this.el.addEventListener("click", this.skip);
