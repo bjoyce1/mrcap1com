@@ -64,7 +64,7 @@ export const PersistentNavigation = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        "fixed top-[var(--announcement-offset,0px)] left-0 right-0 z-50 transition-all duration-500",
         "bg-background/20 backdrop-blur-xl",
         isScrolled && "bg-background/60 border-b border-primary/10 shadow-[0_1px_30px_hsl(var(--primary)/0.05)]"
       )}
