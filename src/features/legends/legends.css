@@ -109,7 +109,7 @@
 @keyframes lg-pop{0%{transform:scale(1)}24%{transform:scale(1.38) translateY(-7%)}38%{transform:scale(1.2) translateY(-4%)}80%{transform:scale(1.2) translateY(-4%)}100%{transform:scale(1)}}
 @keyframes lg-rim{0%,100%{opacity:0}30%,70%{opacity:1}}
 /* Artists come alive in their frame: a bob and tilt and a rim light in their colour. */
-.legends-world .hit-pop.is-char .symbol-tile img{transform-origin:50% 85%;animation:lg-char .8s ease-in-out var(--d) both}
+.legends-world .hit-pop.is-char .symbol-tile:not(.layered) img{transform-origin:50% 85%;animation:lg-char .8s ease-in-out var(--d) both}
 @keyframes lg-char{0%,100%{transform:none}25%{transform:rotate(-6deg) scale(1.1)}45%{transform:rotate(5deg) scale(1.13) translateY(-4%)}65%{transform:rotate(-2deg) scale(1.08)}}
 .legends-world .hit-spark{position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;background:#fff6d0;box-shadow:0 0 6px var(--sym),0 0 12px var(--sym);opacity:0;animation:lg-spark .7s ease-out calc(var(--d) + 110ms) both}
 @keyframes lg-spark{0%{opacity:1;transform:translate(0,0) rotate(45deg) scale(.4)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(45deg) scale(1)}}
@@ -297,3 +297,41 @@
 @keyframes lg-slam{0%{transform:scale(2.4) rotate(-6deg);opacity:0}45%{transform:scale(.9) rotate(1deg);opacity:1}70%{transform:scale(1.06)}100%{transform:none}}
 .legends-world .bigwin-amount{font:400 clamp(36px,7vw,84px)/1 var(--lg-display);font-variant-numeric:tabular-nums;background:var(--lg-gold);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.5px #5a3207;filter:drop-shadow(0 4px 0 #2a1402) drop-shadow(0 0 20px rgba(255,180,60,.6))}
 .legends-world .bigwin-sub{font:400 12px/1 var(--lg-display);letter-spacing:.24em;color:#c9b8d6}
+/* Layered Legend win (layers.ts): the portrait at rest, then his city pushes in, he leans out past the frame and points,
+   and his name plate slams and catches a light sweep. --split is where the plate starts; he pivots there, so his cut
+   waist stays behind it. A plate cut as a plain strip (data-slam="0") only takes the light. */
+.legends-world .symbol-tile.layered{overflow:visible;contain:none}
+.legends-world .symbol-tile.layered .lt-clip{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+.legends-world .symbol-tile.layered img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.legends-world .symbol-tile.layered .lt-rest{z-index:1}
+.legends-world .lt-char,.legends-world .lt-plate,.legends-world .lt-glint{z-index:2}
+.legends-world .lt-char{--w:calc(var(--split)*100%);transform-origin:50% var(--w);-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));mask-composite:intersect}
+.legends-world .lt-plate,.legends-world .lt-glint{transform-origin:50% 86%}
+.legends-world .lt-glint{position:absolute;inset:0;overflow:hidden;pointer-events:none;-webkit-mask-size:cover;mask-size:cover;-webkit-mask-position:center;mask-position:center}
+.legends-world .lt-glint b{position:absolute;inset:0;background:linear-gradient(100deg,transparent 38%,rgba(255,255,255,.85) 50%,transparent 62%);transform:translateX(-120%)}
+.legends-world .hit-pop .layered .lt-rest{animation:lg-lt-rest .9s linear var(--d) both}
+.legends-world .hit-pop .layered .lt-bg{animation:lg-lt-bg .9s cubic-bezier(.2,.8,.3,1) var(--d) both}
+.legends-world .hit-pop .layered .lt-char{animation:lg-lt-char .9s cubic-bezier(.65,0,.35,1) var(--d) both}
+.legends-world .hit-pop .layered[data-slam="1"] :is(.lt-plate,.lt-glint){animation:lg-lt-plate .9s ease-out var(--d) both}
+.legends-world .hit-pop .layered .lt-glint b{animation:lg-lt-glint .9s ease-in-out var(--d) both}
+@keyframes lg-lt-rest{0%{opacity:1}10%,88%{opacity:0}100%{opacity:1}}
+@keyframes lg-lt-bg{0%{transform:scale(1.02)}35%{transform:scale(1.12);filter:brightness(1.45) saturate(1.2)}75%{transform:scale(1.09);filter:brightness(1.2)}100%{transform:scale(1.02)}}
+@keyframes lg-lt-char{0%{transform:none}12%{transform:scale(.96) translateY(2%)}34%{transform:scale(1.16) translateY(-6%) rotate(-3deg);filter:brightness(1.12)}50%{transform:scale(1.12) translateY(-4%) rotate(-1deg)}75%{transform:scale(1.14) translateY(-5%) rotate(-2deg)}100%{transform:none}}
+@keyframes lg-lt-plate{0%,20%{transform:none}27%{transform:scale(1.22)}36%{transform:scale(.95)}44%{transform:scale(1.02)}100%{transform:none}}
+@keyframes lg-lt-glint{0%,34%{transform:translateX(-120%)}72%,100%{transform:translateX(120%)}}
+/* Legend Sweep in the Big Win show: he rises through the light, his name lands, then he breathes while the XP counts. */
+.legends-world .bigwin-hero{position:relative;width:clamp(200px,44vmin,380px);aspect-ratio:1;margin-bottom:6px}
+.legends-world .bigwin-hero[hidden]{display:none}
+.legends-world .bigwin-hero img{position:absolute;inset:0;width:100%;height:100%}
+.legends-world .bh-bg{border-radius:8%;-webkit-mask:radial-gradient(closest-side,#000 60%,transparent);mask:radial-gradient(closest-side,#000 60%,transparent);opacity:0}
+.legends-world .bh-char{--w:calc(var(--split)*100%);transform-origin:50% var(--w);-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));mask-composite:intersect;opacity:0}
+.legends-world .bh-plate{transform-origin:50% 86%;opacity:0}
+.legends-world .bigwin-hero.run .bh-bg{animation:lg-bh-bg 1.6s cubic-bezier(.2,.8,.3,1) both}
+.legends-world .bigwin-hero.run .bh-char{animation:lg-bh-rise 1.5s cubic-bezier(.65,0,.35,1) both,lg-bh-breathe 2.4s ease-in-out 1.5s infinite alternate}
+.legends-world .bigwin-hero.run .bh-plate{animation:lg-bh-slam .5s cubic-bezier(.2,1.4,.35,1) 1.05s both}
+.legends-world .bigwin-hero.run[data-slam="0"] .bh-plate{animation:lg-bh-fade .4s ease-out 1.05s both}
+@keyframes lg-bh-bg{from{opacity:0;transform:scale(1.3)}to{opacity:.5;transform:scale(1.05)}}
+@keyframes lg-bh-rise{0%{opacity:0;transform:translateY(38%) scale(.86)}25%{opacity:1}70%{opacity:1;transform:translateY(-4%) scale(1.06)}100%{opacity:1;transform:translateY(-1%) scale(1.04)}}
+@keyframes lg-bh-breathe{from{opacity:1;transform:translateY(-1%) scale(1.04)}to{opacity:1;transform:translateY(-2%) scale(1.06)}}
+@keyframes lg-bh-slam{0%{opacity:0;transform:scale(1.7)}60%{opacity:1;transform:scale(.94)}80%{opacity:1;transform:scale(1.03)}100%{opacity:1;transform:none}}
+@keyframes lg-bh-fade{from{opacity:0}to{opacity:1}}

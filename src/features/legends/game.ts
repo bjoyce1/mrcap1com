@@ -7,6 +7,8 @@ import {activePool,totalSpins,type Balance} from './balance';
 import {loadProfile,loadHistory,loadSweeps,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem} from './account';
 import {renderBoard,animateReels,animateCounter,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl,type Tease} from './motion';
 import {BigWin} from './bigwin';
+import {isArtist} from './hits';
+import {preloadLayers,layersReady} from './layers';
 import {buildMarquee,attractMode} from './cabinet';
 import {sweepTease,tiersFor} from './fx';
 import {supabase} from '@/integrations/supabase/client';
@@ -125,6 +127,8 @@ async function spin(){
     if(unmounted||userId!==player)return;
     pendingKey=null;
     const target=answer.board,prior=activeBoard,outcome=answer.outcome;
+    // The winning Legends' layers load while the reels spin; any not ready by the hit show use the flat pop.
+    if(!userReducedMotion)preloadLayers(outcome.hitCells.map(k=>{const [c,r]=k.split(':').map(Number);return target[c][r];}).filter(isArtist));
     // Teases only lengthen and light reels that have not landed yet; the board above is already decided.
     const bonusTease=anticipationReels(target),sweepHint=sweepTease(target);
     const anticipate:Tease[]=target.map((_,i)=>sweepHint.reels[i]?'sweep':bonusTease[i]?'bonus':false);
@@ -150,7 +154,7 @@ async function spin(){
     hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{
       paylines.cycle();
       // Big Win show for 500+ XP, SPC Unity and every Legend Sweep (all of those reach a tier).
-      void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',reducedMotion:userReducedMotion});
+      void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion});
     }});
     if(outcome.xp>0)flashMarquee(isMajor?3200:1400);
     const fresh=answer.newCharacters.length;

@@ -2,6 +2,7 @@
 import {SYMBOL_MAP,PAYLINES} from './config';
 import {createBoard} from './engine';
 import {hitSchedule,isArtist,type HitStep,type HitWin} from './hits';
+import {layersReady,type Layers} from './layers';
 import murderOneAsset from '@/assets/legends/murder-one-portrait.webp.asset.json';
 import rapperKAsset from '@/assets/legends/rapper-k-portrait.webp.asset.json';
 import komodoAsset from '@/assets/legends/komodo-dbx-portrait.webp.asset.json';
@@ -35,6 +36,18 @@ export function makeTile(id,{mini=false,filler=false}={}){
   const image=document.createElement('img');image.src=symbolUrl(id);image.alt='';image.loading=mini?'lazy':'eager';image.decoding='async';image.draggable=false;
   root.style.setProperty('--sym',SYMBOL_MAP[id]?.color||'#ffd27a');
   root.appendChild(image);return root;
+}
+/** A Legend tile for the win pop, built from layers: the portrait shows at rest, then he leans out of the frame while the plate slams. */
+function makeLayeredTile(id:string,l:Layers){
+  const root=makeTile(id),rest=root.querySelector('img') as HTMLImageElement;
+  root.classList.add('layered');root.dataset.slam=l.slam?'1':'0';root.style.setProperty('--split',String(l.split));
+  const img=(cls:string,src:string)=>{const i=document.createElement('img');i.className=cls;i.src=src;i.alt='';i.draggable=false;return i;};
+  const clip=document.createElement('div');clip.className='lt-clip';rest.classList.add('lt-rest');clip.append(img('lt-bg',l.bg),rest);
+  // The light sweep is masked by the plate art, so it only lights the chrome letters.
+  const glint=document.createElement('div');glint.className='lt-glint';glint.append(document.createElement('b'));
+  glint.style.setProperty('-webkit-mask-image',`url(${l.plate})`);glint.style.setProperty('mask-image',`url(${l.plate})`);
+  root.append(clip,img('lt-char',l.char),img('lt-plate',l.plate),glint);
+  return root;
 }
 export function renderBoard(container,board,hits=[]){
   container.replaceChildren();const matched=new Set(hits);
@@ -212,7 +225,8 @@ export class HitShow {
       const mult=step.win.type==='multiplier';
       pop.className=`hit-pop${isArtist(id)?' is-char':''}${id==='wild'?' is-wild':''}${id==='bonus'?' is-bonus':''}${mult?' is-mult':''}${step.win.type==='sweep'?' is-sweep':''}`;
       pop.style.cssText=`left:${r.left-box.left}px;top:${r.top-box.top}px;width:${r.width}px;height:${r.height}px;--d:${cell.delay}ms;--sym:${SYMBOL_MAP[id]?.color||'#ffd27a'}`;
-      pop.append(makeTile(id));
+      const layers=isArtist(id)?layersReady(id):null;
+      pop.append(layers?makeLayeredTile(id,layers):makeTile(id));
       // Multiplier finale: the tile flares and stamps its factor over the board.
       if(mult){const badge=document.createElement('span');badge.className='mult-badge';badge.textContent=`×${(step.win as HitWin&{multiplier?:number}).multiplier??''}`;pop.append(badge);}
       for(let k=0;k<8;k++){

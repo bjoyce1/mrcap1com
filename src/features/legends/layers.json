@@ -1,0 +1,62 @@
+{
+  "cl-che": {
+    "asset": "9b0eaf96-b50d-44ca-a2fc-2d18cafc3e62",
+    "dir": "cl-che.9b0eaf96",
+    "slam": false,
+    "split": 0.714
+  },
+  "ganxsta-nip": {
+    "asset": "0a1362a7-35f7-4ba5-af4f-c256e337086c",
+    "dir": "ganxsta-nip.0a1362a7",
+    "slam": true,
+    "split": 0.7
+  },
+  "k-rino": {
+    "asset": "63a2baee-8f8f-44ba-a9b6-8eeb276cb7b1",
+    "dir": "k-rino.63a2baee",
+    "slam": true,
+    "split": 0.692
+  },
+  "k-water": {
+    "asset": "1be14c97-8c06-4fd0-9cb9-c29b1746e968",
+    "dir": "k-water.1be14c97",
+    "slam": true,
+    "split": 0.694
+  },
+  "klondike-kat": {
+    "asset": "f6ddcc09-5d82-4174-b2e1-d3521c8ea78f",
+    "dir": "klondike-kat.f6ddcc09",
+    "slam": true,
+    "split": 0.702
+  },
+  "komodo-dbx": {
+    "asset": "6bc8ac14-6522-429b-805d-7dc3e9ef038f",
+    "dir": "komodo-dbx.6bc8ac14",
+    "slam": true,
+    "split": 0.71
+  },
+  "mr-cap": {
+    "asset": "e423be08-13cf-40d3-8881-b059b9a94ead",
+    "dir": "mr-cap.e423be08",
+    "slam": true,
+    "split": 0.678
+  },
+  "murder-one": {
+    "asset": "fd808bfb-bb14-48a1-a166-97286f6c7a65",
+    "dir": "murder-one.fd808bfb",
+    "slam": true,
+    "split": 0.706
+  },
+  "point-blank": {
+    "asset": "e037eb4b-3c23-4718-827e-959d136f3b20",
+    "dir": "point-blank.e037eb4b",
+    "slam": true,
+    "split": 0.674
+  },
+  "rapper-k": {
+    "asset": "bc486664-0fb0-4dfc-b6ce-f8fd592c5984",
+    "dir": "rapper-k.bc486664",
+    "slam": true,
+    "split": 0.722
+  }
+}

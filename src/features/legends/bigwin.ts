@@ -2,6 +2,7 @@
 // coin shower. Presentation only; the outcome is already decided and shown in the result panel for screen readers.
 import { countUpMs, tiersFor } from "./fx";
 import type { SynthSound } from "./motion";
+import type { Layers } from "./layers";
 
 type Coin = { x: number; y: number; vx: number; vy: number; r: number; spin: number; spinV: number; age: number; life: number };
 
@@ -57,7 +58,7 @@ export class BigWin {
   private counting = false; private finishNow: (() => void) | null = null; private timer = 0; private raf = 0;
   constructor(host: HTMLElement, private sound: SynthSound) {
     this.el = document.createElement("div"); this.el.className = "bigwin"; this.el.hidden = true; this.el.setAttribute("aria-hidden", "true");
-    this.el.innerHTML = '<div class="bigwin-rays"></div><canvas class="bigwin-coins"></canvas><div class="bigwin-core"><img class="bigwin-art" alt="" hidden /><span class="bigwin-kicker"></span><strong class="bigwin-tier"></strong><b class="bigwin-amount">0</b><small class="bigwin-sub">VIRTUAL XP • TAP TO CONTINUE</small></div>';
+    this.el.innerHTML = '<div class="bigwin-rays"></div><canvas class="bigwin-coins"></canvas><div class="bigwin-core"><div class="bigwin-hero" hidden><img class="bh-bg" alt="" /><img class="bh-char" alt="" /><img class="bh-plate" alt="" /></div><img class="bigwin-art" alt="" hidden /><span class="bigwin-kicker"></span><strong class="bigwin-tier"></strong><b class="bigwin-amount">0</b><small class="bigwin-sub">VIRTUAL XP • TAP TO CONTINUE</small></div>';
     host.append(this.el);
     this.coins = new CoinShower(this.el.querySelector("canvas")!);
     this.el.addEventListener("click", this.skip);
@@ -66,14 +67,22 @@ export class BigWin {
   /** Tap or key: the first finishes the count, the second (or the timer) closes the show. */
   private skip = () => { if (this.counting) this.finishNow?.(); else this.close(); };
   private onKey = (e: KeyboardEvent) => { if (["Enter", " ", "Escape"].includes(e.key)) { e.preventDefault(); this.skip(); } };
-  /** Run the show; resolves when it closes. Skipped entirely (resolves at once) under reduced motion or below BIG WIN. */
-  play({ xp, kicker = "", art = "", reducedMotion = false }: { xp: number; kicker?: string; art?: string; reducedMotion?: boolean }): Promise<void> {
+  /** Run the show; resolves when it closes. Skipped entirely (resolves at once) under reduced motion or below BIG WIN.
+   *  With `layers` (a Legend Sweep whose layers are loaded) the Legend rises in person instead of showing the flat `art`. */
+  play({ xp, kicker = "", art = "", layers = null, reducedMotion = false }: { xp: number; kicker?: string; art?: string; layers?: Layers | null; reducedMotion?: boolean }): Promise<void> {
     const tiers = tiersFor(xp);
     if (reducedMotion || !tiers.length) return Promise.resolve();
     this.close();
     const tierEl = this.q<HTMLElement>(".bigwin-tier"), amount = this.q<HTMLElement>(".bigwin-amount"), artEl = this.q<HTMLImageElement>(".bigwin-art");
     this.q<HTMLElement>(".bigwin-kicker").textContent = kicker;
-    artEl.hidden = !art; if (art) artEl.src = art;
+    const hero = this.q<HTMLElement>(".bigwin-hero");
+    hero.hidden = !layers; hero.classList.remove("run");
+    if (layers) {
+      this.q<HTMLImageElement>(".bh-bg").src = layers.bg; this.q<HTMLImageElement>(".bh-char").src = layers.char; this.q<HTMLImageElement>(".bh-plate").src = layers.plate;
+      hero.style.setProperty("--split", String(layers.split)); hero.dataset.slam = layers.slam ? "1" : "0";
+      void hero.offsetWidth; hero.classList.add("run");
+    }
+    artEl.hidden = !art || !!layers; if (art && !layers) artEl.src = art;
     tierEl.textContent = ""; amount.textContent = "0";
     this.el.hidden = false; this.el.dataset.level = "0";
     void this.el.offsetWidth; this.el.classList.add("is-open");
