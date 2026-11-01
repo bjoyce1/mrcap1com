@@ -235,7 +235,7 @@ async function loadAccount(nextUser:string|null){
     pendingKey=null;
     void paypalButtons?.close?.().catch(()=>undefined);
     paypalButtons=null;buttonsShown=false;$('shop-paypal').replaceChildren();
-    $('shop-retry').hidden=true;
+    $('shop-retry').hidden=true;buyButton.setState('idle');
   }
   userId=nextUser;loading=!!nextUser;history=[];
   if(!nextUser){
