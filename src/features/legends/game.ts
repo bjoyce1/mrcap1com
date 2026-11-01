@@ -9,6 +9,7 @@ import {renderBoard,animateReels,animateCounter,Confetti,SynthSound,PaylineOverl
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
+import {createPurchaseButton} from './purchase-button';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
