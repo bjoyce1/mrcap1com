@@ -14,7 +14,7 @@ test('a six-reel Supreme win unlocks the reward without awarding extra spins', (
   const won = applySpin(initialState(), board).state;
   expect(supremePrizeState(won.badges).equipped).toBe(true);
   expect(won.welcomeLeft).toBe(24);
-  expect(won.paidSpins).toBe(0);
+  expect(won.spinsToday).toBe(0);
 });
 
 test('turning the cosmetic off preserves the earned unlock on reload', () => {
