@@ -1,10 +1,18 @@
 import { describe, expect, it } from "vitest";
 import { evaluateBoard } from "./engine";
-import { hitSchedule, isArtist, type HitWin } from "./hits";
+import { HIT_STEP_MS, hitSchedule, isArtist, type HitWin } from "./hits";
 
 const line = (payline: number, xp: number, cells: string[], symbol = "k-rino"): HitWin => ({ type: "line", payline, xp, symbol, count: cells.length, cells });
 
 describe("hitSchedule", () => {
+  it("lets a sixth-reel layered hit finish before replacing its step", () => {
+    const cells = Array.from({ length: 6 }, (_, col) => `${col}:0`);
+    const steps = hitSchedule([line(1, 750, cells), line(2, 500, cells)]);
+    const lastCell = steps[0].cells.at(-1);
+    expect(lastCell?.delay).toBe(475);
+    expect(steps[1].start).toBe(HIT_STEP_MS);
+    expect(steps[1].start).toBeGreaterThanOrEqual((lastCell?.delay ?? 0) + 900);
+  });
   it("celebrates Unity, then the 713 Bonus, then lines by XP", () => {
     const wins: HitWin[] = [
       line(1, 50, ["0:1", "1:1", "2:1"]),

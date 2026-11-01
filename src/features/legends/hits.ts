@@ -6,6 +6,8 @@ export type HitCell = { key: string; col: number; row: number; delay: number };
 export type HitStep = { win: HitWin; start: number; cells: HitCell[] };
 
 const ARTIST_IDS = new Set(ARTISTS.map((a) => a.id));
+// Leave time for the final reel's 475ms stagger and 900ms layered animation to finish.
+export const HIT_STEP_MS = 1400;
 // Multipliers (Double and Triple Bonus) play last, as the finale that multiplies everything before them.
 const RANK: Record<string, number> = { sweep: 0, supreme: 1, unity: 2, bonus: 3, line: 4, multiplier: 5 };
 
@@ -18,7 +20,7 @@ export const isArtist = (id: string) => ARTIST_IDS.has(id);
  */
 export function hitSchedule(
   wins: HitWin[],
-  { maxWins = 4, perWin = 1250, cellStagger = 95 }: { maxWins?: number; perWin?: number; cellStagger?: number } = {},
+  { maxWins = 4, perWin = HIT_STEP_MS, cellStagger = 95 }: { maxWins?: number; perWin?: number; cellStagger?: number } = {},
 ): HitStep[] {
   const sorted = wins
     .map((win, index) => ({ win, index }))
