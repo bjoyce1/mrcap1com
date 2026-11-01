@@ -178,7 +178,10 @@
 .legends-world .spin-shop p{font-size:12px;line-height:1.6;color:#c9b8d6;margin:8px auto 0;max-width:46ch}
 .legends-world .shop-age{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;color:#f3dfae;cursor:pointer}
 .legends-world .shop-age input{width:18px;height:18px;accent-color:#f5c443}
-.legends-world .shop-paypal{max-width:340px;margin:14px auto 0;min-height:44px}
+.legends-world .shop-checkout{max-width:380px;margin:16px auto 0;padding:14px 14px 12px;border-radius:16px;border:1px solid transparent;background:linear-gradient(165deg,rgba(38,22,58,.92),rgba(12,8,20,.96)) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 22px rgba(248,205,123,.12),0 0 34px rgba(166,92,255,.12)}
+.legends-world .shop-checkout .lg-label{margin-bottom:10px}
+.legends-world .shop-checkout .lg-label:before,.legends-world .shop-checkout .lg-label:after{flex:0 1 64px}
+.legends-world .shop-paypal{padding:10px 10px 6px;border-radius:12px;background:linear-gradient(180deg,#fbf7ee,#f1e9da);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 18px rgba(0,0,0,.45);min-height:44px}
 .legends-world .shop-msg{color:#ffe08a!important;font-weight:600;min-height:1em}
 .legends-world .shop-paid{color:#9fe0b5!important}
 .legends-world .shop-fine{font-size:10.5px!important;color:#9c8bad!important}
