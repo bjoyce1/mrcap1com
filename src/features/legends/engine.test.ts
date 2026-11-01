@@ -67,5 +67,5 @@ test('special symbols are rarer than every artist and music symbol; artists stay
   assert.deepEqual(MULTIPLIERS,{double:2,triple:3});
   assert.equal(SYMBOL_WEIGHTS.double,2);assert.equal(SYMBOL_WEIGHTS.triple,1);
   assert.equal(new Set(ARTISTS.map(a=>SYMBOL_WEIGHTS[a.id])).size,1);
-  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),160);
+  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),180);
 });

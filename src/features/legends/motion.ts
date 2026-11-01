@@ -2,9 +2,17 @@
 import {SYMBOL_MAP,PAYLINES} from './config';
 import {createBoard} from './engine';
 import {hitSchedule,isArtist,type HitStep,type HitWin} from './hits';
-import murderOneAsset from '@/assets/legends/murder-one.asset.json';
-import rapperKAsset from '@/assets/legends/rapper-k.asset.json';
-/** Symbol art lives in public/games/spc-legends/symbols. */
+import murderOneAsset from '@/assets/legends/murder-one-portrait.webp.asset.json';
+import rapperKAsset from '@/assets/legends/rapper-k-portrait.webp.asset.json';
+import komodoAsset from '@/assets/legends/komodo-dbx-portrait.webp.asset.json';
+import nipAsset from '@/assets/legends/ganxsta-nip-portrait.webp.asset.json';
+import krinoAsset from '@/assets/legends/k-rino-portrait.webp.asset.json';
+import capAsset from '@/assets/legends/mr-cap-portrait.webp.asset.json';
+import katAsset from '@/assets/legends/klondike-kat-portrait.webp.asset.json';
+import blankAsset from '@/assets/legends/point-blank-portrait.webp.asset.json';
+import waterAsset from '@/assets/legends/k-water-portrait.webp.asset.json';
+import clcheAsset from '@/assets/legends/cl-che-portrait.webp.asset.json';
+/** Uploaded character art uses asset pointers; other symbols use public game assets. */
 /** Set by animateReels while reels move; calling skip() lands every reel at its final stop. */
 export type ReelControl={skip?:(()=>void)|null};
 /** The parts of an engine win the overlay draws. */
@@ -12,7 +20,13 @@ export type Win={type:string;payline?:number;count?:number;symbol?:string;cells:
 /** Per reel: false, or which tease lengthens and lights it ('bonus': two 713s landed; 'sweep': one artist on every reel so far). */
 export type Tease=false|'bonus'|'sweep';
 type ReelOptions={reducedMotion?:boolean;anticipate?:(Tease|boolean)[];teaseColor?:string;control?:ReelControl;onReady?:()=>void;onStop?:(reel:number)=>void;onAnticipate?:(kind:Tease)=>void};
-const uploadedSymbols:Record<string,string>={'murder-one':murderOneAsset.url,'rapper-k':rapperKAsset.url};
+const uploadedSymbols:Record<string,string>={
+  'murder-one':murderOneAsset.url,'rapper-k':rapperKAsset.url,
+  'komodo-dbx':komodoAsset.url,'ganxsta-nip':nipAsset.url,
+  'k-rino':krinoAsset.url,'mr-cap':capAsset.url,
+  'klondike-kat':katAsset.url,'point-blank':blankAsset.url,
+  'k-water':waterAsset.url,'cl-che':clcheAsset.url,
+};
 export const symbolUrl=(id:string)=>uploadedSymbols[id]??`/games/spc-legends/symbols/${id}.webp`;
 /** Reel motor: GPU-accelerated symbol strips. Resolves only after the six staggered reels settle. */
 export function makeTile(id,{mini=false,filler=false}={}){
