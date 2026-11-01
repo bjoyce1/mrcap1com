@@ -1,7 +1,7 @@
 // Ported from the SPC Legends source package (src/ui/motion.js). Animation, sound and canvas only; never decides outcomes.
 import {SYMBOL_MAP,PAYLINES} from './config';
 import {createBoard} from './engine';
-import {hitSchedule,isArtist,type HitStep,type HitWin} from './hits';
+import {HIT_STEP_MS,hitSchedule,isArtist,type HitStep,type HitWin} from './hits';
 import {layersReady,type Layers} from './layers';
 import murderOneAsset from '@/assets/legends/murder-one-portrait.webp.asset.json';
 import rapperKAsset from '@/assets/legends/rapper-k-portrait.webp.asset.json';
@@ -33,7 +33,7 @@ export const symbolUrl=(id:string)=>uploadedSymbols[id]??`/games/spc-legends/sym
 export function makeTile(id,{mini=false,filler=false}={}){
   const root=document.createElement('div');root.className=`symbol-tile${filler?' filler':''}`;root.dataset.symbol=id;
   if(filler)root.setAttribute('aria-hidden','true');else{root.setAttribute('role','img');root.setAttribute('aria-label',SYMBOL_MAP[id]?.name||id);}
-  const image=document.createElement('img');image.src=symbolUrl(id);image.alt='';image.loading=mini?'lazy':'eager';image.decoding='async';image.draggable=false;
+  const image=document.createElement('img');image.src=symbolUrl(id);image.alt='';image.loading=mini?'lazy':'eager';image.decoding=mini?'async':'sync';image.draggable=false;
   root.style.setProperty('--sym',SYMBOL_MAP[id]?.color||'#ffd27a');
   root.appendChild(image);return root;
 }
@@ -199,10 +199,12 @@ export class PaylineOverlay {
  * spins up light rays. Clones sit in their own layer, so the reels underneath are never moved. */
 export class HitShow {
   board:HTMLElement;layer:HTMLDivElement;timers:ReturnType<typeof setTimeout>[]=[];
+  private generation=0;
   constructor(board:HTMLElement){
     this.board=board;this.layer=document.createElement('div');this.layer.className='hit-layer';this.layer.setAttribute('aria-hidden','true');board.append(this.layer);
   }
   clear(){
+    this.generation++;
     this.timers.forEach(clearTimeout);this.timers=[];this.layer.replaceChildren();
     this.board.querySelectorAll('.popping').forEach(el=>el.classList.remove('popping'));this.board.classList.remove('lg-shake');
   }
@@ -211,13 +213,15 @@ export class HitShow {
     const steps=reducedMotion?[]:hitSchedule(wins);
     if(!steps.length){onDone();return;}
     if(big){this.board.classList.add('lg-shake');this.later(520,()=>this.board.classList.remove('lg-shake'));}
-    steps.forEach(step=>this.later(step.start,()=>{onStep(step.win);this.pop(step);}));
-    this.later(steps[steps.length-1].start+1250,()=>{this.clear();onDone();});
+    steps.forEach(step=>this.later(step.start,()=>{onStep(step.win);void this.pop(step);}));
+    this.later(steps[steps.length-1].start+HIT_STEP_MS,()=>{this.clear();onDone();});
   }
   private later(ms:number,fn:()=>void){this.timers.push(setTimeout(fn,ms));}
-  private pop(step:HitStep){
+  private async pop(step:HitStep){
+    const generation=++this.generation;
     this.layer.replaceChildren();this.board.querySelectorAll('.popping').forEach(el=>el.classList.remove('popping'));
     const box=this.board.getBoundingClientRect();
+    const prepared:{pop:HTMLDivElement;tile:HTMLElement}[]=[];
     for(const cell of step.cells){
       const tile=this.board.querySelector<HTMLElement>(`.reels [data-cell="${cell.key}"]`);if(!tile)continue;
       const r=tile.getBoundingClientRect(),id=tile.dataset.symbol||'';
@@ -234,8 +238,16 @@ export class HitShow {
         spark.className='hit-spark';spark.style.setProperty('--dx',`${Math.cos(a)*dist*r.width}px`);spark.style.setProperty('--dy',`${Math.sin(a)*dist*r.height}px`);
         pop.append(spark);
       }
-      this.layer.append(pop);tile.classList.add('popping');
+      prepared.push({pop,tile});
     }
+    // Preloading URLs alone does not guarantee newly created images are paint-ready.
+    // Keep the settled reels visible until every overlay image has decoded.
+    try{
+      await Promise.all(prepared.flatMap(({pop})=>Array.from(pop.querySelectorAll('img')).map(image=>image.decode())));
+    }catch{return;}
+    // A new spin, next win or unmount must not resurrect an obsolete celebration.
+    if(generation!==this.generation)return;
+    for(const {pop,tile} of prepared){this.layer.append(pop);tile.classList.add('popping');}
   }
 }
 /** "+150 XP" rising out of an element; skipped when motion is reduced. */

@@ -1,5 +1,9 @@
 # Identity connection
 
+# SPC Legends win animation
+
+- [x] Keep hit artwork paint-ready and let the final reel animation finish without changing results or payments.
+
 # SPC Legends debit and credit checkout
 
 - [x] Enable PayPal card funding in the existing Legends spin checkout and verify eligible card options without charging.
