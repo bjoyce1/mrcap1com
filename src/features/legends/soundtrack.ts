@@ -50,6 +50,9 @@ export class WinSoundtrack {
     this.stopNow();
     const el = new Audio(songUrl(s));
     el.volume = 0.7;
+    el.addEventListener("loadedmetadata", () => {
+      el.currentTime = Math.min(WIN_CUE_SECONDS, Math.max(0, el.duration - 1));
+    }, { once: true });
     this.el = el;
     el.play().catch(() => { /* autoplay blocked or offline */ });
     return s;
