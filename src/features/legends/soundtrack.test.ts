@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { pickWinSong, WIN_SONGS } from "./soundtrack";
+import { pickWinSong, WIN_CUE_SECONDS, WIN_SONGS } from "./soundtrack";
 
 const base = { supreme: false, unity: false, sweep: false, major: false, bonus: false, xp: 100 };
 
