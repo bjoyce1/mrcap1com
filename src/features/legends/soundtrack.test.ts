@@ -17,3 +17,6 @@ test("big wins play Bet'n On Me and line hits rotate album cuts", () => {
   expect(pickWinSong({ ...base, major: true })?.title).toBe("Bet'n On Me");
   expect(pickWinSong(base, 1)?.title).toBe(WIN_SONGS.line[1].title);
 });
+test("win songs cue at the 15 second mark", () => {
+  expect(WIN_CUE_SECONDS).toBe(15);
+});
