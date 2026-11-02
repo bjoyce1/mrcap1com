@@ -16,6 +16,7 @@ import {guestSpin} from './guest';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 import {createPurchaseButton} from './purchase-button';
 import {renderSupremePrize} from './supreme-prize';
+import {WinSoundtrack} from './soundtrack';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
@@ -27,7 +28,7 @@ export function mountLegendsGame(root:HTMLElement){
 const $=(id:string):any=>root.querySelector(`[data-lg="${id}"]`);
 const respectsReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const audio=new SynthSound(),paylines=new PaylineOverlay($('board')),hits=new HitShow($('board')),reelControl:ReelControl={};
-const bigWin=new BigWin(root,audio),removeMarquee=buildMarquee(root.querySelector('.machine-shell') as HTMLElement);
+const soundtrack=new WinSoundtrack(),bigWin=new BigWin(root,audio),removeMarquee=buildMarquee(root.querySelector('.machine-shell') as HTMLElement);
 // Artists collected on the latest spin get a card flip in the collection panel.
 let justFound=new Set<string>();
 let userId:string|null=null,loading=true,busy=false,userReducedMotion=respectsReduced.matches;
@@ -111,7 +112,7 @@ async function spin(){
   if(confirmingPayment)return;
   const player=userId;
   if(userId&&totalSpins(balance)<=0){openShop(true);return;}
-  busy=true;buttonState();paylines.clear();hits.clear();bigWin.close();attract.poke();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
+  busy=true;buttonState();paylines.clear();hits.clear();bigWin.close();attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
   try{
@@ -166,6 +167,8 @@ async function spin(){
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
       setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
+      const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:outcome.xp},audio.enabled);
+      if(track&&audio.enabled){const sub=$('result').querySelector('span');if(sub)sub.textContent+=` • NOW PLAYING: ${track.title}`;}
     }else{
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
     }
@@ -309,7 +312,7 @@ $('shop-open').addEventListener('click',()=>{
   buyButton.setState('processing');
   void openShop(true).then(ok=>buyButton.setState(ok?'idle':'error'));
 });
-$('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'♫':'♫̸';$('sound').title=audio.enabled?'Mute sound':'Enable sound';if(audio.enabled)audio.tone(523,.14);});
+$('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);if(!audio.enabled)soundtrack.stopNow();$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'♫':'♫̸';$('sound').title=audio.enabled?'Mute sound':'Enable sound';if(audio.enabled)audio.tone(523,.14);});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
 // The daily allowance rolls over at Houston midnight; re-read the balance when the tab comes back.
@@ -323,7 +326,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();clearTimeout(winningTimer);
+  unmounted=true;soundtrack.stopNow();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();clearTimeout(winningTimer);
   void paypalButtons?.close?.().catch(()=>undefined);
   respectsReduced.removeEventListener?.('change',onReducedChange);
   document.removeEventListener('visibilitychange',onVisible);
