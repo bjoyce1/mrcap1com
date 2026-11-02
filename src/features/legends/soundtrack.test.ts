@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { pickWinSong, WIN_SONGS } from "./soundtrack";
+import { pickWinSong, WIN_CUE_SECONDS, WIN_SONGS } from "./soundtrack";
 
 const base = { supreme: false, unity: false, sweep: false, major: false, bonus: false, xp: 100 };
 
@@ -16,4 +16,7 @@ test("SPC Unity plays The Coalition and a Legend Sweep plays Ties That Bind Us",
 test("big wins play Bet'n On Me and line hits rotate album cuts", () => {
   expect(pickWinSong({ ...base, major: true })?.title).toBe("Bet'n On Me");
   expect(pickWinSong(base, 1)?.title).toBe(WIN_SONGS.line[1].title);
+});
+test("win songs cue at the 15 second mark", () => {
+  expect(WIN_CUE_SECONDS).toBe(15);
 });
