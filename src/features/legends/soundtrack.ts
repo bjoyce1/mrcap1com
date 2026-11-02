@@ -34,6 +34,9 @@ export function pickWinSong(k: WinKind, lineIndex = 0): WinSong | null {
 
 export const songUrl = (s: WinSong) => BASE + s.file;
 
+/** Win songs skip the intro and start at this many seconds in. */
+export const WIN_CUE_SECONDS = 15;
+
 /** One audio element; a new hit replaces the current song, a new spin fades it out. */
 export class WinSoundtrack {
   private el: HTMLAudioElement | null = null;
