@@ -5,6 +5,12 @@
     "slam": false,
     "split": 0.714
   },
+  "dope-e": {
+    "asset": "e1fb5f96-7701-4a3b-a464-b75a336154d8",
+    "dir": "dope-e.e1fb5f96",
+    "slam": true,
+    "split": 0.738
+  },
   "ganxsta-nip": {
     "asset": "0a1362a7-35f7-4ba5-af4f-c256e337086c",
     "dir": "ganxsta-nip.0a1362a7",
