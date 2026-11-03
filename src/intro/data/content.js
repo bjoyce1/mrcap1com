@@ -57,7 +57,8 @@ export const GALLERY = [
   { src: '/intro/img/story/studio.jpg', caption: 'Studio · Houston', w: 1.5, h: 1 },
   { src: '/intro/img/story/vinyl-legacy.webp', caption: 'Vinyl · Legacy', w: 1, h: 1 },
   { src: '/intro/img/story/spc-austin-2025.webp', caption: 'SPC · Austin 2025', w: 0.78, h: 1 },
-  { src: '/intro/img/story/houston-skyline.webp', caption: 'H-Town', w: 1.5, h: 1 },
+  // `live`: a short silent loop made from the same photo (Seedance 2.5 test), played on desktops
+  { src: '/intro/img/story/houston-skyline.webp', caption: 'H-Town', w: 1.5, h: 1, live: '/intro/video/h-town-live.mp4' },
 ];
 
 export const NFT = {

@@ -12,6 +12,45 @@ import { GALLERY, TIMELINE } from '../data/content.js';
 
 const TIMELINE_Z = [-192, -258]; // where the golden rail runs (camera covers it during the timeline station)
 const coarse = matchMedia('(pointer: coarse)').matches;
+// moving pictures (the cinema screen, living prints, the ORIGIN sky) are desktop only
+const allowVideo = !coarse && !navigator.connection?.saveData;
+
+// A short silent loop, fetched whole and played from memory: the host serves no byte ranges, and
+// a video the browser cannot seek in will not loop cleanly (Safari may not play it at all).
+function loopVideo(url) {
+  const el = document.createElement('video');
+  Object.assign(el, { muted: true, loop: true, playsInline: true, preload: 'none' });
+  const texture = new THREE.VideoTexture(el);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  let state = 'idle', want = false, live = false;
+  el.addEventListener('playing', () => { live = true; }, { once: true });
+  return {
+    texture,
+    get live() { return live; },
+    arm() {
+      if (state !== 'idle') return;
+      state = 'loading';
+      fetch(url)
+        .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(`${url} ${r.status}`))))
+        .then((blob) => { el.src = URL.createObjectURL(blob); state = 'ready'; if (want) el.play().catch(() => {}); })
+        .catch(() => { state = 'failed'; });
+    },
+    play(on) {
+      if (on === want) return;
+      want = on;
+      if (state !== 'ready') return;
+      if (on) el.play().catch(() => {});
+      else el.pause();
+    },
+    dispose() {
+      el.pause();
+      if (el.src) URL.revokeObjectURL(el.src);
+      el.removeAttribute('src');
+      el.load();
+      texture.dispose();
+    },
+  };
+}
 
 const PALETTE = [
   { u: 6, deep: '#1b0b27', haze: '#d9a441', haze2: '#5b31c9' },
@@ -82,6 +121,29 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
   const sky = new THREE.Mesh(new THREE.SphereGeometry(1500, 32, 16), skyMat);
   sky.renderOrder = -10;
   scene.add(sky);
+
+  // the ORIGIN sky: a Houston night drifting far ahead in the nebula. It is added onto the sky,
+  // so only its lights show; the dark of the clip leaves the nebula as it was.
+  const memory = allowVideo ? loopVideo('/intro/video/origin-sky.mp4') : null;
+  const memoryMat = new THREE.ShaderMaterial({
+    uniforms: { uMap: { value: memory?.texture ?? null }, uFade: { value: 0 } },
+    vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+    fragmentShader: /* glsl */ `
+      uniform sampler2D uMap; uniform float uFade; varying vec2 vUv;
+      void main(){
+        vec3 c = max(sRGBTransferEOTF(texture2D(uMap, vUv)).rgb - 0.02, 0.0) * 1.4; // video is sRGB; three decodes it only in built-in materials
+        float edge = smoothstep(1.0, 0.4, length((vUv - 0.5) * 2.0)); // dissolves into the nebula at every edge
+        edge *= smoothstep(0.04, 0.42, vUv.x); // and fades out toward the story copy on the left
+        gl_FragColor = vec4(c * edge * uFade, 1.0);
+        #include <colorspace_fragment>
+      }`,
+    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false,
+  });
+  const memoryPlane = new THREE.Mesh(new THREE.PlaneGeometry(1073, 460), memoryMat);
+  memoryPlane.renderOrder = -9;
+  memoryPlane.visible = false;
+  scene.add(memoryPlane);
+  let memoryIn = 0;
 
   // ── stars ────────────────────────────────────────────────────────────────────
   const STARS = coarse ? 1800 : 6000;
@@ -209,7 +271,9 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     cap.renderOrder = 1; // drawn after its print, never under it
     m.add(cap);
     castShadow(m, W, H);
-    m.userData = { baseY: y, seed: i * 1.7, cap, shadow: m.userData.shadow };
+    // a living print: the photo starts to move as it develops
+    const live = g.live && allowVideo ? loopVideo(g.live) : null;
+    m.userData = { baseY: y, seed: i * 1.7, cap, shadow: m.userData.shadow, live };
     gallery.add(m);
     galleryMats.push(m);
   });
@@ -341,7 +405,6 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
   });
 
   // floating cinema screen — the Limitless video (desktop only), letterbox bars cropped away
-  const allowVideo = !coarse && !navigator.connection?.saveData;
   const video = document.createElement('video');
   Object.assign(video, { muted: true, loop: true, playsInline: true, crossOrigin: 'anonymous', preload: 'none' });
   const videoTex = new THREE.VideoTexture(video);
@@ -489,6 +552,20 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     sky.position.copy(camera.position);
     sky.rotation.y = time * 0.004;
 
+    // the ORIGIN sky rides with the camera like the nebula, so it stays far away
+    if (memory) {
+      if (u > 6.5) memory.arm();
+      const fade = smooth(range(u, 9.0, 10.4)) * (1 - smooth(range(u, 15.6, 16.8)));
+      memory.play(!still && fade > 0.01);
+      if (memory.live) memoryIn = Math.min(1, memoryIn + dt / 1.5); // a clip that lands mid-chapter eases in
+      memoryPlane.visible = memory.live && fade > 0.003;
+      memoryMat.uniforms.uFade.value = fade * memoryIn * 0.75;
+      if (memoryPlane.visible) {
+        memoryPlane.position.copy(camera.position).add(tmp.set(130, 130, -880));
+        memoryPlane.lookAt(camera.position);
+      }
+    }
+
     if (dt > 0) speed += (Math.abs(camera.position.z - lastCamZ) / dt - speed) * 0.08; else speed *= 0.9;
     lastCamZ = camera.position.z;
     starMat.uniforms.uTime.value = time;
@@ -541,7 +618,15 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
       m.userData.cap.material.opacity = o;
       m.userData.shadow.material.opacity = o * 0.6;
       m.visible = o > 0.003;
+      const live = m.userData.live;
+      if (live) {
+        live.arm();
+        live.play(!still && m.visible);
+        // the clip takes over while the print is still developing, so the switch hides in the emulsion
+        if (live.live) { m.material.uniforms.uMap.value = live.texture; m.material.uniforms.uVideo.value = 1; }
+      }
     });
+    if (!gOn) galleryMats.forEach((m) => m.userData.live?.play(false));
 
     // timeline — only the year we're passing speaks
     const railOn = camera.position.z < -150 && camera.position.z > -290;
@@ -693,6 +778,8 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     video.removeAttribute('src');
     video.load();
     videoTex.dispose();
+    memory?.dispose();
+    galleryMats.forEach((m) => m.userData.live?.dispose());
     disposables.forEach((d) => d.dispose());
   }
 

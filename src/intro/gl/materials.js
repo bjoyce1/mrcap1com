@@ -132,6 +132,8 @@ export function photoMaterial(map, { holo = 0, rim = '#d9a441', key = 0, print =
       uMap: { value: map }, uOpacity: { value: 1 }, uTime: { value: 0 }, uHolo: { value: holo },
       uRim: { value: new THREE.Color(rim) }, uHover: { value: 0 }, uKey: { value: key },
       uMode: { value: print ? 1 : sleeve ? 2 : 0 }, uDevelop: { value: 1 }, uLight: chapterLight,
+      // 1 while uMap is a video: three decodes sRGB video only in its built-in materials, so this shader does it
+      uVideo: { value: 0 },
       // mat widths in uv: sides, top, bottom
       uMat: { value: new THREE.Vector3(print ? print.mat / w : 0, print ? print.mat / h : 0, print ? print.bottom / h : 0) },
     },
@@ -139,13 +141,14 @@ export function photoMaterial(map, { holo = 0, rim = '#d9a441', key = 0, print =
       varying vec2 vUv;
       void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: /* glsl */ `
-      uniform sampler2D uMap; uniform float uOpacity, uTime, uHolo, uHover, uKey, uMode, uDevelop; uniform vec3 uRim, uLight, uMat; varying vec2 vUv;
+      uniform sampler2D uMap; uniform float uOpacity, uTime, uHolo, uHover, uKey, uMode, uDevelop, uVideo; uniform vec3 uRim, uLight, uMat; varying vec2 vUv;
       float grain(vec2 p) { return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
       void main() {
         bool isPrint = uMode > 0.5 && uMode < 1.5, isSleeve = uMode > 1.5;
         vec2 lo = vec2(uMat.x, uMat.z), hi = vec2(1.0 - uMat.x, 1.0 - uMat.y);
         vec2 puv = isPrint ? (vUv - lo) / (hi - lo) : vUv;
         vec4 c = texture2D(uMap, clamp(puv, 0.0, 1.0));
+        if (uVideo > 0.5) c = sRGBTransferEOTF(c);
         c.rgb *= 0.84; // keep bright photos just under the bloom threshold
         vec2 d = min(vUv, 1.0 - vUv);
         float edge = min(d.x, d.y);
