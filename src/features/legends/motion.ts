@@ -7,6 +7,7 @@ import murderOneAsset from '@/assets/legends/murder-one-portrait.webp.asset.json
 import rapperKAsset from '@/assets/legends/rapper-k-portrait.webp.asset.json';
 import komodoAsset from '@/assets/legends/komodo-dbx-portrait.webp.asset.json';
 import nipAsset from '@/assets/legends/ganxsta-nip-portrait.webp.asset.json';
+import dopeEAsset from '@/assets/legends/dope-e-portrait.png.asset.json';
 import krinoAsset from '@/assets/legends/k-rino-portrait.webp.asset.json';
 import capAsset from '@/assets/legends/mr-cap-portrait.webp.asset.json';
 import katAsset from '@/assets/legends/klondike-kat-portrait.webp.asset.json';
