@@ -7,8 +7,8 @@ type Entry={asset:string;dir:string;slam:boolean;split:number};
 export type Layers={bg:string;char:string;plate:string;slam:boolean;split:number};
 
 // Asset ids of the portraits the game shows now. Layers cut from older art would not line up, so they are skipped.
-const pointers=import.meta.glob<{asset_id:string}>('../../assets/legends/*-portrait.webp.asset.json',{eager:true,import:'default'});
-const current=new Map(Object.entries(pointers).map(([path,p])=>[path.split('/').pop()!.replace('-portrait.webp.asset.json',''),p.asset_id]));
+const pointers=import.meta.glob<{asset_id:string}>('../../assets/legends/*-portrait.*.asset.json',{eager:true,import:'default'});
+const current=new Map(Object.entries(pointers).map(([path,p])=>[path.split('/').pop()!.replace(/-portrait\.(webp|png)\.asset\.json/,''),p.asset_id]));
 
 export function layersFor(id:string,entries:Record<string,Entry>=manifest,assets:Map<string,string>=current):Layers|null{
   const e=entries[id];
