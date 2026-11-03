@@ -25,6 +25,7 @@ type ReelOptions={reducedMotion?:boolean;anticipate?:(Tease|boolean)[];teaseColo
 const uploadedSymbols:Record<string,string>={
   'murder-one':murderOneAsset.url,'rapper-k':rapperKAsset.url,
   'komodo-dbx':komodoAsset.url,'ganxsta-nip':nipAsset.url,
+  'dope-e':dopeEAsset.url,
   'k-rino':krinoAsset.url,'mr-cap':capAsset.url,
   'klondike-kat':katAsset.url,'point-blank':blankAsset.url,
   'k-water':waterAsset.url,'cl-che':clcheAsset.url,

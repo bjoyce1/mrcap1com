@@ -5,12 +5,13 @@ import { evaluateBoard as serverEvaluate } from '../../../supabase/functions/_sh
 import { guestSpin } from './guest';
 
 test('guest and account rosters include all ten Legends with equal artist weights', () => {
-  expect(ARTISTS).toHaveLength(10);
-  expect(ARTISTS.slice(-4).map(({ id, name }) => ({ id, name }))).toEqual([
+  expect(ARTISTS).toHaveLength(11);
+  expect(ARTISTS.slice(-5).map(({ id, name }) => ({ id, name }))).toEqual([
     { id: 'murder-one', name: 'Murder One' },
     { id: 'rapper-k', name: 'Rapper K' },
     { id: 'komodo-dbx', name: 'Komodo DBX' },
     { id: 'ganxsta-nip', name: 'Ganxsta Nip' },
+    { id: 'dope-e', name: 'Dope-E' },
   ]);
   expect(SERVER_ARTISTS).toEqual(ARTISTS);
   expect(SERVER_WEIGHTS).toEqual(SYMBOL_WEIGHTS);
@@ -18,9 +19,10 @@ test('guest and account rosters include all ten Legends with equal artist weight
   expect(SYMBOL_WEIGHTS['rapper-k']).toBe(10);
   expect(SYMBOL_WEIGHTS['komodo-dbx']).toBe(10);
   expect(SYMBOL_WEIGHTS['ganxsta-nip']).toBe(10);
+  expect(SYMBOL_WEIGHTS['dope-e']).toBe(10);
 });
 
-for (const id of ['murder-one', 'rapper-k', 'komodo-dbx', 'ganxsta-nip']) {
+for (const id of ['murder-one', 'rapper-k', 'komodo-dbx', 'ganxsta-nip', 'dope-e']) {
   test(`${id} can be collected and earns the existing character XP in both engines`, () => {
     const board = [
       [id, 'mic', 'mixer'], [id, 'tape', 'vinyl'], [id, 'headphones', 'legend'],
