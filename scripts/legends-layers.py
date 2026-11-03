@@ -44,11 +44,20 @@ ARTISTS = {
     "rapper-k":     {"split": 905, "crown": [850, 780, 1110, 905], "model": "birefnet-general-lite"},
     "komodo-dbx":   {"split": 890, "crown": [495, 780, 745, 890], "model": "isnet-anime"},
     "ganxsta-nip":  {"split": 878, "crown": [515, 812, 745, 878], "model": "isnet-anime"},
+    "dope-e":       {"split": 925, "model": "isnet-anime"},
 }
 
 
+def pointer_path(artist_id):
+    for suffix in ("-portrait.webp.asset.json", "-portrait.png.asset.json"):
+        candidate = ASSETS / f"{artist_id}{suffix}"
+        if candidate.exists():
+            return candidate
+    raise SystemExit(f"{artist_id}: no portrait asset pointer in {ASSETS}")
+
+
 def portrait(artist_id):
-    pointer = json.loads((ASSETS / f"{artist_id}-portrait.webp.asset.json").read_text())
+    pointer = json.loads(pointer_path(artist_id).read_text())
     # The asset host refuses Python's default user agent.
     req = urllib.request.Request(SITE + pointer["url"], headers={"User-Agent": "Mozilla/5.0 legends-layers"})
     with urllib.request.urlopen(req) as r:
