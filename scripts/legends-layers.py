@@ -121,7 +121,7 @@ def main():
         save(bg, None, OUT / folder / "bg.webp")
         save(*char, OUT / folder / "char.webp")
         save(*plate, OUT / folder / "plate.webp")
-        manifest[artist_id] = {"asset": asset_id, "dir": folder, "slam": not cfg.get("band", False)}
+        manifest[artist_id] = {"asset": asset_id, "dir": folder, "slam": not cfg.get("band", False), "split": round(cfg["split"] / src.shape[0], 3)}
         print("layers", artist_id, folder)
     MANIFEST.write_text(json.dumps(dict(sorted(manifest.items())), indent=2) + "\n")
 
