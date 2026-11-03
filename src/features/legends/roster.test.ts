@@ -4,7 +4,7 @@ import { ARTISTS as SERVER_ARTISTS, SYMBOL_WEIGHTS as SERVER_WEIGHTS } from '../
 import { evaluateBoard as serverEvaluate } from '../../../supabase/functions/_shared/legends/engine';
 import { guestSpin } from './guest';
 
-test('guest and account rosters include all ten Legends with equal artist weights', () => {
+test('guest and account rosters include all eleven Legends with equal artist weights', () => {
   expect(ARTISTS).toHaveLength(11);
   expect(ARTISTS.slice(-5).map(({ id, name }) => ({ id, name }))).toEqual([
     { id: 'murder-one', name: 'Murder One' },
