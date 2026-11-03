@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SectionIntro from "@/components/blocks/SectionIntro";
 import { ChapterHeader, PullQuoteBand } from "@/components/about/BioBlocks";
-import hTownRepresent from "@/assets/h-town-represent.webp";
+import spcItsOnMeCover from "@/assets/spc-its-on-me-cover.png.asset.json";
 import spcAustin from "@/assets/spc-austin-2025.webp";
 import CitationBlock from "@/components/blocks/CitationBlock";
 import CTAButtonRow from "@/components/blocks/CTAButtonRow";
@@ -78,7 +78,7 @@ const SouthParkCoalition = () => {
           <section className="relative min-h-[72vh] flex items-end overflow-hidden grain-overlay">
             <div className="absolute inset-0">
               <img
-                src={hTownRepresent}
+                src={spcItsOnMeCover.url}
                 alt=""
                 aria-hidden="true"
                 className="h-full w-full object-cover object-center"
