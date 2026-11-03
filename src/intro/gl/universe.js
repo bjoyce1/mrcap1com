@@ -12,8 +12,18 @@ import { GALLERY, TIMELINE } from '../data/content.js';
 
 const TIMELINE_Z = [-192, -258]; // where the golden rail runs (camera covers it during the timeline station)
 const coarse = matchMedia('(pointer: coarse)').matches;
-// moving pictures (the cinema screen, living prints, the ORIGIN sky) are desktop only
+// moving pictures (the cinema screen, living prints, the sky memories) are desktop only
 const allowVideo = !coarse && !navigator.connection?.saveData;
+
+// Sky memories (Seedance 2.5 loops), one per chapter, each kept clear of that chapter's copy.
+// u: fade in from, fully in, fade out from, gone. at: where it hangs, relative to the camera.
+// side: the way it fades out, toward the copy (-1 left, 1 right, 0 neither).
+const SKY_MEMORIES = [
+  { src: '/intro/video/origin-sky.mp4', u: [9.0, 10.4, 15.6, 16.8], at: [130, 130], side: -1 }, // the freeway at night
+  { src: '/intro/video/sound-sky.mp4', u: [17.6, 18.8, 24.4, 25.4], at: [-130, 140], side: 1 }, // a slab convoy
+  { src: '/intro/video/legacy-sky.mp4', u: [26.6, 27.8, 30.4, 31.2], at: [130, 130], side: -1 }, // downtown over the bayou; gone before the cinema screen
+  { src: '/intro/video/stage-sky.mp4', u: [34.4, 35.6, 37.9, 38.7], at: [0, 190], side: 0 }, // arena beams; gone before the finale
+];
 
 // A short silent loop, fetched whole and played from memory: the host serves no byte ranges, and
 // a video the browser cannot seek in will not loop cleanly (Safari may not play it at all).
@@ -122,28 +132,31 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
   sky.renderOrder = -10;
   scene.add(sky);
 
-  // the ORIGIN sky: a Houston night drifting far ahead in the nebula. It is added onto the sky,
-  // so only its lights show; the dark of the clip leaves the nebula as it was.
-  const memory = allowVideo ? loopVideo('/intro/video/origin-sky.mp4') : null;
-  const memoryMat = new THREE.ShaderMaterial({
-    uniforms: { uMap: { value: memory?.texture ?? null }, uFade: { value: 0 } },
-    vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
-    fragmentShader: /* glsl */ `
-      uniform sampler2D uMap; uniform float uFade; varying vec2 vUv;
-      void main(){
-        vec3 c = max(sRGBTransferEOTF(texture2D(uMap, vUv)).rgb - 0.02, 0.0) * 1.4; // video is sRGB; three decodes it only in built-in materials
-        float edge = smoothstep(1.0, 0.4, length((vUv - 0.5) * 2.0)); // dissolves into the nebula at every edge
-        edge *= smoothstep(0.04, 0.42, vUv.x); // and fades out toward the story copy on the left
-        gl_FragColor = vec4(c * edge * uFade, 1.0);
-        #include <colorspace_fragment>
-      }`,
-    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false,
-  });
-  const memoryPlane = new THREE.Mesh(new THREE.PlaneGeometry(1073, 460), memoryMat);
-  memoryPlane.renderOrder = -9;
-  memoryPlane.visible = false;
-  scene.add(memoryPlane);
-  let memoryIn = 0;
+  // sky memories: a Houston night drifting far ahead in each chapter's nebula. Each is added onto
+  // the sky, so only its lights show; the dark of the clip leaves the nebula as it was.
+  const skies = allowVideo ? SKY_MEMORIES.map((def) => {
+    const video = loopVideo(def.src);
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { uMap: { value: video.texture }, uFade: { value: 0 }, uSide: { value: def.side } },
+      vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: /* glsl */ `
+        uniform sampler2D uMap; uniform float uFade, uSide; varying vec2 vUv;
+        void main(){
+          vec3 c = max(sRGBTransferEOTF(texture2D(uMap, vUv)).rgb - 0.02, 0.0) * 1.4; // video is sRGB; three decodes it only in built-in materials
+          float edge = smoothstep(1.0, 0.4, length((vUv - 0.5) * 2.0)); // dissolves into the nebula at every edge
+          float s = uSide < 0. ? vUv.x : uSide > 0. ? 1. - vUv.x : 1.;
+          edge *= smoothstep(0.04, 0.42, s); // and fades out toward the chapter's copy
+          gl_FragColor = vec4(c * edge * uFade, 1.0);
+          #include <colorspace_fragment>
+        }`,
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false,
+    });
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(1073, 460), mat);
+    plane.renderOrder = -9;
+    plane.visible = false;
+    scene.add(plane);
+    return { ...def, video, mat, plane, in: 0 };
+  }) : [];
 
   // ── stars ────────────────────────────────────────────────────────────────────
   const STARS = coarse ? 1800 : 6000;
@@ -552,19 +565,20 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     sky.position.copy(camera.position);
     sky.rotation.y = time * 0.004;
 
-    // the ORIGIN sky rides with the camera like the nebula, so it stays far away
-    if (memory) {
-      if (u > 6.5) memory.arm();
-      const fade = smooth(range(u, 9.0, 10.4)) * (1 - smooth(range(u, 15.6, 16.8)));
-      memory.play(!still && fade > 0.01);
-      if (memory.live) memoryIn = Math.min(1, memoryIn + dt / 1.5); // a clip that lands mid-chapter eases in
-      memoryPlane.visible = memory.live && fade > 0.003;
-      memoryMat.uniforms.uFade.value = fade * memoryIn * 0.75;
-      if (memoryPlane.visible) {
-        memoryPlane.position.copy(camera.position).add(tmp.set(130, 130, -880));
-        memoryPlane.lookAt(camera.position);
+    // sky memories ride with the camera like the nebula, so they stay far away; one chapter at a time
+    skies.forEach((s) => {
+      const [a, b, c, d] = s.u;
+      if (u > a - 2.5 && u < d) s.video.arm();
+      const fade = smooth(range(u, a, b)) * (1 - smooth(range(u, c, d)));
+      s.video.play(!still && fade > 0.01);
+      if (s.video.live) s.in = Math.min(1, s.in + dt / 1.5); // a clip that lands mid-chapter eases in
+      s.plane.visible = s.video.live && fade > 0.003;
+      s.mat.uniforms.uFade.value = fade * s.in * 0.75;
+      if (s.plane.visible) {
+        s.plane.position.copy(camera.position).add(tmp.set(s.at[0], s.at[1], -880));
+        s.plane.lookAt(camera.position);
       }
-    }
+    });
 
     if (dt > 0) speed += (Math.abs(camera.position.z - lastCamZ) / dt - speed) * 0.08; else speed *= 0.9;
     lastCamZ = camera.position.z;
@@ -778,7 +792,7 @@ export async function createUniverse({ envMap, tex, assets, renderer }) {
     video.removeAttribute('src');
     video.load();
     videoTex.dispose();
-    memory?.dispose();
+    skies.forEach((s) => s.video.dispose());
     galleryMats.forEach((m) => m.userData.live?.dispose());
     disposables.forEach((d) => d.dispose());
   }
