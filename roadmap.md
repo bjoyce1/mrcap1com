@@ -1,5 +1,10 @@
 # Identity connection
 
+# SPC Legends artist win music
+
+- [ ] Add the supplied Mr. CAP song and artist-specific selection for vertical, matching-line and artist-led wins, retaining tier fallback and the 15-second cue.
+- [ ] Test artist selection and verify in-game playback, mute and next-spin cleanup without changing rewards or publishing.
+
 # SPC Legends vertical previews and epic effects
 
 - [x] Detect three matching tiles within each reel, Wild substitution allowed, with no extra rewards.
