@@ -17,7 +17,7 @@
 
 # SPC Legends roster additions
 
-- [ ] Update Mr. CAP's portrait and win layers, then verify character displays and guest play.
+- [x] Update Mr. CAP's portrait and win layers, then verify character displays and guest play with 87 Legends tests passing.
 - [x] Add Dope-E as the eleventh Legend with uploaded artwork, cut win layers, and server roster parity.
 - [x] Update all ten character portraits, add Komodo DBX and Ganxsta Nip to both rosters, deploy account spin support, and verify loaded artwork and guest play.
 - [x] Add Murder One and Rapper K artwork to guest and server spins, collection and library, and verify gameplay.
