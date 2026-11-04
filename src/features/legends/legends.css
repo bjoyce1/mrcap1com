@@ -11,7 +11,7 @@
 .legends-world .lines-tabs{display:flex;flex-wrap:wrap;gap:4px;margin:12px 0}
 .legends-world .lines-controls{display:flex;align-items:center;gap:8px}
 .legends-world .lines-controls>button{flex-shrink:0}
-.legends-world .lines-controls label{flex:1;min-width:0;display:flex;align-items:center;gap:6px}
+.legends-world .lines-controls label{flex:1;min-width:0;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .legends-world .lines-controls select{width:100%;min-width:0;background:var(--surface);color:var(--ink);padding:8px;border:0;border-radius:6px}
 .legends-world .line-explanation{min-height:100px;margin:12px 0}
 .legends-world{color-scheme:dark;--bg:#07060c;--ink:#f9f3ff;--muted:#a998bb;--gold:#f8cd7b;--gold2:#b7722d;--pink:#ff4bbd;--cyan:#33c9fe;--purple:#a65cff;--line:#524066;--surface:#130f20;--gap:5px;--font-head:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;--font-body:Inter,system-ui,-apple-system,Arial,sans-serif; font-family:var(--font-body);background:var(--bg);color:var(--ink)}
