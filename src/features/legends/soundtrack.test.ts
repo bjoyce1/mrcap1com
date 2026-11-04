@@ -33,7 +33,7 @@ test('250 XP cycles Eternal Legacy, Respect and A.C. Chill without consecutive r
 });
 
 test('each tier maintains its own visit rotation when other tiers intervene', () => {
-  const player = new WinSoundtrack();
+  const player = new WinSoundtrack(() => 0);
   expect(player.play({ ...base, xp: 250 }, false)?.title).toBe('Eternal Legacy');
   expect(player.play({ ...base, xp: 1000 }, false)?.title).toBe("Bet'n On Me");
   expect(player.play({ ...base, xp: 250 }, false)?.title).toBe('Respect');
