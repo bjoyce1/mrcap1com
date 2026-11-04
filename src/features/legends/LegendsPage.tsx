@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, type CSSProperties } from "react";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
@@ -7,13 +7,11 @@ import { symbolUrl } from "./motion";
 import { ARTISTS, HOUSTON_HOODS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
 import { WinningLines } from './WinningLines';
-import wordmarkComplete from "@/assets/legends/wordmark-complete.png";
+import { Marquee } from "./Marquee";
 import "@fontsource/russo-one/400.css";
 import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
-
-/** Page art cut from the approved symbol sheet (scripts/build_ui_assets.py in the game package). */
-const ui = (name: string) => `/games/spc-legends/ui/${name}.webp`;
+import "./environment.css";
 
 /**
  * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game with account spins and PayPal packs.
@@ -30,21 +28,20 @@ const LegendsGame = memo(function LegendsGame() {
     <div ref={root} className="legends-world">
       <div className="lg-smoke" aria-hidden="true"><span /><span /><span /></div>
       <section className="hero lg-container">
-       <img className="hero-skyline is-left" src={ui("skyline-left")} alt="" />
-       <img className="hero-skyline is-right" src={ui("skyline-right")} alt="" />
-       <img className="hero-logo" src={ui("spc-logo")} alt="South Park Coalition, Houston, TX" width={420} height={384} />
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
-       <h1 className="hero-title"><span className="lg-wordmark"><img src={wordmarkComplete} alt="SPC Legends" width={1536} height={512} /></span></h1>
-       <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
+       <Marquee />
        <p className="hero-copy">{ARTISTS.length} legends. {HOUSTON_HOODS.length} H-Town hoods. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
        <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> {PAYLINES.length} PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
       </section>
       <section className="lg-container game-layout" data-lg="game" aria-label="SPC Legends game">
+       <div className="cab-underglow" aria-hidden="true" />
        <div className="machine-shell">
+        <div className="cab-decor" aria-hidden="true"><span className="cab-sheen" /><span className="cab-neon is-left" /><span className="cab-neon is-right" /><span className="cab-corner is-tl" /><span className="cab-corner is-tr" /><span className="cab-corner is-bl" /><span className="cab-corner is-br" /></div>
         <div className="machine-top"><div><div className="section-label">713MIXHOUSE ARCADE / 001</div><h2 className="machine-title">THE LEGENDS MACHINE</h2></div><span className="cabinet-tag">HOUSTON, TX</span></div>
+        <div className="cab-chain" aria-hidden="true" />
         <div className="supreme-player-title" data-lg="player-title" hidden><span aria-hidden="true">♛</span> SUPREME LEGENDARY <small>PLAYER TITLE</small></div>
         <div className="cabinet-inset"><div className="reel-headers"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div>
-          <div className="reel-board" data-lg="board" aria-label="Six reels with three symbols each"><div data-lg="reels" className="reels"></div></div>
+          <div className="reel-board" data-lg="board" aria-label="Six reels with three symbols each"><div data-lg="reels" className="reels"></div><div className="cab-burst" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <i key={i} style={{ "--a": `${(i / 14) * 360}deg`, "--r": `${38 + (i % 3) * 9}%` } as CSSProperties} />)}</div></div>
           <div className="board-bottom"><span><span className="board-led"></span> SIX REELS ACTIVE · TAP ANY CARD FOR BIO</span><span>SPC // 713</span></div></div>
         <div className="hud">
          <div className="hud-block"><span className="hud-label" data-lg="spins-label">WELCOME SPINS</span><strong data-lg="spins">25</strong></div>
@@ -53,7 +50,7 @@ const LegendsGame = memo(function LegendsGame() {
          <div className="hud-block"><span className="hud-label">BEST SPIN</span><strong data-lg="best">0</strong></div>
         </div>
         <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
-       <div className="controls"><button type="button" data-lg="spin" className="spin-button"><span aria-hidden="true">{'\n'}</span> <span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">{'\n'}</span></button><button type="button" data-lg="sound" className="icon-button" aria-pressed="false" title="Enable sound" aria-label="Toggle sound"><span data-lg="sound-icon" aria-hidden="true">♫̸</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button></div>
+       <div className="controls"><button type="button" data-lg="spin" className="spin-button"><span className="spin-star" aria-hidden="true">✦</span> <span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">›</span></button><button type="button" data-lg="sound" className="icon-button" aria-pressed="false" title="Turn on sound effects" aria-label="Toggle sound effects"><span data-lg="sound-icon" aria-hidden="true">🔇</span></button><button type="button" data-lg="music" className="icon-button" aria-pressed="false" title="Turn on win music" aria-label="Toggle win music"><span data-lg="music-icon" aria-hidden="true">♫̸</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button></div>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
         <WinningLines />
         <button type="button" className="buy-button" data-lg="shop-open" data-state="idle" aria-expanded="false" aria-controls="lg-shop" hidden>

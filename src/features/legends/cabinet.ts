@@ -19,6 +19,19 @@ export function buildMarquee(shell: HTMLElement, count = 28): () => void {
   return () => rows.forEach((row) => row.remove());
 }
 
+/** Pauses the ambient loops of the marquee and the cabinet while each is off screen, and everything while the tab is
+ * hidden (an `is-offscreen` class that legends.css pauses on). Returns a cleanup function. */
+export function watchOffscreen(root: HTMLElement): () => void {
+  const parts = [...root.querySelectorAll<HTMLElement>(".hero, .machine-shell")];
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle("is-offscreen", !e.isIntersecting);
+  });
+  parts.forEach((el) => io.observe(el));
+  const onVisibility = () => root.classList.toggle("is-offscreen", document.hidden);
+  document.addEventListener("visibilitychange", onVisibility);
+  return () => { io.disconnect(); document.removeEventListener("visibilitychange", onVisibility); };
+}
+
 /** After `idleMs` without a spin, a random tile catches a glint every few seconds and the spin button breathes.
  * `poke()` marks activity; `stop()` cleans up. Does nothing while motion is reduced. */
 export function attractMode(root: HTMLElement, { isBusy, reduced, idleMs = 6000 }: { isBusy: () => boolean; reduced: () => boolean; idleMs?: number }) {

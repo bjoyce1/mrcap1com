@@ -1,0 +1,38 @@
+{
+  "size": [
+    1920,
+    1185
+  ],
+  "inner": {
+    "left": 3.021,
+    "top": 4.895,
+    "width": 93.958,
+    "height": 90.295
+  },
+  "title": {
+    "left": 19.792,
+    "top": 35.274,
+    "width": 60.521,
+    "height": 33.249
+  },
+  "pieces": {
+    "crown": {
+      "left": 38.542,
+      "top": 1.181,
+      "width": 23.021,
+      "height": 31.392
+    },
+    "ribbon-left": {
+      "left": 3.229,
+      "top": 15.865,
+      "width": 32.292,
+      "height": 21.772
+    },
+    "ribbon-right": {
+      "left": 60.312,
+      "top": 15.359,
+      "width": 36.458,
+      "height": 22.278
+    }
+  }
+}

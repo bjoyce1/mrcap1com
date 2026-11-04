@@ -295,5 +295,15 @@ export class SynthSound {
   /** Phone vibration, only while sound is on (the same switch means "sound and feel"). */
   feel(pattern:number|number[]){if(this.enabled)try{navigator.vibrate?.(pattern);}catch{/* not supported */}}
   tease(){[440,554,659].forEach((note,i)=>this.tone(note,.16,{wave:'sine',gain:.02,delay:i*.07}));this.riser();}
+  /** The lever pull: a short rising sweep as the reels wind up. */
+  spinStart(){this.riser(.32);this.tone(196,.12,{wave:'triangle',gain:.02});}
+  /** A new Legend joins the collection: a bright two-note chime. */
+  unlock(){this.tone(1319,.18,{wave:'sine',gain:.022});this.tone(1760,.28,{wave:'sine',gain:.02,delay:.09});}
+  /** Celebration stinger for level 2 (bonus or major) and level 3 (Unity, Supreme, Sweep). */
+  stinger(level:number){
+    const notes=level>=3?[392,523,659,784,1047]:[440,554,659];
+    notes.forEach((note,i)=>this.tone(note,.3,{wave:'sawtooth',gain:.012,delay:.04+i*.05}));
+    if(level>=3)this.riser(.6);
+  }
   win(major=false){const notes=major?[392,523,659,784,988]:[392,494,587];notes.forEach((note,i)=>this.tone(note,.25,{wave:'triangle',gain:.033,delay:i*.08}));}
 }

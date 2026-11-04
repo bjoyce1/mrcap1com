@@ -9,7 +9,8 @@ import {renderBoard,animateReels,animateCounter,SynthSound,PaylineOverlay,HitSho
 import {BigWin} from './bigwin';
 import {isArtist} from './hits';
 import {preloadLayers,layersReady} from './layers';
-import {buildMarquee,attractMode} from './cabinet';
+import {buildMarquee,attractMode,watchOffscreen} from './cabinet';
+import {createStage,celebrationLevel} from './stage';
 import {sweepTease,tiersFor} from './fx';
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
@@ -50,6 +51,11 @@ function storeOrder(orderID:string|null){try{if(userId){if(orderID)localStorage.
 const buyButton=createPurchaseButton($('shop-open'),{reducedMotion:()=>userReducedMotion});
 const motionButton=$('motion');
 const attract=attractMode(root,{isBusy:()=>busy,reduced:()=>userReducedMotion});
+// Where the spin really is (idle → spin-start → spinning → stopping → evaluating → celebrating → idle); the cabinet's
+// lighting follows it in CSS. Ambient loops pause while their part of the page is off screen or the tab is hidden.
+const stage=createStage(root),stopWatching=watchOffscreen(root);
+// Win songs have their own switch, apart from the sound effects; both start off.
+let musicOn=false;
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
 // While reels move the spin button becomes a stop button; it only shortens the animation, never the outcome.
@@ -114,6 +120,7 @@ async function spin(){
   if(userId&&totalSpins(balance)<=0){openShop(true);return;}
   root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:null}));
   busy=true;buttonState();paylines.clear();hits.clear();bigWin.close();attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
+  stage.set('spin-start');audio.spinStart();
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
   try{
@@ -134,13 +141,15 @@ async function spin(){
     // Teases only lengthen and light reels that have not landed yet; the board above is already decided.
     const bonusTease=anticipationReels(target),sweepHint=sweepTease(target);
     const anticipate:Tease[]=target.map((_,i)=>sweepHint.reels[i]?'sweep':bonusTease[i]?'bonus':false);
-    await animateReels($('reels'),prior,target,{reducedMotion:userReducedMotion,anticipate,teaseColor:sweepHint.artist?SYMBOL_MAP[sweepHint.artist]?.color:'',control:reelControl,onReady:buttonState,onStop:i=>audio.stop(i),onAnticipate:kind=>{
+    stage.set('spinning');
+    await animateReels($('reels'),prior,target,{reducedMotion:userReducedMotion,anticipate,teaseColor:sweepHint.artist?SYMBOL_MAP[sweepHint.artist]?.color:'',control:reelControl,onReady:buttonState,onStop:i=>{audio.stop(i);if(i===0)stage.set('stopping');},onAnticipate:kind=>{
       audio.tease();
       if(kind==='sweep')setResult('LEGEND SWEEP INCOMING…',`${SYMBOL_MAP[sweepHint.artist as string]?.name} has landed on every reel so far.`,'HOLD UP');
       else setResult('TWO 713s LANDED…','One more 713 anywhere unlocks the Houston bonus.','HOLD UP');
     }});
     root.classList.remove('lg-spinning');
     if(unmounted||userId!==player)return;
+    stage.set('evaluating');
     const oldXP=xp;
     xp+=outcome.xp;best=Math.max(best,outcome.xp);spinsTaken+=1;activeBoard=target;balance=answer.balance;
     collection=[...new Set([...collection,...answer.newCharacters])];
@@ -153,13 +162,18 @@ async function spin(){
     renderBoard($('reels'),target,outcome.hitCells);
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
     paylines.show(outcome.wins,{reducedMotion:userReducedMotion,autoCycle:false});
+    // The celebration level comes from the real outcome; the cabinet stays lit until the hit show and any Big Win close.
+    const level=celebrationLevel(outcome);
+    if(level){stage.set('celebrating',level);if(level>1)audio.stinger(level);}
     hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{
       paylines.cycle();
       // Big Win show for 500+ XP, SPC Unity and every Legend Sweep (all of those reach a tier).
-      void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion});
+      void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion})
+        .then(()=>{if(stage.get()==='celebrating')stage.set('idle');});
     }});
     if(outcome.xp>0)flashMarquee(isMajor?3200:1400);
     const fresh=answer.newCharacters.length;
+    if(fresh)window.setTimeout(()=>audio.unlock(),450);
     if(outcome.xp>0){
       floatText($('board'),`+${outcome.xp.toLocaleString()} XP`,{reducedMotion:userReducedMotion});
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
@@ -168,8 +182,8 @@ async function spin(){
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
       setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
-      const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:outcome.xp},audio.enabled);
-      if(track&&audio.enabled){const sub=$('result').querySelector('span');if(sub)sub.textContent+=` • NOW PLAYING: ${track.title}`;}
+      const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:outcome.xp},musicOn);
+      if(track&&musicOn){const sub=$('result').querySelector('span');if(sub)sub.textContent+=` • NOW PLAYING: ${track.title}`;}
     }else{
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
     }
@@ -177,7 +191,7 @@ async function spin(){
     root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:{board:target,wins:outcome.wins,xp:outcome.xp}}));
     if(userId&&!totalSpins(balance))openShop(true);
   }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
-  finally{busy=false;$('spin').classList.remove('is-spinning');root.classList.remove('lg-spinning');attract.poke();buttonState();}
+  finally{busy=false;$('spin').classList.remove('is-spinning');root.classList.remove('lg-spinning');attract.poke();buttonState();if(stage.get()!=='celebrating')stage.set('idle');}
 }
 
 // ----- Spin packs: $1 for 25 spins through the site's PayPal account -----
@@ -354,7 +368,8 @@ $('shop-open').addEventListener('click',()=>{
   buyButton.setState('processing');
   void openShop(true).then(ok=>buyButton.setState(ok?'idle':'error'));
 });
-$('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);if(!audio.enabled)soundtrack.stopNow();$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'♫':'♫̸';$('sound').title=audio.enabled?'Mute sound':'Enable sound';if(audio.enabled)audio.tone(523,.14);});
+$('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'🔊':'🔇';$('sound').title=audio.enabled?'Mute sound effects':'Turn on sound effects';if(audio.enabled)audio.tone(523,.14);});
+$('music').addEventListener('click',()=>{musicOn=!musicOn;if(!musicOn)soundtrack.stopNow();$('music').setAttribute('aria-pressed',String(musicOn));$('music-icon').textContent=musicOn?'♫':'♫̸';$('music').title=musicOn?'Mute win music':'Turn on win music';});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
 // The daily allowance rolls over at Houston midnight; re-read the balance when the tab comes back.
@@ -368,7 +383,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;soundtrack.stopNow();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();clearTimeout(winningTimer);
+  unmounted=true;soundtrack.stopNow();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();clearTimeout(winningTimer);
   root.removeEventListener('lg-inspect-line',onInspectLine);
   void paypalButtons?.close?.().catch(()=>undefined);
   root.removeEventListener('click',onRootClick);
