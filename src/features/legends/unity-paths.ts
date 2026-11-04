@@ -41,13 +41,27 @@ export function inspectWinningLines(board: string[][], wins: SpinWin[], credited
   });
   const standard: InspectedLine[] = PAYLINES.map((rows, i) => {
     const win = wins.find(w => w.type === 'line' && w.payline === i + 1);
-    const match = lineMatch(rows.map((r, c) => board[c][r]));
+    const symbols = rows.map((r, c) => board[c][r]);
+    const match = lineMatch(symbols);
+    const target = symbols.find(id => id !== 'wild' && id !== 'double-wild');
+    const brokenAt = target ? symbols.findIndex(id => id !== target && id !== 'wild' && id !== 'double-wild') : -1;
+    const run = brokenAt < 0 ? 6 : brokenAt;
+    const sequence = symbols.map((id, c) => `R${c + 1} row ${rows[c] + 1}: ${SYMBOL_MAP[id].name}`).join(' → ');
+    const wildCells = rows.flatMap((r, c) => (symbols[c] === 'wild' || symbols[c] === 'double-wild') && c < (win?.count ?? run) ? [`reel ${c + 1}, row ${r + 1}`] : []);
+    const substitution = target && wildCells.length ? ` Wild substitutes for ${SYMBOL_MAP[target].name} at ${wildCells.join('; ')}.` : '';
     const cells = win?.cells ?? rows.map((r, c) => `${c}:${r}`);
     return { id: `line-${i + 1}`, label: `Matching payline ${i + 1}`, cells, accepted: !!win,
-      explanation: win ? `${win.count} matching ${SYMBOL_MAP[win.symbol ?? '']?.name} symbols from reel 1${win.wildMultiplier && win.wildMultiplier > 1 ? ` (×${win.wildMultiplier} Double Wild)` : ''}. +${win.xp} base XP. The illuminated cells are the actual paid run. Standard matching paylines are separate from Unity.` : match ? 'The matching symbol has no standard XP award. Not an SPC Unity decision.' : 'Rejected: fewer than three matching symbols from reel 1. Wilds substitute, but specials cannot form paid runs. This fixed payline is separate from Unity adjacency rules.',
+      explanation: `${sequence}. ${win ? `${win.count} matching ${SYMBOL_MAP[win.symbol ?? '']?.name} symbols from reel 1${win.wildMultiplier && win.wildMultiplier > 1 ? ` (×${win.wildMultiplier} Double Wild)` : ''}. +${win.xp} base XP. The illuminated cells are the actual paid run.` : match ? 'Rejected: this symbol has no standard XP award.' : !target ? 'Rejected: Wilds cannot win alone; a real artist or music symbol is required.' : target === 'bonus' ? 'Rejected: 713 is a scatter bonus, not a matching-symbol payline.' : `Rejected: the ${SYMBOL_MAP[target].name} run stops at ${run} matching positions${brokenAt >= 0 ? `; reel ${brokenAt + 1} contains ${SYMBOL_MAP[symbols[brokenAt]].name}` : ''}. At least three consecutive matching positions from reel 1 are required.`}${substitution} Standard matching paylines are separate from Unity.`,
       win: win ?? { type: 'unity', xp: 0, cells },
     };
   });
+  const wilds = board.flatMap((col, c) => col.flatMap((id, r) => {
+    if (id !== 'wild' && id !== 'double-wild') return [];
+    const cell = `${c}:${r}`;
+    const crossing = standard.filter((_, i) => PAYLINES[i][c] === r);
+    const awarded = wins.filter(w => w.type === 'line' && w.cells.includes(cell));
+    return [{ cell, explanation: `${SYMBOL_MAP[id].name} at reel ${c + 1}, row ${r + 1}: ${awarded.length ? `contributed to matching paylines ${awarded.map(w => w.payline).join(', ')}` : `no awarded matching run through this tile (${crossing.length} fixed paylines checked)`}. Wilds substitute for artist or music symbols, but need at least three consecutive matches starting on reel 1. They cannot replace a real artist for Unity or Supreme.` }];
+  }));
   const rejected: InspectedLine[] = analysis.rejected.map(p => ({ id: `reject-${p.id}`, label: `Rejected route [${p.rows.join(', ')}]`, cells: p.cells, accepted: false, explanation: p.reasons.join(' '), win: { type: 'unity', xp: 0, cells: p.cells } }));
-  return { qualifying, standard, rejected, awards, creditedXp, multiplier };
+  return { qualifying, standard, rejected, awards, creditedXp, multiplier, wilds };
 }
