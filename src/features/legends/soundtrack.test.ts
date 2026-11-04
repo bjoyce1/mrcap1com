@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { describe, expect, it, test } from 'vitest';
 import { pickWinSong, WIN_CUE_SECONDS, WIN_SONGS, WinSoundtrack, winSongTier } from './soundtrack';
 
 const base = { supreme: false, unity: false, sweep: false, major: false, bonus: false, xp: 100 };
