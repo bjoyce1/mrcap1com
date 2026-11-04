@@ -3,6 +3,7 @@ import {ALL_SYMBOL_MAP,SYMBOL_MAP,PAYLINES} from './config';
 import {createBoard} from './engine';
 import {HIT_STEP_MS,hitSchedule,isArtist,type HitStep,type HitWin} from './hits';
 import {layersReady,type Layers} from './layers';
+import { useAudioAnalyzerStore } from '@/stores/audioAnalyzerStore';
 /** Set by animateReels while reels move; calling skip() lands every reel at its final stop. */
 export type ReelControl={skip?:(()=>void)|null};
 /** The parts of an engine win the overlay draws. */
@@ -142,7 +143,7 @@ export class PaylineOverlay {
   }
   /** autoCycle=false draws the lines dim and waits for focus()/cycle(), so the hit show can lead. */
   show(wins:Win[],{reducedMotion=false,autoCycle=true}={}){
-    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='sweep');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
+    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='sweep'||w.type==='vertical');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
   }
   focus(win:Win){this.paths.forEach(p=>this.light(p,p.win===win));}
   cycle(){this.autoCycle=true;this.draw();}
@@ -258,15 +259,33 @@ export function animateCounter(el,from,to,{duration=650,reducedMotion=false}={})
 }
 export class SynthSound {
   enabled:boolean;ctx:AudioContext|null;
+  private master:GainNode|null=null;
+  private wind:{source:AudioBufferSourceNode;gain:GainNode}|null=null;
   constructor(){this.enabled=false;this.ctx=null;}
-  setEnabled(value){this.enabled=!!value;if(this.enabled){this.ctx??=new (window.AudioContext||(window as unknown as {webkitAudioContext:typeof AudioContext}).webkitAudioContext)();this.ctx.resume().catch(()=>{});}}
+  setEnabled(value){this.enabled=!!value;if(this.enabled){this.ctx=useAudioAnalyzerStore.getState().getContext();if(!this.master){this.master=this.ctx.createGain();this.master.connect(this.ctx.destination);}this.master.gain.setValueAtTime(1,this.ctx.currentTime);this.ctx.resume().catch(()=>{});}else{this.endSpin();if(this.ctx)this.master?.gain.setValueAtTime(0,this.ctx.currentTime);}}
+  private noise(seconds:number,frequency:number,endFrequency:number,gain:number,loop=false){
+    if(!this.enabled||!this.ctx||!this.master)return null;
+    const ctx=this.ctx,t=ctx.currentTime,buffer=ctx.createBuffer(1,Math.ceil(ctx.sampleRate*seconds),ctx.sampleRate),data=buffer.getChannelData(0);
+    for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1);
+    const source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),volume=ctx.createGain();source.buffer=buffer;source.loop=loop;
+    filter.type='bandpass';filter.Q.value=loop ? .6 : 3;filter.frequency.setValueAtTime(frequency,t);filter.frequency.exponentialRampToValueAtTime(endFrequency,t+seconds);
+    volume.gain.setValueAtTime(.0001,t);volume.gain.linearRampToValueAtTime(gain,t+.05);
+    if(!loop)volume.gain.exponentialRampToValueAtTime(.0001,t+seconds);
+    source.connect(filter);filter.connect(volume);volume.connect(this.master);source.start(t);
+    if(!loop)source.stop(t+seconds+.02);
+    source.onended=()=>{source.disconnect();filter.disconnect();volume.disconnect();};
+    return {source,gain:volume};
+  }
+  endSpin(){if(!this.wind)return;try{this.wind.source.stop();}catch{/* already stopped */}this.wind=null;}
+  explode(){this.noise(.55,1600,70,.085);this.thump();this.feel([20,25,35]);}
+  destroy(){this.endSpin();this.master?.disconnect();this.master=null;this.enabled=false;}
   tone(freq:number,duration=.09,{wave='sine' as OscillatorType,gain=.026,delay=0}={}){
     if(!this.enabled||!this.ctx)return;
     const t=this.ctx.currentTime+delay,osc=this.ctx.createOscillator(),vol=this.ctx.createGain();
     osc.type=wave;osc.frequency.setValueAtTime(freq,t);
     vol.gain.setValueAtTime(0,t);vol.gain.linearRampToValueAtTime(gain,t+.01);
     vol.gain.exponentialRampToValueAtTime(.0001,t+duration);
-    osc.connect(vol);vol.connect(this.ctx.destination);osc.start(t);osc.stop(t+duration+.015);
+    osc.connect(vol);vol.connect(this.master??this.ctx.destination);osc.start(t);osc.stop(t+duration+.015);
   }
   /** A short pitch-dropping bass hit, the "thump" of a reel landing. */
   thump(){
@@ -274,9 +293,9 @@ export class SynthSound {
     const t=this.ctx.currentTime,osc=this.ctx.createOscillator(),vol=this.ctx.createGain();
     osc.type='sine';osc.frequency.setValueAtTime(130,t);osc.frequency.exponentialRampToValueAtTime(48,t+.14);
     vol.gain.setValueAtTime(.09,t);vol.gain.exponentialRampToValueAtTime(.0001,t+.18);
-    osc.connect(vol);vol.connect(this.ctx.destination);osc.start(t);osc.stop(t+.2);
+    osc.connect(vol);vol.connect(this.master??this.ctx.destination);osc.start(t);osc.stop(t+.2);
   }
-  stop(n){this.thump();this.tone(260+n*73,.09,{wave:'triangle',gain:.022});this.feel(12);}
+  stop(n){this.noise(.22,2200+n*110,550,.025);this.thump();this.tone(260+n*73,.09,{wave:'triangle',gain:.022});this.feel(12);if(n===5)this.endSpin();}
   /** A filtered rising sweep under an anticipation tease. */
   riser(seconds=.9){
     if(!this.enabled||!this.ctx)return;
@@ -284,7 +303,7 @@ export class SynthSound {
     osc.type='sawtooth';osc.frequency.setValueAtTime(180,t);osc.frequency.exponentialRampToValueAtTime(880,t+seconds);
     filter.type='lowpass';filter.frequency.setValueAtTime(600,t);filter.frequency.exponentialRampToValueAtTime(3200,t+seconds);
     vol.gain.setValueAtTime(0,t);vol.gain.linearRampToValueAtTime(.022,t+seconds*.8);vol.gain.exponentialRampToValueAtTime(.0001,t+seconds+.1);
-    osc.connect(filter);filter.connect(vol);vol.connect(this.ctx.destination);osc.start(t);osc.stop(t+seconds+.15);
+    osc.connect(filter);filter.connect(vol);vol.connect(this.master??this.ctx.destination);osc.start(t);osc.stop(t+seconds+.15);
   }
   /** The Big Win count-up tick. */
   tick(){this.tone(1100+Math.random()*300,.025,{wave:'square',gain:.006});}
@@ -297,7 +316,7 @@ export class SynthSound {
   feel(pattern:number|number[]){if(this.enabled)try{navigator.vibrate?.(pattern);}catch{/* not supported */}}
   tease(){[440,554,659].forEach((note,i)=>this.tone(note,.16,{wave:'sine',gain:.02,delay:i*.07}));this.riser();}
   /** The lever pull: a short rising sweep as the reels wind up. */
-  spinStart(){this.riser(.32);this.tone(196,.12,{wave:'triangle',gain:.02});}
+  spinStart(){this.endSpin();this.wind=this.noise(1,260,1800,.018,true);this.riser(.32);this.tone(196,.12,{wave:'triangle',gain:.02});}
   /** A new Legend joins the collection: a bright two-note chime. */
   unlock(){this.tone(1319,.18,{wave:'sine',gain:.022});this.tone(1760,.28,{wave:'sine',gain:.02,delay:.09});}
   /** Celebration stinger for level 2 (bonus or major) and level 3 (Unity, Supreme, Sweep). */

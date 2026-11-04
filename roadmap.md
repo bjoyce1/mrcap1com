@@ -1,5 +1,12 @@
 # Identity connection
 
+# SPC Legends vertical previews and epic effects
+
+- [x] Detect three matching tiles within each reel, Wild substitution allowed, with no extra rewards.
+- [x] Add vertical inspection and explosive tile/reel celebrations with reduced-motion protection.
+- [x] Add spinning wind and tire-screech stops respecting mute and cleanup.
+- [x] Verify 126 Legends tests, exact vertical highlights, guest wind and six brake sounds, reduced motion and mobile layout without publishing.
+
 # SPC Legends XP music and Wild clarity
 
 - [x] Rotate distinct album song pools by credited XP tier, retaining the 15-second cue and sound controls.

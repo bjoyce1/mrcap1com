@@ -18,6 +18,8 @@ import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 import {createPurchaseButton} from './purchase-button';
 import {renderSupremePrize} from './supreme-prize';
 import {WinSoundtrack} from './soundtrack';
+import {verticalPreviews} from './vertical-preview';
+import {ImpactEffects} from './impact-effects';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
@@ -30,6 +32,7 @@ const $=(id:string):any=>root.querySelector(`[data-lg="${id}"]`);
 const respectsReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 const audio=new SynthSound(),paylines=new PaylineOverlay($('board')),hits=new HitShow($('board')),reelControl:ReelControl={};
 const soundtrack=new WinSoundtrack(),bigWin=new BigWin(root,audio),removeMarquee=buildMarquee(root.querySelector('.machine-shell') as HTMLElement);
+const impacts=new ImpactEffects($('board'));
 // Artists collected on the latest spin get a card flip in the collection panel.
 let justFound=new Set<string>();
 let userId:string|null=null,loading=true,busy=false,userReducedMotion=respectsReduced.matches;
@@ -119,7 +122,7 @@ async function spin(){
   const player=userId;
   if(userId&&totalSpins(balance)<=0){openShop(true);return;}
   root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:null}));
-  busy=true;buttonState();paylines.clear();hits.clear();bigWin.close();attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
+  busy=true;buttonState();paylines.clear();hits.clear();impacts.clear();bigWin.close();attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
   stage.set('spin-start');audio.spinStart();
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
@@ -160,6 +163,8 @@ async function spin(){
     if(supreme&&!badges.includes('supreme-legends'))badges.push('supreme-legends');
     justFound=new Set(answer.newCharacters);
     renderBoard($('reels'),target,outcome.hitCells);
+    const vertical=verticalPreviews(target);
+    vertical.forEach(v=>$('reels').children[v.reel]?.classList.add('vertical-preview'));
     // Supreme Legendary is a Legend on every reel, not a line: each of its six Legends wears a crown instead.
     outcome.wins.find(w=>w.type==='supreme')?.cells.forEach(cell=>$('reels').querySelector(`[data-cell="${cell}"]`)?.classList.add('is-supreme'));
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
@@ -167,8 +172,9 @@ async function spin(){
     // The celebration level comes from the real outcome; the cabinet stays lit until the hit show and any Big Win close.
     const level=celebrationLevel(outcome),hit=celebrationHit(outcome);
     if(level){stage.set('celebrating',level,hit);if(level>1)audio.stinger(level);}
-    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>{paylines.focus(w);stage.setHit(hitKindForWin(w),SYMBOL_MAP[w.symbol as string]?.color);},onDone:()=>{stage.setHit(hit);
+    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>{paylines.focus(w);stage.setHit(hitKindForWin(w),SYMBOL_MAP[w.symbol as string]?.color);if(w.type==='bonus'||w.type==='sweep'||w.type==='unity'||(w.type==='line'&&(w.count??0)>=5)){impacts.burst(w.cells,userReducedMotion);audio.explode();}},onDone:()=>{stage.setHit(hit);
       paylines.cycle();
+      if(vertical.length){impacts.burst(vertical.flatMap(v=>v.cells),userReducedMotion,true);audio.explode();paylines.show([...outcome.wins,...vertical],{reducedMotion:userReducedMotion});}
       // Big Win show for 1,000+ XP; every Legend Sweep reaches it (see fx.ts).
       void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion})
         .then(()=>{if(stage.get()==='celebrating')stage.set('idle');});
@@ -190,10 +196,11 @@ async function spin(){
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
     }
     refresh(oldXP);
+    if(vertical.length){$('result-desc').textContent+=` • VERTICAL PREVIEW: ${vertical.map(v=>`reel ${v.reel+1}`).join(', ')} • 0 extra XP`;}
     root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:{board:target,wins:outcome.wins,xp:outcome.xp}}));
     if(userId&&!totalSpins(balance))openShop(true);
   }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
-  finally{busy=false;$('spin').classList.remove('is-spinning');root.classList.remove('lg-spinning');attract.poke();buttonState();if(stage.get()!=='celebrating')stage.set('idle');}
+  finally{audio.endSpin();busy=false;$('spin').classList.remove('is-spinning');root.classList.remove('lg-spinning');attract.poke();buttonState();if(stage.get()!=='celebrating')stage.set('idle');}
 }
 
 // ----- Spin packs: $1 for 25 spins through the site's PayPal account -----
@@ -352,11 +359,12 @@ const onKeyDown=(e:KeyboardEvent)=>{if(e.key==='Escape')closeSpotlight();};
 const onInspectLine=(event:Event)=>{
   if(busy)return;
   const win=(event as CustomEvent<SpinWin>).detail;
-  hits.clear();bigWin.close();
+  hits.clear();impacts.clear();bigWin.close();
   const selected=new Set(win.cells);
   $('reels').classList.add('has-wins');
   root.querySelectorAll<HTMLElement>('.reel-window [data-cell]').forEach(tile=>tile.classList.toggle('match',selected.has(tile.dataset.cell??'')));
   paylines.show([win],{reducedMotion:userReducedMotion,autoCycle:false});paylines.focus(win);
+  if(win.type==='vertical'){impacts.burst(win.cells,userReducedMotion,true);audio.explode();}
 };
 root.addEventListener('lg-inspect-line',onInspectLine);
 root.addEventListener('click',onRootClick);
@@ -385,7 +393,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;soundtrack.stopNow();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();clearTimeout(winningTimer);
+  unmounted=true;soundtrack.stopNow();audio.destroy();impacts.destroy();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();clearTimeout(winningTimer);
   root.removeEventListener('lg-inspect-line',onInspectLine);
   void paypalButtons?.close?.().catch(()=>undefined);
   root.removeEventListener('click',onRootClick);

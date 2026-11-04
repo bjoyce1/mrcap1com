@@ -1,6 +1,7 @@
 import { ARTISTS, PAYLINES, SYMBOL_MAP } from './config';
 import { lineMatch, validateBoard } from './engine';
 import type { SpinWin } from './account';
+import { verticalPreviews } from './vertical-preview';
 
 const artists = new Set(ARTISTS.map(a => a.id));
 export type UnityPath = { id: string; rows: number[]; cells: string[]; symbols: string[]; reasons: string[] };
@@ -63,5 +64,9 @@ export function inspectWinningLines(board: string[][], wins: SpinWin[], credited
     return [{ cell, explanation: `${SYMBOL_MAP[id].name} at reel ${c + 1}, row ${r + 1}: ${awarded.length ? `contributed to matching paylines ${awarded.map(w => w.payline).join(', ')}` : `no awarded matching run through this tile (${crossing.length} fixed paylines checked)`}. Wilds substitute for artist or music symbols, but need at least three consecutive matches starting on reel 1. They cannot replace a real artist for Unity or Supreme.` }];
   }));
   const rejected: InspectedLine[] = analysis.rejected.map(p => ({ id: `reject-${p.id}`, label: `Rejected route [${p.rows.join(', ')}]`, cells: p.cells, accepted: false, explanation: p.reasons.join(' '), win: { type: 'unity', xp: 0, cells: p.cells } }));
-  return { qualifying, standard, rejected, awards, creditedXp, multiplier, wilds };
+  const vertical: InspectedLine[] = verticalPreviews(board).map(win => ({
+    id: `vertical-${win.reel}`, label: `Reel ${win.reel + 1} vertical (preview)`, cells: win.cells, accepted: true, win,
+    explanation: `Three ${SYMBOL_MAP[win.symbol].name} matching positions from top to bottom on reel ${win.reel + 1}, with Wild substitution allowed. Preview only: 0 extra XP, no extra spins or rewards. Separate from credited matching paylines and Unity.`,
+  }));
+  return { qualifying, standard, rejected, vertical, awards, creditedXp, multiplier, wilds };
 }
