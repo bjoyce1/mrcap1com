@@ -1,10 +1,21 @@
-.legends-world .impact-layer{position:absolute;inset:0;z-index:8;pointer-events:none;overflow:hidden;border-radius:inherit}
-.legends-world .impact-ring{position:absolute;border-radius:50%;box-shadow:inset 0 0 0 3px var(--gold),0 0 20px var(--gold);animation:lg-impact-ring 850ms ease-out both}
-.legends-world .impact-shard{position:absolute;width:9px;height:15px;background:var(--lg-gold);box-shadow:0 0 8px var(--gold);clip-path:polygon(0 0,100% 30%,65% 100%);animation:lg-impact-shard 900ms ease-out both}
-.legends-world .vertical-beam{position:absolute;background:var(--lg-gold);box-shadow:0 0 16px var(--gold),0 0 30px var(--gold);transform-origin:50% 100%;animation:lg-vertical-beam 1050ms ease-out both}
-.legends-world .reel-window.vertical-preview{box-shadow:inset 0 0 0 3px var(--gold),0 0 18px var(--gold)}
-@keyframes lg-impact-ring{0%{opacity:0;transform:scale(.3)}15%{opacity:.85}100%{opacity:0;transform:scale(2.7)}}
-@keyframes lg-impact-shard{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.5)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--turn)) scale(.3)}}
-@keyframes lg-vertical-beam{0%{opacity:0;transform:scaleY(0)}20%{opacity:.9;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1) scaleX(2)}}
+/* SPC hit language: gold chain rings, diamond shards, purple lightning and a crown on vertical stacks. */
+.legends-world .impact-layer{position:absolute;inset:0;z-index:8;pointer-events:none;overflow:hidden;border-radius:inherit;--spc-violet:#9b4dff;--spc-ice:#e9f6ff}
+.legends-world .impact-ring{position:absolute;border-radius:50%;border:3px dashed #ffd76a;box-shadow:0 0 0 2px rgb(155 77 255/.55),0 0 22px #ffd76a,inset 0 0 18px rgb(155 77 255/.6);animation:lg-impact-ring 850ms cubic-bezier(.2,.8,.3,1) both}
+.legends-world .impact-shard{position:absolute;width:10px;height:10px;margin:-5px;background:var(--lg-gold);box-shadow:0 0 10px #ffd76a;clip-path:polygon(50% 0,100% 40%,50% 100%,0 40%);animation:lg-impact-shard 900ms cubic-bezier(.15,.7,.3,1) both}
+.legends-world .impact-shard.gem{background:linear-gradient(135deg,var(--spc-ice),#b9a4ff 55%,var(--spc-violet));box-shadow:0 0 10px var(--spc-violet)}
+.legends-world .vertical-column{position:absolute;transform-origin:50% 100%;animation:lg-vertical-rise 1400ms cubic-bezier(.2,.8,.2,1) both;
+  background:linear-gradient(90deg,transparent,rgb(155 77 255/.35) 20%,rgb(255 215 106/.18) 50%,rgb(155 77 255/.35) 80%,transparent);
+  box-shadow:inset 3px 0 0 -1px #ffd76a,inset -3px 0 0 -1px #ffd76a,0 0 34px rgb(155 77 255/.55)}
+.legends-world .vertical-column::before,.legends-world .vertical-column::after{content:"";position:absolute;top:0;bottom:0;width:6px;background:repeating-linear-gradient(180deg,#ffe7a0 0 7px,#8f5512 7px 9px,transparent 9px 12px);opacity:.9}
+.legends-world .vertical-column::before{left:-3px}.legends-world .vertical-column::after{right:-3px}
+.legends-world .vertical-bolt{position:absolute;left:50%;top:0;bottom:0;width:22%;transform:translateX(-50%);background:linear-gradient(180deg,var(--spc-ice),#c9a6ff 40%,#ffd76a);filter:drop-shadow(0 0 8px var(--spc-violet)) drop-shadow(0 0 14px #ffd76a);
+  clip-path:polygon(55% 0,20% 38%,52% 40%,15% 72%,48% 70%,30% 100%,85% 60%,52% 62%,82% 34%,50% 33%,80% 0);animation:lg-vertical-bolt 1400ms steps(1) both}
+.legends-world .vertical-crown{position:absolute;left:50%;top:6%;transform:translateX(-50%);color:#ffd76a;text-shadow:0 0 10px #ffd76a,0 0 22px var(--spc-violet);font-style:normal;line-height:1;animation:lg-vertical-crown 1400ms ease-out both}
+.legends-world .reel-window.vertical-preview{box-shadow:inset 0 0 0 3px #ffd76a,inset 0 0 26px rgb(155 77 255/.55),0 0 22px rgb(255 215 106/.7)}
+@keyframes lg-impact-ring{0%{opacity:0;transform:scale(.3) rotate(0)}15%{opacity:.9}100%{opacity:0;transform:scale(2.5) rotate(60deg)}}
+@keyframes lg-impact-shard{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.5)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--turn)) scale(.35)}}
+@keyframes lg-vertical-rise{0%{opacity:0;transform:scaleY(0)}18%{opacity:1;transform:scaleY(1)}75%{opacity:.85}100%{opacity:0;transform:scaleY(1) scaleX(1.25)}}
+@keyframes lg-vertical-bolt{0%,12%{opacity:0}14%,22%{opacity:1}24%,30%{opacity:.2}32%,46%{opacity:1}48%,100%{opacity:0}}
+@keyframes lg-vertical-crown{0%,20%{opacity:0;transform:translate(-50%,40%) scale(.4)}40%{opacity:1;transform:translate(-50%,0) scale(1.15)}80%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-20%) scale(1)}}
 .legends-world.reduce-motion .impact-layer{display:none}
 @media(prefers-reduced-motion:reduce){.legends-world .impact-layer{display:none}}
