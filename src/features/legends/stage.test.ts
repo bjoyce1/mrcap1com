@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { celebrationLevel, createStage } from "./stage";
+import { celebrationHit, celebrationLevel, createStage, hitKindForWin } from "./stage";
 import { evaluateBoard } from "./engine";
 
 describe("celebrationLevel", () => {
@@ -48,5 +48,13 @@ describe("createStage", () => {
     stage.set("spinning");
     expect(stage.set("spin-start")).toBe(true);
     expect(stage.get()).toBe("spin-start");
+    expect(celebrationHit({ xp: 0, wins: [] })).toBe("none");
+    expect(celebrationHit({ xp: 50, wins: [{ type: "line" }] })).toBe("line");
+    expect(celebrationHit({ xp: 100, wins: [{ type: "line", wildMultiplier: 2 }] })).toBe("double-wild");
+    expect(celebrationHit({ xp: 300, wins: [{ type: "bonus" }] })).toBe("bonus");
+    expect(celebrationHit({ xp: 100, wins: [{ type: "line" }, { type: "multiplier" }] })).toBe("multiplier");
+    expect(celebrationHit({ xp: 750, wins: [{ type: "supreme" }, { type: "unity" }] })).toBe("unity");
+    expect(celebrationHit({ xp: 25000, wins: [{ type: "sweep" }] })).toBe("sweep");
+    expect(hitKindForWin({ type: "line", wildMultiplier: 2 })).toBe("double-wild");
   });
 });

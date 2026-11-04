@@ -12,8 +12,9 @@ const place = (b: Box): CSSProperties => ({ left: `${b.left}%`, top: `${b.top}%`
 // Highway lanes, as points in percent of the artwork, traced on its red light trails (the road dips to the bottom
 // centre and climbs away to the upper right). Tail lights head away up the ramp, headlights come down it.
 const LANES: Lane[] = [
-  { points: [[40, 83.5], [45, 84.5], [50, 87.5], [55, 89], [60, 89.5], [65, 89], [70, 87.5], [74, 85.5], [78, 82], [82, 78], [86, 73.5], [89, 70], [92, 67]], kind: "tail", cars: 4, ms: 9000 },
-  { points: [[92.5, 69], [89, 72], [86, 75.5], [82, 80], [78, 84], [74, 87.5], [70, 89.5], [65, 91], [60, 91.5], [55, 91], [50, 89.5], [45, 86.5], [40, 85.5]], kind: "head", cars: 3, ms: 8000 },
+  { points: [[40, 83.5], [45, 84.5], [50, 87.5], [55, 89], [60, 89.5], [65, 89], [70, 87.5], [74, 85.5], [78, 82], [82, 78], [86, 73.5], [89, 70], [92, 67]], kind: "tail", cars: 6, ms: 7600 },
+  { points: [[92.5, 69], [89, 72], [86, 75.5], [82, 80], [78, 84], [74, 87.5], [70, 89.5], [65, 91], [60, 91.5], [55, 91], [50, 89.5], [45, 86.5], [40, 85.5]], kind: "head", cars: 5, ms: 6800 },
+  { points: [[40, 84.5], [45, 85.5], [50, 88.5], [55, 90], [60, 90.5], [65, 90], [70, 88.5], [74, 86.5], [78, 83], [82, 79], [86, 74.5], [89, 71], [92, 68]], kind: "slab", cars: 3, ms: 8200 },
 ];
 
 /** Runs traffic.ts lanes in the host element for as long as the component is mounted. */

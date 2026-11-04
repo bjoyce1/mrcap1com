@@ -10,7 +10,7 @@ import {BigWin} from './bigwin';
 import {isArtist} from './hits';
 import {preloadLayers,layersReady} from './layers';
 import {buildMarquee,attractMode,watchOffscreen} from './cabinet';
-import {createStage,celebrationLevel} from './stage';
+import {createStage,celebrationLevel,celebrationHit,hitKindForWin} from './stage';
 import {sweepTease,tiersFor} from './fx';
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
@@ -165,9 +165,9 @@ async function spin(){
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
     paylines.show(outcome.wins,{reducedMotion:userReducedMotion,autoCycle:false});
     // The celebration level comes from the real outcome; the cabinet stays lit until the hit show and any Big Win close.
-    const level=celebrationLevel(outcome);
-    if(level){stage.set('celebrating',level);if(level>1)audio.stinger(level);}
-    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{
+    const level=celebrationLevel(outcome),hit=celebrationHit(outcome);
+    if(level){stage.set('celebrating',level,hit);if(level>1)audio.stinger(level);}
+    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>{paylines.focus(w);stage.setHit(hitKindForWin(w),SYMBOL_MAP[w.symbol as string]?.color);},onDone:()=>{stage.setHit(hit);
       paylines.cycle();
       // Big Win show for 1,000+ XP; every Legend Sweep reaches it (see fx.ts).
       void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion})
