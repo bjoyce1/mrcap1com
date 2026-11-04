@@ -6,6 +6,7 @@ import { mountLegendsGame } from "./game";
 import { symbolUrl } from "./motion";
 import { ARTISTS, HOUSTON_HOODS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
+import { WinningLines } from './WinningLines';
 import wordmarkComplete from "@/assets/legends/wordmark-complete.png";
 import "@fontsource/russo-one/400.css";
 import "@fontsource/alfa-slab-one/400.css";
@@ -54,6 +55,7 @@ const LegendsGame = memo(function LegendsGame() {
         <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
        <div className="controls"><button type="button" data-lg="spin" className="spin-button"><span aria-hidden="true">{'\n'}</span> <span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">{'\n'}</span></button><button type="button" data-lg="sound" className="icon-button" aria-pressed="false" title="Enable sound" aria-label="Toggle sound"><span data-lg="sound-icon" aria-hidden="true">♫̸</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button></div>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
+        <WinningLines />
         <button type="button" className="buy-button" data-lg="shop-open" data-state="idle" aria-expanded="false" aria-controls="lg-shop" hidden>
          <span className="buy-sweep" aria-hidden="true" />
          <span className="buy-label">GET MORE SPINS</span>

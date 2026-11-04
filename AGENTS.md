@@ -12,3 +12,4 @@ AuthProvider keeps access loading until the current session's server role lookup
 - Keep Legends paylines and Supreme scoring identical in the client and server engines; Supreme uses one real artist cell per reel and awards once per board, while account badges are committed atomically with the spin to prevent client-controlled rewards.
 - Derive Supreme cosmetic entitlements from the existing server-persisted badge for accounts and visit-only badges for guests; never use cosmetic state to grant balances or gameplay advantages.
 - Legends hit overlays wait for their displayed images to decode and discard stale preparations; shared step timing covers the final reel's layered animation to prevent blank artwork and premature removal.
+- Unity adjacent-path analysis and proposed scoring remain shadow-only, separate from credited engine outcomes; the inspector never changes XP, collections, badges or server commits, so reward rollout requires explicit approval.

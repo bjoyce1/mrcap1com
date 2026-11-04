@@ -1,5 +1,19 @@
 /* SPC Legends game styles, ported from the source package (src/styles.css) and scoped to .legends-world
    so nothing leaks into the rest of mrcap1.com. Keyframes are prefixed lg-. */
+.legends-world .winning-lines{margin-top:16px;color:var(--ink);font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.legends-world .winning-lines[hidden]{display:none}
+.legends-world .winning-lines h3{display:flex;align-items:center;gap:8px;color:var(--gold);font-size:16px;margin:0}
+.legends-world .winning-lines p{color:var(--muted);margin:8px 0}
+.legends-world .winning-lines strong{color:var(--gold)}
+.legends-world .winning-lines details{margin:12px 0}
+.legends-world .winning-lines summary{cursor:pointer;color:var(--gold)}
+.legends-world .winning-lines ul{padding-left:20px}
+.legends-world .lines-tabs{display:flex;flex-wrap:wrap;gap:4px;margin:12px 0}
+.legends-world .lines-controls{display:flex;align-items:center;gap:8px}
+.legends-world .lines-controls>button{flex-shrink:0}
+.legends-world .lines-controls label{flex:1;min-width:0;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.legends-world .lines-controls select{width:100%;min-width:0;background:var(--surface);color:var(--ink);padding:8px;border:0;border-radius:6px}
+.legends-world .line-explanation{min-height:100px;margin:12px 0}
 .legends-world{color-scheme:dark;--bg:#07060c;--ink:#f9f3ff;--muted:#a998bb;--gold:#f8cd7b;--gold2:#b7722d;--pink:#ff4bbd;--cyan:#33c9fe;--purple:#a65cff;--line:#524066;--surface:#130f20;--gap:5px;--font-head:'Barlow Condensed',Impact,'Arial Narrow',sans-serif;--font-body:Inter,system-ui,-apple-system,Arial,sans-serif; font-family:var(--font-body);background:var(--bg);color:var(--ink)}
 .legends-world *{box-sizing:border-box}.legends-world{scroll-behavior:smooth}.legends-world{margin:0;min-width:320px;background:linear-gradient(180deg,#0f0719 0%,#07060c 650px,#090711 100%);overflow-x:hidden;color:var(--ink);font-family:var(--font-body)}.legends-world img{max-width:100%;display:block}.legends-world a{color:inherit;text-decoration:none}.legends-world button{font:inherit;cursor:pointer}.legends-world button:disabled{cursor:not-allowed;opacity:.6}.legends-world button:focus-visible,.legends-world a:focus-visible{outline:3px solid #fff;outline-offset:3px}.legends-world ::selection{background:#be63eb;color:#fff}
 .legends-world .lg-container{width:min(1320px,calc(100% - 44px));margin-inline:auto}.legends-world .ambient-grid{position:absolute;inset:0 0 auto;height:680px;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 50% 0%,rgba(107,30,166,.43),transparent 56%),radial-gradient(ellipse at 11% 25%,rgba(18,79,158,.18),transparent 33%),radial-gradient(ellipse at 90% 20%,rgba(204,30,141,.14),transparent 29%)}.legends-world .ambient-grid:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 79px,rgba(165,109,232,.025) 80px),linear-gradient(180deg,transparent 0%,#08060e 100%)}
