@@ -18,7 +18,7 @@ import {guestSpin} from './guest';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 import {createPurchaseButton} from './purchase-button';
 import {renderSupremePrize} from './supreme-prize';
-import {WinSoundtrack} from './soundtrack';
+import {WinSoundtrack,winningArtist} from './soundtrack';
 import {ImpactEffects} from './impact-effects';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
@@ -196,7 +196,7 @@ async function spin(){
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
       setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,[description,stacks].filter(Boolean).join(' • ')+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':unity?'SPC UNITY!':vertical.length?'VERTICAL STACK!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
-      const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:outcome.xp},musicOn);
+      const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:outcome.xp,artist:winningArtist(outcome.wins,target)},musicOn);
       if(track&&musicOn){const sub=$('result').querySelector('span');if(sub)sub.textContent+=` • NOW PLAYING: ${track.title}`;}
     }else{
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
@@ -370,6 +370,11 @@ const onInspectLine=(event:Event)=>{
   root.querySelectorAll<HTMLElement>('.reel-window [data-cell]').forEach(tile=>tile.classList.toggle('match',selected.has(tile.dataset.cell??'')));
   paylines.show([win],{reducedMotion:userReducedMotion,autoCycle:false});paylines.focus(win);
   if(win.type==='vertical'){impacts.burst(win.cells,userReducedMotion,true);audio.explode(true);}
+  const artist=winningArtist([win],activeBoard);
+  if(artist&&musicOn){
+    const track=soundtrack.play({supreme:win.type==='supreme',unity:win.type==='unity',sweep:win.type==='sweep',major:false,bonus:false,xp:history[0]?.xp??win.xp,artist},true);
+    if(track){const sub=$('result').querySelector('span');if(sub)sub.textContent=sub.textContent.replace(/ • NOW PLAYING:.*$/,'')+` • NOW PLAYING: ${track.title}`;}
+  }
 };
 root.addEventListener('lg-inspect-line',onInspectLine);
 root.addEventListener('click',onRootClick);

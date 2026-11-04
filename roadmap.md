@@ -1,5 +1,10 @@
 # Identity connection
 
+# SPC Legends artist win music
+
+- [x] Add the supplied Mr. CAP song and artist-specific selection for vertical, matching-line and artist-led wins, retaining tier fallback and the 15-second cue.
+- [x] Verify 147 game tests and a complete guest spin using the supplied vertical arrangement: Cap International plays at 15 seconds, mute and next-spin cleanup work, with no reward changes or publication.
+
 # SPC Legends vertical previews and epic effects
 
 - [x] Detect three matching tiles within each reel, Wild substitution allowed, with no extra rewards.
