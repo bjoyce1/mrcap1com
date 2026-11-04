@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
 import { mountLegendsGame } from "./game";
 import { symbolUrl } from "./motion";
-import { ARTISTS, PAYLINES } from "./config";
+import { ARTISTS, HOUSTON_HOODS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
 import wordmarkComplete from "@/assets/legends/wordmark-complete.png";
 import "@fontsource/russo-one/400.css";
@@ -35,7 +35,7 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
        <h1 className="hero-title"><span className="lg-wordmark"><img src={wordmarkComplete} alt="SPC Legends" width={1536} height={512} /></span></h1>
        <div className="hero-subtitle">SPIN <em>THE</em> MIX</div>
-       <p className="hero-copy">{ARTISTS.length} legends. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
+       <p className="hero-copy">{ARTISTS.length} legends. {HOUSTON_HOODS.length} H-Town hoods. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
        <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> {PAYLINES.length} PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
       </section>
       <section className="lg-container game-layout" data-lg="game" aria-label="SPC Legends game">
@@ -44,7 +44,7 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="supreme-player-title" data-lg="player-title" hidden><span aria-hidden="true">♛</span> SUPREME LEGENDARY <small>PLAYER TITLE</small></div>
         <div className="cabinet-inset"><div className="reel-headers"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div>
           <div className="reel-board" data-lg="board" aria-label="Six reels with three symbols each"><div data-lg="reels" className="reels"></div></div>
-          <div className="board-bottom"><span><span className="board-led"></span> SIX REELS ACTIVE</span><span>SPC // 713</span></div></div>
+          <div className="board-bottom"><span><span className="board-led"></span> SIX REELS ACTIVE · TAP ANY CARD FOR BIO</span><span>SPC // 713</span></div></div>
         <div className="hud">
          <div className="hud-block"><span className="hud-label" data-lg="spins-label">WELCOME SPINS</span><strong data-lg="spins">25</strong></div>
          <div className="hud-block"><span className="hud-label">LEGENDS XP</span><strong data-lg="xp">0</strong></div>
@@ -85,8 +85,8 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="game-disclaimer">25 FREE SPINS TO START, THEN 3 FREE SPINS A DAY (HOUSTON TIME) • Extra spins are $1 for 25 • No cash, prizes or real-world rewards. Legends XP is for entertainment only.</div>
        </div>
        <aside className="sidebar">
-         <section className="panel collection-panel" data-lg="collection-panel"><div className="panel-heading"><div><span className="section-label">YOUR LEGACY</span><h2>LEGENDS COLLECTION</h2></div><span data-lg="collection-count" className="small-chip">0 / {ARTISTS.length}</span></div><div className="collection-grid" data-lg="collection"></div><div className="progress-track"><div data-lg="collection-progress" className="progress-fill"></div></div><p data-lg="collection-note" className="panel-note">Spin to discover every artist.</p></section>
-         <section className="panel panel-special"><div className="panel-heading"><div><span className="section-label">GAME CHANGERS</span><h2>SPECIAL SYMBOLS</h2></div></div><div className="special-grid"><div className="special"><img src={symbolUrl("wild")} alt="SPC Wild symbol" /><b>SPC WILD</b><small>Substitutes in lines</small></div><div className="special"><img src={symbolUrl("bonus")} alt="713 Bonus symbol" /><b>713 BONUS</b><small>3+ on the board</small></div><div className="special"><img src={symbolUrl("double")} alt="713 Double Bonus symbol" /><b>713 DOUBLE BONUS</b><small>×2 XP on a winning spin</small></div><div className="special"><img src={symbolUrl("triple")} alt="SPC Triple Bonus symbol" /><b>SPC TRIPLE BONUS</b><small>×3 XP on a winning spin</small></div></div></section>
+         <section className="panel collection-panel" data-lg="collection-panel"><div className="panel-heading"><div><span className="section-label">YOUR LEGACY</span><h2>LEGENDS COLLECTION</h2></div><span data-lg="collection-count" className="small-chip">0 / {ARTISTS.length}</span></div><div className="collection-grid" data-lg="collection"></div><div className="progress-track"><div data-lg="collection-progress" className="progress-fill"></div></div><p data-lg="collection-note" className="panel-note">Spin to discover every artist. Tap any portrait to inspect.</p></section>
+         <section className="panel panel-special"><div className="panel-heading"><div><span className="section-label">GAME CHANGERS</span><h2>SPECIAL SYMBOLS</h2></div></div><div className="special-grid"><div className="special" data-symbol-id="wild"><img src={symbolUrl("wild")} alt="SPC Wild symbol" /><b>SPC WILD</b><small>Substitutes in lines</small></div><div className="special" data-symbol-id="bonus"><img src={symbolUrl("bonus")} alt="713 Bonus symbol" /><b>713 BONUS</b><small>3+ on the board</small></div><div className="special" data-symbol-id="double"><img src={symbolUrl("double")} alt="713 Double Bonus symbol" /><b>713 DOUBLE BONUS</b><small>×2 XP on a winning spin</small></div><div className="special" data-symbol-id="triple"><img src={symbolUrl("triple")} alt="SPC Triple Bonus symbol" /><b>SPC TRIPLE BONUS</b><small>×3 XP on a winning spin</small></div></div></section>
          <section className="panel history-panel"><div className="panel-heading"><div><span className="section-label">YOUR LAST SETS</span><h2>SPIN HISTORY</h2></div></div><ol data-lg="history" className="history" /></section>
        </aside>
       </section>
@@ -95,12 +95,25 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><p data-lg="supreme-badge" className="supreme-badge" hidden>✦ SUPREME LEGENDARY</p><div className="supreme-prize"><span className="section-label">SUPREME REWARD</span><h3>THE GOLD CABINET</h3><p>Exclusive gold reel trim and a crowned Supreme Legendary player title.</p><p className="prize-status" data-lg="prize-status" aria-live="polite">LOCKED · WIN SUPREME LEGENDARY</p><Button type="button" variant="secondary" className="prize-equip" data-lg="prize-equip" aria-pressed="false" disabled>LOCKED</Button><small>Cosmetic reward only. No cash value or extra spins.</small></div><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/{ARTISTS.length}</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong data-lg="mode">Guest</strong></div><p className="panel-note">Sign in and your spins, XP and collection are saved to your account.</p></div>
       </section>
       <section className="lg-container symbol-library">
-        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>{ARTISTS.length} artist legends, four special symbols, eight music and Houston symbols</p></div>
+        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>{ARTISTS.length} artist legends, {HOUSTON_HOODS.length} historic Houston neighborhoods, four special symbols, eight studio &amp; Houston symbols — tap any card to inspect</p></div>
         <div className="library-group"><div className="lg-label">CHARACTER SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-characters" /></div>
+        <div className="library-group"><div className="lg-label">HOUSTON HOOD SYMBOLS</div><div className="library-grid is-five" data-lg="lib-hoods" /></div>
         <div className="library-group"><div className="lg-label">SPECIAL SYMBOLS</div><div className="library-grid is-four" data-lg="lib-special" /></div>
         <div className="library-group"><div className="lg-label">MUSIC &amp; HOUSTON SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-music" /></div>
       </section>
-      
+      <div className="lg-spotlight" data-lg="spotlight" hidden role="dialog" aria-modal="true" aria-labelledby="lg-spotlight-title">
+        <div className="lg-spotlight-backdrop" data-lg="spotlight-close" />
+        <div className="lg-spotlight-card">
+          <button type="button" className="lg-spotlight-close" data-lg="spotlight-close" aria-label="Close spotlight">✕</button>
+          <div className="lg-spotlight-art"><img data-lg="spotlight-img" src={symbolUrl("k-rino")} alt="" /></div>
+          <div className="lg-spotlight-body">
+            <span className="section-label" data-lg="spotlight-role">SPC LEGEND</span>
+            <h3 id="lg-spotlight-title" data-lg="spotlight-title">K-Rino</h3>
+            <div className="lg-spotlight-hood" data-lg="spotlight-hood">South Park (MLK Blvd)</div>
+            <p className="lg-spotlight-bio" data-lg="spotlight-bio" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 });

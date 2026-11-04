@@ -336,3 +336,27 @@
 @keyframes lg-bh-breathe{from{opacity:1;transform:translateY(-1%) scale(1.04)}to{opacity:1;transform:translateY(-2%) scale(1.06)}}
 @keyframes lg-bh-slam{0%{opacity:0;transform:scale(1.7)}60%{opacity:1;transform:scale(.94)}80%{opacity:1;transform:scale(1.03)}100%{opacity:1;transform:none}}
 @keyframes lg-bh-fade{from{opacity:0}to{opacity:1}}
+
+/* Houston Hoods 5-column library grid & interactive symbol cards */
+.legends-world .library-grid.is-five{grid-template-columns:repeat(5,1fr)}
+@media(max-width:860px){.legends-world .library-grid.is-five{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.legends-world .library-grid.is-five{grid-template-columns:repeat(2,1fr)}}
+.legends-world [data-symbol-id],.legends-world .reel-window .symbol-tile{cursor:pointer}
+.legends-world .special[data-symbol-id]{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.legends-world .special[data-symbol-id]:hover{transform:translateY(-3px);border-color:rgba(255,212,118,.52);box-shadow:0 12px 26px rgba(0,0,0,.45),0 0 18px rgba(255,200,90,.18)}
+
+/* Collector Spotlight Modal */
+.legends-world .lg-spotlight{position:fixed;inset:0;z-index:110;display:grid;place-items:center;padding:20px}
+.legends-world .lg-spotlight[hidden]{display:none}
+.legends-world .lg-spotlight-backdrop{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(28,10,48,.78),rgba(4,2,10,.92));backdrop-filter:blur(8px)}
+.legends-world .lg-spotlight-card{position:relative;z-index:1;display:grid;grid-template-columns:minmax(220px,320px) 1fr;gap:24px;align-items:center;width:min(760px,94vw);padding:24px;border-radius:18px;background:linear-gradient(155deg,rgba(26,15,44,.97),rgba(10,6,20,.98));border:2px solid color-mix(in srgb,var(--sym,#ffd27a) 68%,#fff);box-shadow:0 24px 68px rgba(0,0,0,.82),0 0 42px color-mix(in srgb,var(--sym,#ffd27a) 32%,transparent);animation:lg-spot-in .26s cubic-bezier(.2,1.3,.35,1)}
+@keyframes lg-spot-in{from{opacity:0;transform:scale(.9) translateY(10px)}to{opacity:1;transform:none}}
+.legends-world .lg-spotlight-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,212,118,.38);background:rgba(15,8,28,.85);color:#fff3d1;font-size:16px;font-weight:700;cursor:pointer;display:grid;place-items:center;transition:transform .16s ease,background .16s ease}
+.legends-world .lg-spotlight-close:hover{transform:scale(1.08);background:rgba(255,200,90,.22)}
+.legends-world .lg-spotlight-art{aspect-ratio:1;border-radius:14px;overflow:hidden;border:2px solid color-mix(in srgb,var(--sym,#ffd27a) 75%,#fff);box-shadow:0 12px 32px rgba(0,0,0,.65),0 0 26px color-mix(in srgb,var(--sym,#ffd27a) 35%,transparent);background:#090512}
+.legends-world .lg-spotlight-art img{width:100%;height:100%;object-fit:cover;display:block}
+.legends-world .lg-spotlight-body{display:grid;gap:8px;text-align:left;padding-right:12px}
+.legends-world .lg-spotlight-body h3{margin:0;font:400 clamp(26px,4vw,38px)/1.05 var(--lg-display);color:#fff4d4;text-shadow:0 3px 0 #261104,0 0 18px color-mix(in srgb,var(--sym,#ffd27a) 55%,transparent)}
+.legends-world .lg-spotlight-hood{display:inline-flex;align-items:center;width:fit-content;padding:5px 11px;border-radius:999px;font:700 11px/1 var(--lg-sans);letter-spacing:.14em;text-transform:uppercase;color:#ffe6a3;background:rgba(255,200,90,.12);border:1px solid rgba(255,200,90,.35)}
+.legends-world .lg-spotlight-bio{margin:6px 0 0;font-size:15px;line-height:1.6;color:#d8cbe8}
+@media(max-width:640px){.legends-world .lg-spotlight-card{grid-template-columns:1fr;justify-items:center;text-align:center;padding:20px}.legends-world .lg-spotlight-art{width:min(260px,72vw)}.legends-world .lg-spotlight-body{justify-items:center;text-align:center;padding-right:0}}

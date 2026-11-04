@@ -1,7 +1,7 @@
 // Ported from the SPC Legends source package (src/main.js). Wires the server (account.ts) to the motion layer
 // inside one container, so the game can mount and unmount with its React page. Spins, outcomes and balances
 // come from the server; this file only animates and displays them.
-import {ARTISTS,MUSIC,SPECIAL,SYMBOL_MAP,XP_TABLE} from './config';
+import {ALL_SYMBOL_MAP,ARTISTS,HOUSTON_HOODS,MUSIC,SPECIAL,SYMBOL_LORE,SYMBOL_MAP,XP_TABLE} from './config';
 import {createBoard,anticipationReels} from './engine';
 import {activePool,totalSpins,type Balance} from './balance';
 import {loadProfile,loadHistory,loadSweeps,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem} from './account';
@@ -62,7 +62,7 @@ function renderCollection(){
   const ids=new Set(collection);
   $('collection').replaceChildren(...ARTISTS.map(a=>{
     const gold=swept.has(a.id);
-    const element=document.createElement('div');element.className=`collection-tile${ids.has(a.id)?'':' locked'}${justFound.has(a.id)?' just-found':''}${gold?' swept':''}`;element.dataset.label=a.name;element.title=gold?`${a.name}: gold Legend card (Legend Sweep)`:ids.has(a.id)?`${a.name} discovered`:`${a.name} is undiscovered`;
+    const element=document.createElement('div');element.className=`collection-tile${ids.has(a.id)?'':' locked'}${justFound.has(a.id)?' just-found':''}${gold?' swept':''}`;element.dataset.label=a.name;element.dataset.symbolId=a.id;element.title=gold?`${a.name}: gold Legend card (Legend Sweep) — tap for bio`:ids.has(a.id)?`${a.name} discovered — tap for bio`:`${a.name} — tap to preview`;
     const img=document.createElement('img');img.src=symbolUrl(a.id);img.alt='';img.loading='lazy';element.append(img);return element;
   }));
   justFound=new Set();
@@ -292,17 +292,46 @@ async function loadAccount(nextUser:string|null){
   }finally{if(!unmounted&&userId===nextUser&&revision===accountRevision){loading=false;refresh();}}
 }
 
-/** The library mirrors the symbol sheet: character, special, and music and Houston groups. */
+/** The library mirrors the symbol sheet: character, Houston hoods, special, and music and Houston groups. */
 function populateLibrary(){
-  const groups:[string,readonly {id:string;name:string;color:string}[]][]=[['lib-characters',ARTISTS],['lib-special',SPECIAL],['lib-music',MUSIC]];
+  const groups:[string,readonly {id:string;name:string;color:string}[]][]=[['lib-characters',ARTISTS],['lib-hoods',HOUSTON_HOODS],['lib-special',SPECIAL],['lib-music',MUSIC]];
   for(const [slot,symbols] of groups){
-    $(slot).replaceChildren(...symbols.map(s=>{
-      const div=document.createElement('div');div.className=`library-item${slot==='lib-characters'?' is-char':''}`;div.style.setProperty('--sym',s.color);
+    const host=$(slot);if(!host)continue;
+    host.replaceChildren(...symbols.map(s=>{
+      const div=document.createElement('div');div.className=`library-item${slot==='lib-characters'||slot==='lib-hoods'?' is-char':''}`;div.style.setProperty('--sym',s.color);
+      div.dataset.symbolId=s.id;
       const img=document.createElement('img');img.src=symbolUrl(s.id);img.alt=s.name;img.loading='lazy';
       const title=document.createElement('b');title.textContent=s.name;div.append(img,title);return div;
     }));
   }
 }
+function openSpotlight(id:string){
+  const sym=ALL_SYMBOL_MAP[id];const modal=$('spotlight');if(!sym||!modal)return;
+  const lore=SYMBOL_LORE[id]??{role:'SPC LEGENDS SYMBOL',hood:'Houston, TX (713)',bio:'Official high-resolution symbol from the South Park Coalition arcade cabinet.'};
+  modal.style.setProperty('--sym',sym.color||'#ffd27a');
+  const img=$('spotlight-img') as HTMLImageElement|null;if(img){img.src=symbolUrl(id);img.alt=sym.name;}
+  const title=$('spotlight-title');if(title)title.textContent=sym.name;
+  const role=$('spotlight-role');if(role)role.textContent=lore.role;
+  const hood=$('spotlight-hood');if(hood)hood.textContent=lore.hood;
+  const bio=$('spotlight-bio');if(bio)bio.textContent=lore.bio;
+  modal.hidden=false;
+}
+function closeSpotlight(){
+  const modal=$('spotlight');if(modal)modal.hidden=true;
+}
+const onRootClick=(e:MouseEvent)=>{
+  const target=e.target as HTMLElement|null;if(!target)return;
+  if(target.closest('[data-lg="spotlight-close"]')){closeSpotlight();return;}
+  const symTrigger=target.closest<HTMLElement>('[data-symbol-id]');
+  if(symTrigger?.dataset.symbolId){openSpotlight(symTrigger.dataset.symbolId);return;}
+  if(!busy){
+    const reelTile=target.closest<HTMLElement>('.reel-window .symbol-tile[data-symbol]');
+    if(reelTile?.dataset.symbol)openSpotlight(reelTile.dataset.symbol);
+  }
+};
+const onKeyDown=(e:KeyboardEvent)=>{if(e.key==='Escape')closeSpotlight();};
+root.addEventListener('click',onRootClick);
+document.addEventListener('keydown',onKeyDown);
 $('spin').addEventListener('click',spin);
 $('prize-equip').addEventListener('click',()=>{if(!badges.includes('supreme-legends'))return;supremeLookEnabled=!supremeLookEnabled;renderSupremePrize(root,badges,!!userId,supremeLookEnabled);});
 $('shop-retry').addEventListener('click',()=>{const orderID=pendingOrder();if(orderID)void confirmPayment(orderID);});
@@ -328,6 +357,8 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
 return ()=>{
   unmounted=true;soundtrack.stopNow();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();clearTimeout(winningTimer);
   void paypalButtons?.close?.().catch(()=>undefined);
+  root.removeEventListener('click',onRootClick);
+  document.removeEventListener('keydown',onKeyDown);
   respectsReduced.removeEventListener?.('change',onReducedChange);
   document.removeEventListener('visibilitychange',onVisible);
   reelControl.skip?.();paylines.clear();paylines.resize.disconnect();paylines.svg.remove();hits.clear();hits.layer.remove();

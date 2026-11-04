@@ -1,11 +1,15 @@
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { expect, test } from 'vitest';
-import { ARTISTS, SYMBOL_WEIGHTS } from './config';
-import { ARTISTS as SERVER_ARTISTS, SYMBOL_WEIGHTS as SERVER_WEIGHTS } from '../../../supabase/functions/_shared/legends/config';
+import { ALL_SHOWCASE_SYMBOLS, ARTISTS, HOUSTON_HOODS, SYMBOL_WEIGHTS } from './config';
+import { ARTISTS as SERVER_ARTISTS, HOUSTON_HOODS as SERVER_HOODS, SYMBOL_WEIGHTS as SERVER_WEIGHTS } from '../../../supabase/functions/_shared/legends/config';
 import { evaluateBoard as serverEvaluate } from '../../../supabase/functions/_shared/legends/engine';
 import { guestSpin } from './guest';
 
 test('guest and account rosters include all eleven Legends with equal artist weights', () => {
   expect(ARTISTS).toHaveLength(11);
+  expect(HOUSTON_HOODS).toHaveLength(5);
+  expect(ALL_SHOWCASE_SYMBOLS).toHaveLength(28);
   expect(ARTISTS.slice(-5).map(({ id, name }) => ({ id, name }))).toEqual([
     { id: 'murder-one', name: 'Murder One' },
     { id: 'rapper-k', name: 'Rapper K' },
@@ -14,12 +18,20 @@ test('guest and account rosters include all eleven Legends with equal artist wei
     { id: 'dope-e', name: 'Dope-E' },
   ]);
   expect(SERVER_ARTISTS).toEqual(ARTISTS);
+  expect(SERVER_HOODS).toEqual(HOUSTON_HOODS);
   expect(SERVER_WEIGHTS).toEqual(SYMBOL_WEIGHTS);
   expect(SYMBOL_WEIGHTS['murder-one']).toBe(10);
   expect(SYMBOL_WEIGHTS['rapper-k']).toBe(10);
   expect(SYMBOL_WEIGHTS['komodo-dbx']).toBe(10);
   expect(SYMBOL_WEIGHTS['ganxsta-nip']).toBe(10);
   expect(SYMBOL_WEIGHTS['dope-e']).toBe(10);
+});
+
+test('all 28 mastered 1024x1024 symbol WebPs exist on disk in public/games/spc-legends/symbols', () => {
+  for (const sym of ALL_SHOWCASE_SYMBOLS) {
+    const p = resolve(__dirname, '../../../public/games/spc-legends/symbols', `${sym.id}.webp`);
+    expect(existsSync(p), `Missing symbol WebP: ${sym.id}.webp`).toBe(true);
+  }
 });
 
 for (const id of ['murder-one', 'rapper-k', 'komodo-dbx', 'ganxsta-nip', 'dope-e']) {

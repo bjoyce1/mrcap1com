@@ -27,10 +27,19 @@ export const MUSIC = Object.freeze([
   {id:'speakers',name:'Speakers',color:'#a764ff'}
 ]);
 export const SPECIAL = Object.freeze([{id:'wild',name:'SPC Wild',color:'#ffc766'},{id:'bonus',name:'713 Bonus',color:'#fcd965'},{id:'double',name:'713 Double Bonus',color:'#ff4fd8'},{id:'triple',name:'SPC Triple Bonus',color:'#ff3a2e'}]);
+export const HOUSTON_HOODS = Object.freeze([
+  {id:'south-park',name:'South Park',color:'#f59e0b',subtitle:'Home of the SPC',desc:'MLK Blvd & Cullen — Birthplace of the South Park Coalition.'},
+  {id:'3rd-ward',name:'3rd Ward',color:'#ef4444',subtitle:'Southside Stronghold',desc:'Emancipation Ave & Scott St — Historic H-Town cultural bedrock.'},
+  {id:'5th-ward',name:'5th Ward',color:'#a855f7',subtitle:'The Bloody Nickel',desc:'Lyons Ave — Legendary proving ground of Houston street lyricism.'},
+  {id:'acres-homes',name:'Acres Homes',color:'#22c55e',subtitle:'The 44 Northside',desc:'W. Montgomery Rd — Slab parades, trunks knocking, Northside pride.'},
+  {id:'mcgregor-park',name:'McGregor Park',color:'#38bdf8',subtitle:'MacGregor Way',desc:'Brays Bayou & MLK — Sunday park car shows and classic H-Town shine.'}
+]);
 // Double and Triple Bonus multiply a winning spin's XP; both on one board multiply by 6. They never pay on their own.
 export const MULTIPLIERS = Object.freeze({double:2,triple:3});
 export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL];
+export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS,...HOUSTON_HOODS];
 export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
+export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries(ALL_SHOWCASE_SYMBOLS.map(x=>[x.id,x])));
 const SPECIAL_WEIGHTS={wild:2,bonus:3,double:2,triple:1};
 export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:SPECIAL_WEIGHTS[s.id]])));
 // welcomeSpins: one-time starter spins every player gets, used before the daily allowance.
