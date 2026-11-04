@@ -70,3 +70,19 @@ test('multipliers apply to Unity like any other win', () => {
   expect(r.xp).toBe(r.baseXp*6);
   expect(r.wins.filter(w=>w.type==='unity').length).toBeLessThanOrEqual(1);
 });
+
+test('a leading middle-row Wild contributes only when three consecutive positions match', () => {
+  const b = [
+    ['k-rino', 'wild', 'mic'], ['mr-cap', 'k-rino', 'mic'], ['point-blank', 'k-rino', 'mic'],
+    ['klondike-kat', 'mr-cap', 'mic'], ['ganxsta-nip', 'dope-e', 'mic'], ['murder-one', 'rapper-k', 'mic'],
+  ];
+  const result = evaluateBoard(b);
+  expect(result.wins.find(w => w.type === 'line' && w.payline === 1)).toMatchObject({ count: 3, symbol: 'k-rino', xp: 50, cells: ['0:1', '1:1', '2:1'] });
+  expect(inspectWinningLines(b, result.wins, result.xp).wilds[0].cell).toBe('0:1');
+  expect(serverEvaluate(b)).toEqual(result);
+  b[2][1] = 'tape';
+  const broken = evaluateBoard(b);
+  expect(broken.wins.some(w => w.type === 'line' && w.payline === 1)).toBe(false);
+  expect(inspectWinningLines(b, broken.wins, broken.xp).standard[0].accepted).toBe(false);
+  expect(serverEvaluate(b)).toEqual(broken);
+});

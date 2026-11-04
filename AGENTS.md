@@ -13,3 +13,4 @@ AuthProvider keeps access loading until the current session's server role lookup
 - Derive Supreme cosmetic entitlements from the existing server-persisted badge for accounts and visit-only badges for guests; never use cosmetic state to grant balances or gameplay advantages.
 - Legends hit overlays wait for their displayed images to decode and discard stale preparations; shared step timing covers the final reel's layered animation to prevent blank artwork and premature removal.
 - Unity adjacent-path analysis and proposed scoring remain shadow-only, separate from credited engine outcomes; the inspector never changes XP, collections, badges or server commits, so reward rollout requires explicit approval.
+- Legends soundtrack selects disjoint rotating song pools by credited total XP, with per-tier visit counters; presentation cannot change game outcomes or server rewards.

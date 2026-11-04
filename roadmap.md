@@ -1,5 +1,11 @@
 # Identity connection
 
+# SPC Legends XP music and Wild clarity
+
+- [x] Rotate distinct album song pools by credited XP tier, retaining the 15-second cue and sound controls.
+- [x] Explain exact Wild substitutions and broken matching runs in Winning Lines without changing rewards.
+- [x] Verify 122 Legends tests, all 14 audio files, advancing guest win playback, mute and mobile results without publishing.
+
 # SPC Unity evaluation audit
 
 - [x] Enumerate and explain every continuous distinct-artist route, with separate standard paylines.

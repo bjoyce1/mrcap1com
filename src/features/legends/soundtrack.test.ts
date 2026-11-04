@@ -1,62 +1,45 @@
-import { expect, test } from "vitest";
-import { pickWinSong, WIN_CUE_SECONDS, WIN_SONGS } from "./soundtrack";
+import { expect, test } from 'vitest';
+import { pickWinSong, WIN_CUE_SECONDS, WIN_SONGS, WinSoundtrack, winSongTier } from './soundtrack';
 
 const base = { supreme: false, unity: false, sweep: false, major: false, bonus: false, xp: 100 };
 
-test("no track is selected for a losing spin", () => {
-  expect(pickWinSong({ ...base, xp: 0 })).toBeNull();
-  expect(pickWinSong({ ...base, xp: -1 })).toBeNull();
+test('losing and invalid XP do not select music', () => {
+  for (const xp of [0, -1, NaN, Infinity]) expect(pickWinSong({ ...base, xp })).toBeNull();
 });
 
-test("each game reward level has a distinct song", () => {
-  const cases = [
-    { ...base, xp: 100, expected: WIN_SONGS.line[0] },
-    { ...base, supreme: true, xp: 250, expected: WIN_SONGS.supreme },
-    { ...base, unity: true, xp: 500, expected: WIN_SONGS.unity },
-    { ...base, bonus: true, xp: 300, expected: WIN_SONGS.bonus },
-    { ...base, major: true, xp: 750, expected: WIN_SONGS.major },
-    { ...base, xp: 1000, expected: WIN_SONGS.big },
-    { ...base, xp: 2000, expected: WIN_SONGS.mega },
-    { ...base, xp: 10000, expected: WIN_SONGS.legendary },
-    { ...base, sweep: true, xp: 25000, expected: WIN_SONGS.sweep },
-  ];
-  for (const { expected, ...kind } of cases) {
-    expect(pickWinSong(kind)?.title).toBe(expected.title);
-    expect(pickWinSong(kind)?.file).toBe(expected.file);
+test.each([
+  [25, 'line'], [249, 'line'], [250, 'supreme'], [499, 'supreme'],
+  [500, 'major'], [749, 'major'], [750, 'unity'], [999, 'unity'],
+  [1000, 'big'], [1999, 'big'], [2000, 'mega'], [9999, 'mega'], [10000, 'legendary'],
+] as const)('%i credited XP selects the %s pool regardless of hit flags', (xp, tier) => {
+  expect(winSongTier(xp)).toBe(tier);
+  expect(pickWinSong({ ...base, xp, supreme: true, unity: true, sweep: true, major: true, bonus: true })).toEqual(WIN_SONGS[tier][0]);
+});
+
+test('250, 500 and 750 XP always use different songs', () => {
+  for (let rotation = 0; rotation < 12; rotation++) {
+    const songs = [250, 500, 750].map(xp => pickWinSong({ ...base, xp }, rotation)?.file);
+    expect(new Set(songs).size).toBe(3);
   }
-  expect(new Set(cases.map(({ expected }) => expected.file)).size).toBe(cases.length);
 });
 
-test("major XP tier overrides Supreme, Unity and bonus flags", () => {
-  const multiple = { ...base, supreme: true, unity: true, bonus: true, major: true };
-  expect(pickWinSong({ ...multiple, xp: 1000 })).toEqual(WIN_SONGS.big);
-  expect(pickWinSong({ ...multiple, xp: 2000 })).toEqual(WIN_SONGS.mega);
-  expect(pickWinSong({ ...multiple, xp: 10000 })).toEqual(WIN_SONGS.legendary);
+test('no XP tier shares tracks with another tier', () => {
+  const files = Object.values(WIN_SONGS).flatMap(pool => pool.map(s => s.file));
+  expect(new Set(files).size).toBe(files.length);
 });
 
-test("Legend Sweep takes priority even with other awards", () => {
-  expect(pickWinSong({ ...base, supreme: true, unity: true, sweep: true, major: true, xp: 25000 })).toEqual(WIN_SONGS.sweep);
+test('250 XP cycles Eternal Legacy, Respect and A.C. Chill without consecutive repeats', () => {
+  expect([0, 1, 2, 3].map(i => pickWinSong({ ...base, xp: 250 }, i)?.title)).toEqual(['Eternal Legacy', 'Respect', 'A.C. Chill', 'Eternal Legacy']);
 });
 
-test("Unity has priority over Supreme when below Big Win threshold", () => {
-  expect(pickWinSong({ ...base, supreme: true, unity: true, xp: 750 })).toEqual(WIN_SONGS.unity);
+test('each tier maintains its own visit rotation when other tiers intervene', () => {
+  const player = new WinSoundtrack();
+  expect(player.play({ ...base, xp: 250 }, false)?.title).toBe('Eternal Legacy');
+  expect(player.play({ ...base, xp: 1000 }, false)?.title).toBe("Bet'n On Me");
+  expect(player.play({ ...base, xp: 250 }, false)?.title).toBe('Respect');
+  expect(player.play({ ...base, xp: 1000 }, false)?.title).toBe('Nobody Comes Close');
 });
 
-test("Win song thresholds match the actual tier boundaries", () => {
-  expect(pickWinSong({ ...base, xp: 999 })).toEqual(WIN_SONGS.line[0]);
-  expect(pickWinSong({ ...base, xp: 1000 })).toEqual(WIN_SONGS.big);
-  expect(pickWinSong({ ...base, xp: 1999 })).toEqual(WIN_SONGS.big);
-  expect(pickWinSong({ ...base, xp: 2000 })).toEqual(WIN_SONGS.mega);
-  expect(pickWinSong({ ...base, xp: 9999 })).toEqual(WIN_SONGS.mega);
-  expect(pickWinSong({ ...base, xp: 10000 })).toEqual(WIN_SONGS.legendary);
-});
-
-test("ordinary line wins rotate through their own tracks", () => {
-  expect(pickWinSong(base, 0)).toEqual(WIN_SONGS.line[0]);
-  expect(pickWinSong(base, 1)).toEqual(WIN_SONGS.line[1]);
-  expect(pickWinSong(base, 2)).toEqual(WIN_SONGS.line[0]);
-});
-
-test("win songs cue at the 15 second mark", () => {
+test('win songs retain the 15-second cue', () => {
   expect(WIN_CUE_SECONDS).toBe(15);
 });
