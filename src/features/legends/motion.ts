@@ -262,13 +262,13 @@ export class SynthSound {
   private master:GainNode|null=null;
   private wind:{source:AudioBufferSourceNode;gain:GainNode}|null=null;
   constructor(){this.enabled=false;this.ctx=null;}
-  setEnabled(value){this.enabled=!!value;if(this.enabled){this.ctx=useAudioAnalyzerStore.getState().getContext();this.master??=this.ctx.createGain();this.master.connect(this.ctx.destination);this.master.gain.setValueAtTime(1,this.ctx.currentTime);this.ctx.resume().catch(()=>{});}else{this.endSpin();if(this.ctx)this.master?.gain.setValueAtTime(0,this.ctx.currentTime);}}
+  setEnabled(value){this.enabled=!!value;if(this.enabled){this.ctx=useAudioAnalyzerStore.getState().getContext();if(!this.master){this.master=this.ctx.createGain();this.master.connect(this.ctx.destination);}this.master.gain.setValueAtTime(1,this.ctx.currentTime);this.ctx.resume().catch(()=>{});}else{this.endSpin();if(this.ctx)this.master?.gain.setValueAtTime(0,this.ctx.currentTime);}}
   private noise(seconds:number,frequency:number,endFrequency:number,gain:number,loop=false){
     if(!this.enabled||!this.ctx||!this.master)return null;
     const ctx=this.ctx,t=ctx.currentTime,buffer=ctx.createBuffer(1,Math.ceil(ctx.sampleRate*seconds),ctx.sampleRate),data=buffer.getChannelData(0);
     for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1);
     const source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),volume=ctx.createGain();source.buffer=buffer;source.loop=loop;
-    filter.type='bandpass';filter.Q.value=loop?.6:3;filter.frequency.setValueAtTime(frequency,t);filter.frequency.exponentialRampToValueAtTime(endFrequency,t+seconds);
+    filter.type='bandpass';filter.Q.value=loop ? .6 : 3;filter.frequency.setValueAtTime(frequency,t);filter.frequency.exponentialRampToValueAtTime(endFrequency,t+seconds);
     volume.gain.setValueAtTime(.0001,t);volume.gain.linearRampToValueAtTime(gain,t+.05);
     if(!loop)volume.gain.exponentialRampToValueAtTime(.0001,t+seconds);
     source.connect(filter);filter.connect(volume);volume.connect(this.master);source.start(t);
