@@ -1,7 +1,7 @@
 // Ported from the SPC Legends source package (src/main.js). Wires the server (account.ts) to the motion layer
 // inside one container, so the game can mount and unmount with its React page. Spins, outcomes and balances
 // come from the server; this file only animates and displays them.
-import {ALL_SYMBOL_MAP,ARTISTS,HOUSTON_HOODS,MUSIC,SPECIAL,SYMBOL_LORE,SYMBOL_MAP,XP_TABLE} from './config';
+import {ALL_SYMBOL_MAP,ARTISTS,HOUSTON_HOODS,MUSIC,SPECIAL,SYMBOL_LORE,SYMBOL_MAP,XP_TABLE,GAME_CONFIG} from './config';
 import {createBoard,anticipationReels} from './engine';
 import {activePool,totalSpins,type Balance} from './balance';
 import {loadProfile,loadHistory,loadSweeps,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem,type SpinWin} from './account';
@@ -15,6 +15,7 @@ import {followTempo} from './tempo';
 import {sweepTease,tiersFor} from './fx';
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
+import {SPIN_PACKS,packById,DAILY_SPEND_CAP_CENTS} from '../../../supabase/functions/_shared/legends/packs.ts';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 import {createPurchaseButton} from './purchase-button';
 import {renderSupremePrize} from './supreme-prize';
@@ -41,7 +42,7 @@ let supremeLookEnabled=true;
 // Artists this player has swept: their collection card turns into a gold Legend card.
 let swept=new Set<string>();
 let xp=0,best=0,spinsTaken=0,collection:string[]=[],history:HistoryItem[]=[];
-let balance:Balance={welcomeLeft:25,dailyLeft:3,paidSpins:0},activeBoard=createBoard();
+let balance:Balance={welcomeLeft:GAME_CONFIG.welcomeSpins,dailyLeft:GAME_CONFIG.dailySpins,paidSpins:0},activeBoard=createBoard();
 // A spin whose answer never arrived is retried with the same key, so the server replays it instead of spending another.
 let pendingKey:string|null=null;
 let unmounted=false;
@@ -59,13 +60,18 @@ const attract=attractMode(root,{isBusy:()=>busy,reduced:()=>userReducedMotion});
 const stage=createStage(root),stopWatching=watchOffscreen(root),stopTempo=followTempo(root);
 // Win songs have their own switch, apart from the sound effects; both start on.
 let musicOn=true;
+// Visitors get a few free tries before signing in; the count lives in this browser only (a soft limit).
+const guestKey='spc-legends-guest-tries';
+let guestUsed=(()=>{try{return Math.max(0,Number(localStorage.getItem(guestKey))||0);}catch{return 0;}})();
+const guestLeft=()=>Math.max(0,GAME_CONFIG.guestTries-guestUsed);
+function useGuestTry(){guestUsed++;try{localStorage.setItem(guestKey,String(guestUsed));}catch{/* counted for this visit */}}
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
 // While reels move the spin button becomes a stop button; it only shortens the animation, never the outcome.
 function buttonState(){
   const left=totalSpins(balance);
   $('spin').disabled=confirmingPayment||(busy?!reelControl.skip:loading);
-  $('spin-label').textContent=busy?'TAP TO STOP':loading?'LOADING…':!userId?'SPIN THE MIX':left?'SPIN THE MIX':'GET MORE SPINS';
+  $('spin-label').textContent=busy?'TAP TO STOP':loading?'LOADING…':!userId?(guestLeft()?'SPIN THE MIX':'SIGN IN TO SPIN'):left?'SPIN THE MIX':'GET MORE SPINS';
 }
 function renderCollection(){
   const ids=new Set(collection);
@@ -91,10 +97,10 @@ function renderHistory(){const list=$('history');list.replaceChildren();if(!hist
   for(const h of history.slice(0,6)){const el=document.createElement('li');const label=document.createElement('span');label.textContent=historyLabel(h);const gained=document.createElement('strong');gained.textContent=`+${h.xp} XP`;el.append(label,gained);list.append(el);}}
 function renderBalance(){
   const pool=activePool(balance);
-  $('spins-label').textContent=userId?pool.label:'DEMO SPINS';$('spins').textContent=userId?pool.count:'∞';
+  $('spins-label').textContent=userId?pool.label:'FREE TRIES';$('spins').textContent=String(userId?pool.count:guestLeft());$('signin').hidden=!!userId;
   $('shop-paid').textContent=balance.paidSpins?`You have ${balance.paidSpins} paid spin${balance.paidSpins===1?'':'s'}.`:'';
-  $('mode').textContent=userId?'Account':'Guest demo';
-  $('balance-summary').textContent=userId?`${balance.welcomeLeft} welcome · ${balance.dailyLeft} free today · ${balance.paidSpins} paid · ${totalSpins(balance)} total spins`:'Guest demo · Progress resets when you leave · No account spins spent';
+  $('mode').textContent=userId?'Account':'Guest';
+  $('balance-summary').textContent=userId?`${balance.welcomeLeft} welcome · ${balance.dailyLeft} free today · ${balance.paidSpins} paid · ${totalSpins(balance)} total spins`:`${guestLeft()} free tr${guestLeft()===1?'y':'ies'} left · Sign in for ${GAME_CONFIG.welcomeSpins} free spins, ${GAME_CONFIG.dailySpins} more every day, and saved XP, coins and Legends`;
 }
 function refresh(animateFrom:number|null=null){
   if(animateFrom!==null)animateCounter($('xp'),animateFrom,xp,{reducedMotion:userReducedMotion});else $('xp').textContent=xp.toLocaleString();
@@ -127,6 +133,7 @@ async function spin(){
   if(confirmingPayment)return;
   const player=userId;
   if(userId&&totalSpins(balance)<=0){openShop(true);return;}
+  if(!userId&&!guestLeft()){askToSignIn();return;}
   root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:null}));
   busy=true;buttonState();paylines.clear();hits.clear();impacts.clear();bigWin.close();attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
   stage.set('spin-start');audio.spinStart();
@@ -134,12 +141,13 @@ async function spin(){
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
   try{
     let answer=player?await requestSpin(key):guestSpin(collection);
+    if(!player)useGuestTry();
     // The server allows one spin every 1.2 seconds; a quick tap after "tap to stop" waits and retries the same key.
     if('error' in answer&&answer.error==='cooldown'){await wait(1300);answer=await requestSpin(key);}
     if('error' in answer){
       if(answer.error!=='failed')pendingKey=null;
       if(answer.error==='signed_out'){await loadAccount(null);return;}
-      if(answer.error==='no_spins'){if(answer.balance)balance=answer.balance;refresh();setResult('OUT OF SPINS','Grab 25 more spins for $1, or come back tomorrow for 3 free spins (Houston time).','REFILL');openShop(true);return;}
+      if(answer.error==='no_spins'){if(answer.balance)balance=answer.balance;refresh();setResult('OUT OF SPINS',`Grab a spin pack (25 for $1 and up), or come back tomorrow for ${GAME_CONFIG.dailySpins} free spins (Houston time).`,'REFILL');openShop(true);return;}
       setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');return;
     }
     if(unmounted||userId!==player)return;
@@ -204,11 +212,24 @@ async function spin(){
     refresh(oldXP);
     root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:{board:target,wins:outcome.wins,xp:outcome.xp}}));
     if(userId&&!totalSpins(balance))openShop(true);
+    if(!player&&!guestLeft())setTimeout(()=>{if(!userId&&!busy)askToSignIn(false);},2600);
   }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
   finally{audio.endSpin();busy=false;$('spin').classList.remove('is-spinning');root.classList.remove('lg-spinning');attract.poke();buttonState();if(stage.get()!=='celebrating')stage.set('idle');}
 }
 
-// ----- Spin packs: $1 for 25 spins through the site's PayPal account -----
+// ----- Spin packs (packs.ts): $1 to $100 through the site's PayPal account, at most $100 a day -----
+function askToSignIn(scroll=true){
+  setResult(`SIGN IN FOR ${GAME_CONFIG.welcomeSpins} FREE SPINS`,`Your free tries are used. Sign in to get ${GAME_CONFIG.welcomeSpins} free spins, ${GAME_CONFIG.dailySpins} more every day (Houston time), and keep your XP, coins and Legends.`,'FREE TRIES USED');
+  $('signin').hidden=false;buttonState();
+  if(scroll)$('signin').scrollIntoView({block:'nearest',behavior:userReducedMotion?'auto':'smooth'});
+}
+let selectedPack=SPIN_PACKS[0].id;
+const orderPacks=new Map<string,string>();
+function selectPack(id:string){
+  if(!packById(id))return;selectedPack=id;
+  root.querySelectorAll<HTMLElement>('[data-pack]').forEach(card=>{const on=card.dataset.pack===id;card.classList.toggle('is-selected',on);card.setAttribute('aria-checked',String(on));});
+}
+root.querySelectorAll<HTMLElement>('[data-pack]').forEach(card=>card.addEventListener('click',()=>selectPack(card.dataset.pack!)));
 let paypalReady:Promise<boolean>|null=null;
 function shopMessage(text:string){$('shop-msg').textContent=text;}
 function loadPayPal():Promise<boolean>{
@@ -247,7 +268,8 @@ async function confirmPayment(orderID:string){
     animateCounter($('spins'),beforeSpins,activePool(balance).count,{reducedMotion:userReducedMotion});
     const spinsBlock=$('spins').closest('.hud-block');if(spinsBlock)retrigger(spinsBlock,'balance-glow');
     shopMessage('Payment confirmed. Your paid spin balance is updated.');
-    setResult('25 SPINS ADDED','Thanks for supporting the Legends. Spin the mix!','READY');
+    const bought=packById(orderPacks.get(orderID));
+    setResult(bought?`${bought.spins.toLocaleString()} SPINS ADDED`:'SPINS ADDED','Thanks for supporting the Legends. Spin the mix!','READY');
   }catch{
     if(!unmounted&&userId===buyer){$('shop-retry').hidden=false;buyButton.setState('error');shopMessage('Confirmation could not finish. Retry before buying another pack.');}
   }finally{
@@ -274,9 +296,9 @@ async function openShop(scrollTo=false):Promise<boolean>{
       shopMessage('Please confirm you are 18 or older to buy spins.');return actions.reject();
     },
     createOrder:async()=>{
-      const order=await startCheckout();
-      if('orderID' in order)return order.orderID;
-      shopMessage(order.error==='not_on_sale'?'Spin packs go on sale soon. Your free spins come back every day (Houston time).':order.error==='signed_out'?'Please sign in again to buy spins.':'Checkout could not start. Please try again.');
+      const pack=selectedPack,order=await startCheckout(pack);
+      if('orderID' in order){orderPacks.set(order.orderID,pack);return order.orderID;}
+      shopMessage(order.error==='not_on_sale'?'Spin packs go on sale soon. Your free spins come back every day (Houston time).':order.error==='signed_out'?'Please sign in again to buy spins.':order.error==='cap'?`You've reached today's $${DAILY_SPEND_CAP_CENTS/100} spin pack limit. It resets at midnight, Houston time.`:'Checkout could not start. Please try again.');
       throw new Error(order.error);
     },
     onApprove:async(data:{orderID:string})=>confirmPayment(data.orderID),
@@ -303,7 +325,8 @@ async function loadAccount(nextUser:string|null){
   if(!nextUser){
     xp=0;best=0;spinsTaken=0;collection=[];badges=[];swept=new Set();balance={welcomeLeft:0,dailyLeft:0,paidSpins:0};
     $('shop').hidden=true;refresh();
-    setResult('THE SOUTH SIDE IS CALLING.','Press SPIN THE MIX to reveal your next lineup.','GUEST DEMO');
+    if(guestLeft())setResult('THE SOUTH SIDE IS CALLING.',`Take ${guestLeft()} free tr${guestLeft()===1?'y':'ies'} on us, then sign in for ${GAME_CONFIG.welcomeSpins} free spins and ${GAME_CONFIG.dailySpins} more every day.`,'FREE TRIES');
+    else askToSignIn(false);
     return;
   }
   refresh();
@@ -313,7 +336,7 @@ async function loadAccount(nextUser:string|null){
     if(unmounted||userId!==nextUser||revision!==accountRevision)return;
     xp=profile.xp;best=profile.best;spinsTaken=profile.totalSpins;collection=profile.collection;badges=profile.badges;balance=profile.balance;history=recent;swept=new Set(sweptIds);
     if(profile.lastBoard&&!busy){activeBoard=profile.lastBoard;renderBoard($('reels'),activeBoard);}
-    setResult('THE SOUTH SIDE IS CALLING.',totalSpins(balance)?'Press SPIN THE MIX to reveal your next lineup.':'You are out of spins. Grab 25 more for $1 or come back tomorrow.','READY TO ROLL');
+    setResult('THE SOUTH SIDE IS CALLING.',totalSpins(balance)?'Press SPIN THE MIX to reveal your next lineup.':`You are out of spins. Grab a spin pack (25 for $1 and up) or come back tomorrow for ${GAME_CONFIG.dailySpins} free spins.`,'READY TO ROLL');
     if(!totalSpins(balance))openShop();
     if(pendingOrder()){await openShop();$('shop-retry').hidden=false;}
   }catch(error){

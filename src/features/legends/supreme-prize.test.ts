@@ -13,7 +13,7 @@ test('a six-reel Supreme win unlocks the reward without awarding extra spins', (
   const board = Array.from({ length: 6 }, (_, col) => [ARTISTS[col].id, 'mic', 'mixer']);
   const won = applySpin(initialState(), board).state;
   expect(supremePrizeState(won.badges).equipped).toBe(true);
-  expect(won.welcomeLeft).toBe(24);
+  expect(won.welcomeLeft).toBe(49);
   expect(won.spinsToday).toBe(0);
 });
 

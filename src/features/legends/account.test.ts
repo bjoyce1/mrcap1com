@@ -9,8 +9,9 @@ beforeEach(() => invoke.mockReset());
 describe("Legends server integration", () => {
   it("creates a pack through the server without browser price or spin overrides", async () => {
     invoke.mockResolvedValue({ data: { orderID: "REAL-ORDER" }, error: null });
-    expect(await startCheckout()).toEqual({ orderID: "REAL-ORDER" });
-    expect(invoke).toHaveBeenCalledWith("legends-spins-checkout", { body: {} });
+    expect(await startCheckout("p25")).toEqual({ orderID: "REAL-ORDER" });
+    // Only the pack id goes up; the server looks up its price and spins.
+    expect(invoke).toHaveBeenCalledWith("legends-spins-checkout", { body: { pack: "p25" } });
   });
   it("uses the approved order and server balance when 25 paid spins stack", async () => {
     invoke.mockResolvedValue({ data: { balance: { welcomeLeft: 10, dailyLeft: 3, paidSpins: 50 } }, error: null });
@@ -35,6 +36,10 @@ describe("Legends server integration", () => {
   });
   it("requires sign-in before a pack can be created", async () => {
     invoke.mockResolvedValue({ error: { context: new Response(JSON.stringify({ error: "Sign in required" }), { status: 401 }) } });
-    expect(await startCheckout()).toEqual({ error: "signed_out" });
+    expect(await startCheckout("p1")).toEqual({ error: "signed_out" });
+  });
+  it("reports the daily spending cap", async () => {
+    invoke.mockResolvedValue({ error: { context: new Response(JSON.stringify({ error: "Daily spin pack limit reached" }), { status: 429 }) } });
+    expect(await startCheckout("p100")).toEqual({ error: "cap" });
   });
 });

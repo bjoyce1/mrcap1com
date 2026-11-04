@@ -389,3 +389,22 @@
 .legends-world.vault-skin-purple-lightning .reel-window{box-shadow:0 0 0 2px #8f3dff,0 0 40px rgba(143,61,255,.65),inset 0 0 30px rgba(143,61,255,.35)}
 .legends-world.vault-skin-diamond-ice .reel-window{box-shadow:0 0 0 2px #9ff3ff,0 0 40px rgba(120,230,255,.6),inset 0 0 30px rgba(200,250,255,.3)}
 .legends-world.vault-skin-houston-chrome .reel-window{box-shadow:0 0 0 2px #ff3b4e,0 0 40px rgba(255,40,70,.6),inset 0 0 30px rgba(255,120,130,.3)}
+
+/* Spin pack picker (packs.ts) and the guest sign-in button. Only the chosen pack glows. */
+.legends-world .pack-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:6px auto 0;max-width:560px}
+.legends-world .pack-grid .pack-card{margin:0;max-width:none;width:100%;padding:18px 8px 12px;cursor:pointer;font:inherit;color:inherit;animation:none;opacity:.78;transition:opacity .2s,transform .2s var(--lg-ease,ease)}
+.legends-world .pack-grid .pack-card:hover{opacity:1}
+.legends-world .pack-grid .pack-card.is-selected{opacity:1;transform:translateY(-2px);animation:lg-pack-glow 3.2s ease-in-out infinite}
+.legends-world .pack-grid .pack-card:focus-visible{outline:2px solid #7ce7ff;outline-offset:2px}
+.legends-world .pack-grid .pack-spins{font-size:17px}
+.legends-world .pack-grid .pack-price{font-size:26px}
+.legends-world .pack-grid .pack-note{font-size:8px;letter-spacing:.16em}
+.legends-world .pack-tag{position:absolute;top:-8px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:2px 8px;border-radius:999px;font-size:8px;font-weight:800;letter-spacing:.14em;color:#2a1402;background:linear-gradient(180deg,#fff3c4,#f5c443)}
+@media(max-width:620px){.legends-world .pack-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 8px}}
+.legends-world .signin-cta{display:block;margin:10px auto 0;max-width:340px;padding:12px 16px;border-radius:12px;text-align:center;font:400 16px/1.1 var(--lg-display);letter-spacing:.08em;color:#2a1402;background:linear-gradient(180deg,#fff3c4,#f5c443 55%,#c98a22);box-shadow:0 0 0 2px #5b3209,0 0 18px rgba(255,200,90,.5);text-decoration:none}
+.legends-world .signin-cta[hidden]{display:none}
+.legends-world .signin-cta:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.legends-world .reward-links{display:flex;justify-content:center;gap:10px;margin:10px 0 0}
+.legends-world .reward-links a{flex:0 1 auto;padding:7px 14px;border-radius:999px;border:1px solid #6a4a80;background:linear-gradient(180deg,#24163a,#110c1e);font-size:10px;font-weight:800;letter-spacing:.18em;color:#ffdb81;text-decoration:none}
+.legends-world .reward-links a:hover{border-color:#f5c475}
+.legends-world .reward-links a:focus-visible{outline:2px solid #7ce7ff;outline-offset:2px}

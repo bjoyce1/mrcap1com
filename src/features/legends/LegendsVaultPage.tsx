@@ -70,7 +70,7 @@ export default function LegendsVaultPage() {
 
         {!loading && !user ? (
           <div className="rounded-xl bg-card p-6 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
-            <p className="text-foreground">Sign in to spend coins. Guest demo XP can't be spent.</p>
+            <p className="text-foreground">Sign in to spend coins. Free tries don't earn coins.</p>
             <Button asChild className="mt-4"><Link to="/auth">Sign in</Link></Button>
           </div>
         ) : (

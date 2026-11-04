@@ -4,15 +4,15 @@ import { activePool, balanceFromRow, totalSpins } from "./balance";
 const now = new Date("2026-10-31T19:00:00Z"); // 2026-10-31 in Houston
 
 describe("balanceFromRow", () => {
-  it("treats a missing row as a new player with 25 welcome and 3 daily spins", () => {
-    expect(balanceFromRow(null, now)).toEqual({ welcomeLeft: 25, dailyLeft: 3, paidSpins: 0 });
+  it("treats a missing row as a new player with 50 welcome and 20 daily spins", () => {
+    expect(balanceFromRow(null, now)).toEqual({ welcomeLeft: 50, dailyLeft: 20, paidSpins: 0 });
   });
   it("counts today's spins only on the same Houston day", () => {
     const row = { welcome_left: 0, paid_spins: 10, spins_today: 2, day: "2026-10-31" };
-    expect(balanceFromRow(row, now)).toEqual({ welcomeLeft: 0, dailyLeft: 1, paidSpins: 10 });
-    expect(balanceFromRow({ ...row, day: "2026-10-30" }, now).dailyLeft).toBe(3);
+    expect(balanceFromRow(row, now)).toEqual({ welcomeLeft: 0, dailyLeft: 18, paidSpins: 10 });
+    expect(balanceFromRow({ ...row, day: "2026-10-30" }, now).dailyLeft).toBe(20);
     // 04:30 UTC on Nov 1 is still Oct 31 in Houston.
-    expect(balanceFromRow(row, new Date("2026-11-01T04:30:00Z")).dailyLeft).toBe(1);
+    expect(balanceFromRow(row, new Date("2026-11-01T04:30:00Z")).dailyLeft).toBe(18);
   });
 });
 

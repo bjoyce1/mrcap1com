@@ -52,10 +52,10 @@ test('Supreme awards a badge once and never adds spins', () => {
   const board=quiet();board.forEach((col,i)=>col[i%3]=ARTISTS[i].id);
   const first=applySpin(initialState(),board);
   expect(first.state.badges).toContain('supreme-legends');
-  expect(first.state.welcomeLeft).toBe(24);expect(first.state.spinsToday).toBe(0);
+  expect(first.state.welcomeLeft).toBe(49);expect(first.state.spinsToday).toBe(0);
   const second=applySpin(first.state,board);
   expect(second.state.badges.filter(b=>b==='supreme-legends')).toHaveLength(1);
-  expect(second.state.welcomeLeft).toBe(23);
+  expect(second.state.welcomeLeft).toBe(48);
   expect(guestSpin([],board).outcome).toEqual(serverEvaluate(board));
 });
 

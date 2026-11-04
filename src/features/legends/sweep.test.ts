@@ -59,8 +59,8 @@ test("a sweep earns the Legend Sweep badge once and never adds spins", () => {
   const board = sweepBoard("point-blank");
   const first = applySpin(initialState(), board);
   expect(first.state.badges).toContain("legend-sweep");
-  expect(first.state.welcomeLeft).toBe(24);
+  expect(first.state.welcomeLeft).toBe(49);
   const second = applySpin(first.state, board);
   expect(second.state.badges.filter((b) => b === "legend-sweep")).toHaveLength(1);
-  expect(second.state.welcomeLeft).toBe(23);
+  expect(second.state.welcomeLeft).toBe(48);
 });

@@ -36,6 +36,13 @@
       "when": 1793824837459,
       "tag": "0004_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793827414832,
+      "tag": "0005_legends_launch",
+      "breakpoints": true
     }
   ]
 }

@@ -65,13 +65,14 @@ export async function requestSpin(idempotencyKey: string): Promise<SpinResult | 
   return { error: "failed" };
 }
 
-/** Starts a $1 pack order. The price and spin count are fixed on the server. */
-export async function startCheckout(): Promise<{ orderID: string } | Failure<"not_on_sale" | "signed_out" | "failed">> {
-  const { data, error } = await supabase.functions.invoke("legends-spins-checkout", { body: {} });
+/** Opens a PayPal order for one spin pack (an id from packs.ts); the server sets its price and spins. */
+export async function startCheckout(pack: string): Promise<{ orderID: string } | Failure<"not_on_sale" | "signed_out" | "cap" | "failed">> {
+  const { data, error } = await supabase.functions.invoke("legends-spins-checkout", { body: { pack } });
   if (!error) return data as { orderID: string };
   const { status } = await failure(error);
   if (status === 503) return { error: "not_on_sale" };
   if (status === 401) return { error: "signed_out" };
+  if (status === 429) return { error: "cap" };
   return { error: "failed" };
 }
 

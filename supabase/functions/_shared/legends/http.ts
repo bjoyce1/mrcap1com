@@ -4,9 +4,7 @@ import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 
 export { corsHeaders };
 
-export const PACK_AMOUNT = "1.00";
-export const PACK_CURRENCY = "USD";
-export const PACK_SPINS = 25;
+// Spin pack prices and sizes live in packs.ts.
 
 export function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {

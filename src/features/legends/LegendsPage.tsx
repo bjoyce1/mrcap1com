@@ -7,6 +7,9 @@ import { applyVaultLook } from "./vault";
 import { symbolUrl } from "./motion";
 import { ARTISTS, HOUSTON_HOODS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { SPIN_PACKS, DAILY_SPEND_CAP_CENTS, bonusPercent } from "../../../supabase/functions/_shared/legends/packs";
+import { GAME_CONFIG } from "./config";
 import { WinningLines } from './WinningLines';
 import { Marquee } from "./Marquee";
 import { Backdrop, Fireworks, HeaderCity } from "./Backdrop";
@@ -39,7 +42,7 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
        <Marquee />
        <p className="hero-copy">{ARTISTS.length} legends. {HOUSTON_HOODS.length} H-Town hoods. Six reels. One Houston legacy. Collect your favorites and light up the board in a Houston arcade experience.</p>
-       <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> {PAYLINES.length} PAYLINES</span><span>25 FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
+       <div className="hero-tags"><span>6 REELS × 3 ROWS</span><span><i className="tiny-star">✦</i> {PAYLINES.length} PAYLINES</span><span>{GAME_CONFIG.welcomeSpins} FREE SPINS TO START</span><span>VIRTUAL XP ONLY</span></div>
       </section>
       <section className="lg-container game-layout" data-lg="game" aria-label="SPC Legends game">
        <div className="cab-underglow" aria-hidden="true" />
@@ -60,13 +63,15 @@ const LegendsGame = memo(function LegendsGame() {
           <div className="reel-board" data-lg="board" aria-label="Six reels with three symbols each"><div data-lg="reels" className="reels"></div><div className="cab-burst" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <i key={i} style={{ "--a": `${(i / 14) * 360}deg`, "--r": `${38 + (i % 3) * 9}%` } as CSSProperties} />)}</div></div>
           <div className="board-bottom"><span><span className="board-led"></span> SIX REELS ACTIVE<span className="board-hint"> · TAP ANY CARD FOR BIO</span></span><span className="board-tools"><button type="button" data-lg="sound" className="icon-button" aria-pressed="true" title="Mute sound effects" aria-label="Toggle sound effects"><span data-lg="sound-icon" aria-hidden="true">🔊</span></button><button type="button" data-lg="music" className="icon-button" aria-pressed="true" title="Mute win music" aria-label="Toggle win music"><span data-lg="music-icon" aria-hidden="true">♫</span></button><button type="button" data-lg="motion" className="icon-button" aria-pressed="false" title="Toggle reduced motion" aria-label="Toggle reduced motion"><span aria-hidden="true">◉</span></button><span className="board-tag">SPC // 713</span></span></div></div>
         <div className="hud">
-         <div className="hud-block"><span className="hud-label" data-lg="spins-label">WELCOME SPINS</span><strong data-lg="spins">25</strong></div>
+         <div className="hud-block"><span className="hud-label" data-lg="spins-label">WELCOME SPINS</span><strong data-lg="spins">{GAME_CONFIG.welcomeSpins}</strong></div>
          <div className="hud-block"><span className="hud-label">LEGENDS XP</span><strong data-lg="xp">0</strong></div>
          <div className="hud-main"><img className="hud-crown" src="/games/spc-legends/marquee/crown.webp" alt="" aria-hidden="true" /><button type="button" data-lg="spin" className="spin-button"><span className="spin-star" aria-hidden="true">◆</span><span data-lg="spin-label">SPIN THE MIX</span><span className="spin-chevron" aria-hidden="true">◆</span></button></div>
          <div className="hud-block"><span className="hud-label">COLLECTED</span><strong data-lg="collected">0 / {ARTISTS.length}</strong></div>
          <div className="hud-block"><span className="hud-label">BEST SPIN</span><strong data-lg="best">0</strong></div>
         </div>
         <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
+        <Link to="/auth" state={{ returnTo: "/legends" }} data-lg="signin" className="signin-cta" hidden>SIGN IN FOR {GAME_CONFIG.welcomeSpins} FREE SPINS</Link>
+        <nav className="reward-links" aria-label="Rewards"><Link to="/legends/vault">✦ COIN VAULT</Link><Link to="/legends/rewards">XP PAYOUTS</Link></nav>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
         <WinningLines />
         <button type="button" className="buy-button" data-lg="shop-open" data-state="idle" aria-expanded="false" aria-controls="lg-shop" hidden>
@@ -79,14 +84,18 @@ const LegendsGame = memo(function LegendsGame() {
          </span>
         </button>
         <section className="spin-shop" data-lg="shop" id="lg-shop" aria-label="Buy spins" hidden>
-         <div className="lg-label">SPIN PACK</div>
-         <div className="pack-card is-selected" aria-label="Selected package: 25 spins for 1 dollar">
-          <span className="pack-icon" aria-hidden="true">✦</span>
-          <span className="pack-spins">25 SPINS</span>
-          <span className="pack-price">$1.00</span>
-          <span className="pack-note">PAID SPINS NEVER EXPIRE</span>
+         <div className="lg-label">CHOOSE A SPIN PACK</div>
+         <div className="pack-grid" role="radiogroup" aria-label="Spin packs">
+          {SPIN_PACKS.map((p, i) => (
+           <button key={p.id} type="button" role="radio" aria-checked={i === 0} data-pack={p.id} className={`pack-card${i === 0 ? " is-selected" : ""}`} aria-label={`${p.spins.toLocaleString()} spins for ${p.cents / 100} dollars`}>
+            {p.label ? <span className="pack-tag">{p.label}</span> : null}
+            <span className="pack-spins">{p.spins.toLocaleString()} SPINS</span>
+            <span className="pack-price">${p.cents / 100}</span>
+            <span className="pack-note">{bonusPercent(p) > 0 ? `${(p.cents / p.spins).toFixed(2).replace(/^0/, "")}¢ A SPIN` : "4¢ A SPIN"}</span>
+           </button>
+          ))}
          </div>
-         <p>Buy another pack any time. Paid spins are used after your free spins.</p>
+         <p>Paid spins never expire and are used after your free spins. Up to ${DAILY_SPEND_CAP_CENTS / 100} of packs a day.</p>
          <label className="shop-age"><input type="checkbox" data-lg="shop-age" /> I am 18 or older</label>
          <div className="shop-checkout">
           <div className="lg-label">SECURE CHECKOUT</div>
@@ -95,9 +104,9 @@ const LegendsGame = memo(function LegendsGame() {
          <p className="shop-msg" data-lg="shop-msg" role="status" aria-live="polite" />
          <Button type="button" variant="secondary" data-lg="shop-retry" hidden>Retry payment confirmation</Button>
          <p className="shop-paid" data-lg="shop-paid" />
-         <p className="shop-fine">Legends XP, ranks and badges have no cash value and cannot be exchanged for money or prizes. Wins never pay out spins. All sales are final unless the law requires a refund. Payments are handled by PayPal.</p>
+         <p className="shop-fine">Legends XP, coins, ranks, badges and Vault items have no cash value and cannot be exchanged for money or prizes. Wins never pay out spins. All sales are final unless the law requires a refund. Payments are handled by PayPal.</p>
         </section>
-        <div className="game-disclaimer">25 FREE SPINS TO START, THEN 3 FREE SPINS A DAY (HOUSTON TIME) • Extra spins are $1 for 25 • No cash, prizes or real-world rewards. Legends XP is for entertainment only.</div>
+        <div className="game-disclaimer">{GAME_CONFIG.welcomeSpins} FREE SPINS TO START, THEN {GAME_CONFIG.dailySpins} FREE SPINS A DAY (HOUSTON TIME) • Spin packs from $1 • No cash, prizes or real-world rewards. Legends XP is for entertainment only.</div>
        </div>
        <aside className="sidebar">
          <section className="panel collection-panel" data-lg="collection-panel"><div className="panel-heading"><div><span className="section-label">YOUR LEGACY</span><h2>LEGENDS COLLECTION</h2></div><span data-lg="collection-count" className="small-chip">0 / {ARTISTS.length}</span></div><div className="collection-grid" data-lg="collection"></div><div className="progress-track"><div data-lg="collection-progress" className="progress-fill"></div></div><p data-lg="collection-note" className="panel-note">Spin to discover every artist. Tap any portrait to inspect.</p></section>
@@ -106,7 +115,7 @@ const LegendsGame = memo(function LegendsGame() {
        </aside>
       </section>
       <section className="lg-container below-grid" data-lg="rules">
-       <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Start with 25 free spins. After those, get three free spins each Houston calendar day. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of {PAYLINES.length} paylines earn virtual XP. Artist, music and Houston hood symbols all pay on paylines. Fill one reel top to bottom with the same artist for 250 base XP, or the same music or hood symbol for 125, a vertical stack. SPC Wilds substitute on paylines and stacks, and 713 Double Wilds both substitute and double that payline's XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover {ARTISTS.map(artist => artist.name).join(', ')}.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus. Connect six different artists across the six reels, one per reel and moving at most one row from reel to reel, for SPC Unity: 500 base XP once per spin. A Legend anywhere on every reel earns Supreme Legendary: 250 base XP and a badge, and each of those Legends wears a crown. Land the SAME Legend on all six reels for a Legend Sweep: 25,000 XP and that artist's gold Legend card. A 713 Double Bonus doubles a winning spin's XP, an SPC Triple Bonus triples it, and both together multiply it by six.</p></div></div></div>
+       <div className="panel rules-panel"><span className="section-label">HOW TO PLAY</span><h2>THE RULES OF THE MIX</h2><div className="rules-grid"><div><b>01 <span>SPIN</span></b><p>Sign in for {GAME_CONFIG.welcomeSpins} free spins, then get {GAME_CONFIG.dailySpins} free spins each Houston calendar day. Out of spins? Spin packs start at 25 for $1. Every reel stops in sequence.</p></div><div><b>02 <span>MATCH</span></b><p>Three or more contiguous matches from reel one on one of {PAYLINES.length} paylines earn virtual XP. Artist, music and Houston hood symbols all pay on paylines. Fill one reel top to bottom with the same artist for 250 base XP, or the same music or hood symbol for 125, a vertical stack. SPC Wilds substitute on paylines and stacks, and 713 Double Wilds both substitute and double that payline's XP.</p></div><div><b>03 <span>COLLECT</span></b><p>Discover {ARTISTS.map(artist => artist.name).join(', ')}.</p></div><div><b>04 <span>CELEBRATE</span></b><p>Find three 713 symbols for a bonus. Connect six different artists across the six reels, one per reel and moving at most one row from reel to reel, for SPC Unity: 500 base XP once per spin. A Legend anywhere on every reel earns Supreme Legendary: 250 base XP and a badge, and each of those Legends wears a crown. Land the SAME Legend on all six reels for a Legend Sweep: 25,000 XP and that artist's gold Legend card. A 713 Double Bonus doubles a winning spin's XP, an SPC Triple Bonus triples it, and both together multiply it by six.</p></div></div></div>
        <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><p data-lg="supreme-badge" className="supreme-badge" hidden>✦ SUPREME LEGENDARY</p><div className="supreme-prize"><span className="section-label">SUPREME REWARD</span><h3>THE GOLD CABINET</h3><p>Exclusive gold reel trim and a crowned Supreme Legendary player title.</p><p className="prize-status" data-lg="prize-status" aria-live="polite">LOCKED · WIN SUPREME LEGENDARY</p><Button type="button" variant="secondary" className="prize-equip" data-lg="prize-equip" aria-pressed="false" disabled>LOCKED</Button><small>Cosmetic reward only. No cash value or extra spins.</small></div><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/{ARTISTS.length}</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong data-lg="mode">Guest</strong></div><p className="panel-note">Sign in and your spins, XP and collection are saved to your account.</p></div>
       </section>
       <section className="lg-container symbol-library">
