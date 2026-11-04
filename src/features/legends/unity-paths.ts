@@ -30,7 +30,7 @@ export function inspectWinningLines(board: string[][], wins: SpinWin[], credited
   const analysis = analyzeUnityPaths(board);
   const paid = wins.find(w => w.type === 'unity');
   const multiplier = wins.filter(w => w.type === 'multiplier').reduce((m, w) => m * (w.multiplier ?? 1), 1);
-  const awards = wins.map(w => `${w.type === 'line' ? `Matching payline ${w.payline}: ${w.count} ${SYMBOL_MAP[w.symbol ?? '']?.name ?? 'symbols'}` : w.type === 'unity' ? 'SPC Unity: six different artists along a connected route' : w.type === 'supreme' ? 'Supreme Legendary: a real artist on every reel' : w.type === 'sweep' ? `Legend Sweep: ${SYMBOL_MAP[w.symbol ?? '']?.name}` : w.type === 'bonus' ? '713 scatter bonus' : 'Multiplier increment'}: +${w.xp.toLocaleString()} ${w.type === 'multiplier' ? 'additional' : 'base'} XP.`);
+  const awards = wins.map(w => `${w.type === 'line' ? `Matching payline ${w.payline}: ${w.count} ${SYMBOL_MAP[w.symbol ?? '']?.name ?? 'symbols'}${w.wildMultiplier && w.wildMultiplier > 1 ? ` (×${w.wildMultiplier} Double Wild)` : ''}` : w.type === 'unity' ? 'SPC Unity: six different artists along a connected route' : w.type === 'supreme' ? 'Supreme Legendary: a real artist on every reel' : w.type === 'sweep' ? `Legend Sweep: ${SYMBOL_MAP[w.symbol ?? '']?.name}` : w.type === 'bonus' ? '713 scatter bonus' : 'Multiplier increment'}: +${w.xp.toLocaleString()} ${w.type === 'multiplier' ? 'additional' : 'base'} XP.`);
   const qualifying: InspectedLine[] = analysis.qualifying.map((p, i) => {
     const isPaid = !!paid && paid.cells.join() === p.cells.join();
     return {
@@ -44,7 +44,7 @@ export function inspectWinningLines(board: string[][], wins: SpinWin[], credited
     const match = lineMatch(rows.map((r, c) => board[c][r]));
     const cells = win?.cells ?? rows.map((r, c) => `${c}:${r}`);
     return { id: `line-${i + 1}`, label: `Matching payline ${i + 1}`, cells, accepted: !!win,
-      explanation: win ? `${win.count} matching ${SYMBOL_MAP[win.symbol ?? '']?.name} symbols from reel 1. +${win.xp} base XP. The illuminated cells are the actual paid run. Standard matching paylines are separate from Unity.` : match ? 'The matching symbol has no standard XP award. Not an SPC Unity decision.' : 'Rejected: fewer than three matching symbols from reel 1. Wilds substitute, but specials cannot form paid runs. This fixed payline is separate from Unity adjacency rules.',
+      explanation: win ? `${win.count} matching ${SYMBOL_MAP[win.symbol ?? '']?.name} symbols from reel 1${win.wildMultiplier && win.wildMultiplier > 1 ? ` (×${win.wildMultiplier} Double Wild)` : ''}. +${win.xp} base XP. The illuminated cells are the actual paid run. Standard matching paylines are separate from Unity.` : match ? 'The matching symbol has no standard XP award. Not an SPC Unity decision.' : 'Rejected: fewer than three matching symbols from reel 1. Wilds substitute, but specials cannot form paid runs. This fixed payline is separate from Unity adjacency rules.',
       win: win ?? { type: 'unity', xp: 0, cells },
     };
   });

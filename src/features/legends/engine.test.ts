@@ -67,5 +67,14 @@ test('special symbols are rarer than every artist and music symbol; artists stay
   assert.deepEqual(MULTIPLIERS,{double:2,triple:3});
   assert.equal(SYMBOL_WEIGHTS.double,2);assert.equal(SYMBOL_WEIGHTS.triple,1);
   assert.equal(new Set(ARTISTS.map(a=>SYMBOL_WEIGHTS[a.id])).size,1);
-  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),190);
+  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),191);
+});
+test('713 Double Wild substitutes on paylines and doubles line XP (2x for one, 4x for two)',()=>{
+  assert.deepEqual(lineMatch(['double-wild','k-rino','k-rino','mic','mic','mic']),{symbol:'k-rino',count:3,wildMultiplier:2});
+  assert.deepEqual(lineMatch(['double-wild','double-wild','k-rino','mic','mic','mic']),{symbol:'k-rino',count:3,wildMultiplier:4});
+  assert.equal(lineMatch(Array(6).fill('double-wild')),null);
+  const b1=quiet();b1[0][1]='k-rino';b1[1][1]='double-wild';b1[2][1]='k-rino';
+  const r1=evaluateBoard(b1);const w1=r1.wins.find(w=>w.type==='line'&&w.payline===1);assert(w1);assert.equal(w1.xp,100);assert.equal(w1.wildMultiplier,2);
+  const b2=quiet();b2[0][1]='double-wild';b2[1][1]='double-wild';b2[2][1]='k-rino';
+  const r2=evaluateBoard(b2);const w2=r2.wins.find(w=>w.type==='line'&&w.payline===1);assert(w2);assert.equal(w2.xp,200);assert.equal(w2.wildMultiplier,4);
 });

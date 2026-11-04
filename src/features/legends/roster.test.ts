@@ -9,7 +9,7 @@ import { guestSpin } from './guest';
 test('guest and account rosters include all eleven Legends with equal artist weights', () => {
   expect(ARTISTS).toHaveLength(11);
   expect(HOUSTON_HOODS).toHaveLength(5);
-  expect(ALL_SHOWCASE_SYMBOLS).toHaveLength(28);
+  expect(ALL_SHOWCASE_SYMBOLS).toHaveLength(29);
   expect(ARTISTS.slice(-5).map(({ id, name }) => ({ id, name }))).toEqual([
     { id: 'murder-one', name: 'Murder One' },
     { id: 'rapper-k', name: 'Rapper K' },
@@ -27,7 +27,7 @@ test('guest and account rosters include all eleven Legends with equal artist wei
   expect(SYMBOL_WEIGHTS['dope-e']).toBe(10);
 });
 
-test('all 28 mastered 1024x1024 symbol WebPs exist on disk in public/games/spc-legends/symbols', () => {
+test('all 29 mastered 1024x1024 symbol WebPs exist on disk in public/games/spc-legends/symbols', () => {
   for (const sym of ALL_SHOWCASE_SYMBOLS) {
     const p = resolve(__dirname, '../../../public/games/spc-legends/symbols', `${sym.id}.webp`);
     expect(existsSync(p), `Missing symbol WebP: ${sym.id}.webp`).toBe(true);

@@ -2,6 +2,7 @@
 import {ARTISTS, MUSIC, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE, MULTIPLIERS} from './config';
 const artistIds=new Set(ARTISTS.map(a=>a.id));
 const musicIds=new Set(MUSIC.map(a=>a.id));
+const isWild=(id:string)=>id==='wild'||id==='double-wild';
 export function localDay(date=new Date(),timeZone=GAME_CONFIG.timezone){
   const parts=new Intl.DateTimeFormat('en-US',{timeZone,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
   const x=Object.fromEntries(parts.map(p=>[p.type,p.value]));
@@ -50,15 +51,15 @@ export function validateBoard(board){
  */
 export function lineMatch(line){
   if(!Array.isArray(line)||line.length!==6||line[0]==='bonus')return null;
-  const real=line.find(s=>s!=='wild');
+  const real=line.find(s=>!isWild(s));
   if(!real||real==='bonus')return null;
-  let count=0;
+  let count=0,doubleWilds=0;
   for(const id of line){
-    if(id==='wild'||id===real){count++;continue;}
+    if(isWild(id)||id===real){count++;if(id==='double-wild')doubleWilds++;continue;}
     break;
   }
   if(count<3)return null;
-  return {symbol:real,count};
+  return doubleWilds>0?{symbol:real,count,wildMultiplier:2**doubleWilds}:{symbol:real,count};
 }
 function cellKey(col,row){return `${col}:${row}`;}
 /** Every connected route across the six reels (239): one row per reel, each step at most one row. Straight rows first. */
@@ -78,9 +79,10 @@ export function evaluateBoard(board){
     if(!matched)return;
     const category=artistIds.has(matched.symbol)?'character':musicIds.has(matched.symbol)?'music':null;
     if(!category)return;
-    const earned=XP_TABLE[category][matched.count];
-    if(!earned)return;
-    const win={type:'line',payline:index+1,symbol:matched.symbol,count:matched.count,xp:earned,cells:line.slice(0,matched.count).map((row,col)=>cellKey(col,row))};
+    const baseEarned=XP_TABLE[category][matched.count];
+    if(!baseEarned)return;
+    const wildMultiplier=matched.wildMultiplier??1,earned=baseEarned*wildMultiplier;
+    const win={type:'line',payline:index+1,symbol:matched.symbol,count:matched.count,...(wildMultiplier>1?{wildMultiplier}:{}),xp:earned,cells:line.slice(0,matched.count).map((row,col)=>cellKey(col,row))};
     wins.push(win);xp+=earned;win.cells.forEach(k=>hits.add(k));
   });
   const scatter=[];
@@ -152,6 +154,6 @@ export function applySpin(state,board,date=new Date()){
   if(outcome.wins.some(w=>w.type==='supreme')&&!badges.includes('supreme-legends'))badges.push('supreme-legends');
   if(outcome.wins.some(w=>w.type==='sweep')&&!badges.includes('legend-sweep'))badges.push('legend-sweep');
   // Welcome spins are spent first and do not touch the daily count.
-  const next={...normalized,spinsToday:normalized.spinsToday+(welcome?0:1),welcomeLeft:normalized.welcomeLeft-(welcome?1:0),totalSpins:normalized.totalSpins+1,xp:normalized.xp+outcome.xp,best:Math.max(normalized.best,outcome.xp),collection,badges,lastBoard:board,history:[{at:date.toISOString(),xp:outcome.xp,wins:outcome.wins.map(w=>({type:w.type,count:w.count||0,symbol:w.symbol||null}))},...normalized.history].slice(0,12)};
+  const next={...normalized,spinsToday:normalized.spinsToday+(welcome?0:1),welcomeLeft:normalized.welcomeLeft-(welcome?1:0),totalSpins:normalized.totalSpins+1,xp:normalized.xp+outcome.xp,best:Math.max(normalized.best,outcome.xp),collection,badges,lastBoard:board,history:[{at:date.toISOString(),xp:outcome.xp,wins:outcome.wins.map(w=>({type:w.type,count:w.count||0,symbol:w.symbol||null,...(w.wildMultiplier?{wildMultiplier:w.wildMultiplier}:{}),...(w.multiplier?{multiplier:w.multiplier}:{})}))},...normalized.history].slice(0,12)};
   return {state:next,outcome,newCharacters:collection.filter(x=>!normalized.collection.includes(x))};
 }

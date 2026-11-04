@@ -25,7 +25,7 @@ export const MUSIC = Object.freeze([
   {id:'legend',name:'Legend Crown',color:'#ffd078'},
   {id:'speakers',name:'Speakers',color:'#a764ff'}
 ]);
-export const SPECIAL = Object.freeze([{id:'wild',name:'SPC Wild',color:'#ffc766'},{id:'bonus',name:'713 Bonus',color:'#fcd965'},{id:'double',name:'713 Double Bonus',color:'#ff4fd8'},{id:'triple',name:'SPC Triple Bonus',color:'#ff3a2e'}]);
+export const SPECIAL = Object.freeze([{id:'wild',name:'SPC Wild',color:'#ffc766'},{id:'double-wild',name:'713 Double Wild',color:'#c084fc'},{id:'bonus',name:'713 Bonus',color:'#fcd965'},{id:'double',name:'713 Double Bonus',color:'#ff4fd8'},{id:'triple',name:'SPC Triple Bonus',color:'#ff3a2e'}]);
 export const HOUSTON_HOODS = Object.freeze([
   {id:'south-park',name:'South Park',color:'#f59e0b',subtitle:'Home of the SPC',desc:'MLK Blvd & Cullen — Birthplace of the South Park Coalition.'},
   {id:'3rd-ward',name:'3rd Ward',color:'#ef4444',subtitle:'Southside Stronghold',desc:'Emancipation Ave & Scott St — Historic H-Town cultural bedrock.'},
@@ -51,6 +51,7 @@ export const SYMBOL_LORE: Record<string, {role: string; hood: string; bio: strin
   'acres-homes': {role:'Historic H-Town Hood Badge',hood:'Northwest (The 44)',bio:'Iconic pine-lined streets famous for candy-painted slabs, swangas, and deep Houston trunk music.'},
   'mcgregor-park': {role:'Historic H-Town Hood Badge',hood:'MacGregor Way & MLK',bio:'The legendary Sunday gathering spot where custom slabs, gold spokes, and new SPC mixtapes debuted every weekend.'},
   'wild': {role:'Special Payline Wildcard',hood:'South Park Coalition',bio:'Substitutes for any Artist or Music symbol on any of the 26 paylines. Also counts toward SPC Unity when paired with at least one Legend.'},
+  'double-wild': {role:'Wildcard + 2× Line Multiplier',hood:'713 Mixhouse',bio:'Substitutes for any Artist or Music symbol on a payline AND doubles (2×) the XP of every payline win it helps form (4× when two Double Wilds join the same line).'},
   'bonus': {role:'Scatter Bonus Trigger',hood:'713 Area Code',bio:'Land 3 or more 713 Bonus emblems anywhere on the 6×3 board to trigger +300 Bonus XP and celebratory scatter hits.'},
   'double': {role:'2× Board Multiplier',hood:'713 Mixhouse',bio:'Multiplies the entire winning spin’s XP by 2×. Combine with SPC Triple Bonus on the same spin for a 6× total multiplier.'},
   'triple': {role:'3× Board Multiplier',hood:'South Park Coalition',bio:'Multiplies the entire winning spin’s XP by 3×. Combine with 713 Double Bonus on the same spin for a 6× total multiplier.'},
@@ -69,7 +70,7 @@ export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL];
 export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS,...HOUSTON_HOODS];
 export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
 export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries(ALL_SHOWCASE_SYMBOLS.map(x=>[x.id,x])));
-const SPECIAL_WEIGHTS={wild:2,bonus:3,double:2,triple:1};
+const SPECIAL_WEIGHTS={wild:2,'double-wild':1,bonus:3,double:2,triple:1};
 export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:SPECIAL_WEIGHTS[s.id]])));
 // welcomeSpins: one-time starter spins every player gets, used before the daily allowance.
 export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:3,welcomeSpins:25,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:true});

@@ -1,7 +1,7 @@
 // Order and timing for the win celebration. Pure: reads engine wins, never changes them.
 import { ARTISTS } from "./config";
 
-export type HitWin = { type: string; payline?: number; count?: number; symbol?: string; multiplier?: number; xp: number; cells: string[] };
+export type HitWin = { type: string; payline?: number; count?: number; symbol?: string; multiplier?: number; wildMultiplier?: number; xp: number; cells: string[] };
 export type HitCell = { key: string; col: number; row: number; delay: number };
 export type HitStep = { win: HitWin; start: number; cells: HitCell[] };
 
