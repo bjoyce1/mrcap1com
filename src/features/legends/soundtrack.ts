@@ -71,11 +71,13 @@ export class WinSoundtrack {
   private el: HTMLAudioElement | null = null;
   private fade = 0;
   private rotations: Partial<Record<keyof typeof WIN_SONGS, number>> = {};
+  constructor(private random: () => number = Math.random) {}
 
   play(k: WinKind, enabled: boolean): WinSong | null {
     const tier = winSongTier(k.xp);
     if (!tier) return null;
-    const index = this.rotations[tier] ?? 0;
+    // Each visit starts every tier at a random song, then rotates so repeats are spread out.
+    const index = this.rotations[tier] ?? Math.floor(this.random() * WIN_SONGS[tier].length);
     const s = pickWinSong(k, index);
     if (!s) return null;
     this.rotations[tier] = index + 1;
