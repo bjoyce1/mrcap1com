@@ -47,7 +47,8 @@ export interface WinKind {
 export function pickWinSong(k: WinKind, lineIndex = 0): WinSong | null {
   if (!Number.isFinite(k.xp) || k.xp <= 0) return null;
   if (k.sweep) return WIN_SONGS.sweep;
-  const highestTier = tiersFor(k.xp).at(-1)?.tier;
+  const tiers = tiersFor(k.xp);
+  const highestTier = tiers[tiers.length - 1]?.tier;
   if (highestTier === "legendary") return WIN_SONGS.legendary;
   if (highestTier === "mega") return WIN_SONGS.mega;
   if (highestTier === "big") return WIN_SONGS.big;
