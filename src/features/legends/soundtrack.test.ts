@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { describe, expect, it, test } from 'vitest';
 import { pickWinSong, WIN_CUE_SECONDS, WIN_SONGS, WinSoundtrack, winSongTier } from './soundtrack';
 
 const base = { supreme: false, unity: false, sweep: false, major: false, bonus: false, xp: 100 };
@@ -33,7 +33,7 @@ test('250 XP cycles Eternal Legacy, Respect and A.C. Chill without consecutive r
 });
 
 test('each tier maintains its own visit rotation when other tiers intervene', () => {
-  const player = new WinSoundtrack();
+  const player = new WinSoundtrack(() => 0);
   expect(player.play({ ...base, xp: 250 }, false)?.title).toBe('Eternal Legacy');
   expect(player.play({ ...base, xp: 1000 }, false)?.title).toBe("Bet'n On Me");
   expect(player.play({ ...base, xp: 250 }, false)?.title).toBe('Respect');
@@ -42,4 +42,16 @@ test('each tier maintains its own visit rotation when other tiers intervene', ()
 
 test('win songs retain the 15-second cue', () => {
   expect(WIN_CUE_SECONDS).toBe(15);
+});
+describe('WinSoundtrack tier rotation', () => {
+  it('plays each tier its own pool, starting at a random song and rotating', async () => {
+    const { WinSoundtrack, WIN_SONGS } = await import('./soundtrack');
+    const base = { supreme: false, unity: false, sweep: false, major: false, bonus: false };
+    const t = new WinSoundtrack(() => 0.5);
+    const lines = [0, 1, 2, 3].map(() => t.play({ ...base, xp: 100 }, false)!.title);
+    expect(lines[0]).toBe(WIN_SONGS.line[2].title);
+    expect(new Set(lines).size).toBe(4);
+    expect(t.play({ ...base, xp: 250 }, false)!.title).toBe(WIN_SONGS.supreme[1].title);
+    expect(t.play({ ...base, xp: 750 }, false)!.title).toBe('The Coalition');
+  });
 });
