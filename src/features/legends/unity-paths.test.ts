@@ -11,6 +11,7 @@ describe('exact supplied six-reel board', () => {
     const result = analyzeUnityPaths(board);
     expect(result.qualifying).toHaveLength(32);
     expect(new Set(result.qualifying.map(p => p.id)).size).toBe(32);
+    expect(result.qualifying.map(p=>p.id)).toEqual('000011 000111 000121 001011 001111 001121 010011 010111 010121 011011 011111 011121 012111 012121 100011 101011 110011 111011 121011 210011 210111 210121 211011 211111 211121 212111 212121 221011 221111 221121 222111 222121'.split(' '));
     expect(result.qualifying.length + result.rejected.length).toBe(239);
     for (const p of result.qualifying) { expect(new Set(p.symbols).size).toBe(6); expect(p.cells).toHaveLength(6); expect(p.rows.every((r,c)=>!c||Math.abs(r-p.rows[c-1])<=1)).toBe(true); }
   });

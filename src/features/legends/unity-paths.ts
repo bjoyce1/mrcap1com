@@ -27,7 +27,7 @@ export function analyzeUnityPaths(board: string[][]) {
   return { qualifying: paths.filter(p => !p.reasons.length), rejected: paths.filter(p => p.reasons.length) };
 }
 /** Shadow scoring only. Never pass this result to balances, badges, history or account commits. */
-export function proposedUnityScore(board: string[][], rules = UNITY_PREVIEW_RULES) {
+export function proposedUnityScore(board: string[][], rules: { extraPathXp: number; maxExtraPaths: number } = UNITY_PREVIEW_RULES) {
   for (const value of [rules.extraPathXp, rules.maxExtraPaths]) if (!Number.isSafeInteger(value) || value < 0) throw new RangeError('Unity settings must be nonnegative safe integers');
   const paths = analyzeUnityPaths(board).qualifying;
   const unique = [...new Map(paths.map(p => [p.id, p])).values()];
