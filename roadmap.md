@@ -1,5 +1,11 @@
 # Identity connection
 
+# SPC Unity evaluation audit
+
+- [ ] Enumerate and explain every continuous distinct-artist route, with separate standard paylines.
+- [ ] Verify the supplied board's 32 routes and Paths A, B and C; test once-per-spin proposed XP, duplicate protection and configurable caps.
+- [ ] Add a Winning Lines viewer with exact-cell highlights and preserve existing credited rewards and animations.
+
 # SPC Legends win animation
 
 - [x] Keep hit artwork paint-ready and let the final reel animation finish without changing results or payments.
