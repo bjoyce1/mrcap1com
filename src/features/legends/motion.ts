@@ -142,7 +142,7 @@ export class PaylineOverlay {
   }
   /** autoCycle=false draws the lines dim and waits for focus()/cycle(), so the hit show can lead. */
   show(wins:Win[],{reducedMotion=false,autoCycle=true}={}){
-    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='supreme'||w.type==='sweep');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
+    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='sweep');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
   }
   focus(win:Win){this.paths.forEach(p=>this.light(p,p.win===win));}
   cycle(){this.autoCycle=true;this.draw();}

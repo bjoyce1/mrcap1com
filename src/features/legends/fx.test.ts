@@ -6,14 +6,14 @@ const quiet = () => [["mic", "mixer", "vinyl"], ["tape", "headphones", "legend"]
 
 describe("Big Win tiers", () => {
   it("escalates through every tier the XP passes", () => {
-    expect(tiersFor(499).map((t) => t.tier)).toEqual([]);
-    expect(tiersFor(500).map((t) => t.tier)).toEqual(["big"]);
+    expect(tiersFor(999).map((t) => t.tier)).toEqual([]);
+    expect(tiersFor(1000).map((t) => t.tier)).toEqual(["big"]);
     expect(tiersFor(2000).map((t) => t.tier)).toEqual(["big", "mega"]);
     expect(tiersFor(25250).map((t) => t.label)).toEqual(["BIG WIN", "MEGA WIN", "LEGENDARY WIN"]);
   });
   it("gives bigger wins a longer count-up", () => {
     expect(countUpMs(100)).toBe(0);
-    expect(countUpMs(600)).toBeLessThan(countUpMs(2500));
+    expect(countUpMs(1200)).toBeLessThan(countUpMs(2500));
     expect(countUpMs(2500)).toBeLessThan(countUpMs(30000));
   });
   it("puts every Legend Sweep in the top tier", () => {

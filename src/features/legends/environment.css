@@ -332,3 +332,6 @@
 }
 .legends-world.reduce-motion :is(.lw-glow,.lw-beam,.lw-smoke i){animation:none!important}
 .legends-world.reduce-motion :is(.lw-plane,.lw-embers,.lw-fireworks){display:none}
+
+/* Supreme Legendary: a Legend on every reel. No line is drawn for it; each of its six Legends wears a crown. */
+.legends-world .reels .is-supreme:after{content:'\265B';position:absolute;top:3%;right:4%;z-index:4;display:grid;place-items:center;width:clamp(14px,18%,26px);aspect-ratio:1;border-radius:50%;font-size:clamp(9px,1.1vw,15px);line-height:1;color:#2a1402;background:radial-gradient(circle at 35% 30%,#fff3c4,#f5c443 55%,#b97a1a);box-shadow:0 0 0 1px #5b3209,0 0 8px rgba(255,200,90,.8);pointer-events:none}

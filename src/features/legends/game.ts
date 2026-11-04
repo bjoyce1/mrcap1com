@@ -155,11 +155,13 @@ async function spin(){
     collection=[...new Set([...collection,...answer.newCharacters])];
     history=[{xp:outcome.xp,wins:outcome.wins},...history].slice(0,6);
     const sweeps=outcome.wins.filter(w=>w.type==='sweep').map(w=>w.symbol as string),sweep=sweeps[0]??null;
-    const supreme=outcome.wins.some(w=>w.type==='supreme'),unity=outcome.wins.some(w=>w.type==='unity'),isMajor=!!sweep||unity||tiersFor(outcome.xp).length>0;
+    const supreme=outcome.wins.some(w=>w.type==='supreme'),unity=outcome.wins.some(w=>w.type==='unity'),isMajor=!!sweep||tiersFor(outcome.xp).length>0;
     sweeps.forEach(id=>swept.add(id));if(sweep&&!badges.includes('legend-sweep'))badges.push('legend-sweep');
     if(supreme&&!badges.includes('supreme-legends'))badges.push('supreme-legends');
     justFound=new Set(answer.newCharacters);
     renderBoard($('reels'),target,outcome.hitCells);
+    // Supreme Legendary is a Legend on every reel, not a line: each of its six Legends wears a crown instead.
+    outcome.wins.find(w=>w.type==='supreme')?.cells.forEach(cell=>$('reels').querySelector(`[data-cell="${cell}"]`)?.classList.add('is-supreme'));
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
     paylines.show(outcome.wins,{reducedMotion:userReducedMotion,autoCycle:false});
     // The celebration level comes from the real outcome; the cabinet stays lit until the hit show and any Big Win close.
@@ -167,7 +169,7 @@ async function spin(){
     if(level){stage.set('celebrating',level);if(level>1)audio.stinger(level);}
     hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>paylines.focus(w),onDone:()=>{
       paylines.cycle();
-      // Big Win show for 500+ XP, SPC Unity and every Legend Sweep (all of those reach a tier).
+      // Big Win show for 1,000+ XP; every Legend Sweep reaches it (see fx.ts).
       void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion})
         .then(()=>{if(stage.get()==='celebrating')stage.set('idle');});
     }});
@@ -178,9 +180,9 @@ async function spin(){
       floatText($('board'),`+${outcome.xp.toLocaleString()} XP`,{reducedMotion:userReducedMotion});
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
       const top=outcome.wins.filter(w=>w.type!=='multiplier').sort((a,b)=>b.xp-a.xp)[0],lines=outcome.wins.filter(w=>w.type==='line').length;
-      const description=sweep?`${sweeps.map(id=>SYMBOL_MAP[id]?.name).join(' and ')} on all six reels! ${XP_TABLE.sweep.toLocaleString()} XP + a gold Legend card.${supreme?' Supreme title + Gold Cabinet unlocked.':''}`:supreme?`Six reels of Legends! ${XP_TABLE.supreme} base XP + Supreme Legendary badge, player title and Gold Cabinet unlock.`:unity?'Six distinct SPC artists lined up!':top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
+      const description=sweep?`${sweeps.map(id=>SYMBOL_MAP[id]?.name).join(' and ')} on all six reels! ${XP_TABLE.sweep.toLocaleString()} XP + a gold Legend card.${supreme?' Supreme title + Gold Cabinet unlocked.':''}`:unity?`SPC Unity: six different SPC artists connected across the reels! ${XP_TABLE.unity} base XP${supreme?` + Supreme Legendary ${XP_TABLE.supreme} base XP`:''}.`:supreme?`Six reels of Legends! ${XP_TABLE.supreme} base XP + Supreme Legendary badge, player title and Gold Cabinet unlock.`:top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected.`:'';
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
-      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
+      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':unity?'SPC UNITY!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
       const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:outcome.xp},musicOn);
       if(track&&musicOn){const sub=$('result').querySelector('span');if(sub)sub.textContent+=` • NOW PLAYING: ${track.title}`;}

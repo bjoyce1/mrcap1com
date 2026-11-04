@@ -91,4 +91,4 @@ export const PAYLINES=Object.freeze([
 ].map(line=>Object.freeze(line)));
 // supreme: an artist on every reel (about 45% of spins, so it pays little). sweep: the SAME artist on every reel
 // (about 1 in 4,200 spins), the game's jackpot. Owner decisions, 2026-11-01.
-export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},unity:2000,supreme:250,sweep:25000,bonus:300});
+export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},unity:500,supreme:250,sweep:25000,bonus:300});

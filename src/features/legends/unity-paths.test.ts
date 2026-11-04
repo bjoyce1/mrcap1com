@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import fixture from './unity-board.fixture.json';
-import { analyzeUnityPaths, explainUnityPath, proposedUnityScore, inspectWinningLines } from './unity-paths';
-import { evaluateBoard } from './engine';
+import { analyzeUnityPaths, explainUnityPath, inspectWinningLines } from './unity-paths';
+import { evaluateBoard, UNITY_ROUTES } from './engine';
 import { evaluateBoard as serverEvaluate } from '../../../supabase/functions/_shared/legends/engine';
-import { ARTISTS } from './config';
+import { ARTISTS, XP_TABLE } from './config';
 const aliases: Record<string, string> = fixture.symbolAliases;
 export const board = fixture.sourceBoard.map(col => col.map(id => aliases[id] ?? id));
 describe('exact supplied six-reel board', () => {
@@ -19,22 +19,19 @@ describe('exact supplied six-reel board', () => {
     expect(analyzeUnityPaths(board).qualifying.find(p => p.id === rows.join(''))?.cells).toEqual(rows.map((r,c)=>`${c}:${r}`));
     expect(explainUnityPath(board, rows).reasons).toEqual([]);
   });
-  test('existing rules credit only Supreme, not diagonal Unity', () => {
+  test('Unity pays once for its connected routes, on the client and the server alike', () => {
     const current = evaluateBoard(board);
-    expect(current.xp).toBe(250); expect(current.wins.filter(w=>w.type==='unity')).toHaveLength(0);
+    const unity = current.wins.filter(w=>w.type==='unity');
+    expect(unity).toHaveLength(1);
+    expect(unity[0]).toMatchObject({ xp: XP_TABLE.unity, cells: analyzeUnityPaths(board).qualifying[0].cells });
+    expect(current.xp).toBe(XP_TABLE.supreme + XP_TABLE.unity);
     expect(serverEvaluate(board)).toEqual(current);
-    expect(proposedUnityScore(board)).toMatchObject({ mainAwards: 1, mainXp: 2000, extraXp: 0, xp: 2250 });
-    expect(evaluateBoard(board)).toEqual(current);
   });
-  test('extra routes are capped without counting the main path twice', () => {
-    expect(proposedUnityScore(board, { extraPathXp: 10, maxExtraPaths: 3 })).toMatchObject({ paidExtraPaths: 3, extraXp: 30, xp: 2280 });
-    expect(proposedUnityScore(board, { extraPathXp: 10, maxExtraPaths: 100 })).toMatchObject({ paidExtraPaths: 31, extraXp: 310 });
-    expect(() => proposedUnityScore(board, { extraPathXp: -1, maxExtraPaths: 3 })).toThrow(RangeError);
-  });
-  test('viewer exposes every Unity and rejected route independently of animation cap', () => {
+  test('viewer lists every route and marks the paid one', () => {
     const current=evaluateBoard(board), inspection=inspectWinningLines(board,current.wins,current.xp);
     expect(inspection.qualifying).toHaveLength(32); expect(inspection.rejected).toHaveLength(207); expect(inspection.standard).toHaveLength(26);
-    expect(inspection.qualifying[31].cells).toHaveLength(6);
+    expect(inspection.qualifying.filter(l=>l.label.includes('(paid)'))).toHaveLength(1);
+    expect(inspection.qualifying[0].win.xp).toBe(XP_TABLE.unity);
   });
 });
 test('no top-to-bottom jumps, repeated artists, wilds or nonartists qualify', () => {
@@ -43,15 +40,33 @@ test('no top-to-bottom jumps, repeated artists, wilds or nonartists qualify', ()
   const b=board.map(col=>[...col]); b[0][0]='wild';
   expect(explainUnityPath(b,fixture.paths.A).reasons.some(r=>r.includes('not an SPC artist'))).toBe(true);
 });
-test('three horizontal Unity rows still yield one proposed main award', () => {
+test('the engine checks the same 239 routes the viewer does, straight rows first', () => {
+  expect(UNITY_ROUTES).toHaveLength(239);
+  expect(UNITY_ROUTES.slice(0,3).map(r=>r.join(''))).toEqual(['000000','111111','222222']);
+  expect(new Set(UNITY_ROUTES.map(r=>r.join(''))).size).toBe(239);
+});
+test('three Unity rows still pay one award, on the top row', () => {
   const b=ARTISTS.slice(0,6).map(a=>[a.id,a.id,a.id]);
   expect(analyzeUnityPaths(b).qualifying).toHaveLength(239);
-  expect(evaluateBoard(b).wins.filter(w=>w.type==='unity')).toHaveLength(3);
-  expect(proposedUnityScore(b).mainAwards).toBe(1);
+  const unity=evaluateBoard(b).wins.filter(w=>w.type==='unity');
+  expect(unity).toHaveLength(1);
+  expect(unity[0]).toMatchObject({ row: 0, cells: ['0:0','1:0','2:0','3:0','4:0','5:0'] });
 });
-test('cap is pre-multiplier and both multiplier symbols apply once', () => {
+test('the board from the owner\'s screenshot pays Unity along a connected route', () => {
+  const shot = [
+    ['k-water','headphones','klondike-kat'], ['rapper-k','rapper-k','klondike-kat'], ['rapper-k','point-blank','komodo-dbx'],
+    ['murder-one','k-rino','rapper-k'], ['dope-e','klondike-kat','ganxsta-nip'], ['legend','komodo-dbx','k-rino'],
+  ];
+  const r = evaluateBoard(shot);
+  expect(r.wins.map(w=>w.type).sort()).toEqual(['supreme','unity']);
+  expect(r.xp).toBe(XP_TABLE.supreme + XP_TABLE.unity);
+  expect(analyzeUnityPaths(shot).qualifying).toHaveLength(15);
+  expect(serverEvaluate(shot)).toEqual(r);
+});
+test('multipliers apply to Unity like any other win', () => {
   const b=board.map(col=>[...col]);b[4][0]='double';b[5][0]='triple';
-  expect(proposedUnityScore(b,{extraPathXp:10,maxExtraPaths:3})).toMatchObject({baseXp:2280,multiplier:6,xp:13680});
-  expect(()=>proposedUnityScore(b,{extraPathXp:Infinity,maxExtraPaths:3})).toThrow(RangeError);
-  expect(()=>proposedUnityScore(b,{extraPathXp:0,maxExtraPaths:-1})).toThrow(RangeError);
+  const r=evaluateBoard(b);
+  expect(r.multiplier).toBe(6);
+  expect(r.xp).toBe(r.baseXp*6);
+  expect(r.wins.filter(w=>w.type==='unity').length).toBeLessThanOrEqual(1);
 });

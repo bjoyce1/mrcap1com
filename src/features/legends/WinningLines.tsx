@@ -35,7 +35,7 @@ export function WinningLines() {
     <h3><ListChecks size={18} aria-hidden="true" /> WINNING LINES</h3>
     {result && <>
       <p className="lines-summary">{result.qualifying.length} qualifying Unity routes · {result.standard.filter(l => l.accepted).length} matching paylines awarded</p>
-      <p>Credited: <strong>{result.creditedXp.toLocaleString()} XP</strong> · multiplier ×{result.multiplier}. Proposed Unity scoring: {result.previewXp.toLocaleString()} XP, not credited. Existing rewards remain active.</p>
+      <p>Credited: <strong>{result.creditedXp.toLocaleString()} XP</strong> · multiplier ×{result.multiplier}. SPC Unity pays once per spin, however many routes qualify.</p>
       <details><summary>Award breakdown</summary><ul>{result.awards.length ? result.awards.map((award, i) => <li key={i}>{award}</li>) : <li>No XP award on this spin.</li>}</ul></details>
       <div className="lines-tabs" role="group" aria-label="Line categories">
         {(['qualifying', 'standard', 'rejected'] as const).map(value => <Button key={value} size="sm" variant={group === value ? 'secondary' : 'ghost'} aria-pressed={group === value} onClick={() => { setGroup(value); setIndex(0); setSelected(false); choose(0, result[value]); }}>{value === 'qualifying' ? `Unity (${result.qualifying.length})` : value === 'standard' ? 'Matching paylines' : `Rejected (${result.rejected.length})`}</Button>)}

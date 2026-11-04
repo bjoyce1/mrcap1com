@@ -1,10 +1,9 @@
-import { ARTISTS, PAYLINES, SYMBOL_MAP, XP_TABLE } from './config';
-import { evaluateBoard, lineMatch, validateBoard } from './engine';
+import { ARTISTS, PAYLINES, SYMBOL_MAP } from './config';
+import { lineMatch, validateBoard } from './engine';
 import type { SpinWin } from './account';
 
 const artists = new Set(ARTISTS.map(a => a.id));
 export type UnityPath = { id: string; rows: number[]; cells: string[]; symbols: string[]; reasons: string[] };
-export const UNITY_PREVIEW_RULES = Object.freeze({ extraPathXp: 0, maxExtraPaths: 0 });
 export function explainUnityPath(board: string[][], rows: readonly number[]): UnityPath {
   if (!validateBoard(board)) throw new TypeError('Expected six reels with three valid symbols each');
   if (rows.length !== 6 || rows.some(r => !Number.isInteger(r) || r < 0 || r > 2)) throw new TypeError('Expected six row indices from 0 to 2');
@@ -26,31 +25,20 @@ export function analyzeUnityPaths(board: string[][]) {
   visit([]);
   return { qualifying: paths.filter(p => !p.reasons.length), rejected: paths.filter(p => p.reasons.length) };
 }
-/** Shadow scoring only. Never pass this result to balances, badges, history or account commits. */
-export function proposedUnityScore(board: string[][], rules: { extraPathXp: number; maxExtraPaths: number } = UNITY_PREVIEW_RULES) {
-  for (const value of [rules.extraPathXp, rules.maxExtraPaths]) if (!Number.isSafeInteger(value) || value < 0) throw new RangeError('Unity settings must be nonnegative safe integers');
-  const paths = analyzeUnityPaths(board).qualifying;
-  const unique = [...new Map(paths.map(p => [p.id, p])).values()];
-  const paidExtraPaths = Math.min(Math.max(0, unique.length - 1), rules.maxExtraPaths);
-  const extraXp = paidExtraPaths * rules.extraPathXp;
-  const mainXp = unique.length ? XP_TABLE.unity : 0;
-  const legacy = evaluateBoard(board);
-  const baseXp = legacy.baseXp - legacy.wins.filter(w => w.type === 'unity').reduce((sum, w) => sum + w.xp, 0) + mainXp + extraXp;
-  const xp = baseXp * legacy.multiplier;
-  if (!Number.isSafeInteger(xp)) throw new RangeError('Unity XP exceeds safe integer range');
-  return { paths: unique, mainAwards: unique.length ? 1 : 0, mainXp, paidExtraPaths, extraXp, baseXp, multiplier: legacy.multiplier, xp };
-}
 export type InspectedLine = { id: string; label: string; cells: string[]; explanation: string; accepted: boolean; win: SpinWin };
 export function inspectWinningLines(board: string[][], wins: SpinWin[], creditedXp: number) {
   const analysis = analyzeUnityPaths(board);
-  const preview = proposedUnityScore(board);
+  const paid = wins.find(w => w.type === 'unity');
   const multiplier = wins.filter(w => w.type === 'multiplier').reduce((m, w) => m * (w.multiplier ?? 1), 1);
-  const awards = wins.map(w => `${w.type === 'line' ? `Matching payline ${w.payline}: ${w.count} ${SYMBOL_MAP[w.symbol ?? '']?.name ?? 'symbols'}` : w.type === 'unity' ? 'SPC Unity horizontal row' : w.type === 'supreme' ? 'Supreme Legendary: a real artist on every reel' : w.type === 'sweep' ? `Legend Sweep: ${SYMBOL_MAP[w.symbol ?? '']?.name}` : w.type === 'bonus' ? '713 scatter bonus' : 'Multiplier increment'}: +${w.xp.toLocaleString()} ${w.type === 'multiplier' ? 'additional' : 'base'} XP.`);
-  const qualifying: InspectedLine[] = analysis.qualifying.map((p, i) => ({
-    id: `unity-${p.id}`, label: `Unity route ${i + 1}`, cells: p.cells, accepted: true,
-    explanation: `Six different artists, six reels, adjacent steps. ${p.symbols.map(id => SYMBOL_MAP[id].name).join(' → ')}. Rows [${p.rows.join(', ')}]. ${i === 0 ? `Proposed main award: ${preview.mainXp} base XP once per spin.` : 'Included in the same once-per-spin Unity award. Additional-route XP is disabled.'} Current credited Unity awards: ${wins.filter(w => w.type === 'unity').length}. Proposed rules are not active.`,
-    win: { type: 'unity', xp: 0, cells: p.cells },
-  }));
+  const awards = wins.map(w => `${w.type === 'line' ? `Matching payline ${w.payline}: ${w.count} ${SYMBOL_MAP[w.symbol ?? '']?.name ?? 'symbols'}` : w.type === 'unity' ? 'SPC Unity: six different artists along a connected route' : w.type === 'supreme' ? 'Supreme Legendary: a real artist on every reel' : w.type === 'sweep' ? `Legend Sweep: ${SYMBOL_MAP[w.symbol ?? '']?.name}` : w.type === 'bonus' ? '713 scatter bonus' : 'Multiplier increment'}: +${w.xp.toLocaleString()} ${w.type === 'multiplier' ? 'additional' : 'base'} XP.`);
+  const qualifying: InspectedLine[] = analysis.qualifying.map((p, i) => {
+    const isPaid = !!paid && paid.cells.join() === p.cells.join();
+    return {
+      id: `unity-${p.id}`, label: `Unity route ${i + 1}${isPaid ? ' (paid)' : ''}`, cells: p.cells, accepted: true,
+      explanation: `Six different artists, six reels, adjacent steps. ${p.symbols.map(id => SYMBOL_MAP[id].name).join(' → ')}. Rows [${p.rows.join(', ')}]. ${isPaid ? `This route paid SPC Unity: +${paid.xp.toLocaleString()} base XP.` : 'Also qualifies. SPC Unity pays once per spin, however many routes qualify.'}`,
+      win: { type: 'unity', xp: isPaid ? paid.xp : 0, cells: p.cells },
+    };
+  });
   const standard: InspectedLine[] = PAYLINES.map((rows, i) => {
     const win = wins.find(w => w.type === 'line' && w.payline === i + 1);
     const match = lineMatch(rows.map((r, c) => board[c][r]));
@@ -61,5 +49,5 @@ export function inspectWinningLines(board: string[][], wins: SpinWin[], credited
     };
   });
   const rejected: InspectedLine[] = analysis.rejected.map(p => ({ id: `reject-${p.id}`, label: `Rejected route [${p.rows.join(', ')}]`, cells: p.cells, accepted: false, explanation: p.reasons.join(' '), win: { type: 'unity', xp: 0, cells: p.cells } }));
-  return { qualifying, standard, rejected, awards, creditedXp, multiplier, previewXp: preview.xp };
+  return { qualifying, standard, rejected, awards, creditedXp, multiplier };
 }

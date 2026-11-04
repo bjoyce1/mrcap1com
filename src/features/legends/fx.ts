@@ -3,9 +3,10 @@
 import { ARTISTS } from "./config";
 
 export type WinTier = "big" | "mega" | "legendary";
-/** XP a single spin must reach for each Big Win tier, lowest first. */
+/** XP a single spin must reach for each Big Win tier, lowest first. BIG starts above a plain Unity spin
+ * (Supreme 250 + Unity 500), which lands on about a third of spins. */
 export const WIN_TIERS: readonly { tier: WinTier; label: string; min: number }[] = Object.freeze([
-  { tier: "big", label: "BIG WIN", min: 500 },
+  { tier: "big", label: "BIG WIN", min: 1000 },
   { tier: "mega", label: "MEGA WIN", min: 2000 },
   { tier: "legendary", label: "LEGENDARY WIN", min: 10000 },
 ]);

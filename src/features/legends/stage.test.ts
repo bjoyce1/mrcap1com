@@ -9,13 +9,18 @@ describe("celebrationLevel", () => {
   it("is 1 for a standard line", () => {
     expect(celebrationLevel({ xp: 50, wins: [{ type: "line" }] })).toBe(1);
   });
-  it("is 2 for a bonus, a multiplier or a Big Win tier", () => {
+  it("is 1 for Supreme Legendary, which lands on most spins", () => {
+    expect(celebrationLevel({ xp: 250, wins: [{ type: "supreme" }] })).toBe(1);
+  });
+  it("is 2 for Unity, a bonus, a multiplier or a Big Win tier", () => {
+    expect(celebrationLevel({ xp: 750, wins: [{ type: "supreme" }, { type: "unity" }] })).toBe(2);
     expect(celebrationLevel({ xp: 100, wins: [{ type: "bonus" }] })).toBe(2);
     expect(celebrationLevel({ xp: 100, wins: [{ type: "line" }, { type: "multiplier" }] })).toBe(2);
     expect(celebrationLevel({ xp: 5000, wins: [{ type: "line" }] })).toBe(2);
   });
-  it("is 3 for Unity, Supreme and a Legend Sweep", () => {
-    for (const type of ["unity", "supreme", "sweep"]) expect(celebrationLevel({ xp: 250, wins: [{ type }] })).toBe(3);
+  it("is 3 for a Legend Sweep or a LEGENDARY WIN", () => {
+    expect(celebrationLevel({ xp: 25250, wins: [{ type: "sweep" }] })).toBe(3);
+    expect(celebrationLevel({ xp: 12000, wins: [{ type: "line" }, { type: "multiplier" }] })).toBe(3);
   });
   it("follows the engine's real outcome for a Legend Sweep board", () => {
     const board = Array.from({ length: 6 }, () => ["k-rino", "mic", "vinyl"]);

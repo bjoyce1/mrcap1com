@@ -61,6 +61,14 @@ export function lineMatch(line){
   return {symbol:real,count};
 }
 function cellKey(col,row){return `${col}:${row}`;}
+/** Every connected route across the six reels (239): one row per reel, each step at most one row. Straight rows first. */
+export const UNITY_ROUTES:readonly (readonly number[])[]=(()=>{
+  const out:number[][]=[];
+  const visit=(rows:number[])=>{if(rows.length===6){out.push(rows);return;}for(let row=0;row<3;row++)if(!rows.length||Math.abs(row-rows[rows.length-1])<=1)visit([...rows,row]);};
+  visit([]);
+  const straight=(r:number[])=>r.every(x=>x===r[0]);
+  return Object.freeze([...out.filter(straight),...out.filter(r=>!straight(r))].map(r=>Object.freeze(r)));
+})();
 export function evaluateBoard(board){
   if(!validateBoard(board))throw new TypeError('Expected six reels with three valid symbols each');
   const wins=[],hits=new Set();let xp=0;
@@ -78,12 +86,13 @@ export function evaluateBoard(board){
   const scatter=[];
   board.forEach((col,x)=>col.forEach((s,y)=>{if(s==='bonus')scatter.push(cellKey(x,y))}));
   if(scatter.length>=3){wins.push({type:'bonus',count:scatter.length,xp:XP_TABLE.bonus,cells:scatter});xp+=XP_TABLE.bonus;scatter.forEach(k=>hits.add(k));}
-  for(let y=0;y<3;y++){
-    const ids=board.map(col=>col[y]);
-    if(ids.every(id=>artistIds.has(id))&&new Set(ids).size===6){
-      const cells=Array.from({length:6},(_,x)=>cellKey(x,y));
-      wins.push({type:'unity',row:y,xp:XP_TABLE.unity,cells});xp+=XP_TABLE.unity;cells.forEach(k=>hits.add(k));
-    }
+  // SPC Unity: six different artists along any connected route (one cell per reel, each step at most one row up or
+  // down). Pays once per spin; its path is a straight row when there is one, else the first route found. Owner
+  // decision, 2026-11-04: routes count, 500 XP.
+  const unity=UNITY_ROUTES.find(rows=>{const ids=rows.map((row,col)=>board[col][row]);return ids.every(id=>artistIds.has(id))&&new Set(ids).size===6;});
+  if(unity){
+    const cells=unity.map((row,col)=>cellKey(col,row)),straight=unity.every(row=>row===unity[0]);
+    wins.push({type:'unity',...(straight?{row:unity[0]}:{}),rows:[...unity],xp:XP_TABLE.unity,cells});xp+=XP_TABLE.unity;cells.forEach(k=>hits.add(k));
   }
   // One Supreme path per board: a real artist on every reel, any row, repeats allowed.
   const supremeRows=board.map(col=>col.findIndex(id=>artistIds.has(id)));
