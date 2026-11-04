@@ -1,10 +1,36 @@
 // Win soundtrack: reward-specific songs from "The Ties That Bind Us".
 // Audio is presentation only; it never changes XP, outcomes, or prize eligibility.
+import { isArtist, type HitWin } from './hits';
 
 const BASE = "https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/The-Ties-That-Bind-Us/";
 
-export interface WinSong { title: string; file: string; }
+export interface WinSong { title: string; file: string; url?: string; }
 const song = (title: string, file: string): WinSong => ({ title, file });
+
+/** Only owner-supplied songs belong here. Pools allow more songs per artist later. */
+export const ARTIST_SONGS: Readonly<Record<string, readonly WinSong[]>> = {
+  'mr-cap': [{ title: 'Cap International', file: 'cap-international.mp3', url: 'https://qisamkiggoibjkkdtkxq.supabase.co/storage/v1/object/public/audio/legends%2Fmr-cap%2Fcap-international.mp3' }],
+};
+
+/** Prefer a named artist hit over a mixed group. Ties use XP, then original win order. */
+export function winningArtist(wins: readonly HitWin[], board: readonly (readonly string[])[]): string | null {
+  const priority: Record<string, number> = { sweep: 0, vertical: 1, line: 2, unity: 3, supreme: 4 };
+  const ordered = wins.map((win, index) => ({ win, index }))
+    .filter(({ win }) => priority[win.type] !== undefined)
+    .sort((a, b) => priority[a.win.type] - priority[b.win.type] || b.win.xp - a.win.xp || a.index - b.index);
+  for (const { win } of ordered) {
+    if (win.symbol) {
+      if (isArtist(win.symbol)) return win.symbol;
+      continue;
+    }
+    if (win.type !== 'unity' && win.type !== 'supreme') continue;
+    const cells = win.cells.map(key => key.split(':').map(Number)).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const [col, row] = cells[0] ?? [];
+    const leader = board[col]?.[row];
+    if (leader && isArtist(leader)) return leader;
+  }
+  return null;
+}
 
 /** Disjoint song pools keyed only to total credited XP, not achievement flags. */
 export const WIN_SONGS = {
@@ -39,6 +65,7 @@ export interface WinKind {
   major: boolean;
   bonus: boolean;
   xp: number;
+  artist?: string | null;
 }
 
 export function winSongTier(xp: number): keyof typeof WIN_SONGS | null {
@@ -54,14 +81,16 @@ export function winSongTier(xp: number): keyof typeof WIN_SONGS | null {
 
 /** One song for the spin's total XP, with a caller-owned per-tier rotation. */
 export function pickWinSong(k: WinKind, rotationIndex = 0): WinSong | null {
+  const index = Number.isFinite(rotationIndex) ? Math.abs(Math.trunc(rotationIndex)) : 0;
+  const artistPool = k.artist ? ARTIST_SONGS[k.artist] : undefined;
+  if (artistPool?.length) return artistPool[index % artistPool.length];
   const tier = winSongTier(k.xp);
   if (!tier) return null;
   const pool = WIN_SONGS[tier];
-  const index = Number.isFinite(rotationIndex) ? Math.abs(Math.trunc(rotationIndex)) : 0;
   return pool[index % pool.length];
 }
 
-export const songUrl = (s: WinSong) => BASE + s.file;
+export const songUrl = (s: WinSong) => s.url ?? BASE + s.file;
 
 /** Cue into tracks instead of always playing their intros. */
 export const WIN_CUE_SECONDS = 15;
@@ -70,18 +99,23 @@ export const WIN_CUE_SECONDS = 15;
 export class WinSoundtrack {
   private el: HTMLAudioElement | null = null;
   private fade = 0;
-  private rotations: Partial<Record<keyof typeof WIN_SONGS, number>> = {};
+  private rotations: Record<string, number> = {};
+  private currentUrl: string | null = null;
   constructor(private random: () => number = Math.random) {}
 
   play(k: WinKind, enabled: boolean): WinSong | null {
-    const tier = winSongTier(k.xp);
+    const artistPool = k.artist ? ARTIST_SONGS[k.artist] : undefined;
+    const tier = artistPool?.length ? `artist:${k.artist}` : winSongTier(k.xp);
     if (!tier) return null;
-    // Each visit starts every tier at a random song, then rotates so repeats are spread out.
-    const index = this.rotations[tier] ?? Math.floor(this.random() * WIN_SONGS[tier].length);
+    const pool = artistPool?.length ? artistPool : WIN_SONGS[winSongTier(k.xp) ?? 'line'];
+    // Each visit starts each pool at a random song, then rotates independently.
+    const index = this.rotations[tier] ?? Math.floor(this.random() * pool.length);
     const s = pickWinSong(k, index);
     if (!s) return null;
     this.rotations[tier] = index + 1;
     if (!enabled) return s;
+    // Inspecting the same artist's line should not repeatedly restart the same song.
+    if (this.el && !this.el.paused && this.currentUrl === songUrl(s)) return s;
     this.stopNow();
     const el = new Audio(songUrl(s));
     el.volume = 0.7;
@@ -89,6 +123,7 @@ export class WinSoundtrack {
       if (this.el === el && Number.isFinite(el.duration)) el.currentTime = Math.min(WIN_CUE_SECONDS, Math.max(0, el.duration - 1));
     }, { once: true });
     this.el = el;
+    this.currentUrl = songUrl(s);
     void el.play().catch(() => { /* blocked by user gesture policy or offline */ });
     return s;
   }
@@ -101,5 +136,5 @@ export class WinSoundtrack {
       else el.volume -= step;
     }, 50);
   }
-  stopNow() { clearInterval(this.fade); if (this.el) { this.el.pause(); this.el = null; } }
+  stopNow() { clearInterval(this.fade); if (this.el) { this.el.pause(); this.el = null; } this.currentUrl = null; }
 }
