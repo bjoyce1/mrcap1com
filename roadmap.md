@@ -2,10 +2,10 @@
 
 # SPC Legends vertical previews and epic effects
 
-- [ ] Detect three matching tiles within each reel, Wild substitution allowed, with no extra rewards.
-- [ ] Add vertical inspection and explosive tile/reel celebrations with reduced-motion protection.
-- [ ] Add spinning wind and tire-screech stops respecting mute and cleanup.
-- [ ] Run Legends tests and desktop/mobile guest checks without publishing.
+- [x] Detect three matching tiles within each reel, Wild substitution allowed, with no extra rewards.
+- [x] Add vertical inspection and explosive tile/reel celebrations with reduced-motion protection.
+- [x] Add spinning wind and tire-screech stops respecting mute and cleanup.
+- [x] Verify 126 Legends tests, exact vertical highlights, guest wind and six brake sounds, reduced motion and mobile layout without publishing.
 
 # SPC Legends XP music and Wild clarity
 
