@@ -80,7 +80,7 @@ test('a leading middle-row Wild contributes only when three consecutive position
   expect(result.wins.find(w => w.type === 'line' && w.payline === 1)).toMatchObject({ count: 3, symbol: 'k-rino', xp: 50, cells: ['0:1', '1:1', '2:1'] });
   expect(inspectWinningLines(b, result.wins, result.xp).wilds[0].cell).toBe('0:1');
   expect(serverEvaluate(b)).toEqual(result);
-  b[2][1] = 'screw-tape';
+  b[2][1] = 'tape';
   const broken = evaluateBoard(b);
   expect(broken.wins.some(w => w.type === 'line' && w.payline === 1)).toBe(false);
   expect(inspectWinningLines(b, broken.wins, broken.xp).standard[0].accepted).toBe(false);
