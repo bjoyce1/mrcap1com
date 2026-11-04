@@ -42,10 +42,10 @@
     "split": 0.71
   },
   "mr-cap": {
-    "asset": "e423be08-13cf-40d3-8881-b059b9a94ead",
-    "dir": "mr-cap.e423be08",
+    "asset": "2ad8ca4e-9c46-4f9e-b39a-a4bf921a7795",
+    "dir": "mr-cap.2ad8ca4e",
     "slam": true,
-    "split": 0.678
+    "split": 0.758
   },
   "murder-one": {
     "asset": "fd808bfb-bb14-48a1-a166-97286f6c7a65",
