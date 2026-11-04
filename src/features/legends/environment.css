@@ -120,7 +120,7 @@
 @keyframes lg-fade-in{from{opacity:0}}
 
 /* ---- Lighting that follows the game (stage.ts) ---- */
-.legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .cab-neon{opacity:1;animation-duration:.9s}
+.legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .cab-neon{opacity:1}
 .legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .cab-underglow{opacity:1}
 .legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .mq-neon{opacity:1}
 /* Celebrations: 1 a soft glow round the reels; 2 a strong glow and a fast sheen; 3 also the crown, sparks and a burst. */
@@ -128,11 +128,11 @@
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .cabinet-inset:after{opacity:1}
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .cab-sheen{animation:lg-cab-sheen-fast 1.1s var(--lg-ease) 1}
 @keyframes lg-cab-sheen-fast{from{transform:translateX(-120%) skewX(-12deg)}to{transform:translateX(560%) skewX(-12deg)}}
-.legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .mq-frame-sheen b{animation-duration:2.2s}
+/* Loop speeds for each stage are set in tempo.ts (playback rate, so nothing jumps). */
 .legends-world[data-lg-level="3"] .mq-crown-glow{opacity:1;animation:lg-crown-glow 1.2s ease-in-out infinite alternate}
 @keyframes lg-crown-glow{from{transform:scale(1.4)}to{transform:scale(1.75)}}
-.legends-world[data-lg-level="3"] .mq-sparks i{animation-duration:1.6s}
-.legends-world[data-lg-level="3"] .cab-neon{opacity:1;animation-duration:.5s}
+
+.legends-world[data-lg-level="3"] .cab-neon{opacity:1}
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .cab-burst i{animation:lg-cab-burst 1.3s cubic-bezier(.15,.7,.3,1) both}
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .cab-burst i:nth-child(odd){animation-delay:.12s}
 @keyframes lg-cab-burst{0%{opacity:0;transform:rotate(var(--a)) translateY(0) scale(.4)}15%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(calc(var(--r) * -6)) scale(1)}}
@@ -277,7 +277,7 @@
 .legends-world .lw-plane{top:8%;left:0;width:5px;height:5px;animation:lg-plane 38s linear infinite}
 .legends-world .lw-plane b{position:absolute;inset:0;border-radius:50%;background:#ff5a5a;box-shadow:0 0 8px 3px rgba(255,90,90,.9);animation:lg-blink 1.1s steps(1) infinite}
 @keyframes lg-plane{0%{transform:translate3d(-5vw,4vh,0)}65%,100%{transform:translate3d(105vw,-2vh,0)}}
-@keyframes lg-blink{50%{background:#fff;box-shadow:0 0 8px 3px rgba(255,255,255,.95)}}
+@keyframes lg-blink{50%{opacity:.2}}
 .legends-world .lw-chopper{top:14%;right:-8vw;width:14px;height:6px;border-radius:999px;background:#1e1330;box-shadow:0 0 10px rgba(255,215,106,.75);animation:lg-chopper 29s linear infinite}
 .legends-world .lw-chopper b{position:absolute;left:2px;top:1px;width:4px;height:4px;border-radius:50%;background:#38bdf8;box-shadow:0 0 8px 3px #38bdf8;animation:lg-blink .7s steps(1) infinite}
 .legends-world .lw-chopper span{position:absolute;left:50%;top:100%;width:70px;height:190px;margin-left:-35px;transform-origin:50% 0;background:linear-gradient(180deg,rgba(255,244,210,.55),rgba(255,230,170,.12) 65%,transparent);clip-path:polygon(46% 0,54% 0,100% 100%,0 100%);animation:lg-chopper-cone 2.6s ease-in-out infinite alternate}
@@ -313,25 +313,25 @@
    =================================================================================================================== */
 /* Spinning: the city stirs, equalizer dances faster, beams and freeway lights brighten. */
 .legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .lw-glow{opacity:1}
-.legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .lw-beam{opacity:.72;animation-duration:3.4s}
+.legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .lw-beam{opacity:.72}
 .legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .lw-equalizer{opacity:.62}
-.legends-world:is([data-lg-stage="spin-start"],[data-lg-stage="spinning"],[data-lg-stage="stopping"]) .lw-equalizer i{animation-duration:.55s}
+
 
 /* Any hit: windows flare, equalizer surges, highway signs light up, and level-1 fireworks launch. */
 .legends-world[data-lg-stage="celebrating"] .lw-windows{opacity:.88;animation:none}
 .legends-world[data-lg-stage="celebrating"] .lw-equalizer{opacity:.9;height:42%}
-.legends-world[data-lg-stage="celebrating"] .lw-equalizer i{animation-duration:.32s;background:linear-gradient(180deg,#fff,var(--hit-color,#ffd76a) 35%,#c084fc 75%,rgba(120,40,200,.25));box-shadow:0 0 16px var(--hit-color,#ffd76a)}
+.legends-world[data-lg-stage="celebrating"] .lw-equalizer i{background:linear-gradient(180deg,#fff,var(--hit-color,#ffd76a) 35%,#c084fc 75%,rgba(120,40,200,.25));box-shadow:0 0 16px var(--hit-color,#ffd76a)}
 .legends-world[data-lg-stage="celebrating"] .lw-fwy-sign{border-color:#ffd76a;box-shadow:0 0 22px rgba(255,215,106,.65),0 6px 14px rgba(0,0,0,.6);transform:perspective(400px) rotateX(6deg) scale(1.05)}
 .legends-world[data-lg-stage="celebrating"] .lw-fw.is-l1 i{animation:lg-fw 1.4s cubic-bezier(.15,.7,.3,1) var(--d) both}
 .legends-world[data-lg-stage="celebrating"] .lw-fw.is-l1:before{animation:lg-fw-core .9s ease-out var(--d) both}
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .lw-fw.is-l2:before{animation:lg-fw-core .9s ease-out var(--d) both}
 .legends-world[data-lg-level="3"] .lw-fw:is(.is-l1,.is-l2,.is-l3):before{animation:lg-fw-core 1.6s ease-out var(--d) 3 both}
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .lw-glow{opacity:1;background:radial-gradient(72% 58% at 50% 100%,rgba(255,185,70,.48),transparent 72%),radial-gradient(50% 45% at 12% 58%,rgba(192,90,255,.46),transparent 70%),radial-gradient(50% 45% at 88% 58%,rgba(255,90,200,.38),transparent 70%)}
-.legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .lw-beam{opacity:.96;animation-duration:1.5s}
+.legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .lw-beam{opacity:.96}
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .lw-windows{opacity:1}
 .legends-world:is([data-lg-level="2"],[data-lg-level="3"]) .lw-fw.is-l2 i{animation:lg-fw 1.5s cubic-bezier(.15,.7,.3,1) var(--d) both}
 .legends-world[data-lg-level="3"] .lw-fw:is(.is-l1,.is-l2,.is-l3) i{animation:lg-fw 1.6s cubic-bezier(.15,.7,.3,1) var(--d) 3 both}
-.legends-world[data-lg-level="3"] .lw-beam{animation-duration:1.05s}
+
 
 /* ---- Hit-Specific Spectacles (data-lg-hit) ---- */
 @keyframes lg-shockwave{0%{opacity:.95;transform:scale(.25)}100%{opacity:0;transform:scale(2.8)}}
@@ -415,6 +415,13 @@
   .legends-world .lw-beam{width:14vw}
   .legends-world .lw-fw{--reach:56px}
   .legends-world .lg-car{width:10px;height:3px;margin:-1.5px 0 0 -5px}
+  /* On a phone the cabinet covers almost all of the backdrop, so its hidden moving parts are switched off. */
+  .legends-world .lg-world :is(.lw-traffic,.lw-equalizer,.lw-shockwaves,.lw-lightning,.lw-crown-pillar,.lw-sky-beacon){display:none}
+  .legends-world .lw-fwy-lamps i:before{animation:none}
+  /* No streak stretch on hits: it repaints every car at once. */
+  .legends-world[data-lg-stage="celebrating"] .lg-car.is-tail:before{width:24px}
+  .legends-world[data-lg-stage="celebrating"] .lg-car.is-head:after{width:26px}
+  .legends-world[data-lg-stage="celebrating"] .lg-car.is-slab:before{width:34px}
 }
 
 /* ---- Reduced motion (OS setting or the in-game switch): stillness; the lighting states stay as plain fades ---- */

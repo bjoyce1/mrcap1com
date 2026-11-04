@@ -56,7 +56,7 @@ const NEXT: Record<Stage, Stage[]> = {
 };
 
 export function createStage(el: { dataset: DOMStringMap }) {
-  let stage: Stage = "idle";
+  let stage: Stage = "idle", lastColor = "";
   el.dataset.lgStage = stage;
   el.dataset.lgLevel = "0";
   return {
@@ -75,7 +75,11 @@ export function createStage(el: { dataset: DOMStringMap }) {
     setHit(hit: HitKind, color?: string) {
       if (stage !== "celebrating") return;
       if (hit && hit !== "none") el.dataset.lgHit = hit;
-      if (color && "style" in el) (el as unknown as HTMLElement).style.setProperty("--hit-color", color);
+      // Only on the parts that use it: set on the game root, every element re-styles (a long freeze on phones).
+      if (color && color !== lastColor && "querySelectorAll" in el) {
+        lastColor = color;
+        (el as unknown as HTMLElement).querySelectorAll<HTMLElement>(".lw-equalizer,.lw-shockwaves,.cabinet-inset").forEach((n) => n.style.setProperty("--hit-color", color));
+      }
     },
   };
 }

@@ -4,40 +4,51 @@ import './impact-effects.css';
 export class ImpactEffects {
   private layer: HTMLDivElement;
   private timer: ReturnType<typeof setTimeout> | undefined;
+  private generation = 0;
   constructor(private board: HTMLElement) {
     this.layer = document.createElement('div');
     this.layer.className = 'impact-layer';
     this.layer.setAttribute('aria-hidden', 'true');
     board.append(this.layer);
   }
-  clear() { clearTimeout(this.timer); this.layer.replaceChildren(); }
+  clear() { this.generation++; clearTimeout(this.timer); this.layer.replaceChildren(); }
   burst(cells: string[], reduced: boolean, vertical = false) {
     this.clear();
     if (reduced) return;
+    // Measured and built on the next frame, which brings styles up to date anyway, and added in one go. Measuring
+    // straight after the hit step changed the page made the browser re-style everything first, a freeze on phones.
+    const generation = this.generation;
+    requestAnimationFrame(() => { if (generation === this.generation) this.build(cells, vertical); });
+    this.timer = setTimeout(() => this.clear(), 1200);
+  }
+  private build(cells: string[], vertical: boolean) {
     const box = this.board.getBoundingClientRect();
-    const touched = new Set<number>();
-    for (const cell of [...new Set(cells)].slice(0, 18)) {
+    const spots = [...new Set(cells)].slice(0, 18).flatMap((cell) => {
       const tile = this.board.querySelector<HTMLElement>(`.reels [data-cell="${cell}"]`);
-      if (!tile) continue;
-      const r = tile.getBoundingClientRect(), x = r.left - box.left + r.width / 2, y = r.top - box.top + r.height / 2;
+      return tile ? [{ cell, r: tile.getBoundingClientRect() }] : [];
+    });
+    const shards = window.matchMedia('(max-width: 620px)').matches ? 4 : 8;
+    const frag = document.createDocumentFragment(), touched = new Set<number>();
+    for (const { cell, r } of spots) {
+      const x = r.left - box.left + r.width / 2, y = r.top - box.top + r.height / 2;
       const ring = document.createElement('i'); ring.className = 'impact-ring';
       ring.style.cssText = `left:${x-r.width*.4}px;top:${y-r.width*.4}px;width:${r.width*.8}px;height:${r.width*.8}px`;
-      this.layer.append(ring);
-      for (let i = 0; i < 8; i++) {
-        const angle = i * Math.PI / 4;
+      frag.append(ring);
+      for (let i = 0; i < shards; i++) {
+        const angle = i * Math.PI * 2 / shards;
         const shard = document.createElement('i'); shard.className = 'impact-shard';
         shard.style.cssText = `left:${x}px;top:${y}px;--dx:${Math.cos(angle)*r.width*1.4}px;--dy:${Math.sin(angle)*r.height*1.2}px;--turn:${i*83}deg`;
-        this.layer.append(shard);
+        frag.append(shard);
       }
       const reel = Number(cell.split(':')[0]);
       if (vertical && !touched.has(reel)) {
         touched.add(reel);
         const beam = document.createElement('i'); beam.className = 'vertical-beam';
         beam.style.cssText = `left:${x-2}px;top:0;width:4px;height:${box.height}px`;
-        this.layer.append(beam);
+        frag.append(beam);
       }
     }
-    this.timer = setTimeout(() => this.clear(), 1200);
+    this.layer.append(frag);
   }
   destroy() { this.clear(); this.layer.remove(); }
 }

@@ -11,6 +11,7 @@ import {isArtist} from './hits';
 import {preloadLayers,layersReady} from './layers';
 import {buildMarquee,attractMode,watchOffscreen} from './cabinet';
 import {createStage,celebrationLevel,celebrationHit,hitKindForWin} from './stage';
+import {followTempo} from './tempo';
 import {sweepTease,tiersFor} from './fx';
 import {supabase} from '@/integrations/supabase/client';
 import {guestSpin} from './guest';
@@ -56,7 +57,7 @@ const motionButton=$('motion');
 const attract=attractMode(root,{isBusy:()=>busy,reduced:()=>userReducedMotion});
 // Where the spin really is (idle → spin-start → spinning → stopping → evaluating → celebrating → idle); the cabinet's
 // lighting follows it in CSS. Ambient loops pause while their part of the page is off screen or the tab is hidden.
-const stage=createStage(root),stopWatching=watchOffscreen(root);
+const stage=createStage(root),stopWatching=watchOffscreen(root),stopTempo=followTempo(root);
 // Win songs have their own switch, apart from the sound effects; both start off.
 let musicOn=false;
 // One switch for JS motion and CSS animation, seeded from the OS preference.
@@ -105,10 +106,16 @@ function refresh(animateFrom:number|null=null){
   $('shop-open').hidden=!userId;
 }
 /** Restart a one-shot CSS animation class. */
-function retrigger(el:HTMLElement,cls:string){el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);}
+// Restarts a CSS animation class. Reading offsetWidth to force the restart re-styled the whole page (a freeze on
+// phones); taking the class off for one frame does the same without forcing anything.
+const restarts=new WeakMap<HTMLElement,number>();
+function retrigger(el:HTMLElement|null,cls:string){
+  if(!el)return;const n=(restarts.get(el)??0)+1;restarts.set(el,n);el.classList.remove(cls);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{if(restarts.get(el)===n)el.classList.add(cls);}));
+}
 function setResult(title:string,description:string,kicker='NOW PLAYING'){
   const result=$('result');$('result-title').textContent=title;$('result-desc').textContent=description;result.querySelector('.result-kicker').textContent=kicker;
-  result.classList.remove('swap');void result.offsetWidth;result.classList.add('swap');
+  retrigger(result,'swap');
 }
 /** Marquee bulbs flash together for a moment after a win. */
 let winningTimer=0;
@@ -393,7 +400,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;soundtrack.stopNow();audio.destroy();impacts.destroy();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();clearTimeout(winningTimer);
+  unmounted=true;soundtrack.stopNow();audio.destroy();impacts.destroy();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();stopTempo();clearTimeout(winningTimer);
   root.removeEventListener('lg-inspect-line',onInspectLine);
   void paypalButtons?.close?.().catch(()=>undefined);
   root.removeEventListener('click',onRootClick);

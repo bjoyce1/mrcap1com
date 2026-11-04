@@ -15,6 +15,7 @@ export function runTraffic(host: HTMLElement, lanes: Lane[]): () => void {
   if (typeof host.animate !== "function") return () => {};
   const world = host.closest<HTMLElement>(".legends-world");
   const osReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const phone = window.matchMedia("(max-width: 620px)");
   let cars: HTMLElement[] = [], anims: Animation[] = [], rate = 1, surge = 0;
 
   const setRate = (r: number) => { rate = r; for (const a of anims) a.updatePlaybackRate(r); };
@@ -41,14 +42,16 @@ export function runTraffic(host: HTMLElement, lanes: Lane[]): () => void {
           offset: walked / total,
         };
       });
-      for (let i = 0; i < lane.cars; i++) {
+      // Phones get about a third of the cars: each is a moving layer the phone ticks every frame.
+      const count = phone.matches ? Math.max(1, Math.round(lane.cars / 3)) : lane.cars;
+      for (let i = 0; i < count; i++) {
         const car = document.createElement("i");
         car.className = `lg-car is-${lane.kind}`;
         if (lane.kind === "slab") {
           car.style.setProperty("--slab", SLAB_COLORS[slabIdx++ % SLAB_COLORS.length]);
         }
         host.append(car);
-        const a = car.animate(frames, { duration: lane.ms, iterations: Infinity, delay: -(lane.ms / lane.cars) * i - Math.random() * 550 });
+        const a = car.animate(frames, { duration: lane.ms, iterations: Infinity, delay: -(lane.ms / count) * i - Math.random() * 550 });
         a.updatePlaybackRate(rate);
         cars.push(car); anims.push(a);
       }
@@ -71,7 +74,7 @@ export function runTraffic(host: HTMLElement, lanes: Lane[]): () => void {
       if (now !== reduced) { reduced = now; build(); }
     } else follow();
   });
-  if (world) mo.observe(world, { attributes: true, attributeFilter: ["class", "data-lg-stage", "data-lg-level", "data-lg-hit"] });
+  if (world) mo.observe(world, { attributes: true, attributeFilter: ["class", "data-lg-stage", "data-lg-level"] });
   const ro = new ResizeObserver(build);
   ro.observe(host);
   osReduced.addEventListener("change", build);
