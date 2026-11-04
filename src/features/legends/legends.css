@@ -382,3 +382,10 @@
 .legends-world .lg-spotlight-hood{display:inline-flex;align-items:center;width:fit-content;padding:5px 11px;border-radius:999px;font:700 11px/1 var(--lg-sans);letter-spacing:.14em;text-transform:uppercase;color:#ffe6a3;background:rgba(255,200,90,.12);border:1px solid rgba(255,200,90,.35)}
 .legends-world .lg-spotlight-bio{margin:6px 0 0;font-size:15px;line-height:1.6;color:#d8cbe8}
 @media(max-width:640px){.legends-world .lg-spotlight-card{grid-template-columns:1fr;justify-items:center;text-align:center;padding:20px}.legends-world .lg-spotlight-art{width:min(260px,72vw)}.legends-world .lg-spotlight-body{justify-items:center;text-align:center;padding-right:0}}
+
+/* Vault cosmetics: looks only, bought with coins. */
+.legends-world .vault-player-title{color:#ffd76a;font-size:13px;letter-spacing:.18em;text-shadow:0 0 12px rgba(255,215,106,.6)}
+.legends-world .vault-player-title[hidden]{display:none}
+.legends-world.vault-skin-purple-lightning .reel-window{box-shadow:0 0 0 2px #8f3dff,0 0 40px rgba(143,61,255,.65),inset 0 0 30px rgba(143,61,255,.35)}
+.legends-world.vault-skin-diamond-ice .reel-window{box-shadow:0 0 0 2px #9ff3ff,0 0 40px rgba(120,230,255,.6),inset 0 0 30px rgba(200,250,255,.3)}
+.legends-world.vault-skin-houston-chrome .reel-window{box-shadow:0 0 0 2px #ff3b4e,0 0 40px rgba(255,40,70,.6),inset 0 0 30px rgba(255,120,130,.3)}

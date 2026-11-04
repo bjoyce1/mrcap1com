@@ -3,6 +3,7 @@ import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
 import { mountLegendsGame } from "./game";
+import { applyVaultLook } from "./vault";
 import { symbolUrl } from "./motion";
 import { ARTISTS, HOUSTON_HOODS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,12 @@ import "./environment.css";
 const LegendsGame = memo(function LegendsGame() {
   const root = useRef<HTMLDivElement>(null);
   useEffect(
-    () => (root.current ? mountLegendsGame(root.current) : undefined),
+    () => {
+      if (!root.current) return undefined;
+      const stop = mountLegendsGame(root.current);
+      void applyVaultLook(root.current);
+      return stop;
+    },
     [],
   );
   return (
@@ -47,7 +53,7 @@ const LegendsGame = memo(function LegendsGame() {
          <div className="ch-center">
           <img className="ch-crown" src="/games/spc-legends/marquee/crown.webp" alt="" />
           <h2 className="ch-title"><img src="/games/spc-legends/marquee/title-letters.webp" alt="SPC Legends" width={1536} height={290} /></h2>
-          <div className="ch-plaque"><span className="ch-gem" aria-hidden="true" /><span className="ch-default">SPIN THE MIX</span><div className="supreme-player-title" data-lg="player-title" hidden><span aria-hidden="true">♛</span> SUPREME LEGENDARY <small>PLAYER TITLE</small></div><span className="ch-gem" aria-hidden="true" /></div>
+          <div className="ch-plaque"><span className="ch-gem" aria-hidden="true" /><span className="ch-default">SPIN THE MIX</span><div className="supreme-player-title" data-lg="player-title" hidden><span aria-hidden="true">♛</span> SUPREME LEGENDARY <small>PLAYER TITLE</small></div><div className="vault-player-title" data-lg="vault-title" hidden /><span className="ch-gem" aria-hidden="true" /></div>
          </div>
         </header>
         <div className="cabinet-inset"><div className="reel-headers"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div>
@@ -104,7 +110,7 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="panel stat-panel"><span className="section-label">YOUR GAME FILE</span><h2>THE NUMBERS</h2><p data-lg="supreme-badge" className="supreme-badge" hidden>✦ SUPREME LEGENDARY</p><div className="supreme-prize"><span className="section-label">SUPREME REWARD</span><h3>THE GOLD CABINET</h3><p>Exclusive gold reel trim and a crowned Supreme Legendary player title.</p><p className="prize-status" data-lg="prize-status" aria-live="polite">LOCKED · WIN SUPREME LEGENDARY</p><Button type="button" variant="secondary" className="prize-equip" data-lg="prize-equip" aria-pressed="false" disabled>LOCKED</Button><small>Cosmetic reward only. No cash value or extra spins.</small></div><div className="stat-line"><span>Total Spins</span><strong data-lg="total-spins">0</strong></div><div className="stat-line"><span>Characters Found</span><strong data-lg="found">0/{ARTISTS.length}</strong></div><div className="stat-line"><span>Completion</span><strong data-lg="completion">0%</strong></div><div className="stat-line"><span>Mode</span><strong data-lg="mode">Guest</strong></div><p className="panel-note">Sign in and your spins, XP and collection are saved to your account.</p></div>
       </section>
       <section className="lg-container symbol-library">
-        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>{ARTISTS.length} artist legends, {HOUSTON_HOODS.length} historic Houston neighborhoods, five special symbols, eight studio &amp; Houston symbols — tap any card to inspect. <a href="/legends/rewards" style={{color:'#ffd76a',textDecoration:'underline'}}>See every XP reward</a></p></div>
+        <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>{ARTISTS.length} artist legends, {HOUSTON_HOODS.length} historic Houston neighborhoods, five special symbols, eight studio &amp; Houston symbols — tap any card to inspect. <a href="/legends/rewards" style={{color:'#ffd76a',textDecoration:'underline'}}>See every XP reward</a> · <a href="/legends/vault" style={{color:'#ffd76a',textDecoration:'underline'}}>Spend coins in the Vault</a></p></div>
         <div className="library-group"><div className="lg-label">CHARACTER SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-characters" /></div>
         <div className="library-group"><div className="lg-label">HOUSTON HOOD SYMBOLS</div><div className="library-grid is-five" data-lg="lib-hoods" /></div>
         <div className="library-group"><div className="lg-label">SPECIAL SYMBOLS</div><div className="library-grid is-five" data-lg="lib-special" /></div>
