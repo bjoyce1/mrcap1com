@@ -383,7 +383,16 @@ $('shop-open').addEventListener('click',()=>{
   buyButton.setState('processing');
   void openShop(true).then(ok=>buyButton.setState(ok?'idle':'error'));
 });
-$('sound').addEventListener('click',()=>{audio.setEnabled(!audio.enabled);$('sound').setAttribute('aria-pressed',String(audio.enabled));$('sound-icon').textContent=audio.enabled?'🔊':'🔇';$('sound').title=audio.enabled?'Mute sound effects':'Turn on sound effects';if(audio.enabled)audio.tone(523,.14);});
+// Sound effects are on by default (owner, 2026-11-04); a player who mutes stays muted on this device. Browsers only let
+// audio start from a tap or key press, so the sound engine starts (or wakes) on the first one.
+const soundKey='spc-legends-sound';
+let soundWanted=(()=>{try{return localStorage.getItem(soundKey)!=='off';}catch{return true;}})();
+function showSound(){$('sound').setAttribute('aria-pressed',String(soundWanted));$('sound-icon').textContent=soundWanted?'🔊':'🔇';$('sound').title=soundWanted?'Mute sound effects':'Turn on sound effects';}
+const startSound=()=>{if(soundWanted&&(!audio.enabled||audio.ctx?.state!=='running'))audio.setEnabled(true);};
+const gestures=['pointerdown','touchend','click','keydown'] as const;
+gestures.forEach(type=>document.addEventListener(type,startSound,{capture:true}));
+showSound();
+$('sound').addEventListener('click',()=>{soundWanted=!soundWanted;try{localStorage.setItem(soundKey,soundWanted?'on':'off');}catch{/* the choice lasts this visit */}audio.setEnabled(soundWanted);showSound();if(soundWanted)audio.tone(523,.14);});
 $('music').addEventListener('click',()=>{musicOn=!musicOn;if(!musicOn)soundtrack.stopNow();$('music').setAttribute('aria-pressed',String(musicOn));$('music-icon').textContent=musicOn?'♫':'♫̸';$('music').title=musicOn?'Mute win music':'Turn on win music';});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
@@ -398,7 +407,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;soundtrack.stopNow();audio.destroy();impacts.destroy();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();stopTempo();clearTimeout(winningTimer);
+  unmounted=true;soundtrack.stopNow();gestures.forEach(type=>document.removeEventListener(type,startSound,{capture:true}));audio.destroy();impacts.destroy();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();stopTempo();clearTimeout(winningTimer);
   root.removeEventListener('lg-inspect-line',onInspectLine);
   void paypalButtons?.close?.().catch(()=>undefined);
   root.removeEventListener('click',onRootClick);
