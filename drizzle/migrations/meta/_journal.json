@@ -29,6 +29,13 @@
       "when": 1793487562035,
       "tag": "0003_legends_supreme_badge",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793824837459,
+      "tag": "0004_migration",
+      "breakpoints": true
     }
   ]
 }

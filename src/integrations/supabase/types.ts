@@ -439,6 +439,7 @@ export type Database = {
         Row: {
           badges: string[]
           best: number
+          coins_spent: number
           collection: string[]
           day: string
           last_board: Json | null
@@ -446,6 +447,7 @@ export type Database = {
           paid_spins: number
           spins_today: number
           total_spins: number
+          unlocks: string[]
           updated_at: string
           user_id: string
           welcome_left: number
@@ -454,6 +456,7 @@ export type Database = {
         Insert: {
           badges?: string[]
           best?: number
+          coins_spent?: number
           collection?: string[]
           day?: string
           last_board?: Json | null
@@ -461,6 +464,7 @@ export type Database = {
           paid_spins?: number
           spins_today?: number
           total_spins?: number
+          unlocks?: string[]
           updated_at?: string
           user_id: string
           welcome_left?: number
@@ -469,6 +473,7 @@ export type Database = {
         Update: {
           badges?: string[]
           best?: number
+          coins_spent?: number
           collection?: string[]
           day?: string
           last_board?: Json | null
@@ -476,10 +481,35 @@ export type Database = {
           paid_spins?: number
           spins_today?: number
           total_spins?: number
+          unlocks?: string[]
           updated_at?: string
           user_id?: string
           welcome_left?: number
           xp?: number
+        }
+        Relationships: []
+      }
+      legends_redemptions: {
+        Row: {
+          cost: number
+          created_at: string
+          id: string
+          item_id: string
+          user_id: string
+        }
+        Insert: {
+          cost: number
+          created_at?: string
+          id?: string
+          item_id: string
+          user_id: string
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          id?: string
+          item_id?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -941,6 +971,10 @@ export type Database = {
       }
       legends_credit_purchase: {
         Args: { _capture: string; _order: string; _user: string }
+        Returns: Json
+      }
+      legends_redeem: {
+        Args: { _artist: string; _cost: number; _item: string; _user: string }
         Returns: Json
       }
       move_to_dlq: {
