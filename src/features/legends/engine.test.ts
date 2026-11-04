@@ -67,7 +67,8 @@ test('special symbols are rarer than every artist and music symbol; artists stay
   assert.deepEqual(MULTIPLIERS,{double:2,triple:3});
   assert.equal(SYMBOL_WEIGHTS.double,2);assert.equal(SYMBOL_WEIGHTS.triple,1);
   assert.equal(new Set(ARTISTS.map(a=>SYMBOL_WEIGHTS[a.id])).size,1);
-  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),191);
+  // 11 artists x10, 8 music x6, 5 Houston hoods x4, specials 9.
+  assert.equal(Object.values(SYMBOL_WEIGHTS).reduce((t,w)=>t+w,0),187);
 });
 test('713 Double Wild substitutes on paylines and doubles line XP (2x for one, 4x for two)',()=>{
   assert.deepEqual(lineMatch(['double-wild','k-rino','k-rino','mic','mic','mic']),{symbol:'k-rino',count:3,wildMultiplier:2});

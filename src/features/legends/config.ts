@@ -45,11 +45,11 @@ export const SYMBOL_LORE: Record<string, {role: string; hood: string; bio: strin
   'komodo-dbx': {role:'DBX Production & Bars',hood:'Houston, TX',bio:'Architect of heavy trunk-rattling Texas production and rapid-fire SPC verses.'},
   'ganxsta-nip': {role:'Creator of Horrorcore',hood:'South Park',bio:'The South Park Psycho whose 1992 classic put South Park on the global map and birthed an entire subgenre.'},
   'dope-e': {role:'Terrorists Producer & MC',hood:'South Park',bio:'Mastermind behind classic SPC drum programming, soul-chopped Texas bounce, and rapid-fire verses.'},
-  'south-park': {role:'Historic H-Town Hood Badge',hood:'Southside (713)',bio:'MLK Blvd, Cullen & Bellfort — The historic neighborhood where K-Rino and the founding fathers forged the South Park Coalition.'},
-  '3rd-ward': {role:'Historic H-Town Hood Badge',hood:'Treyland / Southside',bio:'Neighboring cultural powerhouse steeped in Houston music history, independence, and community pride.'},
-  '5th-ward': {role:'Historic H-Town Hood Badge',hood:'Northeast Houston',bio:'The Bloody Nickel — Lyons Avenue stronghold known worldwide for gritty storytelling and Texas rap royalty.'},
-  'acres-homes': {role:'Historic H-Town Hood Badge',hood:'Northwest (The 44)',bio:'Iconic pine-lined streets famous for candy-painted slabs, swangas, and deep Houston trunk music.'},
-  'mcgregor-park': {role:'Historic H-Town Hood Badge',hood:'MacGregor Way & MLK',bio:'The legendary Sunday gathering spot where custom slabs, gold spokes, and new SPC mixtapes debuted every weekend.'},
+  'south-park': {role:'Houston Hood Symbol · 25–750 XP',hood:'Southside (713)',bio:'MLK Blvd, Cullen & Bellfort — The historic neighborhood where K-Rino and the founding fathers forged the South Park Coalition.'},
+  '3rd-ward': {role:'Houston Hood Symbol · 25–750 XP',hood:'Treyland / Southside',bio:'Neighboring cultural powerhouse steeped in Houston music history, independence, and community pride.'},
+  '5th-ward': {role:'Houston Hood Symbol · 25–750 XP',hood:'Northeast Houston',bio:'The Bloody Nickel — Lyons Avenue stronghold known worldwide for gritty storytelling and Texas rap royalty.'},
+  'acres-homes': {role:'Houston Hood Symbol · 25–750 XP',hood:'Northwest (The 44)',bio:'Iconic pine-lined streets famous for candy-painted slabs, swangas, and deep Houston trunk music.'},
+  'mcgregor-park': {role:'Houston Hood Symbol · 25–750 XP',hood:'MacGregor Way & MLK',bio:'The legendary Sunday gathering spot where custom slabs, gold spokes, and new SPC mixtapes debuted every weekend.'},
   'wild': {role:'Special Payline Wildcard',hood:'South Park Coalition',bio:'Substitutes for an Artist or Music symbol on any of the 26 matching paylines. A paid run needs at least three consecutive matching positions starting on reel 1. Wilds do not win alone and cannot replace a real artist for SPC Unity or Supreme Legendary.'},
   'double-wild': {role:'Wildcard + 2× Line Multiplier',hood:'713 Mixhouse',bio:'Substitutes for any Artist or Music symbol on a payline AND doubles (2×) the XP of every payline win it helps form (4× when two Double Wilds join the same line).'},
   'bonus': {role:'Scatter Bonus Trigger',hood:'713 Area Code',bio:'Land 3 or more 713 Bonus emblems anywhere on the 6×3 board to trigger +300 Bonus XP and celebratory scatter hits.'},
@@ -66,12 +66,15 @@ export const SYMBOL_LORE: Record<string, {role: string; hood: string; bio: strin
 });
 // Double and Triple Bonus multiply a winning spin's XP; both on one board multiply by 6. They never pay on their own.
 export const MULTIPLIERS = Object.freeze({double:2,triple:3});
-export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL];
-export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS,...HOUSTON_HOODS];
+// Houston hood symbols land on the reels, sharing the space music had (owner decision 2026-11-04: music 9 -> 6,
+// hoods 4), so Legends, Supreme and Unity land as often as before. Appended last so the
+// weighted pick keeps every earlier symbol's range.
+export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL,...HOUSTON_HOODS];
+export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS];
 export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
 export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries(ALL_SHOWCASE_SYMBOLS.map(x=>[x.id,x])));
 const SPECIAL_WEIGHTS={wild:2,'double-wild':1,bonus:3,double:2,triple:1};
-export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:SPECIAL_WEIGHTS[s.id]])));
+export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?6:HOUSTON_HOODS.some(h=>h.id===s.id)?4:SPECIAL_WEIGHTS[s.id]])));
 // welcomeSpins: one-time starter spins every player gets, used before the daily allowance.
 export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:3,welcomeSpins:25,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:true});
 // 26 unique six-column paths. Each row index is 0,1,2. Visible-line evaluation does not wrap.
@@ -92,4 +95,4 @@ export const PAYLINES=Object.freeze([
 ].map(line=>Object.freeze(line)));
 // supreme: an artist on every reel (about 45% of spins, so it pays little). sweep: the SAME artist on every reel
 // (about 1 in 4,200 spins), the game's jackpot. Owner decisions, 2026-11-01.
-export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},unity:500,supreme:250,sweep:25000,bonus:300});
+export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},hood:{3:25,4:75,5:250,6:750},vertical:{character:250,music:125,hood:125},unity:500,supreme:250,sweep:25000,bonus:300});

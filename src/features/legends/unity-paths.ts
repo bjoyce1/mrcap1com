@@ -31,7 +31,7 @@ export function inspectWinningLines(board: string[][], wins: SpinWin[], credited
   const analysis = analyzeUnityPaths(board);
   const paid = wins.find(w => w.type === 'unity');
   const multiplier = wins.filter(w => w.type === 'multiplier').reduce((m, w) => m * (w.multiplier ?? 1), 1);
-  const awards = wins.map(w => `${w.type === 'line' ? `Matching payline ${w.payline}: ${w.count} ${SYMBOL_MAP[w.symbol ?? '']?.name ?? 'symbols'}${w.wildMultiplier && w.wildMultiplier > 1 ? ` (×${w.wildMultiplier} Double Wild)` : ''}` : w.type === 'unity' ? 'SPC Unity: six different artists along a connected route' : w.type === 'supreme' ? 'Supreme Legendary: a real artist on every reel' : w.type === 'sweep' ? `Legend Sweep: ${SYMBOL_MAP[w.symbol ?? '']?.name}` : w.type === 'bonus' ? '713 scatter bonus' : 'Multiplier increment'}: +${w.xp.toLocaleString()} ${w.type === 'multiplier' ? 'additional' : 'base'} XP.`);
+  const awards = wins.map(w => `${w.type === 'line' ? `Matching payline ${w.payline}: ${w.count} ${SYMBOL_MAP[w.symbol ?? '']?.name ?? 'symbols'}${w.wildMultiplier && w.wildMultiplier > 1 ? ` (×${w.wildMultiplier} Double Wild)` : ''}` : w.type === 'unity' ? 'SPC Unity: six different artists along a connected route' : w.type === 'supreme' ? 'Supreme Legendary: a real artist on every reel' : w.type === 'sweep' ? `Legend Sweep: ${SYMBOL_MAP[w.symbol ?? '']?.name}` : w.type === 'bonus' ? '713 scatter bonus' : w.type === 'vertical' ? `Vertical stack: ${SYMBOL_MAP[w.symbol ?? '']?.name} down reel ${(w as { reel?: number }).reel! + 1}` : 'Multiplier increment'}: +${w.xp.toLocaleString()} ${w.type === 'multiplier' ? 'additional' : 'base'} XP.`);
   const qualifying: InspectedLine[] = analysis.qualifying.map((p, i) => {
     const isPaid = !!paid && paid.cells.join() === p.cells.join();
     return {
@@ -65,8 +65,8 @@ export function inspectWinningLines(board: string[][], wins: SpinWin[], credited
   }));
   const rejected: InspectedLine[] = analysis.rejected.map(p => ({ id: `reject-${p.id}`, label: `Rejected route [${p.rows.join(', ')}]`, cells: p.cells, accepted: false, explanation: p.reasons.join(' '), win: { type: 'unity', xp: 0, cells: p.cells } }));
   const vertical: InspectedLine[] = verticalPreviews(board).map(win => ({
-    id: `vertical-${win.reel}`, label: `Reel ${win.reel + 1} vertical (preview)`, cells: win.cells, accepted: true, win,
-    explanation: `Three ${SYMBOL_MAP[win.symbol].name} matching positions from top to bottom on reel ${win.reel + 1}, with Wild substitution allowed. Preview only: 0 extra XP, no extra spins or rewards. Separate from credited matching paylines and Unity.`,
+    id: `vertical-${win.reel}`, label: `Reel ${win.reel + 1} vertical stack`, cells: win.cells, accepted: true, win,
+    explanation: `Three ${SYMBOL_MAP[win.symbol].name} matching positions from top to bottom on reel ${win.reel + 1}, with Wild substitution allowed. +${win.xp} base XP (artists 250, music and Houston hoods 125), paid on top of any paylines and Unity.`,
   }));
   return { qualifying, standard, rejected, vertical, awards, creditedXp, multiplier, wilds };
 }

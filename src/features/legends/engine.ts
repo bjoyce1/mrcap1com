@@ -1,7 +1,10 @@
 // Ported from the SPC Legends source package (src/game/engine.mjs). Pure: no DOM, no storage.
-import {ARTISTS, MUSIC, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE, MULTIPLIERS} from './config';
+import {ARTISTS, MUSIC, HOUSTON_HOODS, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE, MULTIPLIERS} from './config';
 const artistIds=new Set(ARTISTS.map(a=>a.id));
 const musicIds=new Set(MUSIC.map(a=>a.id));
+const hoodIds=new Set(HOUSTON_HOODS.map(a=>a.id));
+/** The XP category of a symbol that can win on a line or a vertical stack, or null. */
+const categoryOf=(id:string)=>artistIds.has(id)?'character':musicIds.has(id)?'music':hoodIds.has(id)?'hood':null;
 const isWild=(id:string)=>id==='wild'||id==='double-wild';
 export function localDay(date=new Date(),timeZone=GAME_CONFIG.timezone){
   const parts=new Intl.DateTimeFormat('en-US',{timeZone,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
@@ -70,6 +73,14 @@ export const UNITY_ROUTES:readonly (readonly number[])[]=(()=>{
   const straight=(r:number[])=>r.every(x=>x===r[0]);
   return Object.freeze([...out.filter(straight),...out.filter(r=>!straight(r))].map(r=>Object.freeze(r)));
 })();
+/** Every reel stacked top to bottom with one artist, music or hood symbol. Wilds fill in but cannot stack alone. */
+export function verticalStacks(board){
+  return board.flatMap((col,reel)=>{
+    const symbol=col.find(id=>!isWild(id)),category=symbol?categoryOf(symbol):null;
+    if(!category||!col.every(id=>id===symbol||isWild(id)))return [];
+    return [{type:'vertical',reel,symbol,count:3,xp:XP_TABLE.vertical[category],cells:[0,1,2].map(row=>cellKey(reel,row))}];
+  });
+}
 export function evaluateBoard(board){
   if(!validateBoard(board))throw new TypeError('Expected six reels with three valid symbols each');
   const wins=[],hits=new Set();let xp=0;
@@ -77,7 +88,7 @@ export function evaluateBoard(board){
     const symbols=line.map((row,col)=>board[col][row]);
     const matched=lineMatch(symbols);
     if(!matched)return;
-    const category=artistIds.has(matched.symbol)?'character':musicIds.has(matched.symbol)?'music':null;
+    const category=categoryOf(matched.symbol);
     if(!category)return;
     const baseEarned=XP_TABLE[category][matched.count];
     if(!baseEarned)return;
@@ -85,6 +96,9 @@ export function evaluateBoard(board){
     const win={type:'line',payline:index+1,symbol:matched.symbol,count:matched.count,...(wildMultiplier>1?{wildMultiplier}:{}),xp:earned,cells:line.slice(0,matched.count).map((row,col)=>cellKey(col,row))};
     wins.push(win);xp+=earned;win.cells.forEach(k=>hits.add(k));
   });
+  // Vertical stacks: a reel filled top to bottom with one artist, music or hood symbol pays on its own (owner decision
+  // 2026-11-04: artist 250, music and hood 125 base XP per reel).
+  for(const v of verticalStacks(board)){wins.push(v);xp+=v.xp;v.cells.forEach(k=>hits.add(k));}
   const scatter=[];
   board.forEach((col,x)=>col.forEach((s,y)=>{if(s==='bonus')scatter.push(cellKey(x,y))}));
   if(scatter.length>=3){wins.push({type:'bonus',count:scatter.length,xp:XP_TABLE.bonus,cells:scatter});xp+=XP_TABLE.bonus;scatter.forEach(k=>hits.add(k));}

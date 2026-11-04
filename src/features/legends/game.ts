@@ -19,7 +19,6 @@ import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 import {createPurchaseButton} from './purchase-button';
 import {renderSupremePrize} from './supreme-prize';
 import {WinSoundtrack} from './soundtrack';
-import {verticalPreviews} from './vertical-preview';
 import {ImpactEffects} from './impact-effects';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
@@ -85,7 +84,7 @@ function renderCollection(){
 const multiplierOf=(wins:{type:string;multiplier?:number}[])=>wins.filter(w=>w.type==='multiplier').reduce((m,w)=>m*(w.multiplier??1),1);
 function historyLabel(h:HistoryItem){
   const first=h.wins?.find(w=>w.type==='sweep')??h.wins?.find(w=>w.type==='supreme')??h.wins?.[0];if(!first)return 'Spin complete';
-  const label=first.type==='sweep'?`LEGEND SWEEP • ${SYMBOL_MAP[first.symbol as string]?.name??''}`:first.type==='supreme'?'SUPREME LEGENDARY':first.type==='unity'?'SPC UNITY':first.type==='bonus'?'713 HOUSTON BONUS':`${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}${first.wildMultiplier&&first.wildMultiplier>1?` (×${first.wildMultiplier} WILD)`:''}`;
+  const label=first.type==='sweep'?`LEGEND SWEEP • ${SYMBOL_MAP[first.symbol as string]?.name??''}`:first.type==='supreme'?'SUPREME LEGENDARY':first.type==='unity'?'SPC UNITY':first.type==='bonus'?'713 HOUSTON BONUS':first.type==='vertical'?`VERTICAL STACK • ${SYMBOL_MAP[first.symbol as string]?.name??''}`:`${first.count}× ${SYMBOL_MAP[first.symbol as string]?.name||'Match'}${first.wildMultiplier&&first.wildMultiplier>1?` (×${first.wildMultiplier} WILD)`:''}`;
   const m=multiplierOf(h.wins);return m>1?`${label} • ×${m}`:label;
 }
 function renderHistory(){const list=$('history');list.replaceChildren();if(!history.length){const el=document.createElement('li');el.textContent='No spins yet. The stage is yours.';list.append(el);return;}
@@ -170,7 +169,7 @@ async function spin(){
     if(supreme&&!badges.includes('supreme-legends'))badges.push('supreme-legends');
     justFound=new Set(answer.newCharacters);
     renderBoard($('reels'),target,outcome.hitCells);
-    const vertical=verticalPreviews(target);
+    const vertical=outcome.wins.filter(w=>w.type==='vertical') as (SpinWin&{reel:number})[];
     vertical.forEach(v=>$('reels').children[v.reel]?.classList.add('vertical-preview'));
     // Supreme Legendary is a Legend on every reel, not a line: each of its six Legends wears a crown instead.
     outcome.wins.find(w=>w.type==='supreme')?.cells.forEach(cell=>$('reels').querySelector(`[data-cell="${cell}"]`)?.classList.add('is-supreme'));
@@ -179,9 +178,8 @@ async function spin(){
     // The celebration level comes from the real outcome; the cabinet stays lit until the hit show and any Big Win close.
     const level=celebrationLevel(outcome),hit=celebrationHit(outcome);
     if(level){stage.set('celebrating',level,hit);if(level>1)audio.stinger(level);}
-    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>{paylines.focus(w);stage.setHit(hitKindForWin(w),SYMBOL_MAP[w.symbol as string]?.color);if(w.type==='bonus'||w.type==='sweep'||w.type==='unity'||(w.type==='line'&&(w.count??0)>=5)){impacts.burst(w.cells,userReducedMotion);audio.explode();}},onDone:()=>{stage.setHit(hit);
+    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>{paylines.focus(w);stage.setHit(hitKindForWin(w),SYMBOL_MAP[w.symbol as string]?.color);if(w.type==='bonus'||w.type==='sweep'||w.type==='unity'||w.type==='vertical'||(w.type==='line'&&(w.count??0)>=5)){impacts.burst(w.cells,userReducedMotion,w.type==='vertical');audio.explode();}},onDone:()=>{stage.setHit(hit);
       paylines.cycle();
-      if(vertical.length){impacts.burst(vertical.flatMap(v=>v.cells),userReducedMotion,true);audio.explode();paylines.show([...outcome.wins,...vertical],{reducedMotion:userReducedMotion});}
       // Big Win show for 1,000+ XP; every Legend Sweep reaches it (see fx.ts).
       void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion})
         .then(()=>{if(stage.get()==='celebrating')stage.set('idle');});
@@ -194,8 +192,9 @@ async function spin(){
       if(!userReducedMotion)retrigger($('xp').closest('.hud-block'),'bump');
       const top=outcome.wins.filter(w=>w.type!=='multiplier').sort((a,b)=>b.xp-a.xp)[0],lines=outcome.wins.filter(w=>w.type==='line').length;
       const description=sweep?`${sweeps.map(id=>SYMBOL_MAP[id]?.name).join(' and ')} on all six reels! ${XP_TABLE.sweep.toLocaleString()} XP + a gold Legend card.${supreme?' Supreme title + Gold Cabinet unlocked.':''}`:unity?`SPC Unity: six different SPC artists connected across the reels! ${XP_TABLE.unity} base XP${supreme?` + Supreme Legendary ${XP_TABLE.supreme} base XP`:''}.`:supreme?`Six reels of Legends! ${XP_TABLE.supreme} base XP + Supreme Legendary badge, player title and Gold Cabinet unlock.`:top?.type==='bonus'?'Three or more 713 symbols unlocked the Houston bonus.':top?.type==='line'?`${top.count} ${SYMBOL_MAP[top.symbol as string]?.name||'symbol'} symbols connected${top.wildMultiplier&&top.wildMultiplier>1?` (×${top.wildMultiplier} DOUBLE WILD)`:''}.`:'';
+      const stacks=vertical.length?`${vertical.length>1?`${vertical.length} vertical stacks`:'Vertical stack'}: ${vertical.map(v=>`${SYMBOL_MAP[v.symbol as string]?.name} down reel ${v.reel+1}`).join(', ')}`:'';
       const m=multiplierOf(outcome.wins),boost=m>1?` • ${m===6?'DOUBLE AND TRIPLE BONUS':m===3?'TRIPLE BONUS':'DOUBLE BONUS'} ×${m}`:'';
-      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,description+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':unity?'SPC UNITY!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
+      setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,[description,stacks].filter(Boolean).join(' • ')+boost+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':unity?'SPC UNITY!':vertical.length?'VERTICAL STACK!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       audio.win(isMajor);
       const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:outcome.xp},musicOn);
       if(track&&musicOn){const sub=$('result').querySelector('span');if(sub)sub.textContent+=` • NOW PLAYING: ${track.title}`;}
@@ -203,7 +202,6 @@ async function spin(){
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
     }
     refresh(oldXP);
-    if(vertical.length){$('result-desc').textContent+=` • VERTICAL PREVIEW: ${vertical.map(v=>`reel ${v.reel+1}`).join(', ')} • 0 extra XP`;}
     root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:{board:target,wins:outcome.wins,xp:outcome.xp}}));
     if(userId&&!totalSpins(balance))openShop(true);
   }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}

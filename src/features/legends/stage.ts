@@ -3,7 +3,7 @@
 import { tiersFor } from "./fx";
 
 export type Stage = "idle" | "spin-start" | "spinning" | "stopping" | "evaluating" | "celebrating";
-/** 0 no win · 1 a line or Supreme Legendary (most spins) · 2 SPC Unity, a bonus, a multiplier or a Big Win ·
+/** 0 no win · 1 a line or Supreme Legendary (most spins) · 2 SPC Unity, a vertical stack, a bonus, a multiplier or a Big Win ·
  *  3 a Legend Sweep or a LEGENDARY WIN (10,000+ XP), the rare ones. */
 export type Level = 0 | 1 | 2 | 3;
 export type HitKind = "none" | "line" | "double-wild" | "supreme" | "unity" | "bonus" | "multiplier" | "sweep";
@@ -17,7 +17,7 @@ export function celebrationLevel(outcome: Outcome): Level {
   const types = new Set(outcome.wins.map((w) => w.type)), tiers = tiersFor(outcome.xp).length;
   const hasDoubleWild = outcome.wins.some((w) => (w.wildMultiplier ?? 1) > 1);
   if (types.has("sweep") || tiers >= 3) return 3;
-  if (types.has("unity") || types.has("bonus") || types.has("multiplier") || hasDoubleWild || tiers > 0) return 2;
+  if (types.has("unity") || types.has("vertical") || types.has("bonus") || types.has("multiplier") || hasDoubleWild || tiers > 0) return 2;
   return 1;
 }
 

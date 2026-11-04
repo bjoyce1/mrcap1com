@@ -9,12 +9,12 @@ const ARTIST_IDS = new Set(ARTISTS.map((a) => a.id));
 // Leave time for the final reel's 475ms stagger and 900ms layered animation to finish.
 export const HIT_STEP_MS = 1400;
 // Multipliers (Double and Triple Bonus) play last, as the finale that multiplies everything before them.
-const RANK: Record<string, number> = { sweep: 0, supreme: 1, unity: 2, bonus: 3, line: 4, multiplier: 5 };
+const RANK: Record<string, number> = { sweep: 0, supreme: 1, unity: 2, bonus: 3, vertical: 3.5, line: 4, multiplier: 5 };
 
 export const isArtist = (id: string) => ARTIST_IDS.has(id);
 
 /**
- * Which wins to celebrate and when: Legend Sweep first, then Supreme, then SPC Unity, then the 713 Bonus, then lines by XP (ties keep
+ * Which wins to celebrate and when: Legend Sweep first, then Supreme, then SPC Unity, then the 713 Bonus, then vertical stacks, then lines by XP (ties keep
  * payline order), then the Double and Triple Bonus multipliers. At most `maxWins` regular steps (multipliers always play), `perWin` ms apart; inside a step the cells pop left to right,
  * `cellStagger` ms per reel, so a line reads like it is being dealt across the board.
  */

@@ -24,7 +24,9 @@ describe('exact supplied six-reel board', () => {
     const unity = current.wins.filter(w=>w.type==='unity');
     expect(unity).toHaveLength(1);
     expect(unity[0]).toMatchObject({ xp: XP_TABLE.unity, cells: analyzeUnityPaths(board).qualifying[0].cells });
-    expect(current.xp).toBe(XP_TABLE.supreme + XP_TABLE.unity);
+    // Reel 2 is Klondike Kat top to bottom, a paid vertical stack.
+    expect(current.wins.filter(w=>w.type==='vertical')).toMatchObject([{ reel: 1, symbol: 'klondike-kat', xp: XP_TABLE.vertical.character }]);
+    expect(current.xp).toBe(XP_TABLE.supreme + XP_TABLE.unity + XP_TABLE.vertical.character);
     expect(serverEvaluate(board)).toEqual(current);
   });
   test('viewer lists every route and marks the paid one', () => {

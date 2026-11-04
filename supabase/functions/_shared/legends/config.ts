@@ -36,12 +36,15 @@ export const HOUSTON_HOODS = Object.freeze([
 ]);
 // Double and Triple Bonus multiply a winning spin's XP; both on one board multiply by 6. They never pay on their own.
 export const MULTIPLIERS = Object.freeze({double:2,triple:3});
-export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL];
-export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS,...HOUSTON_HOODS];
+// Houston hood symbols land on the reels, sharing the space music had (owner decision 2026-11-04: music 9 -> 6,
+// hoods 4), so Legends, Supreme and Unity land as often as before. Appended last so the
+// weighted pick keeps every earlier symbol's range.
+export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL,...HOUSTON_HOODS];
+export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS];
 export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
 export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries(ALL_SHOWCASE_SYMBOLS.map(x=>[x.id,x])));
 const SPECIAL_WEIGHTS={wild:2,'double-wild':1,bonus:3,double:2,triple:1};
-export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?9:SPECIAL_WEIGHTS[s.id]])));
+export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?6:HOUSTON_HOODS.some(h=>h.id===s.id)?4:SPECIAL_WEIGHTS[s.id]])));
 // welcomeSpins: one-time starter spins every player gets, used before the daily allowance.
 export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:3,welcomeSpins:25,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:true});
 // 26 unique six-column paths. Each row index is 0,1,2. Visible-line evaluation does not wrap.
@@ -62,4 +65,4 @@ export const PAYLINES=Object.freeze([
 ].map(line=>Object.freeze(line)));
 // supreme: an artist on every reel (about 45% of spins, so it pays little). sweep: the SAME artist on every reel
 // (about 1 in 4,200 spins), the game's jackpot. Owner decisions, 2026-11-01.
-export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},unity:500,supreme:250,sweep:25000,bonus:300});
+export const XP_TABLE=Object.freeze({character:{3:50,4:150,5:500,6:1500},music:{3:25,4:75,5:250,6:750},hood:{3:25,4:75,5:250,6:750},vertical:{character:250,music:125,hood:125},unity:500,supreme:250,sweep:25000,bonus:300});
