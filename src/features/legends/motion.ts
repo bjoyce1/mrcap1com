@@ -277,7 +277,26 @@ export class SynthSound {
     return {source,gain:volume};
   }
   endSpin(){if(!this.wind)return;try{this.wind.source.stop();}catch{/* already stopped */}this.wind=null;}
-  explode(){this.noise(.55,1600,70,.085);this.thump();this.feel([20,25,35]);}
+  /** Hit burst in the SPC palette of sound: a thunder crack, low boom and a gold chord in the cabinet key. Vertical stacks add a rising lightning sweep. */
+  explode(vertical=false){
+    this.noise(.08,5200,2400,.05);this.noise(.7,900,55,.07);this.thump();
+    [196,294,392].forEach((note,i)=>this.tone(note,.5,{wave:'triangle',gain:.018,delay:.06+i*.03}));
+    if(vertical){this.riser(.45);[784,1175,1568].forEach((note,i)=>this.tone(note,.22,{wave:'sine',gain:.014,delay:.12+i*.07}));}
+    this.feel(vertical?[30,20,45]:[20,25,35]);
+  }
+  /** A brake screech tuned into the cabinet key: a gliding squeal with tremble, a rubber hiss and a soft chain jingle as it settles. */
+  private screech(n:number){
+    if(!this.enabled||!this.ctx||!this.master)return;
+    const t=this.ctx.currentTime,osc=this.ctx.createOscillator(),lfo=this.ctx.createOscillator(),depth=this.ctx.createGain(),filter=this.ctx.createBiquadFilter(),vol=this.ctx.createGain();
+    const top=1568+n*55;osc.type='sawtooth';osc.frequency.setValueAtTime(top,t);osc.frequency.exponentialRampToValueAtTime(top*.62,t+.2);
+    lfo.frequency.value=34;depth.gain.value=28;lfo.connect(depth);depth.connect(osc.frequency);
+    filter.type='bandpass';filter.Q.value=6;filter.frequency.value=2400;
+    vol.gain.setValueAtTime(.0001,t);vol.gain.linearRampToValueAtTime(.011,t+.02);vol.gain.exponentialRampToValueAtTime(.0001,t+.22);
+    osc.connect(filter);filter.connect(vol);vol.connect(this.master);osc.start(t);lfo.start(t);osc.stop(t+.24);lfo.stop(t+.24);
+    osc.onended=()=>{osc.disconnect();lfo.disconnect();depth.disconnect();filter.disconnect();vol.disconnect();};
+    this.noise(.18,3200,900,.018);
+    this.tone(2637,.06,{wave:'sine',gain:.006,delay:.16});this.tone(3136,.07,{wave:'sine',gain:.005,delay:.2});
+  }
   destroy(){this.endSpin();this.master?.disconnect();this.master=null;this.enabled=false;}
   tone(freq:number,duration=.09,{wave='sine' as OscillatorType,gain=.026,delay=0}={}){
     if(!this.enabled||!this.ctx)return;
@@ -295,7 +314,7 @@ export class SynthSound {
     vol.gain.setValueAtTime(.09,t);vol.gain.exponentialRampToValueAtTime(.0001,t+.18);
     osc.connect(vol);vol.connect(this.master??this.ctx.destination);osc.start(t);osc.stop(t+.2);
   }
-  stop(n){this.noise(.22,2200+n*110,550,.025);this.thump();this.tone(260+n*73,.09,{wave:'triangle',gain:.022});this.feel(12);if(n===5)this.endSpin();}
+  stop(n){this.screech(n);this.thump();this.tone(260+n*73,.09,{wave:'triangle',gain:.022});this.feel(12);if(n===5)this.endSpin();}
   /** A filtered rising sweep under an anticipation tease. */
   riser(seconds=.9){
     if(!this.enabled||!this.ctx)return;
@@ -316,7 +335,12 @@ export class SynthSound {
   feel(pattern:number|number[]){if(this.enabled)try{navigator.vibrate?.(pattern);}catch{/* not supported */}}
   tease(){[440,554,659].forEach((note,i)=>this.tone(note,.16,{wave:'sine',gain:.02,delay:i*.07}));this.riser();}
   /** The lever pull: a short rising sweep as the reels wind up. */
-  spinStart(){this.endSpin();this.wind=this.noise(1,260,1800,.018,true);this.riser(.32);this.tone(196,.12,{wave:'triangle',gain:.02});}
+  spinStart(){
+    this.endSpin();this.wind=this.noise(1,220,1400,.016,true);
+    // Swell the wind in, then let it breathe like spinning reels instead of flat static.
+    if(this.wind&&this.ctx){const g=this.wind.gain.gain,t=this.ctx.currentTime;g.cancelScheduledValues(t);g.setValueAtTime(.0001,t);g.linearRampToValueAtTime(.022,t+.35);g.linearRampToValueAtTime(.013,t+.9);}
+    this.riser(.32);this.tone(98,.35,{wave:'sine',gain:.03});this.tone(196,.12,{wave:'triangle',gain:.02});this.tone(294,.16,{wave:'triangle',gain:.012,delay:.05});
+  }
   /** A new Legend joins the collection: a bright two-note chime. */
   unlock(){this.tone(1319,.18,{wave:'sine',gain:.022});this.tone(1760,.28,{wave:'sine',gain:.02,delay:.09});}
   /** Celebration stinger for level 2 (bonus or major) and level 3 (Unity, Supreme, Sweep). */

@@ -178,7 +178,7 @@ async function spin(){
     // The celebration level comes from the real outcome; the cabinet stays lit until the hit show and any Big Win close.
     const level=celebrationLevel(outcome),hit=celebrationHit(outcome);
     if(level){stage.set('celebrating',level,hit);if(level>1)audio.stinger(level);}
-    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>{paylines.focus(w);stage.setHit(hitKindForWin(w),SYMBOL_MAP[w.symbol as string]?.color);if(w.type==='bonus'||w.type==='sweep'||w.type==='unity'||w.type==='vertical'||(w.type==='line'&&(w.count??0)>=5)){impacts.burst(w.cells,userReducedMotion,w.type==='vertical');audio.explode();}},onDone:()=>{stage.setHit(hit);
+    hits.play(outcome.wins,{reducedMotion:userReducedMotion,big:isMajor,onStep:w=>{paylines.focus(w);stage.setHit(hitKindForWin(w),SYMBOL_MAP[w.symbol as string]?.color);if(w.type==='bonus'||w.type==='sweep'||w.type==='unity'||w.type==='vertical'||(w.type==='line'&&(w.count??0)>=5)){impacts.burst(w.cells,userReducedMotion,w.type==='vertical');audio.explode(w.type==='vertical');}},onDone:()=>{stage.setHit(hit);
       paylines.cycle();
       // Big Win show for 1,000+ XP; every Legend Sweep reaches it (see fx.ts).
       void bigWin.play({xp:outcome.xp,kicker:sweep?`LEGEND SWEEP • ${SYMBOL_MAP[sweep]?.name}`:unity?'SPC UNITY':'',art:sweep?symbolUrl(sweep):'',layers:sweep?layersReady(sweep):null,reducedMotion:userReducedMotion})
@@ -369,7 +369,7 @@ const onInspectLine=(event:Event)=>{
   $('reels').classList.add('has-wins');
   root.querySelectorAll<HTMLElement>('.reel-window [data-cell]').forEach(tile=>tile.classList.toggle('match',selected.has(tile.dataset.cell??'')));
   paylines.show([win],{reducedMotion:userReducedMotion,autoCycle:false});paylines.focus(win);
-  if(win.type==='vertical'){impacts.burst(win.cells,userReducedMotion,true);audio.explode();}
+  if(win.type==='vertical'){impacts.burst(win.cells,userReducedMotion,true);audio.explode(true);}
 };
 root.addEventListener('lg-inspect-line',onInspectLine);
 root.addEventListener('click',onRootClick);

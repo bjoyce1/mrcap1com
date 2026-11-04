@@ -19,7 +19,7 @@ export class ImpactEffects {
     // straight after the hit step changed the page made the browser re-style everything first, a freeze on phones.
     const generation = this.generation;
     requestAnimationFrame(() => { if (generation === this.generation) this.build(cells, vertical); });
-    this.timer = setTimeout(() => this.clear(), 1200);
+    this.timer = setTimeout(() => this.clear(), vertical ? 1500 : 1200);
   }
   private build(cells: string[], vertical: boolean) {
     const box = this.board.getBoundingClientRect();
@@ -36,16 +36,21 @@ export class ImpactEffects {
       frag.append(ring);
       for (let i = 0; i < shards; i++) {
         const angle = i * Math.PI * 2 / shards;
-        const shard = document.createElement('i'); shard.className = 'impact-shard';
+        const shard = document.createElement('i'); shard.className = i % 2 ? 'impact-shard gem' : 'impact-shard';
         shard.style.cssText = `left:${x}px;top:${y}px;--dx:${Math.cos(angle)*r.width*1.4}px;--dy:${Math.sin(angle)*r.height*1.2}px;--turn:${i*83}deg`;
         frag.append(shard);
       }
       const reel = Number(cell.split(':')[0]);
       if (vertical && !touched.has(reel)) {
         touched.add(reel);
-        const beam = document.createElement('i'); beam.className = 'vertical-beam';
-        beam.style.cssText = `left:${x-2}px;top:0;width:4px;height:${box.height}px`;
-        frag.append(beam);
+        const w = r.width;
+        const column = document.createElement('i'); column.className = 'vertical-column';
+        column.style.cssText = `left:${x-w*.55}px;top:0;width:${w*1.1}px;height:${box.height}px`;
+        const bolt = document.createElement('i'); bolt.className = 'vertical-bolt';
+        const crown = document.createElement('i'); crown.className = 'vertical-crown'; crown.textContent = '\u265B';
+        crown.style.cssText = `font-size:${Math.max(18, w*.32)}px`;
+        column.append(bolt, crown);
+        frag.append(column);
       }
     }
     this.layer.append(frag);
