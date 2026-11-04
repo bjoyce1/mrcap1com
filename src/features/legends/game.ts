@@ -4,7 +4,7 @@
 import {ALL_SYMBOL_MAP,ARTISTS,HOUSTON_HOODS,MUSIC,SPECIAL,SYMBOL_LORE,SYMBOL_MAP,XP_TABLE} from './config';
 import {createBoard,anticipationReels} from './engine';
 import {activePool,totalSpins,type Balance} from './balance';
-import {loadProfile,loadHistory,loadSweeps,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem} from './account';
+import {loadProfile,loadHistory,loadSweeps,requestSpin,startCheckout,capturePack,paypalClientId,type HistoryItem,type SpinWin} from './account';
 import {renderBoard,animateReels,animateCounter,SynthSound,PaylineOverlay,HitShow,floatText,symbolUrl,type ReelControl,type Tease} from './motion';
 import {BigWin} from './bigwin';
 import {isArtist} from './hits';
@@ -112,6 +112,7 @@ async function spin(){
   if(confirmingPayment)return;
   const player=userId;
   if(userId&&totalSpins(balance)<=0){openShop(true);return;}
+  root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:null}));
   busy=true;buttonState();paylines.clear();hits.clear();bigWin.close();attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
@@ -173,6 +174,7 @@ async function spin(){
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
     }
     refresh(oldXP);
+    root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:{board:target,wins:outcome.wins,xp:outcome.xp}}));
     if(userId&&!totalSpins(balance))openShop(true);
   }catch(error){console.error('Spin failed:',error);setResult('SPIN COULD NOT COMPLETE','Check your connection and press spin again. You will not be charged a second spin.','TRY AGAIN');renderBoard($('reels'),activeBoard);}
   finally{busy=false;$('spin').classList.remove('is-spinning');root.classList.remove('lg-spinning');attract.poke();buttonState();}
@@ -260,6 +262,7 @@ async function openShop(scrollTo=false):Promise<boolean>{
 
 // ----- Account -----
 async function loadAccount(nextUser:string|null){
+  root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:null}));
   const revision=++accountRevision;
   if(nextUser!==userId){
     pendingKey=null;
@@ -330,6 +333,16 @@ const onRootClick=(e:MouseEvent)=>{
   }
 };
 const onKeyDown=(e:KeyboardEvent)=>{if(e.key==='Escape')closeSpotlight();};
+const onInspectLine=(event:Event)=>{
+  if(busy)return;
+  const win=(event as CustomEvent<SpinWin>).detail;
+  hits.clear();bigWin.close();
+  const selected=new Set(win.cells);
+  $('reels').classList.add('has-wins');
+  root.querySelectorAll<HTMLElement>('.reel-window [data-cell]').forEach(tile=>tile.classList.toggle('match',selected.has(tile.dataset.cell??'')));
+  paylines.show([win],{reducedMotion:userReducedMotion,autoCycle:false});paylines.focus(win);
+};
+root.addEventListener('lg-inspect-line',onInspectLine);
 root.addEventListener('click',onRootClick);
 document.addEventListener('keydown',onKeyDown);
 $('spin').addEventListener('click',spin);
@@ -356,6 +369,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
 });
 return ()=>{
   unmounted=true;soundtrack.stopNow();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();clearTimeout(winningTimer);
+  root.removeEventListener('lg-inspect-line',onInspectLine);
   void paypalButtons?.close?.().catch(()=>undefined);
   root.removeEventListener('click',onRootClick);
   document.removeEventListener('keydown',onKeyDown);

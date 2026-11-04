@@ -28,7 +28,7 @@ describe('exact supplied six-reel board', () => {
   test('extra routes are capped without counting the main path twice', () => {
     expect(proposedUnityScore(board, { extraPathXp: 10, maxExtraPaths: 3 })).toMatchObject({ paidExtraPaths: 3, extraXp: 30, xp: 2280 });
     expect(proposedUnityScore(board, { extraPathXp: 10, maxExtraPaths: 100 })).toMatchObject({ paidExtraPaths: 31, extraXp: 310 });
-    expect(proposedUnityScore(board, { extraPathXp: -1, maxExtraPaths: 3 })).toThrow;
+    expect(() => proposedUnityScore(board, { extraPathXp: -1, maxExtraPaths: 3 })).toThrow(RangeError);
   });
   test('viewer exposes every Unity and rejected route independently of animation cap', () => {
     const current=evaluateBoard(board), inspection=inspectWinningLines(board,current.wins,current.xp);
