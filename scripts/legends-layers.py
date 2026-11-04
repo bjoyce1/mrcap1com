@@ -35,7 +35,7 @@ SIZE = 512
 #          does not slam (it would show its edges), it only catches the light sweep.
 ARTISTS = {
     "k-rino":       {"split": 868, "model": "isnet-anime"},
-    "mr-cap":       {"split": 850, "crown": [540, 780, 680, 850], "model": "birefnet-general-lite"},
+    "mr-cap":       {"split": 950, "crown": [495, 855, 755, 950], "model": "birefnet-general-lite"},
     "klondike-kat": {"split": 880, "model": "birefnet-general-lite"},
     "point-blank":  {"split": 845, "model": "isnet-anime"},
     "k-water":      {"split": 870, "model": "isnet-anime"},
