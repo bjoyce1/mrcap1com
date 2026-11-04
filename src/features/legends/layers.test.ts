@@ -10,15 +10,16 @@ describe("Legend layers", () => {
     for (const a of ARTISTS) expect(layersFor(a.id), a.id).not.toBeNull();
   });
 
-  it("ship all three images for each Legend", () => {
+  it("ship all four images for each Legend", () => {
     for (const e of Object.values(manifest))
-      for (const f of ["bg", "char", "plate"]) expect(existsSync(`public/games/spc-legends/layers/${e.dir}/${f}.webp`), `${e.dir}/${f}`).toBe(true);
+      for (const f of ["rest", "bg", "char", "plate"]) expect(existsSync(`public/games/spc-legends/layers/${e.dir}/${f}.webp`), `${e.dir}/${f}`).toBe(true);
   });
 
   it("are skipped when the portrait no longer matches", () => {
     const entries = { "k-rino": { asset: "old", dir: "k-rino.old", slam: true, split: 0.7 } };
     expect(layersFor("k-rino", entries, new Map([["k-rino", "new"]]))).toBeNull();
     expect(layersFor("k-rino", entries, new Map([["k-rino", "old"]]))).toEqual({
+      rest: "/games/spc-legends/layers/k-rino.old/rest.webp",
       bg: "/games/spc-legends/layers/k-rino.old/bg.webp",
       char: "/games/spc-legends/layers/k-rino.old/char.webp",
       plate: "/games/spc-legends/layers/k-rino.old/plate.webp",

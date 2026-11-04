@@ -26,6 +26,9 @@ OUT = ROOT / "public/games/spc-legends/layers"
 MANIFEST = ROOT / "src/features/legends/layers.json"
 SITE = "https://mrcap1.com"
 SIZE = 512
+# Bumped when the way layers are cut changes, so browsers fetch the new files instead of cached ones.
+# v2: the character's soft side and waist edges are baked into char.webp (no CSS mask, which cost a GPU pass per tile).
+LAYER_VERSION = "v2"
 
 # Per Legend, measured on the 1254 px portraits:
 #   split: first row of the name plate. Above it is the character, below it the plate.
@@ -89,6 +92,11 @@ def layers(src, matte, cfg):
     filled = cv2.cvtColor(cv2.inpaint(cv2.cvtColor(src, cv2.COLOR_RGB2BGR), patch, 15, cv2.INPAINT_TELEA), cv2.COLOR_BGR2RGB)
     char_rgb = np.where(crown[..., None], filled, src)
     char_a = np.clip((np.maximum(matte, crown.astype(np.float32)) * (1 - band) - 0.4) / 0.45, 0, 1)
+    # Soft edges, so leaning out never shows a cut line: fade over the outer 10% of each side, and over the last 12%
+    # of the height above the plate.
+    side = np.clip(np.minimum(xx, w - 1 - xx) / (0.10 * w), 0, 1)
+    waist = np.clip((cfg["split"] - yy) / (0.12 * h), 0, 1)
+    char_a = char_a * side * waist
 
     plate_a = plate_zone if cfg.get("band") else matte * plate_zone
 
@@ -114,10 +122,13 @@ def main():
         bg, char, plate = layers(src, matte, cfg)
         # The folder carries the asset id, so a new portrait never shows a browser's cached old layers.
         old = manifest.get(artist_id, {}).get("dir")
-        folder = f"{artist_id}.{asset_id[:8]}"
+        folder = f"{artist_id}.{asset_id[:8]}.{LAYER_VERSION}"
         if old and old != folder:
             shutil.rmtree(OUT / old, ignore_errors=True)
         (OUT / folder).mkdir(parents=True, exist_ok=True)
+        # The portrait itself at layer size: the pop shows it at rest, and the full 1254 px original made the first win
+        # of a session stall while several were decoded and uploaded at once.
+        save(src, None, OUT / folder / "rest.webp")
         save(bg, None, OUT / folder / "bg.webp")
         save(*char, OUT / folder / "char.webp")
         save(*plate, OUT / folder / "plate.webp")

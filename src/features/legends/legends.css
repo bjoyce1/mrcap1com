@@ -119,7 +119,8 @@
 .legends-world .hit-layer{position:absolute;inset:0;pointer-events:none;z-index:7}
 .legends-world .hit-pop{position:absolute;animation:lg-pop .8s cubic-bezier(.2,1.25,.35,1) var(--d) both;will-change:transform}
 .legends-world .hit-pop .symbol-tile{width:100%;height:100%;aspect-ratio:auto;box-shadow:0 0 0 2px #ffe08a,0 0 24px 6px var(--sym),0 12px 26px rgba(0,0,0,.65)}
-.legends-world .hit-pop .symbol-tile:after{content:'';position:absolute;inset:0;z-index:3;background:radial-gradient(circle at 50% 35%,transparent 38%,color-mix(in srgb,var(--sym) 75%,transparent) 100%);mix-blend-mode:screen;opacity:0;animation:lg-rim .8s ease-out var(--d) both}
+/* Plain alpha, no blend mode: a blended glow forces an extra GPU pass for everything under it on every frame. */
+.legends-world .hit-pop .symbol-tile:after{content:'';position:absolute;inset:0;z-index:3;background:radial-gradient(circle at 50% 35%,transparent 38%,color-mix(in srgb,var(--sym) 75%,transparent) 100%);opacity:0;animation:lg-rim .8s ease-out var(--d) both}
 @keyframes lg-pop{0%{transform:scale(1)}24%{transform:scale(1.38) translateY(-7%)}38%{transform:scale(1.2) translateY(-4%)}80%{transform:scale(1.2) translateY(-4%)}100%{transform:scale(1)}}
 @keyframes lg-rim{0%,100%{opacity:0}30%,70%{opacity:1}}
 /* Artists come alive in their frame: a bob and tilt and a rim light in their colour. */
@@ -282,12 +283,11 @@
 .legends-world .reel-window.sweep-tease{box-shadow:0 0 0 2px var(--tease),0 0 26px 6px var(--tease)}
 .legends-world .reel-window.sweep-tease:after{background:linear-gradient(180deg,color-mix(in srgb,var(--tease) 45%,transparent),transparent 30%,transparent 70%,color-mix(in srgb,var(--tease) 45%,transparent))}
 
-/* Payline comets: a bright head with a soft halo, shown only on the line in focus. */
-.legends-world .payline-comet,.legends-world .payline-comet-halo{opacity:0;transition:opacity .2s}
-.legends-world .payline-comet{fill:#fff}
-.legends-world .payline-comet-halo{fill:var(--line)}
-.legends-world .payline.focus .payline-comet{opacity:1}
-.legends-world .payline.focus .payline-comet-halo{opacity:.45}
+/* Payline comets: a bright head (r 5) with a soft halo (r 11), shown only on the line in focus. They live in their own
+   layer above the lines and move by transform only (PaylineOverlay), so the glowing lines are never repainted. */
+.legends-world .payline-comets{position:absolute;inset:0;z-index:5;pointer-events:none}
+.legends-world .payline-comet{position:absolute;left:0;top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--line) 45%,transparent);opacity:0;transition:opacity .2s;will-change:transform}
+.legends-world .payline-comet.focus{opacity:1}
 
 /* ===== Big Win show ===== */
 .legends-world .bigwin{position:fixed;inset:0;z-index:95;display:grid;place-items:center;overflow:hidden;cursor:pointer;opacity:0;transition:opacity .3s ease;background:radial-gradient(ellipse at center,rgba(40,10,60,.55),rgba(3,1,8,.92) 70%)}
@@ -320,18 +320,26 @@
 .legends-world .symbol-tile.layered img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .legends-world .symbol-tile.layered .lt-rest{z-index:1}
 .legends-world .lt-char,.legends-world .lt-plate,.legends-world .lt-glint{z-index:2}
-.legends-world .lt-char{--w:calc(var(--split)*100%);transform-origin:50% var(--w);-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));mask-composite:intersect}
+/* His soft side and waist edges are baked into char.webp (scripts/legends-layers.py); a CSS mask here cost a GPU pass per tile per frame. */
+.legends-world .lt-char{transform-origin:50% calc(var(--split)*100%)}
 .legends-world .lt-plate,.legends-world .lt-glint{transform-origin:50% 86%}
 .legends-world .lt-glint{position:absolute;inset:0;overflow:hidden;pointer-events:none;-webkit-mask-size:cover;mask-size:cover;-webkit-mask-position:center;mask-position:center}
 .legends-world .lt-glint b{position:absolute;inset:0;background:linear-gradient(100deg,transparent 38%,rgba(255,255,255,.85) 50%,transparent 62%);transform:translateX(-120%)}
+/* Only transform and opacity animate below, so every moving part runs on the compositor; the parts are promoted up
+   front so the first frame of a win does not stop to build layers. */
+.legends-world .hit-pop .layered :is(.lt-bg,.lt-char,.lt-plate,.lt-glint,.lt-glint b){will-change:transform}
+.legends-world .symbol-tile.layered .lt-clip:after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at 50% 42%,rgba(255,244,225,.55),color-mix(in srgb,var(--sym) 40%,transparent) 75%);opacity:0}
 .legends-world .hit-pop .layered .lt-rest{animation:lg-lt-rest .9s linear var(--d) both}
 .legends-world .hit-pop .layered .lt-bg{animation:lg-lt-bg .9s cubic-bezier(.2,.8,.3,1) var(--d) both}
+.legends-world .hit-pop .layered .lt-clip:after{animation:lg-lt-flash .9s cubic-bezier(.2,.8,.3,1) var(--d) both}
 .legends-world .hit-pop .layered .lt-char{animation:lg-lt-char .9s cubic-bezier(.65,0,.35,1) var(--d) both}
 .legends-world .hit-pop .layered[data-slam="1"] :is(.lt-plate,.lt-glint){animation:lg-lt-plate .9s ease-out var(--d) both}
 .legends-world .hit-pop .layered .lt-glint b{animation:lg-lt-glint .9s ease-in-out var(--d) both}
 @keyframes lg-lt-rest{0%{opacity:1}10%,88%{opacity:0}100%{opacity:1}}
-@keyframes lg-lt-bg{0%{transform:scale(1.02)}35%{transform:scale(1.12);filter:brightness(1.45) saturate(1.2)}75%{transform:scale(1.09);filter:brightness(1.2)}100%{transform:scale(1.02)}}
-@keyframes lg-lt-char{0%{transform:none}12%{transform:scale(.96) translateY(2%)}34%{transform:scale(1.16) translateY(-6%) rotate(-3deg);filter:brightness(1.12)}50%{transform:scale(1.12) translateY(-4%) rotate(-1deg)}75%{transform:scale(1.14) translateY(-5%) rotate(-2deg)}100%{transform:none}}
+@keyframes lg-lt-bg{0%{transform:scale(1.02)}35%{transform:scale(1.12)}75%{transform:scale(1.09)}100%{transform:scale(1.02)}}
+/* The city's light flash: an overlay fading in and out stands in for a brightness filter, which would repaint each frame. */
+@keyframes lg-lt-flash{0%,12%{opacity:0}35%{opacity:.6}75%{opacity:.25}100%{opacity:0}}
+@keyframes lg-lt-char{0%{transform:none}12%{transform:scale(.96) translateY(2%)}34%{transform:scale(1.16) translateY(-6%) rotate(-3deg)}50%{transform:scale(1.12) translateY(-4%) rotate(-1deg)}75%{transform:scale(1.14) translateY(-5%) rotate(-2deg)}100%{transform:none}}
 @keyframes lg-lt-plate{0%,20%{transform:none}27%{transform:scale(1.22)}36%{transform:scale(.95)}44%{transform:scale(1.02)}100%{transform:none}}
 @keyframes lg-lt-glint{0%,34%{transform:translateX(-120%)}72%,100%{transform:translateX(120%)}}
 /* Legend Sweep in the Big Win show: he rises through the light, his name lands, then he breathes while the XP counts. */
@@ -339,7 +347,7 @@
 .legends-world .bigwin-hero[hidden]{display:none}
 .legends-world .bigwin-hero img{position:absolute;inset:0;width:100%;height:100%}
 .legends-world .bh-bg{border-radius:8%;-webkit-mask:radial-gradient(closest-side,#000 60%,transparent);mask:radial-gradient(closest-side,#000 60%,transparent);opacity:0}
-.legends-world .bh-char{--w:calc(var(--split)*100%);transform-origin:50% var(--w);-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));-webkit-mask-composite:source-in;mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent),linear-gradient(#000 calc(var(--w) - 12%),transparent var(--w));mask-composite:intersect;opacity:0}
+.legends-world .bh-char{transform-origin:50% calc(var(--split)*100%);opacity:0;will-change:transform,opacity}
 .legends-world .bh-plate{transform-origin:50% 86%;opacity:0}
 .legends-world .bigwin-hero.run .bh-bg{animation:lg-bh-bg 1.6s cubic-bezier(.2,.8,.3,1) both}
 .legends-world .bigwin-hero.run .bh-char{animation:lg-bh-rise 1.5s cubic-bezier(.65,0,.35,1) both,lg-bh-breathe 2.4s ease-in-out 1.5s infinite alternate}

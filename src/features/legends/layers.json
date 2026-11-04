@@ -1,67 +1,67 @@
 {
   "cl-che": {
     "asset": "9b0eaf96-b50d-44ca-a2fc-2d18cafc3e62",
-    "dir": "cl-che.9b0eaf96",
+    "dir": "cl-che.9b0eaf96.v2",
     "slam": false,
     "split": 0.714
   },
   "dope-e": {
     "asset": "e1fb5f96-7701-4a3b-a464-b75a336154d8",
-    "dir": "dope-e.e1fb5f96",
+    "dir": "dope-e.e1fb5f96.v2",
     "slam": true,
     "split": 0.738
   },
   "ganxsta-nip": {
     "asset": "0a1362a7-35f7-4ba5-af4f-c256e337086c",
-    "dir": "ganxsta-nip.0a1362a7",
+    "dir": "ganxsta-nip.0a1362a7.v2",
     "slam": true,
     "split": 0.7
   },
   "k-rino": {
     "asset": "63a2baee-8f8f-44ba-a9b6-8eeb276cb7b1",
-    "dir": "k-rino.63a2baee",
+    "dir": "k-rino.63a2baee.v2",
     "slam": true,
     "split": 0.692
   },
   "k-water": {
     "asset": "1be14c97-8c06-4fd0-9cb9-c29b1746e968",
-    "dir": "k-water.1be14c97",
+    "dir": "k-water.1be14c97.v2",
     "slam": true,
     "split": 0.694
   },
   "klondike-kat": {
     "asset": "f6ddcc09-5d82-4174-b2e1-d3521c8ea78f",
-    "dir": "klondike-kat.f6ddcc09",
+    "dir": "klondike-kat.f6ddcc09.v2",
     "slam": true,
     "split": 0.702
   },
   "komodo-dbx": {
     "asset": "fcaeed96-5c1f-4449-9806-8ebd48efc136",
-    "dir": "komodo-dbx.fcaeed96",
+    "dir": "komodo-dbx.fcaeed96.v2",
     "slam": true,
     "split": 0.71
   },
   "mr-cap": {
     "asset": "2ad8ca4e-9c46-4f9e-b39a-a4bf921a7795",
-    "dir": "mr-cap.2ad8ca4e",
+    "dir": "mr-cap.2ad8ca4e.v2",
     "slam": true,
     "split": 0.758
   },
   "murder-one": {
     "asset": "fd808bfb-bb14-48a1-a166-97286f6c7a65",
-    "dir": "murder-one.fd808bfb",
+    "dir": "murder-one.fd808bfb.v2",
     "slam": true,
     "split": 0.706
   },
   "point-blank": {
     "asset": "e037eb4b-3c23-4718-827e-959d136f3b20",
-    "dir": "point-blank.e037eb4b",
+    "dir": "point-blank.e037eb4b.v2",
     "slam": true,
     "split": 0.674
   },
   "rapper-k": {
     "asset": "bc486664-0fb0-4dfc-b6ce-f8fd592c5984",
-    "dir": "rapper-k.bc486664",
+    "dir": "rapper-k.bc486664.v2",
     "slam": true,
     "split": 0.722
   }

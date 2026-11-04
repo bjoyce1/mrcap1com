@@ -23,6 +23,7 @@ export function makeTile(id,{mini=false,filler=false}={}){
 /** A Legend tile for the win pop, built from layers: the portrait shows at rest, then he leans out of the frame while the plate slams. */
 function makeLayeredTile(id:string,l:Layers){
   const root=makeTile(id),rest=root.querySelector('img') as HTMLImageElement;
+  rest.src=l.rest;
   root.classList.add('layered');root.dataset.slam=l.slam?'1':'0';root.style.setProperty('--split',String(l.split));
   // Sync decoding, like makeTile's portrait: the layers were already decoded once (preloadLayers), so the first
   // painted frame has every layer instead of an empty tile while the browser decodes in the background.
@@ -128,23 +129,27 @@ function stopSparks(reel:HTMLElement){
 const SVG='http://www.w3.org/2000/svg';
 /** Draw winning paylines over the board. Lines take turns being emphasised unless motion is reduced. */
 export class PaylineOverlay {
-  board:HTMLElement;wins:Win[];timer:ReturnType<typeof setInterval>|null;reducedMotion:boolean;svg:SVGSVGElement;resize:ResizeObserver;
-  autoCycle=true;paths:{win:Win;g:SVGGElement}[]=[];
+  board:HTMLElement;wins:Win[];timer:ReturnType<typeof setInterval>|null;reducedMotion:boolean;svg:SVGSVGElement;comets:HTMLDivElement;resize:ResizeObserver;
+  autoCycle=true;paths:{win:Win;g:SVGGElement;comet:HTMLElement|null}[]=[];
   constructor(board:HTMLElement){
     this.board=board;this.wins=[];this.timer=null;this.reducedMotion=false;
     this.svg=document.createElementNS(SVG,'svg');this.svg.setAttribute('class','payline-overlay');this.svg.setAttribute('aria-hidden','true');
-    board.append(this.svg);
+    // Comets ride their own layer as transform animations. Moving them inside the SVG made the browser repaint every
+    // glowing line on every frame, which stuttered on large desktop boards.
+    this.comets=document.createElement('div');this.comets.className='payline-comets';this.comets.setAttribute('aria-hidden','true');
+    board.append(this.svg,this.comets);
     this.resize=new ResizeObserver(()=>this.wins.length&&this.draw());this.resize.observe(board);
   }
   /** autoCycle=false draws the lines dim and waits for focus()/cycle(), so the hit show can lead. */
   show(wins:Win[],{reducedMotion=false,autoCycle=true}={}){
     this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='supreme'||w.type==='sweep');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
   }
-  focus(win:Win){this.paths.forEach(p=>p.g.classList.toggle('focus',p.win===win));}
+  focus(win:Win){this.paths.forEach(p=>this.light(p,p.win===win));}
   cycle(){this.autoCycle=true;this.draw();}
-  clear(){this.wins=[];this.paths=[];clearInterval(this.timer);this.timer=null;this.svg.replaceChildren();}
+  clear(){this.wins=[];this.paths=[];clearInterval(this.timer);this.timer=null;this.svg.replaceChildren();this.comets.replaceChildren();}
+  private light(p:{g:SVGGElement;comet:HTMLElement|null},on:boolean){p.g.classList.toggle('focus',on);p.comet?.classList.toggle('focus',on);}
   draw(){
-    clearInterval(this.timer);this.svg.replaceChildren();
+    clearInterval(this.timer);this.svg.replaceChildren();this.comets.replaceChildren();
     const box=this.board.getBoundingClientRect();
     this.svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);
     const centre=key=>{const el=this.board.querySelector(`[data-cell="${key}"]`);if(!el)return null;const r=el.getBoundingClientRect();return [r.left-box.left+r.width/2,r.top-box.top+r.height/2];};
@@ -161,21 +166,21 @@ export class PaylineOverlay {
       // A thin white core keeps the line readable over tiles that share its colour.
       const core=run.cloneNode() as SVGPolylineElement;core.setAttribute('class','payline-core');
       g.append(guide,run,core);
-      // A comet races along the matched run while this line is in focus.
+      // A comet races along the matched run while this line is in focus: constant speed, so each corner gets its share of the 1.1 s by length.
+      let comet:HTMLElement|null=null;
       if(!this.reducedMotion&&lit>=2){
-        const d='M'+points.slice(0,lit).map(p=>p.join(' ')).join(' L');
-        for(const [cls,r] of [['payline-comet-halo',11],['payline-comet',5]] as const){
-          const c=document.createElementNS(SVG,'circle');c.setAttribute('class',cls);c.setAttribute('r',String(r));
-          const motion=document.createElementNS(SVG,'animateMotion');motion.setAttribute('path',d);motion.setAttribute('dur','1.1s');motion.setAttribute('repeatCount','indefinite');
-          c.append(motion);g.append(c);
-        }
+        const pts=points.slice(0,lit),lengths=pts.map((p,k)=>k?Math.hypot(p[0]-pts[k-1][0],p[1]-pts[k-1][1]):0);
+        const total=lengths.reduce((a,b)=>a+b,0)||1;let walked=0;
+        comet=document.createElement('i');comet.className='payline-comet';comet.style.setProperty('--line',g.style.getPropertyValue('--line'));
+        comet.animate(pts.map((p,k)=>{walked+=lengths[k];return {transform:`translate(${p[0]}px,${p[1]}px)`,offset:walked/total};}),{duration:1100,iterations:Infinity});
+        this.comets.append(comet);
       }
       for(const [x,y] of points.slice(0,lit)){const dot=document.createElementNS(SVG,'circle');dot.setAttribute('cx',String(x));dot.setAttribute('cy',String(y));dot.setAttribute('r',String(Math.max(3,box.width/180)));dot.setAttribute('class','payline-node');g.append(dot);}
-      this.svg.append(g);this.paths.push({win,g});return g;
+      this.svg.append(g);const entry={win,g,comet};this.paths.push(entry);return entry;
     }).filter(Boolean);
-    if(this.reducedMotion||(this.autoCycle&&paths.length<2)){paths.forEach(g=>g.classList.add('focus'));return;}
+    if(this.reducedMotion||(this.autoCycle&&paths.length<2)){paths.forEach(p=>this.light(p,true));return;}
     if(!this.autoCycle)return;
-    let i=0;const step=()=>{paths.forEach((g,n)=>g.classList.toggle('focus',n===i));i=(i+1)%paths.length;};
+    let i=0;const step=()=>{paths.forEach((p,n)=>this.light(p,n===i));i=(i+1)%paths.length;};
     step();this.timer=setInterval(step,1100);
   }
 }
