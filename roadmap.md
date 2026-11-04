@@ -2,9 +2,9 @@
 
 # SPC Unity evaluation audit
 
-- [ ] Enumerate and explain every continuous distinct-artist route, with separate standard paylines.
-- [ ] Verify the supplied board's 32 routes and Paths A, B and C; test once-per-spin proposed XP, duplicate protection and configurable caps.
-- [ ] Add a Winning Lines viewer with exact-cell highlights and preserve existing credited rewards and animations.
+- [x] Enumerate and explain every continuous distinct-artist route, with separate standard paylines.
+- [x] Verify the supplied board's 32 routes and Paths A, B and C; test once-per-spin proposed XP, duplicate protection and configurable caps with 97 Legends tests passing.
+- [x] Add a Winning Lines viewer with exact-cell highlights and preserve existing credited rewards and animations; desktop, mobile and actual guest spin checked.
 
 # SPC Legends win animation
 
