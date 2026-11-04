@@ -8,6 +8,7 @@ import { ARTISTS, HOUSTON_HOODS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
 import { WinningLines } from './WinningLines';
 import { Marquee } from "./Marquee";
+import { Backdrop, Fireworks, HeaderCity } from "./Backdrop";
 import "@fontsource/russo-one/400.css";
 import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
@@ -26,6 +27,7 @@ const LegendsGame = memo(function LegendsGame() {
   );
   return (
     <div ref={root} className="legends-world">
+      <Backdrop />
       <div className="lg-smoke" aria-hidden="true"><span /><span /><span /></div>
       <section className="hero lg-container">
        <div className="hero-kicker lg-label">SOUTH PARK COALITION PRESENTS</div>
@@ -38,7 +40,8 @@ const LegendsGame = memo(function LegendsGame() {
        <div className="machine-shell">
         <div className="cab-decor" aria-hidden="true"><span className="cab-sheen" /><span className="cab-neon is-left" /><span className="cab-neon is-right" /><span className="cab-chainside is-left" /><span className="cab-chainside is-right" /><span className="cab-smoke"><i /><i /><i /></span><span className="cab-corner is-tl" /><span className="cab-corner is-tr" /><span className="cab-corner is-bl" /><span className="cab-corner is-br" /></div>
         <header className="cab-header">
-         <span className="ch-sky is-left" aria-hidden="true" /><span className="ch-sky is-right" aria-hidden="true" />
+         <HeaderCity side="left" /><HeaderCity side="right" />
+         <Fireworks bursts={[[14, 30, "#ffd76a", 2], [86, 26, "#ff63d2", 2], [30, 14, "#7ce7ff", 3], [70, 12, "#ffd76a", 3]]} />
          <img className="ch-ribbon is-left" src="/games/spc-legends/marquee/ribbon-left.webp" alt="713 MIXHOUSE" />
          <img className="ch-ribbon is-right" src="/games/spc-legends/marquee/ribbon-right.webp" alt="South Park Coalition" />
          <div className="ch-center">

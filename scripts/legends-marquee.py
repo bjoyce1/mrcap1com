@@ -100,6 +100,11 @@ def main():
     MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")
     print("scene, frame-mask and", MANIFEST.name, "written")
 
+    # The city and freeways on either side of the title, for the living backdrop and the cabinet header corners.
+    for name, box in {"city-left": (80, 440, 362, 1000), "city-right": (1568, 440, 1845, 1000)}.items():
+        Image.fromarray(art[box[1]:box[3], box[0]:box[2]]).save(OUT / f"{name}.webp", quality=86, method=6)
+        print(name, "written")
+
     # The cabinet header's chrome "SPC LEGENDS" letters: the wordmark without its small crown (the header has the big
     # jeweled crown above it). The top rows fade out so no crown base peeks over the letters.
     word = Image.open(ROOT / "src/assets/legends/wordmark-complete.png").convert("RGBA").crop((0, 182, 1536, 472))
