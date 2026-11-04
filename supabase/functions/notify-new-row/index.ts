@@ -4,7 +4,7 @@
 // idempotency key per row, so repeated calls never send twice.
 import { createClient } from 'npm:@supabase/supabase-js@2'
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors'
-import { z } from 'npm:zod@3.23.8'
+import { z } from 'npm:zod@3'
 
 const OWNER = 'mrcap11@gmail.com'
 const FRESH_MS = 15 * 60 * 1000
