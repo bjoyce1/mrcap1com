@@ -17,6 +17,8 @@ interface AudioAnalyzerStore {
   _source: MediaElementAudioSourceNode | null;
   _raf: number | null;
   _connectedEl: HTMLAudioElement | null;
+  /** Shared by music analysis and game effects; callers must not close it. */
+  getContext: () => AudioContext;
 
   /** Connect (or re-connect) to an <audio> element */
   connect: (audio: HTMLAudioElement) => void;
@@ -38,6 +40,13 @@ export const useAudioAnalyzerStore = create<AudioAnalyzerStore>()((set, get) => 
   _source: null,
   _raf: null,
   _connectedEl: null,
+  getContext: () => {
+    const existing = get()._ctx;
+    if (existing && existing.state !== 'closed') return existing;
+    const ctx = new AudioContext();
+    set({ _ctx: ctx });
+    return ctx;
+  },
 
   connect: (audio: HTMLAudioElement) => {
     const state = get();
@@ -54,7 +63,7 @@ export const useAudioAnalyzerStore = create<AudioAnalyzerStore>()((set, get) => 
     if (state._ctx && state._connectedEl === audio) return;
 
     try {
-      const ctx = new AudioContext();
+      const ctx = get().getContext();
       const analyser = ctx.createAnalyser();
       analyser.fftSize = FFT_SIZE;
       analyser.smoothingTimeConstant = 0.8;
@@ -113,8 +122,7 @@ export const useAudioAnalyzerStore = create<AudioAnalyzerStore>()((set, get) => 
     try {
       state._source?.disconnect();
       state._analyser?.disconnect();
-      state._ctx?.close();
     } catch {}
-    set({ _ctx: null, _analyser: null, _source: null, _connectedEl: null, frequencyData: [] });
+    set({ _analyser: null, _source: null, _connectedEl: null, frequencyData: [] });
   },
 }));

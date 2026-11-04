@@ -9,7 +9,7 @@ type Inspection = ReturnType<typeof inspectWinningLines>;
 export function WinningLines() {
   const host = useRef<HTMLDivElement>(null);
   const [result, setResult] = useState<Inspection | null>(null);
-  const [group, setGroup] = useState<'qualifying' | 'standard' | 'rejected'>('qualifying');
+  const [group, setGroup] = useState<'qualifying' | 'standard' | 'vertical' | 'rejected'>('qualifying');
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState(false);
   useEffect(() => {
@@ -39,7 +39,7 @@ export function WinningLines() {
       <details><summary>Award breakdown</summary><ul>{result.awards.length ? result.awards.map((award, i) => <li key={i}>{award}</li>) : <li>No XP award on this spin.</li>}</ul></details>
       <details><summary>Wild results ({result.wilds.length})</summary>{result.wilds.length ? <ul>{result.wilds.map(wild => <li key={wild.cell}>{wild.explanation}</li>)}</ul> : <p>No Wild tiles on this spin.</p>}</details>
       <div className="lines-tabs" role="group" aria-label="Line categories">
-        {(['qualifying', 'standard', 'rejected'] as const).map(value => <Button key={value} size="sm" variant={group === value ? 'secondary' : 'ghost'} aria-pressed={group === value} onClick={() => { setGroup(value); setIndex(0); setSelected(false); choose(0, result[value]); }}>{value === 'qualifying' ? `Unity (${result.qualifying.length})` : value === 'standard' ? 'Matching paylines' : `Rejected (${result.rejected.length})`}</Button>)}
+        {(['qualifying', 'standard', 'vertical', 'rejected'] as const).map(value => <Button key={value} size="sm" variant={group === value ? 'secondary' : 'ghost'} aria-pressed={group === value} onClick={() => { setGroup(value); setIndex(0); setSelected(false); choose(0, result[value]); }}>{value === 'qualifying' ? `Unity (${result.qualifying.length})` : value === 'standard' ? 'Matching paylines' : value === 'vertical' ? `Vertical preview (${result.vertical.length})` : `Rejected (${result.rejected.length})`}</Button>)}
       </div>
       {line ? <>
         <div className="lines-controls">
@@ -49,7 +49,7 @@ export function WinningLines() {
         </div>
         <div className="line-explanation" aria-live="polite"><strong>{line.label} · {index + 1} / {lines.length}</strong><p>{line.explanation}</p></div>
         {!selected && <Button variant="secondary" size="sm" onClick={() => choose(index)}>Highlight this line</Button>}
-      </> : <p>No qualifying Unity route. Each route must use six different artists with row steps of at most one.</p>}
+      </> : <p>{group === 'vertical' ? 'No vertical match. A reel needs three matching artist or music tiles; Wilds may substitute, but cannot win alone. Vertical matches are preview-only with no extra XP.' : 'No lines in this category.'}</p>}
     </>}
   </div>;
 }
