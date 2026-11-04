@@ -100,6 +100,14 @@ def main():
     MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n")
     print("scene, frame-mask and", MANIFEST.name, "written")
 
+    # The cabinet header's chrome "SPC LEGENDS" letters: the wordmark without its small crown (the header has the big
+    # jeweled crown above it). The top rows fade out so no crown base peeks over the letters.
+    word = Image.open(ROOT / "src/assets/legends/wordmark-complete.png").convert("RGBA").crop((0, 182, 1536, 472))
+    a = np.array(word).astype(np.float32)
+    a[:, :, 3] *= np.clip(np.arange(a.shape[0]) / 12, 0, 1)[:, None]
+    Image.fromarray(a.astype(np.uint8)).save(OUT / "title-letters.webp", quality=88, method=6)
+    print("title-letters written")
+
 
 if __name__ == "__main__":
     main()

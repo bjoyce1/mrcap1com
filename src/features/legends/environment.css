@@ -150,3 +150,93 @@
 }
 .legends-world.reduce-motion :is(.mq-dusk,.mq-smoke i,.mq-embers i,.mq-title-sheen b,.mq-ribbon,.mq-crown,.mq-sparks i,.mq-frame-sheen b,.mq-neon,.cab-underglow,.cab-sheen,.cab-neon,.cab-corner,.cab-burst i,.mq-crown-glow,.spin-button:before){animation:none!important}
 .legends-world.reduce-motion :is(.mq-car,.mq-embers,.mq-sparks,.cab-burst){display:none}
+
+/* ===================================================================================================================
+   The cabinet as in the approved in-game mockup: one ornate gold machine with the 713 MIXHOUSE and South Park
+   Coalition ribbons, the jeweled crown and chrome title on top, gold reel plaques, chains, diamonds and smoke, and a
+   row of gold plaques with the crowned spin button in the middle.
+   =================================================================================================================== */
+.legends-world .machine-shell{padding:16px 28px 22px;border:6px solid transparent;border-radius:28px;box-shadow:0 0 0 1px #3a1d05,inset 0 0 0 3px #1c0d2c,inset 0 0 0 5px rgba(255,215,106,.55),inset 0 0 40px rgba(150,60,220,.25),0 0 34px rgba(255,190,80,.22),0 0 90px rgba(150,60,220,.3),0 30px 70px rgba(0,0,0,.75)}
+.legends-world .machine-shell .marquee{display:none}
+/* Header */
+.legends-world .cab-header{position:relative;display:flex;justify-content:center;min-height:clamp(150px,21vw,236px);margin:0 -12px 12px}
+/* The gold-lit skyline cut-outs in the upper corners, fading toward the title. */
+.legends-world .ch-sky{position:absolute;bottom:4%;width:30%;aspect-ratio:300/220;background:no-repeat center bottom/contain;opacity:.95;pointer-events:none}
+.legends-world .ch-sky.is-left{left:0;background-image:url(/games/spc-legends/ui/skyline-left.webp);-webkit-mask:linear-gradient(90deg,#000 55%,transparent);mask:linear-gradient(90deg,#000 55%,transparent)}
+.legends-world .ch-sky.is-right{right:0;background-image:url(/games/spc-legends/ui/skyline-right.webp);-webkit-mask:linear-gradient(270deg,#000 55%,transparent);mask:linear-gradient(270deg,#000 55%,transparent)}
+.legends-world .ch-ribbon{position:absolute;top:8%;width:27%;height:auto;z-index:2;animation:lg-mq-bob 5.6s ease-in-out infinite alternate}
+.legends-world .ch-ribbon.is-left{left:1%}
+.legends-world .ch-ribbon.is-right{right:1%;animation-duration:6.4s;animation-delay:-2.2s}
+.legends-world .ch-center{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;width:56%}
+.legends-world .ch-crown{width:26%;height:auto;margin-bottom:-5%;position:relative;z-index:1;animation:lg-mq-crown 4.2s ease-in-out infinite alternate}
+.legends-world .ch-title{margin:0;width:100%;line-height:0}
+.legends-world .ch-title img{display:block;width:100%;height:auto}
+.legends-world .ch-plaque{display:flex;align-items:center;gap:12px;margin-top:-1%;padding:7px 22px;border:2px solid transparent;border-radius:999px;background:linear-gradient(180deg,#2c1848,#140b24) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 0 1px #3a1d05,0 6px 14px rgba(0,0,0,.5);font:400 clamp(11px,1.3vw,15px)/1 var(--lg-display);letter-spacing:.22em;color:#f4ecff;white-space:nowrap}
+.legends-world .ch-gem{width:9px;height:9px;flex:none;transform:rotate(45deg);background:linear-gradient(135deg,#fff,#d6dcff 45%,#8088b8 55%,#f4f6ff);box-shadow:0 0 6px rgba(255,255,255,.9)}
+.legends-world .ch-plaque .supreme-player-title{display:flex;align-items:center;gap:8px;padding:0;font:inherit;letter-spacing:inherit;color:var(--gold)}
+.legends-world .ch-plaque .supreme-player-title[hidden]{display:none}
+.legends-world .ch-plaque .supreme-player-title span{font-size:1.3em}
+.legends-world .ch-plaque .supreme-player-title small{display:none}
+.legends-world .ch-plaque:has([data-lg="player-title"]:not([hidden])) .ch-default{display:none}
+/* Reels: gold plaques over each reel with diamond studs between them, inside a double gold frame. */
+.legends-world .cabinet-inset{border:3px solid transparent;border-radius:18px;padding:10px 12px 8px;background:linear-gradient(180deg,#1a0e2c,#07040e) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 0 2px #3a1d05,0 0 0 5px #1c0d2c,0 0 0 7px rgba(255,215,106,.6),inset 0 10px 22px rgba(0,0,0,.85),inset 0 -6px 16px rgba(0,0,0,.6)}
+.legends-world .reel-headers{gap:var(--gap);padding-bottom:8px}
+.legends-world .reel-headers span{position:relative;padding:5px 0 4px;border:2px solid transparent;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#2e1a4c,#160c28) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 0 1px #3a1d05;font:400 clamp(12px,1.5vw,18px)/1 var(--lg-display);letter-spacing:.12em;color:#ffe08a;text-shadow:0 1px 0 #3a1d05}
+.legends-world .reel-headers span:not(:last-child):after{content:'';position:absolute;top:50%;right:calc(var(--gap) / -2 - 6px);width:10px;height:10px;margin-top:-5px;transform:rotate(45deg);z-index:2;background:linear-gradient(135deg,#fff,#d6dcff 45%,#8088b8 55%,#f4f6ff);box-shadow:0 0 0 2px #c9922e,0 0 8px rgba(255,255,255,.8)}
+.legends-world .board-bottom{align-items:center;gap:10px;padding-top:9px}
+.legends-world .board-tools{display:flex;align-items:center;gap:6px}
+.legends-world .board-tools .icon-button{width:34px;min-width:34px;height:34px;padding:0;font-size:15px;border-radius:50%;display:grid;place-items:center}
+.legends-world .board-tag{margin-left:6px}
+/* Bottom row: four gold stat plaques around the crowned spin button. */
+.legends-world .hud{grid-template-columns:1fr 1fr 1.55fr 1fr 1fr;align-items:end;gap:12px;margin:18px 0 10px}
+.legends-world .hud-block{padding:12px 6px;border:3px solid transparent;border-radius:14px;background:linear-gradient(180deg,#2a1745,#120a20) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 0 1px #3a1d05,inset 0 0 18px rgba(150,60,220,.25),0 6px 14px rgba(0,0,0,.45)}
+.legends-world .hud-block:before{display:none}
+.legends-world .hud-label{color:#ffd76a;letter-spacing:.14em}
+.legends-world .hud-block strong{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.5),0 0 12px rgba(190,120,255,.35)}
+.legends-world .hud-main{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0}
+.legends-world .hud-crown{width:30%;height:auto;margin-bottom:-11%;position:relative;z-index:2;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5))}
+.legends-world .hud-main .spin-button{width:100%;min-height:100px;padding:18px 10px 12px;gap:10px;border:4px solid transparent;border-radius:18px;background:radial-gradient(ellipse at 50% 28%,#8a4fd6,#4a1c86 52%,#22093f) padding-box,var(--lg-gold-edge) border-box;box-shadow:0 0 0 2px #3a1d05,0 6px 0 #4a2a06,0 0 28px rgba(255,190,80,.35),inset 0 0 24px rgba(0,0,0,.5),inset 0 2px 0 rgba(255,255,255,.18);font:400 clamp(22px,2.5vw,34px)/1.02 var(--lg-display);letter-spacing:.02em;text-align:center}
+.legends-world .hud-main .spin-button [data-lg="spin-label"]{background:linear-gradient(180deg,#fff 10%,#ece6ff 42%,#9a90c6 56%,#fff 78%,#d8d2f4);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px #2a1402;filter:drop-shadow(0 3px 0 #2a1402)}
+.legends-world .hud-main .spin-button .spin-star,.legends-world .hud-main .spin-button .spin-chevron{font-size:.42em;color:#eef0ff;text-shadow:0 0 6px #fff}
+.legends-world .hud-main .spin-button:not(:disabled):hover{box-shadow:0 0 0 2px #3a1d05,0 6px 0 #4a2a06,0 0 40px rgba(255,190,80,.6),inset 0 0 24px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.22)}
+.legends-world .hud-main .spin-button:not(:disabled):active{box-shadow:0 0 0 2px #3a1d05,0 1px 0 #4a2a06,inset 0 4px 14px rgba(0,0,0,.6)}
+.legends-world .hud-main .spin-button:not(:disabled):hover .spin-star{transform:rotate(180deg) scale(1.2)}
+.legends-world .hud-main .spin-button:not(:disabled):hover .spin-chevron{transform:rotate(-180deg) scale(1.2)}
+/* Chains down both sides, diamond studs in the corners, smoke rolling along the bottom. */
+.legends-world .cab-chainside{top:5%;bottom:5%;width:12px;background:radial-gradient(ellipse 4px 6px at 6px 6px,transparent 48%,#f0c25e 54% 76%,#7a4a10 80%,transparent 84%) 0 0/12px 12px repeat-y;filter:drop-shadow(0 0 3px rgba(255,200,90,.5))}
+.legends-world .cab-chainside.is-left{left:7px}
+.legends-world .cab-chainside.is-right{right:7px}
+.legends-world .cab-neon.is-left{left:12px}
+.legends-world .cab-neon.is-right{right:12px}
+.legends-world .cab-corner{width:18px;height:18px;background:radial-gradient(circle at 35% 30%,#fff,#e6eaff 40%,#9aa2cf 70%,#f4f6ff);box-shadow:0 0 0 2px #e0a93e,0 0 0 3px #5b3209,0 0 12px 2px rgba(255,255,255,.7)}
+.legends-world .cab-smoke{left:0;right:0;bottom:0;height:32%}
+.legends-world .cab-smoke i{position:absolute;bottom:-30%;width:48%;height:80%;border-radius:50%;background:radial-gradient(closest-side,rgba(150,55,235,.4),rgba(110,30,190,.14) 60%,transparent);animation:lg-mq-smoke 24s ease-in-out infinite alternate}
+.legends-world .cab-smoke i:nth-child(1){left:-12%}
+.legends-world .cab-smoke i:nth-child(2){left:30%;animation-duration:29s;animation-delay:-8s;opacity:.7}
+.legends-world .cab-smoke i:nth-child(3){right:-14%;animation-duration:21s;animation-delay:-13s}
+@media(max-width:620px){
+  .legends-world .machine-shell{padding:10px 12px 14px;border-width:4px;border-radius:18px}
+  .legends-world .cab-header{min-height:0;margin:0 -4px 8px;padding-top:4px}
+  .legends-world .ch-ribbon{top:2%;width:30%}
+  .legends-world .ch-center{width:62%}
+  .legends-world .ch-plaque{gap:7px;padding:5px 12px;font-size:9px;letter-spacing:.16em}
+  .legends-world .ch-gem{width:6px;height:6px}
+  .legends-world .cabinet-inset{padding:5px 5px 4px;border-width:2px;border-radius:12px;box-shadow:0 0 0 1px #3a1d05,0 0 0 3px #1c0d2c,0 0 0 4px rgba(255,215,106,.6),inset 0 6px 14px rgba(0,0,0,.85)}
+  .legends-world .reel-headers span{padding:3px 0 2px;border-width:1px;font-size:10px}
+  .legends-world .reel-headers span:not(:last-child):after{width:6px;height:6px;margin-top:-3px;right:calc(var(--gap) / -2 - 3px);box-shadow:0 0 0 1px #c9922e}
+  .legends-world .board-hint{display:none}
+  .legends-world .board-tools .icon-button{width:30px;min-width:30px;height:30px;font-size:13px}
+  .legends-world .hud{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:12px 0 8px}
+  .legends-world .hud-main{grid-column:1/-1;order:-1;margin-bottom:4px}
+  .legends-world .hud-crown{width:16%;margin-bottom:-6%}
+  .legends-world .hud-main .spin-button{min-height:62px;padding:12px 10px 8px;font-size:24px;border-width:3px;border-radius:14px}
+  .legends-world .hud-block{padding:8px 2px;border-width:2px;border-radius:10px}
+  .legends-world .cab-chainside{width:8px;background-size:8px 8px;background-image:radial-gradient(ellipse 3px 4px at 4px 4px,transparent 48%,#f0c25e 54% 76%,#7a4a10 80%,transparent 84%)}
+  .legends-world .cab-chainside.is-left{left:2px}
+  .legends-world .cab-chainside.is-right{right:2px}
+  .legends-world .cab-neon.is-left{left:5px}
+  .legends-world .cab-neon.is-right{right:5px}
+  .legends-world .cab-corner{width:11px;height:11px}
+}
+@media(prefers-reduced-motion:reduce){.legends-world :is(.ch-ribbon,.ch-crown,.cab-smoke i){animation:none!important}}
+.legends-world.reduce-motion :is(.ch-ribbon,.ch-crown,.cab-smoke i){animation:none!important}
