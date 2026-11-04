@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ARTISTS, MUSIC, HOUSTON_HOODS, XP_TABLE, MULTIPLIERS, PAYLINES } from "./config";
-import { uploadedSymbols } from "./motion";
+import { symbolUrl } from "./motion";
 
 /** Read-only reward guide. Every number comes from the live game config, so it never drifts from scoring. */
 const fmt = (n: number) => n.toLocaleString();
@@ -24,8 +24,7 @@ function Table({ title, rows, xp }: { title: string; rows: { id: string; name: s
               <tr key={r.id} className="odd:bg-muted/30">
                 <td className="p-3">
                   <span className="flex items-center gap-3">
-                    {uploadedSymbols[r.id] ? <img src={uploadedSymbols[r.id]} alt="" className="h-9 w-9 rounded-md object-cover" loading="lazy" />
-                      : <span className="h-3 w-3 rounded-full" style={{ background: r.color }} />}
+                    <img src={symbolUrl(r.id)} alt="" className="h-9 w-9 rounded-md object-cover" loading="lazy" />
                     <span className="text-foreground">{r.name}</span>
                   </span>
                 </td>
