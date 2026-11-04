@@ -57,8 +57,8 @@ const attract=attractMode(root,{isBusy:()=>busy,reduced:()=>userReducedMotion});
 // Where the spin really is (idle → spin-start → spinning → stopping → evaluating → celebrating → idle); the cabinet's
 // lighting follows it in CSS. Ambient loops pause while their part of the page is off screen or the tab is hidden.
 const stage=createStage(root),stopWatching=watchOffscreen(root),stopTempo=followTempo(root);
-// Win songs have their own switch, apart from the sound effects; both start off.
-let musicOn=false;
+// Win songs have their own switch, apart from the sound effects; both start on.
+let musicOn=true;
 // One switch for JS motion and CSS animation, seeded from the OS preference.
 function applyMotionPreference(){root.classList.toggle('reduce-motion',userReducedMotion);motionButton.setAttribute('aria-pressed',String(userReducedMotion));motionButton.title=userReducedMotion?'Animations minimized':'Full animations enabled';}
 // While reels move the spin button becomes a stop button; it only shortens the animation, never the outcome.
@@ -395,10 +395,11 @@ let soundWanted=(()=>{try{return localStorage.getItem(soundKey)!=='off';}catch{r
 function showSound(){$('sound').setAttribute('aria-pressed',String(soundWanted));$('sound-icon').textContent=soundWanted?'🔊':'🔇';$('sound').title=soundWanted?'Mute sound effects':'Turn on sound effects';}
 const startSound=()=>{if(soundWanted&&(!audio.enabled||audio.ctx?.state!=='running'))audio.setEnabled(true);};
 const gestures=['pointerdown','touchend','click','keydown'] as const;
+function showMusic(){$('music').setAttribute('aria-pressed',String(musicOn));$('music-icon').textContent=musicOn?'♫':'♫̸';$('music').title=musicOn?'Mute win music':'Turn on win music';}
 gestures.forEach(type=>document.addEventListener(type,startSound,{capture:true}));
-showSound();
+showSound();showMusic();
 $('sound').addEventListener('click',()=>{soundWanted=!soundWanted;try{localStorage.setItem(soundKey,soundWanted?'on':'off');}catch{/* the choice lasts this visit */}audio.setEnabled(soundWanted);showSound();if(soundWanted)audio.tone(523,.14);});
-$('music').addEventListener('click',()=>{musicOn=!musicOn;if(!musicOn)soundtrack.stopNow();$('music').setAttribute('aria-pressed',String(musicOn));$('music-icon').textContent=musicOn?'♫':'♫̸';$('music').title=musicOn?'Mute win music':'Turn on win music';});
+$('music').addEventListener('click',()=>{musicOn=!musicOn;if(!musicOn)soundtrack.stopNow();showMusic();});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
 // The daily allowance rolls over at Houston midnight; re-read the balance when the tab comes back.
