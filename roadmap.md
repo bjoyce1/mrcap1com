@@ -2,9 +2,10 @@
 
 # Vault real-money prices
 
-- [ ] Set Legends, skins and titles to $0.99 USD each; keep songs on coins and preserve existing ownership and XP.
-- [ ] Connect existing PayPal to server-verified, retry-safe Vault unlocks.
-- [ ] Test prices, payment verification, authenticated ownership and phone checkout without charging or publishing.
+- [x] Set Legends, skins and titles to $0.99 USD each; keep songs on coins and preserve existing ownership and XP.
+- [x] Connect existing PayPal to server-verified, retry-safe Vault unlocks.
+- [x] Verify 21 tests, signed-in desktop/phone PayPal and card controls, protected write grants, endpoint guards and real unpaid order reuse without charging or publishing.
+- [ ] Verify a buyer-approved Vault payment unlocks an item and reads back. Blocker: no buyer-approved payment; the unpaid Purple Lightning order is retained for retry.
 
 # Login repair and mobile update
 
