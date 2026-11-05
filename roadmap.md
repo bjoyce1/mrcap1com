@@ -5,7 +5,7 @@
 - [x] Diagnose login persistence and invalid-credential failures without changing account passwords; saved admin access survives refresh.
 - [x] Enable Google sign-in and verify the live domain reaches Google; keep existing profiles and fix confirmation-required signup handling.
 - [x] Verify phone controls, password recovery protection and refreshed signed-in access.
-- [ ] Publish the corrected mobile and login update.
+- [ ] Publish the corrected mobile and login update. Blocker: publication approval is still required.
 - [ ] Complete Google account approval and password reset through an actual email link. Blocker: requires the user's Google approval or password reset email; no password or Google account was supplied.
 
 # SPC Legends artist win music
