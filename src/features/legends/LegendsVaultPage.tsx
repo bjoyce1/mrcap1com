@@ -73,7 +73,7 @@ export default function LegendsVaultPage() {
         {!loading && !user ? (
           <div className="rounded-xl bg-card p-6 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
             <p className="text-foreground">Sign in to purchase Vault items or spend earned coins.</p>
-            <Button asChild className="mt-4"><Link to="/auth?next=/legends/vault">Sign in</Link></Button>
+            <Button asChild className="mt-4"><Link to="/auth" state={{ returnTo: "/legends/vault" }}>Sign in</Link></Button>
           </div>
         ) : (
           <>
@@ -82,7 +82,7 @@ export default function LegendsVaultPage() {
               <div><div className="text-xs uppercase tracking-widest text-muted-foreground">Total XP</div><div className="tabular-nums text-xl text-foreground">{state ? fmt(state.xp) : "..."}</div></div>
               {note && <p role="status" className="text-sm text-foreground">{note}</p>}
             </div>
-            {checkout && user && <VaultCheckout key={checkout.id} item={checkout} userId={user.id} onClose={() => setCheckout(null)} onPaid={(updated) => { setState(updated); setNote(`${checkout.name} unlocked. Payment confirmed.`); setCheckout(null); }} />}
+            {checkout && user && <VaultCheckout key={`${user.id}:${checkout.id}`} item={checkout} userId={user.id} onClose={() => setCheckout(null)} onPaid={(updated) => { setState(updated); setNote(`${checkout.name} unlocked. Payment confirmed.`); setCheckout(null); }} />}
             {SECTIONS.map((sec) => (
               <section key={sec.kind} className="space-y-4">
                 <h2 className="font-serif text-2xl text-foreground">{sec.title}</h2>
