@@ -69,6 +69,7 @@ export default function LegendsVaultPage() {
         <header className="space-y-3">
           <Link to="/legends" className="text-sm text-muted-foreground hover:text-primary">Back to the game</Link>
           <h1 className="font-serif text-4xl text-foreground md:text-5xl">The Vault</h1>
+          <Button asChild variant="secondary"><Link to="/legends/storefront">Browse the storefront</Link></Button>
           <p className="max-w-2xl text-muted-foreground">Legends, skins and titles are $0.99 USD each. Mr. CAP is your starter. Only owned Legends appear on account reels; buying one changes symbol odds. Song unlocks use earned coins. Purchases never lower your XP or rank. Virtual items and coins cannot be exchanged for cash.</p>
         </header>
 
@@ -93,7 +94,7 @@ export default function LegendsVaultPage() {
                     const owned = !!state && isOwned(item, state);
                     const equipped = look.skin === item.id || look.title === item.id;
                     return (
-                      <div key={item.id} className="flex flex-col rounded-xl bg-card p-5 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
+                      <div key={item.id} id={item.id} className="scroll-mt-28 flex flex-col rounded-xl bg-card p-5 shadow-[0_4px_24px_hsl(0_0%_0%/0.3)]">
                         <div className="flex items-center gap-3">
                           {item.artist && <img src={symbolUrl(item.artist)} alt="" className="h-12 w-12 rounded-md object-cover" loading="lazy" />}
                           <h3 className="font-serif text-lg text-foreground">{item.name}</h3>
