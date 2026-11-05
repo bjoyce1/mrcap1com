@@ -43,6 +43,7 @@ const SouthParkCoalition = lazy(() => import("./pages/SouthParkCoalition"));
 const WhoIsMrCap = lazy(() => import("./pages/WhoIsMrCap"));
 const Discography = lazy(() => import("./pages/Discography"));
 const Auth = lazy(() => import("./pages/Auth"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Booking = lazy(() => import("./pages/Booking"));
 const Links = lazy(() => import("./pages/Links"));
@@ -144,6 +145,8 @@ function AppRoutes() {
             <Route path="/booking" element={<PageTransition><Booking /></PageTransition>} />
             <Route path="/links" element={<PageTransition><Links /></PageTransition>} />
             <Route path="/auth" element={<PageTransition><Auth /></PageTransition>} />
+            <Route path="/auth/callback" element={<Auth />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
             <Route path="/admin/library" element={<PageTransition><AdminLibrary /></PageTransition>} />
             <Route path="/admin/roadmap" element={<PageTransition><AdminRoadmap /></PageTransition>} />

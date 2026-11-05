@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { safeGreatdayReturn } from '@/features/greatday/model';
+import { safeAuthReturn, rememberAuthReturn, storedAuthReturn, clearAuthReturn } from '@/lib/auth-return';
+import { lovable } from '@/integrations/lovable';
+import { supabase } from '@/integrations/supabase/client';
+import { GAME_CONFIG } from '@/features/legends/config';
 import { z } from 'zod';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -31,24 +34,51 @@ const Auth = () => {
   const [fullName, setFullName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [notice, setNotice] = useState('');
   
-  const { user, signIn, signUp } = useAuth();
+  const { user, loading, isAdmin, signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const authState = location.state as { greatdayReturnTo?: unknown; returnTo?: unknown } | null;
-  // Players arriving from the SPC Legends game go back to it; everything else keeps the Great Day / admin rule.
-  const fromLegends = authState?.returnTo === "/legends";
-  const returnTo = fromLegends ? "/legends" : safeGreatdayReturn(authState?.greatdayReturnTo);
+  const requestedReturn = safeAuthReturn(authState?.returnTo) ?? safeAuthReturn(authState?.greatdayReturnTo) ?? storedAuthReturn();
+  const fromLegends = requestedReturn?.startsWith('/legends') ?? false;
+  const returnTo = requestedReturn ?? (isAdmin ? '/admin' : '/legends');
 
   useEffect(() => {
-    if (user) {
+    if (user && !loading) {
+      clearAuthReturn();
       navigate(returnTo, { replace: true });
     }
-  }, [user, navigate, returnTo]);
+  }, [user, loading, navigate, returnTo]);
+
+  const handleGoogle = async () => {
+    setIsLoading(true);
+    rememberAuthReturn(returnTo);
+    try {
+      const result = await lovable.auth.signInWithOAuth('google', {
+        redirect_uri: `${window.location.origin}/auth/callback`,
+        extraParams: { prompt: 'select_account' },
+      });
+      if (result.error) toast.error(result.error.message);
+      if (result.redirected) return;
+    } catch { toast.error('Google sign-in could not open. Please try again.'); }
+    setIsLoading(false);
+  };
+
+  const handleReset = async () => {
+    const parsed = z.string().trim().email().safeParse(email);
+    if (!parsed.success) { setErrors({ email: 'Enter your email address first' }); return; }
+    setIsLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(parsed.data, { redirectTo: `${window.location.origin}/reset-password` });
+    setIsLoading(false);
+    if (error) toast.error(error.message);
+    else setNotice('If an account exists for this email, a password reset link is on its way. Check your inbox and spam folder.');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+    setNotice('');
     setIsLoading(true);
 
     try {
@@ -64,16 +94,15 @@ const Auth = () => {
           return;
         }
 
-        const { error } = await signIn(email, password);
+        const { error } = await signIn(result.data.email, result.data.password);
         if (error) {
           if (error.message.includes('Invalid login credentials')) {
-            toast.error('Invalid email or password');
+            setNotice('The email or password was not accepted. Use Forgot password below, or continue with Google.');
           } else {
             toast.error(error.message);
           }
         } else {
           toast.success('Welcome back!');
-          navigate(returnTo, { replace: true });
         }
       } else {
         const result = signupSchema.safeParse({ fullName, email, password });
@@ -87,7 +116,8 @@ const Auth = () => {
           return;
         }
 
-        const { error } = await signUp(email, password, fullName);
+        rememberAuthReturn(returnTo);
+        const { error, needsConfirmation } = await signUp(result.data.email, result.data.password, result.data.fullName);
         if (error) {
           if (error.message.includes('already registered')) {
             toast.error('An account with this email already exists');
@@ -95,8 +125,8 @@ const Auth = () => {
             toast.error(error.message);
           }
         } else {
-          toast.success('Account created successfully!');
-          navigate(returnTo, { replace: true });
+          if (needsConfirmation) setNotice('Check your email to confirm your account before signing in. If you already have an account, sign in or reset your password instead.');
+          else toast.success('Account created successfully!');
         }
       }
     } catch (err) {
@@ -129,18 +159,23 @@ const Auth = () => {
           <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-white/5 p-8">
             <div className="text-center mb-8">
               <h1 className="font-display text-3xl font-medium tracking-tight mb-2">
-                {fromLegends ? 'Play SPC Legends' : isLogin ? 'Admin Login' : 'Create Account'}
+                {fromLegends ? 'Play SPC Legends' : isLogin ? 'Sign In' : 'Create Account'}
               </h1>
               <p className="text-sm text-muted-foreground">
                 {fromLegends
                   ? isLogin
-                    ? 'Sign in to keep spinning. New here? Sign up below for 25 free spins.'
-                    : 'Create a free account and your first 25 spins are on us.'
+                    ? `Sign in to keep spinning. New here? Sign up below for ${GAME_CONFIG.welcomeSpins} free spins.`
+                    : `Create a free account and your first ${GAME_CONFIG.welcomeSpins} spins are on us.`
                   : isLogin
-                    ? 'Sign in to access the admin dashboard'
+                    ? 'Welcome back to Mr. CAP Legacy'
                     : 'Create an account to get started'}
               </p>
             </div>
+
+            <Button type="button" variant="outline" className="w-full mb-6" disabled={isLoading || loading} onClick={handleGoogle}>
+              <span aria-hidden="true" className="font-bold">G</span> Continue with Google
+            </Button>
+            {notice && <p role="status" className="text-sm text-muted-foreground mb-5">{notice}</p>}
 
             <form onSubmit={handleSubmit} className="space-y-5">
               {!isLogin && (
@@ -150,6 +185,7 @@ const Auth = () => {
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                       id="fullName"
+                      autoComplete="name"
                       type="text"
                       placeholder="Your name"
                       value={fullName}
@@ -169,6 +205,7 @@ const Auth = () => {
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="email"
+                    autoComplete="email"
                     type="email"
                     placeholder="you@example.com"
                     value={email}
@@ -187,6 +224,7 @@ const Auth = () => {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="password"
+                    autoComplete={isLogin ? 'current-password' : 'new-password'}
                     type="password"
                     placeholder="••••••••"
                     value={password}
@@ -199,11 +237,13 @@ const Auth = () => {
                 )}
               </div>
 
+              {isLogin && <Button type="button" variant="link" className="px-0" disabled={isLoading} onClick={handleReset}>Forgot password?</Button>}
+
               <Button
                 type="submit"
                 variant="flux"
                 className="w-full"
-                disabled={isLoading}
+                disabled={isLoading || loading}
               >
                 {isLoading ? (
                   <>
@@ -217,7 +257,8 @@ const Auth = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <button
+              <Button
+                variant="link"
                 type="button"
                 onClick={() => {
                   setIsLogin(!isLogin);
@@ -228,7 +269,7 @@ const Auth = () => {
                 {isLogin
                   ? "Don't have an account? Sign up"
                   : 'Already have an account? Sign in'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
