@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { routeSeo } from "@/seo/routes";
 import { mountLegendsGame } from "./game";
 import { applyVaultLook } from "./vault";
+import { mountInstall } from "./install";
 import { symbolUrl } from "./motion";
 import { ARTISTS, HOUSTON_HOODS, PAYLINES } from "./config";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
 import "./environment.css";
 import "./guardian.css";
+import "./install.css";
 
 /**
  * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game with account spins and PayPal packs.
@@ -30,8 +32,12 @@ const LegendsGame = memo(function LegendsGame() {
     () => {
       if (!root.current) return undefined;
       const stop = mountLegendsGame(root.current);
+      const stopInstall = mountInstall(root.current);
       void applyVaultLook(root.current);
-      return stop;
+      return () => {
+        stopInstall();
+        stop();
+      };
     },
     [],
   );
@@ -72,7 +78,12 @@ const LegendsGame = memo(function LegendsGame() {
         </div>
         <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
         <Link to="/auth" state={{ returnTo: "/legends" }} data-lg="signin" className="signin-cta" hidden>SIGN IN FOR {GAME_CONFIG.welcomeSpins} FREE SPINS</Link>
-        <nav className="reward-links" aria-label="Rewards"><Link to="/legends/vault">✦ COIN VAULT</Link><Link to="/legends/rewards">XP PAYOUTS</Link><Link to="/legends/terms">TERMS</Link></nav>
+        <nav className="reward-links" aria-label="Rewards"><Link to="/legends/vault">✦ COIN VAULT</Link><Link to="/legends/rewards">XP PAYOUTS</Link><Link to="/legends/terms">TERMS</Link><button type="button" className="install-link" data-lg="install" hidden>GET THE APP</button></nav>
+        <div className="install-nudge" data-lg="install-nudge" role="region" aria-label="Get the SPC Legends app" hidden>
+         <img src="/games/spc-legends/app/icon-192.png" alt="" width={48} height={48} />
+         <div className="install-nudge-copy"><b>PUT SPC LEGENDS ON YOUR HOME SCREEN</b><span>Full screen, one tap from your phone. No app store needed.</span></div>
+         <div className="install-nudge-actions"><button type="button" className="install-go" data-lg="install-go">GET THE APP</button><button type="button" className="install-later" data-lg="install-dismiss">Not now</button></div>
+        </div>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
         <button type="button" className="blessing-replay" data-lg="blessing-replay" hidden>Replay the Legacy Blessing</button>
         <WinningLines />
@@ -136,6 +147,20 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="library-group"><div className="lg-label">SPECIAL SYMBOLS</div><div className="library-grid is-five" data-lg="lib-special" /></div>
         <div className="library-group"><div className="lg-label">MUSIC &amp; HOUSTON SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-music" /></div>
       </section>
+      <div className="install-sheet" data-lg="install-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="lg-install-title">
+        <div className="install-sheet-backdrop" data-lg="install-close" />
+        <div className="install-sheet-card">
+          <button type="button" className="install-sheet-close" data-lg="install-close" aria-label="Close">✕</button>
+          <img className="install-sheet-icon" src="/games/spc-legends/app/apple-touch-icon.png" alt="" width={72} height={72} />
+          <h3 id="lg-install-title">ADD SPC LEGENDS TO YOUR HOME SCREEN</h3>
+          <ol>
+            <li><span>Tap the <b>Share</b> button <svg className="install-share" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M7 10.5H5.5v10h13v-10H17" /></svg> in your browser bar.</span></li>
+            <li><span>Scroll down and tap <b>Add to Home Screen</b>.</span></li>
+            <li><span>Tap <b>Add</b>. SPC Legends opens full screen from its own icon.</span></li>
+          </ol>
+          <p>Your spins, XP and collection are saved to your account, so sign in inside the app if it asks.</p>
+        </div>
+      </div>
       <div className="lg-spotlight" data-lg="spotlight" hidden role="dialog" aria-modal="true" aria-labelledby="lg-spotlight-title">
         <div className="lg-spotlight-backdrop" data-lg="spotlight-close" />
         <div className="lg-spotlight-card">

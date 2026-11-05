@@ -9,6 +9,7 @@
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_ALT, LOCALE, SITE_NAME, TWITTER_HANDLE, abs } from "./site";
 import { noDashes } from "./text";
 import type { JsonLdNode, SeoEntry } from "./types";
+import { APP_HEAD_TAGS, appHeadTags } from "./app-head";
 
 export const ROBOTS_INDEX = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 export const ROBOTS_NOINDEX = "noindex, nofollow";
@@ -70,6 +71,7 @@ export function headTags(entry: SeoEntry, opts: RenderOptions = {}): string {
     meta("name", "twitter:description", ogDescription),
     meta("name", "twitter:image", image),
     nodes.length ? `<script data-rh="true" type="application/ld+json">${scriptJson(jsonLdDocument(nodes))}</script>` : "",
+    ...(entry.app ? appHeadTags(entry.app) : []),
   ]
     .filter(Boolean)
     .map((t) => `    ${t}`)
@@ -105,6 +107,7 @@ export function renderPage(template: string, entry: SeoEntry, opts: RenderOption
   let head = template.slice(0, headEnd);
   const rest = template.slice(headEnd);
   for (const re of REPLACED_HEAD) head = head.replace(re, "");
+  if (entry.app) for (const re of APP_HEAD_TAGS) head = head.replace(re, "");
   head = `${head.trimEnd()}\n${headTags(entry, opts)}\n  `;
 
   let html = head + rest;

@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { applyAppHead } from "@/seo/app-head";
 import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_ALT, LOCALE, SITE_NAME, TWITTER_HANDLE, abs } from "@/seo/site";
 import { noDashes } from "@/seo/text";
 import { ROBOTS_NOINDEX, jsonLdDocument } from "@/seo/render";
@@ -37,6 +39,9 @@ const SEO = ({ entry, extraJsonLd, ...legacy }: SEOProps) => {
     noIndex: legacy.noIndex,
     jsonLd: legacy.jsonLd ? ((Array.isArray(legacy.jsonLd) ? legacy.jsonLd : [legacy.jsonLd]) as JsonLdNode[]) : undefined,
   };
+  // A page with its own home-screen app (SPC Legends) swaps the manifest and icon while it is open.
+  const app = e.app;
+  useEffect(() => (app ? applyAppHead(document, app) : undefined), [app]);
 
   const url = e.canonical ?? abs(e.path);
   const title = noDashes(e.title);

@@ -34,4 +34,18 @@ export interface SeoEntry {
   noIndex?: boolean;
   /** extra <meta property="article:*"> etc. */
   extraMeta?: { property: string; content: string }[];
+  /** home-screen app details for this page, in place of the site's own (see src/seo/app-head.ts) */
+  app?: AppHead;
+}
+
+/** What a phone uses when someone adds the page to their home screen. */
+export interface AppHead {
+  /** web app manifest URL */
+  manifest: string;
+  /** opaque 180 px icon for iOS */
+  icon: string;
+  /** name under the icon on iOS */
+  title: string;
+  /** browser bar colour */
+  themeColor: string;
 }

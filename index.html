@@ -45,6 +45,9 @@
     <script>document.documentElement.classList.add("js");</script>
     <style>.js #seo-static{display:none}</style>
 
+    <!-- Keep the browser's install offer for pages that show their own install button (SPC Legends).
+         It can fire before the page's code loads; nothing else changes. -->
+    <script>addEventListener("beforeinstallprompt",function(e){window.__installPrompt=e;});</script>
     <!-- Favicon & PWA -->
     <link rel="icon" type="image/png" href="https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/uploads/1770684666573-capfavicon.png" />
     <link rel="apple-touch-icon" href="/icons/icon-192.png" />

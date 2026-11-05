@@ -593,6 +593,8 @@ export const ROUTES: SeoEntry[] = [
       "Match symbols on 26 paylines for virtual Legends XP, stack a reel, collect every artist, and hit the 713 Bonus or SPC Unity. XP and coins have no cash value.",
     ],
     links: [L.music],
+    // "Add to Home Screen" on this page installs the game as its own app (public/legends-manifest.json).
+    app: { manifest: "/legends-manifest.json", icon: "/games/spc-legends/app/apple-touch-icon.png", title: "SPC Legends", themeColor: "#06040b" },
   }),
 
   route({

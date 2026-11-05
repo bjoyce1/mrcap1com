@@ -1,0 +1,23 @@
+{
+  "id": "/legends",
+  "name": "SPC Legends: Spin the Mix",
+  "short_name": "SPC Legends",
+  "description": "Six reels of South Park Coalition legends and Houston hoods. 50 free spins to start, then 20 free spins every day. Virtual XP only.",
+  "start_url": "/legends?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06040b",
+  "theme_color": "#06040b",
+  "categories": ["games", "entertainment", "music"],
+  "icons": [
+    { "src": "/games/spc-legends/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/games/spc-legends/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/games/spc-legends/app/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/games/spc-legends/app/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Coin Vault", "short_name": "Vault", "url": "/legends/vault", "icons": [{ "src": "/games/spc-legends/app/icon-192.png", "sizes": "192x192" }] },
+    { "name": "XP Payouts", "short_name": "Payouts", "url": "/legends/rewards", "icons": [{ "src": "/games/spc-legends/app/icon-192.png", "sizes": "192x192" }] }
+  ]
+}
