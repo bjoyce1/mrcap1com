@@ -3,6 +3,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { VAULT, type VaultItem } from "../../../supabase/functions/_shared/legends/vault.ts";
 import { WIN_SONGS, songUrl, type WinSong } from "./soundtrack";
+import { STARTER_LEGENDS } from "../../../supabase/functions/_shared/legends/reel-access";
 
 export { VAULT, type VaultItem };
 
@@ -12,7 +13,7 @@ export const coinsFor = (xp: number, spent: number) => Math.max(0, xp - spent);
 
 /** An item is owned if bought, or (for Legends) already found on the reels. */
 export const isOwned = (item: VaultItem, s: Pick<VaultState, "unlocks" | "collection">) =>
-  s.unlocks.includes(item.id) || (!!item.artist && s.collection.includes(item.artist));
+  s.unlocks.includes(item.id) || (!!item.artist && (STARTER_LEGENDS.includes(item.artist) || s.collection.includes(item.artist)));
 
 export async function loadVault(userId: string): Promise<VaultState> {
   const { data, error } = await supabase
