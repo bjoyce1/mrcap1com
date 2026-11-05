@@ -1,5 +1,11 @@
 # Identity connection
 
+# Vault real-money prices
+
+- [ ] Set Legends, skins and titles to $0.99 USD each; keep songs on coins and preserve existing ownership and XP.
+- [ ] Connect existing PayPal to server-verified, retry-safe Vault unlocks.
+- [ ] Test prices, payment verification, authenticated ownership and phone checkout without charging or publishing.
+
 # Login repair and mobile update
 
 - [x] Diagnose login persistence and invalid-credential failures without changing account passwords; saved admin access survives refresh.
