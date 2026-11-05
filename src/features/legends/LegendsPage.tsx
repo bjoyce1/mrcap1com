@@ -99,6 +99,15 @@ const LegendsGame = memo(function LegendsGame() {
          <label className="shop-age"><input type="checkbox" data-lg="shop-age" /> I am 18 or older</label>
          <div className="shop-checkout">
           <div className="lg-label">SECURE CHECKOUT</div>
+          <div className="shop-address-tip" role="note" style={{ fontSize: "0.85rem", lineHeight: 1.5, margin: "0.5rem 0 0.75rem", opacity: 0.9 }}>
+           <strong>Paying by card? Enter your billing address like this:</strong>
+           <ul style={{ margin: "0.35rem 0 0", paddingLeft: "1.1rem", listStyle: "disc" }}>
+            <li><b>Street address:</b> number and street only, for example <i>12635 Shadow Creek Pkwy</i></li>
+            <li><b>City</b>, <b>State</b> and <b>ZIP code</b> go in their own boxes. Don't add them to the street line.</li>
+            <li>Put apartment or suite numbers in the second address line, if one is shown.</li>
+            <li>Use the address your bank has on file for this card.</li>
+           </ul>
+          </div>
           <div className="shop-paypal" data-lg="shop-paypal" />
          </div>
          <p className="shop-msg" data-lg="shop-msg" role="status" aria-live="polite" />
