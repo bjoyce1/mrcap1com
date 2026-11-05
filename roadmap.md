@@ -1,5 +1,10 @@
 # Identity connection
 
+# Legends storefront
+
+- [ ] Add a public catalog for Legends, skins and titles with prices, descriptions, search and category filters, linked from the Vault.
+- [ ] Reuse existing account ownership and PayPal checkout; verify desktop/mobile browsing and signed-in checkout without payment or publication.
+
 # Locked Legend reels
 
 - [x] Filter account outcomes to server-owned Legends, retaining existing collections and using Mr. CAP as the default starter; keep guest demo unchanged.
