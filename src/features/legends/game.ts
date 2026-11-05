@@ -88,11 +88,12 @@ function renderCollection(){
     const img=document.createElement('img');img.src=symbolUrl(a.id);img.alt='';img.loading='lazy';element.append(img);return element;
   }));
   // A.C. Chill's memorial card: shown once he is on the reels here or has blessed this player. Not part of the count.
-  if(guardianMet||guardianOnGuestReels()){
+  const shelf=$('guardian-shelf'),slot=$('guardian-slot');shelf.hidden=!(guardianMet||guardianOnGuestReels());slot.replaceChildren();
+  if(!shelf.hidden){
     const memorial=document.createElement('div');memorial.className=`collection-tile memorial${guardianMet?'':' locked'}`;memorial.dataset.label='A.C. Chill';memorial.dataset.symbolId=GUARDIAN.id;
     memorial.title=guardianMet?'A.C. Chill, Legendary Guardian: memorial card, tap for the tribute':'A.C. Chill, Legendary Guardian: land him on a winning board to unlock his memorial card';
     const img=document.createElement('img');img.src=GUARDIAN_ART.tile;img.alt='';img.loading='lazy';memorial.append(img);
-    $('collection').append(memorial);
+    slot.append(memorial);
   }
   justFound=new Set();
   const count=ARTISTS.length;

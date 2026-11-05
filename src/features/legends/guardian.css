@@ -92,3 +92,8 @@
 .legends-world .blessing-replay{display:block;margin:8px auto 0;padding:7px 14px;border-radius:999px;border:1px solid #d9a64b;background:linear-gradient(180deg,#2a1b3c,#140d22);color:#f8cd7b;font:800 11px/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 .legends-world .blessing-replay:hover{background:linear-gradient(180deg,#3a2650,#1c1230)}
 .legends-world .blessing-replay:focus-visible{outline:2px solid #ffd66b;outline-offset:2px}
+
+.legends-world .guardian-shelf{display:flex;align-items:center;gap:14px;margin-top:14px;padding:10px 12px;border-radius:14px;background:radial-gradient(circle at 30px 50%,rgba(255,210,122,.18),transparent 70%),rgba(0,0,0,.35);box-shadow:0 4px 24px hsl(0 0% 0%/.3)}
+.legends-world .guardian-shelf[hidden]{display:none}
+.legends-world .guardian-shelf .section-label{color:#f6c453;letter-spacing:.18em}
+.legends-world .guardian-shelf .collection-tile.memorial{width:72px;aspect-ratio:1;box-shadow:0 0 0 2px #f6c453,0 0 18px rgba(255,200,90,.6),0 0 36px rgba(255,200,90,.25)}
