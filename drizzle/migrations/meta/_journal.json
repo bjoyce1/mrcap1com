@@ -43,6 +43,13 @@
       "when": 1793827414832,
       "tag": "0005_legends_launch",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793844572413,
+      "tag": "0006_legends_vault_cash_purchases",
+      "breakpoints": true
     }
   ]
 }

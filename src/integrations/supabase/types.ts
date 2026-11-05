@@ -518,6 +518,7 @@ export type Database = {
           amount_cents: number
           created_at: string
           id: string
+          pack: string
           paid_at: string | null
           paypal_capture_id: string | null
           paypal_order_id: string
@@ -529,6 +530,7 @@ export type Database = {
           amount_cents?: number
           created_at?: string
           id?: string
+          pack?: string
           paid_at?: string | null
           paypal_capture_id?: string | null
           paypal_order_id: string
@@ -540,6 +542,7 @@ export type Database = {
           amount_cents?: number
           created_at?: string
           id?: string
+          pack?: string
           paid_at?: string | null
           paypal_capture_id?: string | null
           paypal_order_id?: string
@@ -582,6 +585,45 @@ export type Database = {
           user_id?: string
           wins?: Json
           xp?: number
+        }
+        Relationships: []
+      }
+      legends_vault_purchases: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          currency: string
+          id: string
+          item_id: string
+          paid_at: string | null
+          paypal_capture_id: string | null
+          paypal_order_id: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          item_id: string
+          paid_at?: string | null
+          paypal_capture_id?: string | null
+          paypal_order_id?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          item_id?: string
+          paid_at?: string | null
+          paypal_capture_id?: string | null
+          paypal_order_id?: string | null
+          status?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -975,6 +1017,11 @@ export type Database = {
       }
       legends_redeem: {
         Args: { _artist: string; _cost: number; _item: string; _user: string }
+        Returns: Json
+      }
+      legends_spent_today: { Args: { _user: string }; Returns: number }
+      legends_vault_credit: {
+        Args: { _capture: string; _order: string; _user: string }
         Returns: Json
       }
       move_to_dlq: {
