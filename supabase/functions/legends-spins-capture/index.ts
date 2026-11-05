@@ -11,12 +11,15 @@ function check(order: any, userId: string, amountCents: number): { ok: boolean; 
   const unit = order?.purchase_units?.[0];
   const cap = unit?.payments?.captures?.[0];
   const ok = order?.status === "COMPLETED" &&
-    unit?.custom_id === `legends:${userId}` &&
+    (unit?.custom_id ?? cap?.custom_id) === `legends:${userId}` &&
     cap?.status === "COMPLETED" &&
     cap?.amount?.currency_code === PACK_CURRENCY &&
     cap?.amount?.value === paypalAmount(amountCents);
   return { ok, captureId: cap?.id ?? null };
 }
+
+// deno-lint-ignore no-explicit-any
+const cap0 = (o: any) => JSON.stringify(o?.purchase_units?.[0]?.payments?.captures?.[0]?.status ?? null);
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -37,7 +40,7 @@ Deno.serve(async (req: Request) => {
 
     const balance = async () => (await db.rpc("legends_balance", { _user: userId })).data;
     if (row.status === "paid") return json({ balance: await balance() });
-    if (row.status !== "created") return json({ error: "Order is not payable" }, 409);
+    if (row.status !== "created" && row.status !== "failed") return json({ error: "Order is not payable" }, 409);
 
     const token = await getPaypalAccessToken();
     const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
@@ -57,7 +60,7 @@ Deno.serve(async (req: Request) => {
     if (!ok) {
       await db.from("legends_spin_purchases").update({ status: "failed" })
         .eq("paypal_order_id", orderID).eq("user_id", userId).eq("status", "created");
-      console.error("Legends capture verification failed", orderID);
+      console.error("Legends capture verification failed", orderID, order?.status, cap0(order));
       return json({ error: "Payment could not be verified" }, 402);
     }
 
