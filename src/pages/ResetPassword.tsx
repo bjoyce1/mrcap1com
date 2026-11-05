@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Helmet } from 'react-helmet-async';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function ResetPassword() {
   const [ready, setReady] = useState(false);
@@ -13,14 +14,15 @@ export default function ResetPassword() {
   const [confirmation, setConfirmation] = useState('');
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
+  const { isPasswordRecovery } = useAuth();
   useEffect(() => {
     const recovery = new URLSearchParams(window.location.hash.slice(1)).get('type') === 'recovery';
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') setReady(true);
     });
-    if (recovery) supabase.auth.getUser().then(({ data, error }) => setReady(!error && !!data.user));
+    if (recovery || isPasswordRecovery) supabase.auth.getUser().then(({ data, error }) => setReady(!error && !!data.user));
     return () => subscription.unsubscribe();
-  }, []);
+  }, [isPasswordRecovery]);
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     if (!ready || password.length < 6 || password !== confirmation) return;

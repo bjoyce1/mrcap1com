@@ -22,6 +22,15 @@ vi.mock('@/integrations/supabase/client', () => {
 import { AuthProvider, useAuth } from './useAuth';
 
 describe('admin access loading', () => {
+  it('retains recovery authorization for the lazy-loaded reset page', async () => {
+    let recovery = false;
+    const Probe = () => { recovery = useAuth().isPasswordRecovery; return null; };
+    await act(async () => { TestRenderer.create(createElement(AuthProvider, null, createElement(Probe))); });
+    await act(async () => { authChange('PASSWORD_RECOVERY', { user: { id: 'admin-1' } } as Session); });
+    expect(recovery).toBe(true);
+    await act(async () => { authChange('SIGNED_OUT', null); });
+    expect(recovery).toBe(false);
+  });
   it('restores the saved account without a new password login', async () => {
     let restored: string | undefined;
     const Probe = () => { restored = useAuth().user?.id; return null; };

@@ -172,7 +172,7 @@ const Auth = () => {
               </p>
             </div>
 
-            <Button type="button" variant="outline" className="w-full mb-6" disabled={isLoading || loading} onClick={handleGoogle}>
+            <Button type="button" variant="outline" className="w-full mb-6 gap-2" disabled={isLoading || loading} onClick={handleGoogle}>
               <span aria-hidden="true" className="font-bold">G</span> Continue with Google
             </Button>
             {notice && <p role="status" className="text-sm text-muted-foreground mb-5">{notice}</p>}
