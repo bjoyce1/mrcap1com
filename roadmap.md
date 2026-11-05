@@ -2,8 +2,8 @@
 
 # Legends storefront
 
-- [ ] Add a public catalog for Legends, skins and titles with prices, descriptions, search and category filters, linked from the Vault.
-- [ ] Reuse existing account ownership and PayPal checkout; verify desktop/mobile browsing and signed-in checkout without payment or publication.
+- [x] Add a public catalog for all 18 Legends, skins and titles with prices, descriptions, search and category filters, linked from the Vault.
+- [x] Reuse existing account ownership and PayPal checkout; verify desktop/mobile browsing, filters/search, signed-in checkout and 14 pricing/payment tests without payment or publication.
 
 # Locked Legend reels
 
