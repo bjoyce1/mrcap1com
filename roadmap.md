@@ -1,5 +1,11 @@
 # Identity connection
 
+# Login repair and mobile update
+
+- [ ] Diagnose login persistence and invalid-credential failures without changing account passwords.
+- [ ] Enable and verify Google sign-in using existing account profiles.
+- [ ] Verify refreshed signed-in access and publish the corrected mobile update.
+
 # SPC Legends artist win music
 
 - [x] Add the supplied Mr. CAP song and artist-specific selection for vertical, matching-line and artist-led wins, retaining tier fallback and the 15-second cue.
