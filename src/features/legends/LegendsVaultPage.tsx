@@ -5,7 +5,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { symbolUrl } from "./motion";
 import VaultCheckout from "./VaultCheckout";
-import { reelOdds } from "../../../supabase/functions/_shared/legends/reel-access";
 import { VAULT, isOwned, loadVault, readLook, redeem, saveLook, vaultSongUrl, type Look, type VaultItem, type VaultState } from "./vault";
 
 const fmt = (n: number) => n.toLocaleString();
@@ -29,7 +28,6 @@ export default function LegendsVaultPage() {
   const audio = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState<string | null>(null);
   const [checkout, setCheckout] = useState<VaultItem | null>(null);
-  const odds = state ? reelOdds(state) : [];
 
   useEffect(() => { if (user) loadVault(user.id).then(setState).catch(() => setNote(MSG.failed)); }, [user]);
   useEffect(() => () => audio.current?.pause(), []);
@@ -71,7 +69,7 @@ export default function LegendsVaultPage() {
           <h1 className="font-serif text-4xl text-foreground md:text-5xl">The Vault</h1>
           <Button asChild variant="secondary"><Link to="/legends/storefront">Browse the storefront</Link></Button>
           <Button asChild variant="link"><Link to="/legends/spend">Balance and purchase history</Link></Button>
-          <p className="max-w-2xl text-muted-foreground">Legends, skins and titles are $0.99 USD each. Mr. CAP is your starter. Only owned Legends appear on account reels; buying one changes symbol odds. Song unlocks use earned coins. Purchases never lower your XP or rank. Virtual items and coins cannot be exchanged for cash.</p>
+          <p className="max-w-2xl text-muted-foreground">Legends, skins and titles are $0.99 USD each. Mr. CAP is your starter card, and every Legend is on the reels for every player. Buying a Legend adds its card to your collection and never changes the odds. Song unlocks use earned coins. Purchases never lower your XP or rank. Virtual items and coins cannot be exchanged for cash.</p>
         </header>
 
         {!loading && !user ? (
@@ -101,7 +99,6 @@ export default function LegendsVaultPage() {
                           <h3 className="font-serif text-lg text-foreground">{item.name}</h3>
                         </div>
                         <p className="mt-2 flex-1 text-sm text-muted-foreground">{item.detail}</p>
-                        {item.artist && state && <p className="mt-2 text-sm text-primary">{owned ? `Reel eligible · ${((odds.find((entry) => entry.id === item.artist)?.probability ?? 0) * 100).toFixed(2)}% per position` : "Locked · 0% on account reels"}</p>}
                         <div className="mt-4 flex items-center justify-between gap-3">
                           <span className="tabular-nums text-primary">{item.priceCents !== undefined ? `$${(item.priceCents / 100).toFixed(2)} USD` : `${fmt(item.cost)} coins`}</span>
                           {!owned ? (
@@ -111,7 +108,7 @@ export default function LegendsVaultPage() {
                           ) : item.kind === "song" ? (
                             <Button size="sm" variant="secondary" onClick={() => play(item)}>{playing === item.id ? "Stop" : "Play"}</Button>
                           ) : item.kind === "legend" ? (
-                            <span className="text-sm text-muted-foreground">Reel unlocked</span>
+                            <span className="text-sm text-muted-foreground">In your collection</span>
                           ) : (
                             <Button size="sm" variant={equipped ? "default" : "secondary"} aria-pressed={equipped} onClick={() => equip(item)}>{equipped ? "Equipped" : "Equip"}</Button>
                           )}

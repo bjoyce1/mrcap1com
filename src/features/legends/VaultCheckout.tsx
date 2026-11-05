@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -90,6 +91,7 @@ export default function VaultCheckout({ item, userId, onPaid, onClose }: { item:
     <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="font-serif text-2xl">{item.name} · $0.99</h2><Button variant="secondary" disabled={busy} onClick={onClose}>Close</Button></div>
     <p role="status" className="text-sm text-muted-foreground">{message}</p>
     <div ref={container} className="max-w-sm min-h-24" />
+    <p className="text-xs text-muted-foreground">Virtual item with no cash value. Sales are final except where the law requires a refund. <Link to="/legends/terms" className="text-primary hover:underline">Purchase terms</Link></p>
     {pending && <Button variant="secondary" disabled={busy} onClick={() => confirm(pending)}>{busy ? "Confirming..." : "Retry payment confirmation"}</Button>}
   </section>;
 }

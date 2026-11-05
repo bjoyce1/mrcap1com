@@ -71,7 +71,7 @@ const LegendsGame = memo(function LegendsGame() {
         </div>
         <p className="panel-note" data-lg="balance-summary" aria-live="polite" />
         <Link to="/auth" state={{ returnTo: "/legends" }} data-lg="signin" className="signin-cta" hidden>SIGN IN FOR {GAME_CONFIG.welcomeSpins} FREE SPINS</Link>
-        <nav className="reward-links" aria-label="Rewards"><Link to="/legends/vault">✦ COIN VAULT</Link><Link to="/legends/rewards">XP PAYOUTS</Link></nav>
+        <nav className="reward-links" aria-label="Rewards"><Link to="/legends/vault">✦ COIN VAULT</Link><Link to="/legends/rewards">XP PAYOUTS</Link><Link to="/legends/terms">TERMS</Link></nav>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
         <WinningLines />
         <button type="button" className="buy-button" data-lg="shop-open" data-state="idle" aria-expanded="false" aria-controls="lg-shop" hidden>
@@ -95,7 +95,7 @@ const LegendsGame = memo(function LegendsGame() {
            </button>
           ))}
          </div>
-         <p>Paid spins never expire and are used after your free spins. Up to ${DAILY_SPEND_CAP_CENTS / 100} of packs a day.</p>
+         <p>Paid spins never expire and are used after your free spins. Up to ${DAILY_SPEND_CAP_CENTS / 100} of packs a day. <Link to="/legends/terms">Purchase terms</Link>.</p>
          <label className="shop-age"><input type="checkbox" data-lg="shop-age" /> I am 18 or older</label>
          <div className="shop-checkout">
           <div className="lg-label">SECURE CHECKOUT</div>

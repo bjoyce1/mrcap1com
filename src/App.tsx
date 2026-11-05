@@ -76,6 +76,7 @@ const LegendsPage = lazy(() => import("./features/legends/LegendsPage"));
 const LegendsRewardsPage = lazy(() => import("./features/legends/LegendsRewardsPage"));
 const LegendsVaultPage = lazy(() => import("./features/legends/LegendsVaultPage"));
 const LegendsStorefrontPage = lazy(() => import("./features/legends/LegendsStorefrontPage"));
+const LegendsTermsPage = lazy(() => import("./features/legends/LegendsTermsPage"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -187,6 +188,7 @@ function AppRoutes() {
             <Route path="/legends/vault" element={<PageTransition><LegendsVaultPage /></PageTransition>} />
             <Route path="/legends/storefront" element={<PageTransition><LegendsStorefrontPage /></PageTransition>} />
             <Route path="/legends/spend" element={<PageTransition><LegendsStorefrontPage spend /></PageTransition>} />
+            <Route path="/legends/terms" element={<PageTransition><LegendsTermsPage /></PageTransition>} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />

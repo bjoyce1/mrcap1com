@@ -1,23 +1,12 @@
-import { ARTISTS, SYMBOL_WEIGHTS } from "./config.ts";
+import { ARTISTS } from "./config.ts";
 
-// Default account starter until the owner supplies a different starting roster.
+// Owner decision 2026-11-05: every Legend is on the reels for every player, signed in or not.
+// Owning a Legend (hit on the reels or bought in the Vault) adds its card to your collection; it never changes the odds.
 export const STARTER_LEGENDS: readonly string[] = Object.freeze(["mr-cap"]);
-export type ReelOwnership = { collection?: readonly string[]; unlocks?: readonly string[] };
+export type LegendOwnership = { collection?: readonly string[]; unlocks?: readonly string[] };
 
-export function eligibleLegends(ownership: ReelOwnership): string[] {
+/** Legends this account owns: the starter, ones found on the reels, and Vault unlocks, in roster order. */
+export function ownedLegends(ownership: LegendOwnership): string[] {
   const owned = new Set([...STARTER_LEGENDS, ...(ownership.collection ?? []), ...(ownership.unlocks ?? []).filter((id: string) => id.startsWith("legend-")).map((id: string) => id.slice(7))]);
   return ARTISTS.filter((artist: { id: string }) => owned.has(artist.id)).map((artist: { id: string }) => artist.id);
-}
-
-/** Omitted access means the unchanged full-roster guest demo. */
-export function reelWeights(allowedArtists?: readonly string[]): [string, number][] {
-  const artistIds = new Set(ARTISTS.map((artist: { id: string }) => artist.id));
-  const allowed = allowedArtists === undefined ? null : new Set(allowedArtists);
-  return Object.entries(SYMBOL_WEIGHTS).filter(([id]: [string, number]) => !artistIds.has(id) || allowed === null || allowed.has(id));
-}
-
-export function reelOdds(ownership: ReelOwnership): { id: string; probability: number }[] {
-  const weights = reelWeights(eligibleLegends(ownership));
-  const total = weights.reduce((sum: number, [, weight]: [string, number]) => sum + weight, 0);
-  return weights.map(([id, weight]: [string, number]) => ({ id, probability: weight / total }));
 }

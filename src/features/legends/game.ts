@@ -84,7 +84,7 @@ function renderCollection(){
   const count=ARTISTS.length;
   $('collection-count').textContent=`${ids.size} / ${count}`;$('collected').textContent=`${ids.size} / ${count}`;$('found').textContent=`${ids.size}/${count}`;
   $('completion').textContent=`${Math.round(ids.size/count*100)}%`;$('collection-progress').style.width=`${ids.size/count*100}%`;
-  $('collection-note').textContent=ids.size===count?'Complete! Every Legend unlocked.':userId?'Only unlocked Legends appear on account reels. Visit the Vault to add Legends.':'Guest demo uses the full Legend roster.';
+  $('collection-note').textContent=ids.size===count?'Complete! Every Legend unlocked.':'Collect every Legend as they hit your reels, or add one from the Vault.';
 }
 /** Total multiplier from Double and Triple Bonus wins (1 when none landed). */
 const multiplierOf=(wins:{type:string;multiplier?:number}[])=>wins.filter(w=>w.type==='multiplier').reduce((m,w)=>m*(w.multiplier??1),1);
@@ -335,7 +335,7 @@ async function loadAccount(nextUser:string|null){
     const [profile,recent,sweptIds]=await Promise.all([loadProfile(nextUser),loadHistory(),loadSweeps().catch(()=>[] as string[])]);
     if(unmounted||userId!==nextUser||revision!==accountRevision)return;
     xp=profile.xp;best=profile.best;spinsTaken=profile.totalSpins;collection=profile.collection;badges=profile.badges;balance=profile.balance;history=recent;swept=new Set(sweptIds);
-    if(!busy){activeBoard=profile.lastBoard??createBoard(undefined,collection);renderBoard($('reels'),activeBoard);}
+    if(!busy){activeBoard=profile.lastBoard??createBoard();renderBoard($('reels'),activeBoard);}
     setResult('THE SOUTH SIDE IS CALLING.',totalSpins(balance)?'Press SPIN THE MIX to reveal your next lineup.':`You are out of spins. Grab a spin pack (25 for $1 and up) or come back tomorrow for ${GAME_CONFIG.dailySpins} free spins.`,'READY TO ROLL');
     if(!totalSpins(balance))openShop();
     if(pendingOrder()){await openShop();$('shop-retry').hidden=false;}

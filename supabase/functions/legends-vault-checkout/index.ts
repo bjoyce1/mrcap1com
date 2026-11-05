@@ -1,7 +1,7 @@
 import { admin, corsHeaders, json, requireUser } from "../_shared/legends/http.ts";
 import { vaultItem } from "../_shared/legends/vault.ts";
 import { getPaypalAccessToken, paypalBaseUrl } from "../_shared/paypal.ts";
-import { eligibleLegends } from "../_shared/legends/reel-access.ts";
+import { ownedLegends } from "../_shared/legends/reel-access.ts";
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -17,7 +17,7 @@ Deno.serve(async (req: Request) => {
   try {
     const { data: player, error: playerError } = await db.from("legends_players").select("unlocks, collection").eq("user_id", user).maybeSingle();
     if (playerError) throw playerError;
-    if (player?.unlocks.includes(item.id) || (item.artist && eligibleLegends(player ?? {}).includes(item.artist))) return json({ error: "Already owned" }, 409);
+    if (player?.unlocks.includes(item.id) || (item.artist && ownedLegends(player ?? {}).includes(item.artist))) return json({ error: "Already owned" }, 409);
     const { data: pending, error: pendingError } = await db.from("legends_vault_purchases").select("id, status, paypal_order_id").eq("user_id", user).eq("item_id", item.id).in("status", ["creating", "created", "paid"]).maybeSingle();
     if (pendingError) throw pendingError;
     if (pending?.status === "created" && pending.paypal_order_id) return json({ orderID: pending.paypal_order_id });

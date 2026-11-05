@@ -595,6 +595,18 @@ export const ROUTES: SeoEntry[] = [
     links: [L.music],
   }),
 
+  route({
+    path: "/legends/terms",
+    title: "SPC Legends Terms | Spins, Packs and Vault Items",
+    description: "Plain terms for SPC Legends: free daily spins, spin packs and Vault items are virtual with no cash value, a daily purchase limit, and how refunds work.",
+    h1: "SPC Legends Terms",
+    summary: [
+      "SPC Legends: Spin the Mix is free to play, with 50 free spins to start and 20 free spins every Houston day. Spin packs and Vault items are optional virtual purchases through PayPal.",
+      "Spins, XP, coins, Legends, skins, titles and songs have no cash value and can't be exchanged for money or prizes. Spin packs are limited to $100 a day, and sales are final except where the law requires a refund.",
+    ],
+    links: [L.music],
+  }),
+
   admin("/auth", "Admin Login | Mr. CAP"),
   admin("/admin", "Admin | Mr. CAP"),
   admin("/admin/library", "Admin Library | Mr. CAP"),

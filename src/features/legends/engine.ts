@@ -1,6 +1,5 @@
 // Ported from the SPC Legends source package (src/game/engine.mjs). Pure: no DOM, no storage.
 import {ARTISTS, MUSIC, HOUSTON_HOODS, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE, MULTIPLIERS} from './config';
-import { reelWeights } from '../../../supabase/functions/_shared/legends/reel-access';
 const artistIds=new Set(ARTISTS.map(a=>a.id));
 const musicIds=new Set(MUSIC.map(a=>a.id));
 const hoodIds=new Set(HOUSTON_HOODS.map(a=>a.id));
@@ -38,14 +37,14 @@ export function secureRandomInt(n){
   do{globalThis.crypto.getRandomValues(arr);}while(arr[0]>=limit);
   return arr[0]%n;
 }
-export function weightedSymbol(randomInt=secureRandomInt,allowedArtists?: readonly string[]){
-  const entries=reelWeights(allowedArtists),total=entries.reduce((acc,[,w])=>acc+w,0);
+export function weightedSymbol(randomInt=secureRandomInt){
+  const entries=Object.entries(SYMBOL_WEIGHTS),total=entries.reduce((acc,[,w])=>acc+w,0);
   let choice=randomInt(total);
   for(const [id,weight] of entries){choice-=weight;if(choice<0)return id;}
   throw new Error('Invalid random symbol');
 }
-export function createBoard(randomInt=secureRandomInt,allowedArtists?: readonly string[]){
-  return Array.from({length:GAME_CONFIG.reels},()=>Array.from({length:GAME_CONFIG.rows},()=>weightedSymbol(randomInt,allowedArtists)));
+export function createBoard(randomInt=secureRandomInt){
+  return Array.from({length:GAME_CONFIG.reels},()=>Array.from({length:GAME_CONFIG.rows},()=>weightedSymbol(randomInt)));
 }
 export function validateBoard(board){
   return Array.isArray(board)&&board.length===6&&board.every(col=>Array.isArray(col)&&col.length===3&&col.every(id=>!!SYMBOL_MAP[id]));

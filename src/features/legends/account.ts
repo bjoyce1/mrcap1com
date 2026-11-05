@@ -2,7 +2,7 @@
 // Every outcome and balance comes from the server; the browser only animates what it is told.
 import { supabase } from "@/integrations/supabase/client";
 import { balanceFromRow, type Balance, type PlayerRow } from "./balance";
-import { eligibleLegends } from "../../../supabase/functions/_shared/legends/reel-access";
+import { ownedLegends } from "../../../supabase/functions/_shared/legends/reel-access";
 
 export type Profile = { xp: number; best: number; totalSpins: number; collection: string[]; badges: string[]; lastBoard: string[][] | null; balance: Balance };
 export type HistoryItem = { xp: number; wins: { type: string; count?: number; symbol?: string | null; multiplier?: number; wildMultiplier?: number }[] };
@@ -34,7 +34,7 @@ export async function loadProfile(userId: string): Promise<Profile> {
     xp: Number(data?.xp ?? 0),
     best: data?.best ?? 0,
     totalSpins: data?.total_spins ?? 0,
-    collection: eligibleLegends(data ?? {}),
+    collection: ownedLegends(data ?? {}),
     badges: data?.badges ?? [],
     lastBoard: (data?.last_board as string[][] | null) ?? null,
     balance: balanceFromRow(data as PlayerRow),

@@ -69,7 +69,7 @@ export default function LegendsStorefrontPage({ spend = false }: { spend?: boole
         })}
       </div>
       {!items.length && <div className="py-16 text-center"><p className="text-muted-foreground">No items match your search.</p><Button variant="link" onClick={() => { setQuery(""); setCategory("all"); }}>Clear filters</Button></div>}
-      <p className="text-xs text-muted-foreground mt-10 max-w-3xl">Mr. CAP is the starter Legend. Owned Legends join your account reel pool and change symbol odds. Skins and titles are cosmetic. Purchases never spend XP or coins. Virtual items have no cash redemption value.</p>
+      <p className="text-xs text-muted-foreground mt-10 max-w-3xl">Mr. CAP is the starter Legend. Every Legend is on the reels for every player; buying one adds its card to your collection and never changes the odds. Skins and titles are cosmetic. Purchases never spend XP or coins. Virtual items have no cash redemption value. <Link to="/legends/terms" className="text-primary hover:underline">Purchase terms</Link></p>
     </div>
   </main>;
 }
