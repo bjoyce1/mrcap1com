@@ -1,4 +1,4 @@
-// Vault: spend coins (earned XP minus spent) on Legends, skins, titles and songs. Accounts only.
+// Vault: cash purchases for Legends and cosmetics, coin redemption for songs. Accounts only.
 // Ownership lives on the server; equipped looks are cosmetic and never touch spins or scoring.
 import { supabase } from "@/integrations/supabase/client";
 import { VAULT, type VaultItem } from "../../../supabase/functions/_shared/legends/vault.ts";

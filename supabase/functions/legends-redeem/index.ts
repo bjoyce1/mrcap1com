@@ -15,6 +15,7 @@ Deno.serve(async (req: Request) => {
   if (!parsed.success) return json({ error: "itemId is required" }, 400);
   const item = vaultItem(parsed.data.itemId);
   if (!item) return json({ error: "unknown_item" }, 404);
+  if (item.priceCents !== undefined) return json({ error: "PayPal payment required" }, 400);
 
   try {
     // Price comes from the server catalog; the browser only names the item.

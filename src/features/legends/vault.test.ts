@@ -7,16 +7,29 @@ describe("Legends Vault", () => {
     expect(coinsFor(5000, 2000)).toBe(3000);
     expect(coinsFor(100, 500)).toBe(0);
   });
-  it("offers every Legend at 2,000 coins", () => {
+  it("offers every Legend at $0.99 USD", () => {
     const legends = VAULT.filter((i) => i.kind === "legend");
     expect(legends.map((i) => i.artist).sort()).toEqual(ARTISTS.map((a) => a.id).sort());
-    expect(legends.every((i) => i.cost === 2000)).toBe(true);
+    expect(legends.map((i) => i.priceCents)).toEqual(ARTISTS.map(() => 99));
+  });
+  it("prices every skin at $0.99 USD", () => {
+    expect(VAULT.filter((i) => i.kind === "skin").map((i) => i.priceCents)).toEqual([99, 99, 99]);
+  });
+  it("prices every title at $0.99 USD", () => {
+    expect(VAULT.filter((i) => i.kind === "title").map((i) => i.priceCents)).toEqual([99, 99, 99, 99]);
+  });
+  it("keeps songs purchasable with earned coins", () => {
+    for (const item of VAULT.filter((i) => i.kind === "song")) {
+      expect(item.priceCents).toBeUndefined();
+      expect(item.cost).toBe(1500);
+    }
   });
   it("never sells spins", () => {
     expect(VAULT.some((i) => /spin/i.test(i.id))).toBe(false);
   });
   it("treats a Legend already found on the reels as owned", () => {
-    const item = VAULT.find((i) => i.artist === ARTISTS[0].id)!;
+    const item = VAULT.find((i) => i.artist === ARTISTS[0].id);
+    if (!item) throw new Error("Missing Legend");
     expect(isOwned(item, { unlocks: [], collection: [ARTISTS[0].id] })).toBe(true);
     expect(isOwned(item, { unlocks: [], collection: [] })).toBe(false);
   });
