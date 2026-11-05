@@ -70,6 +70,7 @@ export default function LegendsVaultPage() {
           <Link to="/legends" className="text-sm text-muted-foreground hover:text-primary">Back to the game</Link>
           <h1 className="font-serif text-4xl text-foreground md:text-5xl">The Vault</h1>
           <Button asChild variant="secondary"><Link to="/legends/storefront">Browse the storefront</Link></Button>
+          <Button asChild variant="link"><Link to="/legends/spend">Balance and purchase history</Link></Button>
           <p className="max-w-2xl text-muted-foreground">Legends, skins and titles are $0.99 USD each. Mr. CAP is your starter. Only owned Legends appear on account reels; buying one changes symbol odds. Song unlocks use earned coins. Purchases never lower your XP or rank. Virtual items and coins cannot be exchanged for cash.</p>
         </header>
 
