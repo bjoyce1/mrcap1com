@@ -1,5 +1,12 @@
 # Identity connection
 
+# Locked Legend reels
+
+- [ ] Filter account outcomes to server-owned Legends, retaining existing collections and using Mr. CAP as the default starter; keep guest demo unchanged.
+- [ ] Show unlocked and locked reel eligibility and exact symbol odds in the Vault.
+- [ ] Verify exclusion, purchase eligibility, engine parity and signed-in UI without charging or publishing.
+- [ ] Replace prices when supplied. Blocker: no replacement prices provided; retain the previously approved $0.99.
+
 # Vault real-money prices
 
 - [x] Set Legends, skins and titles to $0.99 USD each; keep songs on coins and preserve existing ownership and XP.
