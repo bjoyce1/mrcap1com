@@ -1,0 +1,2 @@
+export type SpendPurchase = { id: string; item_id: string; amount_cents: number; currency: string; status: string; created_at: string; paid_at: string | null; paypal_order_id: string | null };
+export const confirmedSpendCents = (rows: readonly SpendPurchase[]) => rows.reduce((total, row) => total + (row.status === "paid" && row.currency === "USD" ? row.amount_cents : 0), 0);

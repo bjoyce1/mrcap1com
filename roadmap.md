@@ -1,5 +1,10 @@
 # Identity connection
 
+# Legends spend page
+
+- [x] Reuse real-money catalog and checkout with current coins, XP, spins, confirmed spending and own-account purchase history.
+- [x] Verify signed-in history, pending checkout, refresh and phone layout without payment or publication; 14 tests passed, PayPal and card controls loaded, no page errors or phone overflow.
+
 # Legends storefront
 
 - [x] Add a public catalog for all 18 Legends, skins and titles with prices, descriptions, search and category filters, linked from the Vault.

@@ -186,6 +186,7 @@ function AppRoutes() {
             <Route path="/legends/rewards" element={<PageTransition><LegendsRewardsPage /></PageTransition>} />
             <Route path="/legends/vault" element={<PageTransition><LegendsVaultPage /></PageTransition>} />
             <Route path="/legends/storefront" element={<PageTransition><LegendsStorefrontPage /></PageTransition>} />
+            <Route path="/legends/spend" element={<PageTransition><LegendsStorefrontPage spend /></PageTransition>} />
             <Route path="/music/:trackSlug" element={<PageTransition><TrackPage /></PageTransition>} />
             <Route path="/albums/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
             <Route path="/album/:albumSlug" element={<PageTransition><AlbumPage /></PageTransition>} />
