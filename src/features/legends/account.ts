@@ -2,6 +2,7 @@
 // Every outcome and balance comes from the server; the browser only animates what it is told.
 import { supabase } from "@/integrations/supabase/client";
 import { balanceFromRow, type Balance, type PlayerRow } from "./balance";
+import { eligibleLegends } from "../../../supabase/functions/_shared/legends/reel-access";
 
 export type Profile = { xp: number; best: number; totalSpins: number; collection: string[]; badges: string[]; lastBoard: string[][] | null; balance: Balance };
 export type HistoryItem = { xp: number; wins: { type: string; count?: number; symbol?: string | null; multiplier?: number; wildMultiplier?: number }[] };
@@ -25,7 +26,7 @@ async function failure(error: unknown): Promise<{ status: number; body: Record<s
 export async function loadProfile(userId: string): Promise<Profile> {
   const { data, error } = await supabase
     .from("legends_players")
-    .select("welcome_left, paid_spins, spins_today, day, xp, best, total_spins, collection, badges, last_board")
+    .select("welcome_left, paid_spins, spins_today, day, xp, best, total_spins, collection, unlocks, badges, last_board")
     .eq("user_id", userId)
     .maybeSingle();
   if (error) throw error;
@@ -33,7 +34,7 @@ export async function loadProfile(userId: string): Promise<Profile> {
     xp: Number(data?.xp ?? 0),
     best: data?.best ?? 0,
     totalSpins: data?.total_spins ?? 0,
-    collection: data?.collection ?? [],
+    collection: eligibleLegends(data ?? {}),
     badges: data?.badges ?? [],
     lastBoard: (data?.last_board as string[][] | null) ?? null,
     balance: balanceFromRow(data as PlayerRow),

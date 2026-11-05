@@ -20,7 +20,7 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(
 export const VAULT: readonly VaultItem[] = Object.freeze([
   ...ARTISTS.map((a: { id: string; name: string }) => ({
     id: `legend-${a.id}`, kind: "legend" as const, name: a.name, cost: LEGEND_UNLOCK_COST, priceCents: VAULT_PRICE_CENTS, artist: a.id,
-    detail: "Adds this Legend to your collection without waiting for a hit.",
+    detail: "Unlocks this Legend for your account reels. All eligible Legends share equal symbol weight; adding one changes the odds.",
   })),
   { id: "skin-purple-lightning", kind: "skin", name: "Purple Lightning", cost: 5000, priceCents: VAULT_PRICE_CENTS, detail: "Violet storm glow around the cabinet." },
   { id: "skin-diamond-ice", kind: "skin", name: "Diamond Ice", cost: 7500, priceCents: VAULT_PRICE_CENTS, detail: "Frosted cyan cabinet with diamond sparkle." },
