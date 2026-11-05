@@ -1,6 +1,6 @@
 // @ts-nocheck
 // Ported from the SPC Legends source package (src/game/engine.mjs). Pure: no DOM, no storage.
-import {ARTISTS, MUSIC, HOUSTON_HOODS, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE, MULTIPLIERS} from './config.ts';
+import {ARTISTS, MUSIC, HOUSTON_HOODS, SYMBOL_MAP, SYMBOL_WEIGHTS, GAME_CONFIG, PAYLINES, XP_TABLE, MULTIPLIERS, GUARDIAN, LEGACY_BLESSING} from './config.ts';
 const artistIds=new Set(ARTISTS.map(a=>a.id));
 const musicIds=new Set(MUSIC.map(a=>a.id));
 const hoodIds=new Set(HOUSTON_HOODS.map(a=>a.id));
@@ -38,14 +38,17 @@ export function secureRandomInt(n){
   do{globalThis.crypto.getRandomValues(arr);}while(arr[0]>=limit);
   return arr[0]%n;
 }
-export function weightedSymbol(randomInt=secureRandomInt){
-  const entries=Object.entries(SYMBOL_WEIGHTS),total=entries.reduce((acc,[,w])=>acc+w,0);
+/** guardian: A.C. Chill joins the reels (Legacy Blessing switched on). His tickets go last, so every other symbol keeps its range. */
+export function weightedSymbol(randomInt=secureRandomInt,{guardian=false}={}){
+  const entries=Object.entries(SYMBOL_WEIGHTS);
+  if(guardian)entries.push([GUARDIAN.id,LEGACY_BLESSING.weight]);
+  const total=entries.reduce((acc,[,w])=>acc+w,0);
   let choice=randomInt(total);
   for(const [id,weight] of entries){choice-=weight;if(choice<0)return id;}
   throw new Error('Invalid random symbol');
 }
-export function createBoard(randomInt=secureRandomInt){
-  return Array.from({length:GAME_CONFIG.reels},()=>Array.from({length:GAME_CONFIG.rows},()=>weightedSymbol(randomInt)));
+export function createBoard(randomInt=secureRandomInt,options={}){
+  return Array.from({length:GAME_CONFIG.reels},()=>Array.from({length:GAME_CONFIG.rows},()=>weightedSymbol(randomInt,options)));
 }
 export function validateBoard(board){
   return Array.isArray(board)&&board.length===6&&board.every(col=>Array.isArray(col)&&col.length===3&&col.every(id=>!!SYMBOL_MAP[id]));
@@ -66,6 +69,29 @@ export function lineMatch(line){
   return doubleWilds>0?{symbol:real,count,wildMultiplier:2**doubleWilds}:{symbol:real,count};
 }
 function cellKey(col,row){return `${col}:${row}`;}
+/** A.C. Chill's Legacy Blessing for a finished board and its wins, or null. It only reads them, never changes them.
+ * Triggers once per spin when A.C. Chill landed and the board already won with Legends: an artist line or vertical
+ * stack, SPC Unity or a Legend Sweep (Supreme alone does not count). His own cell is the first one, reel by reel.
+ * Blesses up to three different Legend cells, chosen in this fixed order: the cells of the strongest artist wins
+ * (highest XP first, each win's cells left to right), then SPC Unity's cells, then any other Legend on the board,
+ * reel by reel and top to bottom. Wilds, bonus symbols, music, hoods and A.C. Chill himself are never blessed. */
+export function legacyBlessing(board,wins){
+  let guardian=null;
+  board.forEach((col,x)=>col.forEach((id,y)=>{if(!guardian&&id===GUARDIAN.id)guardian=cellKey(x,y);}));
+  if(!guardian)return null;
+  const qualifying=wins.filter(w=>LEGACY_BLESSING.qualifying.includes(w.type)&&(w.type==='unity'||artistIds.has(w.symbol)));
+  if(!qualifying.length)return null;
+  const legendAt=(key)=>{const [x,y]=key.split(':').map(Number);return artistIds.has(board[x]?.[y]);};
+  const ranked=[...qualifying.filter(w=>w.type!=='unity').sort((a,b)=>b.xp-a.xp),...qualifying.filter(w=>w.type==='unity')];
+  const everyLegend=[];board.forEach((col,x)=>col.forEach((id,y)=>{if(artistIds.has(id))everyLegend.push(cellKey(x,y));}));
+  const cells=[];
+  for(const key of [...ranked.flatMap(w=>w.cells),...everyLegend]){
+    if(cells.length>=LEGACY_BLESSING.maxBlessed)break;
+    if(legendAt(key)&&!cells.includes(key))cells.push(key);
+  }
+  const xp=Math.min(LEGACY_BLESSING.maxXp,LEGACY_BLESSING.activationXp+LEGACY_BLESSING.perBlessedXp*cells.length);
+  return {type:'legacy_blessing',symbol:GUARDIAN.id,guardian,count:cells.length,xp,cells};
+}
 /** Every connected route across the six reels (239): one row per reel, each step at most one row. Straight rows first. */
 export const UNITY_ROUTES:readonly (readonly number[])[]=(()=>{
   const out:number[][]=[];
@@ -139,8 +165,12 @@ export function evaluateBoard(board){
     // Each multiplier win reports the extra XP it added, so history and stored wins add up.
     let running=baseXp;for(const w of wins)if(w.type==='multiplier'){w.xp=running*(w.multiplier-1);running*=w.multiplier;}
   }
+  // Line, stack and multiplier totals are final here; the Legacy Blessing adds its own XP on top, unmultiplied.
+  const highest=Math.max(0,...wins.filter(w=>w.type!=='multiplier').map(w=>w.xp))*multiplier;
+  const blessing=legacyBlessing(board,wins);
+  if(blessing){wins.push(blessing);xp+=blessing.xp;hits.add(blessing.guardian);}
   const found=[...new Set(board.flat().filter(id=>artistIds.has(id)))];
-  return {xp,baseXp,multiplier,wins,hitCells:[...hits],found,highest:Math.max(0,...wins.filter(w=>w.type!=='multiplier').map(w=>w.xp))*multiplier};
+  return {xp,baseXp,multiplier,wins,hitCells:[...hits],found,highest};
 }
 /** Presentation hint only: reels that spin longer because exactly two 713 Bonus symbols already landed on earlier reels.
  * It reads a finished board and never changes the outcome or XP.

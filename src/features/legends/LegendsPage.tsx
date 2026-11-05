@@ -17,6 +17,7 @@ import "@fontsource/russo-one/400.css";
 import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
 import "./environment.css";
+import "./guardian.css";
 
 /**
  * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game with account spins and PayPal packs.
@@ -73,6 +74,7 @@ const LegendsGame = memo(function LegendsGame() {
         <Link to="/auth" state={{ returnTo: "/legends" }} data-lg="signin" className="signin-cta" hidden>SIGN IN FOR {GAME_CONFIG.welcomeSpins} FREE SPINS</Link>
         <nav className="reward-links" aria-label="Rewards"><Link to="/legends/vault">✦ COIN VAULT</Link><Link to="/legends/rewards">XP PAYOUTS</Link><Link to="/legends/terms">TERMS</Link></nav>
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
+        <button type="button" className="blessing-replay" data-lg="blessing-replay" hidden>Replay the Legacy Blessing</button>
         <WinningLines />
         <button type="button" className="buy-button" data-lg="shop-open" data-state="idle" aria-expanded="false" aria-controls="lg-shop" hidden>
          <span className="buy-sweep" aria-hidden="true" />

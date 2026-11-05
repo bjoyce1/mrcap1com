@@ -39,10 +39,18 @@ export const MULTIPLIERS = Object.freeze({double:2,triple:3});
 // Houston hood symbols land on the reels, sharing the space music had (owner decision 2026-11-04: music 9 -> 6,
 // hoods 4), so Legends, Supreme and Unity land as often as before. Appended last so the
 // weighted pick keeps every earlier symbol's range.
+// A.C. Chill, Legendary Guardian (owner request 2026-11-05), in memory of an original South Park Coalition member.
+// He is not an artist and not a Wild: he never joins a line, a vertical stack, SPC Unity, Supreme or a Sweep. He only
+// lands on reels where the Legacy Blessing is switched on (off in production until the owner approves these numbers).
+// When he lands on a board that already won with Legends, he blesses up to three of them for XP of his own.
+export const GUARDIAN=Object.freeze({id:'ac-chill',name:'A.C. Chill',color:'#ffd27a',short:'AC',category:'legendary_guardian'});
+// Provisional, owner to approve: weight is his share of reel tickets (the other symbols total 187). Blessing XP is paid
+// once by the server on top of the spin, after Double and Triple Bonus, which never multiply it.
+export const LEGACY_BLESSING=Object.freeze({weight:1,activationXp:150,perBlessedXp:75,maxBlessed:3,maxXp:375,qualifying:Object.freeze(['line','vertical','unity','sweep'])});
 export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL,...HOUSTON_HOODS];
 export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS];
-export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
-export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries(ALL_SHOWCASE_SYMBOLS.map(x=>[x.id,x])));
+export const SYMBOL_MAP = Object.freeze(Object.fromEntries([...SYMBOLS,GUARDIAN].map(x=>[x.id,x])));
+export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries([...ALL_SHOWCASE_SYMBOLS,GUARDIAN].map(x=>[x.id,x])));
 const SPECIAL_WEIGHTS={wild:2,'double-wild':1,bonus:3,double:2,triple:1};
 export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?6:HOUSTON_HOODS.some(h=>h.id===s.id)?4:SPECIAL_WEIGHTS[s.id]])));
 // welcomeSpins: one-time starter spins every player gets, used before the daily allowance.

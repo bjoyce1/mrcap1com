@@ -62,6 +62,7 @@ export const SYMBOL_LORE: Record<string, {role: string; hood: string; bio: strin
   'tape': {role:'Studio Artifact · 25–750 XP',hood:'H-Town Trunk Tape',bio:'Transparent purple-and-gold street cassette mixtape straight out the trunk.'},
   'houston': {role:'Studio Artifact · 25–750 XP',hood:'Downtown 713',bio:'Downtown Houston skyline bathed in purple sunset neon and golden highway lights.'},
   'legend': {role:'Studio Artifact · 25–750 XP',hood:'Coalition Royalty',bio:'Diamond-encrusted 24K gold championship crown honoring Houston’s lyrical pioneers.'},
+  'ac-chill': {role:'Legendary Guardian · Forever SPC',hood:'South Park Coalition',bio:'Original member of the South Park Coalition, honored as the guardian of the SPC legacy. When he lands on a winning board he takes flight and blesses up to three SPC Legends with gold for bonus XP.'},
   'speakers': {role:'Studio Artifact · 25–750 XP',hood:'Custom Trunk Setup',bio:'Dual 15-inch gold-cone subwoofers built to rattle trunk lids down MLK Blvd.'}
 });
 // Double and Triple Bonus multiply a winning spin's XP; both on one board multiply by 6. They never pay on their own.
@@ -69,10 +70,18 @@ export const MULTIPLIERS = Object.freeze({double:2,triple:3});
 // Houston hood symbols land on the reels, sharing the space music had (owner decision 2026-11-04: music 9 -> 6,
 // hoods 4), so Legends, Supreme and Unity land as often as before. Appended last so the
 // weighted pick keeps every earlier symbol's range.
+// A.C. Chill, Legendary Guardian (owner request 2026-11-05), in memory of an original South Park Coalition member.
+// He is not an artist and not a Wild: he never joins a line, a vertical stack, SPC Unity, Supreme or a Sweep. He only
+// lands on reels where the Legacy Blessing is switched on (off in production until the owner approves these numbers).
+// When he lands on a board that already won with Legends, he blesses up to three of them for XP of his own.
+export const GUARDIAN=Object.freeze({id:'ac-chill',name:'A.C. Chill',color:'#ffd27a',short:'AC',category:'legendary_guardian'});
+// Provisional, owner to approve: weight is his share of reel tickets (the other symbols total 187). Blessing XP is paid
+// once by the server on top of the spin, after Double and Triple Bonus, which never multiply it.
+export const LEGACY_BLESSING=Object.freeze({weight:1,activationXp:150,perBlessedXp:75,maxBlessed:3,maxXp:375,qualifying:Object.freeze(['line','vertical','unity','sweep'])});
 export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL,...HOUSTON_HOODS];
 export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS];
-export const SYMBOL_MAP = Object.freeze(Object.fromEntries(SYMBOLS.map(x=>[x.id,x])));
-export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries(ALL_SHOWCASE_SYMBOLS.map(x=>[x.id,x])));
+export const SYMBOL_MAP = Object.freeze(Object.fromEntries([...SYMBOLS,GUARDIAN].map(x=>[x.id,x])));
+export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries([...ALL_SHOWCASE_SYMBOLS,GUARDIAN].map(x=>[x.id,x])));
 const SPECIAL_WEIGHTS={wild:2,'double-wild':1,bonus:3,double:2,triple:1};
 export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?6:HOUSTON_HOODS.some(h=>h.id===s.id)?4:SPECIAL_WEIGHTS[s.id]])));
 // Launch numbers (owner, 2026-11-04). welcomeSpins: one-time starter spins every account gets, used before the daily

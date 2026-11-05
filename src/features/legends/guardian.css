@@ -1,0 +1,94 @@
+/* A.C. Chill, Legendary Guardian: the Legacy Blessing show (guardian.ts). Gold, white and amber light over the board.
+   Only transforms and opacity move; drop shadows are desktop only. */
+.legends-world .guardian-marks{position:absolute;inset:0;pointer-events:none;z-index:8}
+.legends-world .guardian-stage{position:absolute;inset:0;pointer-events:none;z-index:12;font-family:var(--font-head)}
+
+/* The cabinet dims while he is out; his tile and the blessed Legends stay lit. */
+.legends-world .reels .symbol-tile{transition:filter .45s ease}
+.legends-world .reels.guardian-dim .symbol-tile{filter:brightness(.5) saturate(.8)}
+.legends-world .reels.guardian-dim .symbol-tile.legacy-blessed,.legends-world .reels.guardian-dim .symbol-tile.guardian-source{filter:none}
+.legends-world .symbol-tile.guardian-source{border-color:#fff1c2;box-shadow:inset 0 0 0 2px #fff1c2,inset 0 0 22px rgba(255,206,96,.95)}
+.legends-world .symbol-tile.guardian-source img{animation:guardian-source .7s ease-in-out infinite alternate}
+@keyframes guardian-source{from{filter:brightness(1)}to{filter:brightness(1.4) saturate(1.15)}}
+
+/* The flyer: path transform on .guardian-flyer, bob on .guardian-bob, arrival and touch dips on .guardian-rig. */
+.legends-world .guardian-flyer{position:absolute;left:0;top:0;width:var(--fw,160px);will-change:transform}
+.legends-world .guardian-bob{height:100%;animation:guardian-bob 1.5s ease-in-out infinite}
+.legends-world .guardian-rig{position:relative;width:100%;height:100%;opacity:0;transform-origin:50% 62%}
+.legends-world .guardian-rig>img,.legends-world .guardian-wing{position:absolute;inset:0;width:100%;height:100%}
+.legends-world .guardian-wing img{display:block;width:100%;height:100%;animation:guardian-flap-l .82s ease-in-out infinite}
+.legends-world .guardian-wing.right img{animation-name:guardian-flap-r}
+.legends-world .guardian-halo{position:absolute;left:45%;top:1%;width:40%;height:10%;transform:translate(-50%,-50%);border-radius:50%;border:max(2px,calc(var(--fw,160px)*.016)) solid #ffe28a;box-shadow:0 0 calc(var(--fw,160px)*.06) rgba(255,214,100,.95),inset 0 0 calc(var(--fw,160px)*.03) rgba(255,244,200,.85);animation:guardian-halo 1.8s ease-in-out infinite}
+.legends-world .guardian-stage.is-leaving .guardian-halo{animation:guardian-halo-flare .8s ease-out forwards}
+@keyframes guardian-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5%)}}
+/* Up is clockwise for the left wing (its tip is left of the shoulder) and anticlockwise for the right. */
+@keyframes guardian-flap-l{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(15deg)}}
+@keyframes guardian-flap-r{0%,100%{transform:rotate(7deg)}50%{transform:rotate(-15deg)}}
+@keyframes guardian-halo{0%,100%{transform:translate(-50%,-50%);opacity:.9}50%{transform:translate(-50%,-62%);opacity:1}}
+@keyframes guardian-halo-flare{to{transform:translate(-50%,-80%) scale(1.5);opacity:1}}
+@media (min-width:621px){.legends-world .guardian-flyer{filter:drop-shadow(0 8px 14px rgba(0,0,0,.5)) drop-shadow(0 0 12px rgba(255,205,110,.45))}}
+
+/* Particles */
+.legends-world .guardian-spark,.legends-world .guardian-dust,.legends-world .guardian-feather{position:absolute;pointer-events:none;transform:translate(-50%,-50%)}
+.legends-world .guardian-spark{width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,#ffd76a 45%,rgba(255,180,40,0) 72%)}
+.legends-world .guardian-dust{width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#fff6d6 0 20%,#f4c04e 50%,rgba(244,192,78,0) 75%)}
+.legends-world .guardian-feather{width:13px;height:5px;border-radius:60% 40% 60% 40%/70% 70% 30% 30%;background:linear-gradient(90deg,#fffdf6,#e8e2d4 70%,#c9bfae);box-shadow:0 0 4px rgba(255,236,190,.7)}
+.legends-world .guardian-feather.small{width:8px;height:3px}
+
+/* The golden touch: flash, then two rings. */
+.legends-world .guardian-touch{position:absolute;width:var(--cell);height:var(--cell);transform:translate(-50%,-50%)}
+.legends-world .guardian-touch i{position:absolute;inset:0;border-radius:50%}
+.legends-world .touch-flash{background:radial-gradient(circle,#fffbe9 0 18%,rgba(255,214,102,.85) 38%,rgba(255,190,60,0) 70%);animation:touch-flash .55s ease-out forwards}
+.legends-world .touch-wave{border:2px solid #ffd66b;box-shadow:0 0 10px rgba(255,210,100,.8);animation:touch-wave .85s cubic-bezier(.15,.7,.3,1) forwards}
+.legends-world .touch-wave.late{animation-delay:.14s;border-color:#fff1c2;opacity:0}
+@keyframes touch-flash{from{transform:scale(.2);opacity:1}to{transform:scale(1.5);opacity:0}}
+@keyframes touch-wave{from{transform:scale(.3);opacity:1}to{transform:scale(2.3);opacity:0}}
+
+/* legacy_blessed: the Legend keeps its own art under a gold frame, warm light and a passing sheen. */
+.legends-world .symbol-tile.legacy-blessed{border-color:#ffd66b}
+.legends-world .symbol-tile.legacy-blessed img{filter:sepia(.3) saturate(1.3) brightness(1.08) contrast(1.04)}
+.legends-world .blessed-gild{position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 0 0 2px #f6c453,inset 0 0 0 4px rgba(255,240,190,.6),inset 0 0 18px rgba(255,190,60,.65);
+  background:linear-gradient(115deg,transparent 32%,rgba(255,247,214,.6) 48%,transparent 62%) 0 0/260% 100% no-repeat;
+  animation:gild-sheen 1.5s ease-out both}
+@keyframes gild-sheen{from{background-position:130% 0;opacity:0}15%{opacity:1}to{background-position:-70% 0;opacity:1}}
+.legends-world .guardian-mark{position:absolute;width:var(--cell);height:var(--cell-h,var(--cell));transform:translate(-50%,-50%)}
+.legends-world .mark-halo{position:absolute;inset:-3px;border-radius:8px;box-shadow:0 0 0 2px rgba(255,226,140,.95),0 0 16px 3px rgba(255,196,70,.6);animation:mark-halo 1.6s ease-in-out infinite}
+.legends-world .mark-crown{position:absolute;left:50%;top:0;width:40%;transform:translate(-50%,-62%);animation:mark-crown .55s cubic-bezier(.2,1.5,.4,1) both}
+.legends-world .mark-crown svg{display:block;width:100%;height:auto}
+.legends-world .guardian-mark.quiet .mark-crown{animation:none}
+@keyframes mark-halo{0%,100%{opacity:.65}50%{opacity:1}}
+@keyframes mark-crown{from{transform:translate(-50%,-20%) scale(.2);opacity:0}to{transform:translate(-50%,-62%) scale(1);opacity:1}}
+
+/* Titles: brushed silver words over gold kickers, on a soft dark plate so they read over any art. */
+.legends-world .guardian-banner,.legends-world .guardian-result{position:absolute;left:50%;display:flex;flex-direction:column;align-items:center;text-align:center;white-space:nowrap;opacity:0;transform:translate(-50%,0) scale(.88);transition:opacity .35s ease,transform .5s cubic-bezier(.2,1.4,.4,1);padding:10px 26px;border-radius:999px;background:radial-gradient(ellipse at center,rgba(10,6,22,.86) 35%,rgba(10,6,22,0) 72%)}
+.legends-world .guardian-banner{bottom:6%}
+.legends-world .guardian-banner.tribute{bottom:7%}
+/* Low on the board: he hovers above the Legends he just blessed while the result shows. */
+.legends-world .guardian-result{bottom:5%;padding:14px 30px;border-radius:14px;background:linear-gradient(180deg,rgba(26,17,40,.94),rgba(12,8,22,.94));border:1px solid #d9a64b;box-shadow:inset 0 0 0 1px rgba(255,236,186,.25),0 0 24px rgba(255,190,70,.35)}
+.legends-world .guardian-banner small,.legends-world .guardian-result small{font-size:clamp(10px,1.6vw,14px);font-weight:800;letter-spacing:.26em;color:#f8cd7b}
+.legends-world .guardian-banner b,.legends-world .guardian-result b{font-size:clamp(26px,5.4vw,52px);font-weight:900;line-height:1;letter-spacing:.03em;
+  background:linear-gradient(180deg,#ffffff 0%,#eef1f7 36%,#9aa3b6 52%,#f5f7fb 68%,#c3c9d6 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px rgba(150,96,24,.55)}
+.legends-world .guardian-result b{font-size:clamp(18px,3.6vw,32px);margin-top:4px}
+.legends-world .guardian-result strong{font-size:clamp(22px,4.6vw,42px);font-weight:900;line-height:1.1;margin-top:4px;color:#ffd77e;text-shadow:0 0 14px rgba(255,190,70,.6)}
+@media (max-width:620px){.legends-world .guardian-result{padding:8px 16px;bottom:4%}.legends-world .guardian-result small{font-size:8px;letter-spacing:.18em}.legends-world .guardian-result b{font-size:15px}.legends-world .guardian-result strong{font-size:19px}.legends-world .guardian-banner{padding:6px 16px}.legends-world .guardian-banner b{font-size:24px}}
+.legends-world .guardian-stage.show-arrival .guardian-banner.arrival,
+.legends-world .guardian-stage.show-title .guardian-banner.title{opacity:1;transform:translate(-50%,0) scale(1)}
+.legends-world .guardian-stage.show-title .guardian-banner.arrival{opacity:0}
+.legends-world .guardian-stage.show-result .guardian-result,
+.legends-world .guardian-stage.show-tribute .guardian-banner.tribute{opacity:1;transform:translate(-50%,0) scale(1)}
+
+/* Reduced motion: his portrait, the gold, the result. No flight. */
+.legends-world .guardian-portrait{position:absolute;left:50%;top:24%;width:min(30%,140px);transform:translate(-50%,-50%);border-radius:10px;border:2px solid #f6c453;opacity:0}
+.legends-world .guardian-stage.is-simple .guardian-flyer{display:none}
+.legends-world .guardian-stage.is-simple .guardian-portrait{opacity:1}
+.legends-world .guardian-stage.is-simple .guardian-result{bottom:8%}
+.legends-world .guardian-stage.is-simple .guardian-result,.legends-world .reduce-motion .blessed-gild,.legends-world .reduce-motion .mark-crown,.legends-world .reduce-motion .mark-halo{transition:none;animation:none}
+@media (prefers-reduced-motion:reduce){.legends-world .blessed-gild,.legends-world .mark-crown,.legends-world .mark-halo,.legends-world .guardian-bob,.legends-world .guardian-wing img{animation:none}}
+
+/* Memorial card in the collection, and the replay button under the result. */
+.legends-world .collection-tile.memorial{box-shadow:0 0 0 1px #f6c453,0 0 12px rgba(255,200,90,.45)}
+.legends-world .collection-tile.memorial.locked img{filter:grayscale(1) brightness(.45)}
+.legends-world .blessing-replay{display:block;margin:8px auto 0;padding:7px 14px;border-radius:999px;border:1px solid #d9a64b;background:linear-gradient(180deg,#2a1b3c,#140d22);color:#f8cd7b;font:800 11px/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.legends-world .blessing-replay:hover{background:linear-gradient(180deg,#3a2650,#1c1230)}
+.legends-world .blessing-replay:focus-visible{outline:2px solid #ffd66b;outline-offset:2px}

@@ -16,8 +16,10 @@ Deno.serve(async (req: Request) => {
 
   try {
     // Board is generated and scored on the server with crypto randomness; every Legend is on the reels.
+    // A.C. Chill (Legacy Blessing) joins them only when the owner sets LEGENDS_AC_CHILL_ENABLED=true; his blessing XP is
+    // part of outcome.xp and its win entry is saved with the spin, so a replayed key never pays it twice.
     const db = admin();
-    const board = createBoard();
+    const board = createBoard(undefined, { guardian: Deno.env.get("LEGENDS_AC_CHILL_ENABLED") === "true" });
     const o = evaluateBoard(board);
     const outcome = { wins: o.wins, hitCells: o.hitCells, xp: o.xp, found: o.found, highest: o.highest };
 

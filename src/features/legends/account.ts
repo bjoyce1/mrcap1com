@@ -6,7 +6,7 @@ import { ownedLegends } from "../../../supabase/functions/_shared/legends/reel-a
 
 export type Profile = { xp: number; best: number; totalSpins: number; collection: string[]; badges: string[]; lastBoard: string[][] | null; balance: Balance };
 export type HistoryItem = { xp: number; wins: { type: string; count?: number; symbol?: string | null; multiplier?: number; wildMultiplier?: number }[] };
-export type SpinWin = { type: string; payline?: number; count?: number; symbol?: string; multiplier?: number; wildMultiplier?: number; xp: number; cells: string[] };
+export type SpinWin = { type: string; payline?: number; count?: number; symbol?: string; multiplier?: number; wildMultiplier?: number; guardian?: string; xp: number; cells: string[] };
 export type SpinResult = {
   board: string[][];
   outcome: { wins: SpinWin[]; hitCells: string[]; xp: number; found: string[]; highest: number; multiplier?: number };
@@ -47,6 +47,13 @@ export async function loadSweeps(): Promise<string[]> {
   if (error) throw error;
   const swept = (data ?? []).flatMap((row) => ((row.wins as HistoryItem["wins"]) ?? []).filter((w) => w.type === "sweep").map((w) => w.symbol as string));
   return [...new Set(swept)];
+}
+
+/** True once this player has had A.C. Chill's Legacy Blessing: it unlocks his memorial card. */
+export async function loadBlessed(): Promise<boolean> {
+  const { data, error } = await supabase.from("legends_spins").select("id").filter("wins", "cs", JSON.stringify([{ type: "legacy_blessing" }])).limit(1);
+  if (error) throw error;
+  return (data ?? []).length > 0;
 }
 
 export async function loadHistory(): Promise<HistoryItem[]> {
