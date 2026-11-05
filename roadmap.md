@@ -2,9 +2,9 @@
 
 # Locked Legend reels
 
-- [ ] Filter account outcomes to server-owned Legends, retaining existing collections and using Mr. CAP as the default starter; keep guest demo unchanged.
-- [ ] Show unlocked and locked reel eligibility and exact symbol odds in the Vault.
-- [ ] Verify exclusion, purchase eligibility, engine parity and signed-in UI without charging or publishing.
+- [x] Filter account outcomes to server-owned Legends, retaining existing collections and using Mr. CAP as the default starter; keep guest demo unchanged.
+- [x] Show unlocked and locked reel eligibility and exact symbol odds in the Vault.
+- [x] Verify 52 tests, purchase eligibility and engine parity; complete one actual account spin and reload its saved board with no locked artists, with desktop/mobile checks and no payment or publication.
 - [ ] Replace prices when supplied. Blocker: no replacement prices provided; retain the previously approved $0.99.
 
 # Vault real-money prices
