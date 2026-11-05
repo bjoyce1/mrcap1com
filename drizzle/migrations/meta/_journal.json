@@ -50,6 +50,13 @@
       "when": 1793844572413,
       "tag": "0006_legends_vault_cash_purchases",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793844671627,
+      "tag": "0007_vault_purchase_write_grants",
+      "breakpoints": true
     }
   ]
 }
