@@ -72,6 +72,7 @@ const AdminCaptions = lazy(() => import("./pages/AdminCaptions"));
 const ApiDocs = lazy(() => import("./pages/ApiDocs"));
 const GreatDayPreview = lazy(() => import("./features/greatday/GreatDayPreview"));
 const GreatDayStudio = lazy(() => import("./features/greatday/GreatDayStudio"));
+const HomePreview = lazy(() => import("./features/home/HomePreview"));
 const LegendsPage = lazy(() => import("./features/legends/LegendsPage"));
 const LegendsRewardsPage = lazy(() => import("./features/legends/LegendsRewardsPage"));
 const LegendsVaultPage = lazy(() => import("./features/legends/LegendsVaultPage"));
@@ -102,13 +103,15 @@ function AppRoutes() {
   const state = location.state as { backgroundLocation?: Location } | null;
   const introActive = useIntroStore((s) => s.active);
   const greatdayPrivate = PRIVATE_GREATDAY_PATHS.some((path) => path === location.pathname);
+  // the homepage mockup brings its own header and footer
+  const ownChrome = greatdayPrivate || location.pathname === "/home-preview";
 
   return (
     <>
       <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
       <ScrollToTop />
       
-      <div hidden={introActive || greatdayPrivate || location.pathname === "/intro"}>
+      <div hidden={introActive || ownChrome || location.pathname === "/intro"}>
         <PersistentNavigation />
       </div>
       <NavigationManagedContext.Provider value={!greatdayPrivate}>
@@ -116,6 +119,7 @@ function AppRoutes() {
           <Routes location={state?.backgroundLocation || location}>
             <Route path="/analytics" element={<AnalyticsRedirect />} />
             <Route path="/greatday-preview" element={<GreatDayAdminGate><GreatDayPreview /></GreatDayAdminGate>} />
+            <Route path="/home-preview" element={<HomePreview />} />
             <Route path="/admin/greatday" element={<GreatDayAdminGate><GreatDayStudio /></GreatDayAdminGate>} />
             <Route path="/" element={<PageTransition><IntroGate><Index /></IntroGate></PageTransition>} />
             <Route path="/intro" element={<IntroReplay />} />
@@ -212,10 +216,10 @@ function AppRoutes() {
       )}
 
       {/* StickyPlayer stays mounted during the intro (hidden + paused) so its <audio> and stream counts survive */}
-      <div hidden={introActive || greatdayPrivate}>
+      <div hidden={introActive || ownChrome}>
         <StickyPlayer />
       </div>
-      {!introActive && !greatdayPrivate && (
+      {!introActive && !ownChrome && (
         <>
           <MobileBottomNav />
           {/* SPC Legends has its own motion switch; the floating pill would cover its HUD on phones. */}
