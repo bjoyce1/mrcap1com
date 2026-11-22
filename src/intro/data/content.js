@@ -3,7 +3,7 @@
 
 export const SOCIALS = [
   { id: 'spotify', label: 'Spotify', href: 'https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug' },
-  { id: 'apple', label: 'Apple Music', href: 'https://music.apple.com/us/artist/mr-cap/1506719540' },
+  { id: 'apple', label: 'Apple Music', href: 'https://music.apple.com/us/artist/mr-cap/555450213' },
   { id: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@mrcap1' },
   { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/mrcapism/' },
   { id: 'tiktok', label: 'TikTok', href: 'https://www.tiktok.com/@mrcapism' },
