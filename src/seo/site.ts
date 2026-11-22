@@ -23,7 +23,7 @@ export const SAME_AS = [
   "https://www.facebook.com/mrcap11",
   "https://www.youtube.com/@mrcap1",
   "https://open.spotify.com/artist/69pjfQNXA1xjusnI2wfgug",
-  "https://music.apple.com/us/artist/mr-cap/1506719540",
+  "https://music.apple.com/us/artist/mr-cap/555450213",
   "https://www.tiktok.com/@mrcapism",
   "https://www.wikidata.org/wiki/Q139960172",
 ];
