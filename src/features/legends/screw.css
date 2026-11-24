@@ -1,11 +1,17 @@
 /* DJ Screw "Screw Time" overlay and slowed page tint. */
 .screw-time{filter:saturate(1.25) hue-rotate(-12deg);transition:filter .4s}
-.screw-overlay{position:fixed;left:50%;bottom:6vh;z-index:80;display:flex;align-items:center;gap:1rem;padding:.75rem 1.25rem .75rem .75rem;border-radius:1.25rem;background:hsl(270 60% 8%/.88);box-shadow:0 0 40px hsl(285 90% 55%/.45),0 4px 24px hsl(0 0% 0%/.3);transform:translateX(-50%);animation:screw-in 1.4s cubic-bezier(.2,.8,.2,1) both;pointer-events:none}
-.screw-overlay img{width:clamp(72px,12vw,120px);aspect-ratio:1;object-fit:cover;border-radius:.9rem;box-shadow:0 0 24px hsl(150 90% 50%/.5)}
+.screw-overlay{position:fixed;left:50%;top:50%;flex-direction:column;text-align:center;z-index:80;display:flex;align-items:center;gap:1rem;padding:.75rem 1.25rem .75rem .75rem;border-radius:1.25rem;background:hsl(270 60% 8%/.88);box-shadow:0 0 40px hsl(285 90% 55%/.45),0 4px 24px hsl(0 0% 0%/.3);transform:translate(-50%,-50%);animation:screw-in 1.4s cubic-bezier(.2,.8,.2,1) both;pointer-events:none}
+.screw-overlay{perspective:900px}.screw-overlay img{width:clamp(160px,26vw,300px);animation:screw-spin 5s linear infinite;aspect-ratio:1;object-fit:cover;border-radius:.9rem;box-shadow:0 0 24px hsl(150 90% 50%/.5)}
 .screw-copy{display:flex;flex-direction:column;line-height:1.05}
 .screw-copy span{font-size:.65rem;letter-spacing:.22em;color:hsl(45 90% 65%)}
 .screw-copy strong{font-size:clamp(1.4rem,3.4vw,2.4rem);letter-spacing:.06em;color:hsl(300 100% 85%);text-shadow:0 0 18px hsl(290 100% 60%)}
 .screw-copy em{font-style:normal;font-size:.75rem;letter-spacing:.3em;color:hsl(150 80% 65%)}
 .screw-overlay.is-simple{animation:none}
 .screw-overlay.is-leaving{opacity:0;transition:opacity .5s}
-@keyframes screw-in{from{opacity:0;transform:translate(-50%,40px) scale(.9);filter:blur(6px)}to{opacity:1;transform:translateX(-50%);filter:none}}
+@keyframes screw-in{from{opacity:0;transform:translate(-50%,-50%) scale(.6);filter:blur(8px)}to{opacity:1;transform:translate(-50%,-50%);filter:none}}
+
+.screw-overlay.is-simple img{animation:none}
+@keyframes screw-spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.screw-reel{overflow:hidden}
+.screw-reel>*{animation:screw-roll 1.6s linear infinite;animation-delay:calc(var(--screw-i,0)*-.27s);filter:blur(1.5px) saturate(1.3)}
+@keyframes screw-roll{from{transform:translateY(-100%)}to{transform:translateY(100%)}}

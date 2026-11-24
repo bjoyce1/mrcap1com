@@ -11,11 +11,12 @@ export const SCREW_CUE_SECONDS=15;
 
 export function screwTriggered(xp:number):boolean{return xp>=SCREW_TRIGGER_XP;}
 
-/** The slow and chop rhythm: [page speed, milliseconds]. Speed 0 is a freeze (the chop). About 6 seconds total. */
+/** The slow and chop rhythm: [page speed, milliseconds]. Speed 0 is a freeze (the chop). About 10 seconds total. */
 export const SCREW_PATTERN:readonly (readonly [number,number])[]=Object.freeze([
-  [0.25,1100],[0,140],[1,90],[0,140],[1,90],
-  [0.2,1300],[0.25,900],[0,140],[1,90],[0,140],[1,90],
-  [0.2,1500],
+  [0.3,1400],[0,160],[1,90],[0,160],[1,90],
+  [0.2,1500],[0,160],[1,90],[0,160],[1,90],[0,160],[1,90],
+  [0.25,1300],[0.15,1200],[0,160],[1,90],[0,160],[1,90],
+  [0.2,1400],[0,160],[1,90],[0,160],[1,90],[0.15,1100],
 ]);
 export const screwDuration=()=>SCREW_PATTERN.reduce((t,[,ms])=>t+ms,0);
 
@@ -60,11 +61,12 @@ export class ScrewTime{
     const o=document.createElement('div');o.className=`screw-overlay${reduced?' is-simple':''}`;o.setAttribute('role','status');
     o.innerHTML=`<img src="${SCREW_ART}" alt="DJ Screw"><div class="screw-copy"><span>LEGENDARY GUARDIAN</span><strong>DJ SCREW</strong><em>SLOWED &amp; CHOPPED</em></div>`;
     document.body.append(o);this.overlay=o;
+    if(!reduced)this.root.querySelectorAll<HTMLElement>('[data-lg="reels"] > *').forEach((r,i)=>{r.classList.add('screw-reel');r.style.setProperty('--screw-i',String(i));});
   }
   private hideOverlay(){const o=this.overlay;this.overlay=null;if(!o)return;o.classList.add('is-leaving');window.setTimeout(()=>o.remove(),600);}
   private endMotion(){
     clearInterval(this.ticker);this.ticker=0;this.rate=1;this.apply();
-    this.root.classList.remove('screw-time');document.documentElement.style.removeProperty('--screw-rate');
+    this.root.classList.remove('screw-time');this.root.querySelectorAll('.screw-reel').forEach(r=>r.classList.remove('screw-reel'));document.documentElement.style.removeProperty('--screw-rate');
     this.hideOverlay();
   }
   isPlaying(){return !!this.el&&!this.el.paused;}
