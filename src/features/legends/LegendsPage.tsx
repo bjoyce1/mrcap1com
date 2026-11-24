@@ -20,6 +20,7 @@ import "./legends.css";
 import "./environment.css";
 import "./guardian.css";
 import "./install.css";
+import "./polish.css";
 
 /**
  * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game with account spins and PayPal packs.
