@@ -58,3 +58,19 @@ describe("createStage", () => {
     expect(hitKindForWin({ type: "line", wildMultiplier: 2 })).toBe("double-wild");
   });
 });
+
+testGuardianHandoff();
+function testGuardianHandoff() {
+  it("updates the actual win tier after the guardian celebration", () => {
+    const el = { dataset: {} as DOMStringMap };
+    const stage = createStage(el);
+    stage.set("spin-start");
+    stage.set("spinning");
+    stage.set("evaluating");
+    expect(stage.set("celebrating", 2, "unity")).toBe(true);
+    expect(stage.set("celebrating", 3, "sweep")).toBe(true);
+    expect(el.dataset).toMatchObject({ lgStage: "celebrating", lgLevel: "3", lgHit: "sweep" });
+    stage.set("idle");
+    expect(el.dataset.lgHit).toBeUndefined();
+  });
+}

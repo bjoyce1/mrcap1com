@@ -52,7 +52,7 @@ const NEXT: Record<Stage, Stage[]> = {
   spinning: ["stopping", "evaluating", "idle"],
   stopping: ["evaluating", "idle"],
   evaluating: ["celebrating", "idle"],
-  celebrating: ["idle"],
+  celebrating: ["celebrating", "idle"],
 };
 
 export function createStage(el: { dataset: DOMStringMap }) {

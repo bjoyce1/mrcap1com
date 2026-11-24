@@ -81,6 +81,7 @@ export function winSongTier(xp: number): keyof typeof WIN_SONGS | null {
 
 /** One song for the spin's total XP, with a caller-owned per-tier rotation. */
 export function pickWinSong(k: WinKind, rotationIndex = 0): WinSong | null {
+  if (!winSongTier(k.xp)) return null;
   const index = Number.isFinite(rotationIndex) ? Math.abs(Math.trunc(rotationIndex)) : 0;
   const artistPool = k.artist ? ARTIST_SONGS[k.artist] : undefined;
   if (artistPool?.length) return artistPool[index % artistPool.length];
@@ -104,6 +105,7 @@ export class WinSoundtrack {
   constructor(private random: () => number = Math.random) {}
 
   play(k: WinKind, enabled: boolean): WinSong | null {
+    if (!winSongTier(k.xp)) return null;
     const artistPool = k.artist ? ARTIST_SONGS[k.artist] : undefined;
     const tier = artistPool?.length ? `artist:${k.artist}` : winSongTier(k.xp);
     if (!tier) return null;
@@ -115,7 +117,7 @@ export class WinSoundtrack {
     this.rotations[tier] = index + 1;
     if (!enabled) return s;
     // Inspecting the same artist's line should not repeatedly restart the same song.
-    if (this.el && !this.el.paused && this.currentUrl === songUrl(s)) return s;
+    if (this.el && !this.el.paused && this.currentUrl === songUrl(s) && !this.fade) return s;
     this.stopNow();
     const el = new Audio(songUrl(s));
     el.volume = 0.7;
@@ -132,9 +134,9 @@ export class WinSoundtrack {
     clearInterval(this.fade);
     const step = el.volume / Math.max(1, ms / 50);
     this.fade = window.setInterval(() => {
-      if (el.volume <= step) { clearInterval(this.fade); el.pause(); if (this.el === el) this.el = null; }
+      if (el.volume <= step) { clearInterval(this.fade); this.fade = 0; el.pause(); if (this.el === el) { this.el = null; this.currentUrl = null; } }
       else el.volume -= step;
     }, 50);
   }
-  stopNow() { clearInterval(this.fade); if (this.el) { this.el.pause(); this.el = null; } this.currentUrl = null; }
+  stopNow() { clearInterval(this.fade); this.fade = 0; if (this.el) { this.el.pause(); this.el = null; } this.currentUrl = null; }
 }

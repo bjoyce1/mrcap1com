@@ -66,7 +66,8 @@ const attract=attractMode(root,{isBusy:()=>busy,reduced:()=>userReducedMotion});
 // lighting follows it in CSS. Ambient loops pause while their part of the page is off screen or the tab is hidden.
 const stage=createStage(root),stopWatching=watchOffscreen(root),stopTempo=followTempo(root);
 // Win songs have their own switch, apart from the sound effects; both start on.
-let musicOn=true;
+const musicKey='spc-legends-win-music';
+let musicOn=(()=>{try{return localStorage.getItem(musicKey)!=='off';}catch{return true;}})();
 // Visitors get a few free tries before signing in; the count lives in this browser only (a soft limit).
 const guestKey='spc-legends-guest-tries';
 let guestUsed=(()=>{try{return Math.max(0,Number(localStorage.getItem(guestKey))||0);}catch{return 0;}})();
@@ -420,15 +421,15 @@ const onRootClick=(e:MouseEvent)=>{
 const onKeyDown=(e:KeyboardEvent)=>{if(e.key==='Escape')closeSpotlight();};
 const onInspectLine=(event:Event)=>{
   if(busy)return;
-  const win=(event as CustomEvent<SpinWin>).detail;
-  hits.clear();impacts.clear();bigWin.close();
+  const win=(event as CustomEvent<SpinWin & {inspectionRejected?:boolean}>).detail;
+  hits.clear();impacts.clear();bigWin.close();if(stage.get()==='celebrating')stage.set('idle');
   const selected=new Set(win.cells);
-  $('reels').classList.add('has-wins');
-  root.querySelectorAll<HTMLElement>('.reel-window [data-cell]').forEach(tile=>tile.classList.toggle('match',selected.has(tile.dataset.cell??'')));
+  $('reels').classList.toggle('has-wins',!win.inspectionRejected);
+  root.querySelectorAll<HTMLElement>('.reel-window [data-cell]').forEach(tile=>tile.classList.toggle('match',!win.inspectionRejected&&selected.has(tile.dataset.cell??'')));
   paylines.show([win],{reducedMotion:userReducedMotion,autoCycle:false});paylines.focus(win);
-  if(win.type==='vertical'){impacts.burst(win.cells,userReducedMotion,true);audio.explode(true);}
+  if(!win.inspectionRejected&&win.type==='vertical'){impacts.burst(win.cells,userReducedMotion,true);audio.explode(true);}
   const artist=winningArtist([win],activeBoard);
-  if(artist&&musicOn){
+  if(!win.inspectionRejected&&artist&&musicOn){
     const track=soundtrack.play({supreme:win.type==='supreme',unity:win.type==='unity',sweep:win.type==='sweep',major:false,bonus:false,xp:history[0]?.xp??win.xp,artist},true);
     if(track){const sub=$('result').querySelector('span');if(sub)sub.textContent=sub.textContent.replace(/ • NOW PLAYING:.*$/,'')+` • NOW PLAYING: ${track.title}`;}
   }
@@ -461,7 +462,7 @@ function showMusic(){$('music').setAttribute('aria-pressed',String(musicOn));$('
 gestures.forEach(type=>document.addEventListener(type,startSound,{capture:true}));
 showSound();showMusic();
 $('sound').addEventListener('click',()=>{soundWanted=!soundWanted;try{localStorage.setItem(soundKey,soundWanted?'on':'off');}catch{/* the choice lasts this visit */}audio.setEnabled(soundWanted);showSound();if(soundWanted)audio.tone(523,.14);});
-$('music').addEventListener('click',()=>{musicOn=!musicOn;if(!musicOn)soundtrack.stopNow();showMusic();});
+$('music').addEventListener('click',()=>{musicOn=!musicOn;try{localStorage.setItem(musicKey,musicOn?'on':'off');}catch{/* preference lasts this visit */}if(!musicOn)soundtrack.stopNow();showMusic();});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
 // The daily allowance rolls over at Houston midnight; re-read the balance when the tab comes back.

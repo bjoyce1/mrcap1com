@@ -319,3 +319,25 @@
 .legends-world.reduce-motion .library-item img {
   transition: none !important;
 }
+
+/* Inspecting an unsuccessful route must never resemble a credited win. */
+.legends-world .payline.is-rejected .payline-run {
+  stroke-width: 3;
+  stroke-dasharray: 7 6;
+  filter: none;
+}
+.legends-world .payline.is-rejected .payline-core,
+.legends-world .payline.is-rejected .payline-guide {
+  opacity: 0;
+}
+.legends-world .payline.is-rejected .payline-node {
+  fill: #241c30;
+  stroke: #b8a9c7;
+}
+.legends-world .line-explanation[data-accepted="false"] {
+  border-color: #81728f;
+  background: #181320;
+}
+.legends-world .line-explanation[data-accepted="false"] strong {
+  color: #e1d5eb;
+}
