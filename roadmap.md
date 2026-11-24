@@ -1,5 +1,11 @@
 # Identity connection
 
+# Bobby J review
+
+- [x] Add development-only Special Guest, animation poses and photography controller without changing reel probabilities or rewards.
+- [x] Add isolated deterministic preview, cosmetic local gallery, mute, skip and reduced-motion handling.
+- [x] Test outcomes, duplicate prevention and cancellation, then verify desktop and phone review without publishing; 209 game tests passed and the staged photo shoot captured three exact artist cells, retained them after reload and left XP unchanged.
+
 # Legends spend page
 
 - [x] Reuse real-money catalog and checkout with current coins, XP, spins, confirmed spending and own-account purchase history.

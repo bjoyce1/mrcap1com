@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { SPIN_PACKS, DAILY_SPEND_CAP_CENTS, bonusPercent } from "../../../supabase/functions/_shared/legends/packs";
 import { GAME_CONFIG } from "./config";
 import { WinningLines } from './WinningLines';
+import { PaparazziReview, BobbyJSpecialGuest } from './paparazzi/PaparazziReview';
 import { Marquee } from "./Marquee";
 import { Backdrop, Fireworks, HeaderCity } from "./Backdrop";
 import "@fontsource/russo-one/400.css";
@@ -89,6 +90,7 @@ const LegendsGame = memo(function LegendsGame() {
         <div className="result" data-lg="result" role="status" aria-live="polite"><div className="result-kicker">READY TO ROLL</div><strong data-lg="result-title">THE SOUTH SIDE IS CALLING.</strong><span data-lg="result-desc">Press SPIN THE MIX to reveal your first lineup.</span></div>
         <button type="button" className="blessing-replay" data-lg="blessing-replay" hidden>Replay the Legacy Blessing</button>
         <WinningLines />
+        {import.meta.env.DEV && <PaparazziReview />}
         <button type="button" className="buy-button" data-lg="shop-open" data-state="idle" aria-expanded="false" aria-controls="lg-shop" hidden>
          <span className="buy-sweep" aria-hidden="true" />
          <span className="buy-label">GET MORE SPINS</span>
@@ -145,6 +147,7 @@ const LegendsGame = memo(function LegendsGame() {
       <section className="lg-container symbol-library">
         <div className="library-heading"><div><span className="section-label">THE WHOLE MIX</span><h2>SYMBOL SET</h2></div><p>{ARTISTS.length} artist legends, {HOUSTON_HOODS.length} historic Houston neighborhoods, five special symbols, eight studio &amp; Houston symbols — tap any card to inspect. <a href="/legends/rewards" style={{color:'#ffd76a',textDecoration:'underline'}}>See every XP reward</a> · <a href="/legends/vault" style={{color:'#ffd76a',textDecoration:'underline'}}>Spend coins in the Vault</a></p></div>
         <div className="library-group"><div className="lg-label">CHARACTER SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-characters" /></div>
+        {import.meta.env.DEV && <BobbyJSpecialGuest />}
         <div className="library-group"><div className="lg-label">HOUSTON HOOD SYMBOLS</div><div className="library-grid is-five" data-lg="lib-hoods" /></div>
         <div className="library-group"><div className="lg-label">SPECIAL SYMBOLS</div><div className="library-grid is-five" data-lg="lib-special" /></div>
         <div className="library-group"><div className="lg-label">MUSIC &amp; HOUSTON SYMBOLS</div><div className="library-grid is-eight" data-lg="lib-music" /></div>

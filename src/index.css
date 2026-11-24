@@ -79,6 +79,8 @@
     --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.35);
     --shadow-gold: 0 0 30px hsl(39 67% 55% / 0.2);
     --shadow-orange: 0 0 100px hsl(333 64% 51% / 0.08);
+    --pap-platinum: 210 12% 82%;
+    --pap-flash: 0 0% 100%;
   }
 }
 

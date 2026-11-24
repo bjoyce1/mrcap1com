@@ -221,6 +221,13 @@ async function spin(){
       if(unmounted||userId!==player)return;
     }
     // Lines wait dim while the hit show pops each win in turn, then take over and cycle.
+    // Development-only cosmetic guest show, sequenced after the Guardian. No roster or scoring changes.
+    if(import.meta.env.DEV&&target.some(col=>col.includes('bobby-j'))){
+      reelControl.skip=()=>root.dispatchEvent(new CustomEvent('lg-paparazzi-skip'));buttonState();
+      await new Promise<void>(done=>root.dispatchEvent(new CustomEvent('lg-paparazzi-request',{detail:{moment:{spinId:key,board:target,wins:outcome.wins,xp:outcome.xp},reducedMotion:userReducedMotion,done}})));
+      reelControl.skip=null;buttonState();
+      if(unmounted||userId!==player)return;
+    }
     paylines.show(baseWins,{reducedMotion:userReducedMotion,autoCycle:false});
     // The celebration level comes from the real outcome; the cabinet stays lit until the hit show and any Big Win close.
     const level=celebrationLevel(spinOutcome),hit=celebrationHit(spinOutcome);
