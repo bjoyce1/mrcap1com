@@ -7,7 +7,7 @@ import { useAudioAnalyzerStore } from '@/stores/audioAnalyzerStore';
 /** Set by animateReels while reels move; calling skip() lands every reel at its final stop. */
 export type ReelControl={skip?:(()=>void)|null};
 /** The parts of an engine win the overlay draws. */
-export type Win={type:string;payline?:number;count?:number;symbol?:string;cells:string[]};
+export type Win={type:string;payline?:number;count?:number;symbol?:string;cells:string[];inspectionRejected?:boolean};
 /** Per reel: false, or which tease lengthens and lights it ('bonus': two 713s landed; 'sweep': one artist on every reel so far). */
 export type Tease=false|'bonus'|'sweep';
 type ReelOptions={reducedMotion?:boolean;anticipate?:(Tease|boolean)[];teaseColor?:string;control?:ReelControl;onReady?:()=>void;onStop?:(reel:number)=>void;onAnticipate?:(kind:Tease)=>void};
@@ -104,33 +104,35 @@ export async function animateReels(container:HTMLElement,previous:string[][],tar
     item.stopped=true;
     reel.classList.remove('spinning','anticipate','sweep-tease');reel.querySelector('.reel-streak')?.remove();
     reel.classList.add('settle');
-    // Impact: the reel squashes and rebounds as it lands and throws sparks from its base.
-    reel.animate([{transform:'translate3d(0,6px,0) scaleY(.97)'},{transform:'translate3d(0,-2px,0)'},{transform:'none'}],{duration:280,easing:'cubic-bezier(.2,1.4,.4,1)'});
-    stopSparks(reel);
+    // Small mechanical rebound on normal stops; skipping avoids extra movement.
+    if(!skipped){
+      track.animate([{transform:'translate3d(0,3px,0)'},{transform:'translate3d(0,-1px,0)'},{transform:'none'}],{duration:220,easing:'cubic-bezier(.2,.8,.3,1)'});
+      stopSparks(reel);
+    }
     onStop(col);
     const teasing=reels.filter(r=>!r.stopped&&anticipate[r.col]);
-    if(teasing.length&&!teasing.some(r=>r.reel.classList.contains('anticipate'))){
+    if(!skipped&&teasing.length&&!teasing.some(r=>r.reel.classList.contains('anticipate'))){
       teasing.forEach(r=>{r.reel.classList.add('anticipate');if(anticipate[r.col]==='sweep'){r.reel.classList.add('sweep-tease');r.reel.style.setProperty('--tease',teaseColor||'#ffd27a');}});
       const kind=anticipate[teasing[0].col];onAnticipate(kind==='sweep'?'sweep':'bonus');
     }
     setTimeout(()=>reel.classList.remove('settle'),450);
   });
   try{await Promise.all(tasks);}
-  finally{removeEventListener('resize',onResize);control.skip=null;}
-  container.removeAttribute('aria-busy');
+  finally{removeEventListener('resize',onResize);control.skip=null;container.removeAttribute('aria-busy');}
 }
 /** Six gold sparks kicked up from the base of a reel as it lands. */
 function stopSparks(reel:HTMLElement){
   for(let i=0;i<6;i++){
     const spark=document.createElement('i');spark.className='stop-spark';spark.setAttribute('aria-hidden','true');
     spark.style.setProperty('--dx',`${(Math.random()-.5)*70}px`);spark.style.setProperty('--dy',`${-18-Math.random()*40}px`);
-    reel.append(spark);spark.addEventListener('animationend',()=>spark.remove(),{once:true});
+    reel.append(spark);spark.addEventListener('animationend',()=>spark.remove(),{once:true});setTimeout(()=>spark.remove(),650);
   }
 }
 const SVG='http://www.w3.org/2000/svg';
 /** Draw winning paylines over the board. Lines take turns being emphasised unless motion is reduced. */
 export class PaylineOverlay {
   board:HTMLElement;wins:Win[];timer:ReturnType<typeof setInterval>|null;reducedMotion:boolean;svg:SVGSVGElement;comets:HTMLDivElement;resize:ResizeObserver;
+  private focusedWin:Win|null=null;
   autoCycle=true;paths:{win:Win;g:SVGGElement;comet:HTMLElement|null}[]=[];
   constructor(board:HTMLElement){
     this.board=board;this.wins=[];this.timer=null;this.reducedMotion=false;
@@ -143,14 +145,15 @@ export class PaylineOverlay {
   }
   /** autoCycle=false draws the lines dim and waits for focus()/cycle(), so the hit show can lead. */
   show(wins:Win[],{reducedMotion=false,autoCycle=true}={}){
-    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='sweep'||w.type==='vertical');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.draw();
+    this.wins=wins.filter(w=>w.type==='line'||w.type==='unity'||w.type==='sweep'||w.type==='vertical');this.reducedMotion=reducedMotion;this.autoCycle=autoCycle;this.focusedWin=null;this.draw();
   }
-  focus(win:Win){this.paths.forEach(p=>this.light(p,p.win===win));}
+  focus(win:Win){this.focusedWin=win;this.paths.forEach(p=>this.light(p,p.win===win));}
   cycle(){this.autoCycle=true;this.draw();}
-  clear(){this.wins=[];this.paths=[];clearInterval(this.timer);this.timer=null;this.svg.replaceChildren();this.comets.replaceChildren();}
-  private light(p:{g:SVGGElement;comet:HTMLElement|null},on:boolean){p.g.classList.toggle('focus',on);p.comet?.classList.toggle('focus',on);}
+  private clearComets(){this.comets.querySelectorAll<HTMLElement>('.payline-comet').forEach(el=>el.getAnimations().forEach(a=>a.cancel()));this.comets.replaceChildren();}
+  clear(){this.wins=[];this.paths=[];this.focusedWin=null;clearInterval(this.timer);this.timer=null;this.svg.replaceChildren();this.clearComets();}
+  private light(p:{g:SVGGElement;comet:HTMLElement|null},on:boolean){p.g.classList.toggle('focus',on);p.comet?.classList.toggle('focus',on);p.comet?.getAnimations().forEach(a=>{if(on){if(a.playState==='paused')a.play();}else a.pause();});}
   draw(){
-    clearInterval(this.timer);this.svg.replaceChildren();this.comets.replaceChildren();
+    clearInterval(this.timer);this.timer=null;this.svg.replaceChildren();this.clearComets();
     const box=this.board.getBoundingClientRect();
     this.svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);
     const centre=key=>{const el=this.board.querySelector(`[data-cell="${key}"]`);if(!el)return null;const r=el.getBoundingClientRect();return [r.left-box.left+r.width/2,r.top-box.top+r.height/2];};
@@ -158,9 +161,10 @@ export class PaylineOverlay {
     const paths=this.wins.map(win=>{
       const keys=win.type!=='line'?win.cells:(PAYLINES[(win.payline??0)-1]??[]).map((row,col)=>`${col}:${row}`);
       const points=keys.map(centre);if(points.some(p=>!p))return null;
-      const lit=win.type!=='line'?6:win.count;
+      const lit=win.type!=='line'?points.length:Math.min(points.length,win.count??win.cells.length);
       const g=document.createElementNS(SVG,'g');g.setAttribute('class',win.type==='sweep'?'payline supreme-path sweep-path':win.type==='supreme'?'payline supreme-path':'payline');
-      g.style.setProperty('--line',win.type==='sweep'?SYMBOL_MAP[win.symbol]?.color||'#ffd27a':win.type==='supreme'?'var(--gold)':win.type==='unity'?'#fff1c2':SYMBOL_MAP[win.symbol]?.color||'#ffd27a');
+      if(win.inspectionRejected)g.classList.add('is-rejected');
+      g.style.setProperty('--line',win.inspectionRejected?'#b8a9c7':win.type==='sweep'?SYMBOL_MAP[win.symbol]?.color||'#ffd27a':win.type==='supreme'?'var(--gold)':win.type==='unity'?'#fff1c2':SYMBOL_MAP[win.symbol]?.color||'#ffd27a');
       // Faint guide across the full payline, bright stroke over the matched run, a node on each matched cell.
       const guide=document.createElementNS(SVG,'polyline');guide.setAttribute('class','payline-guide');guide.setAttribute('points',points.map(p=>p.join(',')).join(' '));
       const run=document.createElementNS(SVG,'polyline');run.setAttribute('class','payline-run');run.setAttribute('points',points.slice(0,lit).map(p=>p.join(',')).join(' '));
@@ -169,20 +173,20 @@ export class PaylineOverlay {
       g.append(guide,run,core);
       // A comet races along the matched run while this line is in focus: constant speed, so each corner gets its share of the 1.1 s by length.
       let comet:HTMLElement|null=null;
-      if(!this.reducedMotion&&lit>=2){
+      if(!this.reducedMotion&&!win.inspectionRejected&&lit>=2){
         const pts=points.slice(0,lit),lengths=pts.map((p,k)=>k?Math.hypot(p[0]-pts[k-1][0],p[1]-pts[k-1][1]):0);
         const total=lengths.reduce((a,b)=>a+b,0)||1;let walked=0;
         comet=document.createElement('i');comet.className='payline-comet';comet.style.setProperty('--line',g.style.getPropertyValue('--line'));
-        comet.animate(pts.map((p,k)=>{walked+=lengths[k];return {transform:`translate(${p[0]}px,${p[1]}px)`,offset:walked/total};}),{duration:1100,iterations:Infinity});
+        comet.animate(pts.map((p,k)=>{walked+=lengths[k];return {transform:`translate(${p[0]}px,${p[1]}px)`,offset:walked/total};}),{duration:1100,iterations:Infinity}).pause();
         this.comets.append(comet);
       }
       for(const [x,y] of points.slice(0,lit)){const dot=document.createElementNS(SVG,'circle');dot.setAttribute('cx',String(x));dot.setAttribute('cy',String(y));dot.setAttribute('r',String(Math.max(3,box.width/180)));dot.setAttribute('class','payline-node');g.append(dot);}
       this.svg.append(g);const entry={win,g,comet};this.paths.push(entry);return entry;
     }).filter(Boolean);
-    if(this.reducedMotion||(this.autoCycle&&paths.length<2)){paths.forEach(p=>this.light(p,true));return;}
-    if(!this.autoCycle)return;
-    let i=0;const step=()=>{paths.forEach((p,n)=>this.light(p,n===i));i=(i+1)%paths.length;};
-    step();this.timer=setInterval(step,1100);
+    if(!this.autoCycle){paths.forEach(p=>this.light(p,p.win===this.focusedWin));return;}
+    if(this.reducedMotion||paths.length<2){paths.forEach(p=>this.light(p,true));return;}
+    let i=Math.max(0,paths.findIndex(p=>p.win===this.focusedWin));const step=()=>{this.focusedWin=paths[i].win;paths.forEach((p,n)=>this.light(p,n===i));i=(i+1)%paths.length;};
+    step();this.timer=setInterval(step,1500);
   }
 }
 /** The win celebration: winning tiles pop out over the reels, step by step (see hitSchedule).
@@ -246,7 +250,7 @@ export class HitShow {
 export function floatText(host:HTMLElement,text:string,{reducedMotion=false}={}){
   if(reducedMotion)return;
   const el=document.createElement('span');el.className='xp-float';el.textContent=text;el.setAttribute('aria-hidden','true');
-  host.append(el);el.addEventListener('animationend',()=>el.remove(),{once:true});
+  host.append(el);el.addEventListener('animationend',()=>el.remove(),{once:true});setTimeout(()=>el.remove(),2500);
 }
 export function animateCounter(el,from,to,{duration=650,reducedMotion=false}={}){
   if(reducedMotion||to===from){el.textContent=to.toLocaleString();return;}
