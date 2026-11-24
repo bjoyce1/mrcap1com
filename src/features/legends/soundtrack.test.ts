@@ -120,3 +120,35 @@ test('the supplied artist audio starts at 15 seconds and stops on mute', () => {
     expect(pause).toHaveBeenCalledOnce();
   } finally { vi.unstubAllGlobals(); }
 });
+
+test('artist override does not play music for an unsuccessful spin', () => {
+  expect(pickWinSong({ ...base, artist: 'mr-cap', xp: 0 })).toBeNull();
+  const player = new WinSoundtrack(() => 0);
+  expect(player.play({ ...base, artist: 'mr-cap', xp: 0 }, false)).toBeNull();
+});
+
+test('a new win selecting a fading song starts fresh instead of fading out', () => {
+  vi.useFakeTimers();
+  const instances: Array<{ volume: number; paused: boolean; pause: ReturnType<typeof vi.fn> }> = [];
+  const AudioMock = vi.fn(function () {
+    const instance = { volume: 1, duration: 180, currentTime: 0, paused: false,
+      pause: vi.fn(), play: vi.fn().mockResolvedValue(undefined), addEventListener: vi.fn() };
+    instances.push(instance);
+    return instance;
+  });
+  vi.stubGlobal('Audio', AudioMock);
+  vi.stubGlobal('window', { setInterval: globalThis.setInterval });
+  try {
+    const player = new WinSoundtrack(() => 0);
+    const kind = { ...base, artist: 'mr-cap' };
+    player.play(kind, true);
+    player.fadeOut();
+    vi.advanceTimersByTime(100);
+    player.play(kind, true);
+    expect(AudioMock).toHaveBeenCalledTimes(2);
+    expect(instances[0].pause).toHaveBeenCalledOnce();
+    vi.advanceTimersByTime(1000);
+    expect(instances[1].volume).toBe(0.7);
+    player.stopNow();
+  } finally { vi.unstubAllGlobals(); vi.useRealTimers(); }
+});
