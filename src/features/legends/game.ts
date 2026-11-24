@@ -24,6 +24,7 @@ import {createPurchaseButton} from './purchase-button';
 import {renderSupremePrize} from './supreme-prize';
 import {WinSoundtrack,winningArtist} from './soundtrack';
 import {ImpactEffects} from './impact-effects';
+import {readPendingSpin,writePendingSpin} from './pending-spin';
 
 type PayPalButtons={render:(el:HTMLElement)=>Promise<void>;close?:()=>Promise<void>};
 type PayPalNamespace={Buttons:(options:Record<string,unknown>)=>PayPalButtons};
@@ -56,6 +57,13 @@ let balance:Balance={welcomeLeft:GAME_CONFIG.welcomeSpins,dailyLeft:GAME_CONFIG.
 // A spin whose answer never arrived is retried with the same key, so the server replays it instead of spending another.
 let pendingKey:string|null=null;
 let accountNeedsRefresh=false;
+function setPendingSpin(key:string|null){
+  pendingKey=key;
+  if(userId){try{writePendingSpin(window.sessionStorage,userId,key);}catch{/* storage may be blocked */}}
+}
+function restorePendingSpin(id:string|null){
+  try{return id?readPendingSpin(window.sessionStorage,id):null;}catch{return null;}
+}
 let unmounted=false;
 let confirmingPayment=false,accountRevision=0;
 let paypalButtons:PayPalButtons|null=null;
@@ -174,20 +182,33 @@ async function spin(){
   buttonState();paylines.clear();hits.clear();impacts.clear();bigWin.close();guardian.clear();screw.stop();clearTimeout(blessingClearTimer);$('blessing-replay').hidden=true;attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
   stage.set('spin-start');audio.spinStart();
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
-    const key=pendingKey??crypto.randomUUID();if(player)pendingKey=key;
+    const retrying=!!player&&!!pendingKey;
+    const key=pendingKey??crypto.randomUUID();if(player)setPendingSpin(key);
     let answer=player?await requestSpin(key):guestSpin(collection);
     if(!player)useGuestTry();
     // The server allows one spin every 1.2 seconds; a quick tap after "tap to stop" waits and retries the same key.
-    if('error' in answer&&answer.error==='cooldown'){await wait(1300);answer=await requestSpin(key);}
+    if('error' in answer&&answer.error==='cooldown'){await wait(1300);if(unmounted||userId!==player)return;answer=await requestSpin(key);}
     if(unmounted||userId!==player)return;
     if('error' in answer){
-      if(answer.error==='no_spins'||answer.error==='signed_out')pendingKey=null;
+      if(answer.error==='no_spins')setPendingSpin(null);
       if(answer.error==='signed_out'){await loadAccount(null);return;}
       if(answer.error==='no_spins'){if(answer.balance)balance=answer.balance;refresh();setResult('OUT OF SPINS',`Grab a spin pack (25 for $1 and up), or come back tomorrow for ${GAME_CONFIG.dailySpins} free spins (Houston time).`,'REFILL');openShop(true);return;}
       setResult(answer.error==='cooldown'?'PLEASE WAIT A MOMENT':'SPIN NOT CONFIRMED','Retry this same spin to check its result. The existing request key is reused; no new spin is requested.','TRY AGAIN');return;
     }
     if(unmounted||userId!==player)return;
-    confirmed=answer;pendingKey=null;
+    confirmed=answer;setPendingSpin(null);
+    if(retrying&&player){
+      // The initial profile may already include the replayed spin (after a reload).
+      // Reconcile from the server rather than applying any cached XP or balance twice.
+      accountNeedsRefresh=true;
+      setResult('SPIN CONFIRMED','Restoring your saved spin and balance…','READY TO ROLL');
+      await loadAccount(player);
+      if(!unmounted&&userId===player&&!accountNeedsRefresh){
+        setResult('SPIN CONFIRMED',`Your recovered spin earned ${answer.outcome.xp.toLocaleString()} XP. Your account is up to date.`,'READY TO ROLL');
+        root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:{board:answer.board,wins:answer.outcome.wins,xp:answer.outcome.xp}}));
+      }
+      return;
+    }
     const target=answer.board,prior=activeBoard,outcome=answer.outcome;
     // The server has committed this spin; retain its board even if presentation fails.
     activeBoard=target;
@@ -396,7 +417,7 @@ async function loadAccount(nextUser:string|null){
   root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:null}));
   const revision=++accountRevision;
   if(nextUser!==userId){
-    pendingKey=null;accountNeedsRefresh=false;
+    pendingKey=restorePendingSpin(nextUser);accountNeedsRefresh=false;
     badges=[];supremeLookEnabled=true;
     void paypalButtons?.close?.().catch(()=>undefined);
     paypalButtons=null;buttonsShown=false;$('shop-paypal').replaceChildren();
@@ -419,7 +440,8 @@ async function loadAccount(nextUser:string|null){
     if(!busy||accountNeedsRefresh){activeBoard=profile.lastBoard??createBoard();renderBoard($('reels'),activeBoard);}
     accountNeedsRefresh=false;
     setResult('THE SOUTH SIDE IS CALLING.',totalSpins(balance)?'Press SPIN THE MIX to reveal your next lineup.':`You are out of spins. Grab a spin pack (25 for $1 and up) or come back tomorrow for ${GAME_CONFIG.dailySpins} free spins.`,'READY TO ROLL');
-    if(!totalSpins(balance))openShop();
+    if(pendingKey)setResult('SPIN AWAITING CONFIRMATION','Press RETRY SPIN to recover your previous request without starting a second spin.','TRY AGAIN');
+    else if(!totalSpins(balance))openShop();
     if(pendingOrder()){await openShop();$('shop-retry').hidden=false;}
   }catch(error){
     if(unmounted||userId!==nextUser||revision!==accountRevision)return;
