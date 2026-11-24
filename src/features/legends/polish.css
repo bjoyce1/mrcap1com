@@ -344,6 +344,11 @@
 
 /* QC pass 2026-11-24: presentation only. */
 .legends-world .spin-button [data-lg="spin-label"] { white-space: nowrap; }
+.legends-world .hud-main .spin-button.long-label { font-size: clamp(15px, 1.7vw, 24px); gap: 7px; }
+.legends-world .hud-main .spin-button.long-label :is(.spin-star, .spin-chevron) { display: none; }
+@media (max-width: 620px) {
+  .legends-world .hud-main .spin-button.long-label { font-size: 18px; gap: 5px; }
+}
 @media (min-width: 900px) and (max-width: 1600px) {
   .legends-world .hud-main .spin-button { font-size: clamp(17px, 1.45vw, 28px); padding-inline: 8px; gap: 6px; letter-spacing: 0; }
 }

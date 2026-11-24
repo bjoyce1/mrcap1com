@@ -82,7 +82,10 @@ function applyMotionPreference(){root.classList.toggle('reduce-motion',userReduc
 function buttonState(){
   const left=totalSpins(balance);
   $('spin').disabled=confirmingPayment||(busy?!reelControl.skip:loading);
-  $('spin-label').textContent=busy?(guardian.isRunning()?'TAP TO SKIP':'TAP TO STOP'):loading?'LOADING…':!userId?(guestLeft()?'SPIN THE MIX':'SIGN IN TO SPIN'):left?'SPIN THE MIX':'GET MORE SPINS';
+  const label=busy?(guardian.isRunning()?'TAP TO SKIP':'TAP TO STOP'):loading?'LOADING…':!userId?(guestLeft()?'SPIN THE MIX':'SIGN IN TO SPIN'):left?'SPIN THE MIX':'GET MORE SPINS';
+  $('spin-label').textContent=label;
+  // Longer labels get a smaller size so they never clip inside the fixed-width button.
+  $('spin').classList.toggle('long-label',label.length>12);
 }
 function renderCollection(){
   const ids=new Set(collection);
