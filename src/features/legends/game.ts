@@ -17,6 +17,7 @@ import {supabase} from '@/integrations/supabase/client';
 import {guestSpin,guardianOnGuestReels} from './guest';
 import {ACChillGuardianController,blessingOf,GUARDIAN_ART,type BlessingWin} from './guardian';
 import {GUARDIAN} from './config';
+import {ScrewTime,screwTriggered,SCREW_SONG,SCREW_ART} from './screw';
 import {SPIN_PACKS,packById,DAILY_SPEND_CAP_CENTS} from '../../../supabase/functions/_shared/legends/packs.ts';
 import {legendsPayPalSdkUrl,legendsPayPalButtonStyle} from './paypal-options';
 import {createPurchaseButton} from './purchase-button';
@@ -39,6 +40,8 @@ const impacts=new ImpactEffects($('board'));
 // A.C. Chill's Legacy Blessing show; the blessing itself arrives in the spin outcome.
 const guardian=new ACChillGuardianController($('board'),audio);
 if(guardianOnGuestReels())guardian.preload();
+// DJ Screw's Screw Time: presentation only, read from the finished outcome.
+const screw=new ScrewTime(root);screw.preload();let screwMet=false;
 // The memorial card unlocks once a player has been blessed; the last blessing can be replayed (no XP).
 let guardianMet=false,lastBlessing:BlessingWin|null=null,blessingClearTimer=0;
 // Artists collected on the latest spin get a card flip in the collection panel.
@@ -96,6 +99,11 @@ function renderCollection(){
     const img=document.createElement('img');img.src=GUARDIAN_ART.tile;img.alt='';img.loading='lazy';memorial.append(img);
     slot.append(memorial);
   }
+  {
+    const card=document.createElement('div');card.className=`collection-tile memorial${screwMet?'':' locked'}`;card.dataset.label='DJ Screw';
+    card.title=screwMet?'DJ Screw, Legendary Guardian: Screw Time unlocked':'DJ Screw, Legendary Guardian: hit 1,000 XP or more in one spin to bring on Screw Time';
+    const img=document.createElement('img');img.src=SCREW_ART;img.alt='';img.loading='lazy';card.append(img);slot.append(card);shelf.hidden=false;
+  }
   justFound=new Set();
   const count=ARTISTS.length;
   $('collection-count').textContent=`${ids.size} / ${count}`;$('collected').textContent=`${ids.size} / ${count}`;$('found').textContent=`${ids.size}/${count}`;
@@ -152,7 +160,7 @@ async function spin(){
   if(userId&&totalSpins(balance)<=0){openShop(true);return;}
   if(!userId&&!guestLeft()){askToSignIn();return;}
   root.dispatchEvent(new CustomEvent('lg-lines-result',{detail:null}));
-  busy=true;buttonState();paylines.clear();hits.clear();impacts.clear();bigWin.close();guardian.clear();clearTimeout(blessingClearTimer);$('blessing-replay').hidden=true;attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
+  busy=true;buttonState();paylines.clear();hits.clear();impacts.clear();bigWin.close();guardian.clear();screw.stop();clearTimeout(blessingClearTimer);$('blessing-replay').hidden=true;attract.poke();soundtrack.fadeOut();$('spin').classList.add('is-spinning');root.classList.add('lg-spinning');audio.feel(8);
   stage.set('spin-start');audio.spinStart();
   setResult('CUTTING THE MIX…','Each reel stops in order. Good luck finding your legends!','SPINNING');
   const key=pendingKey??crypto.randomUUID();pendingKey=key;
@@ -239,7 +247,9 @@ async function spin(){
       setResult(`+${outcome.xp.toLocaleString()} LEGENDS XP`,[description,stacks].filter(Boolean).join(' • ')+boost+blessed+(lines>1?` • ${lines} paylines hit`:'')+(fresh?` • ${fresh} new character${fresh>1?'s':''}!`:''),sweep?'LEGEND SWEEP!':unity?'SPC UNITY!':blessing?'LEGACY BLESSING!':vertical.length?'VERTICAL STACK!':supreme?'SUPREME LEGENDARY!':m>1?`×${m} MULTIPLIER`:'YOU HIT A MIX');
       if(blessing)$('blessing-replay').hidden=false;
       audio.win(isMajor);
-      const track=soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:spinXp,artist:winningArtist(outcome.wins,target)},musicOn);
+      const screwed=screwTriggered(outcome.xp);
+      if(screwed){screw.play({music:musicOn,reducedMotion:userReducedMotion});if(!screwMet){screwMet=true;renderCollection();}}
+      const track=screwed?(musicOn?SCREW_SONG:null):soundtrack.play({supreme,unity,sweep:!!sweep,major:isMajor||m>1,bonus:top?.type==='bonus',xp:spinXp,artist:winningArtist(outcome.wins,target)},musicOn);
       if(track&&musicOn){const sub=$('result').querySelector('span');if(sub)sub.textContent+=` • NOW PLAYING: ${track.title}`;}
     }else{
       setResult('KEEP THE MIX GOING',fresh?`${fresh} new legend${fresh>1?'s':''} collected, even without a matching line.`:!userId||totalSpins(balance)?'No payline match on this spin. Spin again!':'No payline match. That was your last spin for now.','SPIN COMPLETE');
@@ -462,7 +472,7 @@ function showMusic(){$('music').setAttribute('aria-pressed',String(musicOn));$('
 gestures.forEach(type=>document.addEventListener(type,startSound,{capture:true}));
 showSound();showMusic();
 $('sound').addEventListener('click',()=>{soundWanted=!soundWanted;try{localStorage.setItem(soundKey,soundWanted?'on':'off');}catch{/* the choice lasts this visit */}audio.setEnabled(soundWanted);showSound();if(soundWanted)audio.tone(523,.14);});
-$('music').addEventListener('click',()=>{musicOn=!musicOn;try{localStorage.setItem(musicKey,musicOn?'on':'off');}catch{/* preference lasts this visit */}if(!musicOn)soundtrack.stopNow();showMusic();});
+$('music').addEventListener('click',()=>{musicOn=!musicOn;try{localStorage.setItem(musicKey,musicOn?'on':'off');}catch{/* preference lasts this visit */}if(!musicOn){soundtrack.stopNow();screw.stop();}showMusic();});
 motionButton.addEventListener('click',()=>{userReducedMotion=!userReducedMotion;applyMotionPreference();});
 const onReducedChange=(e:MediaQueryListEvent)=>{if(e.matches){userReducedMotion=true;applyMotionPreference();}};
 // The daily allowance rolls over at Houston midnight; re-read the balance when the tab comes back.
@@ -476,7 +486,7 @@ const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
   if(event==='INITIAL_SESSION'||next!==userId)setTimeout(()=>{if(!unmounted)void loadAccount(next);},0);
 });
 return ()=>{
-  unmounted=true;clearTimeout(blessingClearTimer);guardian.destroy();soundtrack.stopNow();gestures.forEach(type=>document.removeEventListener(type,startSound,{capture:true}));audio.destroy();impacts.destroy();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();stopTempo();clearTimeout(winningTimer);
+  unmounted=true;clearTimeout(blessingClearTimer);guardian.destroy();screw.destroy();soundtrack.stopNow();gestures.forEach(type=>document.removeEventListener(type,startSound,{capture:true}));audio.destroy();impacts.destroy();subscription.unsubscribe();buyButton.destroy();bigWin.destroy();removeMarquee();attract.stop();stopWatching();stopTempo();clearTimeout(winningTimer);
   root.removeEventListener('lg-inspect-line',onInspectLine);
   void paypalButtons?.close?.().catch(()=>undefined);
   root.removeEventListener('click',onRootClick);

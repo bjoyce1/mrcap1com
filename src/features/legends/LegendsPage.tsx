@@ -19,6 +19,7 @@ import "@fontsource/alfa-slab-one/400.css";
 import "./legends.css";
 import "./environment.css";
 import "./guardian.css";
+import "./screw.css";
 import "./install.css";
 import "./polish.css";
 
