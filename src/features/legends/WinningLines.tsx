@@ -29,7 +29,7 @@ export function WinningLines() {
     const entry = entries[next];
     if (!entry) return;
     setIndex(next); setSelected(true);
-    host.current?.dispatchEvent(new CustomEvent('lg-inspect-line', { bubbles: true, detail: entry.win }));
+    host.current?.dispatchEvent(new CustomEvent('lg-inspect-line', { bubbles: true, detail: { ...entry.win, inspectionRejected: !entry.accepted } }));
   };
   return <div ref={host} className="winning-lines" hidden={!result}>
     <h3><ListChecks size={18} aria-hidden="true" /> WINNING LINES</h3>
@@ -47,8 +47,8 @@ export function WinningLines() {
           <label>Line <select aria-label="Select winning line" value={index} onChange={event => choose(Number(event.target.value))}>{lines.map((entry, i) => <option key={entry.id} value={i}>{entry.label}</option>)}</select></label>
           <Button size="icon" variant="secondary" aria-label="Next winning line" title="Next line" disabled={index >= lines.length - 1} onClick={() => choose(index + 1)}><ChevronRight size={18} /></Button>
         </div>
-        <div className="line-explanation" aria-live="polite"><strong>{line.label} · {index + 1} / {lines.length}</strong><p>{line.explanation}</p></div>
-        {!selected && <Button variant="secondary" size="sm" onClick={() => choose(index)}>Highlight this line</Button>}
+        <div className="line-explanation" data-accepted={line.accepted} aria-live="polite"><strong>{line.label} · {index + 1} / {lines.length}</strong><p>{line.explanation}</p></div>
+        {!selected && <Button variant="secondary" size="sm" onClick={() => choose(index)}>{line.accepted ? 'Highlight this line' : 'Inspect rejected line'}</Button>}
       </> : <p>{group === 'vertical' ? 'No vertical stack. A reel needs three matching artist, music or Houston hood tiles; Wilds may substitute, but cannot win alone. Artist stacks pay 250 base XP, music and hood stacks 125.' : 'No lines in this category.'}</p>}
     </>}
   </div>;
