@@ -379,3 +379,7 @@
 @media (prefers-reduced-motion: reduce) {
   .legends-world .spin-button, .legends-world .spin-button:hover { transition: none; transform: none; }
 }
+
+/* Hero logo: approved transparent artwork, no frame or scene layers. */
+.mq-logo{width:min(100%,1100px);margin:0 auto;}
+.mq-logo img{display:block;width:100%;height:auto;filter:drop-shadow(0 12px 32px hsl(0 0% 0%/.45));}
