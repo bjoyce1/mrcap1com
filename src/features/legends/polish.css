@@ -1,0 +1,321 @@
+/* SPC Legends final UI polish, 2026-11-24.
+   Presentation-only: scoped to the existing game. Does not change gameplay,
+   symbol probabilities, win evaluation, account state or checkout behavior.
+   Loaded after environment.css / guardian.css / install.css.
+*/
+.legends-world {
+  --lg-polish-gold: #ffe1a3;
+  --lg-polish-purple: #b678f9;
+  --lg-polish-surface: #120d22;
+}
+
+/* The arcade is an experience, but the game should always remain the focus. */
+.legends-world .hero-copy {
+  max-width: 62ch;
+  color: #ded0eb;
+  font-size: clamp(12px, .95vw, 14px);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+.legends-world .hero-tags span {
+  background: linear-gradient(180deg, rgba(43, 26, 65, .91), rgba(16, 11, 31, .92));
+  border-color: #8861a0;
+  color: #f1e3f7;
+  box-shadow: inset 0 1px 0 rgba(255, 233, 180, .12);
+}
+.legends-world .game-layout > .machine-shell,
+.legends-world .game-layout > .sidebar,
+.legends-world .below-grid > .panel {
+  min-width: 0;
+}
+
+/* Sharpen reel presentation without obscuring the approved artwork. */
+.legends-world .reel-board {
+  box-shadow: inset 0 0 0 1px rgba(255, 207, 131, .24),
+              inset 0 0 22px rgba(0, 0, 0, .85),
+              0 0 16px rgba(171, 76, 232, .1);
+}
+.legends-world .reel-headers span {
+  color: #ffe1a3;
+  text-shadow: 0 1px 0 #211229, 0 0 8px rgba(255, 197, 94, .2);
+}
+.legends-world .reels.has-wins .symbol-tile:not(.match):not(.is-supreme) {
+  filter: brightness(.67) saturate(.78);
+}
+.legends-world .payline.focus .payline-run {
+  stroke-width: 5;
+  filter: drop-shadow(0 0 5px var(--line))
+          drop-shadow(0 0 9px rgba(255, 213, 129, .45));
+}
+.legends-world .payline.focus .payline-node {
+  stroke-width: 3;
+}
+
+/* Put score, instructions, and the selected winning route on equal footing
+   with the flashy art: high contrast, legible numbers, calmer hierarchy. */
+.legends-world .hud-block {
+  justify-content: center;
+  min-width: 0;
+}
+.legends-world .hud-label {
+  color: #f4ce84;
+  font-size: clamp(8px, .75vw, 10px);
+  line-height: 1.35;
+  text-align: center;
+}
+.legends-world .hud-block strong {
+  max-width: 100%;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.015em;
+  line-height: 1.12;
+  text-align: center;
+  white-space: nowrap;
+}
+.legends-world .result {
+  padding: 18px 16px;
+  min-height: 116px;
+  border: 1px solid #a273bc;
+  background: radial-gradient(ellipse at 50% 0%, rgba(132, 66, 168, .28), transparent 75%),
+              linear-gradient(180deg, #1b112f, #0c0917);
+  box-shadow: inset 0 1px 0 rgba(255, 234, 199, .18),
+              0 0 0 1px rgba(31, 12, 47, .65);
+}
+.legends-world .result-kicker {
+  color: #ffdc9c;
+  letter-spacing: .16em;
+}
+.legends-world .result strong {
+  color: #ffebbd;
+  font-size: clamp(22px, 2vw, 29px);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.legends-world .result span {
+  color: #e1d0ec;
+  font-size: clamp(11px, .94vw, 13px);
+  line-height: 1.65;
+}
+.legends-world .game-disclaimer {
+  color: #d5c2df;
+  font-size: 11px;
+  line-height: 1.65;
+  max-width: 80ch;
+  margin-inline: auto;
+}
+
+/* Make payline explanations as easy to read as the win itself. */
+.legends-world .winning-lines {
+  border: 1px solid #6f5384;
+  border-radius: 16px;
+  padding: clamp(12px, 2vw, 18px);
+  background: linear-gradient(160deg, #24143b, #0d0b19 80%);
+  box-shadow: inset 0 1px 0 rgba(255, 235, 193, .11);
+}
+.legends-world .winning-lines h3 {
+  color: #ffdb91;
+  letter-spacing: .06em;
+}
+.legends-world .winning-lines p {
+  color: #d7c6e5;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.legends-world .lines-summary {
+  font-weight: 700;
+  color: #e9d0ff !important;
+}
+.legends-world .lines-tabs {
+  gap: 6px;
+}
+.legends-world .lines-tabs > button {
+  min-height: 36px;
+  white-space: normal;
+  line-height: 1.3;
+  border-radius: 10px;
+}
+.legends-world .lines-tabs > button[aria-pressed='true'] {
+  color: #27152c;
+  background: linear-gradient(180deg, #ffefb7, #f3bd66);
+  border-color: #ffe4a5;
+  box-shadow: 0 0 0 1px rgba(255, 232, 179, .35);
+}
+.legends-world .lines-controls select {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #9a72b9;
+  border-radius: 9px;
+  background: #1a102b;
+  color: #fff5e9;
+}
+.legends-world .line-explanation {
+  min-height: 0;
+  padding: 12px;
+  border: 1px solid rgba(194, 138, 235, .34);
+  border-radius: 12px;
+  background: rgba(12, 8, 23, .54);
+}
+
+/* Readable supporting panels, without overpowering the cabinet. */
+.legends-world .sidebar .panel,
+.legends-world .below-grid .panel {
+  border-color: #6f4e85;
+  box-shadow: inset 0 1px 0 rgba(255, 235, 199, .07), 0 8px 25px rgba(0, 0, 0, .22);
+}
+.legends-world .panel h2 {
+  line-height: 1.12;
+}
+.legends-world .special small {
+  display: block;
+  color: #d0bbdf;
+  line-height: 1.4;
+}
+.legends-world .panel-note {
+  color: #cbb7d9;
+}
+.legends-world .reward-links {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+.legends-world .reward-links a {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.legends-world .library-item b {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+  line-height: 1.3;
+  min-height: 2.6em;
+}
+.legends-world .board-tools .icon-button {
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+@media (hover:hover) {
+  .legends-world .board-tools .icon-button:hover {
+    transform: translateY(-2px);
+    border-color: #ffdc92;
+    box-shadow: 0 0 14px rgba(205, 116, 255, .24);
+  }
+  .legends-world .collection-tile:hover,
+  .legends-world .library-item:hover img {
+    box-shadow: 0 0 0 1px #ddaffd, 0 0 16px rgba(175, 77, 238, .28);
+  }
+}
+.legends-world :is(button, a, select, [role='radio']):focus-visible {
+  outline: 2px solid #a4eaff;
+  outline-offset: 3px;
+}
+
+/* Mid-width desktop: give six reel columns the full width rather than
+   squeezing them beside the sidebar. At larger widths the sidebar remains. */
+@media (min-width: 941px) and (max-width: 1180px) {
+  .legends-world .game-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .legends-world .sidebar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+  .legends-world .sidebar > .history-panel {
+    grid-column: 1 / -1;
+  }
+  .legends-world .game-layout > .cab-underglow {
+    grid-column: 1;
+  }
+}
+
+/* Tablets and phones: no truncated side panels or tiny bonus descriptions. */
+@media (max-width: 700px) {
+  .legends-world .sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .legends-world .sidebar > .history-panel {
+    grid-column: auto;
+  }
+  .legends-world .collection-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .legends-world .special-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .legends-world .special b {
+    font-size: clamp(12px, 2.8vw, 16px);
+  }
+  .legends-world .special small {
+    font-size: 11px;
+  }
+  .legends-world .winning-lines .lines-tabs > button {
+    flex: 1 1 calc(50% - 6px);
+  }
+}
+
+/* Keep all six reels in view at 360 px; reduce chrome, not the art itself. */
+@media (max-width: 620px) {
+  .legends-world .hero-copy { font-size: 12px; line-height: 1.6; }
+  .legends-world .machine-shell {
+    padding: 8px 9px 12px;
+    border-width: 3px;
+  }
+  .legends-world .cabinet-inset { padding: 4px; }
+  .legends-world .reel-headers span {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  .legends-world .board-bottom {
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    line-height: 1.3;
+  }
+  .legends-world .board-tools .icon-button {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+  .legends-world .board-tag { display: none; }
+  .legends-world .hud-block strong {
+    font-size: clamp(18px, 5.6vw, 26px);
+    letter-spacing: -.03em;
+  }
+  .legends-world .hud-label {
+    font-size: clamp(7px, 1.9vw, 9px);
+    letter-spacing: .03em;
+  }
+  .legends-world .result {
+    padding: 14px 12px;
+    min-height: 104px;
+  }
+  .legends-world .result strong { font-size: 22px; }
+  .legends-world .result span { font-size: 12px; }
+  .legends-world .panel h2 { font-size: 22px; }
+  .legends-world .collection-tile:after {
+    font-size: 10px;
+    padding-top: 14px;
+  }
+  .legends-world .game-disclaimer { font-size: 10px; }
+}
+@media (max-width: 380px) {
+  .legends-world .lg-container { width: calc(100% - 14px); }
+  .legends-world .machine-shell { padding: 6px 7px 10px; }
+  .legends-world .reel-board { padding: 1px; }
+  .legends-world .reels, .legends-world .reel-track { gap: 2px; }
+  .legends-world .collection-grid { gap: 5px; }
+  .legends-world .special-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .legends-world .board-tools .icon-button,
+  .legends-world .collection-tile,
+  .legends-world .library-item img {
+    transition: none !important;
+  }
+}
+.legends-world.reduce-motion .board-tools .icon-button,
+.legends-world.reduce-motion .collection-tile,
+.legends-world.reduce-motion .library-item img {
+  transition: none !important;
+}
