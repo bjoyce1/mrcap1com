@@ -434,3 +434,27 @@
 
 /* Supreme Legendary: a Legend on every reel. No line is drawn for it; each of its six Legends wears a crown. */
 .legends-world .reels .is-supreme:after{content:'\265B';position:absolute;top:3%;right:4%;z-index:4;display:grid;place-items:center;width:clamp(14px,18%,26px);aspect-ratio:1;border-radius:50%;font-size:clamp(9px,1.1vw,15px);line-height:1;color:#2a1402;background:radial-gradient(circle at 35% 30%,#fff3c4,#f5c443 55%,#b97a1a);box-shadow:0 0 0 1px #5b3209,0 0 8px rgba(255,200,90,.8);pointer-events:none}
+
+/* Cabinet controls: accommodate every state, including translated or long account labels. */
+.legends-world .hud{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.55fr) minmax(0,1fr) minmax(0,1fr)}
+.legends-world .hud-main{width:100%;min-width:0;container-type:inline-size}
+.legends-world .hud-main .spin-button{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;justify-items:center;width:100%;min-width:0;max-width:100%;height:auto;box-sizing:border-box;gap:clamp(3px,2cqi,10px);padding-inline:clamp(8px,4cqi,16px);font-size:clamp(15px,10cqi,34px);white-space:normal;line-height:1.12}
+.legends-world .hud-main .spin-button [data-lg="spin-label"]{display:block;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-wrap:balance;text-align:center;line-height:1.12;padding-block:3px}
+.legends-world .hud-main .spin-button:is([data-spin-state="signin"],[data-spin-state="refill"],[data-spin-state="retry"],[data-spin-state="checking"]){font-size:clamp(14px,8cqi,27px)}
+.legends-world .hud-main .spin-button .spin-star,.legends-world .hud-main .spin-button .spin-chevron{flex-shrink:0;font-size:.42em}
+.legends-world .hud-main .spin-button:focus-visible{outline:2px solid #fff0bf;outline-offset:4px}
+.legends-world .hud-block strong{max-width:100%;font-variant-numeric:tabular-nums;font-size:clamp(12px,3.1cqi,28px);overflow-wrap:anywhere}
+.legends-world .hud-label{white-space:normal;text-align:center;line-height:1.2}
+.legends-world [data-lg="balance-summary"]{text-align:center;overflow-wrap:anywhere}
+.legends-world .reward-links{flex-wrap:wrap;align-items:center;gap:8px}
+.legends-world .reward-links :is(a,button){min-width:0;text-align:center;white-space:normal;line-height:1.25}
+.legends-world .result{min-width:0;overflow-wrap:anywhere}
+.legends-world .result [data-lg="result-title"]{max-width:100%;text-wrap:balance}
+.legends-world .result [data-lg="result-desc"]{max-width:68ch;line-height:1.55;text-wrap:pretty}
+.legends-world .result[data-result-state="retry"]{border-color:#c99b60}
+@media(max-width:620px){
+  .legends-world .hud{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .legends-world .hud-main .spin-button{font-size:clamp(18px,6.5cqi,30px);min-height:66px}
+  .legends-world .hud-main .spin-button:is([data-spin-state="signin"],[data-spin-state="refill"],[data-spin-state="retry"],[data-spin-state="checking"]){font-size:clamp(16px,5.5cqi,26px)}
+  .legends-world .hud-block strong{font-size:clamp(12px,4.1vw,22px)}
+}
