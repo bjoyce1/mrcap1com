@@ -59,7 +59,7 @@ export class ScrewTime{
   private showOverlay(reduced:boolean){
     const o=document.createElement('div');o.className=`screw-overlay${reduced?' is-simple':''}`;o.setAttribute('role','status');
     o.innerHTML=`<img src="${SCREW_ART}" alt="DJ Screw"><div class="screw-copy"><span>LEGENDARY GUARDIAN</span><strong>DJ SCREW</strong><em>SLOWED &amp; CHOPPED</em></div>`;
-    this.root.append(o);this.overlay=o;
+    document.body.append(o);this.overlay=o;
   }
   private hideOverlay(){const o=this.overlay;this.overlay=null;if(!o)return;o.classList.add('is-leaving');window.setTimeout(()=>o.remove(),600);}
   private endMotion(){
