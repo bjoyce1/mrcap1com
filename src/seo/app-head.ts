@@ -17,6 +17,15 @@ export const APP_HEAD_TAGS = [
 
 const attr = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
+// Structural subset of the DOM. The build's SEO plugin imports this file in Node, where the DOM
+// lib is not loaded, so the global Document and HTMLElement names cannot be used here. The real
+// document satisfies these shapes in the browser.
+type HeadElement = { setAttribute(name: string, value: string): void; remove(): void };
+type HeadDocument = {
+  head: { querySelector(selector: string): HeadElement | null; appendChild(el: unknown): void };
+  createElement(tag: string): HeadElement;
+};
+
 export function appHeadTags(app: AppHead): string[] {
   return [
     `<link rel="manifest" href="${attr(app.manifest)}" />`,
@@ -27,8 +36,8 @@ export function appHeadTags(app: AppHead): string[] {
   ];
 }
 
-function upsert(doc: Document, selector: string, make: () => HTMLElement, key: "href" | "content", value: string | null): void {
-  let el = doc.head.querySelector<HTMLElement>(selector);
+function upsert(doc: HeadDocument, selector: string, make: () => HeadElement, key: "href" | "content", value: string | null): void {
+  let el = doc.head.querySelector(selector);
   if (value === null) {
     el?.remove();
     return;
@@ -40,7 +49,7 @@ function upsert(doc: Document, selector: string, make: () => HTMLElement, key: "
   el.setAttribute(key, value);
 }
 
-function write(doc: Document, head: { manifest: string; icon: string; themeColor: string; title: string | null }): void {
+function write(doc: HeadDocument, head: { manifest: string; icon: string; themeColor: string; title: string | null }): void {
   const link = (rel: string) => () => Object.assign(doc.createElement("link"), { rel });
   const meta = (name: string) => () => Object.assign(doc.createElement("meta"), { name });
   upsert(doc, 'link[rel="manifest"]', link("manifest"), "href", head.manifest);
@@ -51,7 +60,7 @@ function write(doc: Document, head: { manifest: string; icon: string; themeColor
 }
 
 /** Puts the page's app details in the live <head>. The returned function restores the site's own. */
-export function applyAppHead(doc: Document, app: AppHead): () => void {
+export function applyAppHead(doc: HeadDocument, app: AppHead): () => void {
   write(doc, app);
   return () => write(doc, { ...SITE_APP_HEAD, title: null });
 }

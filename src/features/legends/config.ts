@@ -13,7 +13,8 @@ export const ARTISTS = Object.freeze([
   {id:'rapper-k',name:'Rapper K',color:'#be64ff',short:'RK'},
   {id:'komodo-dbx',name:'Komodo DBX',color:'#1bafff',short:'KD'},
   {id:'ganxsta-nip',name:'Ganxsta Nip',color:'#ff5b6a',short:'GN'},
-  {id:'dope-e',name:'Dope-E',color:'#3dff77',short:'DE'}
+  {id:'dope-e',name:'Dope-E',color:'#3dff77',short:'DE'},
+  {id:'psk-13',name:'PSK-13',color:'#ff8a2a',short:'PK'}
 ]);
 export const MUSIC = Object.freeze([
   {id:'mic',name:'Gold Microphone',color:'#ffce65'},
@@ -45,6 +46,7 @@ export const SYMBOL_LORE: Record<string, {role: string; hood: string; bio: strin
   'komodo-dbx': {role:'DBX Production & Bars',hood:'Houston, TX',bio:'Architect of heavy trunk-rattling Texas production and rapid-fire SPC verses.'},
   'ganxsta-nip': {role:'Creator of Horrorcore',hood:'South Park',bio:'The South Park Psycho whose 1992 classic put South Park on the global map and birthed an entire subgenre.'},
   'dope-e': {role:'Terrorists Producer & MC',hood:'South Park',bio:'Mastermind behind classic SPC drum programming, soul-chopped Texas bounce, and rapid-fire verses.'},
+  'psk-13': {role:'SPC Original · South Park Voice',hood:'South Park',bio:'South Park Coalition original whose commanding presence and street anthems helped carry the SPC name across Texas and beyond.'},
   'south-park': {role:'Houston Hood Symbol · 25–750 XP',hood:'Southside (713)',bio:'MLK Blvd, Cullen & Bellfort — The historic neighborhood where K-Rino and the founding fathers forged the South Park Coalition.'},
   '3rd-ward': {role:'Houston Hood Symbol · 25–750 XP',hood:'Treyland / Southside',bio:'Neighboring cultural powerhouse steeped in Houston music history, independence, and community pride.'},
   '5th-ward': {role:'Houston Hood Symbol · 25–750 XP',hood:'Northeast Houston',bio:'The Bloody Nickel — Lyons Avenue stronghold known worldwide for gritty storytelling and Texas rap royalty.'},
@@ -75,7 +77,7 @@ export const MULTIPLIERS = Object.freeze({double:2,triple:3});
 // lands on reels where the Legacy Blessing is switched on (off in production until the owner approves these numbers).
 // When he lands on a board that already won with Legends, he blesses up to three of them for XP of his own.
 export const GUARDIAN=Object.freeze({id:'ac-chill',name:'A.C. Chill',color:'#ffd27a',short:'AC',category:'legendary_guardian'});
-// Provisional, owner to approve: weight is his share of reel tickets (the other symbols total 187). Blessing XP is paid
+// Provisional, owner to approve: weight is his share of reel tickets (the other symbols total 197). Blessing XP is paid
 // once by the server on top of the spin, after Double and Triple Bonus, which never multiply it.
 export const LEGACY_BLESSING=Object.freeze({weight:1,activationXp:150,perBlessedXp:75,maxBlessed:3,maxXp:375,qualifying:Object.freeze(['line','vertical','unity','sweep'])});
 export const SYMBOLS=[...ARTISTS,...MUSIC,...SPECIAL,...HOUSTON_HOODS];

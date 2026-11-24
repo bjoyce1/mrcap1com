@@ -48,6 +48,7 @@ ARTISTS = {
     "komodo-dbx":   {"split": 890, "crown": [495, 780, 745, 890], "model": "isnet-anime"},
     "ganxsta-nip":  {"split": 878, "crown": [515, 812, 745, 878], "model": "isnet-anime"},
     "dope-e":       {"split": 925, "model": "isnet-anime"},
+    "psk-13":       {"split": 1080, "crown": [520, 985, 765, 1080], "model": "isnet-anime"},
 }
 
 

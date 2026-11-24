@@ -31,7 +31,8 @@ describe("Legend layers", () => {
   it("place the plate's top where the character is cut", () => {
     for (const e of Object.values(manifest)) {
       expect(e.split).toBeGreaterThan(0.6);
-      expect(e.split).toBeLessThan(0.8);
+      // PSK-13's name plate sits lower on his poster than the others (0.861).
+      expect(e.split).toBeLessThan(0.9);
     }
   });
 });

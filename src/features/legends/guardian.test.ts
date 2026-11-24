@@ -119,7 +119,7 @@ describe("Legacy Blessing XP", () => {
 describe("Reels and flags", () => {
   it("keeps A.C. Chill off the reels unless switched on, and keeps every other symbol's tickets", () => {
     const total = Object.values(SYMBOL_WEIGHTS).reduce((t, w) => t + w, 0);
-    expect(total).toBe(187);
+    expect(total).toBe(197);
     for (let t = 0; t < total; t++) expect(weightedSymbol(() => t, { guardian: true })).toBe(weightedSymbol(() => t));
     expect(weightedSymbol(() => total, { guardian: true })).toBe(GUARDIAN.id);
     for (let seed = 1; seed < 2000; seed++) expect((createBoard(seeded(seed)) as string[][]).flat()).not.toContain(GUARDIAN.id);

@@ -59,6 +59,12 @@
     "slam": true,
     "split": 0.674
   },
+  "psk-13": {
+    "asset": "9b5d9e61-7335-4355-b202-89b9873865ba",
+    "dir": "psk-13.9b5d9e61.v2",
+    "slam": true,
+    "split": 0.861
+  },
   "rapper-k": {
     "asset": "bc486664-0fb0-4dfc-b6ce-f8fd592c5984",
     "dir": "rapper-k.bc486664.v2",
