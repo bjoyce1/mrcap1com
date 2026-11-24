@@ -70,6 +70,8 @@ export async function requestSpin(idempotencyKey: string): Promise<SpinResult | 
   if (status === 429) return { error: "cooldown" };
   if (status === 402) return { error: "no_spins", balance: body.balance as Balance };
   if (status === 401) return { error: "signed_out" };
+  // Keep diagnostic status without exposing the server body, player ID, or credentials.
+  console.warn("Legends spin not confirmed", { status: status || "transport" });
   return { error: "failed" };
 }
 

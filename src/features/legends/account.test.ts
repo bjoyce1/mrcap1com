@@ -42,4 +42,23 @@ describe("Legends server integration", () => {
     invoke.mockResolvedValue({ error: { context: new Response(JSON.stringify({ error: "Daily spin pack limit reached" }), { status: 429 }) } });
     expect(await startCheckout("p100")).toEqual({ error: "cap" });
   });
+
+  it("recognizes a spin cooldown and retains the supplied request key for retry", async () => {
+    invoke.mockResolvedValueOnce({ error: { context: new Response(JSON.stringify({ error: "cooldown" }), { status: 429 }) } });
+    const result = { board: [["cap"]], outcome: { xp: 500 }, balance: { welcomeLeft: 24, dailyLeft: 3, paidSpins: 0 } };
+    invoke.mockResolvedValueOnce({ data: result, error: null });
+    expect(await requestSpin("retry-key-001")).toEqual({ error: "cooldown" });
+    expect(await requestSpin("retry-key-001")).toBe(result);
+    expect(invoke).toHaveBeenNthCalledWith(1, "legends-spin", { body: { idempotencyKey: "retry-key-001" } });
+    expect(invoke).toHaveBeenNthCalledWith(2, "legends-spin", { body: { idempotencyKey: "retry-key-001" } });
+  });
+  it("keeps unknown server failures distinct from exhausted spins or sign-out", async () => {
+    invoke.mockResolvedValueOnce({ error: { context: new Response(JSON.stringify({ error: "Spin failed" }), { status: 500 }) } });
+    expect(await requestSpin("retry-key-002")).toEqual({ error: "failed" });
+    invoke.mockResolvedValueOnce({ error: { context: new Response(JSON.stringify({ error: "Sign in required" }), { status: 401 }) } });
+    expect(await requestSpin("retry-key-003")).toEqual({ error: "signed_out" });
+    const balance = { welcomeLeft: 0, dailyLeft: 0, paidSpins: 0 };
+    invoke.mockResolvedValueOnce({ error: { context: new Response(JSON.stringify({ error: "no_spins", balance }), { status: 402 }) } });
+    expect(await requestSpin("retry-key-004")).toEqual({ error: "no_spins", balance });
+  });
 });
