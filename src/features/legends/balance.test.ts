@@ -4,8 +4,8 @@ import { activePool, balanceFromRow, totalSpins } from "./balance";
 const now = new Date("2026-10-31T19:00:00Z"); // 2026-10-31 in Houston
 
 describe("balanceFromRow", () => {
-  it("treats a missing row as a new player with 50 welcome and 20 daily spins", () => {
-    expect(balanceFromRow(null, now)).toEqual({ welcomeLeft: 50, dailyLeft: 20, paidSpins: 0 });
+  it("treats a missing row as a new player with 1000 welcome and 20 daily spins", () => {
+    expect(balanceFromRow(null, now)).toEqual({ welcomeLeft: 1000, dailyLeft: 20, paidSpins: 0 });
   });
   it("counts today's spins only on the same Houston day", () => {
     const row = { welcome_left: 0, paid_spins: 10, spins_today: 2, day: "2026-10-31" };

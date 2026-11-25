@@ -20,27 +20,27 @@ test('random injected deterministic source builds valid board',()=>{const b=crea
 test('line wins expose the exact payline cells used for highlighting',()=>{const b=grid();b[0][0]='k-water';b[1][1]='k-water';b[2][2]='k-water';b[3][2]='k-water';const r=evaluateBoard(b);const win=r.wins.find(w=>w.type==='line'&&w.symbol==='k-water');assert(win);assert.deepEqual(win.cells,PAYLINES[win.payline-1].slice(0,win.count).map((row,col)=>`${col}:${row}`));});
 test('anticipation starts after exactly two 713 symbols land and stops after a third',()=>{const b=grid();assert.deepEqual(anticipationReels(b),[false,false,false,false,false,false]);b[0][0]='bonus';assert.deepEqual(anticipationReels(b),[false,false,false,false,false,false]);b[2][1]='bonus';assert.deepEqual(anticipationReels(b),[false,false,false,true,true,true]);b[4][2]='bonus';assert.deepEqual(anticipationReels(b),[false,false,false,true,true,false]);});
 test('anticipation is presentation only and never changes the outcome',()=>{const b=grid();b[0][0]='bonus';b[1][0]='bonus';const before=JSON.stringify(evaluateBoard(b));anticipationReels(b);assert.equal(JSON.stringify(evaluateBoard(b)),before);assert.throws(()=>anticipationReels([['bonus']]),/Expected six reels/);});
-test('new players start with 50 welcome spins, then get 20 free spins a day',()=>{
+test('new players start with 1000 welcome spins, then get 20 free spins a day',()=>{
   const b=grid();let s=initialState(d);
-  assert.equal(GAME_CONFIG.welcomeSpins,50);assert.equal(GAME_CONFIG.dailySpins,20);assert.equal(spinsLeft(s,d),50);assert.equal(onWelcomeSpins(s,d),true);
-  for(let i=0;i<50;i++)s=applySpin(s,b,d).state;
+  assert.equal(GAME_CONFIG.welcomeSpins,1000);assert.equal(GAME_CONFIG.dailySpins,20);assert.equal(spinsLeft(s,d),1000);assert.equal(onWelcomeSpins(s,d),true);
+  for(let i=0;i<1000;i++)s=applySpin(s,b,d).state;
   assert.equal(s.welcomeLeft,0);assert.equal(s.spinsToday,0,'welcome spins do not use the daily allowance');
   assert.equal(spinsLeft(s,d),20);assert.equal(onWelcomeSpins(s,d),false);
   for(let i=0;i<20;i++)s=applySpin(s,b,d).state;
-  assert.equal(spinsLeft(s,d),0);assert.equal(s.totalSpins,70);
+  assert.equal(spinsLeft(s,d),0);assert.equal(s.totalSpins,1020);
   assert.throws(()=>applySpin(s,b,d),/Daily spin limit/);
   const tomorrow=new Date('2026-11-01T19:00:00Z');assert.equal(spinsLeft(s,tomorrow),20);
 });
 test('welcome spins never reset and carry across days',()=>{
-  const s=applySpin(initialState(d),grid(),d).state;assert.equal(s.welcomeLeft,49);
-  const next=normalizeState(s,new Date('2026-11-05T19:00:00Z'));assert.equal(next.welcomeLeft,49);assert.equal(spinsLeft(next,new Date('2026-11-05T19:00:00Z')),49);
+  const s=applySpin(initialState(d),grid(),d).state;assert.equal(s.welcomeLeft,999);
+  const next=normalizeState(s,new Date('2026-11-05T19:00:00Z'));assert.equal(next.welcomeLeft,999);assert.equal(spinsLeft(next,new Date('2026-11-05T19:00:00Z')),999);
 });
-test('players saved before welcome spins get the full 50; bad values are clamped',()=>{
+test('players saved before welcome spins get the full 1000; bad values are clamped',()=>{
   const legacy={schema:3,day:'2026-10-31',spinsToday:3,xp:500,totalSpins:9,collection:['k-rino'],history:[],badges:[]};
-  const s=normalizeState(legacy,d);assert.equal(s.welcomeLeft,50);assert.equal(spinsLeft(s,d),50);assert.equal(s.xp,500);
-  assert.equal(normalizeState({...legacy,welcomeLeft:999},d).welcomeLeft,50);
+  const s=normalizeState(legacy,d);assert.equal(s.welcomeLeft,1000);assert.equal(spinsLeft(s,d),1000);assert.equal(s.xp,500);
+  assert.equal(normalizeState({...legacy,welcomeLeft:5000},d).welcomeLeft,1000);
   assert.equal(normalizeState({...legacy,welcomeLeft:-4},d).welcomeLeft,0);
-  assert.equal(normalizeState({...legacy,welcomeLeft:'25'},d).welcomeLeft,50,'a non-number gets the full allowance');
+  assert.equal(normalizeState({...legacy,welcomeLeft:'25'},d).welcomeLeft,1000,'a non-number gets the full allowance');
 });
 // A board with no wins at all: no symbol appears in more than one reel.
 const quiet=()=>[['mic','mixer','vinyl'],['tape','headphones','legend'],['speakers','houston','mic'],['mixer','vinyl','tape'],['legend','speakers','houston'],['headphones','mic','mixer']];
