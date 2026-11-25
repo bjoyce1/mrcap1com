@@ -1,8 +1,10 @@
 import { Play, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 import { gsap } from "@/hooks/useGSAP";
 import { MagneticWrapper } from "@/hooks/useMagneticHover";
+import Safe3D from "@/components/Safe3D";
+import coinFallback from "@/assets/mr-cap-coin.webp";
 
 const CoinHero3D = lazy(() => import("@/components/home/CoinHero3D"));
 
@@ -176,9 +178,15 @@ const HeroSection = () => {
 
       {/* Three.js layer — gold coin + particles, pure atmosphere */}
       {show3D && (
-        <Suspense fallback={null}>
+        <Safe3D
+          fallback={
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex items-start justify-center pt-24 lg:items-center lg:justify-end lg:pr-[12%] lg:pt-0">
+              <img src={coinFallback} alt="" loading="lazy" decoding="async" className="h-28 w-28 rounded-full object-contain opacity-80 lg:h-56 lg:w-56" />
+            </div>
+          }
+        >
           <CoinHero3D />
-        </Suspense>
+        </Safe3D>
       )}
 
       {/* Cinematic light beam sweep */}

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Play, Pause, SkipForward, Headphones, Shuffle } from "lucide-react";
 import { usePlayerStore, type Track } from "@/stores/playerStore";
@@ -6,6 +6,8 @@ import { useAudioAnalyzerStore } from "@/stores/audioAnalyzerStore";
 import { SplitText } from "@/components/whois/motion";
 import { useMotionOk } from "@/components/whois/motionUtils";
 import { WRAP, coverThumb } from "./catalog";
+import Safe3D from "@/components/Safe3D";
+import vinylFallback from "@/assets/album-ties.webp";
 
 const Vinyl3D = lazy(() => import("@/components/music/Vinyl3D"));
 
@@ -200,9 +202,15 @@ const ListeningRoomHero = ({ trackCount, albumCount, allPlayable, latestPlayable
       {/* 3D vinyl — spins with the music, label mirrors the current track */}
       {show3D && (
         <motion.div style={{ y: recordY, rotate: recordTilt }} className="pointer-events-none absolute inset-0">
-          <Suspense fallback={null}>
+          <Safe3D
+            fallback={
+              <div aria-hidden="true" className="absolute bottom-0 right-0 top-20 hidden w-1/2 items-center justify-center lg:flex">
+                <img src={vinylFallback} alt="" loading="lazy" decoding="async" className="h-72 w-72 rounded-full object-cover opacity-80" />
+              </div>
+            }
+          >
             <Vinyl3D active={running} />
-          </Suspense>
+          </Safe3D>
         </motion.div>
       )}
 

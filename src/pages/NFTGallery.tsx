@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 
 const NFTGalleryHero3D = lazy(() => import("@/components/nft/NFTGalleryHero3D"));
@@ -13,6 +13,8 @@ import WalletConnectPanel from "@/components/nft/WalletConnectPanel";
 import UnlockGrid from "@/components/nft/UnlockGridNew";
 import { nftPageData as data } from "@/content/nft";
 import { routeSeo } from "@/seo/routes";
+import Safe3D from "@/components/Safe3D";
+import nftFallback from "@/assets/nft-limitless.webp";
 
 const NFTGallery = () => {
   const [holderVerified, setHolderVerified] = useState(false);
@@ -41,9 +43,15 @@ const NFTGallery = () => {
           />
           {/* Floating gallery of gold-framed pieces */}
           {show3D && (
-            <Suspense fallback={null}>
+            <Safe3D
+              fallback={
+                <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] items-center justify-center lg:flex">
+                  <img src={nftFallback} alt="" loading="lazy" decoding="async" className="max-h-[70%] w-auto object-contain opacity-80" />
+                </div>
+              }
+            >
               <NFTGalleryHero3D />
-            </Suspense>
+            </Safe3D>
           )}
         </div>
 
