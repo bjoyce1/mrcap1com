@@ -109,7 +109,7 @@ export const ROUTES: SeoEntry[] = [
     ogImageAlt: "Mr. CAP, Houston hip-hop artist",
     title: "Mr. CAP | Houston Rapper | South Park Coalition",
     description: `Official site of Mr. CAP, Houston rapper and ${SPC_ROLE}. New music, the full catalog, live booking, press, and digital art.`,
-    h1: "Mr. CAP",
+    h1: "Mr. CAP: Houston Hip-Hop Artist",
     summary: [
       `Mr. CAP (Cornelius A. Pratt) is a Houston-born rapper, writer, and creative entrepreneur from South Park, and an ${SPC_ROLE}, where the ISM was born.`,
       "Three decades deep: the grind years of O.N.E. on O.N.E. and 2 Tha Grave, The Art of ISM distributed by Sony Music / The Orchard, and The Ties That Bind Us, a 19-track album with the whole South Park Coalition.",
@@ -387,7 +387,7 @@ export const ROUTES: SeoEntry[] = [
     path: "/links",
     title: "Links | Mr. CAP Music, Merch, Shows & More",
     description: "Every official Mr. CAP link in one place: the latest music, show booking, Trap University merch, the NFT gallery, the press kit, discography, and TikTok.",
-    h1: "Mr. CAP",
+    h1: "Mr. CAP: Music, Videos & Links",
     summary: [
       `Quick links to Mr. CAP's music, merch, shows, and more, from the Houston hip-hop artist and ${SPC_ROLE}.`,
       "Start with the latest music, book a show, shop Trap University merch, browse the NFT art gallery, open the press kit, or explore the discography.",

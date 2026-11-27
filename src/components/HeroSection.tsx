@@ -19,7 +19,7 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
-  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const taglineRef = useRef<HTMLSpanElement>(null);
   const releaseRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -208,8 +208,8 @@ const HeroSection = () => {
           onMouseEnter={handleTitleHover}
           onMouseMove={handleTitleTilt}
           onMouseLeave={handleTitleTiltLeave}
-          aria-label="Mr. CAP"
-          className={`font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] will-change-transform cursor-pointer select-none ${
+          aria-label="Mr. CAP, Houston Hip-Hop Artist and Original Member of the South Park Coalition"
+          className={`text-center font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] will-change-transform cursor-pointer select-none ${
             glitching ? "animate-glitch" : ""
           }`}
           style={{
@@ -231,14 +231,14 @@ const HeroSection = () => {
               {ch}
             </span>
           ))}
+          <span
+            ref={taglineRef}
+            className="mt-3 block px-6 font-sans text-sm md:text-base font-medium tracking-[0.15em] uppercase text-foreground/60 will-change-transform"
+            style={{ textShadow: "none", lineHeight: "1.5" }}
+          >
+            Houston Hip-Hop Artist · South Park Coalition
+          </span>
         </h1>
-
-        <p
-          ref={taglineRef}
-          className="mt-3 px-6 text-center text-sm md:text-base font-medium tracking-[0.15em] uppercase text-foreground/60 will-change-transform"
-        >
-          Houston Hip-Hop Artist · South Park Coalition
-        </p>
         <div
           ref={releaseRef}
           className="mt-4 flex items-center gap-3 text-xs md:text-sm font-medium tracking-[0.2em] uppercase will-change-transform"

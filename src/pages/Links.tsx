@@ -90,7 +90,12 @@ const Links = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <h1 className="text-2xl font-display font-bold mb-1">Mr. CAP</h1>
+            <h1 className="mb-1 text-2xl font-display font-bold">
+              Mr. CAP
+              <span className="mt-1 block font-sans text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                Music, Videos & Links
+              </span>
+            </h1>
             <p className="text-muted-foreground text-sm">
               Houston Hip-Hop Legend • Original Member of the South Park Coalition
             </p>
