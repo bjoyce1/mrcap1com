@@ -183,3 +183,16 @@
 - [x] Audit source, public pages, private editorial records, press, SEO, structured data, captions and campaign content for 1986 founding references.
 - [x] Correct confirmed references to 1987 and record Mr. CAP's November 27, 2026 firsthand confirmation as the primary source without changing publication states.
 - [x] Run focused and full regression checks, rescan all project and database content, and summarize every correction without publishing.
+
+# Operation 713 corrected production release
+
+- [x] Save rollback checkpoint 0619cab, pass all 289 regression tests and complete a fresh security scan with no critical findings.
+- [x] Confirm 24 artist and article drafts remain private, the analytics secret exists and the confirmed SPC founding year is 1987 in public and campaign content.
+- [x] Deploy the approved technical SEO release at 07:06:34 UTC without changing gameplay, payments, balances, rewards or artwork.
+- [x] Verify all 133 sitemap canonicals, nine approved public URLs, 24 private shells, desktop and phone layouts, metadata, structured data, robots and sitemap on production.
+- [x] Verify consent-controlled GA4 transmission: no requests before consent or after revocation, correct page view after consent. Realtime readback has no authorized reporting connection.
+- [x] Verify administrator access through sign-out and a fresh owner session, including the Marketing Command Center and verified-data refresh.
+- [x] Submit the corrected sitemap to the verified Search Console property; Google downloaded 133 URLs with zero errors or warnings at 07:09:35 UTC.
+- [x] Save the final production verification report in Project Files with actual results and external steps.
+- [ ] Request indexing for the six new informational pages in Search Console. Blocker: the authorized API cannot request indexing; four URLs are unknown and two are discovered but not indexed.
+- [ ] Confirm the transmitted page view in GA4 Realtime. Blocker: no authorized Google Analytics reporting connection is available.
