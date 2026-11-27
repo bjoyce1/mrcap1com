@@ -127,3 +127,8 @@
 - [x] Build draft Houston experience with simulated wall, no audio, no real signup, disabled proposed tiers.
 - [x] Document future architecture and publication gates without creating tables or connecting services.
 - [x] Test access rules, campaign links, desktop/mobile and existing pages; report files and preview URL without publishing.
+# Homepage SPC Legends showcase
+
+- [x] Add a home page section highlighting the game with a play call to action.
+- [x] Read every figure from game config so the copy cannot go stale.
+- [x] Test the figures, routes and artwork, then check desktop, phone and reduced motion.

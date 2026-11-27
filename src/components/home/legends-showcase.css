@@ -1,0 +1,66 @@
+/* Homepage SPC Legends showcase. Presentation only: nothing here reads or writes game state. */
+
+.lgx-board {
+  --tile: 88px;
+  --gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .lgx-board {
+    --tile: 116px;
+    --gap: 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lgx-board {
+    --tile: 132px;
+    --gap: 14px;
+  }
+}
+
+.lgx-tile {
+  width: var(--tile);
+  height: var(--tile);
+}
+
+.lgx-row {
+  gap: var(--gap);
+}
+
+/* A warm light passes across the board every few seconds. */
+.lgx-sweep {
+  animation: lgx-sweep 6s ease-in-out infinite;
+}
+
+@keyframes lgx-sweep {
+  0%,
+  100% {
+    transform: translateX(-160%);
+  }
+  50% {
+    transform: translateX(320%);
+  }
+}
+
+/* The winning line breathes so the board reads as a live spin. */
+.lgx-line {
+  animation: lgx-line 2.8s ease-in-out infinite;
+}
+
+@keyframes lgx-line {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lgx-sweep,
+  .lgx-line {
+    animation: none;
+  }
+}

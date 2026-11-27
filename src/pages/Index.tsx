@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import AnnouncementStrip from "@/components/home/AnnouncementStrip";
 import ReleaseSpotlight from "@/components/home/ReleaseSpotlight";
+import LegendsShowcase from "@/components/home/LegendsShowcase";
 import ProofStrip from "@/components/home/ProofStrip";
 import BookingCTABand from "@/components/home/BookingCTABand";
 import Footer from "@/components/Footer";
@@ -34,6 +35,8 @@ const Index = () => {
           <ProofStrip />
           <SectionDivider />
           <ReleaseSpotlight />
+          <SectionDivider />
+          <LegendsShowcase />
           <SectionDivider />
           <SpotifyLiveSection />
           <SectionDivider />
