@@ -211,3 +211,9 @@
 - [x] Replace the existing research draft with the owner-approved biography, seven verified sources and existing approved artwork.
 - [x] Pass all 289 regression tests and request publication with route-specific search metadata and sitemap inclusion.
 - [x] Verify production build 2026-11-27T07:29:45Z from commit 506646a: public canonical metadata, ProfilePage schema, social tags, sitemap listing, directory link, artwork, desktop and phone rendering all pass; the checked private draft remains noindex and no page errors or horizontal overflow occurred.
+
+# Five SPC artist biography reviews
+
+- [ ] Review the supplied Cl'Che', DBX, Dope E, Ganxsta NIP and PSK-13 biographies, existing drafts, artwork and source conflicts.
+- [x] Owner approved public pages for all five supplied biographies; preserve all unrelated drafts and game behavior.
+- [ ] Resolve Cl'Che's birth date, artist name styling and DBX profile mapping before publishing.
