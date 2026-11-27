@@ -19,8 +19,7 @@
 @keyframes screw-ring{to{transform:rotate(360deg)}}
 @keyframes screw-halo{0%,100%{opacity:.55;transform:scale(.94)}50%{opacity:1;transform:scale(1.06)}}
 @keyframes screw-chop{50%{transform:scale(.975)}}
-.screw-reel{overflow:hidden}
-.screw-reel>*{animation:screw-roll 3.6s ease-in-out infinite alternate;animation-delay:calc(-1.2s + var(--screw-i,0)*-.2s);filter:blur(.55px) saturate(1.2);will-change:transform}
-@keyframes screw-roll{from{transform:translate3d(-8%,0,0) scale(1.035)}to{transform:translate3d(8%,0,0) scale(1.035)}}
+.screw-reel{position:relative;z-index:2;overflow:hidden;transform-origin:center;animation:screw-pop 2.6s cubic-bezier(.4,0,.2,1) infinite;animation-delay:calc(var(--screw-i,0)*-.18s);will-change:transform}
+@keyframes screw-pop{0%,100%{transform:translate3d(0,0,0) scale(1)}32%{transform:translate3d(0,-3px,0) scale(1.075)}46%{transform:translate3d(0,-2px,0) scale(1.055)}58%{transform:translate3d(0,-3px,0) scale(1.075)}74%{transform:translate3d(0,0,0) scale(.985)}}
 @media(max-width:620px){.screw-overlay{width:min(86vw,340px);padding:1rem;gap:.7rem}.screw-portrait{width:min(56vw,230px)}.screw-copy strong{font-size:1.75rem}.screw-copy em{font-size:.62rem;letter-spacing:.22em}}
-@media(prefers-reduced-motion:reduce){.screw-overlay,.screw-overlay img,.screw-portrait:before,.screw-halo,.screw-reel>*,.screw-overlay.is-chopping .screw-portrait{animation:none}.screw-overlay{transform:translate(-50%,-50%)}}
+@media(prefers-reduced-motion:reduce){.screw-overlay,.screw-overlay img,.screw-portrait:before,.screw-halo,.screw-reel,.screw-overlay.is-chopping .screw-portrait{animation:none}.screw-overlay{transform:translate(-50%,-50%)}}

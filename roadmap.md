@@ -154,3 +154,8 @@
 
 - [x] Add slow horizontal movement and reverse chop beats to all six reels without changing audio or rewards.
 - [x] Verify controlled qualifying guest hits, horizontal reverse chops, cleanup and reduced motion on desktop and phone; all 220 game tests passed without publishing.
+
+# DJ Screw pop-out chops
+
+- [x] Replace sideways drift with whole-reel pop-outs and rhythmic holds and chop pulses, preserving normal-speed music and rewards.
+- [x] Verify a controlled qualifying guest hit on desktop and phone, pop scaling, chop holds and pulses, cleanup and reduced motion; all 220 game tests passed without publishing.
