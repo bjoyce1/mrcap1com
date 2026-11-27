@@ -64,6 +64,13 @@
       "when": 1795582056730,
       "tag": "0008_legends_1000_welcome_spins",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1795758574181,
+      "tag": "0009_legends_marketing_content",
+      "breakpoints": true
     }
   ]
 }

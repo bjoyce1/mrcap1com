@@ -78,6 +78,8 @@ const LegendsRewardsPage = lazy(() => import("./features/legends/LegendsRewardsP
 const LegendsVaultPage = lazy(() => import("./features/legends/LegendsVaultPage"));
 const LegendsStorefrontPage = lazy(() => import("./features/legends/LegendsStorefrontPage"));
 const LegendsTermsPage = lazy(() => import("./features/legends/LegendsTermsPage"));
+const LegendsEditorialPage = lazy(() => import("./features/legends-marketing/EditorialPage"));
+const LegendsMarketingAdmin = lazy(() => import("./features/legends-marketing/MarketingAdmin"));
 
 // ── Loading fallback (matches site theme) ───────────────────
 const PageLoader = () => (
@@ -188,6 +190,12 @@ function AppRoutes() {
             <Route path="/merch" element={<PageTransition><StorePage /></PageTransition>} />
             <Route path="/merch/:slug" element={<PageTransition><ProductPage /></PageTransition>} />
             <Route path="/legends" element={<PageTransition><LegendsPage /></PageTransition>} />
+            {["about", "how-to-play", "artists", "news", "media", "faq"].map(page => <Route key={page} path={`/legends/${page}`} element={<PageTransition><LegendsEditorialPage /></PageTransition>} />)}
+            <Route path="/legends/artists/:slug" element={<PageTransition><LegendsEditorialPage /></PageTransition>} />
+            <Route path="/legends/news/:slug" element={<PageTransition><LegendsEditorialPage /></PageTransition>} />
+            <Route path="/legends/history" element={<Navigate to="/houston-hip-hop-history" replace />} />
+            <Route path="/legends/houston-culture" element={<Navigate to="/houston-hip-hop-history" replace />} />
+            <Route path="/admin/legends-marketing" element={<PageTransition><LegendsMarketingAdmin /></PageTransition>} />
             <Route path="/legends/rewards" element={<PageTransition><LegendsRewardsPage /></PageTransition>} />
             <Route path="/legends/vault" element={<PageTransition><LegendsVaultPage /></PageTransition>} />
             <Route path="/legends/storefront" element={<PageTransition><LegendsStorefrontPage /></PageTransition>} />

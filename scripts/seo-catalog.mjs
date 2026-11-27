@@ -41,13 +41,14 @@ export async function fetchCatalog(env) {
     });
     return data && !data.error && Array.isArray(data.result) ? data.result : null;
   };
-  const [tracks, albums, blogPosts, pressEntries] = await Promise.all([
+  const [tracks, albums, blogPosts, pressEntries, legendsContent] = await Promise.all([
     rest("tracks", TRACK_FIELDS, "release_year.desc.nullslast,created_at.desc"),
     rest("albums", ALBUM_FIELDS, "release_year.desc"),
     sanity("blog-posts"),
     sanity("press-entries"),
+    getJson(`${url}/rest/v1/legends_marketing_content?select=*&status=eq.published&reviewed=eq.true&published_at=lte.${encodeURIComponent(new Date().toISOString())}&order=published_at.desc`, {headers}),
   ]);
-  return { tracks, albums, blogPosts, pressEntries, fetchedAt: new Date().toISOString() };
+  return { tracks, albums, blogPosts, pressEntries, legendsContent, fetchedAt: new Date().toISOString() };
 }
 
 /** Reads VITE_* values from .env files, the way Vite does, without needing Vite. */
@@ -76,7 +77,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   }
   // keep the previous value for anything that failed this time
   const merged = Object.fromEntries(
-    Object.entries(fresh).map(([k, v]) => [k, v ?? prev[k] ?? null]),
+    Object.entries(fresh).map(([k, v]) => [k, k === 'legendsContent' ? v ?? [] : v ?? prev[k] ?? null]),
   );
   fs.writeFileSync(out, JSON.stringify(merged, null, 1) + "\n");
   const n = (v) => (Array.isArray(v) ? v.length : "failed");

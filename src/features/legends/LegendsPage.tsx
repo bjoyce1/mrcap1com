@@ -23,6 +23,7 @@ import "./guardian.css";
 import "./screw.css";
 import "./install.css";
 import "./polish.css";
+import LegendsInformation from "@/features/legends-marketing/Information";
 
 /**
  * SPC Legends: Spin the Mix, the six reel South Park Coalition arcade game with account spins and PayPal packs.
@@ -188,6 +189,7 @@ const LegendsPage = () => (
     <SEO entry={routeSeo("/legends")} />
     <main className="legends-page">
       <LegendsGame />
+      <LegendsInformation />
     </main>
     <Footer />
   </>

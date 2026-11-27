@@ -25,12 +25,14 @@ import {
   trackSeo,
 } from "./builders";
 import type { JsonLdNode, SeoEntry } from "./types";
+import { contentPath, contentSeo, isPublished, type MarketingContent } from "../features/legends-marketing/content";
 
 export interface Catalog {
   tracks?: (TrackLike & { id?: string })[] | null;
   albums?: (AlbumLike & { id?: string })[] | null;
   blogPosts?: Record<string, unknown>[] | null;
   pressEntries?: Record<string, unknown>[] | null;
+  legendsContent?: MarketingContent[] | null;
 }
 
 export interface PageSpec {
@@ -93,6 +95,9 @@ export function collectPages(catalog: Catalog = {}): PageSpec[] {
   for (const story of selfLove2024) pages.push({ path: `/self-love/${story.year}/${story.slug}`, entry: selfLoveStorySeo(story) });
   for (const post of blog) pages.push({ path: `/blog/${post.slug}`, entry: blogPostSeo(post) });
   for (const entry of press) pages.push({ path: `/press/${entry.slug}`, entry: pressPostSeo(entry) });
+  for (const row of catalog.legendsContent ?? []) {
+    if (isPublished(row)) pages.push({path: contentPath(row), entry: contentSeo(row)});
+  }
 
   const albumById = new Map(albums.filter((a) => a.id).map((a) => [a.id as string, a]));
   for (const album of albums) {

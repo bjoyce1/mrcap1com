@@ -435,6 +435,87 @@ export type Database = {
         }
         Relationships: []
       }
+      legends_marketing_content: {
+        Row: {
+          author: string
+          body: string
+          category: string
+          excerpt: string
+          id: string
+          image_url: string
+          kind: string
+          links: Json
+          published_at: string | null
+          reviewed: boolean
+          seo_description: string
+          seo_title: string
+          slug: string
+          sources: string[]
+          status: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string
+          body?: string
+          category?: string
+          excerpt?: string
+          id?: string
+          image_url?: string
+          kind: string
+          links?: Json
+          published_at?: string | null
+          reviewed?: boolean
+          seo_description?: string
+          seo_title?: string
+          slug: string
+          sources?: string[]
+          status?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          body?: string
+          category?: string
+          excerpt?: string
+          id?: string
+          image_url?: string
+          kind?: string
+          links?: Json
+          published_at?: string | null
+          reviewed?: boolean
+          seo_description?: string
+          seo_title?: string
+          slug?: string
+          sources?: string[]
+          status?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      legends_marketing_workspace: {
+        Row: {
+          data: Json
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          data?: Json
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          data?: Json
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       legends_players: {
         Row: {
           badges: string[]

@@ -1,0 +1,18 @@
+CREATE TABLE public.legends_marketing_content (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), kind text NOT NULL CHECK (kind IN ('artist','article')), slug text NOT NULL CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'), title text NOT NULL, excerpt text NOT NULL DEFAULT '', body text NOT NULL DEFAULT '', image_url text NOT NULL DEFAULT '', sources text[] NOT NULL DEFAULT '{}', links jsonb NOT NULL DEFAULT '[]'::jsonb, category text NOT NULL DEFAULT 'Houston hip-hop', tags text[] NOT NULL DEFAULT '{}', seo_title text NOT NULL DEFAULT '', seo_description text NOT NULL DEFAULT '', author text NOT NULL DEFAULT '', reviewed boolean NOT NULL DEFAULT false, status text NOT NULL DEFAULT 'draft' CHECK (status IN ('draft','published')), published_at timestamptz, updated_at timestamptz NOT NULL DEFAULT now(), UNIQUE(kind,slug), CONSTRAINT legends_marketing_publish_ready CHECK (status = 'draft' OR (reviewed AND length(trim(body)) >= 120 AND cardinality(sources) > 0 AND length(trim(excerpt)) > 0 AND image_url ~ '^https://' AND length(seo_title) BETWEEN 1 AND 59 AND length(seo_description) BETWEEN 140 AND 160 AND published_at IS NOT NULL AND (kind = 'artist' OR length(trim(author)) > 0))));
+GRANT SELECT ON public.legends_marketing_content TO anon;
+GRANT SELECT,INSERT,UPDATE,DELETE ON public.legends_marketing_content TO authenticated;
+GRANT ALL ON public.legends_marketing_content TO service_role;
+ALTER TABLE public.legends_marketing_content ENABLE ROW LEVEL SECURITY;
+CREATE POLICY legends_marketing_public_read ON public.legends_marketing_content FOR SELECT TO anon USING (status = 'published' AND reviewed AND published_at <= now());
+CREATE POLICY legends_marketing_authenticated_read ON public.legends_marketing_content FOR SELECT TO authenticated USING ((status = 'published' AND reviewed AND published_at <= now()) OR (select public.has_role((select auth.uid()), 'admin')));
+CREATE POLICY legends_marketing_admin_insert ON public.legends_marketing_content FOR INSERT TO authenticated WITH CHECK ((select public.has_role((select auth.uid()), 'admin')));
+CREATE POLICY legends_marketing_admin_update ON public.legends_marketing_content FOR UPDATE TO authenticated USING ((select public.has_role((select auth.uid()), 'admin'))) WITH CHECK ((select public.has_role((select auth.uid()), 'admin')));
+CREATE POLICY legends_marketing_admin_delete ON public.legends_marketing_content FOR DELETE TO authenticated USING ((select public.has_role((select auth.uid()), 'admin')));
+CREATE INDEX legends_marketing_published_idx ON public.legends_marketing_content (kind,status,published_at);
+CREATE TABLE public.legends_marketing_workspace (id text PRIMARY KEY CHECK (id = 'operation_713'), data jsonb NOT NULL DEFAULT '{}'::jsonb, updated_at timestamptz NOT NULL DEFAULT now());
+GRANT SELECT,INSERT,UPDATE ON public.legends_marketing_workspace TO authenticated;
+GRANT ALL ON public.legends_marketing_workspace TO service_role;
+ALTER TABLE public.legends_marketing_workspace ENABLE ROW LEVEL SECURITY;
+CREATE POLICY legends_marketing_workspace_read ON public.legends_marketing_workspace FOR SELECT TO authenticated USING ((select public.has_role((select auth.uid()), 'admin')));
+CREATE POLICY legends_marketing_workspace_insert ON public.legends_marketing_workspace FOR INSERT TO authenticated WITH CHECK ((select public.has_role((select auth.uid()), 'admin')));
+CREATE POLICY legends_marketing_workspace_update ON public.legends_marketing_workspace FOR UPDATE TO authenticated USING ((select public.has_role((select auth.uid()), 'admin'))) WITH CHECK ((select public.has_role((select auth.uid()), 'admin')));

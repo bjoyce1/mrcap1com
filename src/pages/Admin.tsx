@@ -22,7 +22,8 @@ import {
   Download,
   Music,
   Share2,
-  BarChart3
+  BarChart3,
+  Megaphone
 } from 'lucide-react';
 import ChromaGrid from '@/components/ui/ChromaGrid';
 import { Link } from 'react-router-dom';
@@ -418,6 +419,7 @@ const Admin = () => {
 
           {/* Quick Links */}
           <div className="mb-6">
+            <Button asChild variant="secondary" className="mr-4 mb-3"><Link to="/admin/legends-marketing"><Megaphone className="h-4 w-4 mr-2" />SPC Legends Marketing</Link></Button>
             <Link
               to="/admin/library"
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors"

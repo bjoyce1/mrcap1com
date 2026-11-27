@@ -14,6 +14,8 @@
 import { liveHistory } from "../content/liveHistory";
 import { bookingPageData } from "../content/booking";
 import { nftPageData } from "../content/nft";
+import { MARKETING_ROUTES, gameSchema, FAQ } from "../features/legends-marketing/content";
+import { ARTISTS, GAME_CONFIG } from "../features/legends/config";
 
 import { DEFAULT_OG_IMAGE, PERSON_SAME_AS, PROFESSIONAL_URL, SAME_AS, SITE_URL, SPC_ROLE, abs } from "./site";
 import { HOME_FAQ, HOUSTON_HISTORY_FAQ, SPC_FAQ, WHO_IS_FAQ, faqPage } from "./faqs";
@@ -585,14 +587,15 @@ export const ROUTES: SeoEntry[] = [
 
   route({
     path: "/legends",
-    title: "SPC Legends | Spin the Mix Arcade Game",
-    description: "Play SPC Legends: Spin the Mix, a six reel arcade game with K-Rino, Mr. CAP and the South Park Coalition. 50 free spins to start, then 20 more every day.",
-    h1: "SPC Legends",
+    title: "SPC Legends | Houston Hip-Hop Arcade Game: Spin the Mix",
+    description: "Explore Houston hip-hop with SPC Legends: Spin the Mix. Discover South Park Coalition artists, interactive gameplay, legendary characters and 713 culture.",
+    h1: "SPC Legends: Spin the Mix",
     summary: [
-      "SPC Legends: Spin the Mix is a six reel, three row arcade game starring eleven South Park Coalition legends. Sign in for 50 free spins, then get 20 free spins each Houston day. Extra spin packs start at 25 spins for $1.",
+      `SPC Legends: Spin the Mix is a six reel, three row arcade game featuring ${ARTISTS.length} artists. Accounts start with ${GAME_CONFIG.welcomeSpins} welcome spins, then receive ${GAME_CONFIG.dailySpins} free spins each Houston calendar day. ${FAQ[0].answer}`,
       "Match symbols on 26 paylines for virtual Legends XP, stack a reel, collect every artist, and hit the 713 Bonus or SPC Unity. XP and coins have no cash value.",
     ],
-    links: [L.music],
+    links: [L.music, {href: "/legends/artists", label: "Meet the Legends"}, {href: "/legends/about", label: "About SPC Legends"}, {href: "/legends/how-to-play", label: "How to play"}, {href: "/legends/faq", label: "Questions and answers"}, L.spc, L.history],
+    jsonLd: [gameSchema, breadcrumb(["SPC Legends", "/legends"])],
     // "Add to Home Screen" on this page installs the game as its own app (public/legends-manifest.json).
     app: { manifest: "/legends-manifest.json", icon: "/games/spc-legends/app/apple-touch-icon.png", title: "SPC Legends", themeColor: "#06040b" },
   }),
@@ -603,12 +606,20 @@ export const ROUTES: SeoEntry[] = [
     description: "Plain terms for SPC Legends: free daily spins, spin packs and Vault items are virtual with no cash value, a daily purchase limit, and how refunds work.",
     h1: "SPC Legends Terms",
     summary: [
-      "SPC Legends: Spin the Mix is free to play, with 50 free spins to start and 20 free spins every Houston day. Spin packs and Vault items are optional virtual purchases through PayPal.",
+      `SPC Legends: Spin the Mix is free to play, with ${GAME_CONFIG.welcomeSpins} welcome spins per account and ${GAME_CONFIG.dailySpins} free spins each Houston day. Spin packs and Vault items are optional virtual purchases through PayPal.`,
       "Spins, XP, coins, Legends, skins, titles and songs have no cash value and can't be exchanged for money or prizes. Spin packs are limited to $100 a day, and sales are final except where the law requires a refund.",
     ],
     links: [L.music],
   }),
 
+  ...MARKETING_ROUTES,
+  route({path: "/legends/rewards", title: "SPC Legends Rewards | Virtual XP and Combinations", description: "Explore SPC Legends virtual XP rewards for artist paylines, vertical stacks and special combinations. Read the credited game rules, with no cash or prize value.", h1: "SPC Legends Rewards", summary: ["Review credited virtual XP rewards for artist, studio and Houston neighborhood symbols, with standard paylines, vertical stacks and special combinations.", "XP, coins, collections, skins and titles are virtual entertainment only. Wins do not award extra spins and rewards cannot be exchanged for money or prizes."], links: [{href:"/legends",label:"Play SPC Legends"},{href:"/legends/how-to-play",label:"How to play"}], jsonLd: [breadcrumb(["SPC Legends","/legends"],["Rewards","/legends/rewards"])]}),
+  admin("/admin/captions", "Caption Studio | Mr. CAP"),
+  admin("/admin/legends-marketing", "Marketing Command Center | SPC Legends"),
+  admin("/auth/callback", "Sign-in Callback | Mr. CAP"),
+  admin("/reset-password", "Reset Password | Mr. CAP"),
+  admin("/legends/vault", "Account Vault | SPC Legends"),
+  admin("/legends/spend", "Account Purchases | SPC Legends"),
   admin("/auth", "Admin Login | Mr. CAP"),
   admin("/admin", "Admin | Mr. CAP"),
   admin("/admin/library", "Admin Library | Mr. CAP"),
@@ -623,6 +634,8 @@ export const ROUTES: SeoEntry[] = [
  * land on the right content.
  */
 export const ALIASES: Record<string, string> = {
+  "/legends/history": "/houston-hip-hop-history",
+  "/legends/houston-culture": "/houston-hip-hop-history",
   "/intro": "/",
   "/about": "/who-is-mr-cap",
   "/houston-rapper-mr-cap": "/who-is-mr-cap",

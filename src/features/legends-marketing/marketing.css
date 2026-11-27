@@ -1,0 +1,24 @@
+.legends-editorial {
+  --background: 0 0% 3%;
+  --card: 0 0% 8%;
+  --primary: var(--accent-gold);
+  --primary-foreground: 0 0% 3%;
+  --muted-foreground: 38 10% 72%;
+  --secondary: 350 32% 12%;
+  --secondary-foreground: var(--foreground);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  letter-spacing: 0;
+}
+.legends-editorial .editorial-inner { max-width: 1180px; margin: auto; padding: 2rem 1.5rem 7rem; }
+.legends-editorial h1 { font-family: 'Russo One', sans-serif; font-size: 3rem; line-height: 1.12; }
+.legends-editorial h2 { font-family: 'Russo One', sans-serif; font-size: 1.65rem; line-height: 1.2; }
+.legends-editorial p { line-height: 1.8; }
+.legends-editorial .artist-art { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 6px; box-shadow: var(--shadow-card); }
+.legends-editorial .editorial-card { background: hsl(var(--card)); border-radius: 6px; box-shadow: var(--shadow-card); }
+.legends-editorial a:focus-visible, .legends-editorial summary:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 5px; }
+.legends-editorial input, .legends-editorial textarea { border: none; box-shadow: var(--shadow-card); }
+.legends-editorial .qr-image { background: hsl(var(--foreground)); border-radius: 6px; width: 192px; height: 192px; }
+.legends-editorial .editorial-body { white-space: pre-line; overflow-wrap: anywhere; }
+.legends-editorial .editorial-top { padding-top: 140px; }
+@media (max-width: 640px) { .legends-editorial h1 {font-size: 2.25rem;} .legends-editorial .editorial-top {padding-top: 120px;} .legends-editorial .editorial-inner {padding-left: 1rem; padding-right: 1rem;} }

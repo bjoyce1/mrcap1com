@@ -42,6 +42,8 @@ export function seoPages(env: Record<string, string>): Plugin {
           albums: live?.albums ?? snapshot.albums,
           blogPosts: live?.blogPosts ?? snapshot.blogPosts,
           pressEntries: live?.pressEntries ?? snapshot.pressEntries,
+          // Do not reuse stale public content after a profile is unpublished.
+          legendsContent: live?.legendsContent ?? [],
         };
 
         const template = fs.readFileSync(indexFile, "utf8");

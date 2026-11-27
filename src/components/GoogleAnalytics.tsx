@@ -1,6 +1,7 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { isAutomated, isLiveHost, isPrivatePath } from "@/lib/automation";
+import { analyticsConsent, CONSENT_EVENT } from "@/lib/analyticsConsent";
 
 declare global {
   interface Window {
@@ -66,9 +67,17 @@ function classifyLink(href: string): { name: string; params: Record<string, stri
 const GoogleAnalytics = ({ measurementId }: GoogleAnalyticsProps) => {
   const location = useLocation();
   const enabled = useMemo(() => !isAutomated(), []);
+  const [consented, setConsented] = useState(analyticsConsent);
+  useEffect(() => {
+    const update = () => setConsented(analyticsConsent());
+    window.addEventListener(CONSENT_EVENT, update);
+    return () => window.removeEventListener(CONSENT_EVENT, update);
+  }, []);
+  const privateRoute = isPrivatePath(location.pathname);
 
   useEffect(() => {
-    if (!enabled || /^\/(greatday-preview|admin\/greatday)(\/|$)/.test(location.pathname)) return;
+    if (!enabled || !consented || privateRoute) return;
+    window[`ga-disable-${measurementId}` as keyof Window] = false as never;
     const script1 = document.createElement("script");
     script1.async = true;
     script1.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
@@ -89,29 +98,30 @@ const GoogleAnalytics = ({ measurementId }: GoogleAnalyticsProps) => {
       const link = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
       if (!link) return;
       const hit = classifyLink(link.getAttribute("href") || "");
-      if (hit) trackEvent(hit.name, { ...hit.params, link_url: link.href, page_path: window.location.pathname });
+      if (hit) trackEvent(hit.name, { ...hit.params, page_path: window.location.pathname });
     };
     document.addEventListener("click", onClick, true);
 
     return () => {
       document.removeEventListener("click", onClick, true);
       script1.remove();
-      document.head.removeChild(script2);
+      script2.remove();
+      window[`ga-disable-${measurementId}` as keyof Window] = true as never;
     };
-  }, [measurementId, enabled, /^\/(greatday-preview|admin\/greatday)(\/|$)/.test(location.pathname)]);
+  }, [measurementId, enabled, consented, privateRoute]);
 
   useEffect(() => {
-    if (!enabled || isPrivatePath(location.pathname)) return;
+    if (!enabled || !consented || privateRoute) return;
     // the page's <SEO> sets the title right after it renders; report the view once it has
     const timer = window.setTimeout(() => {
       trackEvent("page_view", {
-        page_location: window.location.href,
-        page_path: location.pathname + location.search,
+        page_location: window.location.origin + location.pathname,
+        page_path: location.pathname,
         page_title: document.title,
       });
     }, 400);
     return () => window.clearTimeout(timer);
-  }, [location.pathname, location.search, enabled]);
+  }, [location.pathname, enabled, consented, privateRoute]);
 
   return null;
 };
@@ -121,7 +131,7 @@ export const trackEvent = (
   eventName: string,
   eventParams?: Record<string, unknown>
 ) => {
-  if (/^\/(greatday-preview|admin\/greatday)(\/|$)/.test(window.location.pathname)) return;
+  if (!analyticsConsent() || isPrivatePath(window.location.pathname)) return;
   if (window.gtag) {
     window.gtag("event", eventName, eventParams);
   }

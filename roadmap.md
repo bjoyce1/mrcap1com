@@ -159,3 +159,11 @@
 
 - [x] Replace sideways drift with whole-reel pop-outs and rhythmic holds and chop pulses, preserving normal-speed music and rewards.
 - [x] Verify a controlled qualifying guest hit on desktop and phone, pop scaling, chop holds and pulses, cleanup and reduced motion; all 220 game tests passed without publishing.
+
+# Operation 713 SEO and marketing
+
+- [ ] Record technical baseline and protect gameplay, identity, payments and private routes.
+- [ ] Add public information, roster directory, verified-profile publishing and editorial drafts using existing culture pages.
+- [ ] Extend existing route metadata and sitemap generation without invented timestamps.
+- [ ] Add protected marketing workspace, campaign links, QR codes, captions and 30-day draft calendar.
+- [ ] Verify public and admin flows, privacy, mobile layout and game regressions; document external setup and publication requirements.
