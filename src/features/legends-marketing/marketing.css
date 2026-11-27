@@ -22,3 +22,20 @@
 .legends-editorial .editorial-body { white-space: pre-line; overflow-wrap: anywhere; }
 .legends-editorial .editorial-top { padding-top: 140px; }
 @media (max-width: 640px) { .legends-editorial h1 {font-size: 2.25rem;} .legends-editorial .editorial-top {padding-top: 120px;} .legends-editorial .editorial-inner {padding-left: 1rem; padding-right: 1rem;} }
+
+/* Artist directory hover: character and name plate pop out of the square, like a reel hit. */
+.legends-editorial .artist-pop { position: relative; aspect-ratio: 1 / 1; border-radius: 6px; box-shadow: var(--shadow-card); isolation: isolate; }
+.legends-editorial .artist-pop .ap-clip { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
+.legends-editorial .artist-pop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.legends-editorial .artist-pop .ap-bg { transition: transform .45s cubic-bezier(.2,.8,.3,1); }
+.legends-editorial .artist-pop .ap-rest { z-index: 1; transition: opacity .15s; }
+.legends-editorial .artist-pop .ap-char, .legends-editorial .artist-pop .ap-plate { z-index: 2; opacity: 0; pointer-events: none; transition: transform .45s cubic-bezier(.2,1.3,.35,1), opacity .15s; }
+.legends-editorial .artist-pop .ap-char { transform-origin: 50% calc(var(--split) * 100%); }
+.legends-editorial .artist-pop .ap-plate { z-index: 3; transform-origin: 50% 86%; }
+.legends-editorial article:hover .artist-pop, .legends-editorial article:focus-within .artist-pop { z-index: 5; }
+.legends-editorial article:is(:hover,:focus-within) .artist-pop .ap-rest { opacity: 0; }
+.legends-editorial article:is(:hover,:focus-within) .artist-pop :is(.ap-char,.ap-plate) { opacity: 1; }
+.legends-editorial article:is(:hover,:focus-within) .artist-pop .ap-bg { transform: scale(1.08); }
+.legends-editorial article:is(:hover,:focus-within) .artist-pop .ap-char { transform: scale(1.16) translateY(-6%) rotate(-2deg); }
+.legends-editorial article:is(:hover,:focus-within) .artist-pop[data-slam="1"] .ap-plate { transform: scale(1.12); }
+@media (prefers-reduced-motion: reduce) { .legends-editorial .artist-pop * { transition: none !important; transform: none !important; } }
