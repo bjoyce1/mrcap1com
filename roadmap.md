@@ -216,4 +216,6 @@
 
 - [ ] Review the supplied Cl'Che', DBX, Dope E, Ganxsta NIP and PSK-13 biographies, existing drafts, artwork and source conflicts.
 - [x] Owner approved public pages for all five supplied biographies; preserve all unrelated drafts and game behavior.
-- [ ] Resolve Cl'Che's birth date, artist name styling and DBX profile mapping before publishing.
+- [x] Use Cl'Che's owner-confirmed May 22, 1980 birth date.
+- [x] Use the owner-confirmed Ganxsta NIP display spelling.
+- [ ] Confirm the DBX to Komodo DBX profile mapping before publishing.
