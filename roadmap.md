@@ -167,13 +167,13 @@
 - [x] Extend existing route metadata and sitemap generation without invented timestamps.
 - [x] Add protected marketing workspace, campaign links, QR codes, captions and 30-day draft calendar.
 - [x] Verify public and admin flows, privacy, mobile layout and game regressions; document external setup and publication requirements.
-- [ ] Phase 2: owner verifies artist facts and sources, adds article images, completes Search Console and Bing verification, approves publish.
+- [ ] Phase 2 editorial activation: owner verifies artist facts and sources and supplies approved article images; Bing setup awaits authorized connection. Technical production publication and existing Search Console verification are complete.
 
 # Operation 713 approved production release
 
 - [x] Record rollback checkpoint and pass all 283 regression tests before publication.
 - [x] Remove unapproved press release draft from the public media page.
-- [ ] Publish the owner-approved technical SEO release without gameplay or payment changes.
-- [ ] Verify actual production URLs, raw HTML, privacy, mobile layout and consent-based analytics.
-- [ ] Confirm Search Console ownership, submit the live sitemap and report indexing limitations.
-- [ ] Deliver production deployment report with remaining issues.
+- [x] Publish the owner-approved technical SEO release without gameplay or payment changes; final deployment 2026-11-27 06:39:43 UTC, source 7e2c73f.
+- [x] Verify actual production URLs, raw HTML, privacy, mobile layout and consent-based analytics; 284 final regressions pass, 24 unpublished shells are noindex, no anonymous draft/workspace rows, nine public URLs return 200.
+- [x] Confirm Search Console ownership, submit the live sitemap and report indexing limitations; Google downloaded all 133 submitted URLs with zero errors or warnings. Six new public URLs are not indexed yet; indexing requests require direct Search Console access.
+- [x] Deliver production deployment report with remaining issues in Project Files.
