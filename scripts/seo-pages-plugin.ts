@@ -49,8 +49,7 @@ export function seoPages(env: Record<string, string>): Plugin {
         const template = fs.readFileSync(indexFile, "utf8");
         const pages = collectPages(catalog);
         for (const page of pages) {
-          // the root file is also the fallback for every unknown path, so it carries no canonical
-          const html = renderPage(template, page.entry, { extraJsonLd: page.extraJsonLd, canonical: page.path !== "/" });
+          const html = renderPage(template, page.entry, { extraJsonLd: page.extraJsonLd });
           const file = page.path === "/" ? indexFile : path.join(outDir, page.path.slice(1), "index.html");
           fs.mkdirSync(path.dirname(file), { recursive: true });
           fs.writeFileSync(file, html);
@@ -59,7 +58,7 @@ export function seoPages(env: Record<string, string>): Plugin {
         const expected = pages.map((p) => ({
           path: p.path,
           title: p.entry.title,
-          canonical: p.path === "/" ? null : (p.entry.canonical ?? `https://mrcap1.com${p.entry.path}`),
+          canonical: p.entry.canonical ?? `https://mrcap1.com${p.entry.path}`,
           noIndex: !!p.entry.noIndex,
         }));
         fs.writeFileSync(path.join(outDir, "seo-pages.json"), JSON.stringify({ builtAt: new Date().toISOString(), pages: expected }));

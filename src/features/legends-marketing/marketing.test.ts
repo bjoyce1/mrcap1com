@@ -22,6 +22,15 @@ describe('Operation 713 safeguards', () => {
     expect(urls).not.toContain('https://mrcap1.com/admin/legends-marketing');
     expect(contentSeo({...base,reviewed:false}).noIndex).toBe(true);
   });
+  it('serves no draft content in artist and article access shells', () => {
+    const pages = collectPages({legendsContent:[{...base,reviewed:false,body:'PRIVATE RESEARCH NOTES'}]});
+    for (const path of ['/legends/artists/k-rino','/legends/news/behind-spc-legends']) {
+      const page = pages.find(p => p.path === path);
+      expect(page?.entry.noIndex).toBe(true);
+      expect(page?.entry.jsonLd).toBeUndefined();
+      expect(JSON.stringify(page?.entry)).not.toContain('PRIVATE RESEARCH NOTES');
+    }
+  });
 });
 import { matchesFilter, scorecard, mergeWorkspace, initialWorkspace } from './content';
 describe('Phase 2 editorial tools', () => {

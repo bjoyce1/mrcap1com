@@ -26,6 +26,7 @@ import {
 } from "./builders";
 import type { JsonLdNode, SeoEntry } from "./types";
 import { contentPath, contentSeo, isPublished, type MarketingContent } from "../features/legends-marketing/content";
+import { ARTISTS } from "../features/legends/config";
 
 export interface Catalog {
   tracks?: (TrackLike & { id?: string })[] | null;
@@ -112,6 +113,24 @@ export function collectPages(catalog: Catalog = {}): PageSpec[] {
     pages.push({ path: trackPath(track.slug), entry });
     pages.push({ path: `/track/${track.slug}`, entry }); // alias, same canonical
   }
+
+  // Unapproved editorial URLs serve only generic noindex shells, never draft text.
+  // Published entries already added above take precedence over these shells.
+  const editorialShells = [
+    ...ARTISTS.map((artist) => `/legends/artists/${artist.id}`),
+    ...["behind-spc-legends", "houston-southern-hip-hop", "independent-houston-music",
+      "meet-spc-legends-artists", "music-to-gaming", "preserving-houston-history",
+      "south-park-coalition-legacy", "south-park-cultural-influence", "story-behind-713mixhouse",
+      "story-behind-spc-legends", "technology-independent-hip-hop", "underground-houston-rap",
+    ].map((slug) => `/legends/news/${slug}`),
+  ];
+  for (const path of editorialShells) pages.push({path, entry: {
+    path, title: "Content unavailable | SPC Legends",
+    description: "This SPC Legends profile or article is not available for public reading. Return to the artist directory, explore approved stories or play the Houston game.",
+    h1: "Not available for public reading.",
+    summary: ["This page is not published.", "Explore the approved artist directory and existing music archive."],
+    links: [{href: "/legends/artists", label: "Artist directory"}], noIndex: true,
+  }});
 
   // one file per path; the first definition wins (static routes beat data pages)
   const seen = new Set<string>();
