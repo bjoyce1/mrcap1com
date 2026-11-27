@@ -196,3 +196,11 @@
 - [x] Save the final production verification report in Project Files with actual results and external steps.
 - [ ] Request indexing for the six new informational pages in Search Console. Blocker: the authorized API cannot request indexing; four URLs are unknown and two are discovered but not indexed.
 - [ ] Confirm the transmitted page view in GA4 Realtime. Blocker: no authorized Google Analytics reporting connection is available.
+
+# Artist biography source review
+
+- [x] Parse all six owner-supplied biographies for Mr. CAP, K-Rino, Klondike Kat and Point Blank.
+- [x] Audit source links, conflicting name spellings, outdated release wording and the confirmed 1987 SPC founding year; all artwork and source URLs returned successfully.
+- [x] Strengthen the four matching artist records as private, unreviewed drafts without changing publication states; all four passed 12 of 12 editorial checks.
+- [ ] Run regression and privacy checks, publish only the four approved profiles and verify the actual production pages.
+- [ ] Verify the production deployment of only the Mr. CAP, K-Rino, Klondike Kat and Point Blank profiles. Owner approved these four public artist pages on November 27, 2026; all other profiles and articles remain private. All 289 regressions passed and the security scan found no critical issues before publication.
