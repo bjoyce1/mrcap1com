@@ -132,3 +132,9 @@
 - [x] Add a home page section highlighting the game with a play call to action.
 - [x] Read every figure from game config so the copy cannot go stale.
 - [x] Test the figures, routes and artwork, then check desktop, phone and reduced motion.
+
+# Home page featured release
+
+- [x] Feature The Art of ISM in the home page release spotlight instead of The Ties That Bind Us.
+- [x] Cut a short Words Of ISM preview clip and wire the play button to it.
+- [x] Check desktop, phone, playback and pause, then report without publishing.

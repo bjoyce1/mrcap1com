@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useRef, useState, useEffect } from "react";
 import { trackMusicPlay } from "@/components/GoogleAnalytics";
 import { gsap } from "@/hooks/useGSAP";
-import albumTies from "@/assets/album-ties.webp";
+import albumArtOfIsm from "@/assets/album-art-of-ism.webp";
 import SectionShell from "@/components/home/SectionShell";
 import AudioWaveform from "@/components/home/AudioWaveform";
 
@@ -22,7 +22,7 @@ const ReleaseSpotlight = () => {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
-        trackMusicPlay("Bet'n On Me");
+        trackMusicPlay("Words Of ISM");
       }
       setIsPlaying(!isPlaying);
     }
@@ -125,12 +125,12 @@ const ReleaseSpotlight = () => {
     <div ref={sectionRef}>
       <SectionShell
         index="02"
-        eyebrow="Latest Release"
+        eyebrow="Featured Release"
         title={null}
         className="overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background pointer-events-none" />
-        <audio ref={audioRef} src="/audio/betn-on-me.mp3" onEnded={() => setIsPlaying(false)} />
+        <audio ref={audioRef} src="/audio/art-of-ism-words-of-ism.mp3" onEnded={() => setIsPlaying(false)} />
 
         <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-14 items-center relative z-10">
           {/* Cover Art */}
@@ -145,8 +145,8 @@ const ReleaseSpotlight = () => {
             <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl ring-1 ring-primary/10">
               <img
                 ref={coverImgRef}
-                src={albumTies}
-                alt="The Ties That Bind Us: SPC Group Album"
+                src={albumArtOfIsm}
+                alt="The Art of ISM album artwork"
                 className="w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -168,26 +168,26 @@ const ReleaseSpotlight = () => {
           <div ref={infoRef} className="flex flex-col justify-center will-change-transform">
             <div className="inline-flex items-center gap-2 mb-4">
               <span className="px-3 py-1 rounded-full bg-primary/15 text-primary text-xs font-semibold uppercase tracking-wider">
-                Latest Release
+                Featured Release
               </span>
-              <span className="text-muted-foreground text-xs">2024</span>
+              <span className="text-muted-foreground text-xs">2019</span>
             </div>
 
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-3">
-              The Ties That{" "}
+              The Art of{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cap-gold">
-                Bind Us
+                ISM
               </span>
             </h2>
 
             <p className="text-muted-foreground text-lg mb-2 font-light">
-              South Park Coalition · 19 Tracks
+              Mr. CAP · 11 Tracks
             </p>
 
             <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-lg">
-              A grown-man statement album, honest, reflective, and unflinching.
-              Featuring K-Rino, Point Blank, Klondike Kat & more. Slowed-and-chopped
-              version released January 2025.
+              The statement album, released through Sony Music / The Orchard.
+              A philosophy pressed to wax, with production by Patrick "Ciddi Boy"
+              Rodriguez.
             </p>
 
             {/* Audio Waveform */}
@@ -203,11 +203,11 @@ const ReleaseSpotlight = () => {
                 onClick={togglePlay}
               >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                {isPlaying ? "Pause Preview" : "Play \"Bet'n On Me\""}
+                {isPlaying ? "Pause Preview" : "Play \"Words Of ISM\""}
               </Button>
               <Button variant="fluxOutline" size="lg" className="rounded-full" asChild>
                 <a
-                  href="https://open.spotify.com/artist/1pSXGKxJIw95dV3xQX4TjS"
+                  href="https://music.apple.com/us/album/the-art-of-ism/1480463642"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
