@@ -14,15 +14,16 @@ import { Music, Newspaper, Gem, CalendarCheck } from "lucide-react";
 import SEO from "@/components/SEO";
 import { routeSeo } from "@/seo/routes";
 import { SPC_FAQ } from "@/seo/faqs";
+import { SPC_FOUNDING_SOURCE_NOTE, SPC_FOUNDING_YEAR } from "../content/spcHistory";
 
 const SouthParkCoalition = () => {
   const sections = [
     {
       title: "The Origins of the South Park Coalition",
       paragraphs: [
-        "The South Park Coalition emerged from Houston's South Park neighborhood as a collective of artists determined to build their own path in the music industry.",
+        `The South Park Coalition was founded in ${SPC_FOUNDING_YEAR} in Houston's South Park neighborhood as a collective of artists determined to build their own path in the music industry.`,
         "Instead of waiting for record deals, they created their own systems, producing, distributing, and promoting their music independently.",
-        "This grassroots approach allowed the coalition to grow organically while maintaining full creative control.",
+        SPC_FOUNDING_SOURCE_NOTE,
       ],
     },
     {
@@ -136,6 +137,7 @@ const SouthParkCoalition = () => {
           {sections.map((section, idx) => (
             <motion.section
               key={idx}
+              id={idx === 0 ? "founding-source" : undefined}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -217,7 +219,7 @@ const SouthParkCoalition = () => {
           <CitationBlock
             canonicalUrl="https://mrcap1.com/south-park-coalition"
             description="Mr. CAP is a Houston-based rapper and an Original Member of the South Park Coalition. This page is part of the official mrcap1.com archive and is intended for citation, research, and cultural documentation."
-            lastUpdated="2026-03-31"
+            lastUpdated="2026-11-27"
             links={[
               { label: "Homepage", href: "/" },
               { label: "Press", href: "/press" },

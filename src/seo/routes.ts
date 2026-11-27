@@ -22,6 +22,7 @@ import { HOME_FAQ, HOUSTON_HISTORY_FAQ, SPC_FAQ, WHO_IS_FAQ, faqPage } from "./f
 import { PERSON_ID, artistNode, breadcrumb, pastEventsLd, personRef } from "./builders";
 import { cleanJson } from "./text";
 import type { JsonLdNode, SeoEntry, SeoLink } from "./types";
+import { SPC_FOUNDING_SOURCE_NOTE, SPC_FOUNDING_YEAR } from "../content/spcHistory";
 
 /* ------------------------------------------------------------------ shared JSON-LD */
 
@@ -32,7 +33,7 @@ const PERSON_FULL: JsonLdNode = {
   image: "https://storage.googleapis.com/gpt-engineer-file-uploads/3vqXVX683sa5x368ogLGKowlzHt1/social-images/social-1764555871791-20190110_181251.jpg",
   sameAs: PERSON_SAME_AS,
   knowsAbout: ["Hip-Hop Music", "Blockchain Technology", "NFTs", "South Park Coalition", "Music Production", "Digital Distribution"],
-  memberOf: { "@type": "MusicGroup", name: "South Park Coalition", foundingLocation: { "@type": "Place", name: "Houston, Texas" } },
+  memberOf: { "@type": "MusicGroup", name: "South Park Coalition", foundingDate: String(SPC_FOUNDING_YEAR), foundingLocation: { "@type": "Place", name: "Houston, Texas" } },
   address: { "@type": "PostalAddress", addressLocality: "Houston", addressRegion: "TX", addressCountry: "US" },
 };
 
@@ -246,23 +247,25 @@ export const ROUTES: SeoEntry[] = [
   route({
     path: "/south-park-coalition",
     title: "South Park Coalition | Houston's Independent Blueprint",
-    description: "How the South Park Coalition built Houston's independent hip-hop blueprint: ownership, longevity, and direct-to-fan hustle, told through Mr. CAP's legacy.",
+    description: `Founded in ${SPC_FOUNDING_YEAR}, the South Park Coalition built Houston's independent hip-hop blueprint through ownership, longevity, and direct-to-fan hustle.`,
     h1: "South Park Coalition: The Independent Blueprint.",
     summary: [
-      "Long before streaming platforms and independent distribution became the norm, the South Park Coalition created a blueprint for artist ownership, longevity, and cultural impact in Houston hip hop.",
-      "The coalition emerged from Houston's South Park neighborhood as a collective of artists determined to build their own path. Instead of waiting for record deals, they produced, distributed, and promoted their music independently, keeping full creative control.",
+      `Founded in ${SPC_FOUNDING_YEAR} in Houston's South Park neighborhood, the South Park Coalition created a blueprint for artist ownership, longevity, and cultural impact in Houston hip hop.`,
+      "Instead of waiting for record deals, the coalition produced, distributed, and promoted its music independently, keeping full creative control.",
       `Mr. CAP is an ${SPC_ROLE}, and his catalog carries that blueprint forward: own the work, build the audience directly, and outlast the hype.`,
+      SPC_FOUNDING_SOURCE_NOTE,
     ],
     links: [L.history, L.who, L.discography, L.press],
     jsonLd: [
       {
         "@type": "MusicGroup",
         name: "South Park Coalition",
+        foundingDate: String(SPC_FOUNDING_YEAR),
         foundingLocation: { "@type": "Place", name: "Houston, Texas" },
         genre: ["Hip-Hop", "Southern Hip-Hop"],
         member: { "@type": "OrganizationRole", roleName: "Original Member", member: personRef },
         url: abs("/south-park-coalition"),
-        description: "The South Park Coalition is one of the most influential independent hip hop collectives to come out of Houston, Texas.",
+        description: `The South Park Coalition is an independent hip hop collective founded in Houston, Texas, in ${SPC_FOUNDING_YEAR}.`,
       },
       faqPage(SPC_FAQ),
       breadcrumb(["South Park Coalition", "/south-park-coalition"]),

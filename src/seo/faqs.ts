@@ -2,6 +2,8 @@
  * FAQ copy, kept in one place so a page's visible FAQ and its FAQPage JSON-LD
  * always say the same thing.
  */
+import { SPC_FOUNDING_SOURCE_NOTE, SPC_FOUNDING_YEAR } from "../content/spcHistory";
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -16,7 +18,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "What is South Park Coalition?",
     answer:
-      "South Park Coalition (SPC) is a legendary hip-hop collective founded in Houston, Texas. Mr. CAP is an Original Member alongside artists like K-Rino, Klondike Kat, and Point Blank.",
+      `South Park Coalition (SPC) is a legendary hip-hop collective founded in Houston, Texas, in ${SPC_FOUNDING_YEAR}. Mr. CAP is an Original Member alongside artists like K-Rino, Klondike Kat, and Point Blank.`,
   },
   {
     question: "How can I book Mr. CAP for a show?",
@@ -31,6 +33,10 @@ export const HOME_FAQ: FaqItem[] = [
 ];
 
 export const SPC_FAQ: FaqItem[] = [
+  {
+    question: "When was the South Park Coalition founded?",
+    answer: `The South Park Coalition was founded in ${SPC_FOUNDING_YEAR}. ${SPC_FOUNDING_SOURCE_NOTE}`,
+  },
   {
     question: "Who are the key members of the South Park Coalition and their impact?",
     answer:
@@ -62,7 +68,7 @@ export const HOUSTON_HISTORY_FAQ: FaqItem[] = [
   {
     question: "Who are the pioneers of Houston underground hip-hop?",
     answer:
-      "Pioneers include DJ Screw (chopped and screwed music), K-Rino and the South Park Coalition (an independent rap collective since 1987), Scarface and the Geto Boys (who brought Houston to the mainstream), and artists like Mr. CAP, Z-Ro, and Trae tha Truth who built careers independently.",
+      `Pioneers include DJ Screw (chopped and screwed music), K-Rino and the South Park Coalition (an independent rap collective since ${SPC_FOUNDING_YEAR}), Scarface and the Geto Boys (who brought Houston to the mainstream), and artists like Mr. CAP, Z-Ro, and Trae tha Truth who built careers independently.`,
   },
   {
     question: "What is chopped and screwed music?",

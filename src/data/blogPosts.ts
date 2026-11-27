@@ -1,3 +1,5 @@
+import { SPC_FOUNDING_SOURCE_NOTE, SPC_FOUNDING_YEAR } from "../content/spcHistory";
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -39,9 +41,11 @@ export const blogPosts: BlogPost[] = [
 
 This isn't just rap. This is a case study in how "Legacy Energy" transforms into a "Future Architect" mindset. With over 30 years in the game, Mr. CAP isn't just a witness to the culture; he is one of its primary engineers. From the trenches of the South Park Coalition to the cutting edge of Web3, the blueprint has changed, but the architect remains the same.
 
-## The Roots of a South Park Giant: SPC and the '86 Blueprint
+## The Roots of a South Park Giant: SPC and the '87 Blueprint
 
-You can't understand the elevation of Mr. CAP without understanding the soil he grew from. In 1986, K-Rino founded the [South Park Coalition (SPC)](/south-park-coalition). This wasn't just a rap group; it was a movement centered on independence, lyrical dexterity, and an unwavering commitment to the community. Mr. CAP entered this circle not just as a student, but as a torchbearer.
+You can't understand the elevation of Mr. CAP without understanding the soil he grew from. In ${SPC_FOUNDING_YEAR}, K-Rino founded the [South Park Coalition (SPC)](/south-park-coalition). This wasn't just a rap group; it was a movement centered on independence, lyrical dexterity, and an unwavering commitment to the community. Mr. CAP entered this circle not just as a student, but as a torchbearer.
+
+${SPC_FOUNDING_SOURCE_NOTE}
 
 The longevity of the SPC is legendary, and Mr. CAP's thirty-year tenure within this brotherhood has seasoned his perspective. He has seen the industry shift from cassette tapes and trunk sales to streaming algorithms and AI-generated playlists. Through every shift, the SPC philosophy remained: stay authentic, stay independent, and own your output. This foundational "Legacy Energy" is what keeps Mr. CAP grounded while his ambitions scale into the digital stratosphere.
 
@@ -927,9 +931,11 @@ The SPC is not just a group; it is a cultural institution. It represents a groun
 
 Here are 10 essential things you should know about the South Park Coalition and their enduring legacy in the world of hip hop.
 
-## 1. Founded by the "Wizard" K-Rino in 1986
+## 1. Founded by the "Wizard" K-Rino in ${SPC_FOUNDING_YEAR}
 
-The South Park Coalition was established in 1986 by the legendary K-Rino. His vision was to create a unified front for the immense talent emerging from the South Park neighborhood of Houston.
+The South Park Coalition was established in ${SPC_FOUNDING_YEAR} by the legendary K-Rino. His vision was to create a unified front for the immense talent emerging from the South Park neighborhood of Houston.
+
+${SPC_FOUNDING_SOURCE_NOTE}
 
 From the beginning, K-Rino sought to foster an environment where lyricism and storytelling were paramount. This dedication to the craft turned SPC into an internationally acclaimed powerhouse of independent music.
 

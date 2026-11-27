@@ -71,6 +71,13 @@
       "when": 1795758574181,
       "tag": "0009_legends_marketing_content",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1795762717247,
+      "tag": "0010_correct_spc_founding_year",
+      "breakpoints": true
     }
   ]
 }

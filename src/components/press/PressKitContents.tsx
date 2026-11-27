@@ -7,6 +7,7 @@ import {
   LOGO_ASSETS,
   DISCOGRAPHY_HIGHLIGHTS,
   PRESS_MENTIONS,
+  HISTORICAL_SOURCE,
 } from "@/content/pressKit";
 
 const Section = ({
@@ -43,6 +44,10 @@ const PressKitContents = ({ long = false, onNavigate }: { long?: boolean; onNavi
         <p className="text-sm leading-relaxed text-[hsl(var(--foreground)/0.82)]">{LONG_BIO}</p>
       </Section>
     )}
+
+    <Section icon={FileText} label="Historical Source">
+      <p className="text-sm leading-relaxed text-[hsl(var(--foreground)/0.82)]">{HISTORICAL_SOURCE}</p>
+    </Section>
 
     <Section icon={Camera} label={`Press Photos · ${PHOTO_ASSETS.length} hi-res`}>
       <div className="grid grid-cols-3 gap-3">

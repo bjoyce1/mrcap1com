@@ -177,3 +177,9 @@
 - [x] Verify actual production URLs, raw HTML, privacy, mobile layout and consent-based analytics; 284 final regressions pass, 24 unpublished shells are noindex, no anonymous draft/workspace rows, nine public URLs return 200.
 - [x] Confirm Search Console ownership, submit the live sitemap and report indexing limitations; Google downloaded all 133 submitted URLs with zero errors or warnings. Six new public URLs are not indexed yet; indexing requests require direct Search Console access.
 - [x] Deliver production deployment report with remaining issues in Project Files.
+
+# SPC founding-year correction
+
+- [x] Audit source, public pages, private editorial records, press, SEO, structured data, captions and campaign content for 1986 founding references.
+- [x] Correct confirmed references to 1987 and record Mr. CAP's November 27, 2026 firsthand confirmation as the primary source without changing publication states.
+- [x] Run focused and full regression checks, rescan all project and database content, and summarize every correction without publishing.

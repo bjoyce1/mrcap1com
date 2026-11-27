@@ -1,3 +1,5 @@
+import { SPC_FOUNDING_YEAR } from '../../content/spcHistory';
+
 // Ported from the SPC Legends source package (src/game/config.mjs). Keep the two in step.
 /** Canonical game definitions. Changes to symbol weights affect random outcome frequency.
  * This is a prototype without prizes or redeemable value. No monetary rewards exist.
@@ -35,7 +37,7 @@ export const HOUSTON_HOODS = Object.freeze([
   {id:'mcgregor-park',name:'McGregor Park',color:'#38bdf8',subtitle:'MacGregor Way',desc:'Brays Bayou & MLK — Sunday park car shows and classic H-Town shine.'}
 ]);
 export const SYMBOL_LORE: Record<string, {role: string; hood: string; bio: string}> = Object.freeze({
-  'k-rino': {role:'The Sorcerer · SPC Co-Founder',hood:'South Park (MLK Blvd)',bio:'Co-founded the South Park Coalition in 1986. Universally respected as one of the most prolific, intricate lyricists in hip-hop history.'},
+  'k-rino': {role:'The Sorcerer · SPC Co-Founder',hood:'South Park (MLK Blvd)',bio:`Co-founded the South Park Coalition in ${SPC_FOUNDING_YEAR}. Universally respected as one of the most prolific, intricate lyricists in hip-hop history.`},
   'mr-cap': {role:'713 Executive · Slab King',hood:'South Park / 713',bio:'Keeper of the 713 flame, executive visionary, and champion of authentic Houston underground culture.'},
   'klondike-kat': {role:'The Lyrical Gorilla',hood:'South Park',bio:'First-wave SPC powerhouse whose thunderous delivery and battle-tested bars defined early Houston street rap.'},
   'point-blank': {role:'The Bull · Prone to Bad Dreams',hood:'South Park',bio:'Author of underground Houston street classics with unmistakable cadence and raw realism.'},
