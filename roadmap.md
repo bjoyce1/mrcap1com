@@ -143,3 +143,9 @@
 
 - [x] Keep section titles and descriptions above the background wash used inside home sections.
 - [x] Confirm nothing covers the headline and the release spotlight header reads clearly.
+
+# DJ Screw playback and animation polish
+
+- [x] Play the supplied slowed and chopped song at normal speed without extra audio slowdown or rewinds.
+- [x] Smooth the guardian reveal, reel motion and chops while preserving the ten second trigger, controls and rewards.
+- [x] Test playback speed, motion timing, desktop and phone presentation without publishing.
