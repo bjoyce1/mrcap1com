@@ -21,6 +21,9 @@ export const SCREW_PATTERN:readonly (readonly [number,number])[]=Object.freeze([
 ]);
 export const screwDuration=()=>SCREW_PATTERN.reduce((t,[,ms])=>t+ms,0);
 
+/** Slow horizontal drift, brief holds, then reverse scratches on each chop beat. */
+export function screwReelRate(rate:number):number{return rate===0?0:rate>0.5?-1.8:1;}
+
 export class ScrewTime{
   private el:HTMLAudioElement|null=null;
   private overlay:HTMLDivElement|null=null;
@@ -49,9 +52,10 @@ export class ScrewTime{
     // Keep the guardian card on its own smooth clock. Only game animations follow the chop pattern.
     for(const a of this.root.getAnimations({subtree:true})){
       if(!this.originalRates.has(a))this.originalRates.set(a,a.playbackRate);
+      const rate='animationName' in a&&a.animationName==='screw-roll'?screwReelRate(this.rate):this.rate;
       try{
-        if(typeof a.updatePlaybackRate==='function')a.updatePlaybackRate(this.rate);
-        else a.playbackRate=this.rate;
+        if(typeof a.updatePlaybackRate==='function')a.updatePlaybackRate(rate);
+        else a.playbackRate=rate;
       }catch{/* The animation finished between frames. */}
     }
     document.documentElement.style.setProperty('--screw-rate',String(this.rate||0.01));

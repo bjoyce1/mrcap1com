@@ -20,7 +20,7 @@
 @keyframes screw-halo{0%,100%{opacity:.55;transform:scale(.94)}50%{opacity:1;transform:scale(1.06)}}
 @keyframes screw-chop{50%{transform:scale(.975)}}
 .screw-reel{overflow:hidden}
-.screw-reel>*{animation:screw-roll 2.4s cubic-bezier(.45,.05,.55,.95) infinite alternate;animation-delay:calc(var(--screw-i,0)*-.24s);filter:blur(.55px) saturate(1.2);will-change:transform}
-@keyframes screw-roll{from{transform:translate3d(0,-2.5%,0) scale(1.015)}to{transform:translate3d(0,2.5%,0) scale(1.015)}}
+.screw-reel>*{animation:screw-roll 3.6s ease-in-out infinite alternate;animation-delay:calc(-1.2s + var(--screw-i,0)*-.2s);filter:blur(.55px) saturate(1.2);will-change:transform}
+@keyframes screw-roll{from{transform:translate3d(-8%,0,0) scale(1.035)}to{transform:translate3d(8%,0,0) scale(1.035)}}
 @media(max-width:620px){.screw-overlay{width:min(86vw,340px);padding:1rem;gap:.7rem}.screw-portrait{width:min(56vw,230px)}.screw-copy strong{font-size:1.75rem}.screw-copy em{font-size:.62rem;letter-spacing:.22em}}
 @media(prefers-reduced-motion:reduce){.screw-overlay,.screw-overlay img,.screw-portrait:before,.screw-halo,.screw-reel>*,.screw-overlay.is-chopping .screw-portrait{animation:none}.screw-overlay{transform:translate(-50%,-50%)}}

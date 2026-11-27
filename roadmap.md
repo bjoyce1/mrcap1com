@@ -149,3 +149,8 @@
 - [x] Play the supplied slowed and chopped song at normal speed without extra audio slowdown or rewinds.
 - [x] Smooth the guardian reveal, reel motion and chops while preserving the ten second trigger, controls and rewards.
 - [x] Test playback speed, motion timing, desktop and phone presentation without publishing.
+
+# DJ Screw horizontal chops
+
+- [x] Add slow horizontal movement and reverse chop beats to all six reels without changing audio or rewards.
+- [x] Verify controlled qualifying guest hits, horizontal reverse chops, cleanup and reduced motion on desktop and phone; all 220 game tests passed without publishing.
