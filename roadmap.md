@@ -205,3 +205,9 @@
 - [x] Run regression and privacy checks, publish only the four approved profiles and verify the actual production pages.
 - [x] Deploy only the Mr. CAP, K-Rino, Klondike Kat and Point Blank profiles at 07:18:09 UTC. All 289 regressions passed, all four profiles passed metadata, schema, artwork, desktop and phone checks, and all 20 other drafts remain private.
 - [x] Submit the 137-URL sitemap to Google; downloaded at 07:19:26 UTC with zero errors or warnings.
+
+# Murder One public artist profile
+
+- [x] Replace the existing research draft with the owner-approved biography, seven verified sources and existing approved artwork.
+- [x] Pass all 289 regression tests and request publication with route-specific search metadata and sitemap inclusion.
+- [ ] Verify the production page, artwork, metadata, structured data, directory link, privacy and phone rendering.

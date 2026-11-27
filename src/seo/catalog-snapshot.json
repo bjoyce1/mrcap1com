@@ -1322,6 +1322,63 @@
  "pressEntries": [],
  "legendsContent": [
   {
+   "id": "d7ae6911-bccc-4b93-a702-fc8b387ada7e",
+   "kind": "artist",
+   "slug": "murder-one",
+   "title": "Murder One",
+   "excerpt": "Murder One, born Ronald Thomas, is a Houston rapper and member of the South Park Coalition. His catalog includes Rhythm for Thugs, Dirty Game and Hood Element with Wash-Off.",
+   "body": "## Introduction\nRonald Thomas, known professionally as Murder One, is a Houston rapper and member of the South Park Coalition. His owner-supplied biography identifies Houston, Texas as his origin and places his recording debut on K-Rino's 1993 album Stories from the Black Book.\n\n## Early South Park Coalition appearance\nThe 1993 Stories from the Black Book track listing credits Murder One on War in South Park alongside A.C. Chill, Greek, Ganksta NIP, DBX, The Beholder and Point Blank. This early appearance documents his connection to K-Rino and the South Park Coalition recording circle.\n\n## Solo career and Over Looked Records\nMurder One began his solo career in 2003, founded Over Looked Records and released his debut solo album, Rhythm for Thugs. His second solo studio album, Dirty Game, followed in 2011 through Over Looked Records. Catalog credits also connect his work with SPC artists including K-Rino, Klondike Kat, Dope-E, PSK-13 and Ganxsta Nip.\n\n## Wash-Off collaboration and later catalog\nHood Element, a collaboration with Wash-Off, was released in 2012. Apple Music lists the 12-song album with a May 2, 2012 release date. Catalog listings also document the later Hood Element Reloaded release in 2016, so this profile does not describe the 2012 album as his latest release.\n\n## SPC Legends\nMurder One is one of the twelve featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied Murder One biography received from Mr. CAP on November 27, 2026. Release dates, appearances and catalog details were cross-checked against the linked album and artist references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/murder-one.webp",
+   "sources": [
+    "https://mrcap1.com/blog/10-things-south-park-coalition",
+    "https://www.thegoodoldayz.com/artist/murder-one/7234.html",
+    "https://www.thegoodoldayz.com/album/stories-from-the-black-book/8129.html",
+    "https://www.thegoodoldayz.com/album/rhythm-for-thugs/19975.html",
+    "https://www.thegoodoldayz.com/album/dirty-game-20312/20312.html",
+    "https://music.apple.com/us/album/hood-element/530502822",
+    "https://www.thegoodoldayz.com/album/hood-element-reloaded/20556.html"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/klondike-kat",
+     "label": "Klondike Kat"
+    },
+    {
+     "href": "/legends/artists/point-blank",
+     "label": "Point Blank"
+    },
+    {
+     "href": "/legends/artists/mr-cap",
+     "label": "Mr. CAP"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist",
+    "houston-hip-hop",
+    "south-park-coalition"
+   ],
+   "seo_title": "Murder One | SPC Legends Artist Profile",
+   "seo_description": "Meet Murder One, born Ronald Thomas. Explore his South Park Coalition debut, Over Looked Records catalog and collaborations with K-Rino and Wash-Off.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:26:09.857548+00:00",
+   "updated_at": "2026-11-27T07:26:24.285196+00:00"
+  },
+  {
    "id": "a94e823b-c558-4a4d-b94f-e6ae52c101b8",
    "kind": "artist",
    "slug": "klondike-kat",
@@ -1508,5 +1565,5 @@
    "updated_at": "2026-11-27T07:16:54.756422+00:00"
   }
  ],
- "fetchedAt": "2026-11-27T07:16:57.300Z"
+ "fetchedAt": "2026-11-27T07:26:31.401Z"
 }
