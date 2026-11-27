@@ -52,7 +52,8 @@ const AnalyticsRedirect = lazy(() => import("./pages/AnalyticsRedirect"));
 const SelfLoveRoom2024 = lazy(() => import("./pages/SelfLoveRoom2024"));
 const SelfLoveStory = lazy(() => import("./pages/SelfLoveStory"));
 const SelfLoveStoryModal = lazy(() => import("./components/SelfLoveStoryModal"));
-const Merch = lazy(() => import("./pages/Merch"));
+const StorePage = lazy(() => import("./features/store/StorePage"));
+const ProductPage = lazy(() => import("./features/store/ProductPage"));
 const AlbumPage = lazy(() => import("./pages/AlbumPage"));
 const TrackPage = lazy(() => import("./pages/TrackPage"));
 const AdminLibrary = lazy(() => import("./pages/AdminLibrary"));
@@ -102,13 +103,15 @@ function AppRoutes() {
   const state = location.state as { backgroundLocation?: Location } | null;
   const introActive = useIntroStore((s) => s.active);
   const greatdayPrivate = PRIVATE_GREATDAY_PATHS.some((path) => path === location.pathname);
+  // the store brings its own header; the music player and phone tab bar stay
+  const storeRoute = location.pathname === "/merch" || location.pathname.startsWith("/merch/");
 
   return (
     <>
       <GoogleAnalytics measurementId={GA_MEASUREMENT_ID} />
       <ScrollToTop />
       
-      <div hidden={introActive || greatdayPrivate || location.pathname === "/intro"}>
+      <div hidden={introActive || greatdayPrivate || storeRoute || location.pathname === "/intro"}>
         <PersistentNavigation />
       </div>
       <NavigationManagedContext.Provider value={!greatdayPrivate}>
@@ -182,7 +185,8 @@ function AppRoutes() {
             <Route path="/self-love/2025" element={<Navigate to="/self-love" replace />} />
             <Route path="/self-love/2026" element={<Navigate to="/self-love" replace />} />
             {/* Merch & Streaming */}
-            <Route path="/merch" element={<PageTransition><Merch /></PageTransition>} />
+            <Route path="/merch" element={<PageTransition><StorePage /></PageTransition>} />
+            <Route path="/merch/:slug" element={<PageTransition><ProductPage /></PageTransition>} />
             <Route path="/legends" element={<PageTransition><LegendsPage /></PageTransition>} />
             <Route path="/legends/rewards" element={<PageTransition><LegendsRewardsPage /></PageTransition>} />
             <Route path="/legends/vault" element={<PageTransition><LegendsVaultPage /></PageTransition>} />
@@ -219,7 +223,7 @@ function AppRoutes() {
         <>
           <MobileBottomNav />
           {/* SPC Legends has its own motion switch; the floating pill would cover its HUD on phones. */}
-          {location.pathname !== "/legends" && <MotionToggle />}
+          {location.pathname !== "/legends" && !storeRoute && <MotionToggle />}
         </>
       )}
       
