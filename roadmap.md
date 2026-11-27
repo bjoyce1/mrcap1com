@@ -220,4 +220,4 @@
 - [x] Use the owner-confirmed Ganxsta NIP display spelling.
 - [x] Confirm the DBX to Komodo DBX profile mapping with the owner and corroborating catalog aliases.
 - [x] Publish the five reviewed content records after source-link and metadata checks; all 289 regressions and all five desktop and phone previews passed.
-- [ ] Save and deploy the five-profile search snapshot, then verify production pages, metadata, sitemap, privacy and phone rendering.
+- [x] Deploy commit ff584a0 in production build 2026-11-27T07:38:21Z; all five pages pass raw metadata, social tags, ProfilePage schema, sitemap, directory, artwork, desktop and phone checks with no page errors or overflow, and the two remaining artist drafts retain private noindex shells.
