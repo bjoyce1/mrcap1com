@@ -138,3 +138,8 @@
 - [x] Feature The Art of ISM in the home page release spotlight instead of The Ties That Bind Us.
 - [x] Cut a short Words Of ISM preview clip and wire the play button to it.
 - [x] Check desktop, phone, playback and pause, then report without publishing.
+
+# Fix faded section titles
+
+- [x] Keep section titles and descriptions above the background wash used inside home sections.
+- [x] Confirm nothing covers the headline and the release spotlight header reads clearly.

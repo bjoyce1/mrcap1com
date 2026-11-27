@@ -58,7 +58,7 @@ const SectionShell = ({
             whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className={`flex flex-col gap-3 mb-12 md:mb-16 ${alignClass}`}
+            className={`relative z-10 flex flex-col gap-3 mb-12 md:mb-16 ${alignClass}`}
           >
             {eyebrow && (
               <div className={`flex items-center gap-3 ${align === "center" ? "justify-center" : ""}`}>
