@@ -23,3 +23,19 @@ describe('Operation 713 safeguards', () => {
     expect(contentSeo({...base,reviewed:false}).noIndex).toBe(true);
   });
 });
+import { matchesFilter, scorecard, mergeWorkspace, initialWorkspace } from './content';
+describe('Phase 2 editorial tools', () => {
+  it('flags research drafts and ready content', () => {
+    const draft = {...base, status: 'draft' as const, body: '## Intro\nText\n\n## Research needed\nMore'};
+    expect(matchesFilter(draft, 'research')).toBe(true);
+    expect(matchesFilter({...base, status: 'draft'}, 'ready')).toBe(true);
+    expect(matchesFilter({...base, image_url: ''}, 'artwork')).toBe(true);
+    expect(scorecard({...base, reviewed: false}).checks.find(c => c.label === 'Editorial review')?.ok).toBe(false);
+  });
+  it('keeps saved drafts when filling new workspace fields', () => {
+    const saved = {...initialWorkspace(), links: [{label: 'x', url: 'u', status: 'draft'}]};
+    expect(mergeWorkspace(saved).links).toHaveLength(1);
+    expect(mergeWorkspace({calendar: [{day: 1, title: 'Old', status: 'approved'}]} as never).calendar[0]).toMatchObject({status: 'approved', title: 'Old'});
+    expect(initialWorkspace().calendar.every(c => c.url?.includes('operation_713_legends_takeover'))).toBe(true);
+  });
+});

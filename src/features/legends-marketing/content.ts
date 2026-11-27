@@ -108,9 +108,82 @@ export function contentSeo(row: MarketingContent): SeoEntry {
 }
 export const draftTopics = ['The Story Behind SPC Legends: Spin the Mix', 'The History and Legacy of the South Park Coalition', 'How Houston Helped Shape Southern Hip-Hop', 'Meet the Artists Behind SPC Legends', 'The Evolution of Underground Houston Rap', "Houston’s Independent Music Movement", 'From Music to Gaming: The SPC Legends Experience', "The Cultural Influence of Houston’s South Park", 'How Technology Is Changing Independent Hip-Hop', 'Behind the Scenes of SPC Legends', "Understanding Houston’s Unique Hip-Hop Sound", 'Preserving Houston Hip-Hop History for Future Generations'];
 export const calendarTasks = ['Technical SEO review','Campaign announcement','Founder introduction','Game overview','Promotional trailer review','Press release review','Email announcement review','K-Rino spotlight','Mr. CAP spotlight','Point Blank spotlight','Klondike Kat spotlight','Artist interview request','Character feature','Artist collaboration request','Houston neighborhood story','South Park Coalition history','Independent music culture','Podcast outreach draft','Media outreach draft','Cultural editorial review','Community story','Founder interview','Development update','Community feedback','Artist interview edit','SEO performance review','Content performance review','Campaign optimization','Approval review','Next-month planning'];
+export interface CalendarItem {day: number; title: string; status: string; platform?: string; theme?: string; caption?: string; assets?: string; url?: string}
+export interface CampaignLink {label: string; url: string; status: string}
+export interface SearchSetup {gscStatus: string; bingStatus: string; ga4Status: string; gscNote: string; bingNote: string}
+const PLATFORMS = ['Instagram','TikTok','Facebook','X','YouTube Shorts','Email'];
+const SLOGAN = 'Spin the Mix. Play the Culture. Become a Legend.';
+const FOOT = 'For adults. Virtual rewards only, no cash value.';
+export function calendarDraft(day: number, title: string): CalendarItem {
+  const theme = CALENDAR_THEMES[(day - 1) % CALENDAR_THEMES.length];
+  const platform = PLATFORMS[(day - 1) % PLATFORMS.length];
+  const artist = ARTISTS[(day - 1) % ARTISTS.length];
+  const spotlight = /spotlight|Character feature/i.test(title);
+  const name = spotlight ? (title.match(/^(.*) spotlight$/)?.[1] ?? artist.name) : '';
+  const path = name ? '/legends/artists' : theme === 'Houston Hip-Hop History' ? '/legends/news' : theme === 'Behind the Game' ? '/legends/how-to-play' : '/legends';
+  const caption = name ? `Meet ${name}, one of the twelve artists on the SPC Legends reels. ${SLOGAN} ${FOOT}`
+    : theme === 'Behind the Game' ? `Six reels, 26 paylines and twelve Houston artists. Here is how SPC Legends works. ${SLOGAN} ${FOOT}`
+    : theme === 'Houston Hip-Hop History' ? `Houston built its own sound. Read the story behind the culture on the reels. ${SLOGAN}`
+    : theme === 'South Park Coalition Legacy' ? `South Park gave the coalition its name. Explore the SPC legacy behind the game. ${SLOGAN}`
+    : theme === 'Independent Artist Ownership' ? `Independent from the start. How Houston artists built their own lane. ${SLOGAN}`
+    : theme === 'Music Meets Technology' ? `Hit a Legend and hear their song. Music and play in one Houston arcade. ${SLOGAN} ${FOOT}`
+    : `The 713 Takeover starts now. Twelve Legends, five Houston hoods, one mix. ${SLOGAN} ${FOOT}`;
+  const source = platform === 'Email' ? 'email' : platform === 'YouTube Shorts' ? 'youtube' : platform.toLowerCase();
+  return {day, title, status: 'draft', platform, theme, caption: `${caption} #SPCLegends #HoustonHipHop`, assets: name ? `${name} approved character artwork, vertical crop` : 'Approved game screen capture or logo, platform-sized crop', url: `https://mrcap1.com${path}?utm_source=${source}&utm_medium=${source === 'email' ? 'newsletter' : 'social'}&utm_campaign=${CAMPAIGN}&utm_content=day_${day}`};
+}
 export const initialWorkspace = () => ({
-  calendar: calendarTasks.map((title, i) => ({day: i + 1, title, status: 'draft'})),
-  captions: ['Instagram','TikTok','Facebook','X','YouTube Shorts','Email'].map(platform => ({platform, status: 'draft', text: 'Spin the Mix. Play the Culture. Become a Legend. Explore SPC Legends at mrcap1.com/legends. For adults. Virtual rewards only, no cash value. #SPCLegends #SouthParkCoalition #713MixHouse #HoustonHipHop #MrCAP'})),
+  calendar: calendarTasks.map((title, i) => calendarDraft(i + 1, title)),
+  captions: PLATFORMS.map(platform => ({platform, status: 'draft', text: `${SLOGAN} Explore SPC Legends at mrcap1.com/legends. ${FOOT} #SPCLegends #SouthParkCoalition #713MixHouse #HoustonHipHop #MrCAP`})),
   outreach: [] as Array<{name: string; channel: string; status: string; notes: string}>,
+  links: [] as CampaignLink[],
+  search: {gscStatus: 'not-started', bingStatus: 'not-started', ga4Status: 'tag-configured', gscNote: '', bingNote: ''} as SearchSetup,
 });
+/** Fill fields added after a workspace was first saved, without overwriting saved drafts. */
+export function mergeWorkspace(saved: Partial<ReturnType<typeof initialWorkspace>> | null | undefined) {
+  const base = initialWorkspace();
+  if (!saved) return base;
+  return {...base, ...saved,
+    calendar: (saved.calendar?.length ? saved.calendar : base.calendar).map((item, i) => item.caption ? item : {...calendarDraft(item.day ?? i + 1, item.title), status: item.status}),
+    links: saved.links ?? base.links, search: {...base.search, ...(saved.search ?? {})}};
+}
 export type Workspace = ReturnType<typeof initialWorkspace>;
+
+export type ContentFilter = 'all' | 'research' | 'artwork' | 'review' | 'ready' | 'published' | 'updating';
+export const FILTER_LABELS: Record<ContentFilter, string> = {all:'All', research:'Needs research', artwork:'Needs artwork', review:'Needs editorial review', ready:'Ready to publish', published:'Published', updating:'Needs updating'};
+const STALE_MS = 180 * 24 * 3600 * 1000;
+/** Editorial quality checks. An editorial indicator only, never a ranking prediction. */
+export function scorecard(row: MarketingContent) {
+  const internal = row.links.filter(l => l.href.startsWith('/')).length + (row.body.match(/mrcap1\.com\//g) ?? []).length;
+  const checks = [
+    {label:'Title', ok: !!row.seo_title.trim() && row.seo_title.length <= 59},
+    {label:'Meta description', ok: row.seo_description.length >= 140 && row.seo_description.length <= 160},
+    {label:'Heading structure', ok: (row.body.match(/^## /gm) ?? []).length >= 2},
+    {label:'Original content', ok: row.body.replace(/\s+/g,' ').length >= 600 && !/Research needed|What this story needs/.test(row.body)},
+    {label:'Internal links', ok: internal >= 2},
+    {label:'Source references', ok: row.sources.length >= 2 && row.sources.every(safeHttps)},
+    {label:'Image', ok: safeHttps(row.image_url)},
+    {label:'Image alt text', ok: safeHttps(row.image_url) && !!row.title.trim()},
+    {label:'Canonical URL', ok: /^[a-z0-9]+(-[a-z0-9]+)*$/.test(row.slug)},
+    {label:'Social sharing', ok: safeHttps(row.image_url) && !!row.seo_title && !!row.seo_description},
+    {label:'Editorial review', ok: row.reviewed},
+    {label:'Publication ready', ok: publicationErrors(row).length === 0},
+  ];
+  return {checks, score: checks.filter(c => c.ok).length, total: checks.length};
+}
+export function matchesFilter(row: MarketingContent, filter: ContentFilter, now = Date.now()): boolean {
+  switch (filter) {
+    case 'research': return row.tags.includes('needs-research') || row.sources.length < 2 || /Research needed|What this story needs|Needs verification|Sources needed/.test(row.body);
+    case 'artwork': return !safeHttps(row.image_url);
+    case 'review': return !row.reviewed;
+    case 'ready': return row.status === 'draft' && publicationErrors(row).length === 0;
+    case 'published': return row.status === 'published';
+    case 'updating': return row.status === 'published' && now - Date.parse(row.updated_at) > STALE_MS;
+    default: return true;
+  }
+}
+export const CAMPAIGN_CHANNELS = [
+  {source:'instagram',medium:'social',label:'Instagram'},{source:'facebook',medium:'social',label:'Facebook'},{source:'tiktok',medium:'social',label:'TikTok'},
+  {source:'x',medium:'social',label:'X'},{source:'youtube',medium:'video',label:'YouTube'},{source:'email',medium:'newsletter',label:'Email newsletter'},
+  {source:'qr',medium:'flyer',label:'QR flyer'},{source:'press',medium:'earned_media',label:'Press coverage'},{source:'podcast',medium:'audio',label:'Podcast appearance'},
+];
+export const CALENDAR_THEMES = ['The 713 Takeover','Meet the Legends','Houston Hip-Hop History','Behind the Game','South Park Coalition Legacy','Independent Artist Ownership','Music Meets Technology'];

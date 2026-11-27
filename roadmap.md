@@ -167,3 +167,4 @@
 - [x] Extend existing route metadata and sitemap generation without invented timestamps.
 - [x] Add protected marketing workspace, campaign links, QR codes, captions and 30-day draft calendar.
 - [x] Verify public and admin flows, privacy, mobile layout and game regressions; document external setup and publication requirements.
+- [ ] Phase 2: owner verifies artist facts and sources, adds article images, completes Search Console and Bing verification, approves publish.
