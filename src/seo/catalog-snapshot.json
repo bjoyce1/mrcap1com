@@ -1322,17 +1322,21 @@
  "pressEntries": [],
  "legendsContent": [
   {
-   "id": "77631904-aba8-4622-be57-ea9d31fd4706",
+   "id": "ca1a8dea-dc77-4f1f-9c86-d4a9061162d3",
    "kind": "artist",
-   "slug": "komodo-dbx",
-   "title": "Komodo DBX",
-   "excerpt": "Komodo DBX, also credited as KomodoDBX and DBX, is a Houston rapper affiliated with Section A and the South Park Coalition whose catalog includes Dragon Klan and Original Gangstah Sh!t.",
-   "body": "## Introduction\nKomodo DBX, also credited as KomodoDBX and DBX, is a Houston rapper associated with Section A and the South Park Coalition. Mr. CAP confirmed that the supplied DBX biography belongs to this existing Komodo DBX profile, and catalog references independently list KomodoDBX as a DBX alias.\n\n## Recording career and affiliations\nThe owner-supplied biography traces his recording activity to 1991. Catalog references document his affiliations with Section A and the South Park Coalition without requiring a precise joining date for either group.\n\n## Dragon Klan\nDragon Klan was released in 2003 through Full Circle Entertainment. The detailed album listing documents the release credits and guest appearances. Catalog references also use the title DBX Of The Dragon K.L.A.N., so this profile does not treat that wording as evidence of a separate album.\n\n## Original Gangstah Sh!t\nOriginal Gangstah Sh!t followed in 2013 through Komodo Entertainment under the KomodoDBX credit. The album listing documents the production and writing credits for this release.\n\n## SPC Legends\nKomodo DBX is one of the twelve featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied DBX biography received from Mr. CAP on November 27, 2026. Mr. CAP confirmed the Komodo DBX profile mapping the same day. Name variants, affiliations and release details were cross-checked against the linked catalog and album references.",
-   "image_url": "https://mrcap1.com/games/spc-legends/symbols/komodo-dbx.webp",
+   "slug": "rapper-k",
+   "title": "Rapper K",
+   "excerpt": "Rapper K, credited as Keith Archie, is a Houston rapper and member of the South Park Coalition. His releases include two solo albums and two collaborations with Sniper.",
+   "body": "## Introduction\nKeith Archie, better known by his stage name Rapper K, is a Houston rapper and member of the South Park Coalition. His owner-supplied biography identifies South Park, Houston, Texas as his origin and Black Book International as his label.\n\n## Early South Park Coalition appearance\nAlbum credits list Rapper K on I Got Pimped from K-Rino's 1995 album Danger Zone, documenting his recordings with K-Rino and the South Park Coalition by the mid-1990s.\n\n## Solo albums\nRapper K released the solo albums Long Time Coming in 2008 and Imma Finish It in 2010 through Black Book International.\n\n## Collaborations with Sniper\nWith fellow SPC member Sniper, Rapper K released Im All In in 2010 and A-1 Muzik in 2012. He has also appeared on later South Park Coalition releases, including The Ties That Bind Us in 2024.\n\n## SPC Legends\nRapper K is one of the featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied Rapper K biography received from Mr. CAP on November 27, 2026. Release dates, appearances and catalog details were cross-checked against the linked album and artist references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/rapper-k.webp",
    "sources": [
-    "https://disco.dog/artist/338929-dbx-5",
-    "https://www.thegoodoldayz.com/album/dragon-klan/22814.html",
-    "https://www.thegoodoldayz.com/album/original-gangstah-sht/20503.html"
+    "https://www.thegoodoldayz.com/album/danger-zone/8130.html",
+    "https://www.thegoodoldayz.com/album/long-time-coming-19765/19765.html",
+    "https://music.apple.com/us/album/imma-finish-it/367692409",
+    "https://music.apple.com/us/album/im-all-in/399202679",
+    "https://www.thegoodoldayz.com/album/a-1-muzik/20501.html",
+    "https://music.apple.com/us/artist/rapper-k/291062258",
+    "https://www.houstonpress.com/music/friday-night-k-rino-and-lil-flip-at-fitzgeralds-6777514/"
    ],
    "links": [
     {
@@ -1348,8 +1352,8 @@
      "label": "K-Rino"
     },
     {
-     "href": "/legends/artists/murder-one",
-     "label": "Murder One"
+     "href": "/legends/artists/mr-cap",
+     "label": "Mr. CAP"
     }
    ],
    "category": "Artist",
@@ -1358,13 +1362,13 @@
     "houston-hip-hop",
     "south-park-coalition"
    ],
-   "seo_title": "Komodo DBX | SPC Legends Artist Profile",
-   "seo_description": "Meet Komodo DBX, the Houston rapper known as DBX. Explore his Section A and South Park Coalition ties plus Dragon Klan and Original Gangstah Sh!t.",
+   "seo_title": "Rapper K | SPC Legends Artist Profile",
+   "seo_description": "Meet Rapper K, born Keith Archie. Explore his South Park Coalition roots, Black Book International albums and collaborations with Sniper and K-Rino.",
    "author": "",
    "reviewed": true,
    "status": "published",
-   "published_at": "2026-11-27T07:36:09.047566+00:00",
-   "updated_at": "2026-11-27T07:36:09.047566+00:00"
+   "published_at": "2026-11-27T07:43:13.912183+00:00",
+   "updated_at": "2026-11-27T07:43:13.912183+00:00"
   },
   {
    "id": "bb84c8d8-61da-444c-b812-658751a63820",
@@ -1564,6 +1568,51 @@
    "updated_at": "2026-11-27T07:36:09.047566+00:00"
   },
   {
+   "id": "77631904-aba8-4622-be57-ea9d31fd4706",
+   "kind": "artist",
+   "slug": "komodo-dbx",
+   "title": "Komodo DBX",
+   "excerpt": "Komodo DBX, also credited as KomodoDBX and DBX, is a Houston rapper affiliated with Section A and the South Park Coalition whose catalog includes Dragon Klan and Original Gangstah Sh!t.",
+   "body": "## Introduction\nKomodo DBX, also credited as KomodoDBX and DBX, is a Houston rapper associated with Section A and the South Park Coalition. Mr. CAP confirmed that the supplied DBX biography belongs to this existing Komodo DBX profile, and catalog references independently list KomodoDBX as a DBX alias.\n\n## Recording career and affiliations\nThe owner-supplied biography traces his recording activity to 1991. Catalog references document his affiliations with Section A and the South Park Coalition without requiring a precise joining date for either group.\n\n## Dragon Klan\nDragon Klan was released in 2003 through Full Circle Entertainment. The detailed album listing documents the release credits and guest appearances. Catalog references also use the title DBX Of The Dragon K.L.A.N., so this profile does not treat that wording as evidence of a separate album.\n\n## Original Gangstah Sh!t\nOriginal Gangstah Sh!t followed in 2013 through Komodo Entertainment under the KomodoDBX credit. The album listing documents the production and writing credits for this release.\n\n## SPC Legends\nKomodo DBX is one of the twelve featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied DBX biography received from Mr. CAP on November 27, 2026. Mr. CAP confirmed the Komodo DBX profile mapping the same day. Name variants, affiliations and release details were cross-checked against the linked catalog and album references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/komodo-dbx.webp",
+   "sources": [
+    "https://disco.dog/artist/338929-dbx-5",
+    "https://www.thegoodoldayz.com/album/dragon-klan/22814.html",
+    "https://www.thegoodoldayz.com/album/original-gangstah-sht/20503.html"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/murder-one",
+     "label": "Murder One"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist",
+    "houston-hip-hop",
+    "south-park-coalition"
+   ],
+   "seo_title": "Komodo DBX | SPC Legends Artist Profile",
+   "seo_description": "Meet Komodo DBX, the Houston rapper known as DBX. Explore his Section A and South Park Coalition ties plus Dragon Klan and Original Gangstah Sh!t.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:36:09.047566+00:00",
+   "updated_at": "2026-11-27T07:36:09.047566+00:00"
+  },
+  {
    "id": "d7ae6911-bccc-4b93-a702-fc8b387ada7e",
    "kind": "artist",
    "slug": "murder-one",
@@ -1619,50 +1668,6 @@
    "status": "published",
    "published_at": "2026-11-27T07:26:09.857548+00:00",
    "updated_at": "2026-11-27T07:26:24.285196+00:00"
-  },
-  {
-   "id": "a94e823b-c558-4a4d-b94f-e6ae52c101b8",
-   "kind": "artist",
-   "slug": "klondike-kat",
-   "title": "Klondike Kat",
-   "excerpt": "Klondike Kat is an original South Park Coalition artist, rapper and singer whose Houston catalog stretches from the 1993 Hustler EP to Diamond Dre.",
-   "body": "## Introduction\nKlondike Kat is an original member of the South Park Coalition and a Houston artist whose work moves between rapping and singing. His owner-supplied biography describes a versatile vocal style that uses shifting accents and a persistent search for new beats and lyrics.\n\n## Early musical journey\nKlondike Kat began his rap journey in 1986 with encouragement from his mother and grandmother. At 13, he formed a singing group with friends and performed in school talent shows. He began writing original material in high school and battled artists from other Houston schools, a path that eventually brought him together with K-Rino.\n\n## Discography\nHis first EP, Hustler, was released in 1993. The supplied biography also lists Mobbin' Music Melodies in 1996, Biography of a Made Man in 1999, Eating Off the Streets Vol. 1 in 2001, Eating Off the Streets Vol. 2 in 2003, Grand Theft Hustling in 2009 and Diamond Dre in 2019.\n\n## Collaboration and performance\nKlondike Kat's collaborators include K-Rino, Point Blank, Cl'Che and other South Park Coalition artists. His performance history includes appearances with DJ Screw, Ice-T, Lil Keke, Z-Ro and Trae tha Truth. He is also named among the featured artists on the SPC group album The Ties That Bind Us.\n\n## Source note\nThis profile draws on an owner-supplied Klondike Kat biography received November 27, 2026 and the official Mr. CAP archive.",
-   "image_url": "https://mrcap1.com/games/spc-legends/symbols/klondike-kat.webp",
-   "sources": [
-    "https://mrcap1.com/south-park-coalition",
-    "https://mrcap1.com/blog/10-things-south-park-coalition",
-    "https://mrcap1.com/live",
-    "https://mrcap1.com/mr-cap-discography"
-   ],
-   "links": [
-    {
-     "href": "/legends",
-     "label": "Play SPC Legends"
-    },
-    {
-     "href": "/legends/artists",
-     "label": "Artist directory"
-    },
-    {
-     "href": "/legends/artists/k-rino",
-     "label": "K-Rino"
-    },
-    {
-     "href": "/legends/artists/point-blank",
-     "label": "Point Blank"
-    }
-   ],
-   "category": "Artist",
-   "tags": [
-    "artist"
-   ],
-   "seo_title": "Klondike Kat | SPC Legends Artist Profile",
-   "seo_description": "Meet Klondike Kat, an original South Park Coalition rapper and singer. Explore his Houston story, discography and role in SPC Legends: Spin the Mix.",
-   "author": "",
-   "reviewed": true,
-   "status": "published",
-   "published_at": "2026-11-27T07:15:22.521548+00:00",
-   "updated_at": "2026-11-27T07:15:22.521548+00:00"
   },
   {
    "id": "f81dbb40-d788-481a-b2c3-54288887029c",
@@ -1805,7 +1810,51 @@
    "status": "published",
    "published_at": "2026-11-27T07:15:22.521548+00:00",
    "updated_at": "2026-11-27T07:16:54.756422+00:00"
+  },
+  {
+   "id": "a94e823b-c558-4a4d-b94f-e6ae52c101b8",
+   "kind": "artist",
+   "slug": "klondike-kat",
+   "title": "Klondike Kat",
+   "excerpt": "Klondike Kat is an original South Park Coalition artist, rapper and singer whose Houston catalog stretches from the 1993 Hustler EP to Diamond Dre.",
+   "body": "## Introduction\nKlondike Kat is an original member of the South Park Coalition and a Houston artist whose work moves between rapping and singing. His owner-supplied biography describes a versatile vocal style that uses shifting accents and a persistent search for new beats and lyrics.\n\n## Early musical journey\nKlondike Kat began his rap journey in 1986 with encouragement from his mother and grandmother. At 13, he formed a singing group with friends and performed in school talent shows. He began writing original material in high school and battled artists from other Houston schools, a path that eventually brought him together with K-Rino.\n\n## Discography\nHis first EP, Hustler, was released in 1993. The supplied biography also lists Mobbin' Music Melodies in 1996, Biography of a Made Man in 1999, Eating Off the Streets Vol. 1 in 2001, Eating Off the Streets Vol. 2 in 2003, Grand Theft Hustling in 2009 and Diamond Dre in 2019.\n\n## Collaboration and performance\nKlondike Kat's collaborators include K-Rino, Point Blank, Cl'Che and other South Park Coalition artists. His performance history includes appearances with DJ Screw, Ice-T, Lil Keke, Z-Ro and Trae tha Truth. He is also named among the featured artists on the SPC group album The Ties That Bind Us.\n\n## Source note\nThis profile draws on an owner-supplied Klondike Kat biography received November 27, 2026 and the official Mr. CAP archive.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/klondike-kat.webp",
+   "sources": [
+    "https://mrcap1.com/south-park-coalition",
+    "https://mrcap1.com/blog/10-things-south-park-coalition",
+    "https://mrcap1.com/live",
+    "https://mrcap1.com/mr-cap-discography"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/point-blank",
+     "label": "Point Blank"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist"
+   ],
+   "seo_title": "Klondike Kat | SPC Legends Artist Profile",
+   "seo_description": "Meet Klondike Kat, an original South Park Coalition rapper and singer. Explore his Houston story, discography and role in SPC Legends: Spin the Mix.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:15:22.521548+00:00",
+   "updated_at": "2026-11-27T07:15:22.521548+00:00"
   }
  ],
- "fetchedAt": "2026-11-27T07:36:12.212Z"
+ "fetchedAt": "2026-11-27T07:43:24.610Z"
 }
