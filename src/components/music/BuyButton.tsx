@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { usePurchasesStore } from "@/stores/purchasesStore";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import SecureCheckoutPanel from "@/components/checkout/SecureCheckoutPanel";
 import { trackEvent } from "@/components/GoogleAnalytics";
 
 interface BuyButtonProps {
@@ -116,6 +117,7 @@ const BuyButton = ({
                 {clientIdFailed ? "Checkout is unavailable right now. Please try again later." : "Loading secure checkout..."}
               </p>
             ) : (
+            <SecureCheckoutPanel>
             <PayPalScriptProvider
               options={{ clientId, currency: "USD", intent: "capture" }}
             >
@@ -173,6 +175,7 @@ const BuyButton = ({
                 }}
               />
             </PayPalScriptProvider>
+            </SecureCheckoutPanel>
             )}
           </div>
         </DialogContent>

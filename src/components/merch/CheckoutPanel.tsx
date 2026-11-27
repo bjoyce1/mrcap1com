@@ -1,3 +1,4 @@
+import SecureCheckoutPanel from '@/components/checkout/SecureCheckoutPanel';
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, Truck, CreditCard, Loader2, CheckCircle2 } from "lucide-react";
@@ -468,14 +469,16 @@ export const CheckoutPanel = ({ isOpen, onClose, onBack }: CheckoutPanelProps) =
                   <Loader2 className="w-8 h-8 animate-spin text-primary" />
                 </div>
               ) : (
-                <div ref={paypalButtonsRef} className="min-h-[150px]">
+                <SecureCheckoutPanel>
+<div ref={paypalButtonsRef} className="min-h-[150px]">
                   {!paypalLoaded && (
                     <div className="flex items-center justify-center py-8">
-                      <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-                      <span className="ml-2 text-muted-foreground">Loading payment options...</span>
+                      <Loader2 className="w-6 h-6 animate-spin text-stone-600" />
+                      <span className="ml-2 text-stone-600">Loading payment options...</span>
                     </div>
                   )}
                 </div>
+                </SecureCheckoutPanel>
               )}
             </div>
           </div>
