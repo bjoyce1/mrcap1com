@@ -85,6 +85,7 @@ function validateShipping(shipping: unknown): Recipient | string {
 async function computeQuote(apiKey: string, items: ValidatedItem[], recipient: Recipient) {
   let subtotalCents = 0;
   let currency = 'USD';
+  const rateItems: { variant_id: number; quantity: number }[] = [];
 
   for (const item of items) {
     const res = await fetch(`${PRINTFUL_API_URL}/store/variants/${item.sync_variant_id}`, {
@@ -95,8 +96,11 @@ async function computeQuote(apiKey: string, items: ValidatedItem[], recipient: R
     const v = data.result?.sync_variant ?? data.result;
     const retail = parseFloat(v?.retail_price);
     if (!Number.isFinite(retail) || retail <= 0) throw new Error(`Variant ${item.sync_variant_id} has no retail price`);
+    const catalogVariantId = Number(v?.variant_id);
+    if (!Number.isInteger(catalogVariantId) || catalogVariantId <= 0) throw new Error(`Variant ${item.sync_variant_id} has no catalog variant`);
     if (v?.currency) currency = v.currency;
     subtotalCents += Math.round(retail * 100) * item.quantity;
+    rateItems.push({ variant_id: catalogVariantId, quantity: item.quantity });
   }
 
   const ratesRes = await fetch(`${PRINTFUL_API_URL}/shipping/rates`, {
@@ -108,10 +112,14 @@ async function computeQuote(apiKey: string, items: ValidatedItem[], recipient: R
         city: recipient.city, state_code: recipient.state_code,
         country_code: recipient.country_code, zip: recipient.zip,
       },
-      items,
+      items: rateItems,
     }),
   });
-  if (!ratesRes.ok) throw new Error(`Shipping rate lookup failed (${ratesRes.status})`);
+  if (!ratesRes.ok) {
+    const errorText = await ratesRes.text();
+    console.error(`Printful shipping rate error (${ratesRes.status}):`, errorText.slice(0, 1000));
+    throw new Error(`Shipping rate lookup failed (${ratesRes.status})`);
+  }
   const ratesData = await ratesRes.json();
   const rates = ratesData.result || [];
   if (rates.length === 0) throw new Error('No shipping options available for this address');

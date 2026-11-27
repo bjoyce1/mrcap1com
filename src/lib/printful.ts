@@ -20,6 +20,7 @@ export interface PrintfulProduct {
     retail_price: string;
     currency: string;
     is_ignored: boolean;
+    availability_status?: string;
     sku: string;
     product: {
       variant_id: number;

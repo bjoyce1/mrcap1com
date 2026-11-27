@@ -79,10 +79,14 @@ function categoryOf(name: string): CategoryId {
   return (CATEGORIES.find((c) => c.match.some((m) => n.includes(m)))?.id ?? "tees") as CategoryId;
 }
 
+export function isSellableVariant(variant: { is_ignored: boolean; availability_status?: string }) {
+  return !variant.is_ignored && (!variant.availability_status || variant.availability_status === "active");
+}
+
 function toProduct(p: PrintfulProduct): StoreProduct {
   const rawName = p.sync_product.name;
   const variants: StoreVariant[] = (p.sync_variants ?? [])
-    .filter((v) => !v.is_ignored)
+    .filter(isSellableVariant)
     .map((v) => {
       const rest = v.name.startsWith(rawName) ? v.name.slice(rawName.length) : v.name;
       const parts = rest.split(" / ").map((s) => s.trim()).filter(Boolean);

@@ -1,5 +1,15 @@
 # Identity connection
 
+# Printful store connection
+
+- [x] Confirm live product sync, stored payment and Printful credentials, and protected order records without exposing credentials.
+- [x] Deploy the existing merch checkout services and verify PayPal authentication without creating or capturing an order.
+- [x] Enable owner-approved automatic Printful fulfillment and verify a live shipping quote through the checkout screen.
+- [x] Correct Printful shipping variant mapping, hide temporarily unavailable variants, and pass 4 stock availability tests.
+- [x] Report remaining Printful account checks and the limits of testing without a real merch purchase.
+- [ ] Publish the current store front end for individual product pages and automatic stock filtering. Blocker: owner publication approval; the backend fixes are already deployed.
+- [ ] Verify a complete paid merch purchase through PayPal capture, Printful confirmation and customer notification. Blocker: requires a buyer-approved payment and the owner's Printful billing and notification settings.
+
 # Bobby J review
 
 - [x] Add development-only Special Guest, animation poses and photography controller without changing reel probabilities or rewards.
