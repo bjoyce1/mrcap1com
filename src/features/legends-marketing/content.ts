@@ -1,7 +1,7 @@
-import { ARTISTS, GAME_CONFIG, PAYLINES } from '@/features/legends/config';
-import { breadcrumb, personRef } from '@/seo/builders';
-import { abs } from '@/seo/site';
-import type { SeoEntry } from '@/seo/types';
+import { ARTISTS, GAME_CONFIG, PAYLINES } from '../legends/config';
+import { breadcrumb, personRef } from '../../seo/builders';
+import { abs } from '../../seo/site';
+import type { SeoEntry } from '../../seo/types';
 
 export const CAMPAIGN = 'operation_713_legends_takeover';
 export const artistArtwork = (id: string) => `/games/spc-legends/symbols/${id}.webp`;

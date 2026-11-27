@@ -85,7 +85,7 @@ export const ALL_SHOWCASE_SYMBOLS=[...SYMBOLS];
 export const SYMBOL_MAP = Object.freeze(Object.fromEntries([...SYMBOLS,GUARDIAN].map(x=>[x.id,x])));
 export const ALL_SYMBOL_MAP = Object.freeze(Object.fromEntries([...ALL_SHOWCASE_SYMBOLS,GUARDIAN].map(x=>[x.id,x])));
 const SPECIAL_WEIGHTS={wild:2,'double-wild':1,bonus:3,double:2,triple:1};
-export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?6:HOUSTON_HOODS.some(h=>h.id===s.id)?4:SPECIAL_WEIGHTS[s.id]])));
+export const SYMBOL_WEIGHTS = Object.freeze(Object.fromEntries(SYMBOLS.map(s=>[s.id,ARTISTS.some(a=>a.id===s.id)?10:MUSIC.some(m=>m.id===s.id)?6:HOUSTON_HOODS.some(h=>h.id===s.id)?4:SPECIAL_WEIGHTS[s.id as keyof typeof SPECIAL_WEIGHTS]])));
 // Launch numbers (owner, 2026-11-04). welcomeSpins: one-time starter spins every account gets, used before the daily
 // allowance. guestTries: spins a visitor gets before signing in (kept in this browser only).
 export const GAME_CONFIG=Object.freeze({reels:6,rows:3,dailySpins:20,welcomeSpins:1000,guestTries:5,timezone:'America/Chicago',localStorageKey:'spc-legends-v3',demoOnly:false});

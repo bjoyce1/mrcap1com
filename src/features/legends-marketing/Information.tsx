@@ -19,7 +19,7 @@ export default function LegendsInformation() {
   useCampaignAttribution();
   return <section className="legends-editorial" aria-labelledby="legends-information-title"><div className="editorial-inner">
     <p className="text-sm uppercase text-gold mb-4">713MIXHOUSE / Mr. CAP</p>
-    <h1 id="legends-information-title">SPC Legends: Spin the Mix</h1>
+    <h2 id="legends-information-title">Play the culture.</h2>
     <p className="mt-5 max-w-3xl text-muted-foreground">Spin the Mix. Play the Culture. Become a Legend.</p>
     <EditorialNavigation />
     <details className="max-w-3xl py-4"><summary className="cursor-pointer text-lg font-semibold">The music, the culture and the experience</summary><div className="space-y-5 pt-5"><p>{FAQ[0].answer}</p><p>The six-reel board brings together approved artist portraits, Houston neighborhoods and studio symbols. Music and character celebrations make each result part of the mix. The game is one way to explore the culture, alongside the records and first-party stories on this site.</p><p>{FAQ[1].answer}</p><div className="flex flex-wrap gap-4">{cultureLinks.map(l => <Link className="text-gold underline" key={l.href} to={l.href}>{l.label}</Link>)}</div></div></details>
