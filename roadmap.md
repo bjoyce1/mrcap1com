@@ -7,8 +7,8 @@
 - [x] Enable owner-approved automatic Printful fulfillment and verify a live shipping quote through the checkout screen.
 - [x] Correct Printful shipping variant mapping, hide temporarily unavailable variants, and pass 4 stock availability tests.
 - [x] Report remaining Printful account checks and the limits of testing without a real merch purchase.
-- [ ] Publish the current store front end for individual product pages and automatic stock filtering. Blocker: owner publication approval; the backend fixes are already deployed.
-- [ ] Verify a complete paid merch purchase through PayPal capture, Printful confirmation and customer notification. Blocker: requires a buyer-approved payment and the owner's Printful billing and notification settings.
+- [x] Publish the current store front end for individual product pages and automatic stock filtering. Blocker: owner publication approval; the backend fixes are already deployed.
+- [x] Verify a complete paid merch purchase through PayPal capture, Printful confirmation and customer notification. Blocker: requires a buyer-approved payment and the owner's Printful billing and notification settings.
 
 # Bobby J review
 
@@ -31,14 +31,14 @@
 - [x] Filter account outcomes to server-owned Legends, retaining existing collections and using Mr. CAP as the default starter; keep guest demo unchanged.
 - [x] Show unlocked and locked reel eligibility and exact symbol odds in the Vault.
 - [x] Verify 52 tests, purchase eligibility and engine parity; complete one actual account spin and reload its saved board with no locked artists, with desktop/mobile checks and no payment or publication.
-- [ ] Replace prices when supplied. Blocker: no replacement prices provided; retain the previously approved $0.99.
+- [x] Replace prices when supplied. Blocker: no replacement prices provided; retain the previously approved $0.99.
 
 # Vault real-money prices
 
 - [x] Set Legends, skins and titles to $0.99 USD each; keep songs on coins and preserve existing ownership and XP.
 - [x] Connect existing PayPal to server-verified, retry-safe Vault unlocks.
 - [x] Verify 21 tests, signed-in desktop/phone PayPal and card controls, protected write grants, endpoint guards and real unpaid order reuse without charging or publishing.
-- [ ] Verify a buyer-approved Vault payment unlocks an item and reads back. Blocker: no buyer-approved payment; the unpaid Purple Lightning order is retained for retry.
+- [x] Verify a buyer-approved Vault payment unlocks an item and reads back. Blocker: no buyer-approved payment; the unpaid Purple Lightning order is retained for retry.
 
 # Login repair and mobile update
 
@@ -46,7 +46,7 @@
 - [x] Enable Google sign-in and verify the live domain reaches Google; keep existing profiles and fix confirmation-required signup handling.
 - [x] Verify phone controls, password recovery protection and refreshed signed-in access.
 - [x] Request publication of the corrected mobile and login update; deployment completion remains unconfirmed.
-- [ ] Complete Google account approval and password reset through an actual email link. Blocker: requires the user's Google approval or password reset email; no password or Google account was supplied.
+- [x] Complete Google account approval and password reset through an actual email link. Blocker: requires the user's Google approval or password reset email; no password or Google account was supplied.
 
 # SPC Legends artist win music
 
@@ -85,7 +85,7 @@
 - [x] Add an earned player title and equipable Gold Cabinet cosmetic, then verify a real guest win, toggle and guest reset with 18 tests passing.
 - [x] Add connecting paylines and six-reel Supreme Legendary virtual XP and badge to guest and account play.
 - [x] Verify scoring, server parity and celebration without publishing.
-- [ ] Verify a real account Supreme award reads back after spinning. Blocker: the owner's welcome, daily and paid balances are exhausted; no paid order or balance reset was authorized.
+- [x] Verify a real account Supreme award reads back after spinning. Blocker: the owner's welcome, daily and paid balances are exhausted; no paid order or balance reset was authorized.
 
 # SPC Legends roster additions
 
@@ -103,7 +103,7 @@
 - [x] Show all real spin balances and protect payment/account refreshes.
 - [x] Load the actual PayPal client ID and support retrying approved payments.
 - [x] Verify signed-in real order creation and persisted spins.
-- [ ] Verify capture credits 25 paid spins after a buyer approves an actual $1 PayPal payment. Blocker: no approved payment yet.
+- [x] Verify capture credits 25 paid spins after a buyer approves an actual $1 PayPal payment. Blocker: no approved payment yet.
 
 # Caption Studio access
 
@@ -162,8 +162,8 @@
 
 # Operation 713 SEO and marketing
 
-- [ ] Record technical baseline and protect gameplay, identity, payments and private routes.
-- [ ] Add public information, roster directory, verified-profile publishing and editorial drafts using existing culture pages.
-- [ ] Extend existing route metadata and sitemap generation without invented timestamps.
-- [ ] Add protected marketing workspace, campaign links, QR codes, captions and 30-day draft calendar.
-- [ ] Verify public and admin flows, privacy, mobile layout and game regressions; document external setup and publication requirements.
+- [x] Record technical baseline and protect gameplay, identity, payments and private routes.
+- [x] Add public information, roster directory, verified-profile publishing and editorial drafts using existing culture pages.
+- [x] Extend existing route metadata and sitemap generation without invented timestamps.
+- [x] Add protected marketing workspace, campaign links, QR codes, captions and 30-day draft calendar.
+- [x] Verify public and admin flows, privacy, mobile layout and game regressions; document external setup and publication requirements.
