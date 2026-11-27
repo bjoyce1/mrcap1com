@@ -1322,6 +1322,248 @@
  "pressEntries": [],
  "legendsContent": [
   {
+   "id": "77631904-aba8-4622-be57-ea9d31fd4706",
+   "kind": "artist",
+   "slug": "komodo-dbx",
+   "title": "Komodo DBX",
+   "excerpt": "Komodo DBX, also credited as KomodoDBX and DBX, is a Houston rapper affiliated with Section A and the South Park Coalition whose catalog includes Dragon Klan and Original Gangstah Sh!t.",
+   "body": "## Introduction\nKomodo DBX, also credited as KomodoDBX and DBX, is a Houston rapper associated with Section A and the South Park Coalition. Mr. CAP confirmed that the supplied DBX biography belongs to this existing Komodo DBX profile, and catalog references independently list KomodoDBX as a DBX alias.\n\n## Recording career and affiliations\nThe owner-supplied biography traces his recording activity to 1991. Catalog references document his affiliations with Section A and the South Park Coalition without requiring a precise joining date for either group.\n\n## Dragon Klan\nDragon Klan was released in 2003 through Full Circle Entertainment. The detailed album listing documents the release credits and guest appearances. Catalog references also use the title DBX Of The Dragon K.L.A.N., so this profile does not treat that wording as evidence of a separate album.\n\n## Original Gangstah Sh!t\nOriginal Gangstah Sh!t followed in 2013 through Komodo Entertainment under the KomodoDBX credit. The album listing documents the production and writing credits for this release.\n\n## SPC Legends\nKomodo DBX is one of the twelve featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied DBX biography received from Mr. CAP on November 27, 2026. Mr. CAP confirmed the Komodo DBX profile mapping the same day. Name variants, affiliations and release details were cross-checked against the linked catalog and album references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/komodo-dbx.webp",
+   "sources": [
+    "https://disco.dog/artist/338929-dbx-5",
+    "https://www.thegoodoldayz.com/album/dragon-klan/22814.html",
+    "https://www.thegoodoldayz.com/album/original-gangstah-sht/20503.html"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/murder-one",
+     "label": "Murder One"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist",
+    "houston-hip-hop",
+    "south-park-coalition"
+   ],
+   "seo_title": "Komodo DBX | SPC Legends Artist Profile",
+   "seo_description": "Meet Komodo DBX, the Houston rapper known as DBX. Explore his Section A and South Park Coalition ties plus Dragon Klan and Original Gangstah Sh!t.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:36:09.047566+00:00",
+   "updated_at": "2026-11-27T07:36:09.047566+00:00"
+  },
+  {
+   "id": "bb84c8d8-61da-444c-b812-658751a63820",
+   "kind": "artist",
+   "slug": "cl-che",
+   "title": "Cl'Che'",
+   "excerpt": "Cl'Che', born LaShavia LaNae West, is a Houston rapper and member of the South Park Coalition whose selected releases include Clasyfyd Lady, Off da Chain and Beautiful Metal.",
+   "body": "## Introduction\nCl'Che', born LaShavia LaNae West on May 22, 1980, is a Houston rapper whose owner-supplied biography traces her recording career to Clasyfyd Lady in 1998. Mr. CAP confirmed the May 22 birth date for this profile on November 27, 2026.\n\n## Debut and guest appearances\nHer official artist biography and interview history identify Clasyfyd Lady as her 1998 debut. During the early 2000s, she appeared on releases by Lil' Keke, Z-Ro and 8Ball before releasing Off da Chain in 2004.\n\n## South Park Coalition\nIn a 2019 Voyage Houston interview, Cl'Che' said K-Rino accepted her into the South Park Coalition in 2009. That first-person account provides a more precise membership date than the mid-2000s wording in the supplied reference material. She has since contributed to projects by members of the collective.\n\n## Beautiful Metal and selected catalog\nThe owner-supplied biography also lists Beautiful Metal as a 2016 release. Her catalog is presented here through selected releases rather than a claim about her latest album or a complete studio-album count.\n\n## SPC Legends\nCl'Che' is one of the twelve featured artist characters in SPC Legends: Spin the Mix. Her approved character artwork represents her place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied Cl'Che' biography received from Mr. CAP on November 27, 2026, with her birth date confirmed the same day. Release and membership details were cross-checked against her official site, her Voyage Houston interview and the linked catalog references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/cl-che.webp",
+   "sources": [
+    "https://voyagehouston.com/interview/meet-clche-ms-houston-clasyfyd-entertainment-south-park-tx/",
+    "https://ilovemshouston.net/about",
+    "https://disco.dog/artist/230512-cl-che",
+    "https://mrcap1.com/mr-cap-discography"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/mr-cap",
+     "label": "Mr. CAP"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist",
+    "houston-hip-hop",
+    "south-park-coalition"
+   ],
+   "seo_title": "Cl'Che' | SPC Legends Artist Profile",
+   "seo_description": "Meet Cl'Che', born LaShavia LaNae West. Explore her Houston rap career, South Park Coalition work and albums Clasyfyd Lady, Off da Chain and Beautiful Metal.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:36:09.047566+00:00",
+   "updated_at": "2026-11-27T07:36:09.047566+00:00"
+  },
+  {
+   "id": "60af4dc5-c098-4a02-8cd6-f62772586bfe",
+   "kind": "artist",
+   "slug": "ganxsta-nip",
+   "title": "Ganxsta NIP",
+   "excerpt": "Ganxsta NIP, born Rowdy Lewayne Williams, is a Houston horrorcore pioneer and member of the South Park Coalition whose debut album, The South Park Psycho, arrived in 1992.",
+   "body": "## Introduction\nGanxsta NIP, born Rowdy Lewayne Williams, is a Houston rapper from South Park whose owner-supplied biography dates his South Park Coalition involvement to 1987. He released his debut album, The South Park Psycho, in 1992.\n\n## Name and aliases\nMr. CAP confirmed Ganxsta NIP as the display spelling for this profile on November 27, 2026. Supplied and catalog materials also use Ganksta NIP, Ganksta N-I-P, N-I-P, N.I.P. and Brother NIP. These variants refer to the same artist in this profile.\n\n## The South Park Psycho\nThe South Park Psycho established his recorded debut in 1992. Album and biographical references place the release within Houston's South Park rap movement and connect his work with the broader South Park Coalition history.\n\n## Horrorcore and South Park Coalition\nThe South Park Coalition booking biography describes him as a pioneer of horrorcore rap and a core SPC member. This profile uses horrorcore pioneer rather than claiming that he single-handedly created the genre. His connections include K-Rino and other Houston artists across the collective's recording history.\n\n## SPC Legends\nGanxsta NIP is one of the twelve featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied Ganxsta NIP biography received from Mr. CAP on November 27, 2026, with the display spelling confirmed the same day. Album, affiliation and horrorcore details were cross-checked against the linked South Park Coalition and music references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/ganxsta-nip.webp",
+   "sources": [
+    "https://bookspc.com/artists/ganksta-nip",
+    "https://www.last.fm/music/Ganksta+Nip/+wiki",
+    "https://mrcap1.com/south-park-coalition",
+    "https://mrcap1.com/blog/10-things-south-park-coalition"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/dope-e",
+     "label": "Dope-E"
+    },
+    {
+     "href": "/legends/artists/murder-one",
+     "label": "Murder One"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist",
+    "houston-hip-hop",
+    "south-park-coalition"
+   ],
+   "seo_title": "Ganxsta NIP | SPC Legends Artist Profile",
+   "seo_description": "Meet Ganxsta NIP, born Rowdy Lewayne Williams. Explore his South Park Coalition history, The South Park Psycho and his role in early horrorcore.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:36:09.047566+00:00",
+   "updated_at": "2026-11-27T07:36:09.047566+00:00"
+  },
+  {
+   "id": "1e0ab541-2b56-4c7e-be9a-8447aed31afb",
+   "kind": "artist",
+   "slug": "psk-13",
+   "title": "PSK-13",
+   "excerpt": "PSK-13 is a Houston rapper associated with the South Park Coalition and Wreckless Klan whose catalog includes the 1997 album Born Bad? with UGK and Ice-T.",
+   "body": "## Introduction\nPSK-13 is a Houston rapper from South Park associated with the South Park Coalition and Wreckless Klan. The owner-supplied biography traces his activity in Houston hip-hop to 1993. This profile uses his established stage name rather than publishing an expanded legal name that the cited catalog references do not consistently establish.\n\n## Early catalog\nHis catalog includes No Ordinary Aggin in 1993 and Born Bad? in 1997. The earlier release is why this profile does not repeat the supplied reference's description of Born Bad? as his debut studio album.\n\n## Born Bad?\nBorn Bad? was released in 1997 through Bigtyme Recordz. Album references document appearances by UGK, Ice-T and fellow South Park Coalition artists, placing the project within a wider network of Houston and Southern rap collaborations.\n\n## Group affiliations and collaborations\nHis documented affiliations include the South Park Coalition and Wreckless Klan. Catalog references also connect him with DJ Screw and other Houston artists. The profile distinguishes those documented affiliations and collaborations from formal membership claims that are not consistently supported by the cited references.\n\n## SPC Legends\nPSK-13 is one of the twelve featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied PSK-13 biography received from Mr. CAP on November 27, 2026. Group affiliations and release details were cross-checked against the linked artist and album references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/psk-13.webp",
+   "sources": [
+    "https://www.thegoodoldayz.com/artist/psk13/8163.html",
+    "https://www.thegoodoldayz.com/album/born-bad/12796.html",
+    "https://mrcap1.com/south-park-coalition"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/point-blank",
+     "label": "Point Blank"
+    },
+    {
+     "href": "/legends/artists/murder-one",
+     "label": "Murder One"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist",
+    "houston-hip-hop",
+    "south-park-coalition"
+   ],
+   "seo_title": "PSK-13 | SPC Legends Artist Profile",
+   "seo_description": "Meet PSK-13, the Houston rapper behind Born Bad? Explore his South Park Coalition and Wreckless Klan ties, plus collaborations with UGK and Ice-T.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:36:09.047566+00:00",
+   "updated_at": "2026-11-27T07:36:09.047566+00:00"
+  },
+  {
+   "id": "a9d944de-8122-4116-a29d-407904448cb3",
+   "kind": "artist",
+   "slug": "dope-e",
+   "title": "Dope-E",
+   "excerpt": "Dope-E, also styled Dope E, is a Houston rapper and producer associated with the South Park Coalition, The Terrorists and the 2002 Murdoq da Warrior release.",
+   "body": "## Introduction\nAl-Khidr Zodoqyah Israel, known professionally as Dope-E and also styled Dope E, is a Houston rapper and record producer. Catalog references document his Murdoq alias and his work across Houston's independent rap community.\n\n## South Park Coalition and production\nHe is associated with the South Park Coalition, The Terrorists, The 144 Elite, C.O.D. and Frontline Terrorists. Project sources credit him as an internal SPC producer and as co-producer of Mr. CAP's single SOAR'N. The owner-supplied biography also identifies his production work on It's Goin Down from The Terrorists' album Full Scale Attack.\n\n## Early appearances\nHis detailed catalog credits include assistant production and appearances on K-Rino's Stories from the Black Book. He also made an uncredited appearance on Ganksta NIP's Psychic Thoughts. These references support specific credits without converting every associated group or production-company credit into a personal one.\n\n## Murdoq da Warrior\nHe released Murdoq da Warrior under the name Murdoq in 2002. Apple Music lists the project digitally as Da Warrior and explicitly credits Murdoq (Dope E of The Terrorists), establishing the alias and group connection. This profile does not describe the release as his only solo album.\n\n## SPC Legends\nDope-E is one of the twelve featured artist characters in SPC Legends: Spin the Mix. His approved character artwork represents his place in the game's celebration of Houston music and South Park Coalition culture.\n\n## Source note\nPrimary biographical source: an owner-supplied Dope E biography received from Mr. CAP on November 27, 2026. Name variants, production credits, appearances and release details were cross-checked against the linked catalog, album and Mr. CAP references.",
+   "image_url": "https://mrcap1.com/games/spc-legends/symbols/dope-e.webp",
+   "sources": [
+    "https://disco.dog/artist/247039-dope-e",
+    "https://music.apple.com/us/album/da-warrior/283128829",
+    "https://www.thegoodoldayz.com/album/stories-from-the-black-book/8133.html",
+    "https://www.thegoodoldayz.com/album/psychic-thoughts/6451.html",
+    "https://mrcap1.com/blog/mr-cap-stands-tall-with-new-single-soarn",
+    "https://mrcap1.com/blog/10-things-south-park-coalition"
+   ],
+   "links": [
+    {
+     "href": "/legends",
+     "label": "Play SPC Legends"
+    },
+    {
+     "href": "/legends/artists",
+     "label": "Artist directory"
+    },
+    {
+     "href": "/legends/artists/k-rino",
+     "label": "K-Rino"
+    },
+    {
+     "href": "/legends/artists/ganxsta-nip",
+     "label": "Ganxsta NIP"
+    },
+    {
+     "href": "/legends/artists/mr-cap",
+     "label": "Mr. CAP"
+    }
+   ],
+   "category": "Artist",
+   "tags": [
+    "artist",
+    "houston-hip-hop",
+    "south-park-coalition"
+   ],
+   "seo_title": "Dope-E | SPC Legends Artist Profile",
+   "seo_description": "Meet Dope-E, the Houston rapper and producer behind South Park Coalition recordings. Explore Murdoq da Warrior, The Terrorists and his work with K-Rino.",
+   "author": "",
+   "reviewed": true,
+   "status": "published",
+   "published_at": "2026-11-27T07:36:09.047566+00:00",
+   "updated_at": "2026-11-27T07:36:09.047566+00:00"
+  },
+  {
    "id": "d7ae6911-bccc-4b93-a702-fc8b387ada7e",
    "kind": "artist",
    "slug": "murder-one",
@@ -1565,5 +1807,5 @@
    "updated_at": "2026-11-27T07:16:54.756422+00:00"
   }
  ],
- "fetchedAt": "2026-11-27T07:26:31.401Z"
+ "fetchedAt": "2026-11-27T07:36:12.212Z"
 }

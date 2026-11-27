@@ -214,8 +214,10 @@
 
 # Five SPC artist biography reviews
 
-- [ ] Review the supplied Cl'Che', DBX, Dope E, Ganxsta NIP and PSK-13 biographies, existing drafts, artwork and source conflicts.
+- [x] Review the supplied Cl'Che', DBX, Dope E, Ganxsta NIP and PSK-13 biographies, existing drafts, artwork and source conflicts; retain owner-confirmed facts and avoid unsupported latest, only and membership-date claims.
 - [x] Owner approved public pages for all five supplied biographies; preserve all unrelated drafts and game behavior.
 - [x] Use Cl'Che's owner-confirmed May 22, 1980 birth date.
 - [x] Use the owner-confirmed Ganxsta NIP display spelling.
-- [ ] Confirm the DBX to Komodo DBX profile mapping before publishing.
+- [x] Confirm the DBX to Komodo DBX profile mapping with the owner and corroborating catalog aliases.
+- [x] Publish the five reviewed content records after source-link and metadata checks; all 289 regressions and all five desktop and phone previews passed.
+- [ ] Save and deploy the five-profile search snapshot, then verify production pages, metadata, sitemap, privacy and phone rendering.
