@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Download, ShoppingCart } from "lucide-react";
@@ -22,10 +22,10 @@ interface BuyButtonProps {
   fullWidth?: boolean;
 }
 
-// PayPal SDK requires a client ID at script load. Using sandbox 'test' is safe — the
-// real client id is enforced server-side when creating the order. Visitors still see
-// PayPal's UI; only confirmed payments via our edge function will be honored.
-const PAYPAL_CLIENT_ID = "sb"; // sandbox shim; real ID lives server-side
+import { paypalClientId as fetchPaypalClientId } from "@/features/legends/account";
+
+// Buttons load with the site's configured live PayPal client ID so orders
+// created on the server are approved on the same account.
 
 const BuyButton = ({
   itemType,
@@ -42,6 +42,19 @@ const BuyButton = ({
   const navigate = useNavigate();
   const { ownsTrack, ownsAlbum, markOwned } = usePurchasesStore();
   const [open, setOpen] = useState(false);
+  const [clientId, setClientId] = useState<string | null>(null);
+  const [clientIdFailed, setClientIdFailed] = useState(false);
+
+  useEffect(() => {
+    if (!open || clientId) return;
+    let active = true;
+    fetchPaypalClientId().then((id) => {
+      if (!active) return;
+      if (id) setClientId(id);
+      else setClientIdFailed(true);
+    });
+    return () => { active = false; };
+  }, [open, clientId]);
 
   const owned = itemType === "track"
     ? ownsTrack(itemId, albumId)
@@ -98,8 +111,13 @@ const BuyButton = ({
           </DialogHeader>
 
           <div className="mt-4">
+            {!clientId ? (
+              <p className="text-sm text-muted-foreground">
+                {clientIdFailed ? "Checkout is unavailable right now. Please try again later." : "Loading secure checkout..."}
+              </p>
+            ) : (
             <PayPalScriptProvider
-              options={{ clientId: PAYPAL_CLIENT_ID, currency: "USD", intent: "capture" }}
+              options={{ clientId, currency: "USD", intent: "capture" }}
             >
               <PayPalButtons
                 style={{ layout: "vertical", color: "gold", shape: "rect", label: "pay" }}
@@ -155,6 +173,7 @@ const BuyButton = ({
                 }}
               />
             </PayPalScriptProvider>
+            )}
           </div>
         </DialogContent>
       </Dialog>
