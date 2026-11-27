@@ -221,3 +221,8 @@
 - [x] Confirm the DBX to Komodo DBX profile mapping with the owner and corroborating catalog aliases.
 - [x] Publish the five reviewed content records after source-link and metadata checks; all 289 regressions and all five desktop and phone previews passed.
 - [x] Deploy commit ff584a0 in production build 2026-11-27T07:38:21Z; all five pages pass raw metadata, social tags, ProfilePage schema, sitemap, directory, artwork, desktop and phone checks with no page errors or overflow, and the two remaining artist drafts retain private noindex shells.
+
+# Rapper K artist biography review
+
+- [ ] Review the supplied Rapper K biography, existing draft, artwork, solo albums and Sniper collaborations.
+- [ ] Confirm visibility before release, then run editorial and regression checks and verify any approved production page.
