@@ -225,4 +225,5 @@
 # Rapper K artist biography review
 
 - [ ] Review the supplied Rapper K biography, existing draft, artwork, solo albums and Sniper collaborations.
-- [ ] Confirm visibility before release, then run editorial and regression checks and verify any approved production page.
+- [x] Mr. CAP approved a public Rapper K artist page on November 27, 2026.
+- [ ] Publish the reviewed Rapper K biography, run regression checks, deploy and verify the production page while preserving all other draft approvals.
