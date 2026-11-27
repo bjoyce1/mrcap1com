@@ -210,4 +210,4 @@
 
 - [x] Replace the existing research draft with the owner-approved biography, seven verified sources and existing approved artwork.
 - [x] Pass all 289 regression tests and request publication with route-specific search metadata and sitemap inclusion.
-- [ ] Verify the production page, artwork, metadata, structured data, directory link, privacy and phone rendering.
+- [x] Verify production build 2026-11-27T07:29:45Z from commit 506646a: public canonical metadata, ProfilePage schema, social tags, sitemap listing, directory link, artwork, desktop and phone rendering all pass; the checked private draft remains noindex and no page errors or horizontal overflow occurred.
