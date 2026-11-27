@@ -167,7 +167,7 @@
 - [x] Extend existing route metadata and sitemap generation without invented timestamps.
 - [x] Add protected marketing workspace, campaign links, QR codes, captions and 30-day draft calendar.
 - [x] Verify public and admin flows, privacy, mobile layout and game regressions; document external setup and publication requirements.
-- [ ] Phase 2 editorial activation: owner verifies artist facts and sources and supplies approved article images; Bing setup awaits authorized connection. Technical production publication and existing Search Console verification are complete.
+- [ ] Phase 2 editorial activation: four artist profiles are published; the remaining eight artist drafts and all 12 article drafts require owner-approved facts, sources and images. Bing setup awaits authorized connection. Technical production publication and existing Search Console verification are complete.
 
 # Operation 713 approved production release
 
@@ -202,5 +202,6 @@
 - [x] Parse all six owner-supplied biographies for Mr. CAP, K-Rino, Klondike Kat and Point Blank.
 - [x] Audit source links, conflicting name spellings, outdated release wording and the confirmed 1987 SPC founding year; all artwork and source URLs returned successfully.
 - [x] Strengthen the four matching artist records as private, unreviewed drafts without changing publication states; all four passed 12 of 12 editorial checks.
-- [ ] Run regression and privacy checks, publish only the four approved profiles and verify the actual production pages.
-- [ ] Verify the production deployment of only the Mr. CAP, K-Rino, Klondike Kat and Point Blank profiles. Owner approved these four public artist pages on November 27, 2026; all other profiles and articles remain private. All 289 regressions passed and the security scan found no critical issues before publication.
+- [x] Run regression and privacy checks, publish only the four approved profiles and verify the actual production pages.
+- [x] Deploy only the Mr. CAP, K-Rino, Klondike Kat and Point Blank profiles at 07:18:09 UTC. All 289 regressions passed, all four profiles passed metadata, schema, artwork, desktop and phone checks, and all 20 other drafts remain private.
+- [x] Submit the 137-URL sitemap to Google; downloaded at 07:19:26 UTC with zero errors or warnings.
